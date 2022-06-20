@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Proveedores</title>
+  <title>Administracion</title>
 
   <?php include '../../configuracion/navar.php' ?>
   <!-- Content Wrapper. Contains page content -->
@@ -13,7 +13,7 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 class="m-0">Proveedores</h1>
+            <h1 class="m-0">DASHBOARD HOME</h1>
           </div><!-- /.col -->
           
         </div><!-- /.row -->
@@ -25,8 +25,7 @@
     <div class="content">
       <div class="container-fluid">
         <div class="row">
-          <div class="col-lg-6">
-
+         
 <!-- Contenido -->
 
 
