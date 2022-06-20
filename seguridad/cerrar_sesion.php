@@ -12,7 +12,7 @@ session_unset();
 // destroy the session
 session_destroy();
 
-header('Location: index_login.php');
+header('Location: ../vistas/index_login.php');
 ?>
 
 </body>

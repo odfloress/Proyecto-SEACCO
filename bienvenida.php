@@ -1,11 +1,8 @@
 <?php
 session_start();
 if(!isset($_SESSION['usuario'])){
-  echo '<script>
-            alert("Debes iniciar sesion");
-            // window.Location = "/index_login.php";
-        </script>';
-        header('Location: seguridad/index_login.php');
+ 
+        header('Location: vistas/index_login.php');
         session_unset();
         session_destroy();
         die();
