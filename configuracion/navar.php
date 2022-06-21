@@ -21,6 +21,10 @@
     color: #000000;
 }
 
+.navbar-white {
+    background-color: #dbdbdb;
+    color: #000000;
+}
    
 
 
