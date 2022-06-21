@@ -12,17 +12,17 @@
 
 
   <style>
-    [class*=sidebar-dark] .brand-link, [class*=sidebar-dark] .brand-link .pushmenu {
-    color: rgb(0 0 0 / 80%);}
+[class*=sidebar-dark-] {
+    background-color: #b3b5ff;
+}
 
     [class*=sidebar-dark-] .nav-header {
     background-color: inherit;
     color: #000000;
 }
 
-    [class*=sidebar-dark-] {
-    background-color: #74759d;
-}
+   
+
 
 [class*=sidebar-dark] .btn-sidebar, [class*=sidebar-dark] .form-control-sidebar {
     background-color: #ededed;
