@@ -26,7 +26,7 @@ print_r($_SESSION);
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 class="m-0">DASHBOARD HOME</h1>
+            <h1 class="m-0">Tablero</h1>
           </div><!-- /.col -->
           
         </div><!-- /.row -->

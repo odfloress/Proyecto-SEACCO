@@ -1,6 +1,6 @@
 <?php
 session_start();
-require '../conexion/conexion.php';
+require '../../conexion/conexion.php';
 $correo=(isset($_POST['correo']))?$_POST['correo']:"";
 $usuario=(isset($_POST['usuario']))?$_POST['usuario']:"";
 $contrasena=(isset($_POST['contrasena']))?$_POST['contrasena']:"";
@@ -20,17 +20,17 @@ switch($accion){
  
          echo '<script>
                  alert("ingresar");
-                 window.Location = "../bienvenida.php";
+                 window.Location = "../tablero/vista_tablero.php";
                </script>';
                $_SESSION['usuario'] = $correo;
-               header('Location: ../bienvenida.php');
+               header('Location: ../tablero/vista_tablero.php');
               exit() ;
               
                
      }else{
         echo '<script>
                  alert("Correo o contraseña incorrecta");
-                 window.Location = "vistas/index_login.php";
+                 window.Location = "../iniciar_sesion/index_login.php";
                </script>';
 
         mysqli_close($conn);
