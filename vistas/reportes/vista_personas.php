@@ -1,3 +1,15 @@
+<?php
+session_start();
+if(!isset($_SESSION['usuario'])){
+ 
+        header('Location: ../iniciar_sesion/index_login.php');
+        session_unset();
+        session_destroy();
+        die();
+        
+}
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -61,24 +73,18 @@
                 <table id="example1" class="table table-bordered table-striped">
                   <thead>
                   <tr>
-                    <th>Rendering engine</th>
-                    <th>Browser</th>
-                    <th>Platform(s)</th>
-                    <th>Engine version</th>
-                    <th>CSS grade</th>
-                    <th>prue</th>
+                    <th>Nombre</th>
+                    <th>Usuario</th>
+                    <th>Correo</th>
+                    <th>Registrado</th>
                   </tr>
                   </thead>
                   <tbody>
                   <tr>
-                    <td>Trident</td>
-                    <td>Internet
-                      Explorer 4.0
-                    </td>
-                    <td>Win 95+</td>
-                    <td> 4</td>
-                    <td>X</td>
-                    <td>asas</td>
+                    <td>David Sánchez</td>
+                    <td>DAVIDS</td>
+                    <td>odfloress@unah.hn</td>
+                    <td> 07/07/2022 7:00:00</td>
                   </tr>
                   
                   

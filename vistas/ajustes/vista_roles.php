@@ -1,3 +1,14 @@
+<?php
+session_start();
+if(!isset($_SESSION['usuario'])){
+ 
+        header('Location: ../iniciar_sesion/index_login.php');
+        session_unset();
+        session_destroy();
+        die();
+        
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -141,7 +152,7 @@
             
             <div class="card">
               <div class="card-header">
-                <h3 class="card-title">Bitacora Universal</h3>
+                <h3 class="card-title">Roles de los usuarios</h3>
                 
               </div>
               
@@ -150,126 +161,127 @@
                 <table id="example1" class="table table-bordered table-striped">
                   <thead>
                   <tr>
+                  <th>Acciones</th>
                     <th>Id</th>
                     <th>Rol</th>
                     <th>Estado</th>
-        	        <th>Acciones</th>
+        	        
                   </tr>
                   </thead>
                   <tbody>
                   <tr>
+                  <td>
+                
+                <!-- Inicio de modal de editar -->
+    
+            
+                <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#myModal2">
+                <i class="fas fa-pencil-alt"></i>
+                </button>
+          
+    
+                  <!-- El Modal -->
+                      <div class="modal" id="myModal2">
+                          <div class="modal-dialog">
+                              <div class="modal-content">
+                                  <!-- Encabezado del modal -->
+                                  <div class="modal-header">
+                                      <h4 class="modal-title">Editar Rol</h4>
+                                      <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                  </div>
+                                  <!-- Fin Encabezado del modal -->
+    
+                                  <!-- Cuerpo del modal Modal -->
+                                  <div class="modal-body">
+                                  <div class="container mt-3">
+                                    <label for="pwd" class="form-label">Rol:</label><br>
+                                      <input type="text" name="" id="">  
+                                  </div>
+    
+                                <div class="container mt-3">
+                                      <label for="pwd" class="form-label">Nuevo Acceso:</label>
+                                      <form action="/action_page.php">
+                                      <div class="form-check">
+                                      <input type="checkbox" class="form-check-input" id="check1" name="option1" value="something" checked>
+                                      <label class="form-check-label" for="check1">Visualizar</label>
+                                      </div>
+                                      <div class="form-check">
+                                      <input type="checkbox" class="form-check-input" id="check2" name="option2" value="something">
+                                      <label class="form-check-label" for="check2">Guardar</label>
+                                      </div>
+                                      <div class="form-check">
+                                      <input type="checkbox" class="form-check-input" id="check3" name="option3" value="something">
+                                      <label class="form-check-label" for="check3">Actualizar</label>
+                                      </div>
+                                      <div class="form-check">
+                                      <input type="checkbox" class="form-check-input" id="check4" name="option4" value="something">
+                                      <label class="form-check-label" for="check4">Elimiar</label>
+                                      </div>
+                                      </form>
+                                      </div>
+                                      <div class="container mt-3">
+                                      <label for="pwd" class="form-label">Pantallas:</label>
+                                      <form action="/action_page.php">
+                                      <div class="form-check">
+                                      <input type="checkbox" class="form-check-input" id="check1" name="option1" value="something" checked>
+                                      <label class="form-check-label" for="check1">Personas</label>
+                                      </div>
+                                      <div class="form-check">
+                                      <input type="checkbox" class="form-check-input" id="check2" name="option2" value="something">
+                                      <label class="form-check-label" for="check2">Catalogo</label>
+                                      </div>
+                                      <div class="form-check">
+                                      <input type="checkbox" class="form-check-input" id="check3" name="option3" value="something">
+                                      <label class="form-check-label" for="check3">Inventario</label>
+                                      </div>
+                                      <div class="form-check">
+                                      <input type="checkbox" class="form-check-input" id="check4" name="option4" value="something">
+                                      <label class="form-check-label" for="check4">Proyectos</label>
+                                      </div>
+                                      <div class="form-check">
+                                      <input type="checkbox" class="form-check-input" id="check4" name="option4" value="something">
+                                      <label class="form-check-label" for="check4">Reportes</label>
+                                      </div>
+                                      <div class="form-check">
+                                      <input type="checkbox" class="form-check-input" id="check4" name="option4" value="something">
+                                      <label class="form-check-label" for="check4">Ajustes</label>
+                                      </div>
+                                      </form>
+                                  </div>
+    
+                                  <div class="container mt-3">
+                                    <label for="pwd" class="form-label">Estado de Rol:</label>
+                                      <form>
+                                          <select class="form-select form-select-sm mt-3">
+                                              <option>Activo</option>
+                                              <option>Inactivo</option>
+                                          </select>
+                                      </form>    
+                                  </div>
+    
+    
+                                  </div>
+                                  <!-- Fin Cuerpo del modal Modal -->
+                                  <!-- pie del modal -->
+                                  <div class="modal-footer">
+                                      <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Guardar</button>
+                                      <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
+                                  </div>
+                                  <!-- Fin pie del modal -->
+                              </div>
+                          </div>
+                      </div>
+                      <!-- Fin  de modal de Editar -->
+                                      <button  value="btnEliminar" name="accion" 
+                                          onclick="return confirm('¿Quieres eliminar este dato?')"
+                                          type="submit" class="btn btn-danger " data-id="19">
+                                          <i class="fas fa-trash-alt"></i>
+                                      </button>
+    
+                         </td>         
                   <td>1</td>
                 <td>Administrador</td>
-                <td>Activo</td> 
-                <td>
-                <div class="btn-group">
-<!-- Inicio de modal de editar -->
-<div class="container mt-3">
-        
-        <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#myModal2">
-        <i class="fas fa-pencil-alt"></i>
-        </button>
-    </div>
-
-<!-- El Modal -->
-    <div class="modal" id="myModal2">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <!-- Encabezado del modal -->
-                <div class="modal-header">
-                    <h4 class="modal-title">Editar Rol</h4>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                </div>
-                <!-- Fin Encabezado del modal -->
-
-                <!-- Cuerpo del modal Modal -->
-                <div class="modal-body">
-                <div class="container mt-3">
-	                <label for="pwd" class="form-label">Rol:</label><br>
-                    <input type="text" name="" id="">  
-                </div>
-
-              <div class="container mt-3">
-<label for="pwd" class="form-label">Nuevo Acceso:</label>
-<form action="/action_page.php">
-<div class="form-check">
-<input type="checkbox" class="form-check-input" id="check1" name="option1" value="something" checked>
-<label class="form-check-label" for="check1">Visualizar</label>
-</div>
-<div class="form-check">
-<input type="checkbox" class="form-check-input" id="check2" name="option2" value="something">
-<label class="form-check-label" for="check2">Guardar</label>
-</div>
-<div class="form-check">
-<input type="checkbox" class="form-check-input" id="check3" name="option3" value="something">
-<label class="form-check-label" for="check3">Actualizar</label>
-</div>
-<div class="form-check">
-<input type="checkbox" class="form-check-input" id="check4" name="option4" value="something">
-<label class="form-check-label" for="check4">Elimiar</label>
-</div>
-</form>
-</div>
-<div class="container mt-3">
-<label for="pwd" class="form-label">Pantallas:</label>
-<form action="/action_page.php">
-<div class="form-check">
-<input type="checkbox" class="form-check-input" id="check1" name="option1" value="something" checked>
-<label class="form-check-label" for="check1">Personas</label>
-</div>
-<div class="form-check">
-<input type="checkbox" class="form-check-input" id="check2" name="option2" value="something">
-<label class="form-check-label" for="check2">Catalogo</label>
-</div>
-<div class="form-check">
-<input type="checkbox" class="form-check-input" id="check3" name="option3" value="something">
-<label class="form-check-label" for="check3">Inventario</label>
-</div>
-<div class="form-check">
-<input type="checkbox" class="form-check-input" id="check4" name="option4" value="something">
-<label class="form-check-label" for="check4">Proyectos</label>
-</div>
-<div class="form-check">
-<input type="checkbox" class="form-check-input" id="check4" name="option4" value="something">
-<label class="form-check-label" for="check4">Reportes</label>
-</div>
-<div class="form-check">
-<input type="checkbox" class="form-check-input" id="check4" name="option4" value="something">
-<label class="form-check-label" for="check4">Ajustes</label>
-</div>
-</form>
-                </div>
-
-                <div class="container mt-3">
-	                <label for="pwd" class="form-label">Estado de Rol:</label>
-                    <form>
-                        <select class="form-select form-select-sm mt-3">
-                            <option>Activo</option>
-                            <option>Inactivo</option>
-                        </select>
-                    </form>    
-                </div>
-
-
-                </div>
-                <!-- Fin Cuerpo del modal Modal -->
-                <!-- pie del modal -->
-                <div class="modal-footer">
-      	            <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Guardar</button>
-                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
-                </div>
-                <!-- Fin pie del modal -->
-            </div>
-        </div>
-    </div>
-    <!-- Fin  de modal de Editar -->
-                    <button  value="btnEliminar" name="accion" 
-                        onclick="return confirm('¿Quieres eliminar este dato?')"
-                        type="submit" class="btn btn-danger " data-id="19">
-                        <i class="fas fa-trash-alt"></i>
-                    </button>
-</div>
-                </td>                      
+                <td>Activo</td>             
                  </tr>  
                  
                   

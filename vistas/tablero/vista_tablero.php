@@ -8,8 +8,11 @@ if(!isset($_SESSION['usuario'])){
         die();
         
 }
-print_r($_SESSION);
-?>
+
+
+// <?php $usuario = $_SESSION;
+// echo $usuario['usuario']; ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -40,7 +43,7 @@ print_r($_SESSION);
         <div class="row">
          
 <!-- Contenido -->
-<a href="../../seguridad/cerrar_sesion.php">Cerra sesión</a>
+
 
 <!-- fin contenido -->
 

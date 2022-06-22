@@ -89,7 +89,7 @@
                         
                 <div class="dropdown-divider"></div>
                 <a href="#" class="dropdown-item">
-                    <i class="fa fa-user"></i> Perfil
+                    <i class="fa fa-user"></i> Perfil (<?php $usuario = $_SESSION; echo $usuario['usuario']; ?>)
                 </a>
                 <div class="dropdown-divider"></div>
                 <a href="../../seguridad/cerrar_sesion.php" class="dropdown-item">

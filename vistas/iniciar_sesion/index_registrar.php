@@ -1,5 +1,5 @@
 <?php
-require '../controladores/registrar.php';
+require '../../controladores/registrar.php';
 ?>
 <!DOCTYPE html>
 <html lang="en">

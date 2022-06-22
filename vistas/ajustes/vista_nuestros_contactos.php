@@ -8,7 +8,6 @@ if(!isset($_SESSION['usuario'])){
         die();
         
 }
-print_r($_SESSION);
 ?>
 <!DOCTYPE html>
 <html lang="en">
