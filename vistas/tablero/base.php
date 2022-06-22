@@ -41,7 +41,7 @@ print_r($_SESSION);
          
 <!-- Contenido -->
 <a href="../../seguridad/cerrar_sesion.php">Cerra sesión</a>
-
+df
 <!-- fin contenido -->
 
 

@@ -113,7 +113,7 @@
     <!-- Brand Logo -->
     <a  href="#" class="brand-link">
       <img src="../../imagenes/seacco.jpg" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
-      <span  class="brand-text font-weight-" >C_SEACCO</span>
+      <span  class="brand-text font-weight-" >SEACCO</span>
     </a>
 
     <!-- Sidebar -->
