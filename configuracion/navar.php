@@ -148,7 +148,7 @@
             
           </li>
           <li class="nav-item">
-            <a href="http://localhost/SEACCO/vistas/vista_perfil.php" class="nav-link">
+            <a href="http://localhost/SEACCO/vistas/tablero/vista_perfil.php" class="nav-link">
               <i class="fa fa-user"></i>
               <p>
                 Perfil
