@@ -14,7 +14,7 @@ if(!isset($_SESSION['usuario'])){
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Clientes</title>
+  <title>Usuario</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
@@ -27,8 +27,47 @@ if(!isset($_SESSION['usuario'])){
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1>Clientes</h1>
-            
+            <h1></h1>
+            <!-- Inicio de modal de agregar -->
+<div class="container mt-3">
+        <h3>Usuarios</h3> <br>  
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal">
+            Nuevo Usuario
+        </button>
+    </div>
+
+<!-- El Modal -->
+    <div class="modal" id="myModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <!-- Encabezado del modal -->
+                <div class="modal-header">
+                    <h4 class="modal-title">Nuevo Usuario</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <!-- Fin Encabezado del modal -->
+
+                <!-- Cuerpo del modal Modal -->
+                <div class="modal-body">
+                <label for="">Id Usuario</label>
+                    <input type="text" class="form-control" name="txtPrecio_Compra" required value="" placeholder="" id="txtPrecio_Compra"   >
+                    <br>
+                    <label for="">Usuario</label>
+                    <input type="text" class="form-control" name="txtPrecio_Compra" required value="" placeholder="" id="txtPrecio_Compra"   >
+                    <br>
+                
+                </div>
+                <!-- Fin Cuerpo del modal Modal -->
+                <!-- pie del modal -->
+                <div class="modal-footer">
+      	            <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Agregar</button>
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
+                </div>
+                <!-- Fin pie del modal -->
+            </div>
+        </div>
+    </div>
+    <!-- Fin  de modal de agregar --> <br>
           </div>
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
@@ -53,7 +92,7 @@ if(!isset($_SESSION['usuario'])){
             
             <div class="card">
               <div class="card-header">
-                <h3 class="card-title">Clientes</h3>
+                <h3 class="card-title">Usuarios</h3>
                 
               </div>
               
@@ -64,15 +103,25 @@ if(!isset($_SESSION['usuario'])){
                   <tr>
                   <th>Acciones</th>
                   <th>Id</th>
-                  <th>Codigo</th>
+                  <th>Rol</th>
+                  <th>estado</th>
                   <th>Nombre</th>
                   <th>Apellido</th>
+                  <th>Usuario</th>
+                  <th>Contraseña</th> 
                   <th>Correo</th>
-                  <th>Telefono</th>
+                  <th>Genero</th>                  
+                  <th>DNI</th>
+                  <th>Profesion</th>
                   <th>Dirección</th>
-                  <th>Referencia</th>
-                  <th>Genero</th>
+                  <th>Telefono</th>
+                  <th>Telefono referencia</th>
+                  <th>Experiencia laboral</th>
+                  <th>Curriculum</th>
+                  <th>Verificación correo</th>                                   
                   <th>Foto</th>
+                 
+                  
                   
                   </tr>
                   </thead>
@@ -91,7 +140,7 @@ if(!isset($_SESSION['usuario'])){
 
                                 <!-- Encabezado del modal -->
                                 <div class="modal-header">
-                                  <h4 class="modal-title">Editar categoria</h4>
+                                  <h4 class="modal-title">Editar Usuario</h4>
                                   <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                                 </div>
                                 <!-- Fin Encabezado del modal -->
@@ -99,10 +148,10 @@ if(!isset($_SESSION['usuario'])){
 
                                 <!-- Cuerpo del modal Modal -->
                                           <div class="modal-body">
-                                              <label for="">Id categoria</label>
+                                              <label for="">Id Usuario</label>
                                               <input type="text" class="form-control" name="txtPrecio_Compra" required value="" placeholder="" id="txtPrecio_Compra"   >
                                               <br>
-                                              <label for="">Categoria</label>
+                                              <label for="">Usuario</label>
                                               <input type="text" class="form-control" name="txtPrecio_Compra" required value="" placeholder="" id="txtPrecio_Compra"   >
                                               <br>
                                           
@@ -126,6 +175,14 @@ if(!isset($_SESSION['usuario'])){
                     </button>
 </td>
                      <td>1</td>
+                     <td>Ingresar</td>
+                     <td>Ingresar</td>
+                     <td>Ingresar</td>
+                     <td>Ingresar</td>
+                     <td>Ingresar</td>
+                     <td>Ingresar</td>
+                     <td>Ingresar</td>
+                     <td>Ingresar</td>
                      <td>Ingresar</td>
                      <td>Ingresar</td>
                      <td>Ingresar</td>
