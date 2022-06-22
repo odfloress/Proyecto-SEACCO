@@ -111,7 +111,7 @@
   <!-- style="background-color:rgb(255, 255, 255);" -->
   <aside  class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
-    <a  href="../../plantilla/AdminLTE-3.2.0/index3.html" class="brand-link">
+    <a  href="#" class="brand-link">
       <img src="../../imagenes/seacco.jpg" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
       <span  class="brand-text font-weight-" >C_SEACCO</span>
     </a>
