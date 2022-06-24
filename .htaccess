@@ -2,4 +2,14 @@ Options All -Indexes
 
 RewriteEngine On
 
-RewriteRule ^([-a-zA-Z0-9/]+)$ index.php?ruta=$1 
+RewriteRule ^([-a-zA-Z0-9/]+)$ index.php?ruta=$1 [QSA,L]
+
+RewriteEngine On
+RewriteCond %{REQUEST_FILENAME} !-f
+
+RewriteRule ^([^\.]+)$ $1.php [NC,L]
+RewriteRule ^([^\.]+)$ $1.html [NC,L]
+
+
+
+

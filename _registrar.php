@@ -1,5 +1,5 @@
 <?php
-require '../../controladores/registrar.php';
+require 'controladores/co_registrar.php';
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -11,7 +11,7 @@ require '../../controladores/registrar.php';
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
   <style> 
 body {
-  background-image: url('../imagenes/fondo.jpg');
+  background-image: url('imagenes/fondo.jpg');
   background-repeat: no-repeat;
   background-attachment: fixed; 
   background-size: 100% 100%;
@@ -34,7 +34,7 @@ body {
                 <center><h4>Registrar usuario</h4></center><br>
                 
 
-            <center><img src="../imagenes/seacco.jpg" alt="Girl in a jacket" width="150" height="150"><br></center>
+            <center><img src="imagenes/seacco.jpg" alt="Girl in a jacket" width="150" height="150"><br></center>
 
             <label for="email" class="form-label">Nombre:</label>
             <input style="background-color:rgb(240, 244, 245);" type="text" class="form-control"  placeholder="Ingrese el nombre" name="nombre">

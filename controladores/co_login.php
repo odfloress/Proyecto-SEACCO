@@ -1,74 +1,64 @@
 <?php
-session_start();
-require '../../conexion/conexion.php';
-$usuario=(isset($_POST['usuario']))?$_POST['usuario']:"";
-$contrasena=(isset($_POST['contrasena']))?$_POST['contrasena']:"";
-$accion=(isset($_POST['accion']))?$_POST['accion']:"";
+  session_start();
+  require 'conexion/conexion.php';
 
-  // encripta la contraseña
-$contrasena= hash('sha512', $contrasena);
+  //Variables para recuperar la información de los campos del login
+  $usuario=(isset($_POST['usuario']))?$_POST['usuario']:"";
+  $contrasena=(isset($_POST['contrasena']))?$_POST['contrasena']:"";
+  $accion=(isset($_POST['accion']))?$_POST['accion']:"";
 
-switch($accion){
-    case "ingresar": // es ingresar por que el valor del boton es ingresar
-     // validar que exista el usuario y contraseña
-     $validar_correo = "SELECT * FROM usuarios WHERE usuario='$usuario' and contrasena='$contrasena'";
-     $result = mysqli_query($conn, $validar_correo);
-     
-     if (mysqli_num_rows($result) > 0) {
+  // Encripta la contraseña
+  $contrasena= hash('sha512', $contrasena);
 
-       
-      $validar_intento = "SELECT * FROM parametros WHERE parametro='intentos' and valor<4";
-      $result1 = mysqli_query($conn, $validar_intento);
+  // Inicio del switch, para validar el valor del boton accion
+  switch($accion){
+    case "ingresar": 
 
+     // Valida que exista el usuario y contraseña
+     $validar_usuario = "SELECT * FROM tbl_usuarios WHERE USUARIO='$usuario' and CONTRASENA='$contrasena'";
+     $result = mysqli_query($conn, $validar_usuario); 
+      if (mysqli_num_rows($result) > 0) { 
+
+     // Valida los intentos fallidos en la tabla tbl_parametros 
+     $validar_intento = "SELECT * FROM tbl_parametros WHERE parametro='intentos' and valor<4";
+     $result1 = mysqli_query($conn, $validar_intento);
       if (mysqli_num_rows($result1) > 0) {
 
+          $_SESSION['usuario'] = $usuario;
+          header('Location: vistas/tablero/vista_tablero.php');
 
-         echo '<script>
-                 alert("ingresar");
-                 window.Location = "../tablero/vista_tablero.php";
-               </script>';
-               $_SESSION['usuario'] = $usuario;
-               header('Location: ../tablero/vista_tablero.php');
-              exit() ;
+          //Deja en cero los intentos fallidos
+          $conn = new mysqli($servername, $username, $password, $dbname);
+          $sql =  "UPDATE tbl_parametros SET valor=0 WHERE PARAMETRO='intentos'";
+          if ($conn->query($sql) === TRUE) {}
+        exit() ;
+
       }else{
-      
-        echo '<script>
-                 alert("Bloqueado");
-                 window.Location = "../iniciar_sesion/index_login.php";
-               </script>';
-
-        mysqli_close($conn);
-
-   
-                    
-              }
+            // Da una alerta si supero los intentos fallidos y cierra cualquier conexion a la BD
+             echo '<script>
+                     alert("Bloqueado por intentos fallidos");
+                     window.Location = "/_login.php";
+                   </script>';
+                   mysqli_close($conn);       
+            }
                
      }else{
-      
-        echo '<script>
-                 alert("Correo o contraseña invalido");
-                 window.Location = "../iniciar_sesion/index_login.php";
-               </script>';
-
-        mysqli_close($conn);
-
-   
-                    
-              }
-                   
+          // Suma los intentos fallidos en la tabla tbl_parametros y cierra cualquier conexion a la BD
+           $conn = new mysqli($servername, $username, $password, $dbname);
+           $sql =  "UPDATE tbl_parametros SET valor=valor+1 WHERE PARAMETRO='intentos'";
+            if ($conn->query($sql) === TRUE) {
+             echo '<script>
+                      alert("Usuario o contraseña invalidos");
+                      window.Location = "/_login.php";
+                   </script>';
+                   mysqli_close($conn);
+             } 
+          }                   
     break;
-    case "calcular":
-      $nu= 1;
-      if($nu === 1){
-        $error ="Hola";
-      }
-     
-
-    
-      default:
-        // echo "algo salio mal";
-        $conn->close();   
-}
+      // si el valor del boton no es ingresar cierra cualquier conexion que exista a la BD
+    default:
+    $conn->close();   
+ }// Fin del switch, para validar el valor del boton accion
 
 
 ?>

@@ -92,7 +92,7 @@
                     <i class="fa fa-user"></i> Perfil (<?php $usuario = $_SESSION; echo $usuario['usuario']; ?>)
                 </a>
                 <div class="dropdown-divider"></div>
-                <a href="../../seguridad/cerrar_sesion.php" class="dropdown-item">
+                <a href="../../_login.php" class="dropdown-item">
                     <i class="fas fa-file mr-2"></i> Salir
                 </a>         
         </li>

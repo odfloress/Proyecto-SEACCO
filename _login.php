@@ -1,5 +1,5 @@
 <?php
-require '../../controladores/co_login.php';
+require 'controladores/co_login.php';
 ?>
 
 
@@ -13,22 +13,14 @@ require '../../controladores/co_login.php';
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
   <style> 
 body {
-  background-image: url('../../imagenes/fondo.jpg');
+  background-image: url('imagenes/fondo.jpg');
   background-repeat: no-repeat;
   background-attachment: fixed; 
   background-size: 100% 100%;
 }
 
 </style>
-<!-- <style type="text/css"> 
-  .transformacion2 { text-transform: uppercase;
-   width: 100%;
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  resize: vertical;
-  }   
-   </style> -->
+
 
    <!-- inicio script para validar que solo sean mayusculas las letras del usuario -->
 <script>
@@ -93,7 +85,7 @@ function clave(e) {
       <div class="modal-body ">
         <form action="" method="POST">
             <div class="mb-3 mt-3">
-            <center><img src="../../imagenes/seacco.jpg" alt="Girl in a jacket" width="150" height="150"><br></center>
+            <center><img src="imagenes/seacco.jpg" alt="Girl in a jacket" width="150" height="150"><br></center>
            
             <label for="email" class="form-label">Usuario:</label>
             <input style="background-color:rgb(240, 244, 245);" type="text"  onkeypress="return SoloLetras(event);"  onKeyUP="this.value=this.value.toUpperCase();" class="form-control" autocomplete="off" placeholder="Ingrese el Usuaio" name="usuario" required  >
@@ -126,5 +118,5 @@ function clave(e) {
 </script>
 
 </body>
-<script type="text/javascript" src="../../js/evitar_reenvio.js"></script>
+<script type="text/javascript" src="js/evitar_reenvio.js"></script>
 </html>

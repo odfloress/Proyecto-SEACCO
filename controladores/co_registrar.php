@@ -1,5 +1,5 @@
 <?php
-require '../conexion/conexion.php';
+require 'conexion/conexion.php';
 $nombre=(isset($_POST['nombre']))?$_POST['nombre']:"";
 $correo=(isset($_POST['correo']))?$_POST['correo']:"";
 $usuario=(isset($_POST['usuario']))?$_POST['usuario']:"";
@@ -13,7 +13,7 @@ $contrasena= hash('sha512', $contrasena);
 switch($accion){
     case "registrar": // es insertar por que el valor del boton es insertar
      // validar que no se repita el correo
-     $validar_correo = "SELECT * FROM usuarios WHERE correo='$correo'";
+     $validar_correo = "SELECT * FROM TBL_USUARIOS WHERE CORREO='$correo'";
      $result = mysqli_query($conn, $validar_correo);
      
      if (mysqli_num_rows($result) > 0) {
@@ -21,7 +21,7 @@ switch($accion){
  
          echo '<script>
                  alert("el correo ya existe, intente con otro");
-                 window.Location = "/index_registrar.php";
+                 window.Location = "/registrar.php";
                </script>';
               
                
@@ -31,7 +31,7 @@ switch($accion){
 
 
 
-     $sql = "INSERT INTO usuarios (nombre, correo, usuario, contrasena)
+     $sql = "INSERT INTO tbl_usuarios (NOMBRE, CORREO, USUARIO, CONTRASENA)
                     VALUES ('$nombre', '$correo', '$usuario', '$contrasena')";
 
 
@@ -39,7 +39,7 @@ switch($accion){
                 if (mysqli_query($conn, $sql)) {
                   echo '<script>
                           alert("usuario creado con exito");
-                          window.Location = "/index_registrar.php";
+                          window.Location = "registrar.php";
                         </script>';
                         $error = 1;
                 } else {

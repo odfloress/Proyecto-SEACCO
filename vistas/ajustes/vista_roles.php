@@ -2,7 +2,7 @@
 session_start();
 if(!isset($_SESSION['usuario'])){
  
-        header('Location: ../iniciar_sesion/index_login.php');
+         header('Location: ../../_login.php');
         session_unset();
         session_destroy();
         die();
