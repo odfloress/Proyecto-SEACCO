@@ -108,14 +108,7 @@ function clave(e) {
     </div>
   </div>
 
-<script>
-  function remplazar(elemento){
-  let texto = elemento.value
-  texto = texto.split(/[^A-Za-z\#\&]+/g)
-  texto = texto.join("")
-  elemento.value = texto
-}
-</script>
+
 
 </body>
 <script type="text/javascript" src="js/evitar_reenvio.js"></script>
