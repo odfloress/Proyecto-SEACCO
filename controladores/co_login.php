@@ -19,8 +19,8 @@
      $result = mysqli_query($conn, $validar_usuario); 
       if (mysqli_num_rows($result) > 0) { 
 
-          // Valida los intentos fallidos en la tabla tbl_parametros 
-          $validar_intento = "SELECT * FROM tbl_parametros WHERE parametro='intentos' and valor<4";
+          // Valida los intentos fallidos en la tabla tbl_usuarios 
+          $validar_intento = "SELECT * FROM tbl_usuarios WHERE usuario='$usuario' and intentos<4";
           $result1 = mysqli_query($conn, $validar_intento);
             if (mysqli_num_rows($result1) > 0) {
 
@@ -29,7 +29,7 @@
 
                 //Deja en cero los intentos fallidos
                 $conn = new mysqli($servername, $username, $password, $dbname);
-                $sql =  "UPDATE tbl_parametros SET valor=0 WHERE PARAMETRO='intentos'";
+                $sql =  "UPDATE tbl_usuarios SET intentos=0 WHERE usuario='$usuario'";
                 if ($conn->query($sql) === TRUE) {}
               exit() ;
 
@@ -43,9 +43,9 @@
                   }
                
      }else{
-          // Suma los intentos fallidos en la tabla tbl_parametros y cierra cualquier conexion a la BD
+          // Suma los intentos fallidos en la tabla tbl_usuarios y cierra cualquier conexion a la BD
            $conn = new mysqli($servername, $username, $password, $dbname);
-           $sql =  "UPDATE tbl_parametros SET valor=valor+1 WHERE PARAMETRO='intentos'";
+           $sql =  "UPDATE tbl_usuarios SET intentos=intentos+1 WHERE usuario='$usuario'";
             if ($conn->query($sql) === TRUE) {
              echo '<script>
                       alert("Usuario o contraseña invalidos");
