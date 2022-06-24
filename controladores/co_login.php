@@ -19,28 +19,28 @@
      $result = mysqli_query($conn, $validar_usuario); 
       if (mysqli_num_rows($result) > 0) { 
 
-     // Valida los intentos fallidos en la tabla tbl_parametros 
-     $validar_intento = "SELECT * FROM tbl_parametros WHERE parametro='intentos' and valor<4";
-     $result1 = mysqli_query($conn, $validar_intento);
-      if (mysqli_num_rows($result1) > 0) {
+          // Valida los intentos fallidos en la tabla tbl_parametros 
+          $validar_intento = "SELECT * FROM tbl_parametros WHERE parametro='intentos' and valor<4";
+          $result1 = mysqli_query($conn, $validar_intento);
+            if (mysqli_num_rows($result1) > 0) {
 
-          $_SESSION['usuario'] = $usuario;
-          header('Location: vistas/tablero/vista_tablero.php');
+                $_SESSION['usuario'] = $usuario;
+                header('Location: vistas/tablero/vista_tablero.php');
 
-          //Deja en cero los intentos fallidos
-          $conn = new mysqli($servername, $username, $password, $dbname);
-          $sql =  "UPDATE tbl_parametros SET valor=0 WHERE PARAMETRO='intentos'";
-          if ($conn->query($sql) === TRUE) {}
-        exit() ;
+                //Deja en cero los intentos fallidos
+                $conn = new mysqli($servername, $username, $password, $dbname);
+                $sql =  "UPDATE tbl_parametros SET valor=0 WHERE PARAMETRO='intentos'";
+                if ($conn->query($sql) === TRUE) {}
+              exit() ;
 
-      }else{
-            // Da una alerta si supero los intentos fallidos y cierra cualquier conexion a la BD
-             echo '<script>
-                     alert("Bloqueado por intentos fallidos");
-                     window.Location = "/_login.php";
-                   </script>';
-                   mysqli_close($conn);       
-            }
+            }else{
+                  // Da una alerta si supero los intentos fallidos y cierra cualquier conexion a la BD
+                  echo '<script>
+                          alert("Bloqueado por intentos fallidos");
+                          window.Location = "/_login.php";
+                        </script>';
+                        mysqli_close($conn);       
+                  }
                
      }else{
           // Suma los intentos fallidos en la tabla tbl_parametros y cierra cualquier conexion a la BD
