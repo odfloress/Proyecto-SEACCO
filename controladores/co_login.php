@@ -7,7 +7,7 @@
   $contrasena=(isset($_POST['contrasena']))?$_POST['contrasena']:"";
   $accion=(isset($_POST['accion']))?$_POST['accion']:"";
 
-  // Encripta la contraseña
+  // Desencripta la contraseña
   $contrasena= hash('sha512', $contrasena);
 
   // Inicio del switch, para validar el valor del boton accion

@@ -1,68 +1,63 @@
 <?php
-require 'conexion/conexion.php';
-$nombre=(isset($_POST['nombre']))?$_POST['nombre']:"";
-$correo=(isset($_POST['correo']))?$_POST['correo']:"";
-$usuario=(isset($_POST['usuario']))?$_POST['usuario']:"";
+  require 'conexion/conexion.php';
 
-$contrasena=(isset($_POST['contrasena']))?$_POST['contrasena']:"";
-$accion=(isset($_POST['accion']))?$_POST['accion']:"";
+  //Variables para recuperar la información de los campos de la vista registro
+  $nombre=(isset($_POST['nombre']))?$_POST['nombre']:"";
+  $apellido=(isset($_POST['apellido']))?$_POST['apellido']:"";
+  $usuario=(isset($_POST['usuario']))?$_POST['usuario']:"";
+  $contrasena=(isset($_POST['contrasena']))?$_POST['contrasena']:"";
+  $correo=(isset($_POST['correo']))?$_POST['correo']:"";
+  $dni=(isset($_POST['dni']))?$_POST['dni']:"";
+  $profesion=(isset($_POST['profesion']))?$_POST['profesion']:"";
+  $direccion=(isset($_POST['direccion']))?$_POST['direccion']:"";
+  $celular=(isset($_POST['celular']))?$_POST['celular']:"";
+  $referencia=(isset($_POST['referencia']))?$_POST['referencia']:"";
+  $celular_referencia=(isset($_POST['celular_referencia']))?$_POST['celular_referencia']:"";
+  $experiencia_laboral=(isset($_POST['experiencia_laboral']))?$_POST['experiencia_laboral']:"";
+  $curriculum=(isset($_POST['curriculum']))?$_POST['curriculum']:"";
+  $foto=(isset($_POST['foto']))?$_POST['foto']:"";
+  $genero=(isset($_POST['genero']))?$_POST['genero']:"";
+  $area=(isset($_POST['area']))?$_POST['area']:"";
+
+ 
+  $accion=(isset($_POST['accion']))?$_POST['accion']:"";
 
   // encripta la contraseña
-$contrasena= hash('sha512', $contrasena);
+  $contrasena= hash('sha512', $contrasena);
 
-switch($accion){
-    case "registrar": // es insertar por que el valor del boton es insertar
-     // validar que no se repita el correo
-     $validar_correo = "SELECT * FROM TBL_USUARIOS WHERE CORREO='$correo'";
-     $result = mysqli_query($conn, $validar_correo);
-     
-     if (mysqli_num_rows($result) > 0) {
-       
- 
-         echo '<script>
-                 alert("el correo ya existe, intente con otro");
-                 window.Location = "/registrar.php";
-               </script>';
-              
+  switch($accion){
+      case "registrar": 
+
+        // validacion para que no se repitan los usuarios en la tabla tbl_usuarios
+           $validar_usuario = "SELECT * FROM tbl_usuarios WHERE USUARIO='$usuario'";
+           $result = mysqli_query($conn, $validar_usuario);
+           if (mysqli_num_rows($result) > 0) {
+
+                echo '<script>
+                        alert("El usuario ya existe, intente con otro");
+                        window.Location = "/registrar.php";
+                      </script>';
+                      mysqli_close($conn);
                
-              mysqli_close($conn);
-               
-     }else{
-
-
-
-     $sql = "INSERT INTO tbl_usuarios (NOMBRE, CORREO, USUARIO, CONTRASENA)
-                    VALUES ('$nombre', '$correo', '$usuario', '$contrasena')";
-
-
-// Insertar en la bd
-                if (mysqli_query($conn, $sql)) {
-                  echo '<script>
-                          alert("usuario creado con exito");
-                          window.Location = "registrar.php";
-                        </script>';
-                        $error = 1;
-                } else {
-                  echo "Error: " . $sql . "<br>" . mysqli_error($conn);
-                }
-
-                mysqli_close($conn);
-                    
-              }
-                   
-    break;
-    case "calcular":
-      $nu= 1;
-      if($nu === 1){
-        $error ="Hola";
-      }
-     
-
-    
-      default:
-        // echo "algo salio mal";
-        $conn->close();   
-}
+          }else{      
+                  $sql = "INSERT INTO tbl_usuarios (ID_ROL, ID_ESTADO_USUARIO, NOMBRE, APELLIDO, USUARIO, GENERO, CORREO, DNI, PROFESION, DIRECCION, CELULAR, REFERENCIA, CEL_REFERENCIA, EXPERIENCIA_LABORAL, CURRICULUM, CONTRASENA, FOTO)
+                                VALUES (1,1,'$nombre', '$apellido', '$usuario', '$genero', '$correo', '$dni', '$profesion',  '$direccion', '$celular', '$referencia', '$celular_referencia', '$experiencia_laboral', '$curriculum','$contrasena','$foto')";
+                  
+                  if (mysqli_query($conn, $sql)) {
+                    echo "Usuario creado con exito";
+                  } else {
+                    echo "Error: " . $sql . "<br>" . mysqli_error($conn);
+                  }
+                  
+                  mysqli_close($conn);
+               }
+             
+      break;
+      
+        default:
+          
+          $conn->close();   
+  }
 
 
 ?>
