@@ -39,7 +39,35 @@
                       </script>';
                       mysqli_close($conn);
                
-          }else{      
+          }else{  
+            
+            // validacion para que no se repitan los correos en la tabla tbl_usuarios
+            $validar_correo = "SELECT * FROM tbl_usuarios WHERE  CORREO='$correo'";
+            $result = mysqli_query($conn, $validar_correo);
+            if (mysqli_num_rows($result) > 0) {
+
+                echo '<script>
+                        alert("El correo ya existe, intente con otro");
+                        window.Location = "/registrar.php";
+                      </script>';
+                      mysqli_close($conn);
+
+            }else{
+
+                  // validacion para que no se repita el DNI en la tabla tbl_usuarios
+            $validar_dni = "SELECT * FROM tbl_usuarios WHERE  DNI='$dni'";
+            $result = mysqli_query($conn, $validar_dni);
+            if (mysqli_num_rows($result) > 0) {
+
+                echo '<script>
+                        alert("El DNI ya esta registrado, verifique que el ingresado sea el correcto");
+                        window.Location = "/registrar.php";
+                      </script>';
+                      mysqli_close($conn);
+
+            }else{
+
+                  // Inserta en la tabla tbl_usuarios
                   $sql = "INSERT INTO tbl_usuarios (ID_ROL, ID_ESTADO_USUARIO, NOMBRE, APELLIDO, USUARIO, GENERO, CORREO, DNI, PROFESION, DIRECCION, CELULAR, REFERENCIA, CEL_REFERENCIA, EXPERIENCIA_LABORAL, CURRICULUM, CONTRASENA, FOTO)
                                 VALUES (1,1,'$nombre', '$apellido', '$usuario', '$genero', '$correo', '$dni', '$profesion',  '$direccion', '$celular', '$referencia', '$celular_referencia', '$experiencia_laboral', '$curriculum','$contrasena','$foto')";
                   
@@ -50,7 +78,9 @@
                   }
                   
                   mysqli_close($conn);
-               }
+                }
+                }
+               } // fin del else principal
              
       break;
       

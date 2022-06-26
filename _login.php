@@ -97,8 +97,18 @@ function clave(e) {
             <div class="d-grid">
             <button type="submit" name="accion" value="ingresar" class="btn btn-dark btn-block">ingresar</button>
             </div>
+
+            <div class="row">
+                <div class="col"> 
+                <a href="index_correo.php">Olvido la contraseña?</a>
+                </div>
+                <div class="col">
+                <a href="http://localhost/SEACCO/_registrar">Registrar un usuario</a>
+                </div>
+            </div>
+
+          
             
-            <a href="index_correo.php">Olvido la contraseña?</a>
         </form>
       </div>
        <!--Fin Cuerpo del modal -->
