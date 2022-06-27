@@ -24,14 +24,24 @@
           $result1 = mysqli_query($conn, $validar_intento);
             if (mysqli_num_rows($result1) > 0) {
 
-                $_SESSION['usuario'] = $usuario;
-                header('Location: vistas/tablero/vista_tablero.php');
+                // Valida cantidad de preguntas en la tabla tbl_usuarios 
+                $validar_pregunta = "SELECT * FROM tbl_usuarios WHERE usuario='$usuario' and CANT_PREGUNTAS>7 ";
+                $result2 = mysqli_query($conn, $validar_pregunta);
+                  if (mysqli_num_rows($result2) > 0) {
 
-                //Deja en cero los intentos fallidos
-                $conn = new mysqli($servername, $username, $password, $dbname);
-                $sql =  "UPDATE tbl_usuarios SET intentos=0 WHERE usuario='$usuario'";
-                if ($conn->query($sql) === TRUE) {}
-              exit() ;
+                      $_SESSION['usuario'] = $usuario;
+                     header('Location: vistas/tablero/vista_tablero.php');
+
+                      //Deja en cero los intentos fallidos
+                       $conn = new mysqli($servername, $username, $password, $dbname);
+                       $sql =  "UPDATE tbl_usuarios SET intentos=0 WHERE usuario='$usuario'";
+                       if ($conn->query($sql) === TRUE) {}
+                       exit() ;
+
+                  }else{ //redirecciona a la vista preguntas_seguridad
+                  
+                          header('Location: http://localhost/SEACCO/vistas/iniciar_sesion/preguntas_seguridad');
+                       }
 
             }else{
                   // Da una alerta si supero los intentos fallidos y cierra cualquier conexion a la BD

@@ -3,7 +3,7 @@
 function clave(e) {
   key = e.keyCode || e.which;
   tecla = String.fromCharCode(key).toString();
-  letras = "ABCDEFGHIJKLMNÑOPQRSTUVWXZabcdefghijklmnñopqrstuvwxyz0123456789@_-";
+  letras = "ABCDEFGHIJKLMNÑOPQRSTUVWXZabcdefghijklmnñopqrstuvwxyz0123456789@_-$.()";
   
   especiales = [8,13];
   tecla_especial = false;
@@ -15,7 +15,7 @@ function clave(e) {
   }
   
   if(letras.indexOf(tecla) == -1 && !tecla_especial){
-    alert("Ingresar sin espacios");
+    alert("Ingresar sin especiales");
     return false;
   }
 }

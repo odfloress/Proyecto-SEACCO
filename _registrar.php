@@ -20,8 +20,28 @@ body {
 }
 
 </style>
-<script type="text/javascript" src="js/mayusculas.js"></script>
-<script type="text/javascript" src="js/validacion_contraseña.js"></script>
+<script >
+function clave(e) {
+  key = e.keyCode || e.which;
+  tecla = String.fromCharCode(key).toString();
+  letras = "ABCDEFGHIJKLMNÑOPQRSTUVWXZabcdefghijklmnñopqrstuvwxyz";
+  
+  especiales = [8,13];
+  tecla_especial = false;
+  for(var i in especiales) {
+    if(key == especiales[i]){
+      tecla_especial = true;
+      break;
+    }
+  }
+  
+  if(letras.indexOf(tecla) == -1 && !tecla_especial){
+    alert("Ingresar Solo mayusculas");
+    return false;
+  }
+}
+</script>
+
 </head>
 <!-- oncopy="return false" onpaste="return false"  esto no permite copiar ni pegar -->
 <body style="background-color:rgb(241, 243, 243);"   oncopy="return false" onpaste="return false">
@@ -54,11 +74,11 @@ body {
             <div class="row">
                 <div class="col">
                   <label for="pwd" class="form-label">Usuario:</label>
-                  <input style="background-color:rgb(240, 244, 245);" type="text" autocomplete="off" onkeypress="return SoloLetras(event);"  onKeyUP="this.value=this.value.toUpperCase();" class="form-control" placeholder="Asignar usuario" name="usuario" required>
+                  <input style="background-color:rgb(240, 244, 245);" type="text" autocomplete="off" onkeypress="return clave(event);"  onKeyUP="this.value=this.value.toUpperCase();" class="form-control" placeholder="Asignar usuario" name="usuario" required>
                 </div>
                 <div class="col">
                   <label for="pwd" class="form-label">Contraseña:</label>
-                  <input style="background-color:rgb(240, 244, 245);" type="password" autocomplete="off" onkeypress="return clave(event);" class="form-control"  placeholder="Ingrese la contraseña" name="contrasena" max="10" required pattern="(?=.*[\d])(?=.*[a-z])(?=.*[A-Z]).{8,}">
+                  <input style="background-color:rgb(240, 244, 245);" type="password" autocomplete="off"  class="form-control"  placeholder="Ingrese la contraseña" name="contrasena" max="10" required pattern="(?=.*[\d])(?=.*[a-z])(?=.*[A-Z]).{8,}">
                 </div>
             </div>
             <div class="row">
