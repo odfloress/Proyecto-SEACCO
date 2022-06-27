@@ -100,7 +100,7 @@ function clave(e) {
 
             <div class="row">
                 <div class="col"> 
-                <a href="index_correo.php">Olvido la contraseña?</a>
+                <a href="http://localhost/SEACCO/vistas/iniciar_sesion/metodo_recuperacion">Olvido la contraseña?</a>
                 </div>
                 <div class="col">
                 <a href="http://localhost/SEACCO/_registrar">Registrar un usuario</a>

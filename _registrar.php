@@ -150,7 +150,8 @@ function clave(e) {
                 </div>               
            </div><br>
             <div class="d-grid">
-            <button type="submit" name="accion" value="registrar" class="btn btn-dark btn-block">Registrar</button>
+            <button type="submit" name="accion" value="registrar" class="btn btn-dark btn-block">Registrar</button><br>
+            <a href="http://localhost/SEACCO/_login" class="btn btn-danger btn-block">Cancelar</a>
             </div>         
             
         </form>
