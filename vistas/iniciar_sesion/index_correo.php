@@ -43,6 +43,7 @@ body {
             </div>
         
             <button type="button" class="btn btn-primary btn-block">Enviar</button> 
+            <a href="http://localhost/SEACCO/_login" class="btn btn-danger btn-block">Cancelar</a>
         </form>
       </div>
        <!--Fin Cuerpo del modal -->
