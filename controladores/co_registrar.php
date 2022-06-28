@@ -72,7 +72,11 @@
                                 VALUES (1,1,'$nombre', '$apellido', '$usuario', '$genero', '$correo', '$dni', '$profesion',  '$direccion', '$celular', '$referencia', '$celular_referencia', '$experiencia_laboral', '$curriculum','$contrasena','$foto')";
                   
                   if (mysqli_query($conn, $sql)) {
-                    echo "Usuario creado con exito";
+                    echo '<script>
+                                  alert("Usuario creado con exito");
+                                  window.Location = "/_login";
+                      </script>';
+                      header('Location: http://localhost/SEACCO/_login.php');
                   } else {
                     echo "Error: " . $sql . "<br>" . mysqli_error($conn);
                   }
