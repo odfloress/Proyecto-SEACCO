@@ -1,3 +1,21 @@
+<?php
+include '../../conexion/conexion.php'
+?>
+ <?php
+          // Valida la configuración de intentos fallidos de la tabla tbl_parametros
+          $sql = "SELECT PREGUNTA FROM tbl_preguntas";
+            $result = $conn->query($sql);
+
+            if ($result->num_rows > 0) {
+              
+              while($row = $result->fetch_assoc()) {
+                echo  $row["PREGUNTA"]. "<br>";
+              }
+            } else {
+              echo "0 results";
+            }
+            $conn->close();
+  ?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -39,6 +57,35 @@ body {
             <center><img src="../../imagenes/seacco.jpg" alt="Girl in a jacket" width="150" height="150"><br></center>
            
             <div class="container mt-3">
+
+
+
+         
+
+            <label for="sel1" class="form-label">Preguntas:</label>
+            <select name="txtMarca_Producto" class="form-control" required="false">
+              <option  value="">Seleccione pregunta</option>
+              <?php 
+             $sql = "SELECT PREGUNTA FROM tbl_preguntas";
+             $result = $conn->query($sql);
+ 
+             if ($result->num_rows > 0) {
+               
+              while($row = $result->fetch_assoc()) {
+              echo '<option value=".$row["PREGUNTA"]."></option>';
+              }}
+              ?>
+            </select>
+
+
+
+
+
+
+
+
+
+
 
                 <label for="sel1" class="form-label">Preguntas:</label>
                 <select class="form-select" id="sel1" name="preguntas" >

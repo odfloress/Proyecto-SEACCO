@@ -46,27 +46,7 @@ function SoloLetras(e) {
 </script>
 <!-- Fin script para validar que solo sean mayusculas las letras del usuario -->
 <!-- inicio script para validar que no ingrese espacios en blanco en contraseña -->
-<script>
-function clave(e) {
-  key = e.keyCode || e.which;
-  tecla = String.fromCharCode(key).toString();
-  letras = "ABCDEFGHIJKLMNÑOPQRSTUVWXZabcdefghijklmnñopqrstuvwxyz0123456789@_-";
-  
-  especiales = [8,13];
-  tecla_especial = false;
-  for(var i in especiales) {
-    if(key == especiales[i]){
-      tecla_especial = true;
-      break;
-    }
-  }
-  
-  if(letras.indexOf(tecla) == -1 && !tecla_especial){
-    alert("Ingresar sin espacios");
-    return false;
-  }
-}
-</script>
+
  <!-- Fin script para validar que no ingrese espacios en blanco en contraseña -->
 </head>
 <!-- oncopy="return false" onpaste="return false"  esto no permite copiar ni pegar -->
@@ -92,7 +72,7 @@ function clave(e) {
             </div>
             <div class="mb-3">
             <label for="pwd" class="form-label">Contraseña:</label>
-            <input style="background-color:rgb(240, 244, 245);" type="password" onkeypress="return clave(event);" class="form-control"  placeholder="Ingrese la contraseña" name="contrasena" max="10" required pattern="(?=.*[\d])(?=.*[a-z])(?=.*[A-Z]).{8,}">
+            <input style="background-color:rgb(240, 244, 245);" type="password"  class="form-control"  placeholder="Ingrese la contraseña" name="contrasena" max="10" required pattern="(?=.*[\d])(?=.*[a-z])(?=.*[A-Z]).{8,}">
             </div>
             <div class="d-grid">
             <button type="submit" name="accion" value="ingresar" class="btn btn-dark btn-block">ingresar</button>
