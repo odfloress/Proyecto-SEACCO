@@ -2,12 +2,15 @@
 session_start();
 if(!isset($_SESSION['usuario'])){
  
-        header('Location: ../iniciar_sesion/index_login.php');
+        header('Location: ../../_login.php');
         session_unset();
         session_destroy();
         die();
         
 }
+include '../../controladores/co_categoria_productos.php';
+
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -18,6 +21,9 @@ if(!isset($_SESSION['usuario'])){
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+  
+
+
 
   <?php include '../../configuracion/navar.php' ?>
   <!-- Content Wrapper. Contains page content -->
@@ -26,7 +32,7 @@ if(!isset($_SESSION['usuario'])){
     <section class="content-header">
       <div class="container-fluid">
         <div class="row mb-2">
-          <div class="col-sm-6">
+          <div class="col-sm-2">
             <h1></h1>
             <!-- Inicio de modal de agregar -->
 <div class="container mt-3">
@@ -41,6 +47,7 @@ if(!isset($_SESSION['usuario'])){
         <div class="modal-dialog">
             <div class="modal-content">
                 <!-- Encabezado del modal -->
+                <form action="" method="post">
                 <div class="modal-header">
                     <h4 class="modal-title">Nueva categoria</h4>
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
@@ -49,21 +56,20 @@ if(!isset($_SESSION['usuario'])){
 
                 <!-- Cuerpo del modal Modal -->
                 <div class="modal-body">
-                <label for="">Id categoria</label>
-                    <input type="text" class="form-control" name="txtPrecio_Compra" required value="" placeholder="" id="txtPrecio_Compra"   >
-                    <br>
+               
                     <label for="">Categoria</label>
-                    <input type="text" class="form-control" name="txtPrecio_Compra" required value="" placeholder="" id="txtPrecio_Compra"   >
+                    <input type="text" class="form-control" name="categoria" required value="" placeholder="" id="txtPrecio_Compra"   >
                     <br>
                 
                 </div>
                 <!-- Fin Cuerpo del modal Modal -->
                 <!-- pie del modal -->
                 <div class="modal-footer">
-      	            <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Agregar</button>
+      	            <button type="submit" name="accion" value="agregar" class="btn btn-primary" onclick="return confirm('¿Desea agregar la categoria?')">Agregar</button>
                     <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
                 </div>
                 <!-- Fin pie del modal -->
+                </form>
             </div>
         </div>
     </div>
@@ -97,7 +103,7 @@ if(!isset($_SESSION['usuario'])){
               </div>
               
               <!-- /.card-header -->
-              <div class="card-body">
+              <div class="card-body ">
                 <table id="example1" class="table table-bordered table-striped">
                   <thead>
                   <tr>
@@ -108,15 +114,18 @@ if(!isset($_SESSION['usuario'])){
                   </tr>
                   </thead>
                   <tbody>
+                    <?php while ($filas= mysqli_fetch_assoc($result)){
+
+                     ?>
                   <tr>
                   <td>
                         <!-- inicio boton editar -->
-                      <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#myModal2">
+                      <button type="button"  class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#myModal2<?php echo $filas['ID_CATEGORIA'] ?>" >
                       <i class="fas fa-pencil-alt"></i>
                       </button>
 
                           <!-- El Modal -->
-                          <div class="modal" id="myModal2">
+                          <div class="modal" id="myModal2<?php echo $filas['ID_CATEGORIA'] ?>">
                             <div class="modal-dialog">
                               <div class="modal-content">
 
@@ -129,12 +138,13 @@ if(!isset($_SESSION['usuario'])){
 
 
                                 <!-- Cuerpo del modal Modal -->
+                                <form action="" method="post">
                                           <div class="modal-body">
                                               <label for="">Id categoria</label>
-                                              <input type="text" class="form-control" name="txtPrecio_Compra" required value="" placeholder="" id="txtPrecio_Compra"   >
+                                              <input type="text" readonly class="form-control" name="id_categoria" required value="<?php echo $filas['ID_CATEGORIA'] ?>" placeholder="" id="txtPrecio_Compra"   >
                                               <br>
                                               <label for="">Categoria</label>
-                                              <input type="text" class="form-control" name="txtPrecio_Compra" required value="" placeholder="" id="txtPrecio_Compra"   >
+                                              <input type="text" class="form-control" name="categoria" required value="<?php echo $filas['NOMBRE_CATEGORIA'] ?>" placeholder="" id="txtPrecio_Compra"   >
                                               <br>
                                           
                                           </div>
@@ -142,25 +152,31 @@ if(!isset($_SESSION['usuario'])){
 
                                 <!-- pie del modal -->
                                 <div class="modal-footer">
-                                <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Guardar</button>
+                                <button type="submit" name="accion" value="editar" class="btn btn-primary" onclick="return confirm('¿Desea editar la categoria?')">Guardar</button>
                                   <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
                                 </div>
+                             
                                   <!-- Fin pie del modal -->
+                                 
                               </div>
                             </div>
                           </div>
                           <!-- fin boton editar -->
-                      <button  value="btnEliminar" name="accion" 
+                         
+                          <!-- <input type="hidden" name="id_categoria" value="<?php echo $filas['ID_CATEGORIA'] ?>" > -->
+                          
+                      <button  value="eliminar" name="accion" 
                         onclick="return confirm('¿Quieres eliminar este dato?')"
-                        type="submit" class="btn btn-danger " data-id="19">
+                        type="submit" class="btn btn-danger ">
                         <i class="fas fa-trash-alt"></i>
-                    </button>
+                    </button></form>
+                    
 </td>
-                     <td>1</td>
-                     <td>Finalizado</td>
+                     <td ><?php echo $filas['ID_CATEGORIA'] ?></td>
+                     <td><?php echo $filas['NOMBRE_CATEGORIA'] ?></td>
                     
       </tr>
-                  
+                <?php } ?>  
                   </tfoot>
                 </table>
               </div>
@@ -232,4 +248,5 @@ if(!isset($_SESSION['usuario'])){
   });
 </script>
 </body>
+<script type="text/javascript" src="../../js/evitar_reenvio.js"></script>
 </html>
