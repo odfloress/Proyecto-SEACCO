@@ -48,6 +48,7 @@
                               $result5 = mysqli_query($conn, $validar_pregunta);
                             }//fin del segundo while
                             if (mysqli_num_rows($result5) > 0) {
+                              $_SESSION['usuario'] = $usuario;
                                 header('Location: http://localhost/SEACCO/vistas/iniciar_sesion/preguntas_seguridad');
                               
                             }else {// Fin del if que valida las preguntas de la tabla tbl_usuarios e inicia el else

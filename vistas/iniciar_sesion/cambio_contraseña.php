@@ -8,7 +8,7 @@ if(!isset($_SESSION['usuario'])){
         die();
         
 }
-include '../../controladores/con_preguntas.php';
+include '../../controladores/con_config_contraseña.php';
 
 
 ?>
@@ -19,7 +19,7 @@ include '../../controladores/con_preguntas.php';
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>Configuración preguntas</title>
+  <title>Cambio de contraseña</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -54,7 +54,7 @@ body {
             <div class="mb-3 mt-3">
               <center><h3>Configuración</h3></center><br>
             <div class="alert alert-success">
-            <strong>¡Hola!</strong> Configure sus preguntas y respuestas antes de ingresar al sistema
+            <strong>¡Hola!</strong> Debe cambiar su contraseña antes de ingresar al sistema
             </div>            
            
             <div class="container mt-3">
@@ -63,46 +63,29 @@ body {
                 <label for="sel1" class="form-label">Usuario:</label>
                 <input type="text" name="" value="<?php $usuario = $_SESSION; echo $usuario['usuario']; ?>" class="form-control" readonly>
                 
+                <label for="sel1" class="form-label">Contraseña Actual:</label>
+                <input type="password" name="contrasena_actual" value="" class="form-control" required pattern="(?=.*[\d])(?=.*[a-z])(?=.*[A-Z]).{8,}">
 
-                <label for="sel1" class="form-label">Preguntas:</label>
-                <select placeholder="Seleccione" class="form-select" id="sel1" name="preguntas" required >
-                  <option></option>
-                  <?php
-                      include '../../conexion/conexion.php';
-                      $getpregunta1 = "SELECT * FROM tbl_preguntas ORDER BY ID_PREGUNTA";
-                      $getpregunta2 = mysqli_query($conn, $getpregunta1);
-                      if (mysqli_num_rows($getpregunta2) > 0) {
-                          while($row = mysqli_fetch_assoc($getpregunta2))
-                            {
-                              $id = $row['ID_PREGUNTA'];
-                              $pregunta =$row['PREGUNTA'];
-                           ?>
-                              <option value="<?php  echo $id; ?>"><?php echo $pregunta?></option>
-                          <?php
-                    }}// finaliza el if y el while
+                <label for="sel1" class="form-label">Nueva contraseña</label>
+                <input type="password" name="nueva_contrasena" value="" class="form-control" required pattern="(?=.*[\d])(?=.*[a-z])(?=.*[A-Z]).{8,}">
 
-                ?>
-                </select>
-
+                <label for="sel1" class="form-label">Confirmar contraseña</label>
+                <input type="password" name="confirmar_contrasena" value="" class="form-control" required pattern="(?=.*[\d])(?=.*[a-z])(?=.*[A-Z]).{8,}">
                 
-                <label for="pwd" class="form-label">Respuesta:</label>
-                <input type="text" class="form-control" id="email" placeholder="Ingrese su respuesta" name="respuesta" required>
+
             </div>
             </div>
             
             
            
             <div class="d-grid">
-            <button type="submit" name="accion" value="guardar" class="btn btn-dark btn-block">Guardar</button>
+            <button type="submit" name="accion" value="actualizar" class="btn btn-dark btn-block">Actualizar</button>
             </div>
           
             
         </form>
       </div>
        <!--Fin Cuerpo del modal -->
-
-     
-
     </div>
   </div>
 

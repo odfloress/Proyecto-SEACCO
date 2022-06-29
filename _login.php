@@ -68,11 +68,13 @@ function SoloLetras(e) {
             <center><img src="imagenes/seacco.jpg" alt="Girl in a jacket" width="150" height="150"><br></center>
            
             <label for="email" class="form-label">Usuario:</label>
-            <input style="background-color:rgb(240, 244, 245);" type="text"  onkeypress="return SoloLetras(event);"  onKeyUP="this.value=this.value.toUpperCase();" class="form-control" autocomplete="off" placeholder="Ingrese el Usuaio" name="usuario" required  >
+            <input type="text" style="background-color:rgb(240, 244, 245);" name="usuario" id="ingUsuario" class="form-control" placeholder="Ingrese el Usuaio" autocomplete = "off"  onkeypress="return soloLetras(event);" minlength="3" maxlength="20" onkeyup="mayus(this);" required onblur="quitarespacios(this);" onkeydown="sinespacio(this);">
+            
             </div>
             <div class="mb-3">
             <label for="pwd" class="form-label">Contraseña:</label>
-            <input style="background-color:rgb(240, 244, 245);" type="password"  class="form-control"  placeholder="Ingrese la contraseña" name="contrasena" max="10" required pattern="(?=.*[\d])(?=.*[a-z])(?=.*[A-Z]).{8,}">
+            <input type="password" style="background-color:rgb(240, 244, 245);" name="contrasena" id="ingPassword" class="form-control" placeholder="Ingrese la contraseña" aria-label="Username" aria-describedby="basic-addon1"   minlength="8" maxlength="30" required onblur="quitarespacios(this);" onkeyup="sinespacio(this);" pattern="(?=.*[\d])(?=.*[a-z])(?=.*[A-Z]).{8,}">
+            
             </div>
             <div class="d-grid">
             <button type="submit" name="accion" value="ingresar" class="btn btn-dark btn-block">ingresar</button>
@@ -97,7 +99,71 @@ function SoloLetras(e) {
 
     </div>
   </div>
+  <script>
+      function soloLetras(e){
+       key = e.keyCode || e.which;
+       tecla = String.fromCharCode(key).toLowerCase();
+       letras = " áéíóúabcdefghijklmnñopqrstuvwxyz";
+       especiales = ["8-37-39-46"];
 
+       tecla_especial = false
+       for(var i in especiales){
+        if(key == especiales[i]){
+          tecla_especial = true;
+          break;
+        }
+      }
+
+      if(letras.indexOf(tecla)==-1 && !tecla_especial){
+        return false;
+      }
+    }
+  </script>
+
+
+    <script type="text/javascript">
+  
+        function mayus(e) {
+          e.value = e.value.toUpperCase();
+         }
+    </script>
+
+
+    <script type="text/javascript">
+
+        function sinespacio(e) {
+
+        var cadena =  e.value;
+        var limpia = "";
+        var parts = cadena.split(" ");
+        var length = parts.length;
+
+          for (var i = 0; i < length; i++) {
+              nuevacadena = parts[i];
+              subcadena = nuevacadena.trim();
+
+          if(subcadena != "") {
+             limpia += subcadena + " ";
+                }
+          }
+        limpia = limpia.trim();
+        e.value = limpia;
+
+         };
+     </script>
+
+ <script type="text/javascript">
+
+    function quitarespacios(e) {
+
+      var cadena =  e.value;
+      cadena = cadena.trim();
+
+      e.value = cadena;
+
+    };
+
+  </script>
 
 
 </body>
