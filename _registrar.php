@@ -20,11 +20,11 @@ body {
 }
 
 </style>
-<script >
-function clave(e) {
+<script>
+  function clave(e) {
   key = e.keyCode || e.which;
   tecla = String.fromCharCode(key).toString();
-  letras = "ABCDEFGHIJKLMNÑOPQRSTUVWXZabcdefghijklmnñopqrstuvwxyz";
+  letras = "ABCDEFGHIJKLMNÑOPQRSTUVWXZabcdefghijklmnñopqrstuvwxyz0123456789";
   
   especiales = [8,13];
   tecla_especial = false;
@@ -36,11 +36,12 @@ function clave(e) {
   }
   
   if(letras.indexOf(tecla) == -1 && !tecla_especial){
-    alert("Ingresar Solo mayusculas");
+    alert("Ingresar solo mayusculas");
     return false;
   }
 }
 </script>
+
 
 </head>
 <!-- oncopy="return false" onpaste="return false"  esto no permite copiar ni pegar -->
@@ -64,21 +65,21 @@ function clave(e) {
             <div class="row">
                 <div class="col">
                   <label for="email"  class="form-label">Nombre:</label>
-                  <input style="background-color:rgb(240, 244, 245);" type="text" autocomplete="off" onkeypress="return SoloLetras(event);"  onKeyUP="this.value=this.value.toUpperCase();" class="form-control"  placeholder="Ingrese el nombre" name="nombre" required>
+                  <input style="background-color:rgb(240, 244, 245);" type="text" autocomplete="off"   onkeyup="mayus(this);" maxlength="30" class="form-control"  placeholder="Ingrese el nombre" name="nombre" required>
                 </div>
                 <div class="col">
                   <label for="pwd" class="form-label">Apellido:</label>
-                  <input style="background-color:rgb(240, 244, 245);" type="text" autocomplete="off" onkeypress="return SoloLetras(event);"  onKeyUP="this.value=this.value.toUpperCase();" class="form-control"  placeholder="Ingrese su apellido" name="apellido" required>
+                  <input style="background-color:rgb(240, 244, 245);" type="text" autocomplete="off"  onkeyup="mayus(this);" maxlength="30" class="form-control"  placeholder="Ingrese su apellido" name="apellido" required>
                 </div>
             </div>
             <div class="row">
                 <div class="col">
                   <label for="pwd" class="form-label">Usuario:</label>
-                  <input style="background-color:rgb(240, 244, 245);" type="text" autocomplete="off" onkeypress="return clave(event);"  onKeyUP="this.value=this.value.toUpperCase();" class="form-control" placeholder="Asignar usuario" name="usuario" required>
+                  <input style="background-color:rgb(240, 244, 245);" type="text" autocomplete="off" onkeypress="return clave(event);"  onKeyUP="this.value=this.value.toUpperCase();"  class="form-control" placeholder="Asignar usuario" name="usuario" required>
                 </div>
                 <div class="col">
                   <label for="pwd" class="form-label">Contraseña:</label>
-                  <input style="background-color:rgb(240, 244, 245);" type="password" autocomplete="off"  class="form-control"  placeholder="Ingrese la contraseña" name="contrasena" max="10" required pattern="(?=.*[\d])(?=.*[a-z])(?=.*[A-Z]).{8,}">
+                  <input style="background-color:rgb(240, 244, 245);" type="password" autocomplete="off"  class="form-control"  placeholder="Ingrese la contraseña" name="contrasena" max="10" required pattern="(?=.*[\d])(?=.*[a-z])(?=.*[A-Z]).{8,}" onblur="quitarespacios(this);"  onkeyup="sinespacio(this);" required="" minlength="8" maxlength="9" >
                 </div>
             </div>
             <div class="row">
@@ -88,7 +89,7 @@ function clave(e) {
                 </div>
                 <div class="col">
                   <label for="pwd" class="form-label">DNI:</label>
-                  <input style="background-color:rgb(240, 244, 245);" type="text" autocomplete="off" class="form-control"  placeholder="0000-0000-000000" name="dni" required>
+                  <input style="background-color:rgb(240, 244, 245);" type="text" autocomplete="off" class="form-control"  placeholder="0000-0000-000000" name="dni" minlength="13" maxlength="13" onkeypress="return solonumero(event)" required>
                 </div>
             </div>
             <div class="row">
@@ -142,7 +143,7 @@ function clave(e) {
                 </div>  
                 <div class="col">
                 <label for="pwd" class="form-label">Area:</label>
-                <input class="form-control" autocomplete="off" maxlength="1" list="browsers1" type="text" id="calcular" name="area"  id="browser" placeholder="Seleccione"  required >
+                <input class="form-control" autocomplete="off" maxlength="20" list="browsers1" type="text" id="calcular" name="area"  id="browser" placeholder="Seleccione"  required >
                 <datalist id="browsers1">
                   <option value="ADMINISTRATIVA">
                   <option value="MANO DE OBRA">
@@ -166,3 +167,53 @@ function clave(e) {
 <script type="text/javascript" src="js/evitar_reenvio.js"></script>
 
 </html>
+<script type="text/javascript">
+ function mayus(e) {
+   e.value = e.value.toUpperCase();
+ }
+</script>
+
+<script type="text/javascript">
+
+function sinespacio(e) {
+
+  var cadena =  e.value;
+  var limpia = "";
+  var parts = cadena.split(" ");
+  var length = parts.length;
+
+  for (var i = 0; i < length; i++) {
+    nuevacadena = parts[i];
+    subcadena = nuevacadena.trim();
+
+    if(subcadena != "") {
+      limpia += subcadena + " ";
+    }
+  }
+  limpia = limpia.trim();
+  e.value = limpia;
+
+};
+</script>
+
+<script type="text/javascript">
+function quitarespacios(e) {
+
+  var cadena =  e.value;
+  cadena = cadena.trim();
+
+  e.value = cadena;
+
+};
+</script>
+
+<script type="text/javascript"> function solonumero(e) {
+        tecla = (document.all) ? e.keyCode : e.which;
+        if (tecla==8) return true;
+        else if (tecla==0||tecla==9)  return true;
+       // patron =/[0-9\s]/;// -> solo letras
+        patron =/[0-9\s]/;// -> solo numeros
+        te = String.fromCharCode(tecla);
+        return patron.test(te);
+    }
+	</script>

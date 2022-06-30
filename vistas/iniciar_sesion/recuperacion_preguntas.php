@@ -86,7 +86,7 @@ body {
 
                 
                 <label for="pwd" class="form-label">Respuesta:</label>
-                <input type="text" class="form-control" id="email" placeholder="Ingrese su respuesta" name="respuesta" >
+                <input type="text" class="form-control" id="email" placeholder="Ingrese su respuesta" name="respuesta" autocomplete="off"   onkeyup="mayus(this);" maxlength="30" required>
             </div>
             </div>
             
@@ -112,3 +112,53 @@ body {
 </body>
 <script type="text/javascript" src="../../js/evitar_reenvio.js"></script>
 </html>
+<script type="text/javascript">
+ function mayus(e) {
+   e.value = e.value.toUpperCase();
+ }
+</script>
+
+<script type="text/javascript">
+
+function sinespacio(e) {
+
+  var cadena =  e.value;
+  var limpia = "";
+  var parts = cadena.split(" ");
+  var length = parts.length;
+
+  for (var i = 0; i < length; i++) {
+    nuevacadena = parts[i];
+    subcadena = nuevacadena.trim();
+
+    if(subcadena != "") {
+      limpia += subcadena + " ";
+    }
+  }
+  limpia = limpia.trim();
+  e.value = limpia;
+
+};
+</script>
+
+<script type="text/javascript">
+function quitarespacios(e) {
+
+  var cadena =  e.value;
+  cadena = cadena.trim();
+
+  e.value = cadena;
+
+};
+</script>
+
+<script type="text/javascript"> function solonumero(e) {
+        tecla = (document.all) ? e.keyCode : e.which;
+        if (tecla==8) return true;
+        else if (tecla==0||tecla==9)  return true;
+       // patron =/[0-9\s]/;// -> solo letras
+        patron =/[0-9\s]/;// -> solo numeros
+        te = String.fromCharCode(tecla);
+        return patron.test(te);
+    }
+	</script>
