@@ -69,7 +69,8 @@ body {
                   <option></option>
                   <?php
                       include '../../conexion/conexion.php';
-                      $getpregunta1 = "SELECT * FROM tbl_preguntas ORDER BY ID_PREGUNTA";
+                      $getpregunta1 = "SELECT * FROM tbl_preguntas  WHERE ID_PREGUNTA  NOT IN (SELECT ID_PREGUNTA  FROM  tbl_respuestas_usuario WHERE USUARIO = '$usuario[usuario]' ) ORDER BY ID_PREGUNTA";
+                      // $getpregunta1 = "SELECT * FROM tbl_preguntas  WHERE ID_PREGUNTA  NOT IN (SELECT ID_PREGUNTA  FROM  tbl_respuestas_usuario WHERE USUARIO = 'JO' ) ORDER BY ID_PREGUNTA";
                       $getpregunta2 = mysqli_query($conn, $getpregunta1);
                       if (mysqli_num_rows($getpregunta2) > 0) {
                           while($row = mysqli_fetch_assoc($getpregunta2))
