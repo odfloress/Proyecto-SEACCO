@@ -116,7 +116,7 @@ body {
             </div>
         
             <button type="submit" name="submit" class="btn btn-primary btn-block">Enviar</button><br> 
-            <a href="http://localhost:8000/Proyecto-SEACCO/_login" class="btn btn-danger btn-block">Regresar</a><br>
+            <a href="http://localhost/SEACCO/_login" class="btn btn-danger btn-block">Regresar</a><br>
              
         </form>
       </div>
