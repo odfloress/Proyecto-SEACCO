@@ -32,16 +32,12 @@ include '../../controladores/crud_crear_preguntas.php';
     <section class="content-header">
       <div class="container-fluid">
         <div class="row mb-2">
+          <!-- <div class="card-header text-center">
+              <h5> Preguntas de seguridad</h5>
+          </div> -->
           <div class="col-sm-2">
-            <h1></h1>
             <!-- Inicio de modal de agregar -->
-            <div class="container mt-3">
-              <!-- <h3>Crear_preguntas</h3> <br>   -->
-              <!-- <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal">
-                Nueva pregunta
-              </button> -->
-            </div>
-
+              
             <!-- El Modal -->
             <div class="modal" id="myModal">
                 <div class="modal-dialog">
@@ -73,7 +69,7 @@ include '../../controladores/crud_crear_preguntas.php';
                     </div>
                 </div>
             </div>
-            <!-- Fin  de modal de agregar --> <br>
+            <!-- Fin  de modal de agregar --> 
           </div>
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right"></ol>
@@ -91,19 +87,22 @@ include '../../controladores/crud_crear_preguntas.php';
       <div class="container-fluid">
         <div class="row">
           <div class="col-12">
-           
             <!-- /.card -->
-            
             <div class="card">
-              <div class="card-header">
-                <h3 class="card-title">Preguntas de seguridad</h3> <br>
-                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal">
-                  Nueva pregunta
-              </button>
-              </div>
+                  <div class="card-header">
+                    <h3 class="card-title" >Preguntas de seguridad</h3> 
+                    
+                  </div>
               
               <!-- /.card-header -->
               <div class="card-body ">
+                    <div class="card-fluid "> 
+                      <button type="button" class="btn btn-primary  " data-bs-toggle="modal" data-bs-target="#myModal">
+                        Nueva pregunta
+                      </button>
+                    </div> <br>
+                  
+
                 <table id="example1" class="table table-bordered table-striped">
                   <thead>
                   <tr>
@@ -176,7 +175,7 @@ include '../../controladores/crud_crear_preguntas.php';
                      <td ><?php echo $filas['ID_PREGUNTA'] ?></td>
                      <td><?php echo $filas['PREGUNTA'] ?></td>
                     
-      </tr>
+                     </tr>
                 <?php } ?>  
                   </tfoot>
                 </table>
