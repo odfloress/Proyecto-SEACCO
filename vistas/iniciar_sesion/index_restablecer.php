@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -28,34 +29,28 @@ body {
 
       <!--Inicio Cuerpo del modal -->
       <div class="modal-body ">
-        <form action="/action_page.php">
+        <form action="" method="post">
             <div class="mb-3 mt-3">
             <center><img src="seacco.jpg" alt="Girl in a jacket" width="150" height="150"><br></center>
             <div class="alert alert-success">
                 <strong>¡Hola!</strong> Ingrese su nueva contraseña para su usuario.
             </div>
-            <label for="email" class="form-label">Correo:</label>
-            <input style="background-color:rgb(240, 244, 245);" type="email" class="form-control"   name="correo">
-            <label for="email" class="form-label">Contraseña:</label>
-            <input style="background-color:rgb(240, 244, 245);" type="password" class="form-control"   name="contraseña">
-            <label for="email" class="form-label">Confirmar Contraseña:</label>
-            <input style="background-color:rgb(240, 244, 245);" type="password" class="form-control"  placeholder="Ingrese el correo" name="con_contraseña">
+            <label for="email" class="form-label">Nueva contraseña:</label>
+            <input style="background-color:rgb(240, 244, 245);" type="password" class="form-control" placeholder="Nueva contraseña"  name="nueva_contrasena">
+            <label for="email" class="form-label">Confirmar nueva contraseña:</label>
+            <input style="background-color:rgb(240, 244, 245);" type="password" class="form-control"  placeholder="Confirmar nueva contraseña" name="confirmar_contrasena">
             </div>
             
         
-            <center><button type="button" class="btn btn-primary btn-block">Enviar</button></center>
-            
+            <center><button type="submit" name="accion" class="btn btn-primary btn-block">Enviar</button></center>
             
             
         </form>
       </div>
        <!--Fin Cuerpo del modal -->
 
-
     </div>
   </div>
-
-
 
 </body>
 </html>
