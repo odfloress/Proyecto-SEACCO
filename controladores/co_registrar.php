@@ -67,16 +67,30 @@
 
             }else{
 
+                    // inicio inserta en la tabla bitacora
+                    $sql7 = "INSERT INTO tbl_bitacora (ID_USUARIO, ID_OBJETO, USUARIO, ACCION, OBSERVACION)
+                    VALUES (2, 1, '$usuario', 'REGISTRO', 'EL SUARIO $usuario SE REGISTRO')";
+                    
+                    if (mysqli_query($conn, $sql7)) {
+                      
+                    } else {
+                    
+                    }
+              // fin inserta en la tabla bitacora
+
                   // Inserta en la tabla tbl_usuarios
                   $sql = "INSERT INTO tbl_usuarios (ID_ROL, ID_ESTADO_USUARIO, NOMBRE, APELLIDO, USUARIO, GENERO, CORREO, DNI, PROFESION, DIRECCION, CELULAR, REFERENCIA, CEL_REFERENCIA, EXPERIENCIA_LABORAL, CURRICULUM, CONTRASENA, FOTO)
-                                VALUES (1,1,'$nombre', '$apellido', '$usuario', '$genero', '$correo', '$dni', '$profesion',  '$direccion', '$celular', '$referencia', '$celular_referencia', '$experiencia_laboral', '$curriculum','$contrasena','$foto')";
+                                VALUES (1,4,'$nombre', '$apellido', '$usuario', '$genero', '$correo', '$dni', '$profesion',  '$direccion', '$celular', '$referencia', '$celular_referencia', '$experiencia_laboral', '$curriculum','$contrasena','$foto')";
                   
                   if (mysqli_query($conn, $sql)) {
                     echo '<script>
                                   alert("Usuario creado con exito");
-                                  window.Location = "/_login";
+                                  window.location.href="/SEACCO/_login";
                       </script>';
-                      header('Location: http://localhost/SEACCO/_login.php');
+
+                      
+                            
+                     
                   } else {
                     echo "Error: " . $sql . "<br>" . mysqli_error($conn);
                   }

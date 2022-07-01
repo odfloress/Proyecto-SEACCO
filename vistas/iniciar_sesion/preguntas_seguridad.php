@@ -54,7 +54,7 @@ body {
             <div class="mb-3 mt-3">
               <center><h3>Configuración</h3></center><br>
             <div class="alert alert-success">
-            <strong>¡Hola!</strong> Configure sus preguntas y respuestas antes de ingresar al sistema
+            <strong>¡Hola!</strong> Configure sus preguntas y respuestas antes de ingresar al sistema <br> <strong> <?php echo "Respondido " . $respondido . " de " . $pregunta; ?></strong><br>
             </div>            
            
             <div class="container mt-3">
@@ -94,11 +94,16 @@ body {
             
            
             <div class="d-grid">
-            <button type="submit" name="accion" value="guardar" class="btn btn-dark btn-block">Guardar</button>
-            </div>
+              
+            <button type="submit" name="accion" value="guardar" class="btn btn-dark btn-block">Guardar</button><br>
+            </form>
+            </div>  <form action="" method="post"><div class="d-grid">
+          
+            <button type="submit" class="btn btn-primary btn-block" name="accion" value="continuar">continuar</button>
+            </div></form>
           
             
-        </form>
+        
       </div>
        <!--Fin Cuerpo del modal -->
 
