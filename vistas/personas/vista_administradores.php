@@ -2,22 +2,28 @@
 session_start();
 if(!isset($_SESSION['usuario'])){
  
-        header('Location: ../iniciar_sesion/index_login.php');
+        header('Location: ../../_login.php');
         session_unset();
         session_destroy();
         die();
         
 }
+include '../../controladores/crud_administradores.php';
+
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Usuario</title>
+  <title>Usuarios</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+  
+
+
 
   <?php include '../../configuracion/navar.php' ?>
   <!-- Content Wrapper. Contains page content -->
@@ -26,48 +32,53 @@ if(!isset($_SESSION['usuario'])){
     <section class="content-header">
       <div class="container-fluid">
         <div class="row mb-2">
-          <div class="col-sm-6">
+          <div class="col-sm-2">
             <h1></h1>
             <!-- Inicio de modal de agregar -->
 <div class="container mt-3">
         <h3>Usuarios</h3> <br>  
         <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal">
-            Nuevo Usuario
+            Nuevo usuario
         </button>
-    </div>
-
-<!-- El Modal -->
+        <!-- El Modal -->
     <div class="modal" id="myModal">
         <div class="modal-dialog">
             <div class="modal-content">
                 <!-- Encabezado del modal -->
+                <form action="" method="post">
                 <div class="modal-header">
-                    <h4 class="modal-title">Nuevo Usuario</h4>
+                    <h4 class="modal-title">Nuevo usuario</h4>
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
                 <!-- Fin Encabezado del modal -->
 
                 <!-- Cuerpo del modal Modal -->
                 <div class="modal-body">
-                <label for="">Id Usuario</label>
-                    <input type="text" class="form-control" name="txtPrecio_Compra" required value="" placeholder="" id="txtPrecio_Compra"   >
-                    <br>
+                    
+                    <!-- Inicio del select de rol -->
+
+                    <!-- Inicio del select de rol -->
+               
                     <label for="">Usuario</label>
-                    <input type="text" class="form-control" name="txtPrecio_Compra" required value="" placeholder="" id="txtPrecio_Compra"   >
+                    <input type="text" class="form-control" name="categoria" required value="" placeholder="" id="txtPrecio_Compra"   >
                     <br>
                 
                 </div>
                 <!-- Fin Cuerpo del modal Modal -->
                 <!-- pie del modal -->
                 <div class="modal-footer">
-      	            <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Agregar</button>
+      	            <button type="submit" name="accion" value="agregar" class="btn btn-primary" onclick="return confirm('¿Desea agregar la categoria?')">Agregar</button>
                     <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
                 </div>
                 <!-- Fin pie del modal -->
+                </form>
             </div>
         </div>
     </div>
     <!-- Fin  de modal de agregar --> <br>
+    </div>
+
+
           </div>
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
@@ -90,14 +101,14 @@ if(!isset($_SESSION['usuario'])){
            
             <!-- /.card -->
             
-            <div class="card">
+            <div class="card table-responsive">
               <div class="card-header">
                 <h3 class="card-title">Usuarios</h3>
                 
               </div>
               
               <!-- /.card-header -->
-              <div class="card-body">
+              <div class="card-body ">
                 <table id="example1" class="table table-bordered table-striped">
                   <thead>
                   <tr>
@@ -108,51 +119,54 @@ if(!isset($_SESSION['usuario'])){
                   <th>Nombre</th>
                   <th>Apellido</th>
                   <th>Usuario</th>
-                  <th>Contraseña</th> 
+                  
                   <th>Correo</th>
                   <th>Genero</th>                  
                   <th>DNI</th>
                   <th>Profesion</th>
                   <th>Dirección</th>
                   <th>Telefono</th>
+                  <th>Referencia</th>
                   <th>Telefono referencia</th>
                   <th>Experiencia laboral</th>
                   <th>Curriculum</th>
                   <th>Verificación correo</th>                                   
                   <th>Foto</th>
-                 
-                  
                   
                   </tr>
                   </thead>
                   <tbody>
+                    <?php while ($filas= mysqli_fetch_assoc($result)){
+
+                     ?>
                   <tr>
                   <td>
                         <!-- inicio boton editar -->
-                      <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#myModal2">
+                      <button type="button"  class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#myModal2<?php echo $filas['ID_USUARIO'] ?>" >
                       <i class="fas fa-pencil-alt"></i>
                       </button>
 
                           <!-- El Modal -->
-                          <div class="modal" id="myModal2">
+                          <div class="modal" id="myModal2<?php echo $filas['ID_USUARIO'] ?>">
                             <div class="modal-dialog">
                               <div class="modal-content">
 
                                 <!-- Encabezado del modal -->
                                 <div class="modal-header">
-                                  <h4 class="modal-title">Editar Usuario</h4>
+                                  <h4 class="modal-title">Editar usuario</h4>
                                   <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                                 </div>
                                 <!-- Fin Encabezado del modal -->
 
 
                                 <!-- Cuerpo del modal Modal -->
+                                <form action="" method="post">
                                           <div class="modal-body">
-                                              <label for="">Id Usuario</label>
-                                              <input type="text" class="form-control" name="txtPrecio_Compra" required value="" placeholder="" id="txtPrecio_Compra"   >
+                                              <label for="">Id usuario</label>
+                                              <input type="text" readonly class="form-control" name="id_categoria" required value="<?php echo $filas['ID_USUARIO'] ?>" placeholder="" id="txtPrecio_Compra"   >
                                               <br>
-                                              <label for="">Usuario</label>
-                                              <input type="text" class="form-control" name="txtPrecio_Compra" required value="" placeholder="" id="txtPrecio_Compra"   >
+                                              <label for="">Usuario:</label>
+                                              <input type="text" class="form-control" name="categoria" required value="<?php echo $filas['ID_ROL'] ?>" placeholder="" id="txtPrecio_Compra"   >
                                               <br>
                                           
                                           </div>
@@ -160,42 +174,50 @@ if(!isset($_SESSION['usuario'])){
 
                                 <!-- pie del modal -->
                                 <div class="modal-footer">
-                                <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Guardar</button>
+                                <button type="submit" name="accion" value="editar" class="btn btn-primary" onclick="return confirm('¿Desea editar la categoria?')">Guardar</button>
                                   <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
                                 </div>
+                             
                                   <!-- Fin pie del modal -->
+                                 
                               </div>
                             </div>
                           </div>
                           <!-- fin boton editar -->
-                      <button  value="btnEliminar" name="accion" 
+                         
+                         
+                          
+                      <button  value="eliminar" name="accion" 
                         onclick="return confirm('¿Quieres eliminar este dato?')"
-                        type="submit" class="btn btn-danger " data-id="19">
+                        type="submit" class="btn btn-danger ">
                         <i class="fas fa-trash-alt"></i>
-                    </button>
+                    </button></form>
+                    
 </td>
-                     <td>1</td>
-                     <td>Ingresar</td>
-                     <td>Ingresar</td>
-                     <td>Ingresar</td>
-                     <td>Ingresar</td>
-                     <td>Ingresar</td>
-                     <td>Ingresar</td>
-                     <td>Ingresar</td>
-                     <td>Ingresar</td>
-                     <td>Ingresar</td>
-                     <td>Ingresar</td>
-                     <td>Ingresar</td>
-                     <td>Ingresar</td>
-                     <td>Ingresar</td>
-                     <td>Ingresar</td>
-                     <td>Ingresar</td>
-                     <td>Ingresar</td>
-                     <td>Ingresar</td>
+                     <td ><?php echo $filas['ID_USUARIO'] ?></td>
+                     <td><?php echo $filas['ID_ROL'] ?></td>
+                     <td><?php echo $filas['ID_ESTADO_USUARIO'] ?></td>
+                     <td><?php echo $filas['NOMBRE'] ?></td>
+                     <td><?php echo $filas['APELLIDO'] ?></td>
+                     <td><?php echo $filas['USUARIO'] ?></td>
+                     <td><?php echo $filas['CORREO'] ?></td>
+                     <td><?php echo $filas['GENERO'] ?></td>
+                     <td><?php echo $filas['DNI'] ?></td>
+                     <td><?php echo $filas['PROFESION'] ?></td>
+                     <td><?php echo $filas['DIRECCION'] ?></td>
+                     <td><?php echo $filas['CELULAR'] ?></td>
+                     <td><?php echo $filas['REFERENCIA'] ?></td>
+                     <td><?php echo $filas['CEL_REFERENCIA'] ?></td>
+                     <td><?php echo $filas['EXPERIENCIA_LABORAL'] ?></td>
+                     <td><?php echo $filas['CURRICULUM'] ?></td>
+                     <td><?php echo $filas['VERIFICASION_CORREO'] ?></td>
+                     <td><?php echo $filas['FOTO'] ?></td>
+                     
+                     
                     
       </tr>
-                  
-                  </tfoot>
+                <?php } ?>  
+                </tbody>
                 </table>
               </div>
               <!-- /.card-body -->
@@ -266,4 +288,5 @@ if(!isset($_SESSION['usuario'])){
   });
 </script>
 </body>
+<script type="text/javascript" src="../../js/evitar_reenvio.js"></script>
 </html>

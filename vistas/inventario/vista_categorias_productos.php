@@ -8,7 +8,7 @@ if(!isset($_SESSION['usuario'])){
         die();
         
 }
-include '../../controladores/co_categoria_productos.php';
+include '../../controladores/crud_categoria_productos.php';
 
 
 ?>
@@ -96,7 +96,7 @@ include '../../controladores/co_categoria_productos.php';
            
             <!-- /.card -->
             
-            <div class="card">
+            <div class="card table-responsive">
               <div class="card-header">
                 <h3 class="card-title">Categorias</h3>
                 
@@ -163,7 +163,7 @@ include '../../controladores/co_categoria_productos.php';
                           </div>
                           <!-- fin boton editar -->
                          
-                          <!-- <input type="hidden" name="id_categoria" value="<?php echo $filas['ID_CATEGORIA'] ?>" > -->
+                         
                           
                       <button  value="eliminar" name="accion" 
                         onclick="return confirm('¿Quieres eliminar este dato?')"
@@ -177,7 +177,7 @@ include '../../controladores/co_categoria_productos.php';
                     
       </tr>
                 <?php } ?>  
-                  </tfoot>
+                </tbody>
                 </table>
               </div>
               <!-- /.card-body -->

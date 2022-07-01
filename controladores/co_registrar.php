@@ -54,7 +54,7 @@
 
             }else{
 
-                  // validacion para que no se repita el DNI en la tabla tbl_usuarios
+            // validacion para que no se repita el DNI en la tabla tbl_usuarios
             $validar_dni = "SELECT * FROM tbl_usuarios WHERE  DNI='$dni'";
             $result = mysqli_query($conn, $validar_dni);
             if (mysqli_num_rows($result) > 0) {
