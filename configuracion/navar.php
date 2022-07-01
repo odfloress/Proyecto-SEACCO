@@ -328,6 +328,11 @@
                 </a>
               </li>
               <li class="nav-item">
+                <a href="http://localhost/SEACCO/vistas/ajustes/vista_preguntas.php" class="nav-link">
+                  <p>Preguntas de seguridad</p>
+                </a>
+              </li>
+              <li class="nav-item">
                 <a href="http://localhost/SEACCO/vistas/ajustes/vista_bitacora.php" class="nav-link">
                   <p>Bitacora</p>
                 </a>
