@@ -5,85 +5,135 @@
   $result = mysqli_query($conn, $sql);
 
 
-  // //Variables para recuperar la información de los campos de la vista categorias de productos
-  $id_categoria=(isset($_POST['id_categoria']))?$_POST['id_categoria']:"";
-  $categoria=(isset($_POST['categoria']))?$_POST['categoria']:"";
+  // //Variables para recuperar la información de los campos de la vista adminiistradores
+  $id_usuario=(isset($_POST['id_usuario']))?$_POST['id_usuario']:"";
+  $rol=(isset($_POST['rol']))?$_POST['rol']:"";
+  $estado=(isset($_POST['estado']))?$_POST['estado']:"";
+  $nombre=(isset($_POST['nombre']))?$_POST['nombre']:"";
+  $apellido=(isset($_POST['apellido']))?$_POST['apellido']:"";
+  $usuario=(isset($_POST['usuario']))?$_POST['usuario']:"";
+  // $contrasena=(isset($_POST['contrasena']))?$_POST['contrasena']:"";
+  $correo=(isset($_POST['correo']))?$_POST['correo']:"";
+  $genero=(isset($_POST['genero']))?$_POST['genero']:"";
+  $dni=(isset($_POST['dni']))?$_POST['dni']:"";
+  $profesion=(isset($_POST['profesion']))?$_POST['profesion']:"";
+  $direccion=(isset($_POST['direccion']))?$_POST['direccion']:"";
+  $celular=(isset($_POST['celular']))?$_POST['celular']:"";
+  $referencia=(isset($_POST['referencia']))?$_POST['referencia']:"";
+  $celular_referencia=(isset($_POST['celular_referencia']))?$_POST['celular_referencia']:"";
+  $experiencia_laboral=(isset($_POST['experiencia_laboral']))?$_POST['experiencia_laboral']:"";
+  $curriculum=(isset($_POST['curriculum']))?$_POST['curriculum']:"";
+  $foto=(isset($_POST['foto']))?$_POST['foto']:"";  
+  $area=(isset($_POST['area']))?$_POST['area']:"";
 
-  //variable para recuperar los botones de la vista categprias de productos  
+  //variable para recuperar los botones de la vista administradores  
   $accion=(isset($_POST['accion']))?$_POST['accion']:"";
   
   
   switch($accion){
       //para insertar en la tabla mysl
       case "agregar": 
-        // valida si existe una categoria con el mismo nombre
-        $validar_categoria = "SELECT * FROM tbl_categoria_producto WHERE NOMBRE_CATEGORIA='$categoria'";
-        $result1 = mysqli_query($conn, $validar_categoria); 
-         if (mysqli_num_rows($result1) > 0) { 
+       
+       // validacion para que no se repitan los usuarios en la tabla tbl_usuarios
+       $validar_usuario = "SELECT * FROM tbl_usuarios WHERE USUARIO='$usuario'";
+       $result = mysqli_query($conn, $validar_usuario);
+       if (mysqli_num_rows($result) > 0) {
+
+            echo '<script>
+                    alert("El usuario ya existe, intente con otro");
+                    window.location.href="../../vistas/personas/vista_administradores";                   
+                  </script>';
+                  mysqli_close($conn);
+           
+      }else{  
+        
+        // validacion para que no se repitan los correos en la tabla tbl_usuarios
+        $validar_correo = "SELECT * FROM tbl_usuarios WHERE  CORREO='$correo'";
+        $result = mysqli_query($conn, $validar_correo);
+        if (mysqli_num_rows($result) > 0) {
+
+            echo '<script>
+                    alert("El correo ya existe, intente con otro");
+                    window.location.href="../../vistas/personas/vista_administradores"; 
+                  </script>';
+                  mysqli_close($conn);
+
+        }else{
+
+        // validacion para que no se repita el DNI en la tabla tbl_usuarios
+        $validar_dni = "SELECT * FROM tbl_usuarios WHERE  DNI='$dni'";
+        $result = mysqli_query($conn, $validar_dni);
+        if (mysqli_num_rows($result) > 0) {
+
+            echo '<script>
+                    alert("El DNI ya esta registrado, verifique que el ingresado sea el correcto");
+                    window.location.href="../../vistas/personas/vista_administradores";
+                  </script>';
+                  mysqli_close($conn);
+
+        }else{
+
+              // Inserta en la tabla tbl_usuarios
+              $sql = "INSERT INTO tbl_usuarios (ID_ROL, ID_ESTADO_USUARIO, NOMBRE, APELLIDO, USUARIO, GENERO, CORREO, DNI, PROFESION, DIRECCION, CELULAR, REFERENCIA, CEL_REFERENCIA, EXPERIENCIA_LABORAL, CURRICULUM, CONTRASENA, FOTO, AREA)
+                            VALUES ($rol,$estado,'$nombre', '$apellido', '$usuario', '$genero', '$correo', '$dni', '$profesion',  '$direccion', '$celular', '$referencia', '$celular_referencia', '$experiencia_laboral', '$curriculum','Da1234567','$foto', '$area')";
               
-         
-           echo '<script>
-                    alert("Categoria ya existe");
-                 </script>';
-                 mysqli_close($conn);
-         }else{ 
-
-                //si no existe una categoria permite insertar
-                $sql1 = "INSERT INTO tbl_categoria_producto (NOMBRE_CATEGORIA)
-                VALUES ('$categoria')";
-                if (mysqli_query($conn, $sql1)) {
-                  header('Location: ../../vistas/inventario/vista_categorias_productos.php');
-
-                } else {
-                        echo '<script>
-                                alert("Error al tratar de crear categoria");
-                              </script>'; mysqli_error($conn);
-                       }
+              if (mysqli_query($conn, $sql)) {
+                echo '<script>
+                              alert("Usuario creado con exito");
+                              window.location.href="../../vistas/personas/vista_administradores";
+                  </script>';
                 
-                mysqli_close($conn);
-
-              }                    
-
+              } else {
+                echo "Error: " . $sql . "<br>" . mysqli_error($conn);
+                
+              }
+              
+              mysqli_close($conn);
+            }
+            }
+           } // fin del else principal
+         
              
       break;
 
        //para editar en la tabla mysl      
       case "editar";
 
-        // valida si existe una categoria con el mismo nombre
-        $validar_categoria = "SELECT * FROM tbl_categoria_producto WHERE NOMBRE_CATEGORIA='$categoria'";
-        $result2 = mysqli_query($conn, $validar_categoria); 
-         if (mysqli_num_rows($result2) > 0) { 
+     
+
+                    // Edita en la tabla  tbl_usuarios
+                    $sql2 = "UPDATE tbl_usuarios SET ID_ROL='$rol', ID_ESTADO_USUARIO='$estado', NOMBRE='$nombre', APELLIDO='$apellido', USUARIO='$usuario', GENERO='$genero', CORREO='$correo', DNI='$dni', PROFESION='$profesion', DIRECCION='$direccion', CELULAR='$celular', REFERENCIA='$referencia', CEL_REFERENCIA='$celular_referencia', EXPERIENCIA_LABORAL='$experiencia_laboral', CURRICULUM='$curriculum', FOTO='$foto'  WHERE ID_USUARIO='$id_usuario'";
+                    if (mysqli_query($conn, $sql2)) {
+                      echo '<script>
+                              alert("Usuario editado con exito");
+                              window.location.href="../../vistas/personas/vista_administradores";
+                            </script>';
+
+                    }else{
+                              echo '<script>
+                                        alert("EUsuario editado con exito");
+                                        window.location.href="../../vistas/personas/vista_administradores";
+                                    </script>';
+
+                          mysqli_close($conn);
+                        }
+                       
+           
+
+
+
+
               
-         
-           echo '<script>
-                    alert("No se puede editar, ya existe una caregoria con ese nombre");
-                 </script>';
-                 mysqli_close($conn);
-         }else{ 
-
-                $sql2 = "UPDATE tbl_categoria_producto SET NOMBRE_CATEGORIA='$categoria' WHERE ID_CATEGORIA='$id_categoria'";
-                if (mysqli_query($conn, $sql2)) {
-                   header('Location: ../../vistas/inventario/vista_categorias_productos.php');
-
-                }else{
-                     echo '<script>
-                            alert("Error al tratar de editar categoria");
-                           </script>'; mysqli_error($conn);
-                     }
-
-                mysqli_close($conn);
-              }
-      
+              
       break;
       
       //para eliminar en la tabla mysl  
       case "eliminar";
 
-      $sql3 = "DELETE FROM tbl_categoria_producto WHERE ID_CATEGORIA='$id_categoria'";
+      $sql3 = "DELETE FROM tbl_usuarios WHERE ID_USUARIO='$id_usuario'";
       if (mysqli_query($conn, $sql3)) {
 
-          header('Location: ../../vistas/inventario/vista_categorias_productos.php');
+          header('Location: ../../vistas/personas/vista_administradores');
       }else{
               echo '<script>
                         alert("Error al tratar de eliminar categoria");

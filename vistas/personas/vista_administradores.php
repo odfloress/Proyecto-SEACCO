@@ -56,18 +56,104 @@ include '../../controladores/crud_administradores.php';
                 <div class="modal-body">
                     
                     <!-- Inicio del select de rol -->
-
+                    <label for="sel1" class="form-label">Rol:</label>
+                    <select  class="form-select"  name="rol" required >
+                        <option></option>
+                        <?php
+                        include '../../conexion/conexion.php';
+                        $roles = "SELECT * FROM tbl_roles ORDER BY ID_ROL";
+                        $roles2 = mysqli_query($conn, $roles);
+                        if (mysqli_num_rows($roles2) > 0) {
+                            while($row = mysqli_fetch_assoc($roles2))
+                            {
+                              $id = $row['ID_ROL'];
+                              $rol =$row['ROL'];
+                        ?>
+                          <option value="<?php  echo $id; ?>"><?php echo $rol?></option>
+                          <?php
+                           }}// finaliza el if y el while
+                           ?>
+                   </select>
                     <!-- Inicio del select de rol -->
-               
-                    <label for="">Usuario</label>
-                    <input type="text" class="form-control" name="categoria" required value="" placeholder="" id="txtPrecio_Compra"   >
-                    <br>
+                    <!-- Inicio del select deL estado -->
+                    <label for="sel1" class="form-label">Estado:</label>
+                    <select class="form-select"  name="estado" required >
+                        <option></option>
+                        <?php
+                        include '../../conexion/conexion.php';
+                        $estados = "SELECT * FROM tbl_estado_usuario ORDER BY ID_ESTADO_USUARIO";
+                        $estados2 = mysqli_query($conn, $estados);
+                        if (mysqli_num_rows($estados2) > 0) {
+                            while($row = mysqli_fetch_assoc($estados2))
+                            {
+                              $id = $row['ID_ESTADO_USUARIO'];
+                              $estado =$row['NOMBRE'];
+                        ?>
+                          <option value="<?php  echo $id; ?>"><?php echo $estado?></option>
+                          <?php
+                           }}// finaliza el if y el while
+                           ?>
+                   </select>
+                    <!-- Inicio del select deL estado -->
+                    
+                    <label for="">Nombres:</label>
+                    <input type="text" class="form-control" name="nombre" required value="" placeholder=""  >
+
+                    <label for="">Apellidos:</label>
+                    <input type="text" class="form-control" name="apellido" required value="" placeholder="" >
+
+                    <label for="">Usuario:</label>
+                    <input type="text" class="form-control" name="usuario" required value="" placeholder="" >
+
+                    <label for="">Correo:</label>
+                    <input type="text" class="form-control" name="correo" required value="" placeholder="" >
+                     
+                    <label for="">Genero:</label>
+                    <select class="form-select"  name="genero" required >
+                      <option value=""></option>
+                      <option value="">M</option>
+                      <option value="">F</option>
+                    </select>
+
+                    <label for="">DNI:</label>
+                    <input type="text" class="form-control" name="dni" required value="" placeholder="" >
+
+                    <label for="">Profesion:</label>
+                    <input type="text" class="form-control" name="profesion" required value="" placeholder="" >
+
+                    <label for="">Dirección:</label>
+                    <input type="text" class="form-control" name="direccion" required value="" placeholder="" >
+
+                    <label for="">Telefono:</label>
+                    <input type="text" class="form-control" name="celular" required value="" placeholder="" >
+                    
+                    <label for="">Referencia:</label>
+                    <input type="text" class="form-control" name="referencia" required value="" placeholder="" >
+
+                    <label for="">Telefono de referencia:</label>
+                    <input type="text" class="form-control" name="celular_referencia" required value="" placeholder="" >
+
+                    <label for="">Experiencia laboral:</label>
+                    <input type="text" class="form-control" name="experiencia_laboral" required value="" placeholder="" >
+
+                    <label for="">Curriculum:</label>
+                    <input type="text" class="form-control" name="curriculum" required value="" placeholder="" >
+
+                    <label for="">Foto:</label>
+                    <input type="text" class="form-control" name="foto" required value="" placeholder="" >
+
+                    <label for="pwd" class="form-label">Area:</label>
+                    <input class="form-control" autocomplete="off" maxlength="20" list="browsers1" type="text" id="calcular" name="area"  id="browser"  required >
+                    <datalist id="browsers1">
+                      <option value="ADMINISTRATIVA">
+                      <option value="MANO DE OBRA">
+                    </datalist> 
                 
                 </div>
                 <!-- Fin Cuerpo del modal Modal -->
                 <!-- pie del modal -->
                 <div class="modal-footer">
-      	            <button type="submit" name="accion" value="agregar" class="btn btn-primary" onclick="return confirm('¿Desea agregar la categoria?')">Agregar</button>
+      	            <button type="submit" name="accion" value="agregar" class="btn btn-primary" onclick="return confirm('¿Desea agregar un usuario?')">Agregar</button>
                     <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
                 </div>
                 <!-- Fin pie del modal -->
@@ -119,7 +205,6 @@ include '../../controladores/crud_administradores.php';
                   <th>Nombre</th>
                   <th>Apellido</th>
                   <th>Usuario</th>
-                  
                   <th>Correo</th>
                   <th>Genero</th>                  
                   <th>DNI</th>
@@ -129,9 +214,9 @@ include '../../controladores/crud_administradores.php';
                   <th>Referencia</th>
                   <th>Telefono referencia</th>
                   <th>Experiencia laboral</th>
-                  <th>Curriculum</th>
-                  <th>Verificación correo</th>                                   
+                  <th>Curriculum</th>                                                    
                   <th>Foto</th>
+                  <th>Area</th>
                   
                   </tr>
                   </thead>
@@ -140,7 +225,7 @@ include '../../controladores/crud_administradores.php';
 
                      ?>
                   <tr>
-                  <td>
+                  <td>  
                         <!-- inicio boton editar -->
                       <button type="button"  class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#myModal2<?php echo $filas['ID_USUARIO'] ?>" >
                       <i class="fas fa-pencil-alt"></i>
@@ -160,32 +245,124 @@ include '../../controladores/crud_administradores.php';
 
 
                                 <!-- Cuerpo del modal Modal -->
-                                <form action="" method="post">
-                                          <div class="modal-body">
-                                              <label for="">Id usuario</label>
-                                              <input type="text" readonly class="form-control" name="id_categoria" required value="<?php echo $filas['ID_USUARIO'] ?>" placeholder="" id="txtPrecio_Compra"   >
-                                              <br>
-                                              <label for="">Usuario:</label>
-                                              <input type="text" class="form-control" name="categoria" required value="<?php echo $filas['ID_ROL'] ?>" placeholder="" id="txtPrecio_Compra"   >
-                                              <br>
-                                          
-                                          </div>
-                                <!-- Fin Cuerpo del modal Modal -->
+                <form action="" method="post">
+                              
+                <div class="modal-body">
+                    <label for="">Id del Usuario:</label>
+                    <input type="text" class="form-control" readonly name="id_usuario" required value="<?php echo $filas['ID_USUARIO'] ?>"  placeholder=""  >
+                    <!-- Inicio del select de rol -->
+                    <label for="sel1" class="form-label">Rol:</label>
+                    <select  class="form-select"  name="rol" required >
+                        <option><?php echo $filas['ID_ROL'] ?></option>
+                        <?php
+                        include '../../conexion/conexion.php';
+                        $roles = "SELECT * FROM tbl_roles ORDER BY ID_ROL";
+                        $roles2 = mysqli_query($conn, $roles);
+                        if (mysqli_num_rows($roles2) > 0) {
+                            while($row = mysqli_fetch_assoc($roles2))
+                            {
+                              $id = $row['ID_ROL'];
+                              $rol =$row['ROL'];
+                        ?>
+                          <option value="<?php  echo $id; ?>"><?php echo $rol?></option>
+                          <?php
+                           }}// finaliza el if y el while
+                           ?>
+                   </select>
+                    <!-- Inicio del select de rol -->
+                    <!-- Inicio del select deL estado -->
+                    <label for="sel1" class="form-label">Estado:</label>
+                    <select class="form-select"  name="estado" required >
+                        <option><?php echo $filas['ID_ESTADO_USUARIO'] ?></option>
+                        <?php
+                        include '../../conexion/conexion.php';
+                        $estados = "SELECT * FROM tbl_estado_usuario ORDER BY ID_ESTADO_USUARIO";
+                        $estados2 = mysqli_query($conn, $estados);
+                        if (mysqli_num_rows($estados2) > 0) {
+                            while($row = mysqli_fetch_assoc($estados2))
+                            {
+                              $id = $row['ID_ESTADO_USUARIO'];
+                              $estado =$row['NOMBRE'];
+                        ?>
+                          <option value="<?php  echo $id; ?>"><?php echo $estado?></option>
+                          <?php
+                           }}// finaliza el if y el while
+                           ?>
+                   </select>
+                    <!-- Inicio del select deL estado -->
+                    
+                    <label for="">Nombres:</label>
+                    <input type="text" class="form-control" name="nombre" required value="<?php echo $filas['NOMBRE'] ?>"  placeholder=""  >
+
+                    <label for="">Apellidos:</label>
+                    <input type="text" class="form-control" name="apellido" required value="<?php echo $filas['APELLIDO'] ?>" placeholder="" >
+
+                    <label for="">Usuario:</label>
+                    <input type="text" class="form-control" name="usuario" required value="<?php echo $filas['USUARIO'] ?>" placeholder="" >
+
+                    <label for="">Correo:</label>
+                    <input type="text" class="form-control" name="correo" required value="<?php echo $filas['CORREO'] ?>" placeholder="" >
+                     
+                    <label for="">Genero:</label>
+                    <select class="form-select"  name="genero" required >
+                      <option value=""><?php echo $filas['GENERO'] ?></option>
+                      <option value="">M</option>
+                      <option value="">F</option>
+                    </select>
+
+                    <label for="">DNI:</label>
+                    <input type="text" class="form-control" name="dni" required value="<?php echo $filas['DNI'] ?>" placeholder="" >
+
+                    <label for="">Profesion:</label>
+                    <input type="text" class="form-control" name="profesion" required value="<?php echo $filas['PROFESION'] ?>" placeholder="" >
+
+                    <label for="">Dirección:</label>
+                    <input type="text" class="form-control" name="direccion" required value="<?php echo $filas['DIRECCION'] ?>" placeholder="" >
+
+                    <label for="">Telefono:</label>
+                    <input type="text" class="form-control" name="celular" required value="<?php echo $filas['CELULAR'] ?>" placeholder="" >
+                    
+                    <label for="">Referencia:</label>
+                    <input type="text" class="form-control" name="referencia" required value="<?php echo $filas['REFERENCIA'] ?>" placeholder="" >
+
+                    <label for="">Telefono de referencia:</label>
+                    <input type="text" class="form-control" name="celular_referencia" required value="<?php echo $filas['CEL_REFERENCIA'] ?>" placeholder="" >
+
+                    <label for="">Experiencia laboral:</label>
+                    <input type="text" class="form-control" name="experiencia_laboral" required value="<?php echo $filas['EXPERIENCIA_LABORAL'] ?>" placeholder="" >
+
+                    <label for="">Curriculum:</label>
+                    <input type="text" class="form-control" name="curriculum" required value="<?php echo $filas['CURRICULUM'] ?>" placeholder="" >
+
+                    <label for="">Foto:</label>
+                    <input type="text" class="form-control" name="foto" required value="<?php echo $filas['FOTO'] ?>" placeholder="" >
+
+                    <label for="pwd" class="form-label">Area:</label>
+                    <input class="form-control" autocomplete="off" maxlength="20" list="browsers1" type="text" id="calcular" name="area"  id="browser"  required >
+                    <datalist id="browsers1">
+                      <option value="<?php echo $filas['AREA'] ?>">
+                      <option value="ADMINISTRATIVA">
+                      <option value="MANO DE OBRA">
+                    </datalist> 
+                
+                </div>
+                <!-- Fin Cuerpo del modal Modal -->
 
                                 <!-- pie del modal -->
                                 <div class="modal-footer">
                                 <button type="submit" name="accion" value="editar" class="btn btn-primary" onclick="return confirm('¿Desea editar la categoria?')">Guardar</button>
                                   <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
                                 </div>
-                             
+                                </form>
                                   <!-- Fin pie del modal -->
-                                 
+                                  <form action="" method="post">
                               </div>
                             </div>
                           </div>
                           <!-- fin boton editar -->
-                         
-                         
+                          
+                          
+                            <input type="hidden" name="id_usuario"  value="<?php echo $filas['ID_USUARIO'] ?>">
                           
                       <button  value="eliminar" name="accion" 
                         onclick="return confirm('¿Quieres eliminar este dato?')"
@@ -209,9 +386,10 @@ include '../../controladores/crud_administradores.php';
                      <td><?php echo $filas['REFERENCIA'] ?></td>
                      <td><?php echo $filas['CEL_REFERENCIA'] ?></td>
                      <td><?php echo $filas['EXPERIENCIA_LABORAL'] ?></td>
-                     <td><?php echo $filas['CURRICULUM'] ?></td>
-                     <td><?php echo $filas['VERIFICASION_CORREO'] ?></td>
+                     <td><?php echo $filas['CURRICULUM'] ?></td>                     
                      <td><?php echo $filas['FOTO'] ?></td>
+                     <td><?php echo $filas['AREA'] ?></td>
+
                      
                      
                     
