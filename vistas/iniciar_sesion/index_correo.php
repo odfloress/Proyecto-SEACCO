@@ -8,7 +8,7 @@ use PHPMailer\PHPMailer\Exception;
 use PHPMailer\PHPMailer\SMTP;
 
 $result="";
-$enlace = "http://localhost:8000/Proyecto-SEACCO/vistas/iniciar_sesion/index_restablecer.php";
+$enlace = "http://localhost/SEACCO/vistas/iniciar_sesion/index_restablecer.php";
 
 if(isset($_POST['submit'])){
     require '../../PHPMailer/Exception.php';
