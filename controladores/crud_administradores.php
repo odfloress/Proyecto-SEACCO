@@ -12,7 +12,7 @@
   $nombre=(isset($_POST['nombre']))?$_POST['nombre']:"";
   $apellido=(isset($_POST['apellido']))?$_POST['apellido']:"";
   $usuario=(isset($_POST['usuario']))?$_POST['usuario']:"";
-  // $contrasena=(isset($_POST['contrasena']))?$_POST['contrasena']:"";
+  $contrasena=(isset($_POST['contrasena']))?$_POST['contrasena']:"";
   $correo=(isset($_POST['correo']))?$_POST['correo']:"";
   $genero=(isset($_POST['genero']))?$_POST['genero']:"";
   $dni=(isset($_POST['dni']))?$_POST['dni']:"";
@@ -25,10 +25,14 @@
   $curriculum=(isset($_POST['curriculum']))?$_POST['curriculum']:"";
   $foto=(isset($_POST['foto']))?$_POST['foto']:"";  
   $area=(isset($_POST['area']))?$_POST['area']:"";
+  $usuario1 = $_SESSION; 
 
   //variable para recuperar los botones de la vista administradores  
   $accion=(isset($_POST['accion']))?$_POST['accion']:"";
   
+  // encripta la contraseña
+  $contrasena= hash('sha512', $contrasena);
+
   
   switch($accion){
       //para insertar en la tabla mysl
@@ -75,13 +79,24 @@
 
               // Inserta en la tabla tbl_usuarios
               $sql = "INSERT INTO tbl_usuarios (ID_ROL, ID_ESTADO_USUARIO, NOMBRE, APELLIDO, USUARIO, GENERO, CORREO, DNI, PROFESION, DIRECCION, CELULAR, REFERENCIA, CEL_REFERENCIA, EXPERIENCIA_LABORAL, CURRICULUM, CONTRASENA, FOTO, AREA)
-                            VALUES ($rol,$estado,'$nombre', '$apellido', '$usuario', '$genero', '$correo', '$dni', '$profesion',  '$direccion', '$celular', '$referencia', '$celular_referencia', '$experiencia_laboral', '$curriculum','Da1234567','$foto', '$area')";
+                            VALUES ($rol,$estado,'$nombre', '$apellido', '$usuario', '$genero', '$correo', '$dni', '$profesion',  '$direccion', '$celular', '$referencia', '$celular_referencia', '$experiencia_laboral', '$curriculum','$contrasena','$foto', '$area')";
               
               if (mysqli_query($conn, $sql)) {
                 echo '<script>
                               alert("Usuario creado con exito");
                               window.location.href="../../vistas/personas/vista_administradores";
                   </script>';
+
+                  // inicio inserta en la tabla bitacora
+                  $sql = "INSERT INTO tbl_bitacora (ID_USUARIO, ID_OBJETO, USUARIO, ACCION, OBSERVACION)
+                  VALUES (2, 1, '$usuario1[usuario]', 'INSERTO', 'CREO AL USUARIO $usuario')";
+                  
+                  if (mysqli_query($conn, $sql)) {
+                    
+                  } else {
+                  
+                  }
+                 // fin inserta en la tabla bitacora
                 
               } else {
                 echo "Error: " . $sql . "<br>" . mysqli_error($conn);
@@ -109,6 +124,17 @@
                               window.location.href="../../vistas/personas/vista_administradores";
                             </script>';
 
+                            // inicio inserta en la tabla bitacora
+                                $sql = "INSERT INTO tbl_bitacora (ID_USUARIO, ID_OBJETO, USUARIO, ACCION, OBSERVACION)
+                                VALUES (2, 1, '$usuario1[usuario]', 'EDITO', 'EDITO AL USUARIO $usuario')";
+                                
+                                if (mysqli_query($conn, $sql)) {
+                                  
+                                } else {
+                                
+                                }
+                          // fin inserta en la tabla bitacora
+
                     }else{
                               echo '<script>
                                         alert("EUsuario editado con exito");
@@ -129,14 +155,25 @@
       
       //para eliminar en la tabla mysl  
       case "eliminar";
+        // inicio inserta en la tabla bitacora
+        $sql = "INSERT INTO tbl_bitacora (ID_USUARIO, ID_OBJETO, USUARIO, ACCION, OBSERVACION)
+        VALUES (2, 1, '$usuario1[usuario]', 'ELIMINO', 'ELIMINO AL USUARIO CON ID: $id_usuario')";
+        
+        if (mysqli_query($conn, $sql)) {
+          
+        } else {
+        
+        }
+        // fin inserta en la tabla bitacora
 
       $sql3 = "DELETE FROM tbl_usuarios WHERE ID_USUARIO='$id_usuario'";
       if (mysqli_query($conn, $sql3)) {
+        
 
           header('Location: ../../vistas/personas/vista_administradores');
       }else{
               echo '<script>
-                        alert("Error al tratar de eliminar categoria");
+                        alert("Error al tratar de eliminar usuario");
                     </script>'; mysqli_error($conn);
            }
         mysqli_close($conn);

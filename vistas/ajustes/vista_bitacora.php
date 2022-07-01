@@ -8,6 +8,9 @@ if(!isset($_SESSION['usuario'])){
         die();
         
 }
+include '../../controladores/crud_bitacora.php';
+
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -75,25 +78,23 @@ if(!isset($_SESSION['usuario'])){
                     <th>Fecha</th>
                     <th>Usuario</th>
                     <th>Acción</th>
+                    <th>Observacion</th>
                   </tr>
                   </thead>
                   <tbody>
-                  <tr>
-                    <td>5/8/2022 7:00am</td>
-                    <td>Empleado</td>
-                    <td>Modificar fotografia</td>                        
-                 </tr>  
-                 <tr>
-                    <td>8/10/2022 7:07am</td>
-                    <td>Admin</td>
-                    <td>Agrego usuario</td>                        
-                 </tr> 
-                 <tr>
-                    <td>10/4/2022 7:14am</td>
-                    <td>Admin</td>
-                    <td>elimino usuario</td>                        
-                 </tr>
+                  <?php 
                   
+                 
+                  while ($filas= mysqli_fetch_assoc($result)){
+                    ?>
+                  <tr>
+                    <td><?php echo $filas['FECHA'] ?></td>
+                    <td><?php echo $filas['USUARIO'] ?></td>
+                    <td><?php echo $filas['ACCION'] ?></td> 
+                    <td><?php echo $filas['OBSERVACION'] ?></td>                         
+                 </tr>  
+               
+                 <?php } ?>  
                   
                   </tfoot>
                 </table>

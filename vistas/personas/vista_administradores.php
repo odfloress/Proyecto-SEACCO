@@ -97,16 +97,19 @@ include '../../controladores/crud_administradores.php';
                     <!-- Inicio del select deL estado -->
                     
                     <label for="">Nombres:</label>
-                    <input type="text" class="form-control" name="nombre" required value="" placeholder=""  >
+                    <input type="text" class="form-control" name="nombre" required value="" placeholder="" autocomplete="off" onkeyup="mayus(this);" maxlength="30" >
 
                     <label for="">Apellidos:</label>
-                    <input type="text" class="form-control" name="apellido" required value="" placeholder="" >
+                    <input type="text" class="form-control" name="apellido" required value="" placeholder="" autocomplete="off" onkeyup="mayus(this);" maxlength="30" >
 
                     <label for="">Usuario:</label>
-                    <input type="text" class="form-control" name="usuario" required value="" placeholder="" >
+                    <input type="text" class="form-control" name="usuario" required value="" autocomplete = "off"  onkeypress="return soloLetras(event);" minlength="3" maxlength="20" onkeyup="mayus(this);" required onblur="quitarespacios(this);" onkeydown="sinespacio(this);">
+
+                    <label for="">Contraseña:</label>
+                    <input type="password" class="form-control" name="contrasena" title="una mayuscula, minuscula, 8 caracteres, un 1 numero  " value="" minlength="8" maxlength="30" required onblur="quitarespacios(this);" onkeyup="sinespacio(this);" pattern="(?=.*[\d])(?=.*[a-z])(?=.*[A-Z]).{8,}">
 
                     <label for="">Correo:</label>
-                    <input type="text" class="form-control" name="correo" required value="" placeholder="" >
+                    <input type="email" class="form-control" name="correo" required value="" autocomplete="off" placeholder="" > 
                      
                     <label for="">Genero:</label>
                     <select class="form-select"  name="genero" required >
@@ -116,34 +119,34 @@ include '../../controladores/crud_administradores.php';
                     </select>
 
                     <label for="">DNI:</label>
-                    <input type="text" class="form-control" name="dni" required value="" placeholder="" >
+                    <input type="text" class="form-control" name="dni" required value="" autocomplete="off" minlength="15" maxlength="15"  onkeypress="return solonumero(event)" placeholder="0000-0000-000000" >
 
                     <label for="">Profesion:</label>
-                    <input type="text" class="form-control" name="profesion" required value="" placeholder="" >
-
+                    <input type="text" class="form-control" name="profesion" required value="" autocomplete="off" onkeyup="mayus(this);" maxlength="30" >
+ 
                     <label for="">Dirección:</label>
-                    <input type="text" class="form-control" name="direccion" required value="" placeholder="" >
+                    <input type="text" class="form-control" name="direccion" required value="" autocomplete="off" onkeyup="mayus(this);" maxlength="70" >
 
                     <label for="">Telefono:</label>
-                    <input type="text" class="form-control" name="celular" required value="" placeholder="" >
+                    <input type="number" autocomplete="off" class="form-control" name="celular" required value="" placeholder="" >
                     
                     <label for="">Referencia:</label>
-                    <input type="text" class="form-control" name="referencia" required value="" placeholder="" >
+                    <input type="text" class="form-control" name="referencia" required value="" autocomplete="off" onkeyup="mayus(this);" maxlength="30" >
 
                     <label for="">Telefono de referencia:</label>
-                    <input type="text" class="form-control" name="celular_referencia" required value="" placeholder="" >
+                    <input type="number" autocomplete="off"  class="form-control" name="celular_referencia" required value="" placeholder="" >
 
                     <label for="">Experiencia laboral:</label>
-                    <input type="text" class="form-control" name="experiencia_laboral" required value="" placeholder="" >
+                    <input type="text" class="form-control" name="experiencia_laboral" required value="" autocomplete="off" onkeyup="mayus(this);" maxlength="30" >
 
                     <label for="">Curriculum:</label>
-                    <input type="text" class="form-control" name="curriculum" required value="" placeholder="" >
+                    <input type="file" class="form-control" name="curriculum"  value="" placeholder="Opcional" >
 
                     <label for="">Foto:</label>
-                    <input type="text" class="form-control" name="foto" required value="" placeholder="" >
+                    <input type="file" class="form-control" name="foto" value="" placeholder="Opcional" >
 
                     <label for="pwd" class="form-label">Area:</label>
-                    <input class="form-control" autocomplete="off" maxlength="20" list="browsers1" type="text" id="calcular" name="area"  id="browser"  required >
+                    <input class="form-control" autocomplete="off" maxlength="20" list="browsers1" type="text" id="calcular" name="area"  id="browser"  required autocomplete="off" onkeyup="mayus(this);" maxlength="30" >
                     <datalist id="browsers1">
                       <option value="ADMINISTRATIVA">
                       <option value="MANO DE OBRA">
@@ -292,16 +295,19 @@ include '../../controladores/crud_administradores.php';
                     <!-- Inicio del select deL estado -->
                     
                     <label for="">Nombres:</label>
-                    <input type="text" class="form-control" name="nombre" required value="<?php echo $filas['NOMBRE'] ?>"  placeholder=""  >
+                    <input type="text" class="form-control" name="nombre" required value="<?php echo $filas['NOMBRE'] ?>"  autocomplete="off" onkeyup="mayus(this);" maxlength="30" >
 
                     <label for="">Apellidos:</label>
-                    <input type="text" class="form-control" name="apellido" required value="<?php echo $filas['APELLIDO'] ?>" placeholder="" >
+                    <input type="text" class="form-control" name="apellido" required value="<?php echo $filas['APELLIDO'] ?>" autocomplete="off" onkeyup="mayus(this);" maxlength="30" >
 
                     <label for="">Usuario:</label>
-                    <input type="text" class="form-control" name="usuario" required value="<?php echo $filas['USUARIO'] ?>" placeholder="" >
+                    <input type="text" readonly class="form-control" name="usuario" required value="<?php echo $filas['USUARIO'] ?>" placeholder="" >
+
+                    <!-- <label for="">Contraseña:</label>
+                    <input type="password" class="form-control" name="contrasena" required value="<?php echo $filas['USUARIO'] ?>" onblur="quitarespacios(this);" onkeyup="sinespacio(this);" pattern="(?=.*[\d])(?=.*[a-z])(?=.*[A-Z]).{8,}"> -->
 
                     <label for="">Correo:</label>
-                    <input type="text" class="form-control" name="correo" required value="<?php echo $filas['CORREO'] ?>" placeholder="" >
+                    <input type="email" class="form-control" name="correo" required value="<?php echo $filas['CORREO'] ?>" placeholder="" >
                      
                     <label for="">Genero:</label>
                     <select class="form-select"  name="genero" required >
@@ -311,31 +317,32 @@ include '../../controladores/crud_administradores.php';
                     </select>
 
                     <label for="">DNI:</label>
-                    <input type="text" class="form-control" name="dni" required value="<?php echo $filas['DNI'] ?>" placeholder="" >
+                    <input type="text" class="form-control" name="dni" required value="<?php echo $filas['DNI'] ?>" autocomplete="off" minlength="15" maxlength="15"  onkeypress="return solonumero(event)" placeholder="0000-0000-000000" >
 
                     <label for="">Profesion:</label>
-                    <input type="text" class="form-control" name="profesion" required value="<?php echo $filas['PROFESION'] ?>" placeholder="" >
+                    <input type="text" class="form-control" name="profesion" required value="<?php echo $filas['PROFESION'] ?>" autocomplete="off" onkeyup="mayus(this);" maxlength="30" >
 
                     <label for="">Dirección:</label>
-                    <input type="text" class="form-control" name="direccion" required value="<?php echo $filas['DIRECCION'] ?>" placeholder="" >
+                    <input type="text" class="form-control" name="direccion" required value="<?php echo $filas['DIRECCION'] ?>" autocomplete="off" onkeyup="mayus(this);" maxlength="70" >
 
                     <label for="">Telefono:</label>
-                    <input type="text" class="form-control" name="celular" required value="<?php echo $filas['CELULAR'] ?>" placeholder="" >
+                    <input type="number" class="form-control" name="celular" required value="<?php echo $filas['CELULAR'] ?>" placeholder="" >
                     
                     <label for="">Referencia:</label>
-                    <input type="text" class="form-control" name="referencia" required value="<?php echo $filas['REFERENCIA'] ?>" placeholder="" >
+                    <input type="text" class="form-control" name="referencia" required value="<?php echo $filas['REFERENCIA'] ?>" autocomplete="off" onkeyup="mayus(this);" maxlength="70" >
 
                     <label for="">Telefono de referencia:</label>
-                    <input type="text" class="form-control" name="celular_referencia" required value="<?php echo $filas['CEL_REFERENCIA'] ?>" placeholder="" >
+                    <input type="number" class="form-control" name="celular_referencia" required value="<?php echo $filas['CEL_REFERENCIA'] ?>" placeholder="" >
 
                     <label for="">Experiencia laboral:</label>
-                    <input type="text" class="form-control" name="experiencia_laboral" required value="<?php echo $filas['EXPERIENCIA_LABORAL'] ?>" placeholder="" >
+                    <input type="text" class="form-control" name="experiencia_laboral" required value="<?php echo $filas['EXPERIENCIA_LABORAL'] ?>" autocomplete="off" onkeyup="mayus(this);" maxlength="30" >
 
                     <label for="">Curriculum:</label>
-                    <input type="text" class="form-control" name="curriculum" required value="<?php echo $filas['CURRICULUM'] ?>" placeholder="" >
+                    <input type="file" class="form-control" name="curriculum"  value="<?php echo $filas['CURRICULUM'] ?>" placeholder="" >
 
                     <label for="">Foto:</label>
-                    <input type="text" class="form-control" name="foto" required value="<?php echo $filas['FOTO'] ?>" placeholder="" >
+                  
+                    <input type="file" class="form-control" name="foto" value="<?php echo $filas['FOTO'] ?>" placeholder="" >
 
                     <label for="pwd" class="form-label">Area:</label>
                     <input class="form-control" autocomplete="off" maxlength="20" list="browsers1" type="text" id="calcular" name="area"  id="browser"  required >
@@ -363,6 +370,7 @@ include '../../controladores/crud_administradores.php';
                           
                           
                             <input type="hidden" name="id_usuario"  value="<?php echo $filas['ID_USUARIO'] ?>">
+                            
                           
                       <button  value="eliminar" name="accion" 
                         onclick="return confirm('¿Quieres eliminar este dato?')"
@@ -387,7 +395,7 @@ include '../../controladores/crud_administradores.php';
                      <td><?php echo $filas['CEL_REFERENCIA'] ?></td>
                      <td><?php echo $filas['EXPERIENCIA_LABORAL'] ?></td>
                      <td><?php echo $filas['CURRICULUM'] ?></td>                     
-                     <td><?php echo $filas['FOTO'] ?></td>
+                     <td><img class="img-thumbnail" width="100px" src="../../imagenes/<?php echo $filas['FOTO'] ?>" /></td>
                      <td><?php echo $filas['AREA'] ?></td>
 
                      
@@ -465,6 +473,90 @@ include '../../controladores/crud_administradores.php';
     });
   });
 </script>
+
 </body>
 <script type="text/javascript" src="../../js/evitar_reenvio.js"></script>
 </html>
+
+
+<script>
+      function soloLetras(e){
+       key = e.keyCode || e.which;
+       tecla = String.fromCharCode(key).toLowerCase();
+       letras = " áéíóúabcdefghijklmnñopqrstuvwxyz";
+       especiales = ["8-37-39-46"];
+
+       tecla_especial = false
+       for(var i in especiales){
+        if(key == especiales[i]){
+          tecla_especial = true;
+          break;
+        }
+      }
+
+      if(letras.indexOf(tecla)==-1 && !tecla_especial){
+        return false;
+      }
+    }
+  </script>
+
+
+    <script type="text/javascript">
+  
+        function mayus(e) {
+          e.value = e.value.toUpperCase();
+         }
+    </script>
+
+
+    <script type="text/javascript">
+
+        function sinespacio(e) {
+
+        var cadena =  e.value;
+        var limpia = "";
+        var parts = cadena.split(" ");
+        var length = parts.length;
+
+          for (var i = 0; i < length; i++) {
+              nuevacadena = parts[i];
+              subcadena = nuevacadena.trim();
+
+          if(subcadena != "") {
+             limpia += subcadena + " ";
+                }
+          }
+        limpia = limpia.trim();
+        e.value = limpia;
+
+         };
+     </script>
+
+ <script type="text/javascript">
+
+    function quitarespacios(e) {
+
+      var cadena =  e.value;
+      cadena = cadena.trim();
+
+      e.value = cadena;
+
+    };
+
+  </script>
+
+
+
+
+
+
+<script type="text/javascript"> function solonumero(e) {
+        tecla = (document.all) ? e.keyCode : e.which;
+        if (tecla==8) return true;
+        else if (tecla==0||tecla==9)  return true;
+       // patron =/[0-9\s]/;// -> solo letras
+        patron =/[0-9-\s]/;// -> solo numeros
+        te = String.fromCharCode(tecla);
+        return patron.test(te);
+    }
+	</script>

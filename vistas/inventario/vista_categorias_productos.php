@@ -115,7 +115,7 @@ include '../../controladores/crud_categoria_productos.php';
                   </thead>
                   <tbody>
                     <?php while ($filas= mysqli_fetch_assoc($result)){
-
+ 
                      ?>
                   <tr>
                   <td>
