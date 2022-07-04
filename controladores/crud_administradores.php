@@ -93,8 +93,7 @@
                   
                   if (mysqli_query($conn, $sql)) {
                     
-                  } else {
-                  
+                  } else {                 
                   }
                  // fin inserta en la tabla bitacora
                 
@@ -144,9 +143,7 @@
                           mysqli_close($conn);
                         }
                        
-           
-
-
+      
 
 
               

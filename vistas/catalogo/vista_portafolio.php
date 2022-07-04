@@ -8,6 +8,8 @@ if(!isset($_SESSION['usuario'])){
         die();
         
 }
+
+include '../../controladores/crud_portafolio.php'
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -35,7 +37,7 @@ if(!isset($_SESSION['usuario'])){
             Nuevo
         </button>
     </div>
-
+    
 <!-- El Modal -->
     <div class="modal" id="myModal">
         <div class="modal-dialog">
@@ -46,28 +48,38 @@ if(!isset($_SESSION['usuario'])){
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
                 <!-- Fin Encabezado del modal -->
-
+                <form action="" method="post" enctype="multipart/form-data">
                 <!-- Cuerpo del modal Modal -->
                 <div class="modal-body">
-                <label for="">Id Portafolio</label>
-                    <input type="text" class="form-control" name="txtPrecio_Compra" required value="" placeholder="" id="txtPrecio_Compra"   >
+                <label for="">Tipo</label>
+                    <input type="text" class="form-control" readonly value="PORTAFOLIO" name="tipo" required value="" placeholder="" id="txtPrecio_Compra"   >
                     <br>
-                    <label for="">Portafolio</label>
-                    <input type="text" class="form-control" name="txtPrecio_Compra" required value="" placeholder="" id="txtPrecio_Compra"   >
+                    <label for="">Imagen</label>
+                    <input type="file" class="form-control" name="imagenes" required value="" placeholder="" id="txtPrecio_Compra"   >
                     <br>
+                    <label for="">Titulo</label>
+                    <input type="text" class="form-control"  name="tutulo" required value="" placeholder="" id="txtPrecio_Compra"   >
+                    <br>
+                    <label for="">Descripción</label>
+                    <input type="text" class="form-control"  name="descripcion" required value="" placeholder="" id="txtPrecio_Compra"   >
+                    <br>
+                    
                 
                 </div>
                 <!-- Fin Cuerpo del modal Modal -->
                 <!-- pie del modal -->
                 <div class="modal-footer">
-      	            <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Agregar</button>
+      	            <button type="submit" value="aceptar" class="btn btn-primary" >Agregar</button>
                     <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
                 </div>
                 <!-- Fin pie del modal -->
             </div>
         </div>
     </div>
+    </form>
     <!-- Fin  de modal de agregar --> <br>
+
+
           </div>
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
