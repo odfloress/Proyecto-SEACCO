@@ -15,59 +15,70 @@ if(isset($_POST['submit'])){
     require '../../PHPMailer/PHPMailer.php';
     require '../../PHPMailer/SMTP.php';
 
+    $correo=(isset($_POST['correo']))?$_POST['correo']:"";
+
     $mail = new PHPMailer(true);
+  // Valida que exista el correo
+  $validar_correo = "SELECT * FROM tbl_usuarios WHERE CORREO='$correo'";
+  $resultado = mysqli_query($conn, $validar_correo); 
+  if (mysqli_num_rows($resultado) > 0) { 
 
-try {
+      try {
 
-    $mail->SMTPOptions = array(
-        'ssl' => array(
-        'verify_peer' => false,
-        'verify_peer_name' => false,
-        'allow_self_signed' => true
-        )
-    );
+          $mail->SMTPOptions = array(
+              'ssl' => array(
+              'verify_peer' => false,
+              'verify_peer_name' => false,
+              'allow_self_signed' => true
+              )
+          );
 
-    //Server settings
-    $mail->SMTPDebug = 0;                      //Enable verbose debug output
-    $mail->isSMTP();                                            //Send using SMTP
-    $mail->Host       = 'smtp.gmail.com';                     //Set the SMTP server to send through
-    $mail->SMTPAuth   = true;                                   //Enable SMTP authentication
-    $mail->Username   = 'seaccoc@gmail.com';                     //SMTP username
-    $mail->Password   = 'lveucqeygmxrtigm';                               //SMTP password
-    $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;            //Enable implicit TLS encryption
-    $mail->Port       = 465;                                    //TCP port to connect to; use 587 if you have set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`
+          //Server settings
+          $mail->SMTPDebug = 0;                      //Enable verbose debug output
+          $mail->isSMTP();                                            //Send using SMTP
+          $mail->Host       = 'smtp.gmail.com';                     //Set the SMTP server to send through
+          $mail->SMTPAuth   = true;                                   //Enable SMTP authentication
+          $mail->Username   = 'seaccoc@gmail.com';                     //SMTP username
+          $mail->Password   = 'lveucqeygmxrtigm';                               //SMTP password
+          $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;            //Enable implicit TLS encryption
+          $mail->Port       = 465;                                    //TCP port to connect to; use 587 if you have set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`
 
-    //Recipients
-    $mail->setFrom('seaccoc@gmail.com', 'Constructora SEACO');
-    $mail->addAddress($_POST['correo'],'Usuario');     //Add a recipient
-    //$mail->addAddress('ellen@example.com');               //Name is optional
-    //$mail->addReplyTo('info@example.com', 'Information');
-    //$mail->addCC('cc@example.com');
-    //$mail->addBCC('bcc@example.com');
+          //Recipients
+          $mail->setFrom('seaccoc@gmail.com', 'Constructora SEACO');
+          $mail->addAddress($_POST['correo'],'Usuario');     //Add a recipient
+          //$mail->addAddress('ellen@example.com');               //Name is optional
+          //$mail->addReplyTo('info@example.com', 'Information');
+          //$mail->addCC('cc@example.com');
+          //$mail->addBCC('bcc@example.com');
 
-    //Attachments
-    //$mail->addAttachment('/var/tmp/file.tar.gz');         //Add attachments
-    //$mail->addAttachment('/tmp/image.jpg', 'new.jpg');    //Optional name
+          //Attachments
+          //$mail->addAttachment('/var/tmp/file.tar.gz');         //Add attachments
+          //$mail->addAttachment('/tmp/image.jpg', 'new.jpg');    //Optional name
 
-    //Content
-    $mail->isHTML(true);                                  //Set email format to HTML
-    $mail->Subject = 'Cambio de contraseña';
-    $mail->Body    = 'Ingrese al enlace para cambiar la contraseña: </b>'.$enlace ;
-    //$mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
+          //Content
+          $mail->isHTML(true);                                  //Set email format to HTML
+          $mail->Subject = 'Cambio de contraseña';
+          $mail->Body    = 'Ingrese al enlace para cambiar la contraseña: </b>'.$enlace ;
+          //$mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
 
-    $mail->send();
-        echo '<script>
-                alert("Correo enviado exitosamente");
-            </script>';
-} catch (Exception $e) {
-    echo "Error al enviar el mensaje: {$mail->ErrorInfo}";
-}
-    if(!$mail->send()){
-        $result="Algo esta mal, por favor inténtelo de nuevo.";
-    }
-    else{
-        $result="Gracias correo enviado exitosamente. Revise su correo!!!";
-    }
+          $mail->send();
+              echo '<script>
+                      alert("Correo enviado exitosamente");
+                  </script>';
+      } catch (Exception $e) {
+          echo "Error al enviar el mensaje: {$mail->ErrorInfo}";
+      }
+          if(!$mail->send()){
+              $result="Algo esta mal, por favor inténtelo de nuevo.";
+          }
+          else{
+              $result="Gracias correo enviado exitosamente. Revise su correo!!!";
+          }
+  }else{
+    echo '<script>
+            alert("El correo no existe");
+          </script>';
+  }
 }
 ?>
 
