@@ -15,6 +15,46 @@
   switch($accion){
     case "ingresar": 
 
+      // Valida que exista el usuario y contraseña y que sea superadmin
+     $validar_usuario = "SELECT * FROM tbl_usuarios WHERE USUARIO='$usuario' and CONTRASENA='$contrasena' and ID_ROL=3";
+     $result = mysqli_query($conn, $validar_usuario); 
+      if (mysqli_num_rows($result) > 0) { 
+
+        $_SESSION['usuario'] = $usuario;
+        header('Location: vistas/tablero/vista_tablero.php');
+
+         // inicio inserta en la tabla bitacora
+         $sql = "INSERT INTO tbl_bitacora (ID_USUARIO, ID_OBJETO, USUARIO, ACCION, OBSERVACION)
+         VALUES (2, 1, '$usuario', 'INGRESO', 'EL USUARIO $usuario (SUPERADMIN) SE LOGUIO')";
+         
+         if (mysqli_query($conn, $sql)) {
+           
+         } else {}
+         // fin inserta en la tabla bitacora
+        
+        //Deja en cero los intentos fallidos
+         $conn = new mysqli($servername, $username, $password, $dbname);
+         $sql =  "UPDATE tbl_usuarios SET intentos=0 WHERE usuario='$usuario'";
+         if ($conn->query($sql) === TRUE) {}
+         exit() ;
+      }else{
+
+      // Valida si estado es inactivo
+     $validar_usuario = "SELECT * FROM tbl_usuarios WHERE USUARIO='$usuario' and CONTRASENA='$contrasena' and ID_ESTADO_USUARIO=2";
+     $result = mysqli_query($conn, $validar_usuario); 
+      if (mysqli_num_rows($result) > 0) { 
+
+        echo '<script>
+                alert("Su cuenta esta inactiva por favor contactarse cono el administrador");
+                window.Location = "/_login.php";
+             </script>';
+            mysqli_close($conn);
+
+      }else{
+        
+        
+
+
      // Valida que exista el usuario y contraseña
      $validar_usuario = "SELECT * FROM tbl_usuarios WHERE USUARIO='$usuario' and CONTRASENA='$contrasena'";
      $result = mysqli_query($conn, $validar_usuario); 
@@ -90,7 +130,8 @@
                      </script>';
                      mysqli_close($conn);
                } 
-            }                    
+            }  } 
+          }  // fin el if que valida si es superadmin            
     break;
       // si el valor del boton no es ingresar cierra cualquier conexion que exista a la BD
     default:

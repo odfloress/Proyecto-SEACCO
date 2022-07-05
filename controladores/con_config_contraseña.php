@@ -25,14 +25,30 @@
 
             $confirmar_contrasena= hash('sha512', $confirmar_contrasena);
             $conn = new mysqli($servername, $username, $password, $dbname);
-             $sql =  "UPDATE tbl_usuarios SET CONTRASENA='$confirmar_contrasena' WHERE usuario='$usuario[usuario]'";
+             $sql =  "UPDATE tbl_usuarios SET CONTRASENA='$confirmar_contrasena', ID_ESTADO_USUARIO=2 WHERE usuario='$usuario[usuario]'";
               if ($conn->query($sql) === TRUE) {
-               echo '<script>
-                        alert("excelente");
-                        window.Location = "/_login.php";
-                     </script>';
+                 
+                // inicio inserta en la tabla bitacora
+                    $sql7 = "INSERT INTO tbl_bitacora (ID_USUARIO, ID_OBJETO, USUARIO, ACCION, OBSERVACION)
+                    VALUES (2, 1, '$usuario[usuario]', 'ACTUALIZO', 'EL SUARIO $usuario[usuario] ACTUALIZO SU CONTRASEÑA')";
+                    
+                    if (mysqli_query($conn, $sql7)) {
+                      
+                    } else {
+                    
+                    }
+                // fin inserta en la tabla bitacora
+               
+                echo '<script>
+                             alert("Contraseña Actualizada");
+                           window.location.href="../../_login";
+                        </script>';
+                        session_unset();
+
+                        // destroy the session
+                        session_destroy();
                      mysqli_close($conn);
-                     header('Location: ../tablero/vista_tablero.php');
+                    //  header('Location: ../tablero/vista_tablero.php');
                      exit();
                } 
             
