@@ -459,6 +459,7 @@ include '../../controladores/crud_administradores.php';
 <script>
   $(function () {
     $("#example1").DataTable({
+      
       language: {
                           processing: "Tratamiento en curso...",
                           search: "Buscar&nbsp;:",
@@ -479,11 +480,27 @@ include '../../controladores/crud_administradores.php';
                               aria: {
                                       sortAscending: ": active para ordenar la columna en orden ascendente",
                                       sortDescending: ": active para ordenar la columna en orden descendente"
-                                    }
-                         },
+                                    },
 
-                         "responsive": true, "lengthChange": false, "autoWidth": false,
-                          "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"],  
+                          buttons:{
+                            "copy": "Copiar",
+                            "colvis": "Visibilidad",
+                            "collection": "Colección",
+                            "colvisRestore": "Restaurar visibilidad",
+                            "copyKeys": "Presione ctrl o u2318 + C para copiar los datos de la tabla al portapapeles del sistema. <br \/> <br \/> Para cancelar, haga clic en este mensaje o presione escape.",
+                            "copySuccess": {
+                                "1": "Copiada 1 fila al portapapeles",
+                                "_": "Copiadas %ds fila al portapapeles"
+                                },
+                                },    
+                         },
+                         
+                         "responsive": true, "lengthChange": true, "autoWidth": false,
+                          "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"],
+
+                        
+
+                         
         
     })
 
