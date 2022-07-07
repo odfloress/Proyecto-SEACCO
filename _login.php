@@ -21,7 +21,41 @@ body {
 }
 
 </style>
+<?php $ocultar = '';?>
+<!-- inicio evitar si preciona F12, si preciona Ctrl+Shift+I, si preciona Ctr+u -->
 
+<script>
+document.onkeydown = function(e) {
+if(event.keyCode == 123) {
+return false;
+}
+if(e.ctrlKey && e.keyCode == 'E'.charCodeAt(0)){
+return false;
+}
+if(e.ctrlKey && e.shiftKey && e.keyCode == 'I'.charCodeAt(0)){
+return false;
+}
+if(e.ctrlKey && e.shiftKey && e.keyCode == 'J'.charCodeAt(0)){
+return false;
+}
+if(e.ctrlKey && e.keyCode == 'U'.charCodeAt(0)){
+return false;
+}
+if(e.ctrlKey && e.keyCode == 'S'.charCodeAt(0)){
+return false;
+}
+if(e.ctrlKey && e.keyCode == 'H'.charCodeAt(0)){
+return false;
+}
+if(e.ctrlKey && e.keyCode == 'A'.charCodeAt(0)){
+return false;
+}
+if(e.ctrlKey && e.keyCode == 'E'.charCodeAt(0)){
+return false;
+}
+}
+</script>
+<!-- Fin evitar si preciona F12, si preciona Ctrl+Shift+I, si preciona Ctr+u -->
 
    <!-- inicio script para validar que solo sean mayusculas las letras del usuario -->
 <script>
@@ -52,6 +86,7 @@ function SoloLetras(e) {
 </head>
 <!-- oncopy="return false" onpaste="return false"  esto no permite copiar ni pegar -->
 <body style="background-color:rgb(241, 243, 243);" oncopy="return false" onpaste="return false">
+
 
 <!-- inicio oculta el codigo fuente de la pagina -->
 <body oncontextmenu="return false">
