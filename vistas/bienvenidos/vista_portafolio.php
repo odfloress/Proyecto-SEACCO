@@ -1,6 +1,9 @@
 <!DOCTYPE html>
 <html>
 <head>
+<!-- <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script> -->
    <!-- inicio para Modal -->
    
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -56,9 +59,39 @@
   <a href="#contact" onclick="w3_close()" class="w3-bar-item w3-button">CONTACTANOS</a>  
 </nav>
 <br><br>
-  <!-- inicio mapa -->
-  <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3869.8943255546815!2d-87.1795425126564!3d14.083414958674373!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8f6fbdd69e8f86fd%3A0x29aa117c9a4923a1!2sConstructora%20SEACCO%20S.%20De.%20R.L.!5e0!3m2!1ses-419!2shn!4v1653890939969!5m2!1ses-419!2shn" width="100%" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-<!-- Fin mapa -->
+ 
+<!-- Carousel -->
+<div id="demo" class="carousel slide" data-bs-ride="carousel" >
+
+  <!-- Indicators/dots -->
+  <div class="carousel-indicators">
+    <button type="button" data-bs-target="#demo" data-bs-slide-to="0" class="active"></button>
+    <button type="button" data-bs-target="#demo" data-bs-slide-to="1"></button>
+    <button type="button" data-bs-target="#demo" data-bs-slide-to="2"></button>
+  </div>
+  
+  <!-- The slideshow/carousel -->
+  <div class="carousel-inner">
+    <div class="carousel-item active">
+      <img src="../../imagenes/imagen1.1.jpg" alt="Los Angeles" class="d-block" style="width:100%;height:590px;" >
+    </div>
+    <div class="carousel-item">
+      <img src="../../imagenes/imagen1.2.jpg" alt="Chicago" class="d-block" style="width:100%;height:590px;">
+    </div>
+    <div class="carousel-item">
+      <img src="../../imagenes/imagen1.3.jpg" alt="New York" class="d-block" style="width:100%;height:590px;">
+    </div>
+  </div>
+  
+  <!-- Left and right controls/icons -->
+  <button class="carousel-control-prev" type="button" data-bs-target="#demo" data-bs-slide="prev">
+    <span class="carousel-control-prev-icon"></span>
+  </button>
+  <button class="carousel-control-next" type="button" data-bs-target="#demo" data-bs-slide="next">
+    <span class="carousel-control-next-icon"></span>
+  </button>
+</div>
+<!-- fin Carrucel -->
 
 <!-- inicio card -->
 
@@ -66,12 +99,20 @@
   <h3 class="w3-center">Nuestros trabajos</h3> 
   <div class="w3-row-padding " style="margin-top:64px">
 
+  <?php 
+  include '../../conexion/conexion.php';
+  $sql = "SELECT RUTA, TITULO, DESCRIPCION FROM tbl_bienvenida_portafolio";
+  $result = mysqli_query($conn, $sql);
+  while($row = mysqli_fetch_assoc($result)) {
+   
+  ?>
+
     <!-- inicio card 1 -->
   <div class="w3-col w3-third w3-margin-bottom">
       <div class="w3-card">
-      <img src="https://www.w3schools.com/w3images/girl.jpg" alt="Jane" style="width:100%" width="500" height="300">
+      <img src="<?php echo $row["RUTA"]; ?>" alt="Jane" style="width:100%" width="500" height="300">
         <div class="w3-container">
-          <h3>Diseño de casas</h3>
+          <h3><?php echo $row["TITULO"]; ?></h3>
          
          <!-- inicio boton informacion -->
       <div class="container mt-3">                                          
@@ -79,10 +120,9 @@
           <button type="button" class="btn btn-primary " data-bs-toggle="dropdown">
             ver información
           </button>
-          <ul class="dropdown-menu">
-            <li>El principal objetivo de la dirección y del equipo humano de la empresa constructora SEACCO S. de R.L. es la plena satisfacción del cliente, implantando, desarrollando y manteniendo un sistema de gestión de la calidad basado en la mejora continua, proporcionando servicios que cumplan los requisitos aplicables de las partes interesadas con especial énfasis en el cliente.</li>
-            
-          </ul>
+          
+           <textarea readonly class="dropdown-menu" style="background-color: white;" class="form-control"name="" id="" cols="40" rows="5"><?php echo $row["DESCRIPCION"]; ?></textarea>
+          
         </div>
       </div>
       <br>
@@ -92,191 +132,7 @@
       </div>
     </div>
      <!-- fin card 1 -->
-    
-    <div class="w3-col w3-third w3-margin-bottom">
-      <div class="w3-card">
-        <img src="https://www.w3schools.com/w3images/natureboy.jpg" alt="Jane" style="width:100%" width="500" height="300">
-        <div class="w3-container">
-          <h3>Diseños de edificios</h3>
-              <!-- inicio boton informacion -->
-      <div class="container mt-3">                                          
-        <div class="dropdown">
-          <button type="button" class="btn btn-primary " data-bs-toggle="dropdown">
-            ver información
-          </button>
-          <ul class="dropdown-menu">
-            <li>jhgkhavsdf</li>
-            
-          </ul>
-        </div>
-      </div>
-      <br>
-      <!-- fin  boton informacion --> 
-        </div>
-      </div>
-    </div>
-
-    <div class="w3-col w3-third w3-margin-bottom">
-      <div class="w3-card">
-        <img src="https://www.w3schools.com/howto/img_snow.jpg" alt="Jane" style="width:100%" width="500" height="300">
-        <div class="w3-container">
-          <h3>Diseños de restaurantes</h3>
-              <!-- inicio boton informacion -->
-      <div class="container mt-3">                                          
-        <div class="dropdown">
-          <button type="button" class="btn btn-primary " data-bs-toggle="dropdown">
-            ver información
-          </button>
-          <ul class="dropdown-menu">
-            <li>jhgkhavsdf</li>
-            
-          </ul>
-        </div>
-      </div>
-      <br>
-      <!-- fin  boton informacion --> 
-        </div>
-      </div>
-    </div>
-
-    <div class="w3-col w3-third w3-margin-bottom">
-      <div class="w3-card">
-      <img src="https://www.w3schools.com/w3images/girl.jpg" alt="Jane" style="width:100%" width="500" height="300">
-        <div class="w3-container">
-          <h3>Diseño de casas</h3>
-             <!-- inicio boton informacion -->
-      <div class="container mt-3">                                          
-        <div class="dropdown">
-          <button type="button" class="btn btn-primary " data-bs-toggle="dropdown">
-            ver información
-          </button>
-          <ul class="dropdown-menu">
-            <li>jhgkhavsdf</li>
-            
-          </ul>
-        </div>
-      </div>
-      <br>
-      <!-- fin  boton informacion --> 
-        </div>
-      </div>
-    </div>
-    
-    <div class="w3-col w3-third w3-margin-bottom">
-      <div class="w3-card">
-        <img src="https://www.w3schools.com/w3images/natureboy.jpg" alt="Jane" style="width:100%" width="500" height="300">
-        <div class="w3-container">
-          <h3>Diseños de edificios</h3>
-               <!-- inicio boton informacion -->
-      <div class="container mt-3">                                          
-        <div class="dropdown">
-          <button type="button" class="btn btn-primary " data-bs-toggle="dropdown">
-            ver información
-          </button>
-          <ul class="dropdown-menu">
-            <li>jhgkhavsdf</li>
-            
-          </ul>
-        </div>
-      </div>
-      <br>
-      <!-- fin  boton informacion --> 
-        </div>
-      </div>
-    </div>
-
-    <div class="w3-col w3-third w3-margin-bottom">
-      <div class="w3-card">
-        <img src="https://www.w3schools.com/howto/img_snow.jpg" alt="Jane" style="width:100%" width="500" height="300">
-        <div class="w3-container">
-          <h3>Diseños de restaurantes</h3>
-               <!-- inicio boton informacion -->
-      <div class="container mt-3">                                          
-        <div class="dropdown">
-          <button type="button" class="btn btn-primary " data-bs-toggle="dropdown">
-            ver información
-          </button>
-          <ul class="dropdown-menu">
-            <li>jhgkhavsdf</li>
-            
-          </ul>
-        </div>
-      </div>
-      <br>
-      <!-- fin  boton informacion --> 
-        </div>
-      </div>
-    </div>
-
-    <div class="w3-col w3-third w3-margin-bottom">
-      <div class="w3-card">
-      <img src="https://www.w3schools.com/w3images/girl.jpg" alt="Jane" style="width:100%" width="500" height="300">
-        <div class="w3-container">
-          <h3>Diseño de casas</h3>
-             <!-- inicio boton informacion -->
-      <div class="container mt-3">                                          
-        <div class="dropdown">
-          <button type="button" class="btn btn-primary " data-bs-toggle="dropdown">
-            ver información
-          </button>
-          <ul class="dropdown-menu">
-            <li>jhgkhavsdf</li>
-            
-          </ul>
-        </div>
-      </div>
-      <br>
-      <!-- fin  boton informacion --> 
-        </div>
-      </div>
-    </div>
-    
-    <div class="w3-col w3-third w3-margin-bottom">
-      <div class="w3-card">
-        <img src="https://www.w3schools.com/w3images/natureboy.jpg" alt="Jane" style="width:100%" width="500" height="300">
-        <div class="w3-container">
-          <h3>Diseños de edificios</h3>
-               <!-- inicio boton informacion -->
-      <div class="container mt-3">                                          
-        <div class="dropdown">
-          <button type="button" class="btn btn-primary " data-bs-toggle="dropdown">
-            ver información
-          </button>
-          <ul class="dropdown-menu">
-            <li>jhgkhavsdf</li>
-            
-          </ul>
-        </div>
-      </div>
-      <br>
-      <!-- fin  boton informacion --> 
-        </div>
-      </div>
-    </div>
-
-    <div class="w3-col w3-third w3-margin-bottom">
-      <div class="w3-card">
-        <img src="https://www.w3schools.com/howto/img_snow.jpg" alt="Jane" style="width:100%" width="500" height="300">
-        <div class="w3-container">
-          <h3>Diseños de restaurantes</h3>
-              <!-- inicio boton informacion -->
-      <div class="container mt-3">                                          
-        <div class="dropdown">
-          <button type="button" class="btn btn-primary " data-bs-toggle="dropdown">
-            ver información
-          </button>
-          <ul class="dropdown-menu">
-            <li>jhgkhavsdf</li>
-            
-          </ul>
-        </div>
-      </div>
-      <br>
-      <!-- fin  boton informacion --> 
-        </div>
-      </div>
-    </div>
-
+    <?php } ?>
     
     
   </div> 
@@ -299,7 +155,9 @@
     <p><i class="fa fa-phone fa-fw w3-xxlarge w3-margin-right"></i> Telefono: 9660-7632</p>
     <p><i class="fa fa-envelope fa-fw w3-xxlarge w3-margin-right"> </i> Correo: proyectos@seaccoconstruye.com</p>
     <br>
-    
+     <!-- inicio mapa -->
+  <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3869.8943255546815!2d-87.1795425126564!3d14.083414958674373!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8f6fbdd69e8f86fd%3A0x29aa117c9a4923a1!2sConstructora%20SEACCO%20S.%20De.%20R.L.!5e0!3m2!1ses-419!2shn!4v1653890939969!5m2!1ses-419!2shn" width="100%" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+<!-- Fin mapa -->
     
   </div>
 </div>
