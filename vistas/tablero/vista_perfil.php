@@ -6,6 +6,9 @@ if(!isset($_SESSION['usuario'])){
         session_unset();
         session_destroy();
         die();
+
+
+        
         
 }
 require "../../controladores/co_perfil.php";
@@ -14,11 +17,27 @@ require "../../conexion/conexion.php";
 ?>
 <script>
   function mostrarContrasena(){
-    var x = document.getElementById("contrasenaActual");
+    var x = document.getElementById("myInput");
     if (x.type === "password"){
       x.type = "text";
     }else{
       x.type = "password";
+    }
+  }
+  function mostrarContrasena2(){
+    var z = document.getElementById("contra");
+    if (z.type === "password"){
+      z.type = "text";
+    }else{
+      z.type = "password";
+    }
+  }
+  function mostrarContrasena3(){
+    var y = document.getElementById("contrac");
+    if (y.type === "password"){
+      y.type = "text";
+    }else{
+      y.type = "password";
     }
   }
 </script>
@@ -129,7 +148,7 @@ function quitarespacios(e) {
                 <br>
                 
                 <div class="container mt-3">
-                  <button type="button" name="editar" class="btn btn-primary btn-block" data-bs-toggle="modal" data-bs-target="#myModal">
+                  <button type="button" name="accion" value="editar" class="btn btn-primary btn-block" data-bs-toggle="modal" data-bs-target="#myModal">
                     Editar
                   </button>
                 </div>
@@ -144,9 +163,16 @@ function quitarespacios(e) {
                         <h4 class="modal-title">Actualizando datos</h4>
                         <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                       </div>
-                      <form action="" method="post">
+                      
                       <!-- Modal body -->
                       <div class="modal-body">
+                      <div class="text-center">
+                  <img class="profile-user-img img-fluid img-circle"
+                  src="../../imagenes/seacco.jpg"
+                  alt="User profile picture"><br>
+                  <label for="">Cambiar foto de perfil:</label>
+                  
+                </div>
                       <label for="inputusuario" class="col-sm-10 col-form-label">Usuario:</label>
                 <div class="col-sm-10">
                   <input type="text" class="form-control" readonly name="usuario2" id="usuario"  placeholder="" value="<?php echo $row["USUARIO"]; ?>">
@@ -167,10 +193,10 @@ function quitarespacios(e) {
 
                       <!-- Modal footer -->
                       <div class="modal-footer">
-                        <button type="button" name="aceptar" class="btn btn-primary" data-bs-dismiss="modal">Guardar</button>
+                        <button type="submit" name="accion" value="guardar" class="btn btn-primary" data-bs-dismiss="modal">Guardar</button>
                         <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
                       </div>
-                      </form>
+                    
                       <?php }
                 ?>
                     </div>
@@ -210,24 +236,27 @@ function quitarespacios(e) {
                     <div class="form-group row">
                       <label for="inputName" class="col-sm-2 col-form-label">Contraseña actual</label>
                       <div class="col-sm-10">
-                        <input type="password" class="form-control" name="actual" id="contrasenaActual" placeholder="Contraseña actual">
+                        <input type="password" class="form-control" name="actual" id="myInput" placeholder="Contraseña actual" required onblur="quitarespacios(this);" onkeyup="sinespacio(this);" pattern="(?=.*[\d])(?=.*[a-z])(?=.*[A-Z]).{8,}">
+                        <input type="checkbox" onclick="mostrarContrasena()" > Mostrar/Ocultar
                       </div>
                     </div>
                     <div class="form-group row">
                       <label for="inputEmail" class="col-sm-2 col-form-label">Nueva contraseña:</label>
                       <div class="col-sm-10">
-                        <input type="password" class="form-control" name="contrasena" id="nueva_contrasena" placeholder="Nueva contraseña">
+                        <input type="password" class="form-control" name="contrasena" id="contra" placeholder="Nueva contraseña" required onblur="quitarespacios(this);" onkeyup="sinespacio(this);" pattern="(?=.*[\d])(?=.*[a-z])(?=.*[A-Z]).{8,}">
+                        <input type="checkbox" onclick="mostrarContrasena2()" > Mostrar/Ocultar
                       </div>
                     </div>
                     <div class="form-group row">
                       <label for="inputName2" class="col-sm-2 col-form-label">Confirmar contraseña</label>
                       <div class="col-sm-10">
-                        <input type="password" class="form-control" name="confirmar_contrasena" id="confirmar_contrasena" placeholder="Confirmar nueva contraseña">
+                        <input type="password" class="form-control" name="confirmar_contrasena" id="contrac" placeholder="Confirmar nueva contraseña" required onblur="quitarespacios(this);" onkeyup="sinespacio(this);" pattern="(?=.*[\d])(?=.*[a-z])(?=.*[A-Z]).{8,}">
+                        <input type="checkbox" onclick="mostrarContrasena3()" > Mostrar/Ocultar
                       </div>
                     </div>
                       <div class="form-group row">
                         <div class="offset-sm-2 col-sm-10">
-                          <button type="submit" name="actualizar" class="btn btn-primary">Actualizar</button>
+                          <button type="submit" name="accion" value="actualizar" class="btn btn-primary">Actualizar</button>
                         </div>
                       </div>
                   </form>
@@ -241,7 +270,41 @@ function quitarespacios(e) {
 </body>
 </html>
 <?php include '../../configuracion/footer.php' ?>
+<script type="text/javascript">
 
+  function sinespacio(e) {
+
+        var cadena =  e.value;
+        var limpia = "";
+        var parts = cadena.split(" ");
+        var length = parts.length;
+
+          for (var i = 0; i < length; i++) {
+              nuevacadena = parts[i];
+              subcadena = nuevacadena.trim();
+
+          if(subcadena != "") {
+             limpia += subcadena + " ";
+                }
+          }
+        limpia = limpia.trim();
+        e.value = limpia;
+
+         };
+  </script>
+
+ <script type="text/javascript">
+
+    function quitarespacios(e) {
+
+      var cadena =  e.value;
+      cadena = cadena.trim();
+
+      e.value = cadena;
+
+    };
+
+  </script>
 
 
 
