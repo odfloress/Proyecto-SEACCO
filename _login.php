@@ -6,6 +6,7 @@ require 'controladores/co_login.php';
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
   <title>Login SEACCO</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -20,7 +21,41 @@ body {
 }
 
 </style>
+<?php $ocultar = '';?>
+<!-- inicio evitar si preciona F12, si preciona Ctrl+Shift+I, si preciona Ctr+u -->
 
+<script>
+document.onkeydown = function(e) {
+if(event.keyCode == 123) {
+return false;
+}
+if(e.ctrlKey && e.keyCode == 'E'.charCodeAt(0)){
+return false;
+}
+if(e.ctrlKey && e.shiftKey && e.keyCode == 'I'.charCodeAt(0)){
+return false;
+}
+if(e.ctrlKey && e.shiftKey && e.keyCode == 'J'.charCodeAt(0)){
+return false;
+}
+if(e.ctrlKey && e.keyCode == 'U'.charCodeAt(0)){
+return false;
+}
+if(e.ctrlKey && e.keyCode == 'S'.charCodeAt(0)){
+return false;
+}
+if(e.ctrlKey && e.keyCode == 'H'.charCodeAt(0)){
+return false;
+}
+if(e.ctrlKey && e.keyCode == 'A'.charCodeAt(0)){
+return false;
+}
+if(e.ctrlKey && e.keyCode == 'E'.charCodeAt(0)){
+return false;
+}
+}
+</script>
+<!-- Fin evitar si preciona F12, si preciona Ctrl+Shift+I, si preciona Ctr+u -->
 
    <!-- inicio script para validar que solo sean mayusculas las letras del usuario -->
 <script>
@@ -52,6 +87,7 @@ function SoloLetras(e) {
 <!-- oncopy="return false" onpaste="return false"  esto no permite copiar ni pegar -->
 <body style="background-color:rgb(241, 243, 243);" oncopy="return false" onpaste="return false">
 
+
 <!-- inicio oculta el codigo fuente de la pagina -->
 <body oncontextmenu="return false">
 <!-- Fin oculta el codigo fuente de la pagina --> 
@@ -72,13 +108,16 @@ function SoloLetras(e) {
             
             </div>
             <div class="mb-3">
+           
             <label for="pwd" class="form-label">Contraseña:</label>
-            <input type="password" style="background-color:rgb(240, 244, 245);" name="contrasena" id="ingPassword" class="form-control" placeholder="Ingrese la contraseña" aria-label="Username" aria-describedby="basic-addon1"   minlength="8" maxlength="30" required onblur="quitarespacios(this);" onkeyup="sinespacio(this);" pattern="(?=.*[\d])(?=.*[a-z])(?=.*[A-Z]).{8,}">
-            
+            <input type="password"   style="background-color:rgb(240, 244, 245);" name="contrasena" id="myInput" class="form-control" placeholder="Ingrese la contraseña" aria-label="Username" aria-describedby="basic-addon1"   minlength="8" maxlength="30" required onblur="quitarespacios(this);" onkeyup="sinespacio(this);" pattern="(?=.*[\d])(?=.*[a-z])(?=.*[A-Z]).{8,}">
+            <input type="checkbox" onclick="myFunction()" name="" id=""> Mostrar/Ocultar
+          
             </div>
             <div class="d-grid">
             <button type="submit" name="accion" value="ingresar" class="btn btn-dark btn-block">ingresar</button>
             </div>
+            
 
             <div class="row">
                 <div class="col"> 
@@ -99,6 +138,20 @@ function SoloLetras(e) {
 
     </div>
   </div>
+<!-- mostrar y ociltar contraseña -->
+  <script>
+function myFunction() {
+  var x = document.getElementById("myInput");
+  if (x.type === "password") {
+    x.type = "text";
+  } else {
+    x.type = "password";
+  }
+}
+</script>
+
+
+
   <script>
       function soloLetras(e){
        key = e.keyCode || e.which;
