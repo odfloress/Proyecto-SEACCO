@@ -3,12 +3,20 @@ require "../../conexion/conexion.php";
 $sql = "SELECT * FROM tbl_usuarios";
 $result = mysqli_query($conn, $sql);
 
-  if(isset($_POST['actualizar'])){
+$accion=(isset($_POST['accion']))?$_POST['accion']:"";
+
+$actual=(isset($_POST['actual']))?$_POST['actual']:"";
+$contrasenanueva=(isset($_POST['contrasena']))?$_POST['contrasena']:"";
+$contrasenaconfirmar=(isset($_POST['confirmar_contrasena']))?$_POST['confirmar_contrasena']:"";
+$nombre=(isset($_POST['nombre2']))?$_POST['nombre2']:"";
+$apellido=(isset($_POST['apellido2']))?$_POST['apellido2']:"";
+$correo=(isset($_POST['correo2']))?$_POST['correo2']:"";
+$usuario1 = $_SESSION;
+
+switch ($accion){
+
+  case "actualizar":
     
-    $actual=(isset($_POST['actual']))?$_POST['actual']:"";
-    $contrasenanueva=(isset($_POST['contrasena']))?$_POST['contrasena']:"";
-    $contrasenaconfirmar=(isset($_POST['confirmar_contrasena']))?$_POST['confirmar_contrasena']:"";
-    $usuario1 = $_SESSION;
 
     $actual= hash('sha512', $actual);
     // Valida que exista la contraseña
@@ -44,10 +52,37 @@ $result = mysqli_query($conn, $sql);
     </script>';
       mysqli_close($conn);      
     }
+  break;
+      
+  case "guardar":
+    
+      $validar_correo = "SELECT * FROM tbl_usuarios WHERE CORREO='$correo'";
+      $resultado = mysqli_query($conn, $validar_correo); 
+      if (mysqli_num_rows($resultado) > 0) {
+        echo '<script>
+        alert("Este correo ya esta registrado");
+      </script>';
+      }else{
+        
+        $conn = new mysqli($servername, $username, $password, $dbname);
+        $sqlguardar = "UPDATE tbl_usuarios SET NOMBRE='$nombre',APELLIDO='$apellido',CORREO='$correo' WHERE USUARIO='$usuario1[usuario]'";
 
-
-  }
-//Editar datos del perfil del modal
-
+      if (mysqli_query($conn, $sqlguardar)) {
+        echo '<script>
+          alert("Datos actualizados");
+          window.Location = "/_login.php";
+        </script>';
+      } else {
+        echo '<script>
+        alert("Error al actualizar datos");
+        window.Location = "/_login.php";
+      </script>';
+      }
+      }
+      mysqli_close($conn);
+    
+    
+  break;
+}
 
 ?>
