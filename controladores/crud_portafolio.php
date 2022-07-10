@@ -63,7 +63,7 @@ case "editar":
     if (mysqli_query($conn, $sql2)) {
         echo '<script>
                  alert("Edición exitosa");
-                 window.location.href="../../vistas/catalogo/vista_portafolio";
+                //  window.location.href="../../vistas/catalogo/vista_portafolio";
               </script>';
 
     }else{

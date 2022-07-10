@@ -55,7 +55,7 @@ include '../../controladores/crud_portafolio.php'
                     <input type="text" class="form-control" readonly value="PORTAFOLIO" name="tipo" required value="" placeholder=""   >
                     <br>
                     <label for="">Imagen</label>
-                    <input type="file" class="form-control" name="imagenes" required value="<?php echo "$nombreimagen"; ?>" placeholder=""  >
+                    <input type="file" class="form-control" accept=".jpg, .png, .jpej, .JPEG, .JPG, .PNG" name="imagenes" required value="<?php echo "$nombreimagen"; ?>" placeholder=""  >
                     <br>
                     <label for="">Titulo</label>
                     <input type="text" class="form-control"  name="titulo" required value="<?php echo "$titulo"; ?>" placeholder=""  >
@@ -80,7 +80,7 @@ include '../../controladores/crud_portafolio.php'
     </form>
     <!-- Fin  de modal de agregar --> <br>
 
-
+ 
           </div>
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
@@ -106,7 +106,19 @@ include '../../controladores/crud_portafolio.php'
             <div class="card">
               <div class="card-header">
                 <h3 class="card-title">PORTAFOLIO</h3>
-                
+                <!-- inicio ocultar html -->
+                <?php
+                    $t = 2;
+
+                    if ($t < "20") {
+                        ?>
+                          <input type="text" class="form-control"  name="titulo" required value="" placeholder=""  >
+                        <?php
+                    } else {
+                           
+                            }
+              ?>
+              <!-- Fin ocultar html -->
               </div>
               
               <!-- /.card-header -->
