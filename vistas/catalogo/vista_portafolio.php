@@ -80,7 +80,7 @@ include '../../controladores/crud_portafolio.php'
     </form>
     <!-- Fin  de modal de agregar --> <br>
 
-
+ 
           </div>
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
