@@ -8,6 +8,8 @@ if(!isset($_SESSION['usuario'])){
         die();
         
 }
+
+include '../../controladores/crud_bienvenida.php'
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -21,7 +23,7 @@ if(!isset($_SESSION['usuario'])){
 
   <?php include '../../configuracion/navar.php' ?>
   <!-- Content Wrapper. Contains page content -->
-  <div class="content-wrapper">
+  <div class="content-wrapper"><center> <BR></BR><h3>BIENVENIDA</h3> </center>
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <div class="container-fluid">
@@ -30,44 +32,50 @@ if(!isset($_SESSION['usuario'])){
             <h1></h1>
             <!-- Inicio de modal de agregar -->
 <div class="container mt-3">
-        <h3>Bienvenida</h3> <br>  
+       
         <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal">
-            Nuevo 
+            Nuevo
         </button>
     </div>
-
+    
 <!-- El Modal -->
     <div class="modal" id="myModal">
         <div class="modal-dialog">
             <div class="modal-content">
                 <!-- Encabezado del modal -->
                 <div class="modal-header">
-                    <h4 class="modal-title">Nuevo</h4>
+                    <h4 class="modal-title">Nuevo </h4>
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
                 <!-- Fin Encabezado del modal -->
-
+                <form action="" method="post" enctype="multipart/form-data">
                 <!-- Cuerpo del modal Modal -->
                 <div class="modal-body">
-                <label for="">Id Bienvenida</label>
-                    <input type="text" class="form-control" name="txtPrecio_Compra" required value="" placeholder="" id="txtPrecio_Compra"   >
+                <label for="">Tipo</label>
+                    <input type="text" class="form-control" readonly value="BIENVENIDA" name="tipo" required value="" placeholder=""   >
                     <br>
-                    <label for="">Bienvenida</label>
-                    <input type="text" class="form-control" name="txtPrecio_Compra" required value="" placeholder="" id="txtPrecio_Compra"   >
+                    <label for="">Imagen</label>
+                    <input type="file" class="form-control" accept=".jpg, .png, .jpej, .JPEG, .JPG, .PNG" name="imagenes" required value="<?php echo "$nombreimagen"; ?>" placeholder=""  >
                     <br>
-                
+                    <label for="">Titulo</label>
+                    <input type="text" class="form-control"  name="titulo" required value="<?php echo "$titulo"; ?>" placeholder=""  >
+                    <br>
+
                 </div>
                 <!-- Fin Cuerpo del modal Modal -->
                 <!-- pie del modal -->
                 <div class="modal-footer">
-      	            <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Agregar</button>
+      	            <button type="submit" name="accion" value="agregar" class="btn btn-primary" >Agregar</button>
                     <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
                 </div>
                 <!-- Fin pie del modal -->
             </div>
         </div>
     </div>
+    </form>
     <!-- Fin  de modal de agregar --> <br>
+
+ 
           </div>
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
@@ -92,8 +100,20 @@ if(!isset($_SESSION['usuario'])){
             
             <div class="card">
               <div class="card-header">
-                <h3 class="card-title">Bienvenida</h3>
-                
+                <h3 class="card-title">BIENVENIDA</h3>
+                <!-- inicio ocultar html -->
+                <?php
+                    $t = 2;
+
+                    if ($t < "20") {
+                        ?>
+                          <input type="text" class="form-control"  name="titulo" required value="" placeholder=""  >
+                        <?php
+                    } else {
+                           
+                            }
+              ?>
+              <!-- Fin ocultar html -->
               </div>
               
               <!-- /.card-header -->
@@ -102,30 +122,31 @@ if(!isset($_SESSION['usuario'])){
                   <thead>
                   <tr>
                   <th>Acciones</th>
-                  <th>Id</th>
+                  <!-- <th>Id</th> -->
                   <th>Tipo</th>
                   <th>Imagen</th>
                   <th>Titulo</th>
-                  <th>Descripción</th>
                   
                   </tr>
                   </thead>
                   <tbody>
+                  <?php while ($filas= mysqli_fetch_assoc($result)){
+                    ?>
                   <tr>
                   <td>
                         <!-- inicio boton editar -->
-                      <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#myModal2">
+                      <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#myModal2<?php echo $filas['ID_IMAGEN'] ?>">
                       <i class="fas fa-pencil-alt"></i>
                       </button>
 
                           <!-- El Modal -->
-                          <div class="modal" id="myModal2">
+                          <div class="modal" id="myModal2<?php echo $filas['ID_IMAGEN'] ?>">
                             <div class="modal-dialog">
                               <div class="modal-content">
 
                                 <!-- Encabezado del modal -->
                                 <div class="modal-header">
-                                  <h4 class="modal-title">Editar</h4>
+                                  <h4 class="modal-title">Editar </h4>
                                   <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                                 </div>
                                 <!-- Fin Encabezado del modal -->
@@ -133,11 +154,15 @@ if(!isset($_SESSION['usuario'])){
 
                                 <!-- Cuerpo del modal Modal -->
                                           <div class="modal-body">
-                                              <label for="">Id Bienvenida</label>
-                                              <input type="text" class="form-control" name="txtPrecio_Compra" required value="" placeholder="" id="txtPrecio_Compra"   >
+                                              <form action="" method="post">
+                                              <input type="hidden" name="id_imagen"  value="<?php echo $filas['ID_IMAGEN'] ?>">
+                                              <center><img class="img-thumbnail" width="100px" src="<?php echo $filas['RUTA'] ?>"></center>
                                               <br>
-                                              <label for="">Bienvenida</label>
-                                              <input type="text" class="form-control" name="txtPrecio_Compra" required value="" placeholder="" id="txtPrecio_Compra"   >
+                                              <label for="">Imagen</label>
+                                              <input type="file" class="form-control" accept=".jpg, .png, .jpej, .JPEG, .JPG, .PNG" name="imagenes" >
+                                              <br>
+                                              <label for="">Titulo</label>
+                                              <input type="text" class="form-control"  name="titulo" required value="<?php echo $filas['TITULO'] ?>" placeholder=""  >
                                               <br>
                                           
                                           </div>
@@ -145,7 +170,7 @@ if(!isset($_SESSION['usuario'])){
 
                                 <!-- pie del modal -->
                                 <div class="modal-footer">
-                                <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Guardar</button>
+                                <button type="submit" class="btn btn-primary" name="accion" value="editar" >Guardar</button>
                                   <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
                                 </div>
                                   <!-- Fin pie del modal -->
@@ -153,20 +178,20 @@ if(!isset($_SESSION['usuario'])){
                             </div>
                           </div>
                           <!-- fin boton editar -->
-                      <button  value="btnEliminar" name="accion" 
+                          <input type="hidden" name="ruta"  value="<?php echo $filas['RUTA'] ?>">
+                      <button  value="eliminar" name="accion" 
                         onclick="return confirm('¿Quieres eliminar este dato?')"
                         type="submit" class="btn btn-danger " data-id="19">
                         <i class="fas fa-trash-alt"></i>
-                    </button>
+                    </button></form>
 </td>
-                      <td>1</td>
-                     <td>Ingresar</td>
-                     <td>Ingresar</td>
-                     <td>Ingresar</td>
-                     <td>Ingresar</td>
-                    
+                      <!-- <td><?php echo $filas['ID_IMAGEN'] ?></td> -->
+                     <td><?php echo $filas['TIPO'] ?></td>
+                     <td><img class="img-thumbnail" width="100px" src="<?php echo $filas['RUTA'] ?>" /></td>
+                     <td><?php echo $filas['TITULO'] ?></td>
+
       </tr>
-                  
+      <?php } ?>  
                   </tfoot>
                 </table>
               </div>
@@ -223,7 +248,29 @@ if(!isset($_SESSION['usuario'])){
 <script>
   $(function () {
     $("#example1").DataTable({
-      "responsive": true, "lengthChange": false, "autoWidth": false,
+              language: {
+                          processing: "Tratamiento en curso...",
+                          search: "Buscar&nbsp;:",
+                          lengthMenu: "Agrupar de _MENU_ items",
+                          info: "Mostrando del item _START_ al _END_ de un total de _TOTAL_ items",
+                          infoEmpty: "No existen datos.",
+                          infoFiltered: "(filtrado de _MAX_ elementos en total)",
+                          infoPostFix: "",
+                          loadingRecords: "Cargando...",
+                          zeroRecords: "No se encontraron datos con tu busqueda",
+                          emptyTable: "No hay datos disponibles en la tabla.",
+                          paginate: {
+                                          first: "Primero",
+                                          previous: "Anterior",
+                                          next: "Siguiente",
+                                          last: "Ultimo"
+                                      },
+                              aria: {
+                                      sortAscending: ": active para ordenar la columna en orden ascendente",
+                                      sortDescending: ": active para ordenar la columna en orden descendente"
+                                    }
+                         },
+      "responsive": true, "lengthChange": true, "autoWidth": false,
       "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
     }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
     $('#example2').DataTable({
@@ -238,4 +285,7 @@ if(!isset($_SESSION['usuario'])){
   });
 </script>
 </body>
+<script type="text/javascript" src="../../js/evitar_reenvio.js"></script>
 </html>
+
+

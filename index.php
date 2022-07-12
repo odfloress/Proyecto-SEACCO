@@ -1,3 +1,9 @@
+<?php 
+  include 'conexion/conexion.php';
+  $sql7 = "SELECT * FROM tbl_bienvenida_portafolio WHERE TIPO='BIENVENIDA'";
+  $result7 = mysqli_query($conn, $sql7);
+  while($row = mysqli_fetch_assoc($result7)) {
+  ?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -20,7 +26,7 @@
   .bgimg-1 {
             background-position: center;
             background-size: cover;
-            background-image: url('imagenes/banner1.jpg');
+            background-image: url("<?php echo $row['RUTA'] ?>");
             min-height: 100%;
            }
   .w3-bar .w3-button {
@@ -29,6 +35,7 @@
 </style>
 </head>
 <body>
+
 
 <!-- Navbar (sit on top) -->
 <div class="w3-top">
@@ -75,7 +82,7 @@
 
 <!-- About Section -->
 <div class="w3-container" style="padding:128px 16px" id="about">
-  <h3 class="w3-center">SOBRE CONSTRUCTORA SEACCO</h3>  
+  <h3 class="w3-center" >SOBRE CONSTRUCTORA SEACCO </h3>  
 
 <center>   <p>Somos una firma constructora con personal calificado y listo para ejecutar
 cualquier obra civil a nivel nacional, brindamos un servicio de calidad con un
@@ -144,7 +151,7 @@ actividades que se desarrollan en los proyectos ejecutados.</p>
       <p><a href="#work" class="w3-button w3-black"><i class="fa fa-th"> </i>Ver nustros trabajos</a></p>
     </div>
     <div class="w3-col m6">
-      <img class="w3-image w3-round-large" src='imagenes/imagen4.jpeg' alt="Buildings" width="700" height="394">
+      <img class="w3-image w3-round-large" src="<?php echo $row['RUTA'] ?>" alt="Buildings" width="700" height="394">
     </div>
   </div>
 </div>
@@ -336,3 +343,6 @@ function w3_close() {
 
 </body>
 </html>
+<?php 
+    }
+  ?>

@@ -101,7 +101,7 @@
 
   <?php 
   include '../../conexion/conexion.php';
-  $sql = "SELECT RUTA, TITULO, DESCRIPCION FROM tbl_bienvenida_portafolio";
+  $sql = "SELECT * FROM tbl_bienvenida_portafolio WHERE TIPO='PORTAFOLIO'";
   $result = mysqli_query($conn, $sql);
   while($row = mysqli_fetch_assoc($result)) {
    

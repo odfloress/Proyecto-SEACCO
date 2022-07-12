@@ -83,6 +83,29 @@ switch ($accion){
     
     
   break;
+
+  case "editarfoto":
+    if(isset($_FILES['imagenes'])){
+      $nombreimagen= $_FILES['imagenes']['name'];
+      $ruta = $_FILES['imagenes']['tmp_name'];
+      $destino = "../../imagenes/".$nombreimagen;
+      
+      if(copy($ruta, $destino)){
+        $sql5 = "UPDATE tbl_usuarios SET FOTO='$destino' WHERE USUARIO='$usuario1[usuario]'";
+      $resp = mysqli_query($conn, $sql5);
+      if($resp){
+        echo '<script type="text/javascript">
+                 alert("Agregado correctamente");
+                 
+             </script>';
+     }else{
+            echo '<script type="text/javascript">
+            alert("Error al actualizar");
+            
+        </script>';
+          }
+    }
+}
 }
 
 ?>
