@@ -68,7 +68,7 @@
         $result2 = mysqli_query($conn, $validar_rol); 
          if (mysqli_num_rows($result2) > 0) { 
               
-            $sql2 = "UPDATE tbl_roles SET ROL='$rol', DESCRIPCION='$descripcion'  WHERE ID_ROL='$id_rol'";
+            $sql2 = "UPDATE tbl_roles SET ROL='$anterior', DESCRIPCION='$descripcion'  WHERE ID_ROL='$id_rol'";
                 if (mysqli_query($conn, $sql2)) {
 
                    
@@ -80,7 +80,7 @@
                       if (mysqli_query($conn, $sql8)) {} else { }
                     // fin inserta en la tabla bitacora
                     echo '<script>
-                            alert("Rol editado con exito");
+                            alert("Descripción del rol editado con exito");
                             window.location.href="../../vistas/ajustes/vista_roles.php";                   
                           </script>';
                           mysqli_close($conn);
