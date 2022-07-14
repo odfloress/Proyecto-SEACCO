@@ -49,6 +49,7 @@ include '../../controladores/crud_proveedor.php';
                 <!-- Fin Encabezado del modal -->
 
                 <!-- Cuerpo del modal Modal -->
+                <form action="" method="post">
                 <div class="modal-body">
                 <label for="">Id Proveedor</label>
                     <input type="text" class="form-control" name="id_proveedor" required value="" placeholder="" id="txtPrecio_Compra"   >
@@ -79,6 +80,7 @@ include '../../controladores/crud_proveedor.php';
                     <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
                 </div>
                 <!-- Fin pie del modal -->
+                </form>
             </div>
         </div>
     </div>
@@ -152,6 +154,7 @@ include '../../controladores/crud_proveedor.php';
 
 
                                 <!-- Cuerpo del modal Modal -->
+                                <form action="" method="post">
                                           <div class="modal-body">
                                               <label for="">Id Proveedor</label>
                                               <input type="text" class="form-control" name="id_proveedor" required value="<?php echo $filas['ID_PROVEEDOR'] ?>" placeholder="" id="txtPrecio_Compra"   >
@@ -182,7 +185,9 @@ include '../../controladores/crud_proveedor.php';
                                 <button type="submit" name="accion" value="editar" class="btn btn-primary" onclick="return confirm('¿Desea editar el proveedor?')">Guardar</button>
                                   <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
                                 </div>
+                              </form>
                                   <!-- Fin pie del modal -->
+
                               </div>
                             </div>
                           </div>
