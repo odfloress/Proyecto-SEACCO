@@ -39,7 +39,7 @@ if(isset($_POST['submit'])){
           $mail->Host       = 'smtp.gmail.com';                     //Set the SMTP server to send through
           $mail->SMTPAuth   = true;                                   //Enable SMTP authentication
           $mail->Username   = 'seaccoc@gmail.com';                     //SMTP username
-          $mail->Password   = 'lveucqeygmxrtigm';                               //SMTP password
+          $mail->Password   = 'plhmloymsptqqhpc';                               //SMTP password
           $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;            //Enable implicit TLS encryption
           $mail->Port       = 465;                                    //TCP port to connect to; use 587 if you have set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`
 
@@ -68,15 +68,15 @@ if(isset($_POST['submit'])){
       } catch (Exception $e) {
           echo "Error al enviar el mensaje: {$mail->ErrorInfo}";
       }
-          if(!$mail->send()){
-              $result="Algo esta mal, por favor inténtelo de nuevo.";
-          }
-          else{
-              $result="Gracias correo enviado exitosamente. Revise su correo!!!";
-          }
+          // if(!$mail->send()){
+          //     $result="Algo esta mal, por favor inténtelo de nuevo.";
+          // }
+          // else{
+          //     $result="Gracias correo enviado exitosamente. Revise su correo!!!";
+          // }
   }else{
     echo '<script>
-            alert("El correo no existe");
+            alert("No enconrtamos ningun usuario registrados con ese correo  electrónico");
           </script>';
   }
 }
