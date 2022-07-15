@@ -26,7 +26,7 @@
   .bgimg-1 {
             background-position: center;
             background-size: cover;
-            background-image: url("<?php echo $row['RUTA'] ?>");
+            background-image: url("imagenes/<?php echo $row['IMAGEN'] ?>");
             min-height: 100%;
            }
   .w3-bar .w3-button {
@@ -35,7 +35,7 @@
 </style>
 </head>
 <body>
-
+<br><br>
 
 <!-- Navbar (sit on top) -->
 <div class="w3-top">
@@ -151,7 +151,7 @@ actividades que se desarrollan en los proyectos ejecutados.</p>
       <p><a href="#work" class="w3-button w3-black"><i class="fa fa-th"> </i>Ver nustros trabajos</a></p>
     </div>
     <div class="w3-col m6">
-      <img class="w3-image w3-round-large" src="<?php echo $row['RUTA'] ?>" alt="Buildings" width="700" height="394">
+      <img class="w3-image w3-round-large" src="imagenes/<?php echo $row['IMAGEN'] ?>" alt="Buildings" width="700" height="394">
     </div>
   </div>
 </div>

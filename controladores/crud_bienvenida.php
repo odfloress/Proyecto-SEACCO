@@ -26,7 +26,7 @@ case "agregar":
 if(isset($_FILES['imagenes'])){
     $nombreimagen= $_FILES['imagenes']['name'];
     $ruta = $_FILES['imagenes']['tmp_name'];
-    $destino = "imagenes/".$nombreimagen;
+    $destino = "../../imagenes/".$nombreimagen;
 
     if(copy($ruta, $destino)){
         // valida si existe una la imagen con el mismo nombre
