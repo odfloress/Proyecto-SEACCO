@@ -1,6 +1,14 @@
 
 <?php
 session_start();
+if(!isset($_SESSION['usuario'])){
+ 
+        header('Location: ../../_login.php');
+        session_unset();
+        session_destroy();
+        die();
+        
+}
 require '../../conexion/conexion.php';
 
 use PHPMailer\PHPMailer\PHPMailer;
@@ -62,6 +70,12 @@ if(isset($_POST['submit'])){
           //$mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
 
           $mail->send();
+
+          // inicio inserta en la tabla bitacora
+            $sqlB2 = "INSERT INTO tbl_bitacora (ID_USUARIO, ID_OBJETO, USUARIO, ACCION, OBSERVACION)
+              VALUES (2, 1, '$_SESSION[usuario]', 'SOLICITO', 'SOLICITO CAMBIO DE CONTRASEÑA POR CORREO')";
+              if (mysqli_query($conn, $sqlB2)) {} else { }
+          // fin inserta en la tabla bitacora
               echo '<script>
                       alert("Correo enviado exitosamente");
                   </script>';
@@ -115,7 +129,7 @@ body {
 
       <!--Inicio Cuerpo del modal -->
       <div class="modal-body ">
-        <form action="" method="post"
+        <form action="" method="post">
             <div class="mb-3 mt-3">
                <center><img src="../../imagenes/seacco.jpg" alt="Girl in a jacket" width="150" height="150"><br></center>
                 <div class="alert alert-success">
@@ -125,10 +139,11 @@ body {
               <input style="background-color:rgb(240, 244, 245);" type="email" class="form-control"  placeholder="Ingrese el correo" name="correo">
               <center><div><p class="text-success"><?= $result; ?></p></div></center>
             </div>
-        
+            <div class="d-grid">
             <button type="submit" name="submit" class="btn btn-primary btn-block">Enviar</button><br> 
             <a href="http://localhost/SEACCO/_login" class="btn btn-danger btn-block">Regresar</a><br>
-             
+            </div>
+            
         </form>
       </div>
        <!--Fin Cuerpo del modal -->
