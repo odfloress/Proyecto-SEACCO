@@ -65,7 +65,8 @@
                       </script>';
                       mysqli_close($conn);
 
-            }else{
+            }else
+            {
 
                     // inicio inserta en la tabla bitacora
                     $sql7 = "INSERT INTO tbl_bitacora (ID_USUARIO, ID_OBJETO, USUARIO, ACCION, OBSERVACION)

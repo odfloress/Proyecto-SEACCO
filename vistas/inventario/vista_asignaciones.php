@@ -2,11 +2,11 @@
 session_start();
 if(!isset($_SESSION['usuario'])){
  
-        header('Location: ../iniciar_sesion/index_login.php');
-        session_unset();
-        session_destroy();
-        die();
-        
+        //header('Location: ../iniciar_sesion/index_login.php');
+        //session_unset();
+        //session_destroy();
+        //die();
+        include '../../controladores/co_asignaciones.php';   
 }
 ?>
 <!DOCTYPE html>
@@ -37,26 +37,91 @@ if(!isset($_SESSION['usuario'])){
     </div>
 
 <!-- El Modal -->
+
     <div class="modal" id="myModal">
         <div class="modal-dialog">
             <div class="modal-content">
                 <!-- Encabezado del modal -->
                 <div class="modal-header">
-                    <h4 class="modal-title">Nueva asignación</h4>
+                     <h4 class="modal-title">Nueva asignación</h4>
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
                 <!-- Fin Encabezado del modal -->
 
                 <!-- Cuerpo del modal Modal -->
                 <div class="modal-body">
-                <label for="">Id estado</label>
-                    <input type="text" class="form-control" name="txtPrecio_Compra" required value="" placeholder="" id="txtPrecio_Compra"   >
+
+                    <label for="sel1" class="form-label">Proyecto:</label>
+                <select placeholder="Seleccione" class="form-select" id="sel1" name="proyectos" required >
+                  <option></option>
+                  <?php
+                      include '../../conexion/conexion.php';
+                      $getproyecto1 = "SELECT * FROM tbl_proyectos  WHERE ID_PROYECTO  ORDER BY ID_PROYECTO";
+                      // $getpregunta1 = "SELECT * FROM tbl_preguntas  WHERE ID_PREGUNTA  NOT IN (SELECT ID_PREGUNTA  FROM  tbl_respuestas_usuario WHERE USUARIO = 'JO' ) ORDER BY ID_PREGUNTA";
+                      $getproyecto2 = mysqli_query($conn, $getproyecto1);
+                      if (mysqli_num_rows($getproyecto2) > 0) {
+                          while($row = mysqli_fetch_assoc($getproyecto2))
+                            {
+                              $id = $row['ID_PROYECTO'];
+                              $proyecto =$row['NOMBRE'];
+                           ?>
+                              <option value="<?php  echo $id; ?>"><?php echo $proyecto?></option>
+                          <?php
+                    }}// finaliza el if y el while
+
+                ?>
+                </select>
+
+                <form action="co_asignaciones.php" method="post">
+                <br>
+                    <label for="">Id producto</label>
+                    <input type="text" class="form-control" name="id_producto" required value="" placeholder="Ingrese el código del producto" id="id_producto"   >
                     <br>
-                    <label for="">Estado</label>
-                    <input type="text" class="form-control" name="txtPrecio_Compra" required value="" placeholder="" id="txtPrecio_Compra"   >
+                    <label for="">Cantidad</label>
+                    <input type="text" class="form-control" name="cantidad" required value="" placeholder="Ingrese la cantidad" id="cantidad"   >
                     <br>
+                    
+                <div class="row">
+                <div class="col">
+                <label for="pwd" class="form-label">Estado de la herramienta:</label>
+                <input class="form-control" autocomplete="off" maxlength="20" list="browsers" type="text" name="estado_herramienta"  id="estado_herramienta" placeholder="Seleccione" pattern="([ACTIVA-EN REPARACIÓN])" required>
+                <datalist id="browsers">
+                  <option value="ACTIVA">
+                  <option value="EN REPARACIÓN">
+                </datalist> 
+                </div> 
+
+                <div class="row">
+                <div class="col">
+                <label for="pwd" class="form-label">Estado de la asignación:</label>
+                <input class="form-control" autocomplete="off" maxlength="30" list="browser1" type="text" name="estado_asignacion"  id="estado_asignacion" placeholder="Seleccione" pattern="([ENTREGADA-SIN ENTREGAR])" required>
+                <datalist id="browser1">
+                  <option value="ENTREGADA">
+                  <option value="SIN ENTREGAR">
+                </datalist> 
+                </div> 
+
+                </select>
+                    <label for="">Descripción de la asignación</label>
+                    <input type="text" class="form-control" name="descripcion" required value="" placeholder="Ingrese un breve comentario sobre la asignación" id="descripción"   >
+                    <br>
+                    <div class="row">
+                <div class="col">
+                  <label type="text"  class="form-label">Fecha de asignación:</label>
+                  <input style="background-color:rgb(240, 244, 245);" type="date" autocomplete="of" name="fecha_entrega" required>
+                </div>
+                <div class="col">
+                  <label type="text" class="form-label">Fecha de entrega:</label>
+                  <input style="background-color:rgb(240, 244, 245);" type="date" autocomplete="off" name="fecha_entrega" required>
+                </div>
+            </div>
                 
                 </div>
+
+
+
+                </form>
+
                 <!-- Fin Cuerpo del modal Modal -->
                 <!-- pie del modal -->
                 <div class="modal-footer">
@@ -103,6 +168,7 @@ if(!isset($_SESSION['usuario'])){
                   <tr>
                   <th>Acciones</th>
                   <th>Id</th>
+                  <th>Id Producto</th>
                   <th>Proyecto</th>
                   <th>Asignado</th>
                   <th>Descripción</th>
@@ -114,6 +180,11 @@ if(!isset($_SESSION['usuario'])){
                   </tr>
                   </thead>
                   <tbody>
+
+                  <?php while ($filas= mysqli_fetch_assoc($result)){
+ 
+                  ?>   
+                    
                   <tr>
                   <td>
                         <!-- inicio boton editar -->
@@ -122,7 +193,7 @@ if(!isset($_SESSION['usuario'])){
                       </button>
 
                           <!-- El Modal -->
-                          <div class="modal" id="myModal2">
+                          <div class="modal" id="myModal2<?php echo $filas['ID'] ?>">
                             <div class="modal-dialog">
                               <div class="modal-content">
 
@@ -135,14 +206,38 @@ if(!isset($_SESSION['usuario'])){
 
 
                                 <!-- Cuerpo del modal Modal -->
-                                          <div class="modal-body">
-                                              <label for="">Id estado</label>
-                                              <input type="text" class="form-control" name="txtPrecio_Compra" required value="" placeholder="" id="txtPrecio_Compra"   >
+                                <form action="co_asignaciones.php" method="post">
+                                          <div class="modal-body">                                         
+                                              <label for="">Id</label>
+                                              <input type="text" readonly class="form-control" name="id" required value="<?php echo $filas['ID'] ?>" placeholder="" id="id"   >
                                               <br>
-                                              <label for="">Estado</label>
-                                              <input type="text" class="form-control" name="txtPrecio_Compra" required value="" placeholder="" id="txtPrecio_Compra"   >
+                                              <label for="">Id producto</label>
+                                              <input type="text" readonly class="form-control" name="id_producto" required value="<?php echo $filas['ID_PRODUCTO'] ?>" placeholder="" id="id_producto">
                                               <br>
-                                          
+                                              <label for="">Proyecto</label>
+                                              <input type="text" readonly class="form-control" name="id_proyecto" required value="<?php echo $filas['ID_PROYECTO'] ?>" placeholder="" id="id_proyecto">
+                                              <br>
+                                              <label for="">Usuario</label>
+                                              <input type="text" readonly class="form-control" name="id_usuario" required value="<?php echo $filas['ID_USUARIO'] ?>" placeholder="" id="id_usuario">
+                                              <br>
+                                              <label for="">Descripcion</label>
+                                              <input type="text" readonly class="form-control" name="descripcion" required value="<?php echo $filas['DESCRIPCION'] ?>" placeholder="" id="descripcion">
+                                              <br>
+                                              <label for="">Cantidad</label>
+                                              <input type="text" readonly class="form-control" name="cantidad" required value="<?php echo $filas['CANTIDAD'] ?>" placeholder="" id="cantidad">
+                                              <br>
+                                              <label for="">Estado de herramienta</label>
+                                              <input type="text" readonly class="form-control" name="estado_herramienta" required value="<?php echo $filas['ESTADO_HERRAMIENTA'] ?>" placeholder="" id="estado_herramienta">
+                                              <br>
+                                              <label for="">Estado de asignación</label>
+                                              <input type="text" readonly class="form-control" name="estado_asignacion" required value="<?php echo $filas['ESTADO_ASIGNACION'] ?>" placeholder="" id="estado_asignacion">                          
+                                              <br>
+                                              <label for="">Fecha de asignación</label>
+                                              <input type="text" readonly class="form-control" name="fecha_asignado" required value="<?php echo $filas['FECHA_ASIGNADO'] ?>" placeholder="" id="fecha_asignado">                          
+                                              <br>
+                                              <label for="">Fecha de entrega</label>
+                                              <input type="text" readonly class="form-control" name="fecha_entrega" required value="<?php echo $filas['FECHA_ENTREGA'] ?>" placeholder="" id="fecha_entrega">                          
+                                              <br>                                         
                                           </div>
                                 <!-- Fin Cuerpo del modal Modal -->
 
@@ -157,23 +252,23 @@ if(!isset($_SESSION['usuario'])){
                           </div>
                           <!-- fin boton editar -->
                       <button  value="btnEliminar" name="accion" 
-                        onclick="return confirm('¿Quieres eliminar este dato?')"
+                        onclick="return confirm('¿Seguro que desea eliminar esta asignacion?')"
                         type="submit" class="btn btn-danger " data-id="19">
                         <i class="fas fa-trash-alt"></i>
-                    </button>
-</td>
-                     <td>1</td>
-                     <td>agregar</td>
-                     <td>agregar</td>
-                     <td>agregar</td>
-                     <td>agregar</td>
-                     <td>agregar</td>
-                     <td>agregar</td>
-                     <td>agregar</td>
-                     <td>agregar</td>
-                    
+                    </button></form>
+</td>                  
+                     <td><?php echo $filas['ID'] ?></td>
+                     <td><?php echo $filas['ID_PRODUCTO'] ?></td>
+                     <td><?php echo $filas['ID_PROYECTO'] ?></td>
+                     <td><?php echo $filas['ID_USUARIO'] ?></td>
+                     <td><?php echo $filas['DESCRIPCION'] ?></td>
+                     <td><?php echo $filas['CANTIDAD'] ?></td>
+                     <td><?php echo $filas['ESTADO_HERRAMIENTA'] ?></td>
+                     <td><?php echo $filas['ESTADO_ASIGNACION'] ?></td>
+                     <td><?php echo $filas['FECHA_ASIGNADO'] ?></td>
+                     <td><?php echo $filas['FECHA_ENTREGA'] ?></td>
       </tr>
-                  
+      <?php } ?>            
                   </tfoot>
                 </table>
               </div>

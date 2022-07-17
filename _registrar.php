@@ -65,67 +65,68 @@ body {
             <div class="row">
                 <div class="col">
                   <label for="email"  class="form-label">Nombre:</label>
-                  <input style="background-color:rgb(240, 244, 245);" type="text" autocomplete="off"   onkeyup="mayus(this);" maxlength="30" class="form-control"  placeholder="Ingrese el nombre" name="nombre" required>
+                  <input style="background-color:rgb(240, 244, 245);" type="text" autocomplete="of"   onkeyup="mayus(this);" maxlength="30" class="form-control"  placeholder="Ingrese el nombre" name="nombre" required value="<?php if(isset($nombre)) echo $nombre?>">
                 </div>
                 <div class="col">
                   <label for="pwd" class="form-label">Apellido:</label>
-                  <input style="background-color:rgb(240, 244, 245);" type="text" autocomplete="off"  onkeyup="mayus(this);" maxlength="30" class="form-control"  placeholder="Ingrese su apellido" name="apellido" required>
+                  <input style="background-color:rgb(240, 244, 245);" type="text" autocomplete="off"  onkeyup="mayus(this);" maxlength="30" class="form-control"  placeholder="Ingrese su apellido" name="apellido" required value="<?php if(isset($apellido)) echo $apellido?>">
                 </div>
             </div>
             <div class="row">
                 <div class="col">
                   <label for="pwd" class="form-label">Usuario:</label>
-                  <input style="background-color:rgb(240, 244, 245);" type="text" autocomplete="off" onkeypress="return clave(event);"  onKeyUP="this.value=this.value.toUpperCase();"  class="form-control" placeholder="Asignar usuario" name="usuario" required>
+                  <input style="background-color:rgb(240, 244, 245);" type="text" autocomplete="off" onkeypress="return clave(event);"  onKeyUP="this.value=this.value.toUpperCase();"  class="form-control" placeholder="Asignar usuario" name="usuario" required value="<?php if(isset($usuario)) echo $usuario?>">
                 </div>
                 <div class="col">
                   <label for="pwd" class="form-label">Contraseña:</label>
-                  <input style="background-color:rgb(240, 244, 245);" type="password" autocomplete="off"  class="form-control"  placeholder="Ingrese la contraseña" name="contrasena" max="10" required pattern="(?=.*[\d])(?=.*[a-z])(?=.*[A-Z]).{8,}" onblur="quitarespacios(this);"  onkeyup="sinespacio(this);" required="" minlength="8" maxlength="9" >
+                  <input style="background-color:rgb(240, 244, 245);" type="password" autocomplete="off"  class="form-control"  placeholder="Ingrese la contraseña" name="contrasena" id="myInput" max="10" required pattern="(?=.*[\d])(?=.*[a-z])(?=.*[A-Z]).{8,}" onblur="quitarespacios(this);"  onkeyup="sinespacio(this);" required="" minlength="8" maxlength="9">
+                  <input type="checkbox" onclick="myFunction()" name="" id=""> Mostrar/Ocultar
                 </div>
             </div>
             <div class="row">
                 <div class="col">
                   <label for="pwd" class="form-label">Correo:</label>
-                  <input style="background-color:rgb(240, 244, 245);" type="email" autocomplete="off" class="form-control"  placeholder="Ingrese su correo" name="correo" required>
+                  <input style="background-color:rgb(240, 244, 245);" type="email" autocomplete="off" class="form-control"  placeholder="Ingrese su correo" name="correo" required value="<?php if(isset($correo)) echo $correo?>">
                 </div>
                 <div class="col">
                   <label for="pwd" class="form-label">DNI:</label>
-                  <input style="background-color:rgb(240, 244, 245);" type="text" autocomplete="off" class="form-control"  placeholder="0000-0000-000000" name="dni" minlength="13" maxlength="13" onkeypress="return solonumero(event)" required>
+                  <input style="background-color:rgb(240, 244, 245);" type="text" autocomplete="off" class="form-control"  placeholder="Ingrese su DNI sin guiones" name="dni" minlength="13" maxlength="15" pattern="1-9" required value="<?php if(isset($dni)) echo $dni?>">                  
                 </div>
             </div>
             <div class="row">
                 <div class="col">
                   <label for="pwd" class="form-label">Profesión:</label>
-                  <input style="background-color:rgb(240, 244, 245);" type="text" autocomplete="off" onkeypress="return SoloLetras(event);"  onKeyUP="this.value=this.value.toUpperCase();" class="form-control"  placeholder="Ingrese su profesion" name="profesion" required>
+                  <input style="background-color:rgb(240, 244, 245);" type="text" autocomplete="off" onkeypress="return SoloLetras(event);"  onKeyUP="this.value=this.value.toUpperCase();" class="form-control"  placeholder="Ingrese su profesion" name="profesion" required value="<?php if(isset($profesion)) echo $profesion?>">
                 </div>
                 <div class="col">
                   <label for="pwd" class="form-label">Dirección:</label>
-                  <input style="background-color:rgb(240, 244, 245);" type="text" autocomplete="off" onkeypress="return SoloLetras(event);"  onKeyUP="this.value=this.value.toUpperCase();" class="form-control"  placeholder="Ingrese su dirección" name="direccion" required>
+                  <input style="background-color:rgb(240, 244, 245);" type="text" autocomplete="off" onkeypress="return SoloLetras(event);"  onKeyUP="this.value=this.value.toUpperCase();" class="form-control"  placeholder="Ingrese su dirección" name="direccion" required value="<?php if(isset($direccion)) echo $direccion?>">
                 </div>
             </div>
             <div class="row"> 
                 <div class="col">
                   <label for="pwd" class="form-label">Celular:</label>
-                  <input style="background-color:rgb(240, 244, 245);" type="number" autocomplete="off" class="form-control"  placeholder="Ingrese su celular" name="celular" required>
+                  <input style="background-color:rgb(240, 244, 245);" type="number" autocomplete="off" class="form-control"  placeholder="Ingrese su celular" name="celular" required value="<?php if(isset($celular)) echo $celular?>">
                 </div>
                 <div class="col">
                   <label for="pwd" class="form-label">Referencia:</label>
-                  <input style="background-color:rgb(240, 244, 245);" type="text" autocomplete="off" onkeypress="return SoloLetras(event);"  onKeyUP="this.value=this.value.toUpperCase();" class="form-control"  placeholder="Ingrese nombre referencia" name="referencia" required>
+                  <input style="background-color:rgb(240, 244, 245);" type="text" autocomplete="off" onkeypress="return SoloLetras(event);"  onKeyUP="this.value=this.value.toUpperCase();" class="form-control"  placeholder="Ingrese nombre referencia" name="referencia" required value="<?php if(isset($referencia)) echo $referencia?>">
                 </div>
             </div>
             <div class="row">
                 <div class="col">
                   <label for="pwd" class="form-label">Celular referencia:</label>
-                  <input style="background-color:rgb(240, 244, 245);" type="number" autocomplete="off" class="form-control"  placeholder="Opcional" name="celular_referencia" >
+                  <input style="background-color:rgb(240, 244, 245);" type="number" autocomplete="off" class="form-control"  placeholder="Opcional" name="celular_referencia" value="<?php if(isset($celular_referencia)) echo $celular_referencia?>">
                 </div>
                 <div class="col">
                   <label for="pwd" class="form-label">Experiencia laboral:</label>
-                  <input style="background-color:rgb(240, 244, 245);" type="text" autocomplete="off" onkeypress="return SoloLetras(event);"  onKeyUP="this.value=this.value.toUpperCase();" class="form-control"  placeholder="Ingrese su profesión u oficio" name="experiencia_laboral" required>
+                  <input style="background-color:rgb(240, 244, 245);" type="text" autocomplete="off" onkeypress="return SoloLetras(event);"  onKeyUP="this.value=this.value.toUpperCase();" class="form-control"  placeholder="Ingrese su profesión u oficio" name="experiencia_laboral" required value="<?php if(isset($experiencia_laboral)) echo $experiencia_laboral?>">
                 </div>
             </div>
             <div class="row">
                 <div class="col"> 
                   <label for="pwd" class="form-label">Curriculum:</label>
-                  <input style="background-color:rgb(240, 244, 245);" type="file" autocomplete="off" class="form-control"  placeholder="Adjunte su curriculum" name="curriculum" required>
+                  <input style="background-color:rgb(240, 244, 245);" type="file" autocomplete="off" class="form-control"  placeholder="Adjunte su curriculum" name="curriculum">
                 </div>
                 <div class="col">
                   <label for="pwd" class="form-label">Foto:</label>
@@ -135,7 +136,7 @@ body {
             <div class="row">
                 <div class="col">
                 <label for="pwd" class="form-label">Genero:</label>
-                <input class="form-control" autocomplete="off" maxlength="1" list="browsers" type="text" id="calcular" name="genero"  id="browser" placeholder="Seleccione" pattern="([F-M])" required >
+                <input class="form-control" autocomplete="off" maxlength="1" list="browsers" type="text" id="calcular" name="genero"  id="browser" placeholder="Seleccione" pattern="([F-M])" required value="<?php if(isset($genero)) echo $genero?>">
                 <datalist id="browsers">
                   <option value="F">
                   <option value="M">
@@ -143,7 +144,7 @@ body {
                 </div>  
                 <div class="col">
                 <label for="pwd" class="form-label">Area:</label>
-                <input class="form-control" autocomplete="off" maxlength="20" list="browsers1" type="text" id="calcular" name="area"  id="browser" placeholder="Seleccione"  required >
+                <input class="form-control" autocomplete="off" maxlength="20" list="browsers1" type="text" id="calcular" name="area"  id="browser" placeholder="Seleccione"  required value="<?php if(isset($area)) echo $area?>">
                 <datalist id="browsers1">
                   <option value="ADMINISTRATIVA">
                   <option value="MANO DE OBRA">
@@ -152,12 +153,23 @@ body {
            </div><br>
             <div class="d-grid">
             <button type="submit" name="accion" value="registrar" class="btn btn-dark btn-block">Registrar</button><br>
-            <a href="http://localhost/SEACCO/_login" class="btn btn-danger btn-block">Cancelar</a>
+            <a href="Proyecto-SEACCO/vistas/iniciar_sesion/preguntas_seguridad" class="btn btn-danger btn-block">Cancelar</a>
             </div>         
             
         </form>
       </div>
        <!--Fin Cuerpo del modal -->
+    <!-- Mostrar y/u ocultar contraseña -->
+    <script>
+function myFunction() {
+  var x = document.getElementById("myInput");
+  if (x.type === "password") {
+    x.type = "text";
+  } else {
+    x.type = "password";
+  }
+}
+</script>
 
          </div>
   </div>
@@ -171,6 +183,30 @@ body {
  function mayus(e) {
    e.value = e.value.toUpperCase();
  }
+</script>
+
+<script type="text/javascript">
+
+function solonumeros(e) {
+  var teclado= e.value;
+  var numero= "";
+  var especiales = "";
+
+  key=e.keyCode||e.which;
+  teclado = string.fromCharCode(key);
+  numero = "0123456789";
+  especiales = "8-37-38-46"; //Arreglo
+  teclado_especial=false;
+
+  for(var i in especiales){
+    if(key==especiales[i]){
+teclado_especial = true;
+       }
+  }
+if (numero.indexOf(teclado)==-1 && !teclado_especial){
+  return false;
+}
+};
 </script>
 
 <script type="text/javascript">
@@ -207,13 +243,5 @@ function quitarespacios(e) {
 };
 </script>
 
-<script type="text/javascript"> function solonumero(e) {
-        tecla = (document.all) ? e.keyCode : e.which;
-        if (tecla==8) return true;
-        else if (tecla==0||tecla==9)  return true;
-       // patron =/[0-9\s]/;// -> solo letras
-        patron =/[0-9\s]/;// -> solo numeros
-        te = String.fromCharCode(tecla);
-        return patron.test(te);
-    }
+ 
 	</script>

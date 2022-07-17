@@ -1,14 +1,14 @@
 
 <?php
 session_start();
-require '../../conexion/conexion.php';
+require "../../conexion/conexion.php";
 
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 use PHPMailer\PHPMailer\SMTP;
 
 $result="";
-$enlace = "http://localhost/SEACCO/vistas/iniciar_sesion/index_restablecer.php";
+$enlace = "http://localhost/Proyecto-SEACCO/vistas/iniciar_sesion/index_restablecer.php";
 
 if(isset($_POST['submit'])){
     require '../../PHPMailer/Exception.php';
@@ -34,18 +34,20 @@ if(isset($_POST['submit'])){
           );
 
           //Server settings
-          $mail->SMTPDebug = 0;                      //Enable verbose debug output
+          //$mail->SMTPDebug = SMTP::DEBUG_SERVER;                      //Enable verbose debug output
           $mail->isSMTP();                                            //Send using SMTP
-          $mail->Host       = 'smtp.gmail.com';                     //Set the SMTP server to send through
+          $mail->Host       = 'smtp.gmail.com';
+          //$mail->Host       = 'smtp.office365.com';                    //Set the SMTP server to send through
           $mail->SMTPAuth   = true;                                   //Enable SMTP authentication
           $mail->Username   = 'seaccoc@gmail.com';                     //SMTP username
-          $mail->Password   = 'lveucqeygmxrtigm';                               //SMTP password
+          $mail->Password   = 'plhmloymsptqqhpc';                     //SMTP password                                     
           $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;            //Enable implicit TLS encryption
-          $mail->Port       = 465;                                    //TCP port to connect to; use 587 if you have set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`
+          $mail->Port       = 465;    
+          //$mail->Port       = 587;                                     //TCP port to connect to; use 587 if you have set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`
 
           //Recipients
-          $mail->setFrom('seaccoc@gmail.com', 'Constructora SEACO');
-          $mail->addAddress($_POST['correo'],'Usuario');     //Add a recipient
+          $mail->setFrom('seaccoc@gmail.com', 'Constructora SEACCO');
+          $mail->addAddress($_POST['correo'], 'usuario');            //Add a recipient
           //$mail->addAddress('ellen@example.com');               //Name is optional
           //$mail->addReplyTo('info@example.com', 'Information');
           //$mail->addCC('cc@example.com');
@@ -57,8 +59,41 @@ if(isset($_POST['submit'])){
 
           //Content
           $mail->isHTML(true);                                  //Set email format to HTML
-          $mail->Subject = 'Cambio de contraseña';
-          $mail->Body    = 'Ingrese al enlace para cambiar la contraseña: </b>'.$enlace ;
+          $mail->Subject = 'Restablecimiento de contraseña SEACCO';
+          $mail->Body    = '<!DOCTYPE html>
+          <html lang="en">
+          <head>
+              <meta charset="UTF-8">
+              <meta http-equiv="X-UA-Compatible" content="IE=edge">
+              <meta name="viewport" content="width=device-width, initial-scale=1.0">
+              <title>Document</title>
+          
+              
+          </head>
+          <body>
+              <table style="border: 2px solid black; width: 100%; background: beige;">
+                  <thead>
+                      <tr>
+                          <td style="text-align: center;background: greenyellow;color: BLUE" colspan="2"> 
+                              <h1> <b>RESTABLECIMIENTO DE CONTRASEÑA SEACCO '.usuario'</b></h1>  </td> 
+                      </tr>
+          
+                      <tr>
+                          
+                         <center><img src="../../imagenes/seacco.jpg" alt="Girl in a jacket" width="250" height="250"> </center> 
+                          <td style="text-align: center;"><span style="font-size: 28px; text-align: justify;">
+                              Se ha iniciado un proceso de recuperación de contraseña en su cuenta de acceso a 
+                              nuestro sitio web. Por favor haga click en el siguiente enlace para continuar con 
+                              el resto del proceso de reestablecimiento de su clave de acceso:
+                          <br>
+                          <br>
+                          <span style="font-size: 18px; text-align: justify;"></span> '.utf8_decode($estilo_correo).'                      
+                      </span></td>                  
+                      </tr>
+                  </thead>
+              </table>
+          </body>
+          </html>'.$enlace;
           //$mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
 
           $mail->send();
@@ -68,12 +103,12 @@ if(isset($_POST['submit'])){
       } catch (Exception $e) {
           echo "Error al enviar el mensaje: {$mail->ErrorInfo}";
       }
-          if(!$mail->send()){
-              $result="Algo esta mal, por favor inténtelo de nuevo.";
-          }
-          else{
-              $result="Gracias correo enviado exitosamente. Revise su correo!!!";
-          }
+          //if(!$mail->send()){
+          //   $result="Algo esta mal, por favor inténtelo de nuevo.";
+          //}
+          //else{
+          //  $result="Gracias correo enviado exitosamente. Revise su correo!!!";
+          //}
   }else{
     echo '<script>
             alert("El correo no existe");
@@ -127,7 +162,7 @@ body {
             </div>
         
             <button type="submit" name="submit" class="btn btn-primary btn-block">Enviar</button><br> 
-            <a href="http://localhost/SEACCO/_login" class="btn btn-danger btn-block">Regresar</a><br>
+            <a href="http://localhost/Proyecto-SEACCO/_login" class="btn btn-danger btn-block">Regresar</a><br>
              
         </form>
       </div>
