@@ -47,64 +47,95 @@ if(!isset($_SESSION['usuario'])){
 <!-- inicio de todas las card -->
 <!-- inicio codigo card -->
 <div class="col-lg-3 col-6">
+<?php
+include "../../conexion/conexion.php";
 
-    <div class="small-box bg-info">
+$sqlr = "SELECT * FROM tbl_roles";
+if ($resultr=mysqli_query($conn,$sqlr)) {
+    $rowcountr=mysqli_num_rows($resultr);
+
+?>
+    <div class="small-box bg-danger">
           <div class="inner">
-            <h3>150</h3>
-            <p>Cotizaciones</p>
+            <h3><?php echo $rowcountr?></h3>
+            <p>Roles</p>
           </div>
           <div class="icon">
             <i class="far fa-clipboard"> </i> 
           </div>
-            <a href="#" class="small-box-footer">Más información <i class="fas fa-arrow-circle-right"></i></a>
+            <a href="http://localhost/SEACCO/vistas/ajustes/vista_roles.php" class="small-box-footer">Más información <i class="fas fa-arrow-circle-right"></i></a>
       </div>
   </div>
+  <?php }?>
 <!-- fin codigo card -->
 <!-- inicio codigo card -->          
           <div class="col-lg-3 col-6">
-         
+          <?php
+include "../../conexion/conexion.php";
+
+$sqlS = "SELECT * FROM tbl_proyectos WHERE ID_ESTADO=1";
+if ($resultS=mysqli_query($conn,$sqlS)) {
+    $rowcountS=mysqli_num_rows($resultS);
+
+?>
             <div class="small-box bg-success">
                 <div class="inner">
-                  <h3>53<sup style="font-size: 20px"></sup></h3>
+                  <h3><?php echo $rowcountS?></h3>
                   <p>Solicitudes</p>
                 </div>
                 <div class="icon">
                   <i class="fas fa-envelope-open-text"></i>
                 </div>
-                <a href="#" class="small-box-footer">Más información<i class="fas fa-arrow-circle-right"></i></a>
+                <a href="http://localhost/SEACCO/vistas/proyectos/vista_proyectos.php" class="small-box-footer">Más información<i class="fas fa-arrow-circle-right"></i></a>
               </div>
             </div>
+            <?php }?>
 <!-- fin codigo card -->
 <!-- inicio codigo card -->
 <div class="col-lg-3 col-6">
+<?php
+include "../../conexion/conexion.php";
 
+$sql = "SELECT * FROM tbl_usuarios";
+if ($result=mysqli_query($conn,$sql)) {
+    $rowcount=mysqli_num_rows($result);
+
+?>
 <div class="small-box bg-info">
       <div class="inner">
-        <h3>150</h3>
+        <h3><?php echo $rowcount?></h3>
         <p>Usuarios registrados</p>
       </div>
       <div class="icon">
         <i class="fa fa-users"> </i> 
       </div>
-        <a href="#" class="small-box-footer">Más información <i class="fas fa-arrow-circle-right"></i></a>
+        <a href="http://localhost/SEACCO/vistas/personas/vista_administradores.php" class="small-box-footer">Más información <i class="fas fa-arrow-circle-right"></i></a>
   </div>
 </div>
+<?php } ?>
 <!-- fin codigo card -->
           <!-- fin codigo card -->
           <!-- inicio codigo card -->
           <div class="col-lg-3 col-6">
-         
-            <div class="small-box bg-success">
+          <?php
+include "../../conexion/conexion.php";
+
+$sqlP = "SELECT * FROM tbl_proyectos";
+if ($resultP=mysqli_query($conn,$sqlP)) {
+    $rowcountP=mysqli_num_rows($resultP);
+?>
+            <div class="small-box bg-warning">
                 <div class="inner">
-                  <h3>53<sup style="font-size: 20px"></sup></h3>
+                  <h3><?php echo $rowcountP?></h3>
                   <p>Proyectos</p>
                 </div>
                 <div class="icon">
                   <i class="fas fa-share-alt"></i>
                 </div>
-                <a href="#" class="small-box-footer">Más información<i class="fas fa-arrow-circle-right"></i></a>
+                <a href="http://localhost/SEACCO/vistas/proyectos/vista_proyectos.php" class="small-box-footer">Más información<i class="fas fa-arrow-circle-right"></i></a>
               </div>
             </div>
+            <?php } ?>
           <!-- fin codigo card -->
           <!-- fin de todas las card -->
 
@@ -113,13 +144,36 @@ if(!isset($_SESSION['usuario'])){
           <div class="col-lg-6">
             <div class="card">
               <center>
-                           
+              <?php
+include "../../conexion/conexion.php";
+
+$sqlT = "SELECT * FROM tbl_proyectos WHERE UBICACION='TEGUCIGALPA'";
+if ($resultT=mysqli_query($conn,$sqlT)) {
+    $rowcountT=mysqli_num_rows($resultT);
+
+    $sqlC = "SELECT * FROM tbl_proyectos WHERE UBICACION='COMAYAGUA'";
+if ($resultC=mysqli_query($conn,$sqlC)) {
+    $rowcountC=mysqli_num_rows($resultC);
+
+    $sqlY = "SELECT * FROM tbl_proyectos WHERE UBICACION='YORO'";
+if ($resultY=mysqli_query($conn,$sqlY)) {
+    $rowcountY=mysqli_num_rows($resultY);
+
+    $sqlO = "SELECT * FROM tbl_proyectos WHERE UBICACION='OLANCHO'";
+if ($resultO=mysqli_query($conn,$sqlO)) {
+    $rowcountO=mysqli_num_rows($resultO);
+
+    $sql = "SELECT * FROM tbl_proyectos";
+if ($result=mysqli_query($conn,$sql)) {
+    $rowcount=mysqli_num_rows($result);
+?>                         
 <canvas id="myChart" style="width:100%;max-width:100%"></canvas>
 
 <script>
-var xValues = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"];
-var yValues = [70, 59, 54, 57, 40, 59, 44, 44, 57, 59, 54, 24];
-var barColors = ["blue", "green","blue","green","blue","green","blue","green","blue","green","blue","green"];
+var xValues = ["Tegucigalpa", "Comayagua", "Yoro", "Olancho", "TOTAL"];
+var yValues = [<?php echo $rowcountT?>, <?php echo $rowcountC?>, <?php echo $rowcountY?>, 
+<?php echo $rowcountO?>, <?php echo $rowcount?>];
+var barColors = ["blue", "green", "pink", "yellow"];
 
 new Chart("myChart", {
   type: "bar",
@@ -139,6 +193,8 @@ new Chart("myChart", {
   }
 });
 </script>
+<?php };};};};};
+?>
               </center>
             </div>
           </div>
@@ -146,12 +202,31 @@ new Chart("myChart", {
           <!-- inicio codigo grafica 2 -->
           <div class="col-lg-6">
             <div class="card">
-              <center>
-              <canvas id="myChart2" style="width:100%;max-width:100%"></canvas>
+<?php
+include "../../conexion/conexion.php";
+
+$sql = "SELECT * FROM tbl_proyectos WHERE ID_ESTADO=1";
+if ($result=mysqli_query($conn,$sql)) {
+    $rowcount=mysqli_num_rows($result);
+
+    $sql2 = "SELECT * FROM tbl_proyectos WHERE ID_ESTADO=2";
+if ($result2=mysqli_query($conn,$sql2)) {
+    $rowcount2=mysqli_num_rows($result2);
+
+    $sql3 = "SELECT * FROM tbl_proyectos WHERE ID_ESTADO=3";
+if ($result3=mysqli_query($conn,$sql3)) {
+    $rowcount3=mysqli_num_rows($result3);
+
+    $sql4 = "SELECT * FROM tbl_proyectos";
+if ($result4=mysqli_query($conn,$sql4)) {
+    $rowcount4=mysqli_num_rows($result4);
+?>
+<center>
+<canvas id="myChart2" style="width:100%;max-width:100%"></canvas>
 
 <script>
-var xValues = ["Valle", "Valle", "Comayagua", "Atlantida", "Comayagua"];
-var yValues = [55, 49, 44, 24, 15];
+var xValues = ["SOLICITUD", "EN PROCESO", "TERMINADO", "ESTADO USUARIO"];
+var yValues = [<?php echo $rowcount?>, <?php echo $rowcount2?>, <?php echo $rowcount3?>, <?php echo $rowcount4?>];
 var barColors = [
   "#b91d47",
   "#00aba9",
@@ -187,7 +262,8 @@ new Chart("myChart2", {
 
 
           <!-- fin contenido -->
-
+<?php };};};};
+?>
       
 <?php include '../../configuracion/footer.php' ?>
 
