@@ -8,30 +8,8 @@ if(!isset($_SESSION['usuario'])){
         die();
         
 }
-include '../../controladores/crud_crear_preguntas.php';
+include '../../controladores/crud_permisos.php';
 
-// Selecciona el id del rol del usuario logueado
-include '../../conexion/conexion.php';
-$usuario = $_SESSION;
-$roles34 = "SELECT * FROM tbl_usuarios WHERE USUARIO='$usuario[usuario]'";
-$roles35 = mysqli_query($conn, $roles34);
-if (mysqli_num_rows($roles35) > 0)
-{
- while($row = mysqli_fetch_assoc($roles35))
-  { 
-      $id_rol7 = $row['ID_ROL'];
-  } 
-}
-
-               //valida si tiene permisos de consultar la pantalla 
-               $tablero = "SELECT * FROM tbl_ms_roles_ojetos WHERE ID_ROL='$id_rol7' and ID_OBJETO=21 and PERMISO_CONSULTAR=0";
-               $tablero2 = mysqli_query($conn, $tablero);
-               if (mysqli_num_rows($tablero2) > 0)
-               {
-                header('Location: ../../vistas/tablero/vista_perfil.php');
-                die();
-               }
-           
 
 ?>
 <!DOCTYPE html>
@@ -39,10 +17,12 @@ if (mysqli_num_rows($roles35) > 0)
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Crear preguntas</title>
+  <title>Permisos</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+
+  <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
   
 
 
@@ -54,49 +34,79 @@ if (mysqli_num_rows($roles35) > 0)
     <section class="content-header">
       <div class="container-fluid">
         <div class="row mb-2">
-          <!-- <div class="card-header text-center">
-              <h5> Preguntas de seguridad</h5>
-          </div> -->
           <div class="col-sm-2">
+          <h1>Permisos</h1>
             <!-- Inicio de modal de agregar -->
-              
-            <!-- El Modal -->
-            <div class="modal" id="myModal">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <!-- Encabezado del modal -->
-                        <form action="" method="post">
-                        <div class="modal-header">
-                          
-                            <h4 class="modal-title">Nueva Pregunta</h4>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                        </div>
-                        <!-- Fin Encabezado del modal -->
+<div class="container mt-3">
+        
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal">
+            Agregar permisos
+        </button>
+    </div>
 
-                        <!-- Cuerpo del modal Modal -->
-                        <div class="modal-body">
-                      
-                            <label for="">Pregunta</label>
-                            <input type="text" class="form-control" name="pregunta" required value="" placeholder="" 
-                            autocomplete = "off"  onkeypress="return soloLetras(event);" minlength="3" maxlength="50" onkeyup="mayus(this);"  >
-                            <br>
-                        
-                        </div>
-                        <!-- Fin Cuerpo del modal Modal -->
-                        <!-- pie del modal -->
-                        <div class="modal-footer">
-                            <button type="submit" name="accion" value="agregar" class="btn btn-primary" onclick="return confirm('¿Desea agregar la pregunta?')">Agregar</button>
-                            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
-                        </div>
-                        <!-- Fin pie del modal -->
-                        </form>
-                    </div>
+<!-- El Modal -->
+    <div class="modal" id="myModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <!-- Encabezado del modal -->
+                <form action="" method="post">
+                <div class="modal-header">
+                    <h4 class="modal-title">Crear Permisos</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
+                <!-- Fin Encabezado del modal -->
+
+                <!-- Cuerpo del modal Modal -->
+                <div class="modal-body">
+               
+                    <label for="">Seleccione el rol</label>
+                    <select class="form-select" id="lista1" name="lista1" required >
+                        <?php
+                            include '../../conexion/conexion.php';
+                            $roles = "SELECT * FROM tbl_roles ORDER BY ID_ROL";
+                            $roles2 = mysqli_query($conn, $roles);
+                            if (mysqli_num_rows($roles2) > 0) {
+                                while($row = mysqli_fetch_assoc($roles2))
+                                {
+                                $id_rol = $row['ID_ROL'];
+                                $rol =$row['ROL'];
+                         ?>
+                          <option value="<?php  echo $id_rol ?>"><?php echo $rol ?></option>
+                          <?php
+                           }}// finaliza el if y el while
+                           ?>
+                   </select>
+
+                    <div id="select2lista"></div>
+
+                    
+                   <input type="checkbox"  name="insertar" value="1">
+                    <label for="insertar"> Insertar</label><br>
+                    <input type="checkbox"  name="eliminar2" value="1">
+                    <label for="eliminar"> Eliminar</label><br>
+                    <input type="checkbox" name="editar2" value="1">
+                    <label for="vehicle3"> Editar</label><br>
+                    <input type="checkbox" name="consultar" value="1">
+                    <label for="vehicle3"> Consultar</label><br>
+                
+                </div>
+                <!-- Fin Cuerpo del modal Modal -->
+                <!-- pie del modal -->
+                <div class="modal-footer">
+      	            <button type="submit" name="accion" value="agregar" class="btn btn-primary" onclick="return confirm('¿Desea agregar el permiso?')">Agregar</button>
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
+                </div>
+                <!-- Fin pie del modal -->
+                </form>
             </div>
-            <!-- Fin  de modal de agregar --> 
+        </div>
+    </div>
+    <!-- Fin  de modal de agregar --> <br>
           </div>
           <div class="col-sm-6">
-            <ol class="breadcrumb float-sm-right"></ol>
+            <ol class="breadcrumb float-sm-right">
+            
+            </ol>
             
           </div>
           
@@ -111,95 +121,91 @@ if (mysqli_num_rows($roles35) > 0)
       <div class="container-fluid">
         <div class="row">
           <div class="col-12">
+           
             <!-- /.card -->
-            <div class="card">
-                  <div class="card-header">
-                    <h3 class="card-title" >Preguntas de seguridad</h3> 
-                    
-                  </div>
+            
+            <div class="card table-responsive">
+              <div class="card-header">
+                <h3 class="card-title">Permisos de los roles</h3>
+                
+              </div>
               
               <!-- /.card-header -->
               <div class="card-body ">
-                    <div class="card-fluid "> 
-                      <!-- Valida si tiene permiso para insertar una pregunta -->
-                        <?php 
-                          include '../../conexion/conexion.php';
-                          $tablero = "SELECT * FROM tbl_ms_roles_ojetos WHERE ID_ROL='$id_rol7' and ID_OBJETO=21 and PERMISO_INSERCION=1";
-                          $tablero2 = mysqli_query($conn, $tablero);
-                          if (mysqli_num_rows($tablero2) > 0)
-                          {
-                              echo '<button type="button" class="btn btn-primary  " data-bs-toggle="modal" data-bs-target="#myModal">
-                              Nueva pregunta
-                            </button>
-                          </div> <br>';
-                          }
-                        ?>
-                      
-                  
-
                 <table id="example1" class="table table-bordered table-striped">
                   <thead>
                   <tr>
                   <th>Acciones</th>
-                  <th>ID</th>
-                  <th>Pregunta</th>
+                  <th>Pantalla</th>
+                  <th>Rol</th>
+                  <th>Insertar</th>
+                  <th>Eliminar</th>
+                  <th>Editar</th>
+                  <th>Consultar</th>
                   
                   
                   </tr>
                   </thead>
                   <tbody>
-                    <?php while ($filas= mysqli_fetch_assoc($result)){
-
+                    <?php 
+                    include '../../conexion/conexion.php';
+                    $sql = "SELECT * FROM ((tbl_ms_roles_ojetos p 
+                    INNER JOIN tbl_roles r ON p.ID_ROL = r.ID_ROL)
+                    INNER JOIN tbl_ms_objetos o ON p.ID_OBJETO = o.ID_OBJETO)";
+                    $result = mysqli_query($conn, $sql);
+                    while ($filas= mysqli_fetch_assoc($result)){
+ 
                      ?>
                   <tr>
                   <td>
-                    
                         <!-- inicio boton editar -->
-                         <!-- Valida si tiene permiso para EDITAR una pregunta -->
-                         <?php 
-                          include '../../conexion/conexion.php';
-                          $tablero = "SELECT * FROM tbl_ms_roles_ojetos WHERE ID_ROL='$id_rol7' and ID_OBJETO=21 and PERMISO_ACTUALIZACION=1";
-                          $tablero2 = mysqli_query($conn, $tablero);
-                          if (mysqli_num_rows($tablero2) > 0)
-                          {?>
-                            <button type="button"  class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#myModal2<?php echo $filas['ID_PREGUNTA'] ?>" >
-                            <i class="fas fa-pencil-alt"></i>
-                            </button>  <?php 
-                          }
-                        ?>
-                      
+                      <button type="button"  class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#myModal2<?php echo $filas['ID_OBJETO'] ?>" >
+                      <i class="fas fa-pencil-alt"></i>
+                      </button>
 
                           <!-- El Modal -->
-                          <div class="modal" id="myModal2<?php echo $filas['ID_PREGUNTA'] ?>">
+                          <div class="modal" id="myModal2<?php echo $filas['ID_OBJETO'] ?>">
                             <div class="modal-dialog">
                               <div class="modal-content">
 
                                 <!-- Encabezado del modal -->
                                 <div class="modal-header">
-                                  <h4 class="modal-title">Editar pregunta</h4>
+                                <form action="" method="post">
+                                  <h4 class="modal-title">Editar rol</h4>
                                   <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                                 </div>
                                 <!-- Fin Encabezado del modal -->
 
 
                                 <!-- Cuerpo del modal Modal -->
-                                <form action="" method="post">
-                                          <div class="modal-body">
-                                              <label for="">Id pregunta</label>
-                                              <input type="text" readonly class="form-control" name="id_pregunta" required value="<?php echo $filas['ID_PREGUNTA'] ?>" placeholder="" id="txtPrecio_Compra"   >
-                                              <br>
-                                              <label for="">Pregunta</label>
-                                              <input type="hidden" name="anterior"  value="<?php echo $filas['PREGUNTA'] ?>">
-                                              <input type="text" class="form-control" name="pregunta" required value="<?php echo $filas['PREGUNTA'] ?>" placeholder="" id="txtPrecio_Compra" 
-                                              autocomplete = "off"  onkeypress="return soloLetras(event);" minlength="3" maxlength="50" onkeyup="mayus(this);"  >
-                                              <br>
-                                          
-                                          </div>
+                                <div class="modal-body">
+               
+                    <label for="">Rol</label>
+                    <input type="hidden" name="lista1" value="<?php echo $filas['ID_ROL']?>">
+                    <input type="text" class="form-control" readonly name="MOSTRAR rol" value="<?php echo $filas['ROL']?>">
+
+                    <label for="">Pantalla</label>
+                    <input type="hidden" name="lista2" value="<?php echo $filas['ID_OBJETO']?>">
+                    <input type="text" class="form-control" readonly name="Mostrar pantalla" value="<?php echo $filas['OBJETO']?>">
+
+
+
+                   <input type="checkbox"  name="insertar" value="1" <?php if ($filas['PERMISO_INSERCION']==1){echo "checked";}?>>
+                    <label for="insertar"> Insertar</label><br>
+                    <input type="checkbox"  name="eliminar2" value="1" <?php if ($filas['PERMISO_ELIMINACION']==1){echo "checked";}?>>
+                    <label for="eliminar"> Eliminar</label><br>
+                    <input type="checkbox" name="editar2" value="1" <?php if ($filas['PERMISO_ACTUALIZACION']==1){echo "checked";}?>>
+                    <label for="vehicle3"> Editar</label><br>
+                    <input type="checkbox" name="consultar" value="1" <?php if ($filas['PERMISO_CONSULTAR']==1){echo "checked";}?>>
+                    <label for="vehicle3"> Consultar</label><br>
+                
+                </div>
                                 <!-- Fin Cuerpo del modal Modal -->
 
                                 <!-- pie del modal -->
                                 <div class="modal-footer">
-                                <button type="submit" name="accion" value="editar" class="btn btn-primary" onclick="return confirm('¿Desea editar la pregunta?')">Guardar</button>
+                                  
+                                <button type="submit" name="accion" value="editar" class="btn btn-primary" onclick="return confirm('¿Desea editar el permiso?')">Guardar</button>
                                   <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
                                 </div>
                              
@@ -210,31 +216,25 @@ if (mysqli_num_rows($roles35) > 0)
                           </div>
                           <!-- fin boton editar -->
                          
-                          <!-- <input type="hidden" name="id_categoria" value="<?php echo $filas['ID_PREGUNTA'] ?>" > -->
+                         
                           
-                          <!-- Valida si tiene permiso para EDITAR una pregunta -->
-                         <?php 
-                          include '../../conexion/conexion.php';
-                          $tablero = "SELECT * FROM tbl_ms_roles_ojetos WHERE ID_ROL='$id_rol7' and ID_OBJETO=21 and PERMISO_ELIMINACION=1";
-                          $tablero2 = mysqli_query($conn, $tablero);
-                          if (mysqli_num_rows($tablero2) > 0)
-                          {?>
-                            <button  value="eliminar" name="accion" 
+                      <button  value="eliminar" name="accion" 
                         onclick="return confirm('¿Quieres eliminar este dato?')"
                         type="submit" class="btn btn-danger ">
                         <i class="fas fa-trash-alt"></i>
-                      </button>  <?php 
-                          }
-                        ?>
-                      </form>
+                    </button></form>
                     
-                  </td>
-                     <td ><?php echo $filas['ID_PREGUNTA'] ?></td>
-                     <td><?php echo $filas['PREGUNTA'] ?></td>
+</td>
+                     <td ><?php echo $filas['OBJETO'] ?></td>
+                     <td><?php echo $filas['ROL'] ?></td>
+                     <td><?php if ($filas['PERMISO_INSERCION']<1){echo "NO";}else{ Echo "SI"; } ?></td>
+                     <td><?php if ($filas['PERMISO_ELIMINACION']<1){echo "NO";}else{ Echo "SI"; } ?></td>
+                     <td><?php if ($filas['PERMISO_ACTUALIZACION']<1){echo "NO";}else{ Echo "SI"; } ?></td>
+                     <td><?php if ($filas['PERMISO_CONSULTAR']<1){echo "NO";}else{ Echo "SI"; } ?></td>
                     
-                     </tr>
+      </tr>
                 <?php } ?>  
-                  </tfoot>
+                </tbody>
                 </table>
               </div>
               <!-- /.card-body -->
@@ -286,6 +286,8 @@ if (mysqli_num_rows($roles35) > 0)
 <script src="../../plantilla/AdminLTE-3.2.0/dist/js/adminlte.min.js"></script>
 <!-- AdminLTE for demo purposes -->
 <script src="../../plantilla/AdminLTE-3.2.0/dist/js/demo.js"></script>
+<!-- Page specific script -->
+
 <!-- INICIO muestra los botones, traduce y Agrupar -->
 
 <script>
@@ -347,6 +349,8 @@ if (mysqli_num_rows($roles35) > 0)
 </script>
 <!-- Fin muestra los botones y traduce y Agrupar -->
 
+<!-- Enlace Script para que solo permita letras -->
+<script type="text/javascript" src="../../js/solo_letras.js"></script>
 
  <!-- Enlace Script para que convierta a mayusculas las teclas que se van pulsando -->
  <script type="text/javascript" src="../../js/converir_a_mayusculas.js"></script>
@@ -357,28 +361,25 @@ if (mysqli_num_rows($roles35) > 0)
 <script type="text/javascript" src="../../js/evitar_reenvio.js"></script>
 </html>
 
+<script type="text/javascript">
+	$(document).ready(function(){
+		$('#lista1').val(1);
+		recargarLista();
 
-<script>
-  // Inicio Script para que solo permita letras
- 
-  function soloLetras(e){
-       key = e.keyCode || e.which;
-       tecla = String.fromCharCode(key).toLowerCase();
-       letras = " áéíóúabcdefghijklmnñopqrstuvwxyz¿?";
-       especiales = ["8-37-39-46"];
-
-       tecla_especial = false
-       for(var i in especiales){
-        if(key == especiales[i]){
-          tecla_especial = true;
-          break;
-        }
-      }
-
-      if(letras.indexOf(tecla)==-1 && !tecla_especial){
-        return false;
-      }
-    }
- 
-//   Fin Script para que solo permita letras
+		$('#lista1').change(function(){
+			recargarLista();
+		});
+	})
+</script>
+<script type="text/javascript">
+	function recargarLista(){
+		$.ajax({
+			type:"POST",
+			url:"select_pantallas.php",
+			data:"lista1=" + $('#lista1').val(),
+			success:function(r){
+				$('#select2lista').html(r);
+			}
+		});
+	}
 </script>
