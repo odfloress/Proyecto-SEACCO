@@ -9,6 +9,9 @@ if(!isset($_SESSION['usuario'])){
         
 }
 
+ 
+
+
 
 // <?php $usuario = $_SESSION;
 // echo $usuario['usuario']; ?>

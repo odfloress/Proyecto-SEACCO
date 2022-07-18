@@ -64,7 +64,7 @@ include '../../controladores/crud_rol.php';
 
                     <label for="">Descripción</label>
                     <input type="text" class="form-control" name="descripcion" value="<?php echo $descripcion; ?>" placeholder="" autocomplete = "off"  onkeypress="return soloLetras(event);" minlength="3" maxlength="50" 
-                onkeyup="mayus(this);" required 
+                onkeyup="mayus(this);" required >
                 
                 </div>
                 <!-- Fin Cuerpo del modal Modal -->
