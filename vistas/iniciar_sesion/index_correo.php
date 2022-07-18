@@ -1,6 +1,14 @@
 
 <?php
 session_start();
+if(!isset($_SESSION['usuario'])){
+ 
+        header('Location: ../../_login.php');
+        session_unset();
+        session_destroy();
+        die();
+        
+}
 require '../../conexion/conexion.php';
 
 use PHPMailer\PHPMailer\PHPMailer;
@@ -39,7 +47,7 @@ if(isset($_POST['submit'])){
           $mail->Host       = 'smtp.gmail.com';                     //Set the SMTP server to send through
           $mail->SMTPAuth   = true;                                   //Enable SMTP authentication
           $mail->Username   = 'seaccoc@gmail.com';                     //SMTP username
-          $mail->Password   = 'lveucqeygmxrtigm';                               //SMTP password
+          $mail->Password   = 'plhmloymsptqqhpc';                               //SMTP password
           $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;            //Enable implicit TLS encryption
           $mail->Port       = 465;                                    //TCP port to connect to; use 587 if you have set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`
 
@@ -62,21 +70,27 @@ if(isset($_POST['submit'])){
           //$mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
 
           $mail->send();
+
+          // inicio inserta en la tabla bitacora
+            $sqlB2 = "INSERT INTO tbl_bitacora (ID_USUARIO, ID_OBJETO, USUARIO, ACCION, OBSERVACION)
+              VALUES (2, 1, '$_SESSION[usuario]', 'SOLICITO', 'SOLICITO CAMBIO DE CONTRASEÑA POR CORREO')";
+              if (mysqli_query($conn, $sqlB2)) {} else { }
+          // fin inserta en la tabla bitacora
               echo '<script>
                       alert("Correo enviado exitosamente");
                   </script>';
       } catch (Exception $e) {
           echo "Error al enviar el mensaje: {$mail->ErrorInfo}";
       }
-          if(!$mail->send()){
-              $result="Algo esta mal, por favor inténtelo de nuevo.";
-          }
-          else{
-              $result="Gracias correo enviado exitosamente. Revise su correo!!!";
-          }
+          // if(!$mail->send()){
+          //     $result="Algo esta mal, por favor inténtelo de nuevo.";
+          // }
+          // else{
+          //     $result="Gracias correo enviado exitosamente. Revise su correo!!!";
+          // }
   }else{
     echo '<script>
-            alert("El correo no existe");
+            alert("No enconrtamos ningun usuario registrados con ese correo  electrónico");
           </script>';
   }
 }
@@ -115,7 +129,7 @@ body {
 
       <!--Inicio Cuerpo del modal -->
       <div class="modal-body ">
-        <form action="" method="post"
+        <form action="" method="post">
             <div class="mb-3 mt-3">
                <center><img src="../../imagenes/seacco.jpg" alt="Girl in a jacket" width="150" height="150"><br></center>
                 <div class="alert alert-success">
@@ -125,10 +139,11 @@ body {
               <input style="background-color:rgb(240, 244, 245);" type="email" class="form-control"  placeholder="Ingrese el correo" name="correo">
               <center><div><p class="text-success"><?= $result; ?></p></div></center>
             </div>
-        
+            <div class="d-grid">
             <button type="submit" name="submit" class="btn btn-primary btn-block">Enviar</button><br> 
             <a href="http://localhost/SEACCO/_login" class="btn btn-danger btn-block">Regresar</a><br>
-             
+            </div>
+            
         </form>
       </div>
        <!--Fin Cuerpo del modal -->
