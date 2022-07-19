@@ -34,8 +34,8 @@
          }else{ 
 
                 //si no existe un proveedor permite insertar
-                $sql1 = "INSERT INTO tbl_proveedores ( NOMBRE, NOMBRE_REFERENCIA, SECTOR_COMERCIAL, DIRECCION, TELEFONO, CORREO)
-                VALUES ('$nombre','$nombre_referencia','$sector_comercial','$direccion','$telefono','$correo')";
+                $sql1 = "INSERT INTO tbl_proveedores (ID_PROVEEDOR, NOMBRE, NOMBRE_REFERENCIA, SECTOR_COMERCIAL, DIRECCION, TELEFONO, CORREO)
+                VALUES ('$id_proveedor','$nombre','$nombre_referencia','$sector_comercial','$direccion','$telefono','$correo')";
                 if (mysqli_query($conn, $sql1)) {
                     header('Location: ../../vistas/personas/vista_proveedores.php');
 
