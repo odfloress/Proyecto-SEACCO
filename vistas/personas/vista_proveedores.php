@@ -55,13 +55,13 @@ include '../../controladores/crud_proveedor.php';
                     <input type="text" class="form-control" name="id_proveedor" required value="" placeholder="" id="txtPrecio_Compra"   >
                     <br>
                     <label for="">Proveedor</label>
-                    <input type="text" class="form-control" name="nombre" required value="" placeholder="" id="txtPrecio_Compra"  onkeyup="mayus(this);" >
+                    <input type="text" class="form-control" name="nombre" required value="" placeholder="" id="txtPrecio_Compra" onkeypress="return soloLetras(event);" onkeyup="mayus(this);" >
                     <br>
                     <label for="">Nombre Referencia</label>
-                    <input type="text" class="form-control" name="nombre_referencia" required value="" placeholder="" id="txtnombrer"  onkeyup="mayus(this);" >
+                    <input type="text" class="form-control" name="nombre_referencia" required value="" placeholder="" id="txtnombrer" onkeypress="return soloLetras(event);" onkeyup="mayus(this);" >
                     <br>
                     <label for="">Sector comercial</label>
-                    <input type="text" class="form-control" name="sector_comercial" required value="" placeholder="" id="txtsectorcomercial"  onkeyup="mayus(this);" >
+                    <input type="text" class="form-control" name="sector_comercial" required value="" placeholder="" id="txtsectorcomercial" onkeypress="return soloLetras(event);" onkeyup="mayus(this);" >
                     <br>
                     <label for="">direccion</label>
                     <input type="text" class="form-control" name="direccion" required value="" placeholder="" id="txtdireccionproveedor"  onkeyup="mayus(this);" >
@@ -160,13 +160,13 @@ include '../../controladores/crud_proveedor.php';
                                               <input type="text" class="form-control" name="id_proveedor" required value="<?php echo $filas['ID_PROVEEDOR'] ?>" placeholder="" id="txtPrecio_Compra"   >
                                               <br>
                                               <label for="">Proveedor</label>
-                                              <input type="text" class="form-control" name="nombre" required value="<?php echo $filas['NOMBRE'] ?>" placeholder="" id="txtPrecio_Compra"  onkeyup="mayus(this);" >
+                                              <input type="text" class="form-control" name="nombre" required value="<?php echo $filas['NOMBRE'] ?>" placeholder="" id="txtPrecio_Compra" onkeypress="return soloLetras(event);" onkeyup="mayus(this);" >
                                               <br>
                                               <label for="">Nombre Referencia</label>
-                                             <input type="text" class="form-control" name="nombre_referencia" required value="<?php echo $filas['NOMBRE_REFERENCIA'] ?>" placeholder="" id="txtnombrer"  onkeyup="mayus(this);" >
+                                             <input type="text" class="form-control" name="nombre_referencia" required value="<?php echo $filas['NOMBRE_REFERENCIA'] ?>" placeholder="" id="txtnombrer" onkeypress="return soloLetras(event);" onkeyup="mayus(this);" >
                                              <br>
                                              <label for="">Sector comercial</label>
-                                             <input type="text" class="form-control" name="sector_comercial" required value="<?php echo $filas['SECTOR_COMERCIAL'] ?>" placeholder="" id="txtsectorcomercial"  onkeyup="mayus(this);" >
+                                             <input type="text" class="form-control" name="sector_comercial" required value="<?php echo $filas['SECTOR_COMERCIAL'] ?>" placeholder="" id="txtsectorcomercial" onkeypress="return soloLetras(event);" onkeyup="mayus(this);" >
                                              <br>
                                              <label for="">direccion</label>
                                              <input type="text" class="form-control" name="direccion" required value="<?php echo $filas['DIRECCION'] ?>" placeholder="" id="txtdireccionproveedor"  onkeyup="mayus(this);" >
@@ -187,16 +187,17 @@ include '../../controladores/crud_proveedor.php';
                                 </div>
                               </form>
                                   <!-- Fin pie del modal -->
-
+                                  <form action="" method="post">
                               </div>
                             </div>
                           </div>
                           <!-- fin boton editar -->
-                      <button  value="btnEliminar" name="accion" 
+                          <input type="hidden" name="id_proveedor"  value="<?php echo $filas['ID_PROVEEDOR'] ?>">
+                      <button  value="eliminar" name="accion" 
                         onclick="return confirm('¿Quieres eliminar este dato?')"
                         type="submit" class="btn btn-danger " data-id="19">
                         <i class="fas fa-trash-alt"></i>
-                    </button>
+                    </button></form>
 </td>
                          
                     </td>
