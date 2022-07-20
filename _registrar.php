@@ -79,7 +79,7 @@ body {
                 </div>
                 <div class="col">
                   <label for="pwd" class="form-label">Contraseña:</label>
-                  <input style="background-color:rgb(240, 244, 245);" type="password" autocomplete="off"  class="form-control"  placeholder="Ingrese la contraseña" name="contrasena" id="myInput" max="10" required pattern="(?=.*[\d])(?=.*[a-z])(?=.*[A-Z]).{8,}" onblur="quitarespacios(this);"  onkeyup="sinespacio(this);" required="" minlength="8" maxlength="9">
+                  <input style="background-color:rgb(240, 244, 245);" type="password" autocomplete="off"  class="form-control"  placeholder="Ingrese la contraseña" name="contrasena" id="myInput" max="10" required pattern="(?=.*[\d])(?=.*[a-z])(?=.*[A-Z]).{8,}" onblur="quitarespacios(this);"  onkeyup="sinespacio(this);" required="" minlength="8">
                   <input type="checkbox" onclick="myFunction()" name="" id=""> Mostrar/Ocultar
                 </div>
             </div>
@@ -90,7 +90,7 @@ body {
                 </div>
                 <div class="col">
                   <label for="pwd" class="form-label">DNI:</label>
-                  <input style="background-color:rgb(240, 244, 245);" type="text" autocomplete="off" class="form-control"  placeholder="Ingrese su DNI sin guiones" name="dni" minlength="13" maxlength="15" pattern="1-9" required value="<?php if(isset($dni)) echo $dni?>">                  
+                  <input style="background-color:rgb(240, 244, 245);" type="text" autocomplete="off" class="form-control"  placeholder="Ingrese su DNI sin guiones" name="dni" minlength="13" maxlength="15" required value="<?php if(isset($dni)) echo $dni?>">                  
                 </div>
             </div>
             <div class="row">

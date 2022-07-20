@@ -87,7 +87,7 @@ if(isset($_POST['submit'])){
                               el resto del proceso de reestablecimiento de su clave de acceso:
                           <br>
                           <br>
-                          <span style="font-size: 18px; text-align: justify;"></span> '.utf8_decode($estilo_correo).'                      
+                          <span style="font-size: 18px; text-align: justify;"></span>                      
                       </span></td>                  
                       </tr>
                   </thead>
