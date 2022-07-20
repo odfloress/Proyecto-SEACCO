@@ -8,6 +8,7 @@ if(!isset($_SESSION['usuario'])){
         die();
         
 }
+include '../../controladores/crud_estado_proyecto.php';
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -41,6 +42,7 @@ if(!isset($_SESSION['usuario'])){
         <div class="modal-dialog">
             <div class="modal-content">
                 <!-- Encabezado del modal -->
+                <form action="" method="post">
                 <div class="modal-header">
                     <h4 class="modal-title">Nuevo estado</h4>
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
@@ -49,21 +51,20 @@ if(!isset($_SESSION['usuario'])){
 
                 <!-- Cuerpo del modal Modal -->
                 <div class="modal-body">
-                <label for="">Id estado</label>
-                    <input type="text" class="form-control" name="txtPrecio_Compra" required value="" placeholder="" id="txtPrecio_Compra"   >
-                    <br>
+                  
                     <label for="">Estado</label>
-                    <input type="text" class="form-control" name="txtPrecio_Compra" required value="" placeholder="" id="txtPrecio_Compra"   >
+                    <input type="text" class="form-control" name="nombre" required value="" placeholder="" id="txtPrecio_Compra" onkeypress="return soloLetras(event);" minlength="3" maxlength="20" onkeyup="mayus(this);"   >
                     <br>
                 
                 </div>
                 <!-- Fin Cuerpo del modal Modal -->
                 <!-- pie del modal -->
                 <div class="modal-footer">
-      	            <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Agregar</button>
+      	            <button type="submit" name="accion" value="agregar" class="btn btn-primary" onclick="return confirm('¿Desea agregar el estado?')">Agregar</button>
                     <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
                 </div>
                 <!-- Fin pie del modal -->
+                </form>
             </div>
         </div>
     </div>
@@ -108,19 +109,23 @@ if(!isset($_SESSION['usuario'])){
                   </tr>
                   </thead>
                   <tbody>
+                  <?php while ($filas= mysqli_fetch_assoc($result)){
+ 
+ ?>
                   <tr>
                   <td>
                         <!-- inicio boton editar -->
-                      <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#myModal2">
+                      <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#myModal2<?php echo $filas['ID_ESTADOS'] ?>">
                       <i class="fas fa-pencil-alt"></i>
                       </button>
 
                           <!-- El Modal -->
-                          <div class="modal" id="myModal2">
+                          <div class="modal" id="myModal2<?php echo $filas['ID_ESTADOS'] ?>">
                             <div class="modal-dialog">
                               <div class="modal-content">
 
                                 <!-- Encabezado del modal -->
+                                <form action="" method="post">
                                 <div class="modal-header">
                                   <h4 class="modal-title">Editar estado</h4>
                                   <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
@@ -131,10 +136,10 @@ if(!isset($_SESSION['usuario'])){
                                 <!-- Cuerpo del modal Modal -->
                                           <div class="modal-body">
                                               <label for="">Id estado</label>
-                                              <input type="text" class="form-control" name="txtPrecio_Compra" required value="" placeholder="" id="txtPrecio_Compra"   >
+                                              <input type="number" class="form-control" name="id_estados" required value="<?php echo $filas['ID_ESTADOS'] ?>" placeholder="" id="txtPrecio_Compra"   >
                                               <br>
                                               <label for="">Estado</label>
-                                              <input type="text" class="form-control" name="txtPrecio_Compra" required value="" placeholder="" id="txtPrecio_Compra"   >
+                                              <input type="text" class="form-control" name="nombre" required value="<?php echo $filas['NOMBRE'] ?>" placeholder="" id="txtPrecio_Compra" onkeypress="return soloLetras(event);" minlength="3" maxlength="20"  onkeyup="mayus(this);  >
                                               <br>
                                           
                                           </div>
@@ -142,22 +147,26 @@ if(!isset($_SESSION['usuario'])){
 
                                 <!-- pie del modal -->
                                 <div class="modal-footer">
-                                <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Guardar</button>
+                                <button type="submit" name="accion" value="editar" class="btn btn-primary"  onclick="return confirm('¿Desea editar el estado?')">Guardar</button>
                                   <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
                                 </div>
+                                </form>
                                   <!-- Fin pie del modal -->
+                                  <form action="" method="post">
                               </div>
                             </div>
                           </div>
                           <!-- fin boton editar -->
-                      <button  value="btnEliminar" name="accion" 
+                          <input type="hidden" name="id_estados"  value="<?php echo $filas['ID_ESTADOS'] ?>">
+                      <button  value="eliminar" name="accion" 
                         onclick="return confirm('¿Quieres eliminar este dato?')"
                         type="submit" class="btn btn-danger " data-id="19">
                         <i class="fas fa-trash-alt"></i>
-                    </button>
+                    </button></form>
 </td>
-                     <td>1</td>
-                     <td>Finalizado</td>
+                    <td ><?php echo $filas['ID_ESTADOS'] ?></td>
+                     <td><?php echo $filas['NOMBRE'] ?></td>
+                     <?php } ?>
                     
       </tr>
                   
@@ -232,4 +241,46 @@ if(!isset($_SESSION['usuario'])){
   });
 </script>
 </body>
+<script type="text/javascript" src="../../js/evitar_reenvio.js"></script>
 </html>
+
+<script type="text/javascript">
+  
+        function mayus(e) {
+          e.value = e.value.toUpperCase();
+         }
+    </script>
+
+<script type="text/javascript"> function solonumero(e) {
+        tecla = (document.all) ? e.keyCode : e.which;
+        if (tecla==8) return true;
+        else if (tecla==0||tecla==9)  return true;
+       // patron =/[0-9\s]/;// -> solo letras
+        patron =/[0-9-\s]/;// -> solo numeros
+        te = String.fromCharCode(tecla);
+        return patron.test(te);
+    }
+	</script>
+
+<script>
+      function soloLetras(e){
+       key = e.keyCode || e.which;
+       tecla = String.fromCharCode(key).toLowerCase();
+       letras = " áéíóúabcdefghijklmnñopqrstuvwxyz";
+       especiales = ["8-37-39-46"];
+
+       tecla_especial = false
+       for(var i in especiales){
+        if(key == especiales[i]){
+          tecla_especial = true;
+          break;
+        }
+      }
+
+      if(letras.indexOf(tecla)==-1 && !tecla_especial){
+        return false;
+      }
+    }
+  </script>
+
+

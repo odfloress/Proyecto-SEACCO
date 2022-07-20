@@ -8,6 +8,7 @@ if(!isset($_SESSION['usuario'])){
         die();
         
 }
+include '../../controladores/crud_proyectos.php';
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -48,40 +49,45 @@ if(!isset($_SESSION['usuario'])){
                 <!-- Fin Encabezado del modal -->
 
                 <!-- Cuerpo del modal Modal -->
+                <form action="" method="post">
                 <div class="modal-body">
-                  <label for="">Nombre Cliente</label>
-                    <input class="form-control" type="text" name="nombre" id="">
+                <label for="">Id Proyecto</label>
+                    <input class="form-control" type="number" name="id_proyecto" id="">
                     <br>
-                    <label for="">Nombre Encargado</label>
-                    <input class="form-control" type="text" name="nombre" id="">
+                  <label for="">Id Cliente</label>
+                    <input class="form-control" type="number" name="id_cliente" id="">
                     <br>
-                    <label for="">Estado del proyecto</label>
-                    <input class="form-control" type="text" name="nombre" id="">
+                    <label for="">Id Encargado</label>
+                    <input class="form-control" type="number" name="id_usuario" id="">
+                    <br>
+                    <label for="">Id Estado</label>
+                    <input class="form-control" type="number" name="id_estado" id="">
                     <br>
                     <label for="">Nombre Proyecto</label>
-                    <input class="form-control" type="text" name="nombre" id="">
+                    <input class="form-control" type="text" name="nombre" id="" onkeypress="return soloLetras(event);" minlength="3" maxlength="255" onkeyup="mayus(this);>
                     <br>
                     <label for="">Descripción proyecto</label>
-                    <input class="form-control" type="text" name="nombre" id="">
+                    <input class="form-control" type="text" name="descripcion" id="" onkeypress="return soloLetras(event);" minlength="3" maxlength="300" onkeyup="mayus(this);">
                     <br>
                     <label for="">Ubicación Proyecto</label>
-                    <input class="form-control" type="text" name="nombre" id="">
+                    <input class="form-control" type="text" name="ubicacion" id="" onkeypress="return soloLetras(event);" minlength="3" maxlength="255" onkeyup="mayus(this);">
                     <br>
                     <label for="">Fecha inicio</label>
-                    <input class="form-control" type="Date" name="nombre" id="">
+                    <input class="form-control" type="Date" name="fecha_inicio" id="">
                     <br>
                     <label for="">Fecha final</label>
-                    <input class="form-control" type="Date" name="nombre" id="">
+                    <input class="form-control" type="Date" name="fecha_final" id="">
                     <br>
         
       </div>
                 <!-- Fin Cuerpo del modal Modal -->
                 <!-- pie del modal -->
                 <div class="modal-footer">
-      	            <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Agregar</button>
+      	            <button type="submit" name="accion" value="agregar" class="btn btn-primary" onclick="return confirm('¿Desea agregar el proyecto?')">Agregar</button>
                     <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
                 </div>
                 <!-- Fin pie del modal -->
+                </form>
             </div>
         </div>
     </div>
@@ -121,9 +127,9 @@ if(!isset($_SESSION['usuario'])){
                   <tr>
                   <th>Acciones</th>
                     <th>Id proyecto</th>
-                    <th>Cliente</th>
-                    <th>Encargado</th>
-                    <th>Estado</th>
+                    <th>Id Cliente</th>
+                    <th>Id Encargado</th>
+                    <th>Id Estado</th>
                     <th>Proyecto</th>
                     <th>Descripción</th>
                     <th>Ubicación</th>
@@ -133,15 +139,18 @@ if(!isset($_SESSION['usuario'])){
                   </tr>
                   </thead>
                   <tbody>
+                  <?php while ($filas= mysqli_fetch_assoc($result)){
+
+                  ?>
                   <tr>
                   <td>
                         <!-- inicio boton editar -->
-                        <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#myModal2">
+                        <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#myModal2<?php echo $filas['ID_PROYECTO'] ?>">
                         <i class="fas fa-pencil-alt"></i>
                         </button>
 
                             <!-- El Modal -->
-                            <div class="modal" id="myModal2">
+                            <div class="modal" id="myModal2<?php echo $filas['ID_PROYECTO'] ?>">
                             <div class="modal-dialog">
                                 <div class="modal-content">
 
@@ -154,30 +163,34 @@ if(!isset($_SESSION['usuario'])){
 
 
                             <!-- Cuerpo del modal Modal -->
+                            <form action="" method="post">
                             <div class="modal-body">
-                  <label for="">Nombre Cliente</label>
-                    <input class="form-control" type="text" name="nombre" id="">
+                   <label for="">Id Proyecto</label>
+                    <input class="form-control" type="number" name="id_proyecto" id="" value="<?php echo $filas['ID_CLIENTES'] ?>">
+                   <br>            
+                 <label for="">Id Cliente</label>
+                    <input class="form-control" type="number" name="id_cliente" id="" value="<?php echo $filas['ID_CLIENTES'] ?>">
                     <br>
-                    <label for="">Nombre Encargado</label>
-                    <input class="form-control" type="text" name="nombre" id="">
+                    <label for="">Id Encargado</label>
+                    <input class="form-control" type="number" name="id_usuario" id="" value="<?php echo $filas['ID_USUARIO'] ?>">
                     <br>
-                    <label for="">Estado del proyecto</label>
-                    <input class="form-control" type="text" name="nombre" id="">
+                    <label for="">Id Estado</label>
+                    <input class="form-control" type="number" name="id_estado" id="" value="<?php echo $filas['ID_ESTADOS'] ?>">
                     <br>
                     <label for="">Nombre Proyecto</label>
-                    <input class="form-control" type="text" name="nombre" id="">
+                    <input class="form-control" type="text" name="nombre" id="" value="<?php echo $filas['NOMBRE'] ?>" onkeypress="return soloLetras(event);" minlength="3" maxlength="255" onkeyup="mayus(this);" >
                     <br>
                     <label for="">Descripción proyecto</label>
-                    <input class="form-control" type="text" name="nombre" id="">
+                    <input class="form-control" type="text" name="descripcion" id="" value="<?php echo $filas['DESCRIPCION'] ?>" onkeypress="return soloLetras(event);" minlength="3" maxlength="300" onkeyup="mayus(this);" >
                     <br>
                     <label for="">Ubicación Proyecto</label>
-                    <input class="form-control" type="text" name="nombre" id="">
+                    <input class="form-control" type="text" name="ubicacion" id=""value="<?php echo $filas['UBICACION'] ?>" onkeypress="return soloLetras(event);" minlength="3" maxlength="255" onkeyup="mayus(this);"  >
                     <br>
                     <label for="">Fecha inicio</label>
-                    <input class="form-control" type="Date" name="nombre" id="">
+                    <input class="form-control" type="Date" name="fecha_inicio" id="" value="<?php echo $filas['FECHA_INICIO'] ?>">
                     <br>
                     <label for="">Fecha final</label>
-                    <input class="form-control" type="Date" name="nombre" id="">
+                    <input class="form-control" type="Date" name="fecha_final" id="" value="<?php echo $filas['FECHA_FINAL'] ?>">
                     <br>
         
       </div>
@@ -185,29 +198,33 @@ if(!isset($_SESSION['usuario'])){
 
                                 <!-- pie del modal -->
                                 <div class="modal-footer">
-                                <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Guardar</button>
+                                <button <button type="submit" name="accion" value="editar" class="btn btn-primary" onclick="return confirm('¿Desea editar el proyecto?')">Guardar</button>
                                     <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
                                 </div>
+                                </form>
                                     <!-- Fin pie del modal -->
+                                    <form action="" method="post">
                                 </div>
                             </div>
                             </div>
                             <!-- fin boton editar -->
-                    <button  value="btnEliminar" name="accion" 
+                    <button  value="eliminar" name="accion" 
                         onclick="return confirm('¿Quieres eliminar este dato?')"
                         type="submit" class="btn btn-danger " data-id="19">
                         <i class="fas fa-trash-alt"></i>
-                    </button>
+                    </button> </form>
 </td>
-                     <td>1</td>
-                     <td>agregar</td>
-                     <td>agregar</td>
-                     <td>agregar</td>
-                     <td>agregar</td>
-                     <td>agregar</td>
-                     <td>agregar</td>
-                     <td>agregar</td>
-                     <td>agregar</td>
+                            <td ><?php echo $filas['ID_PROYECTO'] ?></td>
+                            <td><?php echo $filas['ID_CLIENTE'] ?></td>
+                            <td><?php echo $filas['ID_USUARIO'] ?></td>
+                            <td><?php echo $filas['ID_ESTADO'] ?></td>
+                            <td><?php echo $filas['NOMBRE'] ?></td>
+                            <td><?php echo $filas['DESCRIPCION'] ?></td>
+                            <td><?php echo $filas['UBICACION'] ?></td>
+                            <td><?php echo $filas['FECHA_INICIO'] ?></td>
+                            <td><?php echo $filas['FECHA_FINAL'] ?></td>
+                            </tr>
+                            <?php } ?> 
                    
       </tr>
                   
@@ -282,4 +299,45 @@ if(!isset($_SESSION['usuario'])){
   });
 </script>
 </body>
+<script type="text/javascript" src="../../js/evitar_reenvio.js"></script>
 </html>
+
+<script type="text/javascript">
+  
+        function mayus(e) {
+          e.value = e.value.toUpperCase();
+         }
+    </script>
+
+<script type="text/javascript"> function solonumero(e) {
+        tecla = (document.all) ? e.keyCode : e.which;
+        if (tecla==8) return true;
+        else if (tecla==0||tecla==9)  return true;
+       // patron =/[0-9\s]/;// -> solo letras
+        patron =/[0-9-\s]/;// -> solo numeros
+        te = String.fromCharCode(tecla);
+        return patron.test(te);
+    }
+	</script>
+
+<script>
+      function soloLetras(e){
+       key = e.keyCode || e.which;
+       tecla = String.fromCharCode(key).toLowerCase();
+       letras = " áéíóúabcdefghijklmnñopqrstuvwxyz";
+       especiales = ["8-37-39-46"];
+
+       tecla_especial = false
+       for(var i in especiales){
+        if(key == especiales[i]){
+          tecla_especial = true;
+          break;
+        }
+      }
+
+      if(letras.indexOf(tecla)==-1 && !tecla_especial){
+        return false;
+      }
+    }
+  </script>
+
