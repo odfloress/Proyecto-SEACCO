@@ -8,6 +8,7 @@ if(!isset($_SESSION['usuario'])){
         die();
         
 }
+include '../../controladores/crud_proveedor.php';
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -48,22 +49,38 @@ if(!isset($_SESSION['usuario'])){
                 <!-- Fin Encabezado del modal -->
 
                 <!-- Cuerpo del modal Modal -->
+                <form action="" method="post">
                 <div class="modal-body">
                 <label for="">Id Proveedor</label>
-                    <input type="text" class="form-control" name="txtPrecio_Compra" required value="" placeholder="" id="txtPrecio_Compra"   >
+                    <input type="text" class="form-control" name="id_proveedor" required value="" placeholder="" id="txtPrecio_Compra"   >
                     <br>
                     <label for="">Proveedor</label>
-                    <input type="text" class="form-control" name="txtPrecio_Compra" required value="" placeholder="" id="txtPrecio_Compra"   >
+                    <input type="text" class="form-control" name="nombre" required value="" placeholder="" id="txtPrecio_Compra" onkeypress="return soloLetras(event);" onkeyup="mayus(this);" >
                     <br>
-                
+                    <label for="">Nombre Referencia</label>
+                    <input type="text" class="form-control" name="nombre_referencia" required value="" placeholder="" id="txtnombrer" onkeypress="return soloLetras(event);" onkeyup="mayus(this);" >
+                    <br>
+                    <label for="">Sector comercial</label>
+                    <input type="text" class="form-control" name="sector_comercial" required value="" placeholder="" id="txtsectorcomercial" onkeypress="return soloLetras(event);" onkeyup="mayus(this);" >
+                    <br>
+                    <label for="">direccion</label>
+                    <input type="text" class="form-control" name="direccion" required value="" placeholder="" id="txtdireccionproveedor"  onkeyup="mayus(this);" >
+                    <br>
+                    <label for="">Telefono</label>
+                    <input type="number" class="form-control" name="telefono" required value="" placeholder="" id="txttelefono"   >
+                    <br>
+                    <label for="">Correo</label>
+                    <input type="text" class="form-control" name="correo" required value="" placeholder="" id="txtcorreo"   >
+                    <br>
                 </div>
                 <!-- Fin Cuerpo del modal Modal -->
                 <!-- pie del modal -->
                 <div class="modal-footer">
-      	            <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Agregar</button>
+      	            <button type="submit" name="accion" value="agregar" class="btn btn-primary" onclick="return confirm('¿Desea agregar el proveedor?')">Agregar</button>
                     <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
                 </div>
                 <!-- Fin pie del modal -->
+                </form>
             </div>
         </div>
     </div>
@@ -113,15 +130,18 @@ if(!isset($_SESSION['usuario'])){
                   </tr>
                   </thead>
                   <tbody>
+                  <?php while ($filas= mysqli_fetch_assoc($result)){
+
+                  ?>
                   <tr>
                   <td>
                         <!-- inicio boton editar -->
-                      <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#myModal2">
+                      <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#myModal2<?php echo $filas['ID_PROVEEDOR'] ?>">
                       <i class="fas fa-pencil-alt"></i>
                       </button>
 
                           <!-- El Modal -->
-                          <div class="modal" id="myModal2">
+                          <div class="modal" id="myModal2<?php echo $filas['ID_PROVEEDOR'] ?>">
                             <div class="modal-dialog">
                               <div class="modal-content">
 
@@ -134,40 +154,62 @@ if(!isset($_SESSION['usuario'])){
 
 
                                 <!-- Cuerpo del modal Modal -->
+                                <form action="" method="post">
                                           <div class="modal-body">
                                               <label for="">Id Proveedor</label>
-                                              <input type="text" class="form-control" name="txtPrecio_Compra" required value="" placeholder="" id="txtPrecio_Compra"   >
+                                              <input type="text" class="form-control" name="id_proveedor" required value="<?php echo $filas['ID_PROVEEDOR'] ?>" placeholder="" id="txtPrecio_Compra"   >
                                               <br>
                                               <label for="">Proveedor</label>
-                                              <input type="text" class="form-control" name="txtPrecio_Compra" required value="" placeholder="" id="txtPrecio_Compra"   >
+                                              <input type="text" class="form-control" name="nombre" required value="<?php echo $filas['NOMBRE'] ?>" placeholder="" id="txtPrecio_Compra" onkeypress="return soloLetras(event);" onkeyup="mayus(this);" >
                                               <br>
-                                          
-                                          </div>
+                                              <label for="">Nombre Referencia</label>
+                                             <input type="text" class="form-control" name="nombre_referencia" required value="<?php echo $filas['NOMBRE_REFERENCIA'] ?>" placeholder="" id="txtnombrer" onkeypress="return soloLetras(event);" onkeyup="mayus(this);" >
+                                             <br>
+                                             <label for="">Sector comercial</label>
+                                             <input type="text" class="form-control" name="sector_comercial" required value="<?php echo $filas['SECTOR_COMERCIAL'] ?>" placeholder="" id="txtsectorcomercial" onkeypress="return soloLetras(event);" onkeyup="mayus(this);" >
+                                             <br>
+                                             <label for="">direccion</label>
+                                             <input type="text" class="form-control" name="direccion" required value="<?php echo $filas['DIRECCION'] ?>" placeholder="" id="txtdireccionproveedor"  onkeyup="mayus(this);" >
+                                             <br>
+                                             <label for="">Telefono</label>
+                                             <input type="number" class="form-control" name="telefono" required value="<?php echo $filas['TELEFONO'] ?>" placeholder="" id="txttelefono"   >
+                                             <br>
+                                             <label for="">Correo</label>
+                                             <input type="text" class="form-control" name="correo" required value="<?php echo $filas['CORREO'] ?>" placeholder="" id="txtcorreo"  >
+                                             <br>   
+                                           </div>
                                 <!-- Fin Cuerpo del modal Modal -->
 
                                 <!-- pie del modal -->
                                 <div class="modal-footer">
-                                <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Guardar</button>
+                                <button type="submit" name="accion" value="editar" class="btn btn-primary" onclick="return confirm('¿Desea editar el proveedor?')">Guardar</button>
                                   <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
                                 </div>
+                              </form>
                                   <!-- Fin pie del modal -->
+                                  <form action="" method="post">
                               </div>
                             </div>
                           </div>
                           <!-- fin boton editar -->
-                      <button  value="btnEliminar" name="accion" 
+                          <input type="hidden" name="id_proveedor"  value="<?php echo $filas['ID_PROVEEDOR'] ?>">
+                      <button  value="eliminar" name="accion" 
                         onclick="return confirm('¿Quieres eliminar este dato?')"
                         type="submit" class="btn btn-danger " data-id="19">
                         <i class="fas fa-trash-alt"></i>
-                    </button>
+                    </button></form>
 </td>
-                     <td>1</td>
-                     <td>Ingresar</td>
-                     <td>Ingresar</td>
-                     <td>Ingresar</td>
-                     <td>Ingresar</td>
-                     <td>Ingresar</td>
-                     <td>Ingresar</td>
+                         
+                    </td>
+                                         <td ><?php echo $filas['ID_PROVEEDOR'] ?></td>
+                                         <td><?php echo $filas['NOMBRE'] ?></td>
+                                         <td><?php echo $filas['NOMBRE_REFERENCIA'] ?></td>
+                                         <td><?php echo $filas['SECTOR_COMERCIAL'] ?></td>
+                                         <td><?php echo $filas['DIRECCION'] ?></td>
+                                         <td><?php echo $filas['TELEFONO'] ?></td>
+                                         <td><?php echo $filas['CORREO'] ?></td>
+                                        </tr>
+                                    <?php } ?>
                     
       </tr>
                   
@@ -242,4 +284,44 @@ if(!isset($_SESSION['usuario'])){
   });
 </script>
 </body>
+<script type="text/javascript" src="../../js/evitar_reenvio.js"></script>
 </html>
+
+<script type="text/javascript">
+  
+        function mayus(e) {
+          e.value = e.value.toUpperCase();
+         }
+    </script>
+
+<script type="text/javascript"> function solonumero(e) {
+        tecla = (document.all) ? e.keyCode : e.which;
+        if (tecla==8) return true;
+        else if (tecla==0||tecla==9)  return true;
+       // patron =/[0-9\s]/;// -> solo letras
+        patron =/[0-9-\s]/;// -> solo numeros
+        te = String.fromCharCode(tecla);
+        return patron.test(te);
+    }
+	</script>
+
+<script>
+      function soloLetras(e){
+       key = e.keyCode || e.which;
+       tecla = String.fromCharCode(key).toLowerCase();
+       letras = " áéíóúabcdefghijklmnñopqrstuvwxyz";
+       especiales = ["8-37-39-46"];
+
+       tecla_especial = false
+       for(var i in especiales){
+        if(key == especiales[i]){
+          tecla_especial = true;
+          break;
+        }
+      }
+
+      if(letras.indexOf(tecla)==-1 && !tecla_especial){
+        return false;
+      }
+    }
+  </script>
