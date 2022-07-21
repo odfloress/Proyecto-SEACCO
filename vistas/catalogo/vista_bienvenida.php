@@ -30,15 +30,16 @@ include '../../controladores/crud_bienvenida.php'
         <div class="row mb-2">
           <div class="col-sm-6">
             <h1></h1>
-            <!-- Inicio de modal de agregar -->
+            <!-- CMENTADO PARA NO MOSTRAR EL BOTON AGREGAR EN LA VISTA BIENVENIDA-->
+            <!-- Inicio de modal de agregar 
 <div class="container mt-3">
        
         <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal">
             Nuevo
         </button>
-    </div>
+    </div> -->
     
-<!-- El Modal -->
+  <!-- El Modal -->
     <div class="modal" id="myModal">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -102,17 +103,7 @@ include '../../controladores/crud_bienvenida.php'
               <div class="card-header">
                 <h3 class="card-title">BIENVENIDA</h3>
                 <!-- inicio ocultar html -->
-                <?php
-                    $t = 2;
-
-                    if ($t < "20") {
-                        ?>
-                          <input type="text" class="form-control"  name="titulo" required value="" placeholder=""  >
-                        <?php
-                    } else {
-                           
-                            }
-              ?>
+                
               <!-- Fin ocultar html -->
               </div>
               
@@ -154,15 +145,15 @@ include '../../controladores/crud_bienvenida.php'
 
                                 <!-- Cuerpo del modal Modal -->
                                           <div class="modal-body">
-                                              <form action="" method="post">
+                                              <form action="" method="post" enctype="multipart/form-data">
                                               <input type="hidden" name="id_imagen"  value="<?php echo $filas['ID_IMAGEN'] ?>">
                                               <center><img class="img-thumbnail" width="100px" src="<?php echo $filas['RUTA'] ?>"></center>
                                               <br>
                                               <label for="">Imagen</label>
-                                              <input type="file" class="form-control" accept=".jpg, .png, .jpej, .JPEG, .JPG, .PNG" name="imagenes" >
+                                              <input type="file" class="form-control" accept=".jpg, .png, .jpej, .JPEG, .JPG, .PNG" name="imagenes2" >
                                               <br>
                                               <label for="">Titulo</label>
-                                              <input type="text" class="form-control"  name="titulo" required value="<?php echo $filas['TITULO'] ?>" placeholder=""  >
+                                              <input type="text" class="form-control" readonly  name="titulo2" required value="<?php echo $filas['TITULO'] ?>" placeholder=""  >
                                               <br>
                                           
                                           </div>
@@ -177,13 +168,14 @@ include '../../controladores/crud_bienvenida.php'
                               </div>
                             </div>
                           </div>
-                          <!-- fin boton editar -->
+                          <!-- CMENTADO PRA NO MOSTRAR EL BOTON ELEIMINAR EN LA VISTA BIENVENIDA-->
+                          <!-- fin boton editar 
                           <input type="hidden" name="ruta"  value="<?php echo $filas['RUTA'] ?>">
                       <button  value="eliminar" name="accion" 
                         onclick="return confirm('¿Quieres eliminar este dato?')"
                         type="submit" class="btn btn-danger " data-id="19">
                         <i class="fas fa-trash-alt"></i>
-                    </button></form>
+                    </button></form>-->
 </td>
                       <!-- <td><?php echo $filas['ID_IMAGEN'] ?></td> -->
                      <td><?php echo $filas['TIPO'] ?></td>

@@ -40,6 +40,11 @@ if(isset($_FILES['imagenes'])){
                  </script>';
                  mysqli_close($conn);
          }else{
+           // inicio inserta en la tabla bitacora
+          $sqlB1 = "INSERT INTO tbl_bitacora (ID_USUARIO, ID_OBJETO, USUARIO, ACCION, OBSERVACION)
+          VALUES (2, 1, '$usuario1[usuario]', 'ACTUALIZO', 'CAMBIO LA CONTRASEÑA')";
+          if (mysqli_query($conn, $sqlB1)) {} else { }
+        // fin inserta en la tabla bitacora
         $sql = "INSERT INTO tbl_bienvenida_portafolio (TIPO, IMAGEN, RUTA, TITULO)
                               VALUES ('$tipo', '$nombreimagen', '$destino', '$titulo')";
         $res = mysqli_query($conn, $sql);
@@ -50,7 +55,10 @@ if(isset($_FILES['imagenes'])){
                      window.location.href="../../vistas/catalogo/vista_bienvenida";
                  </script>';
          }else{
-                die("Error". msqli_error($conn));
+          echo '<script type="text/javascript">
+                alert("Error al agregar foto");
+                window.location.href="../../vistas/catalogo/vista_bienvenida";
+                </script>';
               }
             }
     }
@@ -59,7 +67,15 @@ if(isset($_FILES['imagenes'])){
 break;
 
 case "editar": 
-    $sql2 = "UPDATE tbl_bienvenida_portafolio SET TITULO='$titulo',RUTA='$destino' WHERE ID_IMAGEN='$id_imagen'";
+
+    $titulo2=(isset($_POST['titulo2']))?$_POST['titulo2']:"";
+
+    $nombreimagen2= $_FILES['imagenes2']['name'];
+    $ruta2 = $_FILES['imagenes2']['tmp_name'];
+    $destino2 = "../../imagenes/".$nombreimagen2;
+
+    if(copy($ruta2, $destino2)){
+    $sql2 = "UPDATE tbl_bienvenida_portafolio SET IMAGEN='$nombreimagen2', RUTA='$destino2' WHERE ID_IMAGEN='$id_imagen'";
     if (mysqli_query($conn, $sql2)) {
         echo '<script>
                 alert("Edición exitosa");
@@ -71,7 +87,7 @@ case "editar":
                 alert("Error en la edición ");
                </script>'; mysqli_error($conn);
          }
-
+    }
     mysqli_close($conn);
   
 
