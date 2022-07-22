@@ -8,6 +8,7 @@ if(!isset($_SESSION['usuario'])){
         die();
         
 }
+include '../../controladores/crud_nuestros_contactos.php';
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -52,36 +53,39 @@ if(!isset($_SESSION['usuario'])){
 
       <!-- Modal body -->
       <div class="modal-body">
-          <form>
+          <form action="" method="post">
+          <label for="">Id Contactos</label>
+          <input type="number" name="id_contacto" class="form-control " placeholder="Ingrese su id">
+           <br>
 
           <label for="">Numero telefono</label>
-          <input type="number" class="form-control " placeholder="Ingre su numero">
+          <input type="number" name="telefono" class="form-control " placeholder="Ingrese su numero" >
            <br>
 
            <label for="">Correo</label>
-           <input type="text" class="form-control" placeholder="Opcional Ingrese su correo" name="email">
+           <input type="email" name="correo" class="form-control" placeholder="Opcional Ingrese su correo" >
            <br>
 
            <label for="">Dirección</label>
-           <input type="text" class="form-control " placeholder="Ingre su nombre">
+           <input type="text" name="direccion" class="form-control " placeholder="Ingrese su direccion" onkeyup="mayus(this);" maxlength="30" >
            <br>
 
             <label for="">Facebook</label>
-            <input type="text" class="form-control " placeholder="Ingre su nombre">
+            <input type="text" name="facebook" class="form-control " placeholder="Ingrese su facebook" onkeyup="mayus(this);" maxlength="30">
             <br>
             <label for="">Instagram</label>
-            <input type="text" class="form-control " placeholder="Ingre su nombre">
+            <input type="text" name="instagram" class="form-control " placeholder="Ingrese su instagram" onkeyup="mayus(this);" maxlength="30" >
             <br>       
-  </form>
+  
       </div>
 
       <!-- Modal footer -->
-      <div  class="modal-footer">
-        
-       <a href="http://127.0.0.1:8000/" class="btn btn-primary" onclick="return confirm('¿Desea guardar cambios?')">Guardar</a>
-        
-      </div>
-
+      <div class="modal-footer">
+      	            <button type="submit" name="accion" value="agregar" class="btn btn-primary" onclick="return confirm('¿Desea agregar el contacto?')">Agregar</button>
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
+                </div>
+      
+                </form> 
     </div>
   
     
@@ -92,8 +96,88 @@ if(!isset($_SESSION['usuario'])){
 
 <?php include '../../configuracion/footer.php' ?>
 
+</body>
+<script type="text/javascript" src="../../js/evitar_reenvio.js"></script>
+</html>
+
+<script>
+      function soloLetras(e){
+       key = e.keyCode || e.which;
+       tecla = String.fromCharCode(key).toLowerCase();
+       letras = " áéíóúabcdefghijklmnñopqrstuvwxyz";
+       especiales = ["8-37-39-46"];
+
+       tecla_especial = false
+       for(var i in especiales){
+        if(key == especiales[i]){
+          tecla_especial = true;
+          break;
+        }
+      }
+
+      if(letras.indexOf(tecla)==-1 && !tecla_especial){
+        return false;
+      }
+    }
+  </script>
+
+
+    <script type="text/javascript">
+  
+        function mayus(e) {
+          e.value = e.value.toUpperCase();
+         }
+    </script>
+
+
+    <script type="text/javascript">
+
+        function sinespacio(e) {
+
+        var cadena =  e.value;
+        var limpia = "";
+        var parts = cadena.split(" ");
+        var length = parts.length;
+
+          for (var i = 0; i < length; i++) {
+              nuevacadena = parts[i];
+              subcadena = nuevacadena.trim();
+
+          if(subcadena != "") {
+             limpia += subcadena + " ";
+                }
+          }
+        limpia = limpia.trim();
+        e.value = limpia;
+
+         };
+     </script>
+
+ <script type="text/javascript">
+
+    function quitarespacios(e) {
+
+      var cadena =  e.value;
+      cadena = cadena.trim();
+
+      e.value = cadena;
+
+    };
+
+  </script>
 
 
 
 
 
+
+<script type="text/javascript"> function solonumero(e) {
+        tecla = (document.all) ? e.keyCode : e.which;
+        if (tecla==8) return true;
+        else if (tecla==0||tecla==9)  return true;
+       // patron =/[0-9\s]/;// -> solo letras
+        patron =/[0-9-\s]/;// -> solo numeros
+        te = String.fromCharCode(tecla);
+        return patron.test(te);
+    }
+	</script>
