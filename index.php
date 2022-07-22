@@ -1,9 +1,4 @@
-<?php 
-  include 'conexion/conexion.php';
-  $sql7 = "SELECT * FROM tbl_bienvenida_portafolio WHERE TIPO='BIENVENIDA'";
-  $result7 = mysqli_query($conn, $sql7);
-  while($row = mysqli_fetch_assoc($result7)) {
-  ?>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -23,12 +18,19 @@
               line-height: 1.8;
              }
 /* Encabezado de imagen de altura completa */
+<?php 
+  include 'conexion/conexion.php';
+  $sqlB1 = "SELECT * FROM tbl_bienvenida_portafolio WHERE TIPO='BIENVENIDA' AND ID_IMAGEN=1";
+  $resultB1 = mysqli_query($conn, $sqlB1);
+  while($rowB1 = mysqli_fetch_assoc($resultB1)) {
+  ?>
   .bgimg-1 {
             background-position: center;
             background-size: cover;
-            background-image: url("imagenes/<?php echo $row['IMAGEN'] ?>");
+            background-image: url("imagenes/<?php echo $rowB1['IMAGEN'] ?>");
             min-height: 100%;
            }
+           <?php }?>
   .w3-bar .w3-button {
             padding: 16px;
                      }
@@ -137,7 +139,12 @@ clientes y brindando oportunidades de trabajo para el hondureño.</p>
     </div>
   </div>
 </div>
-
+<?php 
+  include 'conexion/conexion.php';
+  $sql7 = "SELECT * FROM tbl_bienvenida_portafolio WHERE TIPO='BIENVENIDA' AND ID_IMAGEN=2";
+  $result7 = mysqli_query($conn, $sql7);
+  while($row = mysqli_fetch_assoc($result7)) {
+  ?>
 <!-- Promo Section - "We know design" -->
 <div class="w3-container w3-light-grey" style="padding:128px 16px">
   <div class="w3-row-padding">
@@ -155,7 +162,7 @@ actividades que se desarrollan en los proyectos ejecutados.</p>
     </div>
   </div>
 </div>
-
+<?php }?>
 <!-- Team Section -->
 
 <div class="w3-container" style="padding:128px 16px" id="team">
@@ -282,7 +289,12 @@ actividades que se desarrollan en los proyectos ejecutados.</p>
 </center>
 
 
-
+<?php 
+  include 'conexion/conexion.php';
+  $sqlB3 = "SELECT * FROM tbl_bienvenida_portafolio WHERE TIPO='BIENVENIDA' AND ID_IMAGEN=3";
+  $resultB3 = mysqli_query($conn, $sqlB3);
+  while($rowB3 = mysqli_fetch_assoc($resultB3)) {
+  ?>
 <!-- Contact Section -->
 <div class="w3-container w3-light-grey" style="padding:128px 16px" id="contact">
   <h3 class="w3-center">CONTACTANOS</h3>
@@ -298,11 +310,11 @@ actividades que se desarrollan en los proyectos ejecutados.</p>
 <!-- Fin mapa -->
 
     <!-- Image of location/map -->
-    <img src="https://www.w3schools.com/w3images/map.jpg" class="w3-image w3-greyscale" style="width:100%;margin-top:48px">
+    <img src="imagenes/<?php echo $rowB3['IMAGEN'] ?>" class="w3-image w3-greyscale" style="width:100%;margin-top:48px">
   </div>
 </div>
 
-
+<?php }?>
 
 <!-- Footer -->
 <footer class="w3-center w3-black w3-padding-64">
@@ -343,6 +355,3 @@ function w3_close() {
 
 </body>
 </html>
-<?php 
-    }
-  ?>

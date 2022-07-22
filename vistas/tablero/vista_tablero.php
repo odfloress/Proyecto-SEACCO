@@ -228,7 +228,7 @@ if ($result4=mysqli_query($conn,$sql4)) {
 <canvas id="myChart2" style="width:100%;max-width:100%"></canvas>
 
 <script>
-var xValues = ["SOLICITUD", "EN PROCESO", "TERMINADO", "ESTADO USUARIO"];
+var xValues = ["SOLICITUD", "EN PROCESO", "TERMINADO", "PROYECTOS"];
 var yValues = [<?php echo $rowcount?>, <?php echo $rowcount2?>, <?php echo $rowcount3?>, <?php echo $rowcount4?>];
 var barColors = [
   "#b91d47",
