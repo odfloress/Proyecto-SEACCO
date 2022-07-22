@@ -59,7 +59,7 @@ include '../../controladores/crud_nuestros_contactos.php';
            <br>
 
           <label for="">Numero telefono</label>
-          <input type="number" name="telefono" class="form-control " placeholder="Ingrese su numero" >
+          <input type="tel" name="telefono" class="form-control " placeholder="Ingrese su numero"  pattern="[0-9]{9}" onkeypress="return solonumero(event)">
            <br>
 
            <label for="">Correo</label>
