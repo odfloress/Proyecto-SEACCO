@@ -31,13 +31,13 @@ include '../../controladores/crud_bienvenida.php'
           <div class="col-sm-6">
             <h1></h1>
             <!-- CMENTADO PARA NO MOSTRAR EL BOTON AGREGAR EN LA VISTA BIENVENIDA-->
-            <!-- Inicio de modal de agregar 
+            <!-- Inicio de modal de agregar -->
 <div class="container mt-3">
        
         <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal">
             Nuevo
         </button>
-    </div> -->
+    </div> 
     
   <!-- El Modal -->
     <div class="modal" id="myModal">

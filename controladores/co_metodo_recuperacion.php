@@ -32,7 +32,7 @@
      $validar_usuario = "SELECT * FROM tbl_usuarios WHERE USUARIO='$usuario'";
      $result = mysqli_query($conn, $validar_usuario); 
       if (mysqli_num_rows($result) > 0) { 
-        $_SESSION['usuario'] = $usuario;
+        $_SESSION['nombre'] = $usuario;
         header('Location: ../iniciar_sesion/recuperacion_preguntas');
            echo "execelente";
                            
