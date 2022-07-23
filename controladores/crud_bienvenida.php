@@ -14,7 +14,7 @@ $ruta=(isset($_POST['ruta']))?$_POST['ruta']:"";
 
 //variable para recuperar los botones de la vista del crud del portafolio 
 $accion=(isset($_POST['accion']))?$_POST['accion']:"";
-
+$usuario1=$_SESSION;
 
 
 switch($accion){
@@ -33,28 +33,37 @@ if(isset($_FILES['imagenes'])){
         $validar_imagen = "SELECT * FROM tbl_bienvenida_portafolio WHERE RUTA='$destino'";
         $result1 = mysqli_query($conn, $validar_imagen); 
          if (mysqli_num_rows($result1) > 0) { 
-              
+              // inicio inserta en la tabla bitacora
+          $sqlB1 = "INSERT INTO tbl_bitacora (USUARIO, ACCION, OBSERVACION)
+          VALUES ('$usuario1[usuario]', 'INTENTO', 'INTENTO EDITAR UNA IMAGEN DE BIENVENIDA (IMAGEN YA EXISTE)')";
+          if (mysqli_query($conn, $sqlB1)) {} else { }
+        // fin inserta en la tabla bitacora
          
            echo '<script>
                     alert("imagen ya existe");
                  </script>';
                  mysqli_close($conn);
          }else{
-           // inicio inserta en la tabla bitacora
-          $sqlB1 = "INSERT INTO tbl_bitacora (ID_USUARIO, ID_OBJETO, USUARIO, ACCION, OBSERVACION)
-          VALUES (2, 1, '$usuario1[usuario]', 'ACTUALIZO', 'CAMBIO LA CONTRASEÑA')";
-          if (mysqli_query($conn, $sqlB1)) {} else { }
-        // fin inserta en la tabla bitacora
         $sql = "INSERT INTO tbl_bienvenida_portafolio (TIPO, IMAGEN, RUTA, TITULO)
                               VALUES ('$tipo', '$nombreimagen', '$destino', '$titulo')";
         $res = mysqli_query($conn, $sql);
 
          if($res){
+           // inicio inserta en la tabla bitacora
+          $sqlB1 = "INSERT INTO tbl_bitacora (USUARIO, ACCION, OBSERVACION)
+          VALUES ('$usuario1[usuario]', 'EDITO', 'EDITO UNA IMAGEN DE BIENVENIDA ($nombreimagen)')";
+          if (mysqli_query($conn, $sqlB1)) {} else { }
+        // fin inserta en la tabla bitacora
             echo '<script type="text/javascript">
                      alert("Agregado correctamente");
                      window.location.href="../../vistas/catalogo/vista_bienvenida";
                  </script>';
          }else{
+           // inicio inserta en la tabla bitacora
+          $sqlB1 = "INSERT INTO tbl_bitacora (USUARIO, ACCION, OBSERVACION)
+          VALUES ('$usuario1[usuario]', 'INTENTO', 'ERROR AL EDITAR UNA IMAGEN DE BIENVENIDA')";
+          if (mysqli_query($conn, $sqlB1)) {} else { }
+        // fin inserta en la tabla bitacora
           echo '<script type="text/javascript">
                 alert("Error al agregar foto");
                 window.location.href="../../vistas/catalogo/vista_bienvenida";
@@ -77,12 +86,22 @@ case "editar":
     if(copy($ruta2, $destino2)){
     $sql2 = "UPDATE tbl_bienvenida_portafolio SET IMAGEN='$nombreimagen2', RUTA='$destino2' WHERE ID_IMAGEN='$id_imagen'";
     if (mysqli_query($conn, $sql2)) {
+      // inicio inserta en la tabla bitacora
+      $sqlB1 = "INSERT INTO tbl_bitacora (USUARIO, ACCION, OBSERVACION)
+      VALUES ('$usuario1[usuario]', 'EDITO', 'EDITO UNA IMAGEN DE BIENVENIDA ($nombreimagen2)')";
+      if (mysqli_query($conn, $sqlB1)) {} else { }
+    // fin inserta en la tabla bitacora
         echo '<script>
                 alert("Edición exitosa");
                 window.location.href="../../vistas/catalogo/vista_bienvenida";
               </script>';
 
     }else{
+      // inicio inserta en la tabla bitacora
+      $sqlB1 = "INSERT INTO tbl_bitacora (USUARIO, ACCION, OBSERVACION)
+      VALUES ('$usuario1[usuario]', 'INTENTO', 'ERROR AL EDITAR UNA IMAGEN DE BIENVENIDA')";
+      if (mysqli_query($conn, $sqlB1)) {} else { }
+    // fin inserta en la tabla bitacora
          echo '<script>
                 alert("Error en la edición ");
                </script>'; mysqli_error($conn);
@@ -101,9 +120,19 @@ echo $id_imagen;
 
 $sql3 = "DELETE FROM tbl_bienvenida_portafolio WHERE ID_IMAGEN='$id_imagen'";
 if (mysqli_query($conn, $sql3)) {
+  // inicio inserta en la tabla bitacora
+  $sqlB1 = "INSERT INTO tbl_bitacora (USUARIO, ACCION, OBSERVACION)
+  VALUES ('$usuario1[usuario]', 'ELIMINO', 'ELIMIO UNA IMAGEN DE BIENVENIDA')";
+  if (mysqli_query($conn, $sqlB1)) {} else { }
+// fin inserta en la tabla bitacora
     unlink($ruta);
     header('Location: ../../vistas/catalogo/vista_bienvenida');
 }else{
+  // inicio inserta en la tabla bitacora
+  $sqlB1 = "INSERT INTO tbl_bitacora (USUARIO, ACCION, OBSERVACION)
+  VALUES ('$usuario1[usuario]', 'INTENTO', 'ERROR AL ELIMINAR UNA IMAGEN DE BIENVENIDA')";
+  if (mysqli_query($conn, $sqlB1)) {} else { }
+// fin inserta en la tabla bitacora
         echo '<script>
                   alert("Error al tratar de eliminar categoria");
               </script>'; mysqli_error($conn);

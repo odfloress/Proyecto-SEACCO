@@ -34,10 +34,10 @@ include '../../controladores/crud_bienvenida.php'
             <!-- Inicio de modal de agregar -->
 <div class="container mt-3">
        
-        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal">
+        <!--<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal">
             Nuevo
-        </button>
-    </div> 
+        </button>-->
+    </div>
     
   <!-- El Modal -->
     <div class="modal" id="myModal">
@@ -169,13 +169,14 @@ include '../../controladores/crud_bienvenida.php'
                             </div>
                           </div>
                           <!-- CMENTADO PRA NO MOSTRAR EL BOTON ELEIMINAR EN LA VISTA BIENVENIDA-->
-                          <!-- fin boton editar 
+                          <!-- fin boton editar -->
                           <input type="hidden" name="ruta"  value="<?php echo $filas['RUTA'] ?>">
-                      <button  value="eliminar" name="accion" 
-                        onclick="return confirm('¿Quieres eliminar este dato?')"
-                        type="submit" class="btn btn-danger " data-id="19">
-                        <i class="fas fa-trash-alt"></i>
-                    </button></form>-->
+                            <!--<button  value="eliminar" name="accion" 
+                                onclick="return confirm('¿Quieres eliminar este dato?')"
+                                type="submit" class="btn btn-danger " data-id="19">
+                                <i class="fas fa-trash-alt"></i>
+                            </button>-->
+                          </form>
 </td>
                       <!-- <td><?php echo $filas['ID_IMAGEN'] ?></td> -->
                      <td><?php echo $filas['TIPO'] ?></td>

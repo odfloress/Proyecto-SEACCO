@@ -90,6 +90,7 @@ function quitarespacios(e) {
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
   <?php include '../../configuracion/navar.php' ?>
   <!-- Content Wrapper. Contains page content -->
+  <script type="text/javascript" src="../../js/evita_ver_codigo_utilizando_teclas.js"></script>
 </head>
   <body>
   
@@ -335,8 +336,3 @@ function quitarespacios(e) {
     };
 
   </script>
-
-
-
-
-
