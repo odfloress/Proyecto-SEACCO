@@ -279,5 +279,3 @@ include '../../controladores/crud_bienvenida.php'
 </body>
 <script type="text/javascript" src="../../js/evitar_reenvio.js"></script>
 </html>
-
-
