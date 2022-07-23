@@ -52,7 +52,10 @@ include '../../controladores/crud_portafolio.php'
                 <!-- Cuerpo del modal Modal -->
                 <div class="modal-body">
                 <label for="">Tipo</label>
-                    <input type="text" class="form-control" readonly value="PORTAFOLIO" name="tipo" required value="" placeholder=""   >
+                <select  class="form-select" id="sel2" name="tipo">
+                  <option value="PORTAFOLIO">PORTAFOLIO</option>
+                  <option value="CARRUCEL_PORTAFOLIO">CARRUCEL PORTAFOLIO</option>
+                </select>
                     <br>
                     <label for="">Imagen</label>
                     <input type="file" class="form-control" accept=".jpg, .png, .jpej, .JPEG, .JPG, .PNG" name="imagenes" required value="<?php echo "$nombreimagen"; ?>" placeholder=""  >
@@ -107,17 +110,7 @@ include '../../controladores/crud_portafolio.php'
               <div class="card-header">
                 <h3 class="card-title">PORTAFOLIO</h3>
                 <!-- inicio ocultar html -->
-                <?php
-                    $t = 2;
-
-                    if ($t < "20") {
-                        ?>
-                          <input type="text" class="form-control"  name="titulo" required value="" placeholder=""  >
-                        <?php
-                    } else {
-                           
-                            }
-              ?>
+               
               <!-- Fin ocultar html -->
               </div>
               
@@ -136,7 +129,13 @@ include '../../controladores/crud_portafolio.php'
                   </tr>
                   </thead>
                   <tbody>
-                  <?php while ($filas= mysqli_fetch_assoc($result)){
+                  <?php
+                  include '../../conexion/conexion.php';
+                  //para mostrar los datos de la tabla mysql y mostrar en el crud
+                  $sql7 = "SELECT * FROM tbl_bienvenida_portafolio WHERE TIPO NOT IN (SELECT TIPO FROM  tbl_bienvenida_portafolio WHERE TIPO = 'BIENVENIDA' )";
+                  $result = mysqli_query($conn, $sql7);
+                  if (mysqli_num_rows($result) > 0) {
+                  while ($filas= mysqli_fetch_assoc($result)){
                     ?>
                   <tr>
                   <td>
@@ -160,12 +159,19 @@ include '../../controladores/crud_portafolio.php'
 
                                 <!-- Cuerpo del modal Modal -->
                                           <div class="modal-body">
-                                              <form action="" method="post">
+                                              <form action="" method="post" enctype="multipart/form-data">
+                                                <input type="hidden" name="foto" value="<?php echo $filas['IMAGEN'] ?>">
                                               <input type="hidden" name="id_imagen"  value="<?php echo $filas['ID_IMAGEN'] ?>">
                                               <label for="">Imagen</label><br>
-                                              <img class="img-thumbnail" width="100px" src="<?php echo $filas['RUTA'] ?>" />
-                                              
+                                              <img class="img-thumbnail" width="100px" src="<?php echo $filas['RUTA'] ?>" /><br><br>
+                                              <input type="file" class="form-control" accept=".jpg, .png, .jpeg, .JPEG, .JPG, .PNG" name="imagenes"  value="" placeholder=""  >
                                               <br>
+                                              <label for="">Tipo:</label><br>
+                                              <select  class="form-select" id="sel2" name="tipo">
+                                                <option value="<?php echo $filas['TIPO'] ?>"><?php echo $filas['TIPO'] ?></option>
+                                                <option value="PORTAFOLIO">PORTAFOLIO</option>
+                                                <option value="CARRUCEL_PORTAFOLIO">CARRUCEL PORTAFOLIO</option>
+                                              </select>
                                               <label for="">Titulo</label>
                                               <input type="text" class="form-control"  name="titulo" required value="<?php echo $filas['TITULO'] ?>" placeholder=""  >
                                               <br>
@@ -201,7 +207,7 @@ include '../../controladores/crud_portafolio.php'
                      <td><TEXtarea readonly style="background-color: white;" class="form-control"name="" id="" cols="40" rows="5"><?php echo $filas['DESCRIPCION'] ?></TEXtarea></td>
                     
       </tr>
-      <?php } ?>  
+      <?php }} ?>  
                   </tfoot>
                 </table>
               </div>

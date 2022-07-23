@@ -34,8 +34,8 @@ switch ($accion){
         if ($conn->query($sqlresultado) === TRUE) {
 
           // inicio inserta en la tabla bitacora
-          $sqlB1 = "INSERT INTO tbl_bitacora (ID_USUARIO, ID_OBJETO, USUARIO, ACCION, OBSERVACION)
-            VALUES (2, 1, '$usuario1[usuario]', 'ACTUALIZO', 'CAMBIO LA CONTRASEÑA')";
+          $sqlB1 = "INSERT INTO tbl_bitacora ( USUARIO, ACCION, OBSERVACION)
+            VALUES ( '$usuario1[usuario]', 'ACTUALIZO', 'CAMBIO LA CONTRASEÑA')";
             if (mysqli_query($conn, $sqlB1)) {} else { }
           // fin inserta en la tabla bitacora
 
