@@ -40,8 +40,8 @@
                 if (mysqli_query($conn, $sql1)) {
 
                   // inicio inserta en la tabla bitacora
-                  $sql7 = "INSERT INTO tbl_bitacora (ID_USUARIO, ID_OBJETO, USUARIO, ACCION, OBSERVACION)
-                  VALUES (2, 1, '$usuario1[usuario]', 'INSERTO', 'CREO LA PREGUNTA ($pregunta)')";
+                  $sql7 = "INSERT INTO tbl_bitacora (USUARIO, ACCION, OBSERVACION)
+                  VALUES ('$usuario1[usuario]', 'INSERTO', 'CREO LA PREGUNTA ($pregunta)')";
                   if (mysqli_query($conn, $sql7)) {} else { }
                   // fin inserta en la tabla bitacora
                   echo '<script>
@@ -69,7 +69,12 @@
         // valida si existe una pregunta con el mismo nombre
         $validar_pregunta = "SELECT * FROM tbl_preguntas WHERE PREGUNTA='$pregunta'";
         $result2 = mysqli_query($conn, $validar_pregunta); 
-         if (mysqli_num_rows($result2) > 0) {          
+         if (mysqli_num_rows($result2) > 0) { 
+          // inicio inserta en la tabla bitacora
+          $sql9 = "INSERT INTO tbl_bitacora (USUARIO, ACCION, OBSERVACION)
+          VALUES ('$usuario1[usuario]', 'INTENTO', 'NO LOGRO INSERTAR LA PREGUNTA POR QUE YA EXISTE')";
+          if (mysqli_query($conn, $sql9)) {} else { }
+          // fin inserta en la tabla bitacora         
            echo '<script>
                     alert("No se puede editar, ya existe una pregunta con ese nombre");
                  </script>';
@@ -80,9 +85,8 @@
                 if (mysqli_query($conn, $sql2)) {
 
                   // inicio inserta en la tabla bitacora
-                  $sql9 = "INSERT INTO tbl_bitacora (ID_USUARIO, ID_OBJETO, USUARIO, ACCION, OBSERVACION)
-                  VALUES (2, 1, '$usuario1[usuario]', 'EDITO', 'RENOMBRO LA PREGUNTA ($anterior) A ($pregunta)')";
-                  
+                  $sql9 = "INSERT INTO tbl_bitacora (USUARIO, ACCION, OBSERVACION)
+                  VALUES ('$usuario1[usuario]', 'EDITO', 'RENOMBRO LA PREGUNTA ($anterior) A ($pregunta)')";
                   if (mysqli_query($conn, $sql9)) {} else { }
                   // fin inserta en la tabla bitacora
 
@@ -110,6 +114,11 @@
         $result2 = mysqli_query($conn, $validar_pregunta); 
          if (mysqli_num_rows($result2) > 0)
           { 
+             // inicio inserta en la tabla bitacora
+             $sql9 = "INSERT INTO tbl_bitacora (USUARIO, ACCION, OBSERVACION)
+             VALUES ('$usuario1[usuario]', 'INTENTO', 'NO LOGRO ELIMINAR LA PREGUNTA POR QUE ESTABA EN USO')";
+             if (mysqli_query($conn, $sql9)) {} else { }
+             // fin inserta en la tabla bitacora
             echo '<script>
                     alert("No se puede eliminar ya que la pregunta  esta en uso");
                   </script>'; 
@@ -119,8 +128,8 @@
                 $sql3 = "DELETE FROM tbl_preguntas WHERE ID_PREGUNTA='$id_pregunta'";
                 if (mysqli_query($conn, $sql3)) {
                   // inicio inserta en la tabla bitacora
-                  $sql9 = "INSERT INTO tbl_bitacora (ID_USUARIO, ID_OBJETO, USUARIO, ACCION, OBSERVACION)
-                  VALUES (2, 1, '$usuario1[usuario]', 'ELIMINO', 'ELIMINO LA PREGUNTA ($anterior)')";
+                  $sql9 = "INSERT INTO tbl_bitacora (USUARIO, ACCION, OBSERVACION)
+                  VALUES ('$usuario1[usuario]', 'ELIMINO', 'ELIMINO LA PREGUNTA ($anterior)')";
                   
                   if (mysqli_query($conn, $sql9)) {} else { }
                   // fin inserta en la tabla bitacora

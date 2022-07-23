@@ -76,7 +76,7 @@ if ($resultr=mysqli_query($conn,$sqlr)) {
           <?php
 include "../../conexion/conexion.php";
 
-$sqlS = "SELECT * FROM tbl_proyectos WHERE ID_ESTADOS=3";
+$sqlS = "SELECT * FROM tbl_proyectos WHERE ID_ESTADOS=1";
 if ($resultS=mysqli_query($conn,$sqlS)) {
     $rowcountS=mysqli_num_rows($resultS);
 

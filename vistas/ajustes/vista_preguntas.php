@@ -30,7 +30,20 @@ if (mysqli_num_rows($roles35) > 0)
                {
                 header('Location: ../../vistas/tablero/vista_perfil.php');
                 die();
+               }else{
+                $role = "SELECT * FROM tbl_ms_roles_ojetos WHERE ID_ROL='$id_rol7' and ID_OBJETO=21 and PERMISO_CONSULTAR=1";
+                $roless = mysqli_query($conn, $role);
+                if (mysqli_num_rows($roless) > 0){}
+                else{
+                  header('Location: ../../vistas/tablero/vista_perfil.php');
+                  die();
+                }
                }
+               // inicio inserta en la tabla bitacora
+               $sql = "INSERT INTO tbl_bitacora (USUARIO, ACCION, OBSERVACION)
+               VALUES ('$usuario1[usuario]', 'CONSULTO', 'CONSULTO LA PANTALLA ADMINISTRATIVA DE PREGUNTAS')";
+               if (mysqli_query($conn, $sql)) {} else {}
+               // fin inserta en la tabla bitacora
            
 
 ?>

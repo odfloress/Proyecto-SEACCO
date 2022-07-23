@@ -68,13 +68,13 @@
             }else{
 
                     // inicio inserta en la tabla bitacora
-                    $sql7 = "INSERT INTO tbl_bitacora (ID_USUARIO, ID_OBJETO, USUARIO, ACCION, OBSERVACION)
-                    VALUES (2, 1, '$usuario', 'REGISTRO', 'EL SUARIO $usuario SE REGISTRO')";
+                    $sql7 = "INSERT INTO tbl_bitacora ( USUARIO, ACCION, OBSERVACION)
+                    VALUES ( '$usuario', 'REGISTRO', 'EL SUARIO $usuario SE REGISTRO')";
                     
                     if (mysqli_query($conn, $sql7)) {
                       
                     } else {
-                    
+                      
                     }
               // fin inserta en la tabla bitacora
 
