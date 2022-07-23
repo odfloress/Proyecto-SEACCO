@@ -15,9 +15,6 @@
 
   //variable para recuperar los botones de la vista roles  
   $accion=(isset($_POST['accion']))?$_POST['accion']:"";
-
-  
-  
   
   
   switch($accion){
@@ -27,6 +24,7 @@
         $validar_rol = "SELECT * FROM tbl_roles WHERE ROL='$rol'";
         $result1 = mysqli_query($conn, $validar_rol); 
          if (mysqli_num_rows($result1) > 0) { 
+                
                 echo '<script>
                         alert("Rol ya existe");
                       </script>';
@@ -39,8 +37,8 @@
                     if (mysqli_query($conn, $sql1)) {
 
                          // inicio inserta en la tabla bitacora
-                            $sql7 = "INSERT INTO tbl_bitacora (ID_USUARIO, ID_OBJETO, USUARIO, ACCION, OBSERVACION)
-                            VALUES (2, 1, '$usuario1[usuario]', 'INSERTO', 'CREO EL ROL ($rol)')";
+                            $sql7 = "INSERT INTO tbl_bitacora (USUARIO, ACCION, OBSERVACION)
+                            VALUES ('$usuario1[usuario]', 'INSERTO', 'CREO EL ROL ($rol)')";
                              if (mysqli_query($conn, $sql7)) {} else { }
                         // fin inserta en la tabla bitacora
                         echo '<script>
@@ -74,8 +72,8 @@
                    
                            
                      // inicio inserta en la tabla bitacora
-                     $sql8 = "INSERT INTO tbl_bitacora (ID_USUARIO, ID_OBJETO, USUARIO, ACCION, OBSERVACION)
-                     VALUES (2, 1, '$usuario1[usuario]', 'EDITO', 'EDITO DESCRIPCION DEL ROL ($rol)')";
+                     $sql8 = "INSERT INTO tbl_bitacora (USUARIO, ACCION, OBSERVACION)
+                     VALUES ('$usuario1[usuario]', 'EDITO', 'EDITO DESCRIPCION DEL ROL ($rol)')";
                      
                       if (mysqli_query($conn, $sql8)) {} else { }
                     // fin inserta en la tabla bitacora
@@ -102,9 +100,8 @@
                             
                                 
                             // inicio inserta en la tabla bitacora
-                            $sql9 = "INSERT INTO tbl_bitacora (ID_USUARIO, ID_OBJETO, USUARIO, ACCION, OBSERVACION)
-                            VALUES (2, 1, '$usuario1[usuario]', 'EDITO', 'RENOMBRO EL ROL ($anterior) A $rol')";
-                            
+                            $sql9 = "INSERT INTO tbl_bitacora (USUARIO, ACCION, OBSERVACION)
+                            VALUES ('$usuario1[usuario]', 'EDITO', 'RENOMBRO EL ROL ($anterior) A $rol')";
                             if (mysqli_query($conn, $sql9)) {} else { }
                             // fin inserta en la tabla bitacora
                             echo '<script>
@@ -126,7 +123,11 @@
     $validar_rol = "SELECT * FROM tbl_usuarios WHERE ID_ROL='$id_rol'";
     $result4 = mysqli_query($conn, $validar_rol); 
      if (mysqli_num_rows($result4) > 0) { 
-
+         // inicio inserta en la tabla bitacora
+         $sql9 = "INSERT INTO tbl_bitacora (USUARIO, ACCION, OBSERVACION)
+         VALUES ('$usuario1[usuario]', 'INTENTO', 'NO LOGRO YA QUE ESTABA EN USO EL ROL ($rol)')";
+         if (mysqli_query($conn, $sql9)) {} else { }
+         // fin inserta en la tabla bitacora
          echo '<script>
                  alert("No se puede eliminar el rol, ya que esta en uso");
                  window.location.href="../../vistas/ajustes/vista_roles.php";                   
@@ -139,6 +140,11 @@
                 $validar_rol = "SELECT * FROM tbl_ms_roles_ojetos WHERE ID_ROL='$id_rol'";
                 $result5 = mysqli_query($conn, $validar_rol); 
                 if (mysqli_num_rows($result5) > 0) { 
+                        // inicio inserta en la tabla bitacora
+                        $sql9 = "INSERT INTO tbl_bitacora (USUARIO, ACCION, OBSERVACION)
+                        VALUES ('$usuario1[usuario]', 'INTENTO', 'NO LOGRO YA QUE ESTABA EN USO EL ROL ($rol)')";
+                        if (mysqli_query($conn, $sql9)) {} else { }
+                        // fin inserta en la tabla bitacora
 
                     echo '<script>
                             alert("No se puede eliminar el rol, ya que esta en uso.");
@@ -149,8 +155,8 @@
                         $sql3 = "DELETE FROM tbl_roles WHERE ID_ROL='$id_rol'";
                         if (mysqli_query($conn, $sql3)) {
                             // inicio inserta en la tabla bitacora
-                            $sql7 = "INSERT INTO tbl_bitacora (ID_USUARIO, ID_OBJETO, USUARIO, ACCION, OBSERVACION)
-                            VALUES (2, 1, '$usuario1[usuario]', 'ELIMINO', 'ELIMINO EL ROL ($anterior)')";
+                            $sql7 = "INSERT INTO tbl_bitacora (USUARIO, ACCION, OBSERVACION)
+                            VALUES ('$usuario1[usuario]', 'ELIMINO', 'ELIMINO EL ROL ($anterior)')";
                              if (mysqli_query($conn, $sql7)) {} else { }
                         // fin inserta en la tabla bitacora
                             header('Location: ../../vistas/ajustes/vista_roles.php');
