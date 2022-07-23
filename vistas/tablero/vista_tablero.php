@@ -76,7 +76,11 @@ if ($resultr=mysqli_query($conn,$sqlr)) {
           <?php
 include "../../conexion/conexion.php";
 
+<<<<<<< HEAD
 $sqlS = "SELECT * FROM tbl_proyectos WHERE ID_ESTADOS=1";
+=======
+$sqlS = "SELECT * FROM tbl_proyectos WHERE ID_ESTADOS=3";
+>>>>>>> 1b99049705e4ee865045509ec315fdb23e2c9846
 if ($resultS=mysqli_query($conn,$sqlS)) {
     $rowcountS=mysqli_num_rows($resultS);
 
@@ -166,6 +170,10 @@ if ($resultY=mysqli_query($conn,$sqlY)) {
 if ($resultO=mysqli_query($conn,$sqlO)) {
     $rowcountO=mysqli_num_rows($resultO);
 
+    $sqlV = "SELECT * FROM tbl_proyectos WHERE UBICACION='VALLE'";
+if ($resultV=mysqli_query($conn,$sqlV)) {
+    $rowcountV=mysqli_num_rows($resultV);
+
     $sql = "SELECT * FROM tbl_proyectos";
 if ($result=mysqli_query($conn,$sql)) {
     $rowcount=mysqli_num_rows($result);
@@ -173,10 +181,9 @@ if ($result=mysqli_query($conn,$sql)) {
 <canvas id="myChart" style="width:100%;max-width:100%"></canvas>
 
 <script>
-var xValues = ["Tegucigalpa", "Comayagua", "Yoro", "Olancho", "TOTAL"];
-var yValues = [<?php echo $rowcountT?>, <?php echo $rowcountC?>, <?php echo $rowcountY?>, 
-<?php echo $rowcountO?>, <?php echo $rowcount?>];
-var barColors = ["blue", "green", "pink", "yellow"];
+var xValues = ["","Tegucigalpa", "Comayagua", "Yoro", "Olancho","Valle", ""];
+var yValues = [0, <?php echo $rowcountT?>, <?php echo $rowcountC?>, <?php echo $rowcountY?>, <?php echo $rowcountO?>,<?php echo $rowcountV?>,<?php echo $rowcount?>];
+var barColors = ["blue", "green", "pink", "yellow","blue", "green"];
 
 new Chart("myChart", {
   type: "bar",
@@ -196,7 +203,7 @@ new Chart("myChart", {
   }
 });
 </script>
-<?php };};};};};
+<?php };};};};};};
 ?>
               </center>
             </div>
@@ -220,16 +227,20 @@ if ($result2=mysqli_query($conn,$sql2)) {
 if ($result3=mysqli_query($conn,$sql3)) {
     $rowcount3=mysqli_num_rows($result3);
 
-    $sql4 = "SELECT * FROM tbl_proyectos";
+    $sql4 = "SELECT * FROM tbl_proyectos WHERE ID_ESTADOS=4";
 if ($result4=mysqli_query($conn,$sql4)) {
     $rowcount4=mysqli_num_rows($result4);
+
+    $sql5 = "SELECT * FROM tbl_proyectos WHERE ID_ESTADOS=5";
+if ($result5=mysqli_query($conn,$sql5)) {
+    $rowcount5=mysqli_num_rows($result5);
 ?>
 <center>
 <canvas id="myChart2" style="width:100%;max-width:100%"></canvas>
 
 <script>
-var xValues = ["SOLICITUD", "EN PROCESO", "TERMINADO", "PROYECTOS"];
-var yValues = [<?php echo $rowcount?>, <?php echo $rowcount2?>, <?php echo $rowcount3?>, <?php echo $rowcount4?>];
+var xValues = ["ACTIVO", "INACTIVO", "SOLICITUD", "EN PROCESO", "TERMINADO"];
+var yValues = [<?php echo $rowcount?>, <?php echo $rowcount2?>, <?php echo $rowcount3?>, <?php echo $rowcount4?>, <?php echo $rowcount5?>];
 var barColors = [
   "#b91d47",
   "#00aba9",
@@ -255,7 +266,9 @@ new Chart("myChart2", {
   }
 });
 </script>
+
               </center>
+              <?php };};};};};?>
             </div>
           </div>
            <!-- fin codigo grafica 2 -->
@@ -265,8 +278,7 @@ new Chart("myChart2", {
 
 
           <!-- fin contenido -->
-<?php };};};};
-?>
+
       
 <?php include '../../configuracion/footer.php' ?>
 
