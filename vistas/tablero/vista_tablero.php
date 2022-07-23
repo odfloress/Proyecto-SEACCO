@@ -76,7 +76,7 @@ if ($resultr=mysqli_query($conn,$sqlr)) {
           <?php
 include "../../conexion/conexion.php";
 
-$sqlS = "SELECT * FROM tbl_proyectos WHERE ID_ESTADO=1";
+$sqlS = "SELECT * FROM tbl_proyectos WHERE ID_ESTADOS=1";
 if ($resultS=mysqli_query($conn,$sqlS)) {
     $rowcountS=mysqli_num_rows($resultS);
 
@@ -208,15 +208,15 @@ new Chart("myChart", {
 <?php
 include "../../conexion/conexion.php";
 
-$sql = "SELECT * FROM tbl_proyectos WHERE ID_ESTADO=1";
+$sql = "SELECT * FROM tbl_proyectos WHERE ID_ESTADOS=1";
 if ($result=mysqli_query($conn,$sql)) {
     $rowcount=mysqli_num_rows($result);
 
-    $sql2 = "SELECT * FROM tbl_proyectos WHERE ID_ESTADO=2";
+    $sql2 = "SELECT * FROM tbl_proyectos WHERE ID_ESTADOS=2";
 if ($result2=mysqli_query($conn,$sql2)) {
     $rowcount2=mysqli_num_rows($result2);
 
-    $sql3 = "SELECT * FROM tbl_proyectos WHERE ID_ESTADO=3";
+    $sql3 = "SELECT * FROM tbl_proyectos WHERE ID_ESTADOS=3";
 if ($result3=mysqli_query($conn,$sql3)) {
     $rowcount3=mysqli_num_rows($result3);
 
