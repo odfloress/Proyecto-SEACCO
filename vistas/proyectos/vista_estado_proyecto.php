@@ -136,7 +136,7 @@ include '../../controladores/crud_estado_proyecto.php';
                                 <!-- Cuerpo del modal Modal -->
                                           <div class="modal-body">
                                               <label for="">Id estado</label>
-                                              <input type="number" class="form-control" name="id_estados" required value="<?php echo $filas['ID_ESTADOS'] ?>" placeholder="" id="txtPrecio_Compra"   >
+                                              <input type="number" class="form-control" name="id_estados" readonly required value="<?php echo $filas['ID_ESTADOS'] ?>" placeholder="" id="txtPrecio_Compra"   >
                                               <br>
                                               <label for="">Estado</label>
                                               <input type="text" class="form-control" name="nombre" required value="<?php echo $filas['NOMBRE'] ?>" placeholder="" id="txtPrecio_Compra" onkeypress="return soloLetras(event);" minlength="3" maxlength="20"  onkeyup="mayus(this);  >
@@ -226,9 +226,51 @@ include '../../controladores/crud_estado_proyecto.php';
 <script>
   $(function () {
     $("#example1").DataTable({
-      "responsive": true, "lengthChange": false, "autoWidth": false,
-      "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
-    }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+      
+      language: {
+                          processing: "Tratamiento en curso...",
+                          search: "Buscar&nbsp;:",
+                          lengthMenu: "Agrupar de _MENU_ items",
+                          info: "Mostrando del item _START_ al _END_ de un total de _TOTAL_ items",
+                          infoEmpty: "No existen datos.",
+                          infoFiltered: "(filtrado de _MAX_ elementos en total)",
+                          infoPostFix: "",
+                          loadingRecords: "Cargando...",
+                          zeroRecords: "No se encontraron datos con tu busqueda",
+                          emptyTable: "No hay datos disponibles en la tabla.",
+                          paginate: {
+                                          first: "Primero",
+                                          previous: "Anterior",
+                                          next: "Siguiente",
+                                          last: "Ultimo"
+                                      },
+                              aria: {
+                                      sortAscending: ": active para ordenar la columna en orden ascendente",
+                                      sortDescending: ": active para ordenar la columna en orden descendente"
+                                    },
+
+                          buttons:{
+                            "copy": "Copiar",
+                            "colvis": "Visibilidad",
+                            "collection": "Colección",
+                            "colvisRestore": "Restaurar visibilidad",
+                            "copyKeys": "Presione ctrl o u2318 + C para copiar los datos de la tabla al portapapeles del sistema. <br \/> <br \/> Para cancelar, haga clic en este mensaje o presione escape.",
+                            "copySuccess": {
+                                "1": "Copiada 1 fila al portapapeles",
+                                "_": "Copiadas %ds fila al portapapeles"
+                                },
+                                },    
+                         },
+                         
+                         "responsive": true, "lengthChange": true, "autoWidth": false,
+                          "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"],
+
+                        
+
+                         
+        
+    })
+    buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
     $('#example2').DataTable({
       "paging": true,
       "lengthChange": false,

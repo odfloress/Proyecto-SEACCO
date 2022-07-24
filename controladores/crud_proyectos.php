@@ -1,7 +1,7 @@
 <?php
   require '../../conexion/conexion.php';
   //para mostrar los datos de la tabla mysql y mostrar en el crud
-  $sql = "SELECT * FROM tbl_proveedores";
+  $sql = "SELECT * FROM tbl_proyectos";
   $result = mysqli_query($conn, $sql);
 
 
