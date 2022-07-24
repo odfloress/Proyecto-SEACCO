@@ -21,6 +21,10 @@ include '../../controladores/crud_bienvenida.php'
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
 
+  <!-- enlace del scritpt para evitar si preciona F12, si preciona Ctrl+Shift+I, si preciona Ctr+u  -->
+   <script type="text/javascript" src="../../js/evita_ver_codigo_utilizando_teclas.js"></script>
+</head>
+<body oncontextmenu="return false">
   <?php include '../../configuracion/navar.php' ?>
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper"><center> <BR></BR><h3>BIENVENIDA</h3> </center>
@@ -32,7 +36,7 @@ include '../../controladores/crud_bienvenida.php'
             <h1></h1>
             <!-- CMENTADO PARA NO MOSTRAR EL BOTON AGREGAR EN LA VISTA BIENVENIDA-->
             <!-- Inicio de modal de agregar -->
-<div class="container mt-3">
+  <div class="container mt-3">
        
         <!--<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal">
             Nuevo
@@ -61,7 +65,11 @@ include '../../controladores/crud_bienvenida.php'
                     <label for="">Titulo</label>
                     <input type="text" class="form-control"  name="titulo" required value="<?php echo "$titulo"; ?>" placeholder=""  >
                     <br>
-
+                    <label for="">Descripción</label>
+                    <TEXtarea  style="background-color: white;" name="descripcion" class="form-control"name="" id="" cols="40" rows="5"
+                    autocomplete = "off"  onkeypress="return soloLetras(event);" minlength="3" maxlength="50" 
+                    onkeyup="mayus(this);" ><?php echo "$descripcion"; ?></TEXtarea>
+                
                 </div>
                 <!-- Fin Cuerpo del modal Modal -->
                 <!-- pie del modal -->
@@ -117,6 +125,7 @@ include '../../controladores/crud_bienvenida.php'
                   <th>Tipo</th>
                   <th>Imagen</th>
                   <th>Titulo</th>
+                  <th>Descripcion</th>
                   
                   </tr>
                   </thead>
@@ -146,15 +155,25 @@ include '../../controladores/crud_bienvenida.php'
                                 <!-- Cuerpo del modal Modal -->
                                           <div class="modal-body">
                                               <form action="" method="post" enctype="multipart/form-data">
+                                              <input type="hidden" name="foto" value="<?php echo $filas['IMAGEN'] ?>">
                                               <input type="hidden" name="id_imagen"  value="<?php echo $filas['ID_IMAGEN'] ?>">
-                                              <center><img class="img-thumbnail" width="100px" src="<?php echo $filas['RUTA'] ?>"></center>
+                                              <label for="">Imagen</label><br>
+                                              <img class="img-thumbnail" width="100px" src="<?php echo $filas['RUTA'] ?>" /><br><br>
+                                              <input type="file" class="form-control" accept=".jpg, .png, .jpeg, .JPEG, .JPG, .PNG" name="imagenes"  value="" placeholder=""  >
                                               <br>
-                                              <label for="">Imagen</label>
-                                              <input type="file" class="form-control" accept=".jpg, .png, .jpej, .JPEG, .JPG, .PNG" name="imagenes2" >
-                                              <br>
+                                              <label for="">Tipo:</label><br>
+                                              <select  class="form-select" id="sel2" name="tipo">
+                                                <option value="<?php echo $filas['TIPO'] ?>"><?php echo $filas['TIPO'] ?></option>
+                                                
+                                              </select>
                                               <label for="">Titulo</label>
-                                              <input type="text" class="form-control" readonly  name="titulo2" required value="<?php echo $filas['TITULO'] ?>" placeholder=""  >
+                                              <input type="text" class="form-control"  name="titulo" required value="<?php echo $filas['TITULO'] ?>" placeholder="" 
+                                              autocomplete = "off"  onkeypress="return soloLetras(event);" minlength="3" maxlength="50" onkeyup="mayus(this);"  >
                                               <br>
+                                              <label for="">Descripción</label>
+                                              <TEXtarea  style="background-color: white;" name="descripcion" class="form-control"name="" id="" cols="40" rows="5"
+                                              autocomplete = "off"  onkeypress="return soloLetras(event);" minlength="3" maxlength="50" onkeyup="mayus(this);" ><?php echo $filas['DESCRIPCION'] ?></TEXtarea>
+                                          
                                           
                                           </div>
                                 <!-- Fin Cuerpo del modal Modal -->
@@ -182,6 +201,7 @@ include '../../controladores/crud_bienvenida.php'
                      <td><?php echo $filas['TIPO'] ?></td>
                      <td><img class="img-thumbnail" width="100px" src="<?php echo $filas['RUTA'] ?>" /></td>
                      <td><?php echo $filas['TITULO'] ?></td>
+                     <td><?php echo $filas['DESCRIPCION'] ?></td>
 
       </tr>
       <?php } ?>  
@@ -276,7 +296,7 @@ include '../../controladores/crud_bienvenida.php'
       "responsive": true,
     });
   });
-</script>
+  </script>
 </body>
 <script type="text/javascript" src="../../js/evitar_reenvio.js"></script>
 </html>

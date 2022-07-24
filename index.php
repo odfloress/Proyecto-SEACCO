@@ -249,31 +249,87 @@ actividades que se desarrollan en los proyectos ejecutados.</p>
  
   <div class="w3-row-padding" style="margin-top:64px">
     <div class="w3-col l3 m6">
-      <img src='imagenes/imagen8.jpeg' style="width:300px; height:150px" onclick="onClick(this)" class="w3-hover-opacity" alt="A microphone">
+    <?php 
+      include 'conexion/conexion.php';
+      $sqlB4 = "SELECT * FROM tbl_bienvenida_portafolio WHERE TIPO='BIENVENIDA' AND ID_IMAGEN=4";
+      $resultB4 = mysqli_query($conn, $sqlB4);
+      while($rowB4 = mysqli_fetch_assoc($resultB4)) {
+      ?>
+      <img src='imagenes/<?php echo $rowB4['IMAGEN'] ?>' style="width:300px; height:150px" onclick="onClick(this)" class="w3-hover-opacity" alt="<?php echo $rowB4['DESCRIPCION'] ?>">
+      <?php }?>
     </div>
      <div class="w3-col l3 m6">
-      <img src='imagenes/imagen7.jpeg'  style="width:300px; height:150px"  onclick="onClick(this)" class="w3-hover-opacity" alt="A phone">
+     <?php 
+      include 'conexion/conexion.php';
+      $sqlB4 = "SELECT * FROM tbl_bienvenida_portafolio WHERE TIPO='BIENVENIDA' AND ID_IMAGEN=5";
+      $resultB4 = mysqli_query($conn, $sqlB4);
+      while($rowB4 = mysqli_fetch_assoc($resultB4)) {
+      ?>
+      <img src='imagenes/<?php echo $rowB4['IMAGEN'] ?>' style="width:300px; height:150px" onclick="onClick(this)" class="w3-hover-opacity" alt="<?php echo $rowB4['DESCRIPCION'] ?>">
+      <?php }?>
     </div>
     <div class="w3-col l3 m6">
-      <img src='imagenes/imagen5.jpeg'  style="width:300px; height:150px"  onclick="onClick(this)" class="w3-hover-opacity" alt="A drone">
+    <?php 
+      include 'conexion/conexion.php';
+      $sqlB4 = "SELECT * FROM tbl_bienvenida_portafolio WHERE TIPO='BIENVENIDA' AND ID_IMAGEN=6";
+      $resultB4 = mysqli_query($conn, $sqlB4);
+      while($rowB4 = mysqli_fetch_assoc($resultB4)) {
+      ?>
+      <img src='imagenes/<?php echo $rowB4['IMAGEN'] ?>' style="width:300px; height:150px" onclick="onClick(this)" class="w3-hover-opacity" alt="<?php echo $rowB4['DESCRIPCION'] ?>">
+      <?php }?>
     </div>
     <div class="w3-col l3 m6">
-      <img src='imagenes/imagen4.jpeg' style="width:300px; height:150px"  onclick="onClick(this)" class="w3-hover-opacity" alt="Soundbox">
+    <?php 
+      include 'conexion/conexion.php';
+      $sqlB4 = "SELECT * FROM tbl_bienvenida_portafolio WHERE TIPO='BIENVENIDA' AND ID_IMAGEN=7";
+      $resultB4 = mysqli_query($conn, $sqlB4);
+      while($rowB4 = mysqli_fetch_assoc($resultB4)) {
+      ?>
+      <img src='imagenes/<?php echo $rowB4['IMAGEN'] ?>' style="width:300px; height:150px" onclick="onClick(this)" class="w3-hover-opacity" alt="<?php echo $rowB4['DESCRIPCION'] ?>">
+      <?php }?>
     </div>
   </div>
 
   <div class="w3-row-padding w3-section">
     <div class="w3-col l3 m6">
-      <img src='imagenes/imagen8.jpeg'  style="width:300px; height:150px"  onclick="onClick(this)" class="w3-hover-opacity" alt="A tablet">
+    <?php 
+      include 'conexion/conexion.php';
+      $sqlB4 = "SELECT * FROM tbl_bienvenida_portafolio WHERE TIPO='BIENVENIDA' AND ID_IMAGEN=8";
+      $resultB4 = mysqli_query($conn, $sqlB4);
+      while($rowB4 = mysqli_fetch_assoc($resultB4)) {
+      ?>
+      <img src='imagenes/<?php echo $rowB4['IMAGEN'] ?>' style="width:300px; height:150px" onclick="onClick(this)" class="w3-hover-opacity" alt="<?php echo $rowB4['DESCRIPCION'] ?>">
+      <?php }?>
     </div>
     <div class="w3-col l3 m6">
-      <img src='imagenes/imagen7.jpeg'  style="width:300px; height:150px"  onclick="onClick(this)" class="w3-hover-opacity" alt="A camera">
+    <?php 
+      include 'conexion/conexion.php';
+      $sqlB4 = "SELECT * FROM tbl_bienvenida_portafolio WHERE TIPO='BIENVENIDA' AND ID_IMAGEN=9";
+      $resultB4 = mysqli_query($conn, $sqlB4);
+      while($rowB4 = mysqli_fetch_assoc($resultB4)) {
+      ?>
+      <img src='imagenes/<?php echo $rowB4['IMAGEN'] ?>' style="width:300px; height:150px" onclick="onClick(this)" class="w3-hover-opacity" alt="<?php echo $rowB4['DESCRIPCION'] ?>">
+      <?php }?>
     </div>
     <div class="w3-col l3 m6">
-      <img src='imagenes/imagen5.jpeg'  style="width:300px; height:150px"  onclick="onClick(this)" class="w3-hover-opacity" alt="A typewriter">
+    <?php 
+      include 'conexion/conexion.php';
+      $sqlB4 = "SELECT * FROM tbl_bienvenida_portafolio WHERE TIPO='BIENVENIDA' AND ID_IMAGEN=10";
+      $resultB4 = mysqli_query($conn, $sqlB4);
+      while($rowB4 = mysqli_fetch_assoc($resultB4)) {
+      ?>
+      <img src='imagenes/<?php echo $rowB4['IMAGEN'] ?>' style="width:300px; height:150px" onclick="onClick(this)" class="w3-hover-opacity" alt="<?php echo $rowB4['DESCRIPCION'] ?>">
+      <?php }?>
     </div>
     <div class="w3-col l3 m6">
-      <img src='imagenes/imagen4.jpeg'  style="width:300px; height:150px"  onclick="onClick(this)" class="w3-hover-opacity" alt="A tableturner">
+    <?php 
+      include 'conexion/conexion.php';
+      $sqlB4 = "SELECT * FROM tbl_bienvenida_portafolio WHERE TIPO='BIENVENIDA' AND ID_IMAGEN=11";
+      $resultB4 = mysqli_query($conn, $sqlB4);
+      while($rowB4 = mysqli_fetch_assoc($resultB4)) {
+      ?>
+      <img src='imagenes/<?php echo $rowB4['IMAGEN'] ?>' style="width:300px; height:150px" onclick="onClick(this)" class="w3-hover-opacity" alt="<?php echo $rowB4['DESCRIPCION'] ?>">
+      <?php }?>
     </div>
   </div>
 </div>

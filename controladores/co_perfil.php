@@ -148,7 +148,8 @@ switch ($accion){
         </script>';
           }
     }
-}
+  }
+  
 }
 
 ?>
