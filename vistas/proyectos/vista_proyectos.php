@@ -51,32 +51,30 @@ include '../../controladores/crud_proyectos.php';
                 <!-- Cuerpo del modal Modal -->
                 <form action="" method="post">
                 <div class="modal-body">
-                <label for="">Id Proyecto</label>
-                    <input class="form-control" type="number" name="id_proyecto" id="">
-                    <br>
+                      
                   <label for="">Id Cliente</label>
-                    <input class="form-control" type="number" name="id_cliente" id="">
+                    <input class="form-control" type="number" name="id_cliente" id="" required>
                     <br>
                     <label for="">Id Encargado</label>
-                    <input class="form-control" type="number" name="id_usuario" id="">
+                    <input class="form-control" type="number" name="id_usuario" id="" required>
                     <br>
                     <label for="">Id Estado</label>
-                    <input class="form-control" type="number" name="id_estado" id="">
+                    <input class="form-control" type="number" name="id_estado" id="" required>
                     <br>
                     <label for="">Nombre Proyecto</label>
-                    <input class="form-control" type="text" name="nombre" id="" onkeypress="return soloLetras(event);" minlength="3" maxlength="255" onkeyup="mayus(this);>
+                    <input class="form-control" type="text" name="nombre" id="" required onkeypress="return soloLetras(event);" minlength="3" maxlength="255" onkeyup="mayus(this);>
                     <br>
                     <label for="">Descripción proyecto</label>
-                    <input class="form-control" type="text" name="descripcion" id="" onkeypress="return soloLetras(event);" minlength="3" maxlength="300" onkeyup="mayus(this);">
+                    <input class="form-control" type="text" name="descripcion" id="" required onkeypress="return soloLetras(event);" minlength="3" maxlength="300" onkeyup="mayus(this);">
                     <br>
                     <label for="">Ubicación Proyecto</label>
-                    <input class="form-control" type="text" name="ubicacion" id="" onkeypress="return soloLetras(event);" minlength="3" maxlength="255" onkeyup="mayus(this);">
+                    <input class="form-control" type="text" name="ubicacion" id="" required onkeypress="return soloLetras(event);" minlength="3" maxlength="255" onkeyup="mayus(this);">
                     <br>
                     <label for="">Fecha inicio</label>
-                    <input class="form-control" type="Date" name="fecha_inicio" id="">
+                    <input class="form-control" type="Date" name="fecha_inicio" id="" required>
                     <br>
                     <label for="">Fecha final</label>
-                    <input class="form-control" type="Date" name="fecha_final" id="">
+                    <input class="form-control" type="Date" name="fecha_final" id="" required>
                     <br>
         
       </div>
@@ -166,31 +164,31 @@ include '../../controladores/crud_proyectos.php';
                             <form action="" method="post">
                             <div class="modal-body">
                    <label for="">Id Proyecto</label>
-                    <input class="form-control" type="number" name="id_proyecto" id="" value="<?php echo $filas['ID_CLIENTES'] ?>">
+                    <input class="form-control" type="number" name="id_proyecto" id="" readonly required value="<?php echo $filas['ID_PROYECTO'] ?>">
                    <br>            
                  <label for="">Id Cliente</label>
-                    <input class="form-control" type="number" name="id_cliente" id="" value="<?php echo $filas['ID_CLIENTES'] ?>">
+                    <input class="form-control" type="number" name="id_cliente" id="" required value="<?php echo $filas['ID_CLIENTES'] ?>">
                     <br>
                     <label for="">Id Encargado</label>
-                    <input class="form-control" type="number" name="id_usuario" id="" value="<?php echo $filas['ID_USUARIO'] ?>">
+                    <input class="form-control" type="number" name="id_usuario" id="" required value="<?php echo $filas['ID_USUARIO'] ?>">
                     <br>
                     <label for="">Id Estado</label>
-                    <input class="form-control" type="number" name="id_estado" id="" value="<?php echo $filas['ID_ESTADOS'] ?>">
+                    <input class="form-control" type="number" name="id_estado" id="" required value="<?php echo $filas['ID_ESTADOS'] ?>">
                     <br>
                     <label for="">Nombre Proyecto</label>
-                    <input class="form-control" type="text" name="nombre" id="" value="<?php echo $filas['NOMBRE'] ?>" onkeypress="return soloLetras(event);" minlength="3" maxlength="255" onkeyup="mayus(this);" >
+                    <input class="form-control" type="text" name="nombre" id="" required value="<?php echo $filas['NOMBRE'] ?>" onkeypress="return soloLetras(event);" minlength="3" maxlength="255" onkeyup="mayus(this);" >
                     <br>
                     <label for="">Descripción proyecto</label>
-                    <input class="form-control" type="text" name="descripcion" id="" value="<?php echo $filas['DESCRIPCION'] ?>" onkeypress="return soloLetras(event);" minlength="3" maxlength="300" onkeyup="mayus(this);" >
+                    <input class="form-control" type="text" name="descripcion" id="" required value="<?php echo $filas['DESCRIPCION'] ?>" onkeypress="return soloLetras(event);" minlength="3" maxlength="300" onkeyup="mayus(this);" >
                     <br>
                     <label for="">Ubicación Proyecto</label>
-                    <input class="form-control" type="text" name="ubicacion" id=""value="<?php echo $filas['UBICACION'] ?>" onkeypress="return soloLetras(event);" minlength="3" maxlength="255" onkeyup="mayus(this);"  >
+                    <input class="form-control" type="text" name="ubicacion" id="" required value="<?php echo $filas['UBICACION'] ?>" onkeypress="return soloLetras(event);" minlength="3" maxlength="255" onkeyup="mayus(this);"  >
                     <br>
                     <label for="">Fecha inicio</label>
-                    <input class="form-control" type="Date" name="fecha_inicio" id="" value="<?php echo $filas['FECHA_INICIO'] ?>">
+                    <input class="form-control" type="Date" name="fecha_inicio" id="" required value="<?php echo $filas['FECHA_INICIO'] ?>">
                     <br>
                     <label for="">Fecha final</label>
-                    <input class="form-control" type="Date" name="fecha_final" id="" value="<?php echo $filas['FECHA_FINAL'] ?>">
+                    <input class="form-control" type="Date" name="fecha_final" id="" required value="<?php echo $filas['FECHA_FINAL'] ?>">
                     <br>
         
       </div>
@@ -208,6 +206,7 @@ include '../../controladores/crud_proyectos.php';
                             </div>
                             </div>
                             <!-- fin boton editar -->
+                            <input type="hidden" name="id_proyecto"  value="<?php echo $filas['ID_PROYECTO'] ?>">
                     <button  value="eliminar" name="accion" 
                         onclick="return confirm('¿Quieres eliminar este dato?')"
                         type="submit" class="btn btn-danger " data-id="19">
@@ -284,9 +283,51 @@ include '../../controladores/crud_proyectos.php';
 <script>
   $(function () {
     $("#example1").DataTable({
-      "responsive": true, "lengthChange": false, "autoWidth": false,
-      "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
-    }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+      
+      language: {
+                          processing: "Tratamiento en curso...",
+                          search: "Buscar&nbsp;:",
+                          lengthMenu: "Agrupar de _MENU_ items",
+                          info: "Mostrando del item _START_ al _END_ de un total de _TOTAL_ items",
+                          infoEmpty: "No existen datos.",
+                          infoFiltered: "(filtrado de _MAX_ elementos en total)",
+                          infoPostFix: "",
+                          loadingRecords: "Cargando...",
+                          zeroRecords: "No se encontraron datos con tu busqueda",
+                          emptyTable: "No hay datos disponibles en la tabla.",
+                          paginate: {
+                                          first: "Primero",
+                                          previous: "Anterior",
+                                          next: "Siguiente",
+                                          last: "Ultimo"
+                                      },
+                              aria: {
+                                      sortAscending: ": active para ordenar la columna en orden ascendente",
+                                      sortDescending: ": active para ordenar la columna en orden descendente"
+                                    },
+
+                          buttons:{
+                            "copy": "Copiar",
+                            "colvis": "Visibilidad",
+                            "collection": "Colección",
+                            "colvisRestore": "Restaurar visibilidad",
+                            "copyKeys": "Presione ctrl o u2318 + C para copiar los datos de la tabla al portapapeles del sistema. <br \/> <br \/> Para cancelar, haga clic en este mensaje o presione escape.",
+                            "copySuccess": {
+                                "1": "Copiada 1 fila al portapapeles",
+                                "_": "Copiadas %ds fila al portapapeles"
+                                },
+                                },    
+                         },
+                         
+                         "responsive": true, "lengthChange": true, "autoWidth": false,
+                          "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"],
+
+                        
+
+                         
+        
+    })
+    buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
     $('#example2').DataTable({
       "paging": true,
       "lengthChange": false,
