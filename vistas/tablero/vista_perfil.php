@@ -90,8 +90,12 @@ function quitarespacios(e) {
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
   <?php include '../../configuracion/navar.php' ?>
   <!-- Content Wrapper. Contains page content -->
+  <!-- enlace del scritpt para evitar si preciona F12, si preciona Ctrl+Shift+I, si preciona Ctr+u  -->
+  <script type="text/javascript" src="../../js/evita_ver_codigo_utilizando_teclas.js"></script>
 </head>
-  <body>
+<!-- Inicio evita el click derecho de la pagina -->
+  <body oncontextmenu="return false">
+  <!-- Fin evita el click derecho de la pagina --> 
   
   <div class="content-wrapper">
   <!-- Content Header (Page header) -->
@@ -335,8 +339,3 @@ function quitarespacios(e) {
     };
 
   </script>
-
-
-
-
-

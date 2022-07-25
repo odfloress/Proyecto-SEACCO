@@ -11,10 +11,13 @@ $tipo=(isset($_POST['tipo']))?$_POST['tipo']:"";
 $titulo=(isset($_POST['titulo']))?$_POST['titulo']:"";
 $descripcion=(isset($_POST['descripcion']))?$_POST['descripcion']:"";
 $ruta=(isset($_POST['ruta']))?$_POST['ruta']:"";
+$foto=(isset($_POST['foto']))?$_POST['foto']:"";
 
 //variable para recuperar los botones de la vista del crud del portafolio 
 $accion=(isset($_POST['accion']))?$_POST['accion']:"";
 
+//variable de sesion
+$usuario1 = $_SESSION;
 
 
 switch($accion){
@@ -22,64 +25,89 @@ switch($accion){
 case "agregar": 
 
 // agrega la imagen a la carpeta y la ruta en la base de datos
+$permitidos = array("jpg", "png", "jpeg", "JPEG", "JPG", "PNG");
+$extencion = pathinfo($_FILES['imagenes']["name"], PATHINFO_EXTENSION);
 
-if(isset($_FILES['imagenes'])){
-    $nombreimagen= $_FILES['imagenes']['name'];
-    $ruta = $_FILES['imagenes']['tmp_name'];
-    $destino = "../../imagenes/".$nombreimagen;
-
-    if(copy($ruta, $destino)){
-        // valida si existe una la imagen con el mismo nombre
-        $validar_imagen = "SELECT * FROM tbl_bienvenida_portafolio WHERE RUTA='$destino'";
-        $result1 = mysqli_query($conn, $validar_imagen); 
-         if (mysqli_num_rows($result1) > 0) { 
-              
-         
-           echo '<script>
-                    alert("imagen ya existe");
-                 </script>';
-                 mysqli_close($conn);
-         }else{
-           // inicio inserta en la tabla bitacora
-          $sqlB1 = "INSERT INTO tbl_bitacora (ID_USUARIO, ID_OBJETO, USUARIO, ACCION, OBSERVACION)
-          VALUES (2, 1, '$usuario1[usuario]', 'ACTUALIZO', 'CAMBIO LA CONTRASEÑA')";
-          if (mysqli_query($conn, $sqlB1)) {} else { }
-        // fin inserta en la tabla bitacora
-        $sql = "INSERT INTO tbl_bienvenida_portafolio (TIPO, IMAGEN, RUTA, TITULO)
-                              VALUES ('$tipo', '$nombreimagen', '$destino', '$titulo')";
+if(in_array($extencion, $permitidos)){
+    $Fecha= new DateTime();
+    $destino ="../../imagenes/";
+    $nombreimagen=($_FILES['imagenes']["name"]!="")?$Fecha->getTimestamp()."_".$_FILES["imagenes"]["name"]:"imagen.jpg";
+    $tmpFoto= $_FILES["imagenes"]["tmp_name"];
+    if($tmpFoto!="") 
+    {
+     move_uploaded_file($tmpFoto,$destino.$nombreimagen);
+    } 
+        $sql = "INSERT INTO tbl_bienvenida_portafolio (TIPO, IMAGEN, RUTA, TITULO, DESCRIPCION)
+                VALUES ('$tipo', '$nombreimagen', '$destino$nombreimagen', '$titulo', '$descripcion')";
         $res = mysqli_query($conn, $sql);
-
          if($res){
+             // inicio inserta en la tabla bitacora
+             $sql = "INSERT INTO tbl_bitacora (USUARIO, ACCION, OBSERVACION)
+             VALUES ('$usuario1[usuario]', 'INSERTO', 'INSERTO UN REGISTRO DE TIPO ($tipo) Y TITULO ($titulo) ')";
+             if (mysqli_query($conn, $sql)) {} else {}
+             // fin inserta en la tabla bitacora
             echo '<script type="text/javascript">
                      alert("Agregado correctamente");
                      window.location.href="../../vistas/catalogo/vista_bienvenida";
                  </script>';
          }else{
-          echo '<script type="text/javascript">
-                alert("Error al agregar foto");
-                window.location.href="../../vistas/catalogo/vista_bienvenida";
-                </script>';
+                die("Error". mysqli_error($conn));
               }
-            }
-    }
+}else{
+    // inicio inserta en la tabla bitacora
+    $sql = "INSERT INTO tbl_bitacora (USUARIO, ACCION, OBSERVACION)
+    VALUES ('$usuario1[usuario]', 'INTENTO', 'NO LOGRO INSERTAR YA QUE EL ARCHIVO NO ERA IMAGEN')";
+    if (mysqli_query($conn, $sql)) {} else {}
+    // fin inserta en la tabla bitacora
+    echo '<script type="text/javascript">
+             alert("Archivo no permitido");
+             window.location.href="../../vistas/catalogo/vista_bienvenida";
+          </script>';
 }
 
 break;
 
 case "editar": 
 
-    $titulo2=(isset($_POST['titulo2']))?$_POST['titulo2']:"";
+    
+$tmpFoto1= $_FILES["imagenes"]["tmp_name"];
+if($tmpFoto1!="") {
+    $permitidos = array("jpg", "png", "jpeg", "JPEG", "JPG", "PNG");
+    $extencion = pathinfo($_FILES['imagenes']["name"], PATHINFO_EXTENSION);
+    
 
-    $nombreimagen2= $_FILES['imagenes2']['name'];
-    $ruta2 = $_FILES['imagenes2']['tmp_name'];
-    $destino2 = "../../imagenes/".$nombreimagen2;
+}else{
+    $permitidos = array("jpg", "png", "jpeg", "JPEG", "JPG", "PNG");
+    $ultimo = "jpg";
+    $extencion = "$ultimo";
+}
+$direccion = "$ruta";
 
-    if(copy($ruta2, $destino2)){
-    $sql2 = "UPDATE tbl_bienvenida_portafolio SET IMAGEN='$nombreimagen2', RUTA='$destino2' WHERE ID_IMAGEN='$id_imagen'";
-    if (mysqli_query($conn, $sql2)) {
+if(in_array($extencion, $permitidos))
+{
+    $Fecha= new DateTime();
+    $destino ="../../imagenes/";
+    $nombreimagen=($_FILES['imagenes']["name"]!="")?$Fecha->getTimestamp()."_".$_FILES["imagenes"]["name"]:"$foto";
+    $tmpFoto= $_FILES["imagenes"]["tmp_name"];
+    if($tmpFoto!="") 
+    {
+     unlink($ruta); 
+     move_uploaded_file($tmpFoto,$destino.$nombreimagen);
+    } 
+    $direccion = "$destino$nombreimagen";
+
+    
+    $sql2 = "UPDATE tbl_bienvenida_portafolio SET TIPO='$tipo', IMAGEN='$nombreimagen', RUTA='$direccion', TITULO='$titulo', DESCRIPCION='$descripcion' WHERE ID_IMAGEN='$id_imagen'";
+    if (mysqli_query($conn, $sql2)) 
+    {
+        // inicio inserta en la tabla bitacora
+        $sql = "INSERT INTO tbl_bitacora (USUARIO, ACCION, OBSERVACION)
+        VALUES ('$usuario1[usuario]', 'EDITO', 'EDITO UN REGISTRO DE TIPO ($tipo) Y TITULO ($titulo)')";
+        if (mysqli_query($conn, $sql)) {} else {}
+         // fin inserta en la tabla bitacora
         echo '<script>
-                alert("Edición exitosa");
-                window.location.href="../../vistas/catalogo/vista_bienvenida";
+                 alert("Edición exitosa");
+                 window.location.href="../../vistas/catalogo/vista_bienvenida";
               </script>';
 
     }else{
@@ -87,8 +115,18 @@ case "editar":
                 alert("Error en la edición ");
                </script>'; mysqli_error($conn);
          }
-    }
-    mysqli_close($conn);
+         mysqli_close($conn);
+}else{
+    // inicio inserta en la tabla bitacora
+    $sql = "INSERT INTO tbl_bitacora (USUARIO, ACCION, OBSERVACION)
+    VALUES ('$usuario1[usuario]', 'INTENTO', 'NO LOGRO EDITAR YA QUE EL ARCHIVO NO ERA IMAGEN')";
+    if (mysqli_query($conn, $sql)) {} else {}
+    // fin inserta en la tabla bitacora
+    echo '<script type="text/javascript">
+            alert("Archivo no permitido");
+            window.location.href="../../vistas/catalogo/vista_bienvenida";
+         </script>';
+}
   
 
 break;
@@ -101,9 +139,19 @@ echo $id_imagen;
 
 $sql3 = "DELETE FROM tbl_bienvenida_portafolio WHERE ID_IMAGEN='$id_imagen'";
 if (mysqli_query($conn, $sql3)) {
+  // inicio inserta en la tabla bitacora
+  $sqlB1 = "INSERT INTO tbl_bitacora (USUARIO, ACCION, OBSERVACION)
+  VALUES ('$usuario1[usuario]', 'ELIMINO', 'ELIMIO UNA IMAGEN DE BIENVENIDA')";
+  if (mysqli_query($conn, $sqlB1)) {} else { }
+// fin inserta en la tabla bitacora
     unlink($ruta);
     header('Location: ../../vistas/catalogo/vista_bienvenida');
 }else{
+  // inicio inserta en la tabla bitacora
+  $sqlB1 = "INSERT INTO tbl_bitacora (USUARIO, ACCION, OBSERVACION)
+  VALUES ('$usuario1[usuario]', 'INTENTO', 'ERROR AL ELIMINAR UNA IMAGEN DE BIENVENIDA')";
+  if (mysqli_query($conn, $sqlB1)) {} else { }
+// fin inserta en la tabla bitacora
         echo '<script>
                   alert("Error al tratar de eliminar categoria");
               </script>'; mysqli_error($conn);

@@ -31,8 +31,10 @@
                if ($conn->query($sql) === TRUE) 
                {
                   // inicio inserta en la tabla bitacora
-                  $sql7 = "INSERT INTO tbl_bitacora (ID_USUARIO, ID_OBJETO, USUARIO, ACCION, OBSERVACION)
-                  VALUES (2, 1, '$usuario[nombre]', 'ACTUALIZO', 'EL SUARIO $usuario[nombre] ACTUALIZO SU CONTRASEÑA')";
+                  $sql7 = "INSERT INTO tbl_bitacora ( USUARIO, ACCION, OBSERVACION)
+                  VALUES ('$usuario[nombre]', 'ACTUALIZO', 'EL SUARIO $usuario[nombre] ACTUALIZO SU CONTRASEÑA')";
+                  // $sql7 = "INSERT INTO tbl_bitacora (ID_USUARIO, ID_OBJETO, USUARIO, ACCION, OBSERVACION)
+                  // VALUES (2, 1, '$usuario[nombre]', 'ACTUALIZO', 'EL SUARIO $usuario[nombre] ACTUALIZO SU CONTRASEÑA')";
                   if (mysqli_query($conn, $sql7)) {} else {}
                   // fin inserta en la tabla bitacora
                 
@@ -47,8 +49,10 @@
                } 
           }else{
                 // inicio inserta en la tabla bitacora
-                $sql7 = "INSERT INTO tbl_bitacora (ID_USUARIO, ID_OBJETO, USUARIO, ACCION, OBSERVACION)
-                VALUES (2, 1, '$usuario[nombre]', 'INTENTO', 'ERROR AL ACTUALIZAR LA CONTRASEÑA YA QUE NO COINCIDEN')";
+                $sql7 = "INSERT INTO tbl_bitacora (USUARIO, ACCION, OBSERVACION)
+                VALUES ('$usuario[nombre]', 'INTENTO', 'ERROR AL ACTUALIZAR LA CONTRASEÑA YA QUE NO COINCIDEN')";
+                // $sql7 = "INSERT INTO tbl_bitacora (ID_USUARIO, ID_OBJETO, USUARIO, ACCION, OBSERVACION)
+                // VALUES (2, 1, '$usuario[nombre]', 'INTENTO', 'ERROR AL ACTUALIZAR LA CONTRASEÑA YA QUE NO COINCIDEN')";
                 if (mysqli_query($conn, $sql7)) {} else {}
                 // fin inserta en la tabla bitacora
                 echo '<script>
@@ -59,8 +63,10 @@
 
         }else{ 
           // inicio inserta en la tabla bitacora
-          $sql7 = "INSERT INTO tbl_bitacora (ID_USUARIO, ID_OBJETO, USUARIO, ACCION, OBSERVACION)
-          VALUES (2, 1, '$usuario[nombre]', 'INTENTO', 'ERROR AL ACTUALIZAR LA CONTRASEÑA YA QUE NO COINCIDE LA ACTUAL')";
+          $sql7 = "INSERT INTO tbl_bitacora ( USUARIO, ACCION, OBSERVACION)
+          VALUES ( '$usuario[nombre]', 'INTENTO', 'ERROR AL ACTUALIZAR LA CONTRASEÑA YA QUE NO COINCIDE LA ACTUAL')";
+          // $sql7 = "INSERT INTO tbl_bitacora (ID_USUARIO, ID_OBJETO, USUARIO, ACCION, OBSERVACION)
+          // VALUES (2, 1, '$usuario[nombre]', 'INTENTO', 'ERROR AL ACTUALIZAR LA CONTRASEÑA YA QUE NO COINCIDE LA ACTUAL')";
           if (mysqli_query($conn,  $sql7)) {} else {}
           // fin inserta en la tabla bitacora
                echo '<script>

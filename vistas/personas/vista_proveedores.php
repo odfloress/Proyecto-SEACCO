@@ -51,17 +51,15 @@ include '../../controladores/crud_proveedor.php';
                 <!-- Cuerpo del modal Modal -->
                 <form action="" method="post">
                 <div class="modal-body">
-                <label for="">Id Proveedor</label>
-                    <input type="text" class="form-control" name="id_proveedor" required value="" placeholder="" id="txtPrecio_Compra"   >
-                    <br>
+                
                     <label for="">Proveedor</label>
-                    <input type="text" class="form-control" name="nombre" required value="" placeholder="" id="txtPrecio_Compra" onkeypress="return soloLetras(event);" onkeyup="mayus(this);" >
+                    <input type="text" class="form-control" name="nombre" required value="" placeholder="" id="txtPrecio_Compra" onkeypress="return soloLetras(event);" minlength="3" maxlength="20" onkeyup="mayus(this);" >
                     <br>
                     <label for="">Nombre Referencia</label>
-                    <input type="text" class="form-control" name="nombre_referencia" required value="" placeholder="" id="txtnombrer" onkeypress="return soloLetras(event);" onkeyup="mayus(this);" >
+                    <input type="text" class="form-control" name="nombre_referencia" required value="" placeholder="" id="txtnombrer" onkeypress="return soloLetras(event);" minlength="3" maxlength="20" onkeyup="mayus(this);" >
                     <br>
                     <label for="">Sector comercial</label>
-                    <input type="text" class="form-control" name="sector_comercial" required value="" placeholder="" id="txtsectorcomercial" onkeypress="return soloLetras(event);" onkeyup="mayus(this);" >
+                    <input type="text" class="form-control" name="sector_comercial" required value="" placeholder="" id="txtsectorcomercial" onkeypress="return soloLetras(event);" minlength="3" maxlength="20" onkeyup="mayus(this);" >
                     <br>
                     <label for="">direccion</label>
                     <input type="text" class="form-control" name="direccion" required value="" placeholder="" id="txtdireccionproveedor"  onkeyup="mayus(this);" >
@@ -70,7 +68,7 @@ include '../../controladores/crud_proveedor.php';
                     <input type="number" class="form-control" name="telefono" required value="" placeholder="" id="txttelefono"   >
                     <br>
                     <label for="">Correo</label>
-                    <input type="text" class="form-control" name="correo" required value="" placeholder="" id="txtcorreo"   >
+                    <input type="email" class="form-control" name="correo" required value="" placeholder="" id="txtcorreo"   >
                     <br>
                 </div>
                 <!-- Fin Cuerpo del modal Modal -->
@@ -157,7 +155,7 @@ include '../../controladores/crud_proveedor.php';
                                 <form action="" method="post">
                                           <div class="modal-body">
                                               <label for="">Id Proveedor</label>
-                                              <input type="text" class="form-control" name="id_proveedor" required value="<?php echo $filas['ID_PROVEEDOR'] ?>" placeholder="" id="txtPrecio_Compra"   >
+                                              <input type="text" class="form-control" name="id_proveedor" readonly required value="<?php echo $filas['ID_PROVEEDOR'] ?>" placeholder="" id="txtPrecio_Compra"   >
                                               <br>
                                               <label for="">Proveedor</label>
                                               <input type="text" class="form-control" name="nombre" required value="<?php echo $filas['NOMBRE'] ?>" placeholder="" id="txtPrecio_Compra" onkeypress="return soloLetras(event);" onkeyup="mayus(this);" >
@@ -175,7 +173,7 @@ include '../../controladores/crud_proveedor.php';
                                              <input type="number" class="form-control" name="telefono" required value="<?php echo $filas['TELEFONO'] ?>" placeholder="" id="txttelefono"   >
                                              <br>
                                              <label for="">Correo</label>
-                                             <input type="text" class="form-control" name="correo" required value="<?php echo $filas['CORREO'] ?>" placeholder="" id="txtcorreo"  >
+                                             <input type="email" class="form-control" name="correo" required value="<?php echo $filas['CORREO'] ?>" placeholder="" id="txtcorreo"  >
                                              <br>   
                                            </div>
                                 <!-- Fin Cuerpo del modal Modal -->
@@ -269,9 +267,51 @@ include '../../controladores/crud_proveedor.php';
 <script>
   $(function () {
     $("#example1").DataTable({
-      "responsive": true, "lengthChange": false, "autoWidth": false,
-      "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
-    }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+      
+      language: {
+                          processing: "Tratamiento en curso...",
+                          search: "Buscar&nbsp;:",
+                          lengthMenu: "Agrupar de _MENU_ items",
+                          info: "Mostrando del item _START_ al _END_ de un total de _TOTAL_ items",
+                          infoEmpty: "No existen datos.",
+                          infoFiltered: "(filtrado de _MAX_ elementos en total)",
+                          infoPostFix: "",
+                          loadingRecords: "Cargando...",
+                          zeroRecords: "No se encontraron datos con tu busqueda",
+                          emptyTable: "No hay datos disponibles en la tabla.",
+                          paginate: {
+                                          first: "Primero",
+                                          previous: "Anterior",
+                                          next: "Siguiente",
+                                          last: "Ultimo"
+                                      },
+                              aria: {
+                                      sortAscending: ": active para ordenar la columna en orden ascendente",
+                                      sortDescending: ": active para ordenar la columna en orden descendente"
+                                    },
+
+                          buttons:{
+                            "copy": "Copiar",
+                            "colvis": "Visibilidad",
+                            "collection": "Colección",
+                            "colvisRestore": "Restaurar visibilidad",
+                            "copyKeys": "Presione ctrl o u2318 + C para copiar los datos de la tabla al portapapeles del sistema. <br \/> <br \/> Para cancelar, haga clic en este mensaje o presione escape.",
+                            "copySuccess": {
+                                "1": "Copiada 1 fila al portapapeles",
+                                "_": "Copiadas %ds fila al portapapeles"
+                                },
+                                },    
+                         },
+                         
+                         "responsive": true, "lengthChange": true, "autoWidth": false,
+                          "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"],
+
+                        
+
+                         
+        
+    })
+    buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
     $('#example2').DataTable({
       "paging": true,
       "lengthChange": false,
