@@ -21,7 +21,7 @@
             if (mysqli_num_rows($result) > 0) {
               
               // una vez completada  la configuracion de preguntas y respuestas redirecciona a cambio de contraseña
-              header('Location: ../iniciar_sesion/restaurar_contraseña');
+              header('Location: ../../vistas/iniciar_sesion/restaurar_contraseña.php');
                
              
                       } else {  

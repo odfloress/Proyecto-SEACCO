@@ -116,8 +116,8 @@ include '../../_registrar.php';
                     <label for="">Genero:</label>
                     <select class="form-select"  name="genero" required >
                       <option value=""></option>
-                      <option value="">M</option>
-                      <option value="">F</option>
+                      <option value="M">M</option>
+                      <option value="F">F</option>
                     </select>
 
                     <label for="">DNI:</label>
@@ -317,9 +317,10 @@ include '../../_registrar.php';
                     <label for="">Genero:</label>
                     <select class="form-select"  name="genero" required >
                       <option value=""><?php echo $filas['GENERO'] ?></option>
-                      <option value="">M</option>
-                      <option value="">F</option>
+                      <option value="M">M</option>
+                      <option value="F">F</option>
                     </select>
+                    
 
                     <label for="">DNI:</label>
                     <input type="text" class="form-control" name="dni" required value="<?php echo $filas['DNI'] ?>" autocomplete="off" minlength="15" maxlength="15"  onkeypress="return solonumero(event)" placeholder="0000-0000-000000" >

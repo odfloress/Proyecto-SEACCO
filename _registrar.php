@@ -1,5 +1,13 @@
 <?php
-require 'controladores/co_registrar.php';
+session_start();
+if(!isset($_SESSION['usuario'])){
+ 
+        //header('Location: ../iniciar_sesion/index_login.php');
+        //session_unset();
+        //session_destroy();
+        //die();
+        include 'controladores/co_registrar.php';   
+      }
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -8,6 +16,7 @@ require 'controladores/co_registrar.php';
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
@@ -56,7 +65,7 @@ body {
 
       <!--Inicio Cuerpo del modal -->
       <div class="modal-body ">
-        <form action="" method="POST">
+        <form action="co_registrar.php" method="POST">
             <div class="mb-3 mt-3">
                 <center><h4>Registrar usuario</h4></center><br>
                 
@@ -90,7 +99,7 @@ body {
                 </div>
                 <div class="col">
                   <label for="pwd" class="form-label">DNI:</label>
-                  <input style="background-color:rgb(240, 244, 245);" type="text" autocomplete="off" class="form-control"  placeholder="Ingrese su DNI sin guiones" name="dni" minlength="13" maxlength="15" required value="<?php if(isset($dni)) echo $dni?>">                  
+                  <input style="background-color:rgb(240, 244, 245);" type="text" autocomplete="off" class="form-control"  placeholder="Ingrese su DNI sin guiones" name="dni" minlength="13" maxlength="15" required value="<?php if(isset($dni)) echo $dni?>">
                 </div>
             </div>
             <div class="row">
@@ -131,17 +140,33 @@ body {
                 <div class="col">
                   <label for="pwd" class="form-label">Foto:</label>
                   <input style="background-color:rgb(240, 244, 245);" type="file" autocomplete="off" class="form-control"  placeholder="Adjunte su foto" name="foto">
-                </div>
+                </div> 
             </div>
+
             <div class="row">
-                <div class="col">
-                <label for="pwd" class="form-label">Genero:</label>
-                <input class="form-control" autocomplete="off" maxlength="1" list="browsers" type="text" id="calcular" name="genero"  id="browser" placeholder="Seleccione" pattern="([F-M])" required value="<?php if(isset($genero)) echo $genero?>">
-                <datalist id="browsers">
-                  <option value="F">
-                  <option value="M">
-                </datalist> 
-                </div>  
+                <div class="col">             
+            <label for="sel1" class="form-label">Género:</label>
+                <select placeholder="Seleccione" class="form-select" id_="sel1" name="genero" required >
+                  <option></option>
+                  <?php
+                      include '../conexion.php';
+                      $getgenero = "SELECT * FROM tbl_genero WHERE ID_GENERO ORDER BY ID_GENERO";
+                      $getgenero1 = mysqli_query($conn, $getgenero);
+                      if (mysqli_num_rows($getgenero1) > 0) {
+                          while($row = mysqli_fetch_assoc($getgenero1))
+                            {
+                              $id_genero = $row['ID_GENERO'];
+                              $genero =$row['GENERO'];
+                           ?>
+                              <option value="<?php  echo $id_genero; ?>"><?php echo $genero?></option>
+                          <?php
+                    }}// finaliza el if y el while
+
+                ?>
+                 </select>
+            </div>
+            <br>
+           
                 <div class="col">
                 <label for="pwd" class="form-label">Area:</label>
                 <input class="form-control" autocomplete="off" maxlength="20" list="browsers1" type="text" id="calcular" name="area"  id="browser" placeholder="Seleccione"  required value="<?php if(isset($area)) echo $area?>">
@@ -149,8 +174,10 @@ body {
                   <option value="ADMINISTRATIVA">
                   <option value="MANO DE OBRA">
                 </datalist> 
-                </div>               
-           </div><br>
+                </div>   
+                </div>             
+           </div>
+           <br>
             <div class="d-grid">
             <button type="submit" name="accion" value="registrar" class="btn btn-dark btn-block">Registrar</button><br>
             <a href="Proyecto-SEACCO/vistas/iniciar_sesion/preguntas_seguridad" class="btn btn-danger btn-block">Cancelar</a>
@@ -243,5 +270,27 @@ function quitarespacios(e) {
 };
 </script>
 
- 
+<script type="text/javascript"> function solonumero(e) {
+        tecla = (document.all) ? e.keyCode : e.which;
+        if (tecla==8) return true;
+        else if (tecla==0||tecla==9)  return true;
+       // patron =/[0-9\s]/;// -> solo letras
+        patron =/[0-9\s]/;// -> solo numeros
+        te = String.fromCharCode(tecla);
+        return patron.test(te);
+    }
 	</script>
+
+              <!-- Script para ver contraseña de ver contraseña  -->
+  <script>
+    const togglePassword = document.querySelector('#togglePassword');
+    const password = document.querySelector('#id_password');
+
+      togglePassword.addEventListener('click', function (e) {
+    // toggle the type attribute
+    const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
+    password.setAttribute('type', type);
+    // toggle the eye slash icon
+    this.classList.toggle('fa-eye-slash');
+      });
+  </script>

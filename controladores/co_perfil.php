@@ -28,10 +28,17 @@ switch ($accion){
         // encripta la contraseña
         $contrasenanueva= hash('sha512', $contrasenanueva);
         $contrasenaconfirmar= hash('sha512', $contrasenaconfirmar);
-  
+        
         $conn = new mysqli($servername, $username, $password, $dbname);
         $sqlresultado =  "UPDATE tbl_usuarios SET CONTRASENA='$contrasenanueva' WHERE USUARIO='$usuario1[usuario]'";
         if ($conn->query($sqlresultado) === TRUE) {
+
+          // inicio inserta en la tabla bitacora
+          $sqlB1 = "INSERT INTO tbl_bitacora (ID_USUARIO, ID_OBJETO, USUARIO, ACCION, OBSERVACION)
+            VALUES (2, 1, '$usuario1[usuario]', 'ACTUALIZO', 'CAMBIO LA CONTRASEÑA')";
+            if (mysqli_query($conn, $sqlB1)) {} else { }
+          // fin inserta en la tabla bitacora
+
           echo '<script>
             alert("Contraseña actualizada");
             window.Location = "/_login.php";
@@ -68,6 +75,13 @@ switch ($accion){
         $sqlguardar = "UPDATE tbl_usuarios SET NOMBRE='$nombre',APELLIDO='$apellido',CORREO='$correo' WHERE USUARIO='$usuario1[usuario]'";
 
       if (mysqli_query($conn, $sqlguardar)) {
+
+        // inicio inserta en la tabla bitacora
+        $sqlB2 = "INSERT INTO tbl_bitacora (ID_USUARIO, ID_OBJETO, USUARIO, ACCION, OBSERVACION)
+        VALUES (2, 1, '$usuario1[usuario]', 'ACTUALIZO', 'CAMBIO DATOS PERSONALES')";
+        if (mysqli_query($conn, $sqlB2)) {} else { }
+      // fin inserta en la tabla bitacora
+
         echo '<script>
           alert("Datos actualizados");
           window.Location = "/_login.php";
@@ -83,6 +97,38 @@ switch ($accion){
     
     
   break;
+
+  case "editarfoto":
+    if(isset($_FILES['imagenes'])){
+      $nombreimagen= $_FILES['imagenes']['name'];
+      $ruta = $_FILES['imagenes']['tmp_name'];
+      $destino = "../../imagenes/".$nombreimagen;
+      
+      if(copy($ruta, $destino)){
+        $sql5 = "UPDATE tbl_usuarios SET FOTO='$destino' WHERE USUARIO='$usuario1[usuario]'";
+      $resp = mysqli_query($conn, $sql5);
+      if($resp){
+        echo '<script type="text/javascript">
+                 alert("Agregado correctamente");  
+             </script>';
+             // inicio inserta en la tabla bitacora
+             $sql = "INSERT INTO tbl_bitacora (ID_USUARIO, ID_OBJETO, USUARIO, ACCION, OBSERVACION)
+             VALUES (2, 1, '$usuario1[usuario]', 'ACTUALIZO', 'CAMBIO SU FOTO DE PERFIL $nombreimagen')";
+             
+             if (mysqli_query($conn, $sql)) {
+               
+             } else {
+             
+             }
+       // fin inserta en la tabla bitacora
+     }else{
+            echo '<script type="text/javascript">
+            alert("Error al actualizar");
+            
+        </script>';
+          }
+    }
+}
 }
 
 ?>

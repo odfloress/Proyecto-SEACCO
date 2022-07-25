@@ -1,13 +1,13 @@
 <?php
 session_start();
 if(!isset($_SESSION['usuario'])){
- 
-        header('Location: ../iniciar_sesion/index_login.php');
+         header('Location: ../iniciar_sesion/index_login.php');
         session_unset();
         session_destroy();
         die();
-        
+      
 }
+include '../../controladores/crud_clientes.php';
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -48,22 +48,43 @@ if(!isset($_SESSION['usuario'])){
                 <!-- Fin Encabezado del modal -->
 
                 <!-- Cuerpo del modal Modal -->
+                <form action="" method="post">
                 <div class="modal-body">
-                <label for="">Id Cliente</label>
-                    <input type="text" class="form-control" name="txtPrecio_Compra" required value="" placeholder="" id="txtPrecio_Compra"   >
+                    
+                    <label for="">Codigo</label>
+                    <input type="text" class="form-control" name="codigo" required value="" placeholder=""  onkeypress="return soloLetras(event);" onkeyup="mayus(this);" >
                     <br>
-                    <label for="">Cliente</label>
-                    <input type="text" class="form-control" name="txtPrecio_Compra" required value="" placeholder="" id="txtPrecio_Compra"   >
+                    <label for="">Nombre</label>
+                    <input type="text" class="form-control" name="nombre" required value="" placeholder="" id="txtnombre" onkeypress="return soloLetras(event);" onkeyup="mayus(this);" >
                     <br>
-                
+                    <label for="">Apellido</label>
+                    <input type="text" class="form-control" name="apellido" required value="" placeholder="" id="txtapellido" onkeypress="return soloLetras(event);" onkeyup="mayus(this);" >
+                    <br>
+                    <label for="">Correo</label>
+                    <input type="text" class="form-control" name="correo" required value="" placeholder="" id="txtcorreo"   >
+                    <br>
+                    <label for="">Telefono</label>
+                    <input type="number" class="form-control" name="telefono" required value="" placeholder="" id="txttelefono"   >
+                    <br>
+                    <label for="">Direccion</label>
+                    <input type="text" class="form-control" name="direccion" required value="" placeholder="" id="txtcorreo"   >
+                    <br>
+                    <label for="">Referencia</label>
+                    <input type="text" class="form-control" name="nombre_referencia" required value="" placeholder="" id="txtReferencia" onkeypress="return soloLetras(event);" onkeyup="mayus(this);" >
+                    <br>
+                    <label for="">Genero</label>
+                    <input type="text" class="form-control" name="Genero" required value="" placeholder="" id="txtGenero" onkeypress="return soloLetras(event);" onkeyup="mayus(this);" >
+                    <br>
+
                 </div>
                 <!-- Fin Cuerpo del modal Modal -->
                 <!-- pie del modal -->
                 <div class="modal-footer">
-      	            <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Agregar</button>
+      	            <button type="submit" name="accion" value="agregar" class="btn btn-primary" onclick="return confirm('¿Desea agregar el proveedor?')">Agregar</button>
                     <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
                 </div>
                 <!-- Fin pie del modal -->
+                </form>
             </div>
         </div>
     </div>
@@ -102,80 +123,110 @@ if(!isset($_SESSION['usuario'])){
                   <thead>
                   <tr>
                   <th>Acciones</th>
-                  <th>Id</th>
+                  <th>Id Cliente</th>
                   <th>Codigo</th>
                   <th>Nombre</th>
                   <th>Apellido</th>
                   <th>Correo</th>
                   <th>Telefono</th>
-                  <th>Dirección</th>
+                  <th>Direccion</th>
                   <th>Referencia</th>
                   <th>Genero</th>
                   <th>Foto</th>
-                 
-                  
-                  
+
+            
                   </tr>
                   </thead>
                   <tbody>
+                  <?php while ($filas= mysqli_fetch_assoc($result)){
+
+                  ?>
                   <tr>
                   <td>
                         <!-- inicio boton editar -->
-                      <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#myModal2">
+                      <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#myModal2<?php echo $filas['ID_CLIENTE'] ?>">
                       <i class="fas fa-pencil-alt"></i>
                       </button>
 
                           <!-- El Modal -->
-                          <div class="modal" id="myModal2">
+                          <div class="modal" id="myModal2<?php echo $filas['ID_CLIENTE'] ?>">
                             <div class="modal-dialog">
                               <div class="modal-content">
 
                                 <!-- Encabezado del modal -->
                                 <div class="modal-header">
-                                  <h4 class="modal-title">Editar Cliente</h4>
+                                  <h4 class="modal-title">Editar cLIENTE</h4>
                                   <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                                 </div>
                                 <!-- Fin Encabezado del modal -->
 
 
                                 <!-- Cuerpo del modal Modal -->
+                                <form action="" method="post">
                                           <div class="modal-body">
                                               <label for="">Id Cliente</label>
-                                              <input type="text" class="form-control" name="txtPrecio_Compra" required value="" placeholder="" id="txtPrecio_Compra"   >
+                                              <input type="text" class="form-control" readonly name="id_cliente" required value="<?php echo $filas['ID_CLIENTE'] ?>" placeholder="" id="txtxid_cliente"   >
                                               <br>
-                                              <label for="">Cliente</label>
-                                              <input type="text" class="form-control" name="txtPrecio_Compra" required value="" placeholder="" id="txtPrecio_Compra"   >
+                                              <label for="">Codigo</label>
+                                              <input type="text" class="form-control" name="nombre" required value="" placeholder="" id="txtcodigo" onkeypress="return soloLetras(event);" onkeyup="mayus(this);" >
                                               <br>
-                                          
-                                          </div>
+                                              <label for="">Nombre</label>
+                                              <input type="text" class="form-control" name="nombre" required value="" placeholder="" id="txtnombre" onkeypress="return soloLetras(event);" onkeyup="mayus(this);" >
+                                              <br>
+                                              <label for="">Apellido</label>
+                                              <input type="text" class="form-control" name="apellido" required value="" placeholder="" id="txtapellido" onkeypress="return soloLetras(event);" onkeyup="mayus(this);" >
+                                              <br>
+                                              <label for="">Correo</label>
+                                              <input type="text" class="form-control" name="correo" required value="" placeholder="" id="txtcorreo"   >
+                                              <br>
+                                              <label for="">Telefono</label>
+                                              <input type="number" class="form-control" name="telefono" required value="" placeholder="" id="txttelefono"   >
+                                              <br>
+                                              <label for="">Direccion</label>
+                                              <input type="text" class="form-control" name="correo" required value="" placeholder="" id="txtcorreo"   >
+                                              <br>
+                                              <label for="">Referencia</label>
+                                              <input type="text" class="form-control" name="nombre_referencia" required value="" placeholder="" id="txtReferencia" onkeypress="return soloLetras(event);" onkeyup="mayus(this);" >
+                                              <br>
+                                              <label for="">Genero</label>
+                                              <input type="text" class="form-control" name="Genero" required value="" placeholder="" id="txtGenero" onkeypress="return soloLetras(event);" onkeyup="mayus(this);" >
+                                              <br>
+                                           </div>
                                 <!-- Fin Cuerpo del modal Modal -->
 
                                 <!-- pie del modal -->
                                 <div class="modal-footer">
-                                <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Guardar</button>
+                                <button type="submit" name="accion" value="editar" class="btn btn-primary" onclick="return confirm('¿Desea editar el proveedor?')">Guardar</button>
                                   <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
                                 </div>
+                              </form>
                                   <!-- Fin pie del modal -->
+                                  <form action="" method="post">
                               </div>
                             </div>
                           </div>
                           <!-- fin boton editar -->
-                      <button  value="btnEliminar" name="accion" 
+                          <input type="hidden" name="id_cliente"  value="<?php echo $filas['ID_CLIENTE'] ?>">
+                      <button  value="eliminar" name="accion" 
                         onclick="return confirm('¿Quieres eliminar este dato?')"
                         type="submit" class="btn btn-danger " data-id="19">
                         <i class="fas fa-trash-alt"></i>
-                    </button>
+                    </button></form>
 </td>
-                     <td>1</td>
-                     <td>Ingresar</td>
-                     <td>Ingresar</td>
-                     <td>Ingresar</td>
-                     <td>Ingresar</td>
-                     <td>Ingresar</td>
-                     <td>Ingresar</td>
-                     <td>Ingresar</td>
-                     <td>Ingresar</td>
-                     <td>Ingresar</td>
+                         
+                      </td>
+                                         <td ><?php echo $filas['ID_CLIENTE'] ?></td>
+                                         <td><?php echo $filas['CODIGO'] ?></td>
+                                         <td><?php echo $filas['NOMBRE'] ?></td>
+                                         <td><?php echo $filas['APELLIDO'] ?></td>
+                                         <td><?php echo $filas['CORREO'] ?></td>
+                                         <td><?php echo $filas['TELEFONO'] ?></td>
+                                         <td><?php echo $filas['DIRECCION'] ?></td>
+                                         <td><?php echo $filas['REFERENCIA'] ?></td>
+                                         <td><?php echo $filas['GENERO'] ?></td>
+                                         <td><?php echo $filas['FOTO'] ?></td>
+                                        </tr>
+                                    <?php } ?>
                     
       </tr>
                   
@@ -250,4 +301,44 @@ if(!isset($_SESSION['usuario'])){
   });
 </script>
 </body>
+<script type="text/javascript" src="../../js/evitar_reenvio.js"></script>
 </html>
+
+<script type="text/javascript">
+  
+        function mayus(e) {
+          e.value = e.value.toUpperCase();
+         }
+    </script>
+
+<script type="text/javascript"> function solonumero(e) {
+        tecla = (document.all) ? e.keyCode : e.which;
+        if (tecla==8) return true;
+        else if (tecla==0||tecla==9)  return true;
+       // patron =/[0-9\s]/;// -> solo letras
+        patron =/[0-9-\s]/;// -> solo numeros
+        te = String.fromCharCode(tecla);
+        return patron.test(te);
+    }
+	</script>
+
+<script>
+      function soloLetras(e){
+       key = e.keyCode || e.which;
+       tecla = String.fromCharCode(key).toLowerCase();
+       letras = " áéíóúabcdefghijklmnñopqrstuvwxyz";
+       especiales = ["8-37-39-46"];
+
+       tecla_especial = false
+       for(var i in especiales){
+        if(key == especiales[i]){
+          tecla_especial = true;
+          break;
+        }
+      }
+
+      if(letras.indexOf(tecla)==-1 && !tecla_especial){
+        return false;
+      }
+    }
+  </script>

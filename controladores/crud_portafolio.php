@@ -16,34 +16,24 @@ $ruta=(isset($_POST['ruta']))?$_POST['ruta']:"";
 $accion=(isset($_POST['accion']))?$_POST['accion']:"";
 
 
-
 switch($accion){
 //para insertar en la tabla mysl
 case "agregar": 
+$permitidos = array("jpg", "png");
+$extencion = pathinfo($_FILES['imagenes']["name"], PATHINFO_EXTENSION);
 
-// agrega la imagen a la carpeta y la ruta en la base de datos
-
-if(isset($_FILES['imagenes'])){
-    $nombreimagen= $_FILES['imagenes']['name'];
-    $ruta = $_FILES['imagenes']['tmp_name'];
-    $destino = "../../imagenes/".$nombreimagen;
-
-    if(copy($ruta, $destino)){
-        // valida si existe una la imagen con el mismo nombre
-        $validar_imagen = "SELECT * FROM tbl_bienvenida_portafolio WHERE RUTA='$destino'";
-        $result1 = mysqli_query($conn, $validar_imagen); 
-         if (mysqli_num_rows($result1) > 0) { 
-              
-         
-           echo '<script>
-                    alert("imagen ya existe");
-                 </script>';
-                 mysqli_close($conn);
-         }else{
+if(in_array($extencion, $permitidos)){
+    $Fecha= new DateTime();
+    $destino ="../../imagenes/";
+    $nombreimagen=($_FILES['imagenes']["name"]!="")?$Fecha->getTimestamp()."_".$_FILES["imagenes"]["name"]:"imagen.jpg";
+    $tmpFoto= $_FILES["imagenes"]["tmp_name"];
+    if($tmpFoto!="") 
+    {
+     move_uploaded_file($tmpFoto,$destino.$nombreimagen);
+    } 
         $sql = "INSERT INTO tbl_bienvenida_portafolio (TIPO, IMAGEN, RUTA, TITULO, DESCRIPCION)
-                              VALUES ('$tipo', '$nombreimagen', '$destino', '$titulo', '$descripcion')";
+                VALUES ('$tipo', '$nombreimagen', '$destino$nombreimagen', '$titulo', '$descripcion')";
         $res = mysqli_query($conn, $sql);
-
          if($res){
             echo '<script type="text/javascript">
                      alert("Agregado correctamente");
@@ -52,8 +42,11 @@ if(isset($_FILES['imagenes'])){
          }else{
                 die("Error". msqli_error($conn));
               }
-            }
-    }
+}else{
+    echo '<script type="text/javascript">
+                     alert("Archivo no permitido");
+                     window.location.href="../../vistas/catalogo/vista_portafolio";
+                 </script>';
 }
 
 break;
@@ -63,7 +56,7 @@ case "editar":
     if (mysqli_query($conn, $sql2)) {
         echo '<script>
                  alert("Edición exitosa");
-                 window.location.href="../../vistas/catalogo/vista_portafolio";
+                //  window.location.href="../../vistas/catalogo/vista_portafolio";
               </script>';
 
     }else{

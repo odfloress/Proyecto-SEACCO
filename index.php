@@ -21,18 +21,26 @@ require 'controladores/co_registrar.php';
               line-height: 1.8;
              }
 /* Encabezado de imagen de altura completa */
+<?php 
+  include 'conexion/conexion.php';
+  $sqlB1 = "SELECT * FROM tbl_bienvenida_portafolio WHERE TIPO='BIENVENIDA' AND ID_IMAGEN=1";
+  $resultB1 = mysqli_query($conn, $sqlB1);
+  while($rowB1 = mysqli_fetch_assoc($resultB1)) {
+  ?>
   .bgimg-1 {
             background-position: center;
             background-size: cover;
-            background-image: url('imagenes/banner1.jpg');
+            background-image: url("imagenes/<?php echo $rowB1['IMAGEN'] ?>");
             min-height: 100%;
            }
+           <?php }?>
   .w3-bar .w3-button {
             padding: 16px;
                      }
 </style>
 </head>
 <body>
+<br><br>
 
 <!-- Navbar (sit on top) -->
 <div class="w3-top">
@@ -79,7 +87,7 @@ require 'controladores/co_registrar.php';
 
 <!-- About Section -->
 <div class="w3-container" style="padding:128px 16px" id="about">
-  <h3 class="w3-center">SOBRE CONSTRUCTORA SEACCO</h3>  
+  <h3 class="w3-center" >SOBRE CONSTRUCTORA SEACCO </h3>  
 
 <center>   <p>Somos una firma constructora con personal calificado y listo para ejecutar
 cualquier obra civil a nivel nacional, brindamos un servicio de calidad con un
@@ -134,7 +142,12 @@ clientes y brindando oportunidades de trabajo para el hondureño.</p>
     </div>
   </div>
 </div>
-
+<?php 
+  include 'conexion/conexion.php';
+  $sql7 = "SELECT * FROM tbl_bienvenida_portafolio WHERE TIPO='BIENVENIDA' AND ID_IMAGEN=2";
+  $result7 = mysqli_query($conn, $sql7);
+  while($row = mysqli_fetch_assoc($result7)) {
+  ?>
 <!-- Promo Section - "We know design" -->
 <div class="w3-container w3-light-grey" style="padding:128px 16px">
   <div class="w3-row-padding">
@@ -148,11 +161,11 @@ actividades que se desarrollan en los proyectos ejecutados.</p>
       <p><a href="#work" class="w3-button w3-black"><i class="fa fa-th"> </i>Ver nustros trabajos</a></p>
     </div>
     <div class="w3-col m6">
-      <img class="w3-image w3-round-large" src='imagenes/imagen4.jpeg' alt="Buildings" width="700" height="394">
+      <img class="w3-image w3-round-large" src="imagenes/<?php echo $row['IMAGEN'] ?>" alt="Buildings" width="700" height="394">
     </div>
   </div>
 </div>
-
+<?php }?>
 <!-- Team Section -->
 
 <div class="w3-container" style="padding:128px 16px" id="team">
@@ -238,32 +251,95 @@ actividades que se desarrollan en los proyectos ejecutados.</p>
   <h3 class="w3-center">Nuestros trabajos</h3>
  
   <div class="w3-row-padding" style="margin-top:64px">
+
     <div class="w3-col l3 m6">
-      <img src='imagenes/imagen8.jpeg' style="width:300px; height:150px" onclick="onClick(this)" class="w3-hover-opacity" alt="A microphone">
+    <?php 
+      include 'conexion/conexion.php';
+      $sqlt1 = "SELECT * FROM tbl_bienvenida_portafolio WHERE TIPO='BIENVENIDA' AND ID_IMAGEN=4";
+      $resultt1 = mysqli_query($conn, $sqlt1);
+      while($row = mysqli_fetch_assoc($resultt1)) {
+    ?>
+      <img src='imagenes/<?php echo $row['IMAGEN'] ?>' style="width:300px; height:150px" onclick="onClick(this)" class="w3-hover-opacity" alt="Diseño">
+    <?php }?>
     </div>
-     <div class="w3-col l3 m6">
-      <img src='imagenes/imagen7.jpeg'  style="width:300px; height:150px"  onclick="onClick(this)" class="w3-hover-opacity" alt="A phone">
-    </div>
+
     <div class="w3-col l3 m6">
-      <img src='imagenes/imagen5.jpeg'  style="width:300px; height:150px"  onclick="onClick(this)" class="w3-hover-opacity" alt="A drone">
+    <?php 
+      include 'conexion/conexion.php';
+      $sqlt1 = "SELECT * FROM tbl_bienvenida_portafolio WHERE TIPO='BIENVENIDA' AND ID_IMAGEN=5";
+      $resultt1 = mysqli_query($conn, $sqlt1);
+      while($row = mysqli_fetch_assoc($resultt1)) {
+    ?>
+      <img src='imagenes/<?php echo $row['IMAGEN'] ?>' style="width:300px; height:150px" onclick="onClick(this)" class="w3-hover-opacity" alt="Diseño">
+    <?php }?>
     </div>
+
     <div class="w3-col l3 m6">
-      <img src='imagenes/imagen4.jpeg' style="width:300px; height:150px"  onclick="onClick(this)" class="w3-hover-opacity" alt="Soundbox">
+    <?php 
+      include 'conexion/conexion.php';
+      $sqlt1 = "SELECT * FROM tbl_bienvenida_portafolio WHERE TIPO='BIENVENIDA' AND ID_IMAGEN=6";
+      $resultt1 = mysqli_query($conn, $sqlt1);
+      while($row = mysqli_fetch_assoc($resultt1)) {
+    ?>
+      <img src='imagenes/<?php echo $row['IMAGEN'] ?>' style="width:300px; height:150px" onclick="onClick(this)" class="w3-hover-opacity" alt="Diseño">
+    <?php }?>
+    </div>
+
+    <div class="w3-col l3 m6">
+    <?php 
+      include 'conexion/conexion.php';
+      $sqlt1 = "SELECT * FROM tbl_bienvenida_portafolio WHERE TIPO='BIENVENIDA' AND ID_IMAGEN=7";
+      $resultt1 = mysqli_query($conn, $sqlt1);
+      while($row = mysqli_fetch_assoc($resultt1)) {
+    ?>
+      <img src='imagenes/<?php echo $row['IMAGEN'] ?>' style="width:300px; height:150px" onclick="onClick(this)" class="w3-hover-opacity" alt="Diseño">
+    <?php }?>
     </div>
   </div>
 
   <div class="w3-row-padding w3-section">
-    <div class="w3-col l3 m6">
-      <img src='imagenes/imagen8.jpeg'  style="width:300px; height:150px"  onclick="onClick(this)" class="w3-hover-opacity" alt="A tablet">
+  <div class="w3-col l3 m6">
+    <?php 
+      include 'conexion/conexion.php';
+      $sqlt1 = "SELECT * FROM tbl_bienvenida_portafolio WHERE TIPO='BIENVENIDA' AND ID_IMAGEN=8";
+      $resultt1 = mysqli_query($conn, $sqlt1);
+      while($row = mysqli_fetch_assoc($resultt1)) {
+    ?>
+      <img src='imagenes/<?php echo $row['IMAGEN'] ?>' style="width:300px; height:150px" onclick="onClick(this)" class="w3-hover-opacity" alt="Diseño">
+    <?php }?>
     </div>
+
     <div class="w3-col l3 m6">
-      <img src='imagenes/imagen7.jpeg'  style="width:300px; height:150px"  onclick="onClick(this)" class="w3-hover-opacity" alt="A camera">
+    <?php 
+      include 'conexion/conexion.php';
+      $sqlt1 = "SELECT * FROM tbl_bienvenida_portafolio WHERE TIPO='BIENVENIDA' AND ID_IMAGEN=9";
+      $resultt1 = mysqli_query($conn, $sqlt1);
+      while($row = mysqli_fetch_assoc($resultt1)) {
+    ?>
+      <img src='imagenes/<?php echo $row['IMAGEN'] ?>' style="width:300px; height:150px" onclick="onClick(this)" class="w3-hover-opacity" alt="Diseño">
+    <?php }?>
     </div>
+
     <div class="w3-col l3 m6">
-      <img src='imagenes/imagen5.jpeg'  style="width:300px; height:150px"  onclick="onClick(this)" class="w3-hover-opacity" alt="A typewriter">
+    <?php 
+      include 'conexion/conexion.php';
+      $sqlt1 = "SELECT * FROM tbl_bienvenida_portafolio WHERE TIPO='BIENVENIDA' AND ID_IMAGEN=10";
+      $resultt1 = mysqli_query($conn, $sqlt1);
+      while($row = mysqli_fetch_assoc($resultt1)) {
+    ?>
+      <img src='imagenes/<?php echo $row['IMAGEN'] ?>' style="width:300px; height:150px" onclick="onClick(this)" class="w3-hover-opacity" alt="Diseño">
+    <?php }?>
     </div>
+
     <div class="w3-col l3 m6">
-      <img src='imagenes/imagen4.jpeg'  style="width:300px; height:150px"  onclick="onClick(this)" class="w3-hover-opacity" alt="A tableturner">
+    <?php 
+      include 'conexion/conexion.php';
+      $sqlt1 = "SELECT * FROM tbl_bienvenida_portafolio WHERE TIPO='BIENVENIDA' AND ID_IMAGEN=11";
+      $resultt1 = mysqli_query($conn, $sqlt1);
+      while($row = mysqli_fetch_assoc($resultt1)) {
+    ?>
+      <img src='imagenes/<?php echo $row['IMAGEN'] ?>' style="width:300px; height:150px" onclick="onClick(this)" class="w3-hover-opacity" alt="Diseño">
+    <?php }?>
     </div>
   </div>
 </div>
@@ -279,7 +355,12 @@ actividades que se desarrollan en los proyectos ejecutados.</p>
 </center>
 
 
-
+<?php 
+  include 'conexion/conexion.php';
+  $sqlB3 = "SELECT * FROM tbl_bienvenida_portafolio WHERE TIPO='BIENVENIDA' AND ID_IMAGEN=3";
+  $resultB3 = mysqli_query($conn, $sqlB3);
+  while($rowB3 = mysqli_fetch_assoc($resultB3)) {
+  ?>
 <!-- Contact Section -->
 <div class="w3-container w3-light-grey" style="padding:128px 16px" id="contact">
   <h3 class="w3-center">CONTACTANOS</h3>
@@ -295,11 +376,11 @@ actividades que se desarrollan en los proyectos ejecutados.</p>
 <!-- Fin mapa -->
 
     <!-- Image of location/map -->
-    <img src="https://www.w3schools.com/w3images/map.jpg" class="w3-image w3-greyscale" style="width:100%;margin-top:48px">
+    <img src="imagenes/<?php echo $rowB3['IMAGEN'] ?>" class="w3-image w3-greyscale" style="width:100%;margin-top:48px">
   </div>
 </div>
 
-
+<?php }?>
 
 <!-- Footer -->
 <footer class="w3-center w3-black w3-padding-64">
