@@ -48,8 +48,8 @@
                  if (mysqli_query($conn, $sql1)) {
 
                       // inicio inserta en la tabla bitacora
-                      $sql7 = "INSERT INTO tbl_bitacora (ID_USUARIO, ID_OBJETO, USUARIO, ACCION, OBSERVACION)
-                      VALUES (2, 1, '$usuario1[usuario]', 'INSERTO', 'CREO PERMISOS AL ROL ($nombre_rol) PARA LA PANTALLA ($nombre_pantalla)')";
+                      $sql7 = "INSERT INTO tbl_bitacora (USUARIO, ACCION, OBSERVACION)
+                      VALUES ('$usuario1[usuario]', 'INSERTO', 'CREO PERMISOS AL ROL ($nombre_rol) PARA LA PANTALLA ($nombre_pantalla)')";
                       if (mysqli_query($conn, $sql7)) {} else { }
                       // fin inserta en la tabla bitacora
 
@@ -78,8 +78,8 @@
                            
                                 
                             // inicio inserta en la tabla bitacora
-                            $sql9 = "INSERT INTO tbl_bitacora (ID_USUARIO, ID_OBJETO, USUARIO, ACCION, OBSERVACION)
-                            VALUES (2, 1, '$usuario1[usuario]', 'EDITO', 'EDITO LOS PERMISOS DE ROL ($nombre_rol) DE LA PANTALLA ($nombre_pantalla) ')";
+                            $sql9 = "INSERT INTO tbl_bitacora (USUARIO, ACCION, OBSERVACION)
+                            VALUES ('$usuario1[usuario]', 'EDITO', 'EDITO LOS PERMISOS DE ROL ($nombre_rol) DE LA PANTALLA ($nombre_pantalla) ')";
                             
                             if (mysqli_query($conn, $sql9)) {} else { }
                             // fin inserta en la tabla bitacora
@@ -102,8 +102,8 @@
                         $sql3 = "DELETE FROM tbl_ms_roles_ojetos WHERE ID_ROL='$rol' and ID_OBJETO='$pantalla'";
                         if (mysqli_query($conn, $sql3)) {
                             // inicio inserta en la tabla bitacora
-                            $sql7 = "INSERT INTO tbl_bitacora (ID_USUARIO, ID_OBJETO, USUARIO, ACCION, OBSERVACION)
-                            VALUES (2, 1, '$usuario1[usuario]', 'ELIMINO', 'ELIMINO LOS PERMISOS DE ROL ($nombre_rol) DE LA PANTALLA ($nombre_pantalla)')";
+                            $sql7 = "INSERT INTO tbl_bitacora (USUARIO, ACCION, OBSERVACION)
+                            VALUES ('$usuario1[usuario]', 'ELIMINO', 'ELIMINO LOS PERMISOS DE ROL ($nombre_rol) DE LA PANTALLA ($nombre_pantalla)')";
                              if (mysqli_query($conn, $sql7)) {} else { }
                         // fin inserta en la tabla bitacora
                             header('Location: ../../vistas/ajustes/vista_permisos.php');
