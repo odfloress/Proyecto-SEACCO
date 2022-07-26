@@ -16,15 +16,22 @@
         
 
             // Valida la pregunta y respuesta de la tabla tbl_respuestas_usuario
-            $recuperacion = "SELECT * FROM tbl_respuestas_usuario WHERE ID_PREGUNTA='$id_pregunta' and USUARIO='$usuario[usuario]' and RESPUESTA='$respuesta'";
+            $recuperacion = "SELECT * FROM tbl_respuestas_usuario WHERE ID_PREGUNTA='$id_pregunta' and usuario='$usuario[nombre]' and RESPUESTA='$respuesta'";
             $result = mysqli_query($conn, $recuperacion);
             if (mysqli_num_rows($result) > 0) {
-              
+                // inicio inserta en la tabla bitacora
+                $sql = "INSERT INTO tbl_bitacora (USUARIO, ACCION, OBSERVACION)
+                VALUES ('$usuario[nombre]', 'INGRESO', 'EL USUARIO $usuario[nombre] RESPONDIO CORRECTAMENTE LA PREGUNTA')";
+                if (mysqli_query($conn, $sql)) {} else {}
+                // fin inserta en la tabla bitacora
               // una vez completada  la configuracion de preguntas y respuestas redirecciona a cambio de contraseña
               header('Location: ../tablero/vista_tablero');
                
              
                       } else {  
+                        $sql = "INSERT INTO tbl_bitacora (USUARIO, ACCION, OBSERVACION)
+                VALUES ('$usuario[nombre]', 'INTENTO', 'EL USUARIO $usuario[nombre] SE EQUIVOCO EN LA RESPUESTA')";
+                if (mysqli_query($conn, $sql)) {} else {} 
                         echo '<script>
                                 alert("La informacion no coincide");
                              </script>';
