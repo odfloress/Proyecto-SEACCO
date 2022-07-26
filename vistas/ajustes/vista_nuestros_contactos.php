@@ -53,28 +53,31 @@ include '../../controladores/crud_nuestros_contactos.php';
 
       <!-- Modal body -->
       <div class="modal-body">
+      <?php while ($filas= mysqli_fetch_assoc($result)){
+
+?>
           <form action="" method="post">
           <label for="">Id Contactos</label>
-          <input type="number" name="id_contacto" class="form-control " placeholder="Ingrese su id">
+          <input type="number" name="id_contacto" class="form-control " readonly value="<?php echo $filas['ID_CONTACTO'] ?>" placeholder="Ingrese su id">
            <br>
 
           <label for="">Numero telefono</label>
-          <input type="tel" name="telefono" class="form-control " placeholder="Ingrese su numero"  pattern="[0-9]{9}" onkeypress="return solonumero(event)">
+          <input type="tel" name="telefono" class="form-control " placeholder="Ingrese su numero" value="<?php echo $filas['TELEFONO'] ?>" pattern="[0-9]{9}" onkeypress="return solonumero(event)">
            <br>
 
            <label for="">Correo</label>
-           <input type="email" name="correo" class="form-control" placeholder="Opcional Ingrese su correo" >
+           <input type="email" name="correo" class="form-control" value="<?php echo $filas['CORREO'] ?>" placeholder="Opcional Ingrese su correo" >
            <br>
 
            <label for="">Dirección</label>
-           <input type="text" name="direccion" class="form-control " placeholder="Ingrese su direccion" onkeyup="mayus(this);" maxlength="30" >
+           <input type="text" name="direccion" class="form-control " value="<?php echo $filas['DIRECCION'] ?>" placeholder="Ingrese su direccion" onkeyup="mayus(this);" maxlength="30" >
            <br>
 
             <label for="">Facebook</label>
-            <input type="text" name="facebook" class="form-control " placeholder="Ingrese su facebook" onkeyup="mayus(this);" maxlength="30">
+            <input type="text" name="facebook" class="form-control " value="<?php echo $filas['FACEBOOK'] ?>"placeholder="Ingrese su facebook" onkeyup="mayus(this);" maxlength="30">
             <br>
             <label for="">Instagram</label>
-            <input type="text" name="instagram" class="form-control " placeholder="Ingrese su instagram" onkeyup="mayus(this);" maxlength="30" >
+            <input type="text" name="instagram" class="form-control " value="<?php echo $filas['INSTAGRAM'] ?>" placeholder="Ingrese su instagram" onkeyup="mayus(this);" maxlength="30" >
             <br>       
   
       </div>
@@ -86,6 +89,7 @@ include '../../controladores/crud_nuestros_contactos.php';
                 </div>
       
                 </form> 
+                <?php } ?>
     </div>
   
     

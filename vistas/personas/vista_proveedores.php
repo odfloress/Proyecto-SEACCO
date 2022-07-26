@@ -9,6 +9,42 @@ if(!isset($_SESSION['usuario'])){
         
 }
 include '../../controladores/crud_proveedor.php';
+// Selecciona el id del rol del usuario logueado
+include '../../conexion/conexion.php';
+$usuario = $_SESSION;
+$roles34 = "SELECT * FROM tbl_usuarios WHERE USUARIO='$usuario[usuario]'";
+$roles35 = mysqli_query($conn, $roles34);
+if (mysqli_num_rows($roles35) > 0)
+{
+ while($row = mysqli_fetch_assoc($roles35))
+  { 
+      $id_rol7 = $row['ID_ROL'];
+  } 
+}
+
+               //valida si tiene permisos de consultar la pantalla 
+               $tablero = "SELECT * FROM tbl_ms_roles_ojetos WHERE ID_ROL='$id_rol7' and ID_OBJETO=5 and PERMISO_CONSULTAR=0";
+               $tablero2 = mysqli_query($conn, $tablero);
+               if (mysqli_num_rows($tablero2) > 0)
+               {
+                header('Location: ../../vistas/tablero/vista_perfil.php');
+                die();
+               }else{
+                $role = "SELECT * FROM tbl_ms_roles_ojetos WHERE ID_ROL='$id_rol7' and ID_OBJETO=5 and PERMISO_CONSULTAR=1";
+                $roless = mysqli_query($conn, $role);
+                if (mysqli_num_rows($roless) > 0){}
+                else{
+                  header('Location: ../../vistas/tablero/vista_perfil.php');
+                  die();
+                }
+               }
+               // inicio inserta en la tabla bitacora
+               $sql = "INSERT INTO tbl_bitacora (USUARIO, ACCION, OBSERVACION)
+               VALUES ('$usuario1[usuario]', 'CONSULTO', 'CONSULTO LA PANTALLA ADMINISTRATIVA DE PROVEEDORES')";
+               if (mysqli_query($conn, $sql)) {} else {}
+               // fin inserta en la tabla bitacora
+           
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -21,6 +57,9 @@ include '../../controladores/crud_proveedor.php';
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
 
   <?php include '../../configuracion/navar.php' ?>
+   <!-- Inicio evita el click derecho de la pagina -->
+<body oncontextmenu="return false">
+<!-- Fin evita el click derecho de la pagina -->
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
     <!-- Content Header (Page header) -->
@@ -32,10 +71,20 @@ include '../../controladores/crud_proveedor.php';
             <!-- Inicio de modal de agregar -->
 <div class="container mt-3">
         <h3>Proveedores</h3> <br>  
-        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal">
-            Nuevo Proveedor
-        </button>
+        <?php 
+      include '../../conexion/conexion.php';
+      $tablero = "SELECT * FROM tbl_ms_roles_ojetos WHERE ID_ROL='$id_rol7' and ID_OBJETO=5 and PERMISO_INSERCION=1";
+      $tablero2 = mysqli_query($conn, $tablero);
+      if (mysqli_num_rows($tablero2) > 0)
+       {
+         echo '<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal">
+                    Nuevo Proveedor
+                </button>';
+                          }
+                        ?> 
+        
     </div>
+        
 
 <!-- El Modal -->
     <div class="modal" id="myModal">
@@ -133,11 +182,19 @@ include '../../controladores/crud_proveedor.php';
                   ?>
                   <tr>
                   <td>
+                  <?php 
+                          include '../../conexion/conexion.php';
+                          $tablero = "SELECT * FROM tbl_ms_roles_ojetos WHERE ID_ROL='$id_rol7' and ID_OBJETO=5 and PERMISO_ACTUALIZACION=1";
+                          $tablero2 = mysqli_query($conn, $tablero);
+                          if (mysqli_num_rows($tablero2) > 0)
+                          {?>
                         <!-- inicio boton editar -->
                       <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#myModal2<?php echo $filas['ID_PROVEEDOR'] ?>">
                       <i class="fas fa-pencil-alt"></i>
                       </button>
-
+                      <?php 
+                          }
+                        ?>
                           <!-- El Modal -->
                           <div class="modal" id="myModal2<?php echo $filas['ID_PROVEEDOR'] ?>">
                             <div class="modal-dialog">
@@ -190,12 +247,23 @@ include '../../controladores/crud_proveedor.php';
                             </div>
                           </div>
                           <!-- fin boton editar -->
+                          <?php 
+                          include '../../conexion/conexion.php';
+                          $tablero = "SELECT * FROM tbl_ms_roles_ojetos WHERE ID_ROL='$id_rol7' and ID_OBJETO=19 and PERMISO_ELIMINACION=1";
+                          $tablero2 = mysqli_query($conn, $tablero);
+                          if (mysqli_num_rows($tablero2) > 0)
+                          {?>
+
                           <input type="hidden" name="id_proveedor"  value="<?php echo $filas['ID_PROVEEDOR'] ?>">
                       <button  value="eliminar" name="accion" 
                         onclick="return confirm('¿Quieres eliminar este dato?')"
                         type="submit" class="btn btn-danger " data-id="19">
                         <i class="fas fa-trash-alt"></i>
-                    </button></form>
+                    </button>
+                    <?php 
+                          }
+                        ?>
+                      </form>
 </td>
                          
                     </td>

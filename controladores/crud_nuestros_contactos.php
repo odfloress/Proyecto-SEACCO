@@ -25,6 +25,11 @@
                 $sql1 = "INSERT INTO tbl_nuestros_contactos ( ID_CONTACTO,	TELEFONO,	CORREO,	DIRECCION,	FACEBOOK,	INSTAGRAM)
                 VALUES ('$id_contacto','$telefono','$correo','$direccion','$facebook','$instagram')";
                 if (mysqli_query($conn, $sql1)) {
+                  // inicio inserta en la tabla bitacora
+                  $sql7 = "INSERT INTO tbl_bitacora (USUARIO, ACCION, OBSERVACION)
+                  VALUES ('$usuario1[usuario]', 'INSERTO', 'CREO EL CONTACTO')";
+                   if (mysqli_query($conn, $sql7)) {} else { }
+              // fin inserta en la tabla bitacora
                     header('Location: ../../vistas/ajustes/vista_nuestros_contactos.php');
 
                 } else {
