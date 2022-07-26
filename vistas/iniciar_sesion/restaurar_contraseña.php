@@ -62,15 +62,14 @@ body {
             
                 <label for="sel1" class="form-label">Usuario:</label>
                 <input type="text" name="" value="<?php $usuario = $_SESSION; echo $usuario['usuario']; ?>" class="form-control" readonly>
-                
-                
 
                 <label for="sel1" class="form-label">Nueva contraseña</label>
-                <input type="password" name="nueva_contrasena" value="" class="form-control"  minlength="8" maxlength="30" required onblur="quitarespacios(this);" onkeyup="sinespacio(this);" pattern="(?=.*[\d])(?=.*[a-z])(?=.*[A-Z]).{8,}">
-
+                <input type="password" name="nueva_contrasena" id="contrasena" value="" class="form-control"  minlength="8" maxlength="30" required onblur="quitarespacios(this);" onkeyup="sinespacio(this);" pattern="(?=.*[\d])(?=.*[a-z])(?=.*[A-Z]).{8,}">
+                <input type="checkbox" onclick="mostrarContrasena()" > Mostrar/Ocultar
+                <br>
                 <label for="sel1" class="form-label">Confirmar contraseña</label>
-                <input type="password" name="confirmar_contrasena" value="" class="form-control" minlength="8" maxlength="30" required onblur="quitarespacios(this);" onkeyup="sinespacio(this);" pattern="(?=.*[\d])(?=.*[a-z])(?=.*[A-Z]).{8,}">
-                
+                <input type="password" name="confirmar_contrasena" id="contrasena2" value="" class="form-control" minlength="8" maxlength="30" required onblur="quitarespacios(this);" onkeyup="sinespacio(this);" pattern="(?=.*[\d])(?=.*[a-z])(?=.*[A-Z]).{8,}">
+                <input type="checkbox" onclick="mostrarContrasena2()" > Mostrar/Ocultar
 
             </div>
             </div>
@@ -88,6 +87,25 @@ body {
     </div>
   </div>
 
+
+  <script>
+  function mostrarContrasena(){
+    var x = document.getElementById("contrasena");
+    if (x.type === "password"){
+      x.type = "text";
+    }else{
+      x.type = "password";
+    }
+  }
+  function mostrarContrasena2(){
+    var z = document.getElementById("contrasena2");
+    if (z.type === "password"){
+      z.type = "text";
+    }else{
+      z.type = "password";
+    }
+  }
+  </script>
 
 
 </body>

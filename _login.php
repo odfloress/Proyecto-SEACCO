@@ -52,10 +52,19 @@ require 'controladores/co_login.php';
 
             <div class="mb-3">           
                 <label for="Contraseña" class="form-label">Contraseña:</label>
-                <input type="password"   style="background-color:rgb(240, 244, 245);" name="contrasena" id="myInput" class="form-control"
+                <div class="input-group mb-3">
+                <input type="password"   style="background-color:rgb(240, 244, 245);" name="contrasena" id="id_password" class="form-control"
                 placeholder="Ingrese la contraseña"   minlength="8" maxlength="30" required onblur="quitarespacios(this);" onkeyup="sinespacio(this);" 
                 pattern="(?=.*[\d])(?=.*[a-z])(?=.*[A-Z]).{8,}">
-                <input type="checkbox" onclick="myFunction()" name="" id=""> Mostrar/Ocultar
+                <div class="input-group-append ">
+                            
+                          <div class="input-group-text">
+                            <span>
+                            <i class="far fa-eye" id="togglePassword"  ></i>
+                            </span>
+                            
+                          </div> 
+                    </div></div>
             </div>
 
             <div class="d-grid">
@@ -65,7 +74,7 @@ require 'controladores/co_login.php';
 
             <div class="row">
                 <div class="col"> 
-                  <a href="/SEACCO/vistas/iniciar_sesion/metodo_recuperacion">Olvido la contraseña?</a>
+                <a href="http://localhost/Proyecto-SEACCO/vistas/iniciar_sesion/metodo_recuperacion">Olvido la contraseña?</a>
                 </div>
                 <div class="col">
                   <a href="/SEACCO/_registrar">Registrar un usuario</a>
@@ -78,16 +87,19 @@ require 'controladores/co_login.php';
     </div>
   </div>
 
-<!-- Inicio mostrar y ocultar contraseña -->
-  <script>
-function myFunction() {
-  var x = document.getElementById("myInput");
-  if (x.type === "password") {
-    x.type = "text";
-  } else {
-    x.type = "password";
-  }
-}
+           <!-- Script para ver contraseña de ver contraseña  -->
+           <script>
+              const togglePassword = document.querySelector('#togglePassword');
+              const password = document.querySelector('#id_password');
+
+                togglePassword.addEventListener('click', function (e) {
+              // toggle the type attribute
+              const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
+              password.setAttribute('type', type);
+              // toggle the eye slash icon
+              this.classList.toggle('fa-eye-slash');
+                });
+         </script>
 </script>
 <!-- Fin mostrar y ocultar contraseña -->
 

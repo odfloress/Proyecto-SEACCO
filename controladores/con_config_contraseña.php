@@ -17,69 +17,83 @@
       case "actualizar": 
 
         // Valida que exista el usuario y contraseña
-        $validar_usuario = "SELECT * FROM tbl_usuarios WHERE USUARIO='$usuario[usuario]' and CONTRASENA='$contrasena_actual'";
+        $validar_usuario = "SELECT * FROM tbl_usuarios WHERE USUARIO='$usuario[nombre]' and CONTRASENA='$contrasena_actual'";
         $result = mysqli_query($conn, $validar_usuario); 
-        if (mysqli_num_rows($result) > 0) { 
+        if (mysqli_num_rows($result) > 0) 
+        { 
 
-          if ($nueva_contrasena == $confirmar_contrasena) {
+          if ($nueva_contrasena == $confirmar_contrasena) 
+          {
 
-            $confirmar_contrasena= hash('sha512', $confirmar_contrasena);
-            $conn = new mysqli($servername, $username, $password, $dbname);
-             $sql =  "UPDATE tbl_usuarios SET CONTRASENA='$confirmar_contrasena', ID_ESTADO_USUARIO=2 WHERE usuario='$usuario[usuario]'";
-              if ($conn->query($sql) === TRUE) {
-                 
-                // inicio inserta en la tabla bitacora
-                    $sql7 = "INSERT INTO tbl_bitacora (ID_USUARIO, ID_OBJETO, USUARIO, ACCION, OBSERVACION)
-                    VALUES (2, 1, '$usuario[usuario]', 'ACTUALIZO', 'EL SUARIO $usuario[usuario] ACTUALIZO SU CONTRASEÑA')";
-                    
-                    if (mysqli_query($conn, $sql7)) {
-                      
-                    } else {
-                    
-                    }
-                // fin inserta en la tabla bitacora
-               
-                echo '<script>
-                             alert("Contraseña Actualizada");
-                           window.location.href="../../_login";
+               $confirmar_contrasena= hash('sha512', $confirmar_contrasena);
+               $conn = new mysqli($servername, $username, $password, $dbname);
+               $sql =  "UPDATE tbl_usuarios SET CONTRASENA='$confirmar_contrasena', ID_ESTADO_USUARIO=2 WHERE usuario='$usuario[nombre]'";
+               if ($conn->query($sql) === TRUE) 
+               {
+                  // inicio inserta en la tabla bitacora
+                  $sql7 = "INSERT INTO tbl_bitacora ( USUARIO, ACCION, OBSERVACION)
+                  VALUES ('$usuario[nombre]', 'ACTUALIZO', 'EL SUARIO $usuario[nombre] ACTUALIZO SU CONTRASEÑA')";
+                  // $sql7 = "INSERT INTO tbl_bitacora (ID_USUARIO, ID_OBJETO, USUARIO, ACCION, OBSERVACION)
+                  // VALUES (2, 1, '$usuario[nombre]', 'ACTUALIZO', 'EL SUARIO $usuario[nombre] ACTUALIZO SU CONTRASEÑA')";
+                  if (mysqli_query($conn, $sql7)) {} else {}
+                  // fin inserta en la tabla bitacora
+                
+                  echo '<script>
+                            alert("Contraseña Actualizada");
+                            window.location.href="../../_login";
                         </script>';
-                        session_unset();
-
-                        // destroy the session
-                        session_destroy();
-                     mysqli_close($conn);
-                    //  header('Location: ../tablero/vista_tablero.php');
-                     exit();
+                          session_unset();
+                          session_destroy();
+                          mysqli_close($conn);
+                          die();
                } 
-            
-          } else {
-            echo '<script>
-                        alert("Error intente nuevamente ");
-                        window.Location = "/_login.php";
-                     </script>';
-          }
+          }else{
+                // inicio inserta en la tabla bitacora
+                $sql7 = "INSERT INTO tbl_bitacora (USUARIO, ACCION, OBSERVACION)
+                VALUES ('$usuario[nombre]', 'INTENTO', 'ERROR AL ACTUALIZAR LA CONTRASEÑA YA QUE NO COINCIDEN')";
+                // $sql7 = "INSERT INTO tbl_bitacora (ID_USUARIO, ID_OBJETO, USUARIO, ACCION, OBSERVACION)
+                // VALUES (2, 1, '$usuario[nombre]', 'INTENTO', 'ERROR AL ACTUALIZAR LA CONTRASEÑA YA QUE NO COINCIDEN')";
+                if (mysqli_query($conn, $sql7)) {} else {}
+                // fin inserta en la tabla bitacora
+                echo '<script>
+                            alert("Las contraseñas no coinciden");
+                            window.Location = "/_login.php";
+                        </script>'; mysqli_error($conn);
+               }
 
-
-
-
-
-        
-        }else{ // fin del if principal e inicio del else
-
-          echo '<script>
+        }else{ 
+          // inicio inserta en la tabla bitacora
+          $sql7 = "INSERT INTO tbl_bitacora ( USUARIO, ACCION, OBSERVACION)
+          VALUES ( '$usuario[nombre]', 'INTENTO', 'ERROR AL ACTUALIZAR LA CONTRASEÑA YA QUE NO COINCIDE LA ACTUAL')";
+          // $sql7 = "INSERT INTO tbl_bitacora (ID_USUARIO, ID_OBJETO, USUARIO, ACCION, OBSERVACION)
+          // VALUES (2, 1, '$usuario[nombre]', 'INTENTO', 'ERROR AL ACTUALIZAR LA CONTRASEÑA YA QUE NO COINCIDE LA ACTUAL')";
+          if (mysqli_query($conn,  $sql7)) {} else {}
+          // fin inserta en la tabla bitacora
+               echo '<script>
                         alert("Contraseña actual incorrecta");
-                        window.Location = "/_login.php";
+                        window.location.href="../../vistas/iniciar_sesion/cambio_contraseña";
                      </script>';
                      mysqli_close($conn);
-        }
+             }
 
              
+      break;
+      case "cancelar":
+
+          echo '<script>
+                  window.location.href="../../_login";
+                </script>';
+                    session_unset();
+                    session_destroy();
+                    mysqli_close($conn);
+                    die();
+
       break;
       
         default:
           
           $conn->close();   
-  }// Fin del switch, para validar el valor del boton accion
+  }
 
 
 ?>
