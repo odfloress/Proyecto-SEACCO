@@ -14,6 +14,8 @@
   $telefono=(isset($_POST['telefono']))?$_POST['telefono']:"";
   $correo=(isset($_POST['correo']))?$_POST['correo']:"";
 
+  $usuario1 = $_SESSION;
+
   //variable para recuperar los botones de la vista categprias de productos  
   $accion=(isset($_POST['accion']))?$_POST['accion']:"";
   
