@@ -23,9 +23,9 @@ if (mysqli_num_rows($roles35) > 0)
 }
 
                //valida si tiene permisos de consultar la pantalla 
-               $tablero = "SELECT * FROM tbl_ms_roles_ojetos WHERE ID_ROL='$id_rol7' and ID_OBJETO=5 and PERMISO_CONSULTAR=0";
-               $tablero2 = mysqli_query($conn, $tablero);
-               if (mysqli_num_rows($tablero2) > 0)
+               $proveedor = "SELECT * FROM tbl_ms_roles_ojetos WHERE ID_ROL='$id_rol7' and ID_OBJETO=5 and PERMISO_CONSULTAR=0";
+               $proveedor2 = mysqli_query($conn, $proveedor);
+               if (mysqli_num_rows($proveedor2) > 0)
                {
                 header('Location: ../../vistas/tablero/vista_perfil.php');
                 die();
@@ -73,9 +73,9 @@ if (mysqli_num_rows($roles35) > 0)
         <h3>Proveedores</h3> <br>  
         <?php 
       include '../../conexion/conexion.php';
-      $tablero = "SELECT * FROM tbl_ms_roles_ojetos WHERE ID_ROL='$id_rol7' and ID_OBJETO=5 and PERMISO_INSERCION=1";
-      $tablero2 = mysqli_query($conn, $tablero);
-      if (mysqli_num_rows($tablero2) > 0)
+      $proveedor = "SELECT * FROM tbl_ms_roles_ojetos WHERE ID_ROL='$id_rol7' and ID_OBJETO=5 and PERMISO_INSERCION=1";
+      $proveedor2 = mysqli_query($conn, $proveedor);
+      if (mysqli_num_rows($proveedor2) > 0)
        {
          echo '<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal">
                     Nuevo Proveedor
@@ -184,9 +184,9 @@ if (mysqli_num_rows($roles35) > 0)
                   <td>
                   <?php 
                           include '../../conexion/conexion.php';
-                          $tablero = "SELECT * FROM tbl_ms_roles_ojetos WHERE ID_ROL='$id_rol7' and ID_OBJETO=5 and PERMISO_ACTUALIZACION=1";
-                          $tablero2 = mysqli_query($conn, $tablero);
-                          if (mysqli_num_rows($tablero2) > 0)
+                          $proveedor = "SELECT * FROM tbl_ms_roles_ojetos WHERE ID_ROL='$id_rol7' and ID_OBJETO=5 and PERMISO_ACTUALIZACION=1";
+                          $proveedor2 = mysqli_query($conn, $proveedor);
+                          if (mysqli_num_rows($proveedor2) > 0)
                           {?>
                         <!-- inicio boton editar -->
                       <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#myModal2<?php echo $filas['ID_PROVEEDOR'] ?>">
@@ -249,9 +249,9 @@ if (mysqli_num_rows($roles35) > 0)
                           <!-- fin boton editar -->
                           <?php 
                           include '../../conexion/conexion.php';
-                          $tablero = "SELECT * FROM tbl_ms_roles_ojetos WHERE ID_ROL='$id_rol7' and ID_OBJETO=19 and PERMISO_ELIMINACION=1";
-                          $tablero2 = mysqli_query($conn, $tablero);
-                          if (mysqli_num_rows($tablero2) > 0)
+                          $proveedor = "SELECT * FROM tbl_ms_roles_ojetos WHERE ID_ROL='$id_rol7' and ID_OBJETO=5 and PERMISO_ELIMINACION=1";
+                          $proveedor2 = mysqli_query($conn, $proveedor);
+                          if (mysqli_num_rows($proveedor2) > 0)
                           {?>
 
                           <input type="hidden" name="id_proveedor"  value="<?php echo $filas['ID_PROVEEDOR'] ?>">
