@@ -75,23 +75,48 @@ if(!isset($_SESSION['usuario'])){
                                           <div class="modal-body">
 
                                               <div class="form-group">
-                                                  <label for="name" class="col-form-label">Nombre de la Base de Datos</label>
-                                                  <input id="dbname_backup" type="text" name="name" class="form-control" required="required" readonly="readonly"/>
+                                                  <!-- <label for="name" class="col-form-label">Nombre de la Base de Datos</label> -->
+                                                  <!-- <input id="dbname_backup" type="text" name="name" class="form-control" required="required" readonly="readonly"/> -->
+                                                  <!-- inicio Codigo prueba bkdb -->
+                                                  <div class="form-wrap">
+                                                    <form action="database_backup.php" method="post" id="">
+                                                      <div class="form-group">
+                                                        <label class="control-label mb-10" >Host</label>
+                                                        <input type="text" class="form-control" placeholder="Ingrese el  Server Name ejemplo: Localhost" name="server" id="server" required="" autocomplete="on">
+                                                      </div>
+                                                      <div class="form-group">
+                                                        <label class="control-label mb-10" >Usuario Base de datos</label>
+                                                        <input type="text" class="form-control" placeholder="Usuario de la base de datos ejemplo: root" name="username" id="username" required="" autocomplete="on">
+                                                      </div>
+                                                      <div class="form-group">
+                                                        <label class="pull-left control-label mb-10" >Contraseña Base de datos</label>
+                                                        <input type="password" class="form-control" placeholder="Ingrese Contraseña base de datos" name="password" id="password" >
+                                                      </div>
+                                                      <div class="form-group">
+                                                        <label class="pull-left control-label mb-10">Nombre Base de datos</label>
+                                                        <input type="text" class="form-control" placeholder="Ingrese Nombre de la base de datos" name="dbname" id="dbname" required="" autocomplete="on">
+                                                      </div>
+                                                      <div class="form-group text-center">
+                                                        <button type="submit" name="backupnow" class="btn btn-primary btn-rounded">Iniciar Backup</button>
+                                                      </div>
+                                                    </form>
+                                                  </div>
+                                                  <!-- Final  Codigo prueba bkdb -->
                                               </div>
-                                                  <div class="form-group">
+                                                  <!-- <div class="form-group">
                                                       <label for="backup_format" class="col-form-label">Formato</label>
                                                       <select id="backup_format" name="backup_format" class="form-control" required="required">
                                                           <option value="zip">zip (incluye almacén de archivos)</option>
                                                           <option value="dump">pg_dump custom format (without filestore)</option>
                                                           </select>
-                                                  </div>
+                                                  </div> -->
                                               </div>
                                                           
                                           <!-- Modal footer -->
-                                              <div class="modal-footer">
+                                              <!-- <div class="modal-footer">
                                                 <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Continuar</button>
                                                   <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
-                                              </div>
+                                              </div> -->
                                       </div>
                   </div>
               </div>
