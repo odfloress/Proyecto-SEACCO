@@ -3,9 +3,13 @@
   require 'conexion/conexion.php';
 
   //Variables para recuperar la información de los campos y boton del login
-  $usuario=(isset($_POST['usuario']))?$_POST['usuario']:"";
-  $contrasena=(isset($_POST['contrasena']))?$_POST['contrasena']:"";
+  $usuario77=(isset($_POST['usuario']))?$_POST['usuario']:"";
+  $contrasena77=(isset($_POST['contrasena']))?$_POST['contrasena']:"";
   $accion=(isset($_POST['accion']))?$_POST['accion']:"";
+
+  //elimina los espacios en blanco
+  $usuario = preg_replace("/[[:space:]]/","",trim($usuario77));
+  $contrasena = preg_replace("/[[:space:]]/","",trim($contrasena77));
 
   // Desencripta la contraseña
   $contrasena= hash('sha512', $contrasena);

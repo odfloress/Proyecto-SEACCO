@@ -180,7 +180,7 @@
 
 <!-- Footer -->
 <footer class="w3-center w3-black w3-padding-64">
-  <a href="#home" class="w3-button w3-light-grey"><i class="fa fa-arrow-up w3-margin-right"></i>Ir a inicio</a>
+  <a href="#demo" class="w3-button w3-light-grey"><i class="fa fa-arrow-up w3-margin-right"></i>Ir a inicio</a>
   <div class="w3-xlarge w3-section">
   <a href="https://www.facebook.com/pages/category/Construction-Company/Constructora-Seacco-658896417875063/"> <i class="fa fa-facebook-official w3-hover-opacity"></i></a>
     <i class="fa fa-instagram w3-hover-opacity"></i>
@@ -189,7 +189,7 @@
     <i class="fa fa-twitter w3-hover-opacity"></i>
     <i class="fa fa-linkedin w3-hover-opacity"></i>
   </div>
-  <p>Constructora <a href="https://www.w3schools.com/w3css/default.asp" title="W3.CSS" target="_blank" class="w3-hover-text-green">SEACCO</a></p>
+  <p>Constructora <a href="http://localhost/SEACCO/" title="W3.CSS" target="_blank" class="w3-hover-text-green">SEACCO</a></p>
 </footer>
  
 <script>

@@ -8,7 +8,7 @@ if(!isset($_SESSION['usuario'])){
         die();
         
 }
-include '../../controladores/crud_permisos.php';
+include '../../controladores/crud_estados_asignacion.php';
 // Selecciona el id del rol del usuario logueado
 include '../../conexion/conexion.php';
 $usuario = $_SESSION;
@@ -23,26 +23,26 @@ if (mysqli_num_rows($roles35) > 0)
 }
 
                //valida si tiene permisos de consultar la pantalla 
-               $tablero = "SELECT * FROM tbl_ms_roles_ojetos WHERE ID_ROL='$id_rol7' and ID_OBJETO=20 and PERMISO_CONSULTAR=0";
-               $tablero2 = mysqli_query($conn, $tablero);
-               if (mysqli_num_rows($tablero2) > 0)
+               $estado1 = "SELECT * FROM tbl_ms_roles_ojetos WHERE ID_ROL='$id_rol7' and ID_OBJETO=25 and PERMISO_CONSULTAR=0";
+               $estado2 = mysqli_query($conn, $estado1);
+               if (mysqli_num_rows($estado2) > 0)
                {
                 header('Location: ../../vistas/tablero/vista_perfil.php');
                 die();
                }else{
-                $role = "SELECT * FROM tbl_ms_roles_ojetos WHERE ID_ROL='$id_rol7' and ID_OBJETO=20 and PERMISO_CONSULTAR=1";
-                $roless = mysqli_query($conn, $role);
-                if (mysqli_num_rows($roless) > 0){}
-                else{
-                  header('Location: ../../vistas/tablero/vista_perfil.php');
-                  die();
-                }
+                      $estado1 = "SELECT * FROM tbl_ms_roles_ojetos WHERE ID_ROL='$id_rol7' and ID_OBJETO=25 and PERMISO_CONSULTAR=1";
+                      $estado2 = mysqli_query($conn, $estado1);
+                      if (mysqli_num_rows($estado2) > 0){}
+                      else{
+                        header('Location: ../../vistas/tablero/vista_perfil.php');
+                        die();
+                      }
                }
-               // inicio inserta en la tabla bitacora
-               $sql = "INSERT INTO tbl_bitacora (USUARIO, ACCION, OBSERVACION)
-               VALUES ('$usuario1[usuario]', 'CONSULTO', 'CONSULTO LA PANTALLA ADMINISTRATIVA DE PERMISOS')";
-               if (mysqli_query($conn, $sql)) {} else {}
-               // fin inserta en la tabla bitacora
+                // inicio inserta en la tabla bitacora
+                $sql = "INSERT INTO tbl_bitacora (USUARIO, ACCION, OBSERVACION)
+                VALUES ('$usuario1[usuario]', 'CONSULTO', 'CONSULTO LA PANTALLA  ADMINISTRATIVA DE ESTADOS DE ASIGNACION')";
+                if (mysqli_query($conn, $sql)) {} else {}
+                // fin inserta en la tabla bitacora
 
 
 ?>
@@ -51,17 +51,17 @@ if (mysqli_num_rows($roles35) > 0)
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Permisos</title>
+  <title>Estados de asignaciones</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
-
-  <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
-  
-
-
-
+    <!-- enlace del scritpt para evitar si preciona F12, si preciona Ctrl+Shift+I, si preciona Ctr+u  -->
+    <script type="text/javascript" src="../../js/evita_ver_codigo_utilizando_teclas.js"></script>
+    
   <?php include '../../configuracion/navar.php' ?>
+  <!-- Inicio evita el click derecho de la pagina -->
+<body oncontextmenu="return false">
+<!-- Fin evita el click derecho de la pagina --> 
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
     <!-- Content Header (Page header) -->
@@ -69,21 +69,22 @@ if (mysqli_num_rows($roles35) > 0)
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-2">
-          <h1>Permisos</h1>
+            <h1></h1>
             <!-- Inicio de modal de agregar -->
 <div class="container mt-3">
-         <!-- Valida si tiene permiso para insertar un PERMISO -->
-         <?php 
-                          include '../../conexion/conexion.php';
-                          $tablero = "SELECT * FROM tbl_ms_roles_ojetos WHERE ID_ROL='$id_rol7' and ID_OBJETO=20 and PERMISO_INSERCION=1";
-                          $tablero2 = mysqli_query($conn, $tablero);
-                          if (mysqli_num_rows($tablero2) > 0)
-                          {
-                              echo '<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal">
-                              Agregar permisos
-                          </button>';
+  
+        <h3>Estados de las asignaciones</h3> <br> 
+        <?php 
+      include '../../conexion/conexion.php';
+      $profesion4 = "SELECT * FROM tbl_ms_roles_ojetos WHERE ID_ROL='$id_rol7' and ID_OBJETO=25 and PERMISO_INSERCION=1";
+      $profesion5 = mysqli_query($conn, $profesion4);
+      if (mysqli_num_rows($profesion5) > 0)
+       {
+         echo '<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal">
+                    Nuevo estado
+                </button>';
                           }
-                        ?>
+                        ?> 
         
     </div>
 
@@ -94,7 +95,7 @@ if (mysqli_num_rows($roles35) > 0)
                 <!-- Encabezado del modal -->
                 <form action="" method="post">
                 <div class="modal-header">
-                    <h4 class="modal-title">Crear Permisos</h4>
+                    <h4 class="modal-title">Nuevo estado</h4>
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
                 <!-- Fin Encabezado del modal -->
@@ -102,41 +103,16 @@ if (mysqli_num_rows($roles35) > 0)
                 <!-- Cuerpo del modal Modal -->
                 <div class="modal-body">
                
-                    <label for="">Seleccione el rol</label>
-                    <select class="form-select" id="lista1" name="lista1" required >
-                        <?php
-                            include '../../conexion/conexion.php';
-                            $roles = "SELECT * FROM tbl_roles ORDER BY ID_ROL";
-                            $roles2 = mysqli_query($conn, $roles);
-                            if (mysqli_num_rows($roles2) > 0) {
-                                while($row = mysqli_fetch_assoc($roles2))
-                                {
-                                $id_rol = $row['ID_ROL'];
-                                $rol =$row['ROL'];
-                         ?>
-                          <option value="<?php  echo $id_rol ?>"><?php echo $rol ?></option>
-                          <?php
-                           }}// finaliza el if y el while
-                           ?>
-                   </select>
-
-                    <div id="select2lista"></div>
-
-                    
-                   <input type="checkbox"  name="insertar" value="1">
-                    <label for="insertar"> Insertar</label><br>
-                    <input type="checkbox"  name="eliminar2" value="1">
-                    <label for="eliminar"> Eliminar</label><br>
-                    <input type="checkbox" name="editar2" value="1">
-                    <label for="vehicle3"> Editar</label><br>
-                    <input type="checkbox" name="consultar" value="1">
-                    <label for="vehicle3"> Consultar</label><br>
+                    <label for="">Nombre del estado:</label>
+                    <input type="text" class="form-control" name="estado"  value="<?php echo $estado; ?>" placeholder="" autocomplete = "off"  onkeypress="return soloLetras(event);" minlength="3" maxlength="20" 
+                     onkeyup="mayus(this);" required  >
+                    <br>
                 
                 </div>
                 <!-- Fin Cuerpo del modal Modal -->
                 <!-- pie del modal -->
                 <div class="modal-footer">
-      	            <button type="submit" name="accion" value="agregar" class="btn btn-primary" onclick="return confirm('¿Desea agregar el permiso?')">Agregar</button>
+      	            <button type="submit" name="accion" value="agregar" class="btn btn-primary" onclick="return confirm('¿Desea agregar el estado?')">Agregar</button>
                     <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
                 </div>
                 <!-- Fin pie del modal -->
@@ -148,7 +124,7 @@ if (mysqli_num_rows($roles35) > 0)
           </div>
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
-            
+              
             </ol>
             
           </div>
@@ -169,7 +145,7 @@ if (mysqli_num_rows($roles35) > 0)
             
             <div class="card table-responsive">
               <div class="card-header">
-                <h3 class="card-title">Permisos de los roles</h3>
+                <h3 class="card-title">Estados</h3>
                 
               </div>
               
@@ -179,52 +155,43 @@ if (mysqli_num_rows($roles35) > 0)
                   <thead>
                   <tr>
                   <th>Acciones</th>
-                  <th>Pantalla</th>
-                  <th>Rol</th>
-                  <th>Insertar</th>
-                  <th>Eliminar</th>
-                  <th>Editar</th>
-                  <th>Consultar</th>
+                  <th>Id</th>
+                  <th>Profesión</th>
+                  
                   
                   
                   </tr>
                   </thead>
                   <tbody>
                     <?php 
-                    include '../../conexion/conexion.php';
-                    $sql = "SELECT * FROM ((tbl_ms_roles_ojetos p 
-                    INNER JOIN tbl_roles r ON p.ID_ROL = r.ID_ROL)
-                    INNER JOIN tbl_ms_objetos o ON p.ID_OBJETO = o.ID_OBJETO)";
-                    $result = mysqli_query($conn, $sql);
                     while ($filas= mysqli_fetch_assoc($result)){
  
                      ?>
                   <tr>
                   <td>
-                        <!-- inicio boton editar -->
-                          <!-- Valida si tiene permiso para EDITAR un PERMISO -->
-                          <?php 
+                  <?php 
                           include '../../conexion/conexion.php';
-                          $tablero = "SELECT * FROM tbl_ms_roles_ojetos WHERE ID_ROL='$id_rol7' and ID_OBJETO=20 and PERMISO_ACTUALIZACION=1";
-                          $tablero2 = mysqli_query($conn, $tablero);
-                          if (mysqli_num_rows($tablero2) > 0)
+                          $profesion4 = "SELECT * FROM tbl_ms_roles_ojetos WHERE ID_ROL='$id_rol7' and ID_OBJETO=25 and PERMISO_ACTUALIZACION=1";
+                          $profesion5 = mysqli_query($conn, $profesion4);
+                          if (mysqli_num_rows($profesion5) > 0)
                           {?>
-                            <button type="button"  class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#myModal2<?php echo $filas['ID_OBJETO'] ?>" >
+                                 <!-- inicio boton editar -->
+                      <button type="button"  class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#myModal2<?php echo $filas['ID_ASIGNACION'] ?>" >
                       <i class="fas fa-pencil-alt"></i>
                       </button> <?php 
                           }
                         ?>
                       
+                     
 
                           <!-- El Modal -->
-                          <div class="modal" id="myModal2<?php echo $filas['ID_OBJETO'] ?>">
+                          <div class="modal" id="myModal2<?php echo $filas['ID_ASIGNACION'] ?>">
                             <div class="modal-dialog">
                               <div class="modal-content">
 
                                 <!-- Encabezado del modal -->
                                 <div class="modal-header">
-                                
-                                  <h4 class="modal-title">Editar rol</h4>
+                                  <h4 class="modal-title">Editar estado</h4>
                                   <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                                 </div>
                                 <!-- Fin Encabezado del modal -->
@@ -232,34 +199,22 @@ if (mysqli_num_rows($roles35) > 0)
 
                                 <!-- Cuerpo del modal Modal -->
                                 <form action="" method="post">
-                                <div class="modal-body">
-               
-                    <label for="">Rol</label>
-                    <input type="hidden" name="lista1" value="<?php echo $filas['ID_ROL']?>">
-                    <input type="text" class="form-control" readonly name="MOSTRAR rol" value="<?php echo $filas['ROL']?>">
-
-                    <label for="">Pantalla</label>
-                    <input type="hidden" name="lista2" value="<?php echo $filas['ID_OBJETO']?>">
-                    <input type="text" class="form-control" readonly name="Mostrar pantalla" value="<?php echo $filas['OBJETO']?>">
-
-
-
-                   <input type="checkbox"  name="insertar" value="1" <?php if ($filas['PERMISO_INSERCION']==1){echo "checked";}?>>
-                    <label for="insertar"> Insertar</label><br>
-                    <input type="checkbox"  name="eliminar2" value="1" <?php if ($filas['PERMISO_ELIMINACION']==1){echo "checked";}?>>
-                    <label for="eliminar"> Eliminar</label><br>
-                    <input type="checkbox" name="editar2" value="1" <?php if ($filas['PERMISO_ACTUALIZACION']==1){echo "checked";}?>>
-                    <label for="vehicle3"> Editar</label><br>
-                    <input type="checkbox" name="consultar" value="1" <?php if ($filas['PERMISO_CONSULTAR']==1){echo "checked";}?>>
-                    <label for="vehicle3"> Consultar</label><br>
-                
-                </div>
+                                          <div class="modal-body">
+                                            <input type="hidden" name="nombre_anterior" value="<?php echo $filas['ESTADO_ASIGNACION'] ?>">
+                                              <label for="">Id estado:</label>
+                                              <input type="text" readonly class="form-control" name="id_estado" required value="<?php echo $filas['ID_ASIGNACION'] ?>" placeholder=""  >
+                                              <br>
+                                              <label for="">Estado:</label>
+                                              <input type="text" class="form-control" name="estado" required value="<?php echo $filas['ESTADO_ASIGNACION'] ?>" placeholder=""  autocomplete = "off"  onkeypress="return soloLetras(event);" minlength="3" maxlength="20" 
+                                                onkeyup="mayus(this);" required >
+                                             
+                                          
+                                          </div>
                                 <!-- Fin Cuerpo del modal Modal -->
 
                                 <!-- pie del modal -->
                                 <div class="modal-footer">
-                                  
-                                <button type="submit" name="accion" value="editar" class="btn btn-primary" onclick="return confirm('¿Desea editar el permiso?')">Guardar</button>
+                                <button type="submit" name="accion" value="editar" class="btn btn-primary" onclick="return confirm('¿Desea editar el estado?')">Guardar</button>
                                   <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
                                 </div>
                              
@@ -270,29 +225,26 @@ if (mysqli_num_rows($roles35) > 0)
                           </div>
                           <!-- fin boton editar -->
                          
-                         
                           <?php 
                           include '../../conexion/conexion.php';
-                          $tablero = "SELECT * FROM tbl_ms_roles_ojetos WHERE ID_ROL='$id_rol7' and ID_OBJETO=20 and PERMISO_ELIMINACION=1";
-                          $tablero2 = mysqli_query($conn, $tablero);
-                          if (mysqli_num_rows($tablero2) > 0)
+                          $profesion4 = "SELECT * FROM tbl_ms_roles_ojetos WHERE ID_ROL='$id_rol7' and ID_OBJETO=25 and PERMISO_ELIMINACION=1";
+                          $profesion5 = mysqli_query($conn, $profesion4);
+                          if (mysqli_num_rows($profesion5) > 0)
                           {?>
                              <button  value="eliminar" name="accion" 
                         onclick="return confirm('¿Quieres eliminar este dato?')"
                         type="submit" class="btn btn-danger ">
                         <i class="fas fa-trash-alt"></i>
-                    </button> <?php 
+                    </button><?php 
                           }
                         ?>
-                     </form>
+                          
+                      </form>
                     
 </td>
-                     <td ><?php echo $filas['OBJETO'] ?></td>
-                     <td><?php echo $filas['ROL'] ?></td>
-                     <td><?php if ($filas['PERMISO_INSERCION']<1){echo "NO";}else{ Echo "SI"; } ?></td>
-                     <td><?php if ($filas['PERMISO_ELIMINACION']<1){echo "NO";}else{ Echo "SI"; } ?></td>
-                     <td><?php if ($filas['PERMISO_ACTUALIZACION']<1){echo "NO";}else{ Echo "SI"; } ?></td>
-                     <td><?php if ($filas['PERMISO_CONSULTAR']<1){echo "NO";}else{ Echo "SI"; } ?></td>
+                     <td ><?php echo $filas['ID_ASIGNACION'] ?></td>
+                     <td><?php echo $filas['ESTADO_ASIGNACION'] ?></td>
+                     
                     
       </tr>
                 <?php } ?>  
@@ -422,26 +374,3 @@ if (mysqli_num_rows($roles35) > 0)
 </body>
 <script type="text/javascript" src="../../js/evitar_reenvio.js"></script>
 </html>
-
-<script type="text/javascript">
-	$(document).ready(function(){
-		$('#lista1').val(1);
-		recargarLista();
-
-		$('#lista1').change(function(){
-			recargarLista();
-		});
-	})
-</script>
-<script type="text/javascript">
-	function recargarLista(){
-		$.ajax({
-			type:"POST",
-			url:"select_pantallas.php",
-			data:"lista1=" + $('#lista1').val(),
-			success:function(r){
-				$('#select2lista').html(r);
-			}
-		});
-	}
-</script>
