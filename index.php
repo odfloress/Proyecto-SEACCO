@@ -1,3 +1,6 @@
+<?php
+require 'controladores/co_registrar.php';
+?>
 
 <!DOCTYPE html>
 <html>

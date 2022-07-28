@@ -65,7 +65,8 @@
                       </script>';
                       mysqli_close($conn);
 
-            }else{
+            }else
+            {
 
                     // inicio inserta en la tabla bitacora
                     $sql7 = "INSERT INTO tbl_bitacora ( USUARIO, ACCION, OBSERVACION)
@@ -85,7 +86,7 @@
                   if (mysqli_query($conn, $sql)) {
                     echo '<script>
                                   alert("Usuario creado con exito");
-                                  window.location.href="/SEACCO/_login";
+                                  window.location.href="/Proyecto-SEACCO/_login";
                       </script>';
 
                       

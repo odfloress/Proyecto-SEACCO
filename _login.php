@@ -74,7 +74,7 @@ require 'controladores/co_login.php';
 
             <div class="row">
                 <div class="col"> 
-                  <a href="/SEACCO/vistas/iniciar_sesion/metodo_recuperacion">Olvido la contraseña?</a>
+                <a href="http://localhost/Proyecto-SEACCO/vistas/iniciar_sesion/metodo_recuperacion">Olvido la contraseña?</a>
                 </div>
                 <div class="col">
                   <a href="/SEACCO/_registrar">Registrar un usuario</a>

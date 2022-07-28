@@ -9,6 +9,8 @@
   $id_estados=(isset($_POST['id_estados']))?$_POST['id_estados']:"";
   $nombre=(isset($_POST['nombre']))?$_POST['nombre']:"";
 
+  $usuario1 = $_SESSION;
+
   //variable para recuperar los botones de la vista estados proyecto  
   $accion=(isset($_POST['accion']))?$_POST['accion']:"";
   
@@ -32,6 +34,11 @@
                 $sql1 = "INSERT INTO tbl_estados_proyectos (NOMBRE)
                 VALUES ('$nombre')";
                 if (mysqli_query($conn, $sql1)) {
+                  // inicio inserta en la tabla bitacora
+                  $sql7 = "INSERT INTO tbl_bitacora (USUARIO, ACCION, OBSERVACION)
+                  VALUES ('$usuario1[usuario]', 'INSERTO', 'CREO EL ESTADO DE PROYECTO ($nombre)')";
+                   if (mysqli_query($conn, $sql7)) {} else { }
+              // fin inserta en la tabla bitacora
                   header('Location: ../../vistas/proyectos/vista_estado_proyecto.php');
 
                 } else {
@@ -64,6 +71,11 @@
 
                 $sql2 = "UPDATE tbl_estados_proyectos SET NOMBRE='$nombre' WHERE ID_ESTADOS='$id_estados'";
                 if (mysqli_query($conn, $sql2)) {
+                  $sql8 = "INSERT INTO tbl_bitacora (USUARIO, ACCION, OBSERVACION)
+                  VALUES ('$usuario1[usuario]', 'EDITO', 'EDITO EL ESTADO DE PROYECTO ($nombre)')";
+                  
+                   if (mysqli_query($conn, $sql8)) {} else { }
+                 // fin inserta en la tabla bitacora
                    header('Location: ../../vistas/proyectos/vista_estado_proyecto.php');
 
                 }else{
@@ -82,7 +94,11 @@
 
       $sql3 = "DELETE FROM tbl_estados_proyectos WHERE ID_ESTADOS='$id_estados'";
       if (mysqli_query($conn, $sql3)) {
-
+            // inicio inserta en la tabla bitacora
+        $sql7 = "INSERT INTO tbl_bitacora (USUARIO, ACCION, OBSERVACION)
+        VALUES ('$usuario1[usuario]', 'ELIMINO', 'ELIMINO EL ESTADO DE PROYECTO ($nombre)')";
+         if (mysqli_query($conn, $sql7)) {} else { }
+    // fin inserta en la tabla bitacora
           header('Location: ../../vistas/proyectos/vista_estado_proyecto.php');
       }else{
               echo '<script>

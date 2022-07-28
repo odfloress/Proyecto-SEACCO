@@ -47,8 +47,7 @@
                     alert("El usuario ya existe, intente con otro");
                     window.location.href="../../vistas/personas/vista_administradores";                   
                   </script>';
-                  mysqli_close($conn);
-           
+                  mysqli_close($conn);              
       }else{  
         
         // validacion para que no se repitan los correos en la tabla tbl_usuarios
@@ -84,7 +83,7 @@
               if (mysqli_query($conn, $sql)) {
                 echo '<script>
                               alert("Usuario creado con exito");
-                              window.location.href="../../vistas/personas/vista_administradores";
+                              window.location.href="../../vistas/iniciar_sesion/preguntas_seguridad.php";
                   </script>';
 
                   // inicio inserta en la tabla bitacora

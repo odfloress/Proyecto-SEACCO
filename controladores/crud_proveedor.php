@@ -14,6 +14,8 @@
   $telefono=(isset($_POST['telefono']))?$_POST['telefono']:"";
   $correo=(isset($_POST['correo']))?$_POST['correo']:"";
 
+  $usuario1 = $_SESSION;
+
   //variable para recuperar los botones de la vista categprias de productos  
   $accion=(isset($_POST['accion']))?$_POST['accion']:"";
   
@@ -37,6 +39,11 @@
                 $sql1 = "INSERT INTO tbl_proveedores (ID_PROVEEDOR, NOMBRE, NOMBRE_REFERENCIA, SECTOR_COMERCIAL, DIRECCION, TELEFONO, CORREO)
                 VALUES ('$id_proveedor','$nombre','$nombre_referencia','$sector_comercial','$direccion','$telefono','$correo')";
                 if (mysqli_query($conn, $sql1)) {
+                   // inicio inserta en la tabla bitacora
+                   $sql7 = "INSERT INTO tbl_bitacora (USUARIO, ACCION, OBSERVACION)
+                   VALUES ('$usuario1[usuario]', 'INSERTO', 'CREO EL PROVEEDOR ($nombre)')";
+                    if (mysqli_query($conn, $sql7)) {} else { }
+               // fin inserta en la tabla bitacora
                     header('Location: ../../vistas/personas/vista_proveedores.php');
 
                 } else {
@@ -56,20 +63,20 @@
       case "editar";
 
         // valida si existe una categoria con el mismo nombre
-        $validar_proveedor = "SELECT * FROM tbl_proveedores WHERE NOMBRE='$nombre'";
-        $result2 = mysqli_query($conn, $validar_proveedor); 
-         if (mysqli_num_rows($result2) > 0) { 
-              
-         
-           echo '<script>
-                    alert("No se puede editar, ya existe un proveedor con ese nombre");
-                 </script>';
-                 mysqli_close($conn);
-         }else{ 
-
-                $sql2 = "UPDATE tbl_proveedores SET NOMBRE='$nombre', NOMBRE_REFERENCIA='$nombre_referencia', SECTOR_COMERCIAL='$sector_comercial',DIRECCION='$direccion', TELEFONO='$telefono', CORREO='$correo' WHERE ID_PROVEEDOR='$id_proveedor'";
+          $sql2 = "UPDATE tbl_proveedores SET NOMBRE='$nombre', NOMBRE_REFERENCIA='$nombre_referencia', SECTOR_COMERCIAL='$sector_comercial',DIRECCION='$direccion', TELEFONO='$telefono', CORREO='$correo' WHERE ID_PROVEEDOR='$id_proveedor'";
                 if (mysqli_query($conn, $sql2)) {
-                   header('Location: ../../vistas/personas/vista_proveedores.php');
+                  // inicio inserta en la tabla bitacora
+                  $sql8 = "INSERT INTO tbl_bitacora (USUARIO, ACCION, OBSERVACION)
+                  VALUES ('$usuario1[usuario]', 'EDITO', 'EDITO EL PROVEEDOR ($nombre)')";
+                  
+                   if (mysqli_query($conn, $sql8)) {} else { }
+                 // fin inserta en la tabla bitacora
+                 echo '<script>
+                 alert("Descripción del proveedor editado con exito");
+                 window.location.href="../../vistas/personas/vista_proveedores.php";                   
+               </script>';
+               mysqli_close($conn);
+                   
 
                 }else{
                      echo '<script>
@@ -78,7 +85,7 @@
                      }
 
                 mysqli_close($conn);
-              }
+              
       
       break;
       
@@ -87,6 +94,11 @@
 
       $sql3 = "DELETE FROM tbl_proveedores WHERE ID_PROVEEDOR='$id_proveedor'";
       if (mysqli_query($conn, $sql3)) {
+        // inicio inserta en la tabla bitacora
+        $sql7 = "INSERT INTO tbl_bitacora (USUARIO, ACCION, OBSERVACION)
+        VALUES ('$usuario1[usuario]', 'ELIMINO', 'ELIMINO EL PROVEEDOR ($nombre)')";
+         if (mysqli_query($conn, $sql7)) {} else { }
+    // fin inserta en la tabla bitacora
 
           header('Location: ../../vistas/personas/vista_proveedores.php');
       }else{

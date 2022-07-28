@@ -9,6 +9,41 @@ if(!isset($_SESSION['usuario'])){
         
 }
 include '../../controladores/crud_nuestros_contactos.php';
+// Selecciona el id del rol del usuario logueado
+include '../../conexion/conexion.php';
+$usuario = $_SESSION;
+$roles34 = "SELECT * FROM tbl_usuarios WHERE USUARIO='$usuario[usuario]'";
+$roles35 = mysqli_query($conn, $roles34);
+if (mysqli_num_rows($roles35) > 0)
+{
+ while($row = mysqli_fetch_assoc($roles35))
+  { 
+      $id_rol7 = $row['ID_ROL'];
+  } 
+}
+
+               //valida si tiene permisos de consultar la pantalla 
+               $contacto = "SELECT * FROM tbl_ms_roles_ojetos WHERE ID_ROL='$id_rol7' and ID_OBJETO=18 and PERMISO_CONSULTAR=0";
+               $contacto2 = mysqli_query($conn, $contacto);
+               if (mysqli_num_rows($contacto2) > 0)
+               {
+                header('Location: ../../vistas/tablero/vista_perfil.php');
+                die();
+               }else{
+                $role = "SELECT * FROM tbl_ms_roles_ojetos WHERE ID_ROL='$id_rol7' and ID_OBJETO=18 and PERMISO_CONSULTAR=1";
+                $roless = mysqli_query($conn, $role);
+                if (mysqli_num_rows($roless) > 0){}
+                else{
+                  header('Location: ../../vistas/tablero/vista_perfil.php');
+                  die();
+                }
+               }
+               // inicio inserta en la tabla bitacora
+               $sql = "INSERT INTO tbl_bitacora (USUARIO, ACCION, OBSERVACION)
+               VALUES ('$usuario1[usuario]', 'CONSULTO', 'CONSULTO LA PANTALLA ADMINISTRATIVA DE CONTACTOS')";
+               if (mysqli_query($conn, $sql)) {} else {}
+               // fin inserta en la tabla bitacora
+           
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -46,6 +81,7 @@ include '../../controladores/crud_nuestros_contactos.php';
 
  <div >
 <center><h2>Nuestros Contactos</h2></center>
+
       <!-- Modal Header -->
       <center><div  class="modal-header">
          
@@ -53,39 +89,52 @@ include '../../controladores/crud_nuestros_contactos.php';
 
       <!-- Modal body -->
       <div class="modal-body">
+      <?php while ($filas= mysqli_fetch_assoc($result)){
+
+?>
           <form action="" method="post">
           <label for="">Id Contactos</label>
-          <input type="number" name="id_contacto" class="form-control " placeholder="Ingrese su id">
+          <input type="number" name="id_contacto" class="form-control " readonly value="<?php echo $filas['ID_CONTACTO'] ?>" placeholder="Ingrese su id">
            <br>
 
           <label for="">Numero telefono</label>
-          <input type="tel" name="telefono" class="form-control " placeholder="Ingrese su numero"  pattern="[0-9]{9}" onkeypress="return solonumero(event)">
+          <input type="tel" name="telefono" class="form-control " placeholder="Ingrese su numero" value="<?php echo $filas['TELEFONO'] ?>" pattern="[0-9]{9}" onkeypress="return solonumero(event)">
            <br>
 
            <label for="">Correo</label>
-           <input type="email" name="correo" class="form-control" placeholder="Opcional Ingrese su correo" >
+           <input type="email" name="correo" class="form-control" value="<?php echo $filas['CORREO'] ?>" placeholder="Opcional Ingrese su correo" >
            <br>
 
            <label for="">Dirección</label>
-           <input type="text" name="direccion" class="form-control " placeholder="Ingrese su direccion" onkeyup="mayus(this);" maxlength="30" >
+           <input type="text" name="direccion" class="form-control " value="<?php echo $filas['DIRECCION'] ?>" placeholder="Ingrese su direccion" onkeyup="mayus(this);" maxlength="30" >
            <br>
 
             <label for="">Facebook</label>
-            <input type="text" name="facebook" class="form-control " placeholder="Ingrese su facebook" onkeyup="mayus(this);" maxlength="30">
+            <input type="text" name="facebook" class="form-control " value="<?php echo $filas['FACEBOOK'] ?>"placeholder="Ingrese su facebook" onkeyup="mayus(this);" maxlength="30">
             <br>
             <label for="">Instagram</label>
-            <input type="text" name="instagram" class="form-control " placeholder="Ingrese su instagram" onkeyup="mayus(this);" maxlength="30" >
+            <input type="text" name="instagram" class="form-control " value="<?php echo $filas['INSTAGRAM'] ?>" placeholder="Ingrese su instagram" onkeyup="mayus(this);" maxlength="30" >
             <br>       
   
       </div>
 
       <!-- Modal footer -->
+      <?php 
+      include '../../conexion/conexion.php';
+      $tablero = "SELECT * FROM tbl_ms_roles_ojetos WHERE ID_ROL='$id_rol7' and ID_OBJETO=18 and PERMISO_INSERCION=1";
+      $tablero2 = mysqli_query($conn, $tablero);
+      if (mysqli_num_rows($tablero2) > 0)
+       {?>
+      </div> 
       <div class="modal-footer">
       	            <button type="submit" name="accion" value="agregar" class="btn btn-primary" onclick="return confirm('¿Desea agregar el contacto?')">Agregar</button>
                     <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
-                </div>
+                </div><?php 
+                          }
+                        ?>
       
                 </form> 
+                <?php } ?>
     </div>
   
     
