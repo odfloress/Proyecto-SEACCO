@@ -25,6 +25,9 @@
                 if (mysqli_query($conn, $sql)) {} else {}
                 // fin inserta en la tabla bitacora
               // una vez completada  la configuracion de preguntas y respuestas redirecciona a cambio de contraseña
+              
+              session_destroy($_SESSION['nombre']);
+              $_SESSION['recuperacion'] = $usuario;
               header('Location: ../../vistas/iniciar_sesion/restaurar_contraseña.php');
                
              

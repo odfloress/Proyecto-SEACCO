@@ -1,6 +1,6 @@
 <?php
 session_start();
-if(!isset($_SESSION['usuario'])){
+if(!isset($_SESSION['recuperacion'])){
  
         header('Location: ../../_login.php');
         session_unset();
@@ -52,16 +52,16 @@ body {
       <div class="modal-body ">
         <form action="" method="POST">
             <div class="mb-3 mt-3">
-              <center><h3>Configuración</h3></center><br>
+              <center><h3>Cambio de contraseña</h3></center><br>
             <div class="alert alert-success">
-            <strong>¡Hola!</strong> Debe cambiar su contraseña antes de ingresar al sistema
+            <strong>¡Hola!</strong> Para realializar el cambio de contraseña debe colocar su nueva contraseña
             </div>            
            
             <div class="container mt-3">
 
             
                 <label for="sel1" class="form-label">Usuario:</label>
-                <input type="text" name="" value="<?php $usuario = $_SESSION; echo $usuario['usuario']; ?>" class="form-control" readonly>
+                <input type="text" name="" value="<?php $usuario = $_SESSION; echo $usuario['nombre']; ?>" class="form-control" readonly>
 
                 <label for="sel1" class="form-label">Nueva contraseña</label>
                 <input type="password" name="nueva_contrasena" id="contrasena" value="" class="form-control"  minlength="8" maxlength="30" required onblur="quitarespacios(this);" onkeyup="sinespacio(this);" pattern="(?=.*[\d])(?=.*[a-z])(?=.*[A-Z]).{8,}">

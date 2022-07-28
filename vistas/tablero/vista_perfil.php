@@ -131,7 +131,7 @@ function quitarespacios(e) {
                   src="<?php echo $row["FOTO"]; ?>"
                   alt="User profile picture"><br>
                   
-                </div>
+                </div><br>
                 <!-- Editar foto de perfil-->
                 <div class="text-center">
                   <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal2">
@@ -302,7 +302,7 @@ function quitarespacios(e) {
               <!-- /.tab-content -->
             </div><!-- /.card-body -->
         </div>
-</body>
+</body><script type="text/javascript" src="../../js/evitar_reenvio.js"></script>
 </html>
 <?php include '../../configuracion/footer.php' ?>
 <script type="text/javascript">
