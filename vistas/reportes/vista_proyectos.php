@@ -75,6 +75,7 @@ if(!isset($_SESSION['usuario'])){
                   <tr>
                     <th>Id</th>
                     <th>Nombre</th>
+                    <th>Ubicacion</th>
                     <th>Fecha inicio</th>
                     <th>Fecha final</th>
                     <th>Estado</th>
@@ -82,15 +83,27 @@ if(!isset($_SESSION['usuario'])){
                   </tr>
                   </thead>
                   <tbody>
+                    <?php
+                    require '../../conexion/conexion.php';
+                    $consulta = "SELECT tbl_proyectos.ID_PROYECTO AS ID_PROYECTO ,tbl_proyectos.NOMBRE as NOMBRE,tbl_proyectos.UBICACION as UBICACION, tbl_proyectos.FECHA_INICIO as FECHA_INICIO,tbl_proyectos.FECHA_FINAL AS FECHA_FINAL, tbl_estados_proyectos.NOMBRE AS ID_ESTADOS, tbl_usuarios.NOMBRE AS ID_USUARIO 
+                                  FROM tbl_proyectos INNER JOIN tbl_estados_proyectos ON tbl_proyectos.ID_ESTADOS = tbl_estados_proyectos.ID_ESTADOS INNER JOIN tbl_usuarios ON tbl_proyectos.ID_USUARIO=tbl_usuarios.ID_USUARIO";
+                    // $consulta = "SELECT  * from tbl_proyectos";
+                    $proyectos = mysqli_query($conn, $consulta);
+                    foreach($proyectos as $proyecto){
+                    ?>
                   <tr>
-                    <td>1</td>
-                    <td>asd</td>
-                    <td>07/07/2022</td>
-                    <td>07/07/2022</td>
-                    <td>Finalizado</td>
-                    <td>Da</td>
+                    <td><?php echo $proyecto ['ID_PROYECTO']?></td>
+                    <td><?php echo $proyecto ['NOMBRE']?></td>
+                    <td><?php echo $proyecto ['UBICACION']?></td>
+                    <td><?php echo $proyecto ['FECHA_INICIO']?></td>
+                    <td><?php echo $proyecto ['FECHA_FINAL']?></td>
+                    <td><?php echo $proyecto ['ID_ESTADOS']?></td>
+                    <td><?php echo $proyecto ['ID_USUARIO']?></td>
+                    
                   </tr>
-                  
+                      <?php
+                    }
+                      ?>
                   
                   </tfoot>
                 </table>
@@ -150,9 +163,46 @@ if(!isset($_SESSION['usuario'])){
 <script>
   $(function () {
     $("#example1").DataTable({
+      language: {
+                          processing: "Tratamiento en curso...",
+                          search: "Buscar&nbsp;:",
+                          lengthMenu: "Agrupar de _MENU_ items",
+                          info: "Mostrando del item _START_ al _END_ de un total de _TOTAL_ items",
+                          infoEmpty: "No existen datos.",
+                          infoFiltered: "(filtrado de _MAX_ elementos en total)",
+                          infoPostFix: "",
+                          loadingRecords: "Cargando...",
+                          zeroRecords: "No se encontraron datos con tu busqueda",
+                          emptyTable: "No hay datos disponibles en la tabla.",
+                          paginate: {
+                                          first: "Primero",
+                                          previous: "Anterior",
+                                          next: "Siguiente",
+                                          last: "Ultimo"
+                                      },
+                              aria: {
+                                      sortAscending: ": active para ordenar la columna en orden ascendente",
+                                      sortDescending: ": active para ordenar la columna en orden descendente"
+                                    },
+
+                          buttons:{
+                            "copy": "Copiar",
+                            "print": "Imprimir",
+                            "colvis": "Visibilidad",
+                            "collection": "Colección",
+                            "colvisRestore": "Restaurar visibilidad",
+                            "copyKeys": "Presione ctrl o u2318 + C para copiar los datos de la tabla al portapapeles del sistema. <br \/> <br \/> Para cancelar, haga clic en este mensaje o presione escape.",
+                            "copySuccess": {
+                                "1": "Copiada 1 fila al portapapeles",
+                                "_": "Copiadas %ds fila al portapapeles"
+                                },
+                                },    
+                         },
+
       "responsive": true, "lengthChange": false, "autoWidth": false,
       "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
-    }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+    })
+    .buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
     $('#example2').DataTable({
       "paging": true,
       "lengthChange": false,

@@ -9,6 +9,40 @@ if(!isset($_SESSION['usuario'])){
         
 }
 include '../../controladores/crud_permisos.php';
+// Selecciona el id del rol del usuario logueado
+include '../../conexion/conexion.php';
+$usuario = $_SESSION;
+$roles34 = "SELECT * FROM tbl_usuarios WHERE USUARIO='$usuario[usuario]'";
+$roles35 = mysqli_query($conn, $roles34);
+if (mysqli_num_rows($roles35) > 0)
+{
+ while($row = mysqli_fetch_assoc($roles35))
+  { 
+      $id_rol7 = $row['ID_ROL'];
+  } 
+}
+
+               //valida si tiene permisos de consultar la pantalla 
+               $tablero = "SELECT * FROM tbl_ms_roles_ojetos WHERE ID_ROL='$id_rol7' and ID_OBJETO=20 and PERMISO_CONSULTAR=0";
+               $tablero2 = mysqli_query($conn, $tablero);
+               if (mysqli_num_rows($tablero2) > 0)
+               {
+                header('Location: ../../vistas/tablero/vista_perfil.php');
+                die();
+               }else{
+                $role = "SELECT * FROM tbl_ms_roles_ojetos WHERE ID_ROL='$id_rol7' and ID_OBJETO=20 and PERMISO_CONSULTAR=1";
+                $roless = mysqli_query($conn, $role);
+                if (mysqli_num_rows($roless) > 0){}
+                else{
+                  header('Location: ../../vistas/tablero/vista_perfil.php');
+                  die();
+                }
+               }
+               // inicio inserta en la tabla bitacora
+               $sql = "INSERT INTO tbl_bitacora (USUARIO, ACCION, OBSERVACION)
+               VALUES ('$usuario1[usuario]', 'CONSULTO', 'CONSULTO LA PANTALLA ADMINISTRATIVA DE PERMISOS')";
+               if (mysqli_query($conn, $sql)) {} else {}
+               // fin inserta en la tabla bitacora
 
 
 ?>
@@ -38,10 +72,19 @@ include '../../controladores/crud_permisos.php';
           <h1>Permisos</h1>
             <!-- Inicio de modal de agregar -->
 <div class="container mt-3">
+         <!-- Valida si tiene permiso para insertar un PERMISO -->
+         <?php 
+                          include '../../conexion/conexion.php';
+                          $tablero = "SELECT * FROM tbl_ms_roles_ojetos WHERE ID_ROL='$id_rol7' and ID_OBJETO=20 and PERMISO_INSERCION=1";
+                          $tablero2 = mysqli_query($conn, $tablero);
+                          if (mysqli_num_rows($tablero2) > 0)
+                          {
+                              echo '<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal">
+                              Agregar permisos
+                          </button>';
+                          }
+                        ?>
         
-        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal">
-            Agregar permisos
-        </button>
     </div>
 
 <!-- El Modal -->
@@ -159,9 +202,19 @@ include '../../controladores/crud_permisos.php';
                   <tr>
                   <td>
                         <!-- inicio boton editar -->
-                      <button type="button"  class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#myModal2<?php echo $filas['ID_OBJETO'] ?>" >
+                          <!-- Valida si tiene permiso para EDITAR un PERMISO -->
+                          <?php 
+                          include '../../conexion/conexion.php';
+                          $tablero = "SELECT * FROM tbl_ms_roles_ojetos WHERE ID_ROL='$id_rol7' and ID_OBJETO=20 and PERMISO_ACTUALIZACION=1";
+                          $tablero2 = mysqli_query($conn, $tablero);
+                          if (mysqli_num_rows($tablero2) > 0)
+                          {?>
+                            <button type="button"  class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#myModal2<?php echo $filas['ID_OBJETO'] ?>" >
                       <i class="fas fa-pencil-alt"></i>
-                      </button>
+                      </button> <?php 
+                          }
+                        ?>
+                      
 
                           <!-- El Modal -->
                           <div class="modal" id="myModal2<?php echo $filas['ID_OBJETO'] ?>">
@@ -170,7 +223,7 @@ include '../../controladores/crud_permisos.php';
 
                                 <!-- Encabezado del modal -->
                                 <div class="modal-header">
-                                <form action="" method="post">
+                                
                                   <h4 class="modal-title">Editar rol</h4>
                                   <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                                 </div>
@@ -178,6 +231,7 @@ include '../../controladores/crud_permisos.php';
 
 
                                 <!-- Cuerpo del modal Modal -->
+                                <form action="" method="post">
                                 <div class="modal-body">
                
                     <label for="">Rol</label>
@@ -217,12 +271,20 @@ include '../../controladores/crud_permisos.php';
                           <!-- fin boton editar -->
                          
                          
-                          
-                      <button  value="eliminar" name="accion" 
+                          <?php 
+                          include '../../conexion/conexion.php';
+                          $tablero = "SELECT * FROM tbl_ms_roles_ojetos WHERE ID_ROL='$id_rol7' and ID_OBJETO=20 and PERMISO_ELIMINACION=1";
+                          $tablero2 = mysqli_query($conn, $tablero);
+                          if (mysqli_num_rows($tablero2) > 0)
+                          {?>
+                             <button  value="eliminar" name="accion" 
                         onclick="return confirm('¿Quieres eliminar este dato?')"
                         type="submit" class="btn btn-danger ">
                         <i class="fas fa-trash-alt"></i>
-                    </button></form>
+                    </button> <?php 
+                          }
+                        ?>
+                     </form>
                     
 </td>
                      <td ><?php echo $filas['OBJETO'] ?></td>

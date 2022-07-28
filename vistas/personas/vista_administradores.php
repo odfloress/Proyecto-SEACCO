@@ -96,8 +96,10 @@ include '../../controladores/crud_administradores.php';
                    </select>
                     <!-- Inicio del select deL estado -->
                     
+
+
                     <label for="">Nombres:</label>
-                    <input type="text" class="form-control" name="nombre" required value="" placeholder="" autocomplete="off" onkeyup="mayus(this);" maxlength="30" >
+                    <input type="text" class="form-control" name="nombre" required value="" placeholder="" autocomplete="on" onkeyup="mayus(this);" maxlength="30">
 
                     <label for="">Apellidos:</label>
                     <input type="text" class="form-control" name="apellido" required value="" placeholder="" autocomplete="off" onkeyup="mayus(this);" maxlength="30" >
@@ -107,7 +109,7 @@ include '../../controladores/crud_administradores.php';
 
                     <label for="">Contraseña:</label>
                     <input type="password" class="form-control" name="contrasena" title="una mayuscula, minuscula, 8 caracteres, un 1 numero  " value="" minlength="8" maxlength="30" required onblur="quitarespacios(this);" onkeyup="sinespacio(this);" pattern="(?=.*[\d])(?=.*[a-z])(?=.*[A-Z]).{8,}">
-
+                  
                     <label for="">Correo:</label>
                     <input type="email" class="form-control" name="correo" required value="" autocomplete="off" placeholder="" > 
                      
@@ -151,9 +153,10 @@ include '../../controladores/crud_administradores.php';
                       <option value="ADMINISTRATIVA">
                       <option value="MANO DE OBRA">
                     </datalist> 
+                    
                 
                 </div>
-                <!-- Fin Cuerpo del modal Modal -->
+                <!-- Fin Cuerpo del modal Modal -->               
                 <!-- pie del modal -->
                 <div class="modal-footer">
       	            <button type="submit" name="accion" value="agregar" class="btn btn-primary" onclick="return confirm('¿Desea agregar un usuario?')">Agregar</button>
@@ -165,6 +168,7 @@ include '../../controladores/crud_administradores.php';
         </div>
     </div>
     <!-- Fin  de modal de agregar --> <br>
+
     </div>
 
 
@@ -303,8 +307,9 @@ include '../../controladores/crud_administradores.php';
                     <label for="">Usuario:</label>
                     <input type="text" readonly class="form-control" name="usuario" required value="<?php echo $filas['USUARIO'] ?>" placeholder="" >
 
-                    <!-- <label for="">Contraseña:</label>
-                    <input type="password" class="form-control" name="contrasena" required value="<?php echo $filas['USUARIO'] ?>" onblur="quitarespacios(this);" onkeyup="sinespacio(this);" pattern="(?=.*[\d])(?=.*[a-z])(?=.*[A-Z]).{8,}"> -->
+                    <label for="">Contraseña:</label>
+                    <input type="password" class="form-control" name="contrasena" required value="<?php echo $filas['USUARIO'] ?>" onblur="quitarespacios(this);" onkeyup="sinespacio(this);" pattern="(?=.*[\d])(?=.*[a-z])(?=.*[A-Z]).{8,}">
+                    
 
                     <label for="">Correo:</label>
                     <input type="email" class="form-control" name="correo" required value="<?php echo $filas['CORREO'] ?>" placeholder="" >
@@ -355,6 +360,7 @@ include '../../controladores/crud_administradores.php';
                 
                 </div>
                 <!-- Fin Cuerpo del modal Modal -->
+
 
                                 <!-- pie del modal -->
                                 <div class="modal-footer">

@@ -45,7 +45,7 @@ if(in_array($extencion, $permitidos)){
                      window.location.href="../../vistas/catalogo/vista_portafolio";
                  </script>';
          }else{
-                die("Error". msqli_error($conn));
+                die("Error". mysqli_error($conn));
               }
 }else{
     // inicio inserta en la tabla bitacora

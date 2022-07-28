@@ -125,7 +125,7 @@
      if (mysqli_num_rows($result4) > 0) { 
          // inicio inserta en la tabla bitacora
          $sql9 = "INSERT INTO tbl_bitacora (USUARIO, ACCION, OBSERVACION)
-         VALUES ('$usuario1[usuario]', 'INTENTO', 'NO LOGRO YA QUE ESTABA EN USO EL ROL ($rol)')";
+         VALUES ('$usuario1[usuario]', 'INTENTO', 'NO LOGRO ELIMINAR YA QUE ESTABA EN USO EL ROL ($rol)')";
          if (mysqli_query($conn, $sql9)) {} else { }
          // fin inserta en la tabla bitacora
          echo '<script>
@@ -142,7 +142,7 @@
                 if (mysqli_num_rows($result5) > 0) { 
                         // inicio inserta en la tabla bitacora
                         $sql9 = "INSERT INTO tbl_bitacora (USUARIO, ACCION, OBSERVACION)
-                        VALUES ('$usuario1[usuario]', 'INTENTO', 'NO LOGRO YA QUE ESTABA EN USO EL ROL ($rol)')";
+                        VALUES ('$usuario1[usuario]', 'INTENTO', 'NO LOGRO YA QUE ESTA EN USO EL ROL ($rol)')";
                         if (mysqli_query($conn, $sql9)) {} else { }
                         // fin inserta en la tabla bitacora
 
