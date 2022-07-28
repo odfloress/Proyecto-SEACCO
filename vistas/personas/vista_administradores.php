@@ -2,13 +2,13 @@
 session_start();
 if(!isset($_SESSION['usuario'])){
  
-        header('Location: ../../_registrar.php');
+        header('Location: ../../_login.php');
         session_unset();
         session_destroy();
         die();
         
 }
-include '../../_registrar.php';
+include '../../controladores/crud_administradores.php';
 
 
 ?>
