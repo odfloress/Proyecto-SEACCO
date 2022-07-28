@@ -9,8 +9,43 @@ if(!isset($_SESSION['usuario'])){
         
 }
 
-include '../../controladores/crud_bienvenida.php'
+include '../../controladores/crud_bienvenida.php';
+// Selecciona el id del rol del usuario logueado
+include '../../conexion/conexion.php';
+$usuario = $_SESSION;
+$roles34 = "SELECT * FROM tbl_usuarios WHERE USUARIO='$usuario[usuario]'";
+$roles35 = mysqli_query($conn, $roles34);
+if (mysqli_num_rows($roles35) > 0)
+{
+ while($row = mysqli_fetch_assoc($roles35))
+  { 
+      $id_rol7 = $row['ID_ROL'];
+  } 
+}
+
+               //valida si tiene permisos de consultar la pantalla 
+               $tablero = "SELECT * FROM tbl_ms_roles_ojetos WHERE ID_ROL='$id_rol7' and ID_OBJETO=6 and PERMISO_CONSULTAR=0";
+               $tablero2 = mysqli_query($conn, $tablero);
+               if (mysqli_num_rows($tablero2) > 0)
+               {
+                header('Location: ../../vistas/tablero/vista_perfil.php');
+                die();
+               }else{
+                $role = "SELECT * FROM tbl_ms_roles_ojetos WHERE ID_ROL='$id_rol7' and ID_OBJETO=6 and PERMISO_CONSULTAR=1";
+                $roless = mysqli_query($conn, $role);
+                if (mysqli_num_rows($roless) > 0){}
+                else{
+                  header('Location: ../../vistas/tablero/vista_perfil.php');
+                  die();
+                }
+         }
+                // inicio inserta en la tabla bitacora
+                $sql = "INSERT INTO tbl_bitacora (USUARIO, ACCION, OBSERVACION)
+                VALUES ('$usuario1[usuario]', 'CONSULTO', 'CONSULTO LA PANTALLA  ADMINISTRATIVA DEL BIENVENIDA')";
+                if (mysqli_query($conn, $sql)) {} else {}
+                // fin inserta en la tabla bitacora
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -37,10 +72,17 @@ include '../../controladores/crud_bienvenida.php'
             <!-- CMENTADO PARA NO MOSTRAR EL BOTON AGREGAR EN LA VISTA BIENVENIDA-->
             <!-- Inicio de modal de agregar -->
   <div class="container mt-3">
-       
-        <!--<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal">
-            Nuevo
-        </button>-->
+  <?php 
+      include '../../conexion/conexion.php';
+      $tablero = "SELECT * FROM tbl_ms_roles_ojetos WHERE ID_ROL='$id_rol7' and ID_OBJETO=6 and PERMISO_INSERCION=1";
+      $tablero2 = mysqli_query($conn, $tablero);
+      if (mysqli_num_rows($tablero2) > 0)
+       {
+         echo '<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal">
+                 Nuevo
+               </button>';
+                          }
+                        ?>
     </div>
     
   <!-- El Modal -->
@@ -56,14 +98,18 @@ include '../../controladores/crud_bienvenida.php'
                 <form action="" method="post" enctype="multipart/form-data">
                 <!-- Cuerpo del modal Modal -->
                 <div class="modal-body">
-                <label for="">Tipo</label>
-                    <input type="text" class="form-control" readonly value="BIENVENIDA" name="tipo" required value="" placeholder=""   >
+                    <label for="">Tipo</label>
+                    <select  class="form-select" id="sel2" name="tipo">
+                      <option value="BIENVENIDA">BIENVENIDA</option>
+                      <option value="NUESTRO_EQUIPO">NUESTRO EQUIPO</option>
+                    </select>
                     <br>
                     <label for="">Imagen</label>
                     <input type="file" class="form-control" accept=".jpg, .png, .jpej, .JPEG, .JPG, .PNG" name="imagenes" required value="<?php echo "$nombreimagen"; ?>" placeholder=""  >
                     <br>
                     <label for="">Titulo</label>
-                    <input type="text" class="form-control"  name="titulo" required value="<?php echo "$titulo"; ?>" placeholder=""  >
+                    <input type="text" class="form-control"  name="titulo" required value="<?php echo "$titulo"; ?>" placeholder="" 
+                    autocomplete = "off"  onkeypress="return soloLetras(event);" minlength="3" maxlength="50" onkeyup="mayus(this);"  >
                     <br>
                     <label for="">Descripción</label>
                     <TEXtarea  style="background-color: white;" name="descripcion" class="form-control"name="" id="" cols="40" rows="5"
@@ -130,14 +176,28 @@ include '../../controladores/crud_bienvenida.php'
                   </tr>
                   </thead>
                   <tbody>
-                  <?php while ($filas= mysqli_fetch_assoc($result)){
+                  <?php
+                  include '../../conexion/conexion.php';
+                  //para mostrar los datos de la tabla mysql y mostrar en el crud
+                  $sql7 = "SELECT * FROM tbl_bienvenida_portafolio WHERE TIPO NOT IN (SELECT TIPO FROM  tbl_bienvenida_portafolio WHERE TIPO = 'PORTAFOLIO' )";
+                  $result = mysqli_query($conn, $sql7);
+                  if (mysqli_num_rows($result) > 0) {
+                  while ($filas= mysqli_fetch_assoc($result)){
                     ?>
                   <tr>
                   <td>
-                        <!-- inicio boton editar -->
-                      <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#myModal2<?php echo $filas['ID_IMAGEN'] ?>">
-                      <i class="fas fa-pencil-alt"></i>
-                      </button>
+                  <?php 
+                          include '../../conexion/conexion.php';
+                          $tablero = "SELECT * FROM tbl_ms_roles_ojetos WHERE ID_ROL='$id_rol7' and ID_OBJETO=6 and PERMISO_ACTUALIZACION=1";
+                          $tablero2 = mysqli_query($conn, $tablero);
+                          if (mysqli_num_rows($tablero2) > 0)
+                          {?>
+                              <!-- inicio boton editar -->
+                              <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#myModal2<?php echo $filas['ID_IMAGEN'] ?>">
+                              <i class="fas fa-pencil-alt"></i>
+                              </button>  <?php 
+                          }
+                        ?>
 
                           <!-- El Modal -->
                           <div class="modal" id="myModal2<?php echo $filas['ID_IMAGEN'] ?>">
@@ -189,12 +249,22 @@ include '../../controladores/crud_bienvenida.php'
                           </div>
                           <!-- CMENTADO PRA NO MOSTRAR EL BOTON ELEIMINAR EN LA VISTA BIENVENIDA-->
                           <!-- fin boton editar -->
+
                           <input type="hidden" name="ruta"  value="<?php echo $filas['RUTA'] ?>">
-                            <!--<button  value="eliminar" name="accion" 
+                          <?php 
+                          include '../../conexion/conexion.php';
+                          $tablero = "SELECT * FROM tbl_ms_roles_ojetos WHERE ID_ROL='$id_rol7' and ID_OBJETO=6 and PERMISO_ELIMINACION=1";
+                          $tablero2 = mysqli_query($conn, $tablero);
+                          if (mysqli_num_rows($tablero2) > 0)
+                          {
+                            ?>
+                             <button  value="eliminar" name="accion" 
                                 onclick="return confirm('¿Quieres eliminar este dato?')"
                                 type="submit" class="btn btn-danger " data-id="19">
                                 <i class="fas fa-trash-alt"></i>
-                            </button>-->
+                              </button> <?php 
+                          }
+                        ?>
                           </form>
 </td>
                       <!-- <td><?php echo $filas['ID_IMAGEN'] ?></td> -->
@@ -204,7 +274,7 @@ include '../../controladores/crud_bienvenida.php'
                      <td><?php echo $filas['DESCRIPCION'] ?></td>
 
       </tr>
-      <?php } ?>  
+      <?php };} ?>  
                   </tfoot>
                 </table>
               </div>
@@ -297,6 +367,12 @@ include '../../controladores/crud_bienvenida.php'
     });
   });
   </script>
+  <script type="text/javascript">
+ function mayus(e) {
+   e.value = e.value.toUpperCase();
+ }
+</script>
 </body>
 <script type="text/javascript" src="../../js/evitar_reenvio.js"></script>
+
 </html>

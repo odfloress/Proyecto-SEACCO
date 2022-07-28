@@ -194,7 +194,7 @@ new Chart("myChart", {
     legend: {display: false},
     title: {
       display: true,
-      text: "Proyectos por mes"
+      text: "Proyectos por Departamento"
     }
   }
 });

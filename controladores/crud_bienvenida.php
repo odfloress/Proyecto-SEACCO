@@ -1,7 +1,7 @@
 <?php
 include '../../conexion/conexion.php';
 //para mostrar los datos de la tabla mysql y mostrar en el crud
-$sql = "SELECT * FROM tbl_bienvenida_portafolio WHERE TIPO='BIENVENIDA'";
+$sql = "SELECT * FROM tbl_bienvenida_portafolio WHERE TIPO='BIENVENIDA' OR TIPO='NUESTRO_EQUIPO'";
 $result = mysqli_query($conn, $sql);
 
 

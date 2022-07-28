@@ -152,6 +152,7 @@ function quitarespacios(e) {
                         <!-- Modal body -->
                         <div class="modal-body">
                         <div class="text-center">
+                          <input type="hidden" name="ruta" value="<?php echo $row["FOTO"]; ?>">
                           <img class="profile-user-img img-fluid img-circle"
                             src="<?php echo $row["FOTO"]; ?>"
                             alt="User profile picture"><br><br>
