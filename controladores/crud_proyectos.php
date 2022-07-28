@@ -15,7 +15,9 @@
   $ubicacion=(isset($_POST['ubicacion']))?$_POST['ubicacion']:"";
   $fecha_inicio=(isset($_POST['fecha_inicio']))?$_POST['fecha_inicio']:"";
   $fecha_final=(isset($_POST['fecha_final']))?$_POST['fecha_final']:"";
-
+  
+  $usuario1 = $_SESSION;
+  
   //variable para recuperar los botones de la vista categprias de productos  
   $accion=(isset($_POST['accion']))?$_POST['accion']:"";
   
@@ -39,6 +41,11 @@
                 $sql1 = "INSERT INTO tbl_proyectos ( ID_PROYECTO,ID_CLIENTE, ID_USUARIO,ID_ESTADOS, NOMBRE, DESCRIPCION, UBICACION, FECHA_INICIO, FECHA_FINAL)
                 VALUES ('$id_proyecto','$id_cliente','$id_usuario','$id_estado','$nombre','$descripcion','$ubicacion','$fecha_inicio','$fecha_final')";
                 if (mysqli_query($conn, $sql1)) {
+                  // inicio inserta en la tabla bitacora
+                  $sql7 = "INSERT INTO tbl_bitacora (USUARIO, ACCION, OBSERVACION)
+                  VALUES ('$usuario1[usuario]', 'INSERTO', 'CREO EL PROYECTO ($nombre)')";
+                   if (mysqli_query($conn, $sql7)) {} else { }
+              // fin inserta en la tabla bitacora
                     header('Location: ../../vistas/proyectos/vista_proyectos.php');
 
                 } else {
@@ -58,6 +65,12 @@
       case "editar";
        $sql2 = "UPDATE tbl_proyectos SET ID_CLIENTE='$id_cliente', ID_USUARIO='$id_usuario', ID_ESTADOS='$id_estado',NOMBRE='$nombre', DESCRIPCION='$descripcion', UBICACION='$ubicacion', FECHA_INICIO='$fecha_inicio', FECHA_FINAL='$fecha_final' WHERE ID_PROYECTO='$id_proyecto'";
                 if (mysqli_query($conn, $sql2)) {
+                  // inicio inserta en la tabla bitacora
+                  $sql8 = "INSERT INTO tbl_bitacora (USUARIO, ACCION, OBSERVACION)
+                  VALUES ('$usuario1[usuario]', 'EDITO', 'EDITO EL PROYECTO ($nombre)')";
+                  
+                   if (mysqli_query($conn, $sql8)) {} else { }
+                 // fin inserta en la tabla bitacora
                    header('Location: ../../vistas/proyectos/vista_proyectos.php');
 
                 }else{
@@ -76,7 +89,11 @@
 
       $sql3 = "DELETE FROM tbl_proyectos WHERE ID_PROYECTO='$id_proyecto'";
       if (mysqli_query($conn, $sql3)) {
-
+        // inicio inserta en la tabla bitacora
+        $sql7 = "INSERT INTO tbl_bitacora (USUARIO, ACCION, OBSERVACION)
+        VALUES ('$usuario1[usuario]', 'ELIMINO', 'ELIMINO EL PROYECTO ($nombre)')";
+         if (mysqli_query($conn, $sql7)) {} else { }
+    // fin inserta en la tabla bitacora
           header('Location: ../../vistas/proyectos/vista_proyectos.php');
       }else{
               echo '<script>

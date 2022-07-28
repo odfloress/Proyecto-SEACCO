@@ -2,13 +2,13 @@
 session_start();
 if(!isset($_SESSION['usuario'])){
  
-        header('Location: ../iniciar_sesion/index_login.php');
+        header('Location: ../../_login.php');
         session_unset();
         session_destroy();
         die();
         
 }
-include '../../controladores/crud_proveedor.php';
+include '../../controladores/crud_departamentos.php';
 // Selecciona el id del rol del usuario logueado
 include '../../conexion/conexion.php';
 $usuario = $_SESSION;
@@ -23,27 +23,27 @@ if (mysqli_num_rows($roles35) > 0)
 }
 
                //valida si tiene permisos de consultar la pantalla 
-               $proveedor = "SELECT * FROM tbl_ms_roles_ojetos WHERE ID_ROL='$id_rol7' and ID_OBJETO=5 and PERMISO_CONSULTAR=0";
-               $proveedor2 = mysqli_query($conn, $proveedor);
-               if (mysqli_num_rows($proveedor2) > 0)
+               $permiso1 = "SELECT * FROM tbl_ms_roles_ojetos WHERE ID_ROL='$id_rol7' and ID_OBJETO=27 and PERMISO_CONSULTAR=0";
+               $permiso2 = mysqli_query($conn, $permiso1);
+               if (mysqli_num_rows($permiso2) > 0)
                {
                 header('Location: ../../vistas/tablero/vista_perfil.php');
                 die();
                }else{
-                $role = "SELECT * FROM tbl_ms_roles_ojetos WHERE ID_ROL='$id_rol7' and ID_OBJETO=5 and PERMISO_CONSULTAR=1";
-                $roless = mysqli_query($conn, $role);
-                if (mysqli_num_rows($roless) > 0){}
-                else{
-                  header('Location: ../../vistas/tablero/vista_perfil.php');
-                  die();
-                }
+                      $permiso1 = "SELECT * FROM tbl_ms_roles_ojetos WHERE ID_ROL='$id_rol7' and ID_OBJETO=27 and PERMISO_CONSULTAR=1";
+                      $permiso2 = mysqli_query($conn, $permiso1);
+                      if (mysqli_num_rows($permiso2) > 0){}
+                      else{
+                        header('Location: ../../vistas/tablero/vista_perfil.php');
+                        die();
+                      }
                }
-               // inicio inserta en la tabla bitacora
-               $sql = "INSERT INTO tbl_bitacora (USUARIO, ACCION, OBSERVACION)
-               VALUES ('$usuario1[usuario]', 'CONSULTO', 'CONSULTO LA PANTALLA ADMINISTRATIVA DE PROVEEDORES')";
-               if (mysqli_query($conn, $sql)) {} else {}
-               // fin inserta en la tabla bitacora
-           
+                // inicio inserta en la tabla bitacora
+                $sql = "INSERT INTO tbl_bitacora (USUARIO, ACCION, OBSERVACION)
+                VALUES ('$usuario[usuario]', 'CONSULTO', 'CONSULTO LA PANTALLA  ADMINISTRATIVA DE DEPARTAMENTOS')";
+                if (mysqli_query($conn, $sql)) {} else {}
+                // fin inserta en la tabla bitacora
+
 
 ?>
 <!DOCTYPE html>
@@ -51,79 +51,68 @@ if (mysqli_num_rows($roles35) > 0)
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Proveedores</title>
+  <title>Departamentos</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
-
+    <!-- enlace del scritpt para evitar si preciona F12, si preciona Ctrl+Shift+I, si preciona Ctr+u  -->
+    <script type="text/javascript" src="../../js/evita_ver_codigo_utilizando_teclas.js"></script>
+    
   <?php include '../../configuracion/navar.php' ?>
-   <!-- Inicio evita el click derecho de la pagina -->
+  <!-- Inicio evita el click derecho de la pagina -->
 <body oncontextmenu="return false">
-<!-- Fin evita el click derecho de la pagina -->
+<!-- Fin evita el click derecho de la pagina --> 
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <div class="container-fluid">
         <div class="row mb-2">
-          <div class="col-sm-6">
+          <div class="col-sm-2">
             <h1></h1>
             <!-- Inicio de modal de agregar -->
 <div class="container mt-3">
-        <h3>Proveedores</h3> <br>  
+  
+        <h3>Departamentos</h3> <br> 
         <?php 
       include '../../conexion/conexion.php';
-      $proveedor = "SELECT * FROM tbl_ms_roles_ojetos WHERE ID_ROL='$id_rol7' and ID_OBJETO=5 and PERMISO_INSERCION=1";
-      $proveedor2 = mysqli_query($conn, $proveedor);
-      if (mysqli_num_rows($proveedor2) > 0)
+      $permiso_insertar = "SELECT * FROM tbl_ms_roles_ojetos WHERE ID_ROL='$id_rol7' and ID_OBJETO=27 and PERMISO_INSERCION=1";
+      $permiso_insertar2 = mysqli_query($conn, $permiso_insertar);
+      if (mysqli_num_rows($permiso_insertar2) > 0)
        {
          echo '<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal">
-                    Nuevo Proveedor
+                    Nuevo estado
                 </button>';
                           }
                         ?> 
         
     </div>
-        
 
 <!-- El Modal -->
     <div class="modal" id="myModal">
         <div class="modal-dialog">
             <div class="modal-content">
                 <!-- Encabezado del modal -->
+                <form action="" method="post">
                 <div class="modal-header">
-                    <h4 class="modal-title">Nuevo proveedor</h4>
+                    <h4 class="modal-title">Nuevo departamento</h4>
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
                 <!-- Fin Encabezado del modal -->
 
                 <!-- Cuerpo del modal Modal -->
-                <form action="" method="post">
                 <div class="modal-body">
+               
+                    <label for="">Nombre del departamento:</label>
+                    <input type="text" class="form-control" name="departamento"  value="<?php echo $departamento; ?>" placeholder="" autocomplete = "off"  onkeypress="return soloLetras(event);" minlength="3" maxlength="20" 
+                     onkeyup="mayus(this);" required  >
+                    <br>
                 
-                    <label for="">Proveedor</label>
-                    <input type="text" class="form-control" name="nombre" required value="" placeholder="" id="txtPrecio_Compra" onkeypress="return soloLetras(event);" minlength="3" maxlength="20" onkeyup="mayus(this);" >
-                    <br>
-                    <label for="">Nombre Referencia</label>
-                    <input type="text" class="form-control" name="nombre_referencia" required value="" placeholder="" id="txtnombrer" onkeypress="return soloLetras(event);" minlength="3" maxlength="20" onkeyup="mayus(this);" >
-                    <br>
-                    <label for="">Sector comercial</label>
-                    <input type="text" class="form-control" name="sector_comercial" required value="" placeholder="" id="txtsectorcomercial" onkeypress="return soloLetras(event);" minlength="3" maxlength="20" onkeyup="mayus(this);" >
-                    <br>
-                    <label for="">direccion</label>
-                    <input type="text" class="form-control" name="direccion" required value="" placeholder="" id="txtdireccionproveedor"  onkeyup="mayus(this);" >
-                    <br>
-                    <label for="">Telefono</label>
-                    <input type="number" class="form-control" name="telefono" required value="" placeholder="" id="txttelefono"   >
-                    <br>
-                    <label for="">Correo</label>
-                    <input type="email" class="form-control" name="correo" required value="" placeholder="" id="txtcorreo"   >
-                    <br>
                 </div>
                 <!-- Fin Cuerpo del modal Modal -->
                 <!-- pie del modal -->
                 <div class="modal-footer">
-      	            <button type="submit" name="accion" value="agregar" class="btn btn-primary" onclick="return confirm('¿Desea agregar el proveedor?')">Agregar</button>
+      	            <button type="submit" name="accion" value="agregar" class="btn btn-primary" onclick="return confirm('¿Desea agregar el departamento?')">Agregar</button>
                     <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
                 </div>
                 <!-- Fin pie del modal -->
@@ -154,55 +143,55 @@ if (mysqli_num_rows($roles35) > 0)
            
             <!-- /.card -->
             
-            <div class="card">
+            <div class="card table-responsive">
               <div class="card-header">
-                <h3 class="card-title">Proveedores</h3>
+                <h3 class="card-title">Departamentos</h3>
                 
               </div>
               
               <!-- /.card-header -->
-              <div class="card-body">
+              <div class="card-body ">
                 <table id="example1" class="table table-bordered table-striped">
                   <thead>
                   <tr>
                   <th>Acciones</th>
                   <th>Id</th>
-                  <th>Nombre</th>
-                  <th>Nombre referencia</th>
-                  <th>Seactor comercial</th>
-                  <th>Dirección</th>
-                  <th>Telefono</th>
-                  <th>Correo</th>
+                  <th>Departamentos</th>
+                  
+                  
                   
                   </tr>
                   </thead>
                   <tbody>
-                  <?php while ($filas= mysqli_fetch_assoc($result)){
-
-                  ?>
+                    <?php 
+                    while ($filas= mysqli_fetch_assoc($result)){
+ 
+                     ?>
                   <tr>
                   <td>
                   <?php 
                           include '../../conexion/conexion.php';
-                          $proveedor = "SELECT * FROM tbl_ms_roles_ojetos WHERE ID_ROL='$id_rol7' and ID_OBJETO=5 and PERMISO_ACTUALIZACION=1";
-                          $proveedor2 = mysqli_query($conn, $proveedor);
-                          if (mysqli_num_rows($proveedor2) > 0)
+                          $permiso_editar = "SELECT * FROM tbl_ms_roles_ojetos WHERE ID_ROL='$id_rol7' and ID_OBJETO=27 and PERMISO_ACTUALIZACION=1";
+                          $permiso_editar2 = mysqli_query($conn, $permiso_editar);
+                          if (mysqli_num_rows($permiso_editar2) > 0)
                           {?>
-                        <!-- inicio boton editar -->
-                      <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#myModal2<?php echo $filas['ID_PROVEEDOR'] ?>">
+                                 <!-- inicio boton editar -->
+                      <button type="button"  class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#myModal2<?php echo $filas['ID_DEPARTAMENTO'] ?>" >
                       <i class="fas fa-pencil-alt"></i>
-                      </button>
-                      <?php 
+                      </button> <?php 
                           }
                         ?>
+                      
+                     
+
                           <!-- El Modal -->
-                          <div class="modal" id="myModal2<?php echo $filas['ID_PROVEEDOR'] ?>">
+                          <div class="modal" id="myModal2<?php echo $filas['ID_DEPARTAMENTO'] ?>">
                             <div class="modal-dialog">
                               <div class="modal-content">
 
                                 <!-- Encabezado del modal -->
                                 <div class="modal-header">
-                                  <h4 class="modal-title">Editar proveedor</h4>
+                                  <h4 class="modal-title">Editar departamento</h4>
                                   <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                                 </div>
                                 <!-- Fin Encabezado del modal -->
@@ -211,75 +200,55 @@ if (mysqli_num_rows($roles35) > 0)
                                 <!-- Cuerpo del modal Modal -->
                                 <form action="" method="post">
                                           <div class="modal-body">
-                                              <label for="">Id Proveedor</label>
-                                              <input type="text" class="form-control" name="id_proveedor" readonly required value="<?php echo $filas['ID_PROVEEDOR'] ?>" placeholder="" id="txtPrecio_Compra"   >
+                                            <input type="hidden" name="nombre_anterior" value="<?php echo $filas['DEPARTAMENTO'] ?>">
+                                              <label for="">Id departamento:</label>
+                                              <input type="text" readonly class="form-control" name="id_departamento" required value="<?php echo $filas['ID_DEPARTAMENTO'] ?>" placeholder=""  >
                                               <br>
-                                              <label for="">Proveedor</label>
-                                              <input type="text" class="form-control" name="nombre" required value="<?php echo $filas['NOMBRE'] ?>" placeholder="" id="txtPrecio_Compra" onkeypress="return soloLetras(event);" onkeyup="mayus(this);" >
-                                              <br>
-                                              <label for="">Nombre Referencia</label>
-                                             <input type="text" class="form-control" name="nombre_referencia" required value="<?php echo $filas['NOMBRE_REFERENCIA'] ?>" placeholder="" id="txtnombrer" onkeypress="return soloLetras(event);" onkeyup="mayus(this);" >
-                                             <br>
-                                             <label for="">Sector comercial</label>
-                                             <input type="text" class="form-control" name="sector_comercial" required value="<?php echo $filas['SECTOR_COMERCIAL'] ?>" placeholder="" id="txtsectorcomercial" onkeypress="return soloLetras(event);" onkeyup="mayus(this);" >
-                                             <br>
-                                             <label for="">direccion</label>
-                                             <input type="text" class="form-control" name="direccion" required value="<?php echo $filas['DIRECCION'] ?>" placeholder="" id="txtdireccionproveedor"  onkeyup="mayus(this);" >
-                                             <br>
-                                             <label for="">Telefono</label>
-                                             <input type="number" class="form-control" name="telefono" required value="<?php echo $filas['TELEFONO'] ?>" placeholder="" id="txttelefono"   >
-                                             <br>
-                                             <label for="">Correo</label>
-                                             <input type="email" class="form-control" name="correo" required value="<?php echo $filas['CORREO'] ?>" placeholder="" id="txtcorreo"  >
-                                             <br>   
-                                           </div>
+                                              <label for="">Departamento:</label>
+                                              <input type="text" class="form-control" name="departamento" required value="<?php echo $filas['DEPARTAMENTO'] ?>" placeholder=""  autocomplete = "off"  onkeypress="return soloLetras(event);" minlength="3" maxlength="20" 
+                                                onkeyup="mayus(this);" required >
+                                             
+                                          
+                                          </div>
                                 <!-- Fin Cuerpo del modal Modal -->
 
                                 <!-- pie del modal -->
                                 <div class="modal-footer">
-                                <button type="submit" name="accion" value="editar" class="btn btn-primary" onclick="return confirm('¿Desea editar el proveedor?')">Guardar</button>
+                                <button type="submit" name="accion" value="editar" class="btn btn-primary" onclick="return confirm('¿Desea editar el departamento?')">Guardar</button>
                                   <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
                                 </div>
-                              </form>
+                             
                                   <!-- Fin pie del modal -->
-                                  <form action="" method="post">
+                                 
                               </div>
                             </div>
                           </div>
                           <!-- fin boton editar -->
+                         
                           <?php 
                           include '../../conexion/conexion.php';
-                          $proveedor = "SELECT * FROM tbl_ms_roles_ojetos WHERE ID_ROL='$id_rol7' and ID_OBJETO=5 and PERMISO_ELIMINACION=1";
-                          $proveedor2 = mysqli_query($conn, $proveedor);
-                          if (mysqli_num_rows($proveedor2) > 0)
+                          $permiso_eliminar = "SELECT * FROM tbl_ms_roles_ojetos WHERE ID_ROL='$id_rol7' and ID_OBJETO=27 and PERMISO_ELIMINACION=1";
+                          $permiso_eliminar2 = mysqli_query($conn, $permiso_eliminar);
+                          if (mysqli_num_rows($permiso_eliminar2) > 0)
                           {?>
-
-                          <input type="hidden" name="id_proveedor"  value="<?php echo $filas['ID_PROVEEDOR'] ?>">
-                      <button  value="eliminar" name="accion" 
+                             <button  value="eliminar" name="accion" 
                         onclick="return confirm('¿Quieres eliminar este dato?')"
-                        type="submit" class="btn btn-danger " data-id="19">
+                        type="submit" class="btn btn-danger ">
                         <i class="fas fa-trash-alt"></i>
-                    </button>
-                    <?php 
+                    </button><?php 
                           }
                         ?>
+                          
                       </form>
+                    
 </td>
-                         
-                    </td>
-                                         <td ><?php echo $filas['ID_PROVEEDOR'] ?></td>
-                                         <td><?php echo $filas['NOMBRE'] ?></td>
-                                         <td><?php echo $filas['NOMBRE_REFERENCIA'] ?></td>
-                                         <td><?php echo $filas['SECTOR_COMERCIAL'] ?></td>
-                                         <td><?php echo $filas['DIRECCION'] ?></td>
-                                         <td><?php echo $filas['TELEFONO'] ?></td>
-                                         <td><?php echo $filas['CORREO'] ?></td>
-                                        </tr>
-                                    <?php } ?>
+                     <td ><?php echo $filas['ID_DEPARTAMENTO'] ?></td>
+                     <td><?php echo $filas['DEPARTAMENTO'] ?></td>
+                     
                     
       </tr>
-                  
-                  </tfoot>
+                <?php } ?>  
+                </tbody>
                 </table>
               </div>
               <!-- /.card-body -->
@@ -332,6 +301,9 @@ if (mysqli_num_rows($roles35) > 0)
 <!-- AdminLTE for demo purposes -->
 <script src="../../plantilla/AdminLTE-3.2.0/dist/js/demo.js"></script>
 <!-- Page specific script -->
+
+<!-- INICIO muestra los botones, traduce y Agrupar -->
+
 <script>
   $(function () {
     $("#example1").DataTable({
@@ -372,14 +344,12 @@ if (mysqli_num_rows($roles35) > 0)
                          },
                          
                          "responsive": true, "lengthChange": true, "autoWidth": false,
-                          "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"],
-
-                        
-
-                         
+                          "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"],                   
         
     })
-    buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+
+      
+    .buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
     $('#example2').DataTable({
       "paging": true,
       "lengthChange": false,
@@ -391,45 +361,16 @@ if (mysqli_num_rows($roles35) > 0)
     });
   });
 </script>
+<!-- Fin muestra los botones y traduce y Agrupar -->
+
+<!-- Enlace Script para que solo permita letras -->
+<script type="text/javascript" src="../../js/solo_letras.js"></script>
+
+ <!-- Enlace Script para que convierta a mayusculas las teclas que se van pulsando -->
+ <script type="text/javascript" src="../../js/converir_a_mayusculas.js"></script>
+
+ <!-- Enlace Script para quitar espacios en blanco -->
+ <script type="text/javascript" src="../../js/quitar_espacios.js"></script>
 </body>
 <script type="text/javascript" src="../../js/evitar_reenvio.js"></script>
 </html>
-
-<script type="text/javascript">
-  
-        function mayus(e) {
-          e.value = e.value.toUpperCase();
-         }
-    </script>
-
-<script type="text/javascript"> function solonumero(e) {
-        tecla = (document.all) ? e.keyCode : e.which;
-        if (tecla==8) return true;
-        else if (tecla==0||tecla==9)  return true;
-       // patron =/[0-9\s]/;// -> solo letras
-        patron =/[0-9-\s]/;// -> solo numeros
-        te = String.fromCharCode(tecla);
-        return patron.test(te);
-    }
-	</script>
-
-<script>
-      function soloLetras(e){
-       key = e.keyCode || e.which;
-       tecla = String.fromCharCode(key).toLowerCase();
-       letras = " áéíóúabcdefghijklmnñopqrstuvwxyz";
-       especiales = ["8-37-39-46"];
-
-       tecla_especial = false
-       for(var i in especiales){
-        if(key == especiales[i]){
-          tecla_especial = true;
-          break;
-        }
-      }
-
-      if(letras.indexOf(tecla)==-1 && !tecla_especial){
-        return false;
-      }
-    }
-  </script>

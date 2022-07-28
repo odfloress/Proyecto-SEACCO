@@ -12,7 +12,8 @@
   $facebook=(isset($_POST['facebook']))?$_POST['facebook']:"";
   $instagram=(isset($_POST['instagram']))?$_POST['instagram']:"";
   
-
+  $usuario1 = $_SESSION;
+  
   //variable para recuperar los botones de la vista categprias de productos  
   $accion=(isset($_POST['accion']))?$_POST['accion']:"";
   
@@ -25,12 +26,12 @@
                 $sql1 = "INSERT INTO tbl_nuestros_contactos ( ID_CONTACTO,	TELEFONO,	CORREO,	DIRECCION,	FACEBOOK,	INSTAGRAM)
                 VALUES ('$id_contacto','$telefono','$correo','$direccion','$facebook','$instagram')";
                 if (mysqli_query($conn, $sql1)) {
-                  // inicio inserta en la tabla bitacora
-                  $sql7 = "INSERT INTO tbl_bitacora (USUARIO, ACCION, OBSERVACION)
-                  VALUES ('$usuario1[usuario]', 'INSERTO', 'CREO EL CONTACTO')";
-                   if (mysqli_query($conn, $sql7)) {} else { }
-              // fin inserta en la tabla bitacora
-                    header('Location: ../../vistas/ajustes/vista_nuestros_contactos.php');
+                   // inicio inserta en la tabla bitacora
+                   $sql7 = "INSERT INTO tbl_bitacora (USUARIO, ACCION, OBSERVACION)
+                   VALUES ('$usuario1[usuario]', 'INSERTO', 'CREO EL CONTACTO')";
+                    if (mysqli_query($conn, $sql7)) {} else { }
+               // fin inserta en la tabla bitacora
+                    header('Location: ../../vistas/mantenimiento/vista_nuestros_contactos.php');
 
                 } else {
                         echo '<script>

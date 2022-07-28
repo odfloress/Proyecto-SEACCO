@@ -223,7 +223,7 @@ if (mysqli_num_rows($roles35) > 0)
 
                                 <!-- Encabezado del modal -->
                                 <div class="modal-header">
-                                <form action="" method="post">
+                                
                                   <h4 class="modal-title">Editar rol</h4>
                                   <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                                 </div>
@@ -231,6 +231,7 @@ if (mysqli_num_rows($roles35) > 0)
 
 
                                 <!-- Cuerpo del modal Modal -->
+                                <form action="" method="post">
                                 <div class="modal-body">
                
                     <label for="">Rol</label>
