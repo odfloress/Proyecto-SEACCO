@@ -393,9 +393,9 @@ include '../../controladores/crud_administradores.php';
                      <td><?php echo $filas['APELLIDO'] ?></td>
                      <td><?php echo $filas['USUARIO'] ?></td>
                      <td><?php echo $filas['CORREO'] ?></td>
-                     <td><?php echo $filas['GENERO'] ?></td>
+                     <td><?php echo $filas['ID_GENERO'] ?></td>
                      <td><?php echo $filas['DNI'] ?></td>
-                     <td><?php echo $filas['PROFESION'] ?></td>
+                     <td><?php echo $filas['ID_PROFESION'] ?></td>
                      <td><?php echo $filas['DIRECCION'] ?></td>
                      <td><?php echo $filas['CELULAR'] ?></td>
                      <td><?php echo $filas['REFERENCIA'] ?></td>
@@ -403,7 +403,7 @@ include '../../controladores/crud_administradores.php';
                      <td><?php echo $filas['EXPERIENCIA_LABORAL'] ?></td>
                      <td><?php echo $filas['CURRICULUM'] ?></td>                     
                      <td><img class="img-thumbnail" width="100px" src="../../imagenes/<?php echo $filas['FOTO'] ?>" /></td>
-                     <td><?php echo $filas['AREA'] ?></td>
+                     <td><?php echo $filas['ID_AREA'] ?></td>
 
                      
                      
