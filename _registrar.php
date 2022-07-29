@@ -1,13 +1,5 @@
 <?php
-session_start();
-if(!isset($_SESSION['usuario'])){
- 
-        //header('Location: ../iniciar_sesion/index_login.php');
-        //session_unset();
-        //session_destroy();
-        //die();
-        include 'controladores/co_registrar.php';   
-      }
+require 'controladores/co_registrar.php';
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -33,7 +25,7 @@ body {
   function clave(e) {
   key = e.keyCode || e.which;
   tecla = String.fromCharCode(key).toString();
-  letras = "ABCDEFGHIJKLMNÑOPQRSTUVWXZabcdefghijklmnñopqrstuvwxyz0123456789";
+  letras = "ABCDEFGHIJKLMNÑOPQRSTUVWXZabcdefghijklmnñopqrstuvwxyz";
   
   especiales = [8,13];
   tecla_especial = false;
@@ -50,7 +42,30 @@ body {
   }
 }
 </script>
+<script>
+  function clave1(e) {
+  key = e.keyCode || e.which;
+  tecla = String.fromCharCode(key).toString();
+  letras = "ABCDEFGHIJKLMNÑOPQRSTUVWXZabcdefghijklmnñopqrstuvwxyz0123456789,#$%&/=!¡?¿()*{}[]-_'.@<>";
+  
+  especiales = [8,13];
+  tecla_especial = false;
+  for(var i in especiales) {
+    if(key == especiales[i]){
+      tecla_especial = true;
+      break;
+    }
+  }
+  
+  if(letras.indexOf(tecla) == -1 && !tecla_especial){
+    alert("Sin espacios");
+    return false;
+  }
+}
+</script>
 
+<!-- enlace del scritpt para evitar si preciona F12, si preciona Ctrl+Shift+I, si preciona Ctr+u  -->
+<script type="text/javascript" src="js/evita_ver_codigo_utilizando_teclas.js"></script>
 
 </head>
 <!-- oncopy="return false" onpaste="return false"  esto no permite copiar ni pegar -->
@@ -65,7 +80,7 @@ body {
 
       <!--Inicio Cuerpo del modal -->
       <div class="modal-body ">
-        <form action="co_registrar.php" method="POST">
+        <form action="" method="POST">
             <div class="mb-3 mt-3">
                 <center><h4>Registrar usuario</h4></center><br>
                 
@@ -74,129 +89,154 @@ body {
             <div class="row">
                 <div class="col">
                   <label for="email"  class="form-label">Nombre:</label>
-                  <input style="background-color:rgb(240, 244, 245);" type="text" autocomplete="of"   onkeyup="mayus(this);" maxlength="30" class="form-control"  placeholder="Ingrese el nombre" name="nombre" required value="<?php if(isset($nombre)) echo $nombre?>">
+                  <input style="background-color:rgb(240, 244, 245);" type="text" autocomplete="off"  value="<?php echo "$nombre"; ?>" onkeyup="mayus(this);" maxlength="30" class="form-control"  placeholder="Ingrese el nombre" name="nombre" required>
                 </div>
                 <div class="col">
                   <label for="pwd" class="form-label">Apellido:</label>
-                  <input style="background-color:rgb(240, 244, 245);" type="text" autocomplete="off"  onkeyup="mayus(this);" maxlength="30" class="form-control"  placeholder="Ingrese su apellido" name="apellido" required value="<?php if(isset($apellido)) echo $apellido?>">
+                  <input style="background-color:rgb(240, 244, 245);" type="text" autocomplete="off" value="<?php echo "$apellido"; ?>" onkeyup="mayus(this);" maxlength="30" class="form-control"  placeholder="Ingrese su apellido" name="apellido" required>
                 </div>
             </div>
             <div class="row">
                 <div class="col">
                   <label for="pwd" class="form-label">Usuario:</label>
-                  <input style="background-color:rgb(240, 244, 245);" type="text" autocomplete="off" onkeypress="return clave(event);"  onKeyUP="this.value=this.value.toUpperCase();"  class="form-control" placeholder="Asignar usuario" name="usuario" required value="<?php if(isset($usuario)) echo $usuario?>">
+                  <input style="background-color:rgb(240, 244, 245);" type="text" autocomplete="off" value="<?php echo "$usuario"; ?>" onkeypress="return clave(event);"  onKeyUP="this.value=this.value.toUpperCase();"  class="form-control" placeholder="Asignar usuario" name="usuario" required>
                 </div>
                 <div class="col">
-                  <label for="pwd" class="form-label">Contraseña:</label>
-                  <input style="background-color:rgb(240, 244, 245);" type="password" autocomplete="off"  class="form-control"  placeholder="Ingrese la contraseña" name="contrasena" id="myInput" max="10" required pattern="(?=.*[\d])(?=.*[a-z])(?=.*[A-Z]).{8,}" onblur="quitarespacios(this);"  onkeyup="sinespacio(this);" required="" minlength="8">
-                  <input type="checkbox" onclick="myFunction()" name="" id=""> Mostrar/Ocultar
+                  <div class="form-group">
+                  <label for="pwd" class="form-label">Contraseña:</label> 
+                    <div class="input-group mb-3">
+                    <input style="background-color:rgb(240, 244, 245);" type="password" id="id_password"  autocomplete="off" onkeypress="return clave1(event);"  class="form-control"  placeholder="Ingrese la contraseña" name="contrasena"  required pattern="(?=.*[\d])(?=.*[a-z])(?=.*[A-Z]).{8,}" onblur="quitarespacios(this);"  onkeyup="sinespacio(this);" required="" minlength="8" maxlength="40" >
+                      <div class="input-group-append ">
+                            
+                          <div class="input-group-text">
+                            <span>
+                            <i class="far fa-eye" id="togglePassword"  ></i>
+                            </span>
+                            
+                          </div> 
+                    </div>  
+                    </div>
+                  </div>
+                  
+                  <span>
+                  
+                  </span>
+                  
                 </div>
             </div>
             <div class="row">
                 <div class="col">
                   <label for="pwd" class="form-label">Correo:</label>
-                  <input style="background-color:rgb(240, 244, 245);" type="email" autocomplete="off" class="form-control"  placeholder="Ingrese su correo" name="correo" required value="<?php if(isset($correo)) echo $correo?>">
+                  <input style="background-color:rgb(240, 244, 245);" type="email" autocomplete="off" value="<?php echo "$correo"; ?>" onkeypress="return clave1(event);" class="form-control"  placeholder="Ingrese su correo" name="correo" required>
                 </div>
                 <div class="col">
                   <label for="pwd" class="form-label">DNI:</label>
-                  <input style="background-color:rgb(240, 244, 245);" type="text" autocomplete="off" class="form-control"  placeholder="Ingrese su DNI sin guiones" name="dni" minlength="13" maxlength="15" required value="<?php if(isset($dni)) echo $dni?>">
+                  <input style="background-color:rgb(240, 244, 245);" type="text" autocomplete="off" value="<?php echo "$dni"; ?>" class="form-control"  placeholder="" name="dni" minlength="13" maxlength="13" onkeypress="return solonumero(event)" required pattern="[0-9]+[1-9]+" title="13 caracteres y no todos ceros">
                 </div>
             </div>
             <div class="row">
                 <div class="col">
                   <label for="pwd" class="form-label">Profesión:</label>
-                  <input style="background-color:rgb(240, 244, 245);" type="text" autocomplete="off" onkeypress="return SoloLetras(event);"  onKeyUP="this.value=this.value.toUpperCase();" class="form-control"  placeholder="Ingrese su profesion" name="profesion" required value="<?php if(isset($profesion)) echo $profesion?>">
+                  <select style="background-color:rgb(240, 244, 245);" value="<?php echo "$profesion"; ?>" class="form-select" id="lista1" name="profesion" required >
+                        <?php
+                            include 'conexion/conexion.php';
+                            $profesion = "SELECT * FROM tbl_profesiones ORDER BY ID_PROFESION";
+                            $profesion2 = mysqli_query($conn, $profesion);
+                            if (mysqli_num_rows($profesion2) > 0) {
+                                while($row = mysqli_fetch_assoc($profesion2))
+                                {
+                                $id_profesion = $row['ID_PROFESION'];
+                                $profesion3 =$row['PROFESION'];
+                         ?>
+                          <option value="<?php  echo $id_profesion ?>"><?php echo $profesion3 ?></option>
+                          <?php
+                           }}// finaliza el if y el while
+                           ?>
+                   </select>
                 </div>
                 <div class="col">
                   <label for="pwd" class="form-label">Dirección:</label>
-                  <input style="background-color:rgb(240, 244, 245);" type="text" autocomplete="off" onkeypress="return SoloLetras(event);"  onKeyUP="this.value=this.value.toUpperCase();" class="form-control"  placeholder="Ingrese su dirección" name="direccion" required value="<?php if(isset($direccion)) echo $direccion?>">
+                  <input style="background-color:rgb(240, 244, 245);" type="text" autocomplete="off"  value="<?php echo "$direccion"; ?>" onkeypress="return SoloLetras(event);"  onKeyUP="this.value=this.value.toUpperCase();" class="form-control"  placeholder="Ingrese su dirección" name="direccion" required>
                 </div>
             </div>
             <div class="row"> 
                 <div class="col">
                   <label for="pwd" class="form-label">Celular:</label>
-                  <input style="background-color:rgb(240, 244, 245);" type="number" autocomplete="off" class="form-control"  placeholder="Ingrese su celular" name="celular" required value="<?php if(isset($celular)) echo $celular?>">
+                  <input style="background-color:rgb(240, 244, 245);" type="text" autocomplete="off"  value="<?php echo "$celular"; ?>" class="form-control"  placeholder="Ingrese su celular" name="celular" required minlength="8" onkeypress="return solonumero(event)" maxlength="8" pattern="[0-9]+[1-9]+" title="8 caracteres y no todos ceros">
                 </div>
                 <div class="col">
                   <label for="pwd" class="form-label">Referencia:</label>
-                  <input style="background-color:rgb(240, 244, 245);" type="text" autocomplete="off" onkeypress="return SoloLetras(event);"  onKeyUP="this.value=this.value.toUpperCase();" class="form-control"  placeholder="Ingrese nombre referencia" name="referencia" required value="<?php if(isset($referencia)) echo $referencia?>">
+                  <input style="background-color:rgb(240, 244, 245);" type="text" autocomplete="off"  value="<?php echo "$referencia"; ?>" onkeypress="return SoloLetras(event);"  onKeyUP="this.value=this.value.toUpperCase();" class="form-control"  placeholder="Ingrese nombre referencia" name="referencia" required>
                 </div>
             </div>
             <div class="row">
                 <div class="col">
                   <label for="pwd" class="form-label">Celular referencia:</label>
-                  <input style="background-color:rgb(240, 244, 245);" type="number" autocomplete="off" class="form-control"  placeholder="Opcional" name="celular_referencia" value="<?php if(isset($celular_referencia)) echo $celular_referencia?>">
+                  <input style="background-color:rgb(240, 244, 245);" type="text" autocomplete="off"  value="<?php echo "$celular_referencia"; ?>" class="form-control"  placeholder="Opcional" name="celular_referencia" onkeypress="return solonumero(event)" required minlength="8" maxlength="8" pattern="[0-9]+[1-9]+" title="8 caracteres y no todos ceros">
                 </div>
                 <div class="col">
                   <label for="pwd" class="form-label">Experiencia laboral:</label>
-                  <input style="background-color:rgb(240, 244, 245);" type="text" autocomplete="off" onkeypress="return SoloLetras(event);"  onKeyUP="this.value=this.value.toUpperCase();" class="form-control"  placeholder="Ingrese su profesión u oficio" name="experiencia_laboral" required value="<?php if(isset($experiencia_laboral)) echo $experiencia_laboral?>">
+                  <input style="background-color:rgb(240, 244, 245);" type="text" autocomplete="off"  value="<?php echo "$experiencia_laboral"; ?>" onkeypress="return SoloLetras(event);"  onKeyUP="this.value=this.value.toUpperCase();" class="form-control"  placeholder="Ingrese su profesión u oficio" name="experiencia_laboral" required>
                 </div>
             </div>
             <div class="row">
                 <div class="col"> 
                   <label for="pwd" class="form-label">Curriculum:</label>
-                  <input style="background-color:rgb(240, 244, 245);" type="file" autocomplete="off" class="form-control"  placeholder="Adjunte su curriculum" name="curriculum">
+                  <input style="background-color:rgb(240, 244, 245);" type="file" autocomplete="off"  value="<?php echo "$curriculum"; ?>" class="form-control"  placeholder="Adjunte su curriculum" name="curriculum" required>
                 </div>
                 <div class="col">
                   <label for="pwd" class="form-label">Foto:</label>
-                  <input style="background-color:rgb(240, 244, 245);" type="file" autocomplete="off" class="form-control"  placeholder="Adjunte su foto" name="foto">
-                </div> 
+                  <input style="background-color:rgb(240, 244, 245);" type="file" autocomplete="off"  value="<?php echo "$foto"; ?>" class="form-control" required placeholder="Adjunte su foto" name="foto">
+                </div>
             </div>
-
             <div class="row">
-                <div class="col">             
-            <label for="sel1" class="form-label">Género:</label>
-                <select placeholder="Seleccione" class="form-select" id_="sel1" name="genero" required >
-                  <option></option>
-                  <?php
-                      include '../conexion.php';
-                      $getgenero = "SELECT * FROM tbl_genero WHERE ID_GENERO ORDER BY ID_GENERO";
-                      $getgenero1 = mysqli_query($conn, $getgenero);
-                      if (mysqli_num_rows($getgenero1) > 0) {
-                          while($row = mysqli_fetch_assoc($getgenero1))
-                            {
-                              $id_genero = $row['ID_GENERO'];
-                              $genero =$row['GENERO'];
-                           ?>
-                              <option value="<?php  echo $id_genero; ?>"><?php echo $genero?></option>
+                <div class="col">
+                <label for="pwd" class="form-label">Genero:</label>
+                <select style="background-color:rgb(240, 244, 245);" value="<?php echo "$genero"; ?>" class="form-select" id="lista1" name="genero" required >
+                        <?php
+                            include 'conexion/conexion.php';
+                            $genero = "SELECT * FROM tbl_generos ORDER BY ID_GENERO";
+                            $genero2 = mysqli_query($conn, $genero);
+                            if (mysqli_num_rows($genero2) > 0) {
+                                while($row = mysqli_fetch_assoc($genero2))
+                                {
+                                $id_genero = $row['ID_GENERO'];
+                                $genero3 =$row['GENERO'];
+                         ?>
+                          <option value="<?php  echo $id_genero ?>"><?php echo $genero3 ?></option>
                           <?php
-                    }}// finaliza el if y el while
-
-                ?>
-                 </select>
-            </div>
-            <br>
-           
+                           }}// finaliza el if y el while
+                           ?>
+                   </select>
+                </div>  
                 <div class="col">
                 <label for="pwd" class="form-label">Area:</label>
-                <input class="form-control" autocomplete="off" maxlength="20" list="browsers1" type="text" id="calcular" name="area"  id="browser" placeholder="Seleccione"  required value="<?php if(isset($area)) echo $area?>">
-                <datalist id="browsers1">
-                  <option value="ADMINISTRATIVA">
-                  <option value="MANO DE OBRA">
-                </datalist> 
-                </div>   
-                </div>             
-           </div>
-           <br>
+                <select style="background-color:rgb(240, 244, 245);" value="<?php echo "$area"; ?>" class="form-select" id="lista1" name="area" required >
+                        <?php
+                            include 'conexion/conexion.php';
+                            $area = "SELECT * FROM tbl_areas ORDER BY ID_AREA";
+                            $area2 = mysqli_query($conn, $area);
+                            if (mysqli_num_rows($area2) > 0) {
+                                while($row = mysqli_fetch_assoc($area2))
+                                {
+                                $id_area = $row['ID_AREA'];
+                                $area3 =$row['AREA'];
+                         ?>
+                          <option value="<?php  echo $id_area ?>"><?php echo $area3 ?></option>
+                          <?php
+                           }}// finaliza el if y el while
+                           ?>
+                   </select>
+                </div>               
+           </div><br>
             <div class="d-grid">
             <button type="submit" name="accion" value="registrar" class="btn btn-dark btn-block">Registrar</button><br>
-            <a href="Proyecto-SEACCO/vistas/iniciar_sesion/preguntas_seguridad" class="btn btn-danger btn-block">Cancelar</a>
+            <a href="/SEACCO/_login" class="btn btn-danger btn-block">Cancelar</a>
             </div>         
             
         </form>
       </div>
        <!--Fin Cuerpo del modal -->
-    <!-- Mostrar y/u ocultar contraseña -->
-    <script>
-function myFunction() {
-  var x = document.getElementById("myInput");
-  if (x.type === "password") {
-    x.type = "text";
-  } else {
-    x.type = "password";
-  }
-}
-</script>
 
          </div>
   </div>
@@ -210,30 +250,6 @@ function myFunction() {
  function mayus(e) {
    e.value = e.value.toUpperCase();
  }
-</script>
-
-<script type="text/javascript">
-
-function solonumeros(e) {
-  var teclado= e.value;
-  var numero= "";
-  var especiales = "";
-
-  key=e.keyCode||e.which;
-  teclado = string.fromCharCode(key);
-  numero = "0123456789";
-  especiales = "8-37-38-46"; //Arreglo
-  teclado_especial=false;
-
-  for(var i in especiales){
-    if(key==especiales[i]){
-teclado_especial = true;
-       }
-  }
-if (numero.indexOf(teclado)==-1 && !teclado_especial){
-  return false;
-}
-};
 </script>
 
 <script type="text/javascript">

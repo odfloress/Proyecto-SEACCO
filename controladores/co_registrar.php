@@ -19,7 +19,7 @@
   $genero=(isset($_POST['genero']))?$_POST['genero']:"";
   $area=(isset($_POST['area']))?$_POST['area']:"";
 
- 
+ // recupera el botón
   $accion=(isset($_POST['accion']))?$_POST['accion']:"";
 
   // encripta la contraseña
@@ -35,7 +35,7 @@
 
                 echo '<script>
                         alert("El usuario ya existe, intente con otro");
-                        window.Location = "/registrar.php";
+                        // window.Location = "/registrar.php";
                       </script>';
                       mysqli_close($conn);
                
@@ -48,7 +48,7 @@
 
                 echo '<script>
                         alert("El correo ya existe, intente con otro");
-                        window.Location = "/registrar.php";
+                        // window.Location = "/registrar.php";
                       </script>';
                       mysqli_close($conn);
 
@@ -61,32 +61,22 @@
 
                 echo '<script>
                         alert("El DNI ya esta registrado, verifique que el ingresado sea el correcto");
-                        window.Location = "/registrar.php";
+                        // window.Location = "/registrar.php";
                       </script>';
                       mysqli_close($conn);
 
             }else
             {
 
-                    // inicio inserta en la tabla bitacora
-                    $sql7 = "INSERT INTO tbl_bitacora ( USUARIO, ACCION, OBSERVACION)
-                    VALUES ( '$usuario', 'REGISTRO', 'EL SUARIO $usuario SE REGISTRO')";
-                    
-                    if (mysqli_query($conn, $sql7)) {
-                      
-                    } else {
-                      
-                    }
-              // fin inserta en la tabla bitacora
 
                   // Inserta en la tabla tbl_usuarios
-                  $sql = "INSERT INTO tbl_usuarios (ID_ROL, ID_ESTADO_USUARIO, NOMBRE, APELLIDO, USUARIO, GENERO, CORREO, DNI, PROFESION, DIRECCION, CELULAR, REFERENCIA, CEL_REFERENCIA, EXPERIENCIA_LABORAL, CURRICULUM, CONTRASENA, FOTO)
-                                VALUES (1,4,'$nombre', '$apellido', '$usuario', '$genero', '$correo', '$dni', '$profesion',  '$direccion', '$celular', '$referencia', '$celular_referencia', '$experiencia_laboral', '$curriculum','$contrasena','$foto')";
+                  $sql = "INSERT INTO tbl_usuarios (ID_ROL, ID_ESTADO_USUARIO, NOMBRE, APELLIDO, USUARIO, ID_GENERO, CORREO, DNI, ID_PROFESION, DIRECCION, CELULAR, REFERENCIA, CEL_REFERENCIA, EXPERIENCIA_LABORAL, CURRICULUM, CONTRASENA, FOTO, ID_AREA)
+                          VALUES (2,4,'$nombre', '$apellido', '$usuario', '$genero', '$correo', '$dni', '$profesion',  '$direccion', '$celular', '$referencia', '$celular_referencia', '$experiencia_laboral', '$curriculum','$contrasena','$foto', '$area' )";
                   
                   if (mysqli_query($conn, $sql)) {
                     echo '<script>
                                   alert("Usuario creado con exito");
-                                  window.location.href="/Proyecto-SEACCO/_login";
+                                  window.location.href="/SEACCO/_login";
                       </script>';
 
                       
