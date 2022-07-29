@@ -1,4 +1,5 @@
 <?php
+session_start();
   require 'conexion/conexion.php';
 
   //Variables para recuperar la información de los campos de la vista registro
@@ -27,6 +28,11 @@
 
   switch($accion){
       case "registrar": 
+        // // inicio inserta en la tabla bitacora
+        // $sql = "INSERT INTO tbl_bitacora (USUARIO, ACCION, OBSERVACION)
+        // VALUES ('$usuario', 'INTENTO', 'NO LOGRO INGRESAR YA QUE SU CUENTA ESTA INACTIVA')";
+        // if (mysqli_query($conn, $sql)) {} else {}
+        // // fin inserta en la tabla bitacora
 
 
         // validacion para que no se repitan los usuarios en la tabla tbl_usuarios
@@ -102,9 +108,10 @@
                           VALUES (2,4,'$nombre', '$apellido', '$usuario', '$genero', '$correo', '$dni', '$profesion',  '$direccion', '$celular', '$referencia', '$celular_referencia', '$experiencia_laboral', '../../$destino$nombrecurriculum','$contrasena','../../$destino1$nombrefoto', '$area' )";
                   
                   if (mysqli_query($conn, $sql)) {
+                    $_SESSION['nombre'] = $usuario;
                     echo '<script>
                                   alert("Usuario creado con exito");
-                                  window.location.href="/SEACCO/_login";
+                                  window.location.href="/SEACCO/vistas/iniciar_sesion/preguntas_seguridad";
                       </script>';
        
                      
