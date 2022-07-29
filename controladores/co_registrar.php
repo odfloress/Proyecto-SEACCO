@@ -28,6 +28,68 @@
   switch($accion){
       case "registrar": 
 
+        // $permitidos = array("pdf", "docx");
+        // $extencion = pathinfo($_FILES['curriculum']["name"], PATHINFO_EXTENSION);
+        
+        // if(in_array($extencion, $permitidos)){
+        //     $Fecha= new DateTime();
+        //     $destino ="../../curriculum/";
+        //     $nombrecurriculum=($_FILES['curriculum']["name"]!="")?$Fecha->getTimestamp()."_".$_FILES["curriculum"]["name"]:"imagen.jpg";
+        //     $tmpArchivo= $_FILES["curriculum"]["tmp_name"];
+        //     if($tmpArchivo!="") 
+        //     {
+        //      move_uploaded_file($tmpArchivo,$destino.$nombrecurriculum);
+        //     } 
+        //         $sql = "INSERT INTO tbl_bienvenida_portafolio (TIPO, IMAGEN, RUTA, TITULO, DESCRIPCION)
+        //                 VALUES ('$tipo', '$nombrecurriculum', '$destino$nombrecurriculum', '$titulo', '$descripcion')";
+        //         $res = mysqli_query($conn, $sql);
+        //          if($res){
+                     
+        //             echo '<script type="text/javascript">
+        //                      alert("Agregado correctamente");
+        //                      window.location.href="../../vistas/catalogo/vista_portafolio";
+        //                  </script>';
+        //          }else{
+        //                 die("Error". mysqli_error($conn));
+        //               }
+        // }else{
+           
+        //     echo '<script type="text/javascript">
+        //              alert("Archivo no permitido");
+        //              window.location.href="../../vistas/catalogo/vista_portafolio";
+        //           </script>';
+        // }
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         // validacion para que no se repitan los usuarios en la tabla tbl_usuarios
            $validar_usuario = "SELECT * FROM tbl_usuarios WHERE USUARIO='$usuario'";
            $result = mysqli_query($conn, $validar_usuario);
@@ -68,25 +130,52 @@
             }else
             {
 
+              
+        $permitidos = array("pdf", "docx");
+        $extencion = pathinfo($_FILES['curriculum']["name"], PATHINFO_EXTENSION);
+        
+        if(in_array($extencion, $permitidos)){
+            $Fecha= new DateTime();
+            $destino ="curriculum/";
+            $nombrecurriculum=($_FILES['curriculum']["name"]!="")?$Fecha->getTimestamp()."_".$_FILES["curriculum"]["name"]:"imagen.jpg";
+            $tmpArchivo= $_FILES["curriculum"]["tmp_name"];
+            if($tmpArchivo!="") 
+            {
+             move_uploaded_file($tmpArchivo,$destino.$nombrecurriculum);
+            } 
+
+               
+                   
 
                   // Inserta en la tabla tbl_usuarios
                   $sql = "INSERT INTO tbl_usuarios (ID_ROL, ID_ESTADO_USUARIO, NOMBRE, APELLIDO, USUARIO, ID_GENERO, CORREO, DNI, ID_PROFESION, DIRECCION, CELULAR, REFERENCIA, CEL_REFERENCIA, EXPERIENCIA_LABORAL, CURRICULUM, CONTRASENA, FOTO, ID_AREA)
-                          VALUES (2,4,'$nombre', '$apellido', '$usuario', '$genero', '$correo', '$dni', '$profesion',  '$direccion', '$celular', '$referencia', '$celular_referencia', '$experiencia_laboral', '$curriculum','$contrasena','$foto', '$area' )";
+                          VALUES (2,4,'$nombre', '$apellido', '$usuario', '$genero', '$correo', '$dni', '$profesion',  '$direccion', '$celular', '$referencia', '$celular_referencia', '$experiencia_laboral', '../../$destino$nombrecurriculum','$contrasena','$foto', '$area' )";
                   
                   if (mysqli_query($conn, $sql)) {
                     echo '<script>
                                   alert("Usuario creado con exito");
                                   window.location.href="/SEACCO/_login";
                       </script>';
-
-                      
-                            
+       
                      
                   } else {
                     echo "Error: " . $sql . "<br>" . mysqli_error($conn);
                   }
                   
                   mysqli_close($conn);
+                
+
+                }else{
+           
+                  echo '<script type="text/javascript">
+                           alert("Archivo no permitido");
+                           
+                        </script>';
+              }
+
+
+
+
                 }
                 }
                } // fin del else principal

@@ -80,7 +80,7 @@ body {
 
       <!--Inicio Cuerpo del modal -->
       <div class="modal-body ">
-        <form action="" method="POST">
+        <form action="" method="POST"  enctype="multipart/form-data">
             <div class="mb-3 mt-3">
                 <center><h4>Registrar usuario</h4></center><br>
                 
@@ -182,11 +182,11 @@ body {
             <div class="row">
                 <div class="col"> 
                   <label for="pwd" class="form-label">Curriculum:</label>
-                  <input style="background-color:rgb(240, 244, 245);" type="file" autocomplete="off"  value="<?php echo "$curriculum"; ?>" class="form-control"  placeholder="Adjunte su curriculum" name="curriculum" required>
+                  <input style="background-color:rgb(240, 244, 245);" type="file" accept=".pdf, .docx" autocomplete="off"  value="<?php echo "$curriculum"; ?>" class="form-control"  placeholder="Adjunte su curriculum" name="curriculum" required>
                 </div>
                 <div class="col">
                   <label for="pwd" class="form-label">Foto:</label>
-                  <input style="background-color:rgb(240, 244, 245);" type="file" autocomplete="off"  value="<?php echo "$foto"; ?>" class="form-control" required placeholder="Adjunte su foto" name="foto">
+                  <input style="background-color:rgb(240, 244, 245);" type="file" accept=".jpg, .png, .jpej, .JPEG, .JPG, .PNG" autocomplete="off"  value="<?php echo "$foto"; ?>" class="form-control" required placeholder="Adjunte su foto" name="foto">
                 </div>
             </div>
             <div class="row">
