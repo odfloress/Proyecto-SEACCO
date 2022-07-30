@@ -172,7 +172,7 @@ body {
             <div class="row">
                 <div class="col">
                   <label for="pwd" class="form-label">Celular referencia:</label>
-                  <input style="background-color:rgb(240, 244, 245);" type="text" autocomplete="off"  value="<?php echo "$celular_referencia"; ?>" class="form-control"  placeholder="Opcional" name="celular_referencia" onkeypress="return solonumero(event)" required minlength="8" maxlength="8" pattern="[0-9]+[1-9]+" title="8 caracteres y no todos ceros">
+                  <input style="background-color:rgb(240, 244, 245);" type="text" autocomplete="off"  value="<?php echo "$celular_referencia"; ?>" class="form-control"  placeholder="Opcional" name="celular_referencia" onkeypress="return solonumero(event)" required minlength="8" maxlength="8" pattern="[0-9]+[1-9]+[0-9]+" title="8 caracteres y no todos ceros">
                 </div>
                 <div class="col">
                   <label for="pwd" class="form-label">Experiencia laboral:</label>
