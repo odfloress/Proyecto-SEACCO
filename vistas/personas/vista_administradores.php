@@ -260,7 +260,7 @@ include '../../controladores/crud_administradores.php';
                     <!-- Inicio del select de rol -->
                     <label for="sel1" class="form-label">Rol:</label>
                     <select  class="form-select"  name="rol" required >
-                        <option><?php echo $filas['ID_ROL'] ?></option>
+                        <option value="<?php echo $filas['ID_ROL']; ?>"> <?php echo $filas['ROL']; ?></option>
                         <?php
                         include '../../conexion/conexion.php';
                         $roles = "SELECT * FROM tbl_roles ORDER BY ID_ROL";
@@ -280,7 +280,8 @@ include '../../controladores/crud_administradores.php';
                     <!-- Inicio del select deL estado -->
                     <label for="sel1" class="form-label">Estado:</label>
                     <select class="form-select"  name="estado" required >
-                        <option><?php echo $filas['ID_ESTADO_USUARIO'] ?></option>
+                    <option value="<?php echo $filas['ID_ESTADO_USUARIO']; ?>"> <?php echo $filas['NOMBRE_ESTADO']; ?></option>
+                       
                         <?php
                         include '../../conexion/conexion.php';
                         $estados = "SELECT * FROM tbl_estado_usuario ORDER BY ID_ESTADO_USUARIO";
@@ -307,26 +308,55 @@ include '../../controladores/crud_administradores.php';
                     <label for="">Usuario:</label>
                     <input type="text" readonly class="form-control" name="usuario" required value="<?php echo $filas['USUARIO'] ?>" placeholder="" >
 
-                    <label for="">Contraseña:</label>
-                    <input type="password" class="form-control" name="contrasena" required value="<?php echo $filas['USUARIO'] ?>" onblur="quitarespacios(this);" onkeyup="sinespacio(this);" pattern="(?=.*[\d])(?=.*[a-z])(?=.*[A-Z]).{8,}">
+                    
                     
 
                     <label for="">Correo:</label>
-                    <input type="email" class="form-control" name="correo" required value="<?php echo $filas['CORREO'] ?>" placeholder="" >
+                    <input type="email" readonly class="form-control" name="correo" required value="<?php echo $filas['CORREO'] ?>" placeholder="" >
                      
                     <label for="">Genero:</label>
                     <select class="form-select"  name="genero" required >
-                      <option value=""><?php echo $filas['GENERO'] ?></option>
-                      <option value="M">M</option>
-                      <option value="F">F</option>
-                    </select>
+                    <option value="<?php echo $filas['ID_GENERO']; ?>"> <?php echo $filas['GENERO']; ?></option>
+                       
+                        <?php
+                        include '../../conexion/conexion.php';
+                        $generos = "SELECT * FROM tbl_generos ORDER BY ID_GENERO";
+                        $generos2 = mysqli_query($conn, $generos);
+                        if (mysqli_num_rows($generos2) > 0) {
+                            while($row = mysqli_fetch_assoc($generos2))
+                            {
+                              $id_genero = $row['ID_GENERO'];
+                              $genero =$row['GENERO'];
+                        ?>
+                          <option value="<?php  echo $id_genero; ?>"><?php echo $genero?></option>
+                          <?php
+                           }}// finaliza el if y el while
+                           ?>
+                   </select>
                     
 
                     <label for="">DNI:</label>
                     <input type="text" class="form-control" name="dni" required value="<?php echo $filas['DNI'] ?>" autocomplete="off" minlength="15" maxlength="15"  onkeypress="return solonumero(event)" placeholder="0000-0000-000000" >
 
                     <label for="">Profesion:</label>
-                    <input type="text" class="form-control" name="profesion" required value="<?php echo $filas['PROFESION'] ?>" autocomplete="off" onkeyup="mayus(this);" maxlength="30" >
+                    <select class="form-select"  name="profesion" required >
+                    <option value="<?php echo $filas['ID_PROFESION']; ?>"> <?php echo $filas['PROFESION']; ?></option>
+                       
+                        <?php
+                        include '../../conexion/conexion.php';
+                        $profesion = "SELECT * FROM tbl_profesiones ORDER BY ID_PROFESION";
+                        $profesion2 = mysqli_query($conn, $profesion);
+                        if (mysqli_num_rows($profesion2) > 0) {
+                            while($row = mysqli_fetch_assoc($profesion2))
+                            {
+                              $id_profesion = $row['ID_PROFESION'];
+                              $profesion3 =$row['PROFESION'];
+                        ?>
+                          <option value="<?php  echo $id_profesion; ?>"><?php echo $profesion3?></option>
+                          <?php
+                           }}// finaliza el if y el while
+                           ?>
+                   </select>
 
                     <label for="">Dirección:</label>
                     <input type="text" class="form-control" name="direccion" required value="<?php echo $filas['DIRECCION'] ?>" autocomplete="off" onkeyup="mayus(this);" maxlength="70" >
@@ -387,8 +417,8 @@ include '../../controladores/crud_administradores.php';
                     
 </td>
                      <td ><?php echo $filas['ID_USUARIO'] ?></td>
-                     <td><?php echo $filas['ID_ROL'] ?></td>
-                     <td><?php echo $filas['ID_ESTADO_USUARIO'] ?></td>
+                     <td><?php echo $filas['ROL'] ?></td>
+                     <td><?php echo $filas['NOMBRE_ESTADO'] ?></td>
                      <td><?php echo $filas['NOMBRE'] ?></td>
                      <td><?php echo $filas['APELLIDO'] ?></td>
                      <td><?php echo $filas['USUARIO'] ?></td>
