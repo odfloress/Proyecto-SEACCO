@@ -1,7 +1,7 @@
 <?php
   require '../../conexion/conexion.php';
   //para mostrar los datos de la tabla mysql y mostrar en el crud
-  $sql = "SELECT * FROM tbl_roles";
+  $sql = "SELECT * FROM tbl_roles WHERE ROL NOT IN (SELECT ROL FROM  tbl_roles WHERE ID_ROL=3 ) ORDER BY ID_ROL";
   $result = mysqli_query($conn, $sql);
 
 

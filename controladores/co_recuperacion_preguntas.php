@@ -21,7 +21,7 @@
             if (mysqli_num_rows($result) > 0) {
                 // inicio inserta en la tabla bitacora
                 $sql = "INSERT INTO tbl_bitacora (USUARIO, ACCION, OBSERVACION)
-                VALUES ('$usuario[nombre]', 'INGRESO', 'EL USUARIO $usuario[nombre] RESPONDIO CORRECTAMENTE LA PREGUNTA')";
+                VALUES ('$usuario[nombre]', 'INGRESO', 'RESPUESTA CORRECTA Al RECUPERAR CONTRASEÑA')";
                 if (mysqli_query($conn, $sql)) {} else {}
                 // fin inserta en la tabla bitacora
               // una vez completada  la configuracion de preguntas y respuestas redirecciona a cambio de contraseña
@@ -33,7 +33,7 @@
              
                       } else {  
                         $sql = "INSERT INTO tbl_bitacora (USUARIO, ACCION, OBSERVACION)
-                VALUES ('$usuario[nombre]', 'INTENTO', 'EL USUARIO $usuario[nombre] SE EQUIVOCO EN LA RESPUESTA')";
+                VALUES ('$usuario[nombre]', 'INTENTO', 'RESPUESTA INCORRECTA Al RECUPERAR CONTRASEÑA')";
                 if (mysqli_query($conn, $sql)) {} else {} 
                         echo '<script>
                                 alert("La informacion no coincide");
