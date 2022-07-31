@@ -73,20 +73,37 @@ if(!isset($_SESSION['usuario'])){
                 <table id="example1" class="table table-bordered table-striped">
                   <thead>
                   <tr>
+                  <th>Id</th>
                     <th>Nombre</th>
+                    <th>Apellido</th>
                     <th>Usuario</th>
                     <th>Correo</th>
                     <th>Registrado</th>
                   </tr>
                   </thead>
                   <tbody>
+                    <?php
+                    require '../../conexion/conexion.php';
+                    $consulta = "SELECT  * from tbl_usuarios";
+                    $usuarios = mysqli_query($conn, $consulta);
+                      foreach($usuarios as $usuario){
+
+                    
+                    ?>
                   <tr>
-                    <td>David Sánchez</td>
-                    <td>DAVIDS</td>
+                    <td><?php echo $usuario['ID_USUARIO']?></td>
+                    <td><?php echo $usuario['NOMBRE']?></td>
+                    <td><?php echo $usuario['APELLIDO']?></td>
+                    <td><?php echo $usuario['USUARIO']?></td>
+                    <td><?php echo $usuario['CORREO']?></td>
+                    <td><?php echo $usuario['VERIFICASION_CORREO']?></td>
+                    <!-- <td>DAVIDS</td>
                     <td>odfloress@unah.hn</td>
-                    <td> 07/07/2022 7:00:00</td>
+                    <td> 07/07/2022 7:00:00</td> -->
                   </tr>
-                  
+                  <?php
+                    }
+                  ?>
                   
                   </tfoot>
                 </table>
@@ -146,6 +163,41 @@ if(!isset($_SESSION['usuario'])){
 <script>
   $(function () {
     $("#example1").DataTable({
+      language: {
+                          processing: "Tratamiento en curso...",
+                          search: "Buscar&nbsp;:",
+                          lengthMenu: "Agrupar de _MENU_ items",
+                          info: "Mostrando del item _START_ al _END_ de un total de _TOTAL_ items",
+                          infoEmpty: "No existen datos.",
+                          infoFiltered: "(filtrado de _MAX_ elementos en total)",
+                          infoPostFix: "",
+                          loadingRecords: "Cargando...",
+                          zeroRecords: "No se encontraron datos con tu busqueda",
+                          emptyTable: "No hay datos disponibles en la tabla.",
+                          paginate: {
+                                          first: "Primero",
+                                          previous: "Anterior",
+                                          next: "Siguiente",
+                                          last: "Ultimo"
+                                      },
+                              aria: {
+                                      sortAscending: ": active para ordenar la columna en orden ascendente",
+                                      sortDescending: ": active para ordenar la columna en orden descendente"
+                                    },
+
+                          buttons:{
+                            "copy": "Copiar",
+                            "print": "Imprimir",
+                            "colvis": "Visibilidad",
+                            "collection": "Colección",
+                            "colvisRestore": "Restaurar visibilidad",
+                            "copyKeys": "Presione ctrl o u2318 + C para copiar los datos de la tabla al portapapeles del sistema. <br \/> <br \/> Para cancelar, haga clic en este mensaje o presione escape.",
+                            "copySuccess": {
+                                "1": "Copiada 1 fila al portapapeles",
+                                "_": "Copiadas %ds fila al portapapeles"
+                                },
+                                },    
+                         },
       "responsive": true, "lengthChange": false, "autoWidth": false,
       "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
     }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');

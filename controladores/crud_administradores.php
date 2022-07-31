@@ -1,7 +1,13 @@
 <?php
   require '../../conexion/conexion.php';
   //para mostrar los datos de la tabla mysql y mostrar en el crud
-  $sql = "SELECT * FROM tbl_usuarios";
+  $sql = "SELECT * FROM (((((tbl_usuarios u
+                       INNER JOIN tbl_generos g ON u.ID_GENERO = g.ID_GENERO)
+                       INNER JOIN tbl_roles r ON u.ID_ROL = r.ID_ROL)
+                       INNER JOIN tbl_areas a ON u.ID_AREA = a.ID_AREA)
+                       INNER JOIN tbl_estado_usuario e ON u.ID_ESTADO_USUARIO = e.ID_ESTADO_USUARIO)
+                       INNER JOIN tbl_profesiones p ON u.ID_PROFESION = p.ID_PROFESION)";
+
   $result = mysqli_query($conn, $sql);
 
 
@@ -47,8 +53,7 @@
                     alert("El usuario ya existe, intente con otro");
                     window.location.href="../../vistas/personas/vista_administradores";                   
                   </script>';
-                  mysqli_close($conn);
-           
+                  mysqli_close($conn);              
       }else{  
         
         // validacion para que no se repitan los correos en la tabla tbl_usuarios
@@ -84,7 +89,7 @@
               if (mysqli_query($conn, $sql)) {
                 echo '<script>
                               alert("Usuario creado con exito");
-                              window.location.href="../../vistas/personas/vista_administradores";
+                              window.location.href="../../vistas/iniciar_sesion/preguntas_seguridad.php";
                   </script>';
 
                   // inicio inserta en la tabla bitacora

@@ -7,8 +7,6 @@ if(!isset($_SESSION['usuario'])){
         session_destroy();
         die();
 
-
-        
         
 }
 require "../../controladores/co_perfil.php";
@@ -92,8 +90,12 @@ function quitarespacios(e) {
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
   <?php include '../../configuracion/navar.php' ?>
   <!-- Content Wrapper. Contains page content -->
+  <!-- enlace del scritpt para evitar si preciona F12, si preciona Ctrl+Shift+I, si preciona Ctr+u  -->
+  <script type="text/javascript" src="../../js/evita_ver_codigo_utilizando_teclas.js"></script>
 </head>
-  <body>
+<!-- Inicio evita el click derecho de la pagina -->
+  <body oncontextmenu="return false">
+  <!-- Fin evita el click derecho de la pagina --> 
   
   <div class="content-wrapper">
   <!-- Content Header (Page header) -->
@@ -123,14 +125,53 @@ function quitarespacios(e) {
           ?>
           <div class="card card-primary card-outline">
             <div class="card-body box-profile">
-              <form acction="" method="post">
-                <div class="text-center">
+              <form acction="" method="post" enctype="multipart/form-data">
+              <div class="text-center">
                   <img class="profile-user-img img-fluid img-circle"
-                  src="../../imagenes/seacco.jpg"
-                  alt="User profile picture">
-                </div> 
+                  src="<?php echo $row["FOTO"]; ?>"
+                  alt="User profile picture"><br>
+                  
+                </div><br>
+                <!-- Editar foto de perfil-->
+                <div class="text-center">
+                  <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal2">
+                    Cambiar Foto
+                  </button>
+
+                  <!-- The Modal -->
+                  <div class="modal" id="myModal2">
+                    <div class="modal-dialog">
+                      <div class="modal-content">
+
+                        <!-- Modal Header -->
+                        <div class="modal-header">
+                          <h4 class="modal-title">Editar foto de perfil</h4>
+                          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                        </div>
+
+                        <!-- Modal body -->
+                        <div class="modal-body">
+                        <div class="text-center">
+                          <input type="hidden" name="ruta" value="<?php echo $row["FOTO"]; ?>">
+                          <img class="profile-user-img img-fluid img-circle"
+                            src="<?php echo $row["FOTO"]; ?>"
+                            alt="User profile picture"><br><br>
+                            <input type="file" name="imagenes" accept=".jpg, .png, .jpej, .JPEG, .JPG, .PNG">
+                        </div>
+                        </div>
+
+                        <!-- Modal footer -->
+                        <div class="modal-footer">
+                          <button type="submit" name= "accion" value="editarfoto" class="btn btn-primary" data-bs-dismiss="modal">Guardar</button>
+                          <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
+                        </div>
+
+                      </div>
+                    </div>
+                  </div>
+                  </div>
+
                 <!-- <h3 class="profile-username text-center" >DAVIDS</h3> -->
-                <br>
                 <p class="text-muted text-center">Información</p>
                 <ul class="list-group list-group-unbordered mb-3">
                 <label for="inputusuario" class="col-sm-10 col-form-label">Usuario:</label>
@@ -166,13 +207,7 @@ function quitarespacios(e) {
                       
                       <!-- Modal body -->
                       <div class="modal-body">
-                      <div class="text-center">
-                  <img class="profile-user-img img-fluid img-circle"
-                  src="../../imagenes/seacco.jpg"
-                  alt="User profile picture"><br>
-                  <label for="">Cambiar foto de perfil:</label>
-                  
-                </div>
+                      
                       <label for="inputusuario" class="col-sm-10 col-form-label">Usuario:</label>
                 <div class="col-sm-10">
                   <input type="text" class="form-control" readonly name="usuario2" id="usuario"  placeholder="" value="<?php echo $row["USUARIO"]; ?>">
@@ -267,7 +302,7 @@ function quitarespacios(e) {
               <!-- /.tab-content -->
             </div><!-- /.card-body -->
         </div>
-</body>
+</body><script type="text/javascript" src="../../js/evitar_reenvio.js"></script>
 </html>
 <?php include '../../configuracion/footer.php' ?>
 <script type="text/javascript">
@@ -305,8 +340,3 @@ function quitarespacios(e) {
     };
 
   </script>
-
-
-
-
-

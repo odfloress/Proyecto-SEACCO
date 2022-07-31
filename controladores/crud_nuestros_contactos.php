@@ -31,7 +31,7 @@
                    VALUES ('$usuario1[usuario]', 'INSERTO', 'CREO EL CONTACTO')";
                     if (mysqli_query($conn, $sql7)) {} else { }
                // fin inserta en la tabla bitacora
-                    header('Location: ../../vistas/ajustes/vista_nuestros_contactos.php');
+                    header('Location: ../../vistas/mantenimiento/vista_nuestros_contactos.php');
 
                 } else {
                         echo '<script>

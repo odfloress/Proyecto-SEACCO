@@ -1,3 +1,7 @@
+<?php
+require 'controladores/co_registrar.php';
+?>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -10,6 +14,9 @@
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
 <style>
   body,h1,h2,h3,h4,h5,h6 {font-family: "Raleway", sans-serif}
   body, html {
@@ -17,18 +24,26 @@
               line-height: 1.8;
              }
 /* Encabezado de imagen de altura completa */
+<?php 
+  include 'conexion/conexion.php';
+  $sqlB1 = "SELECT * FROM tbl_bienvenida_portafolio WHERE TIPO='BIENVENIDA' AND ID_IMAGEN=1";
+  $resultB1 = mysqli_query($conn, $sqlB1);
+  while($rowB1 = mysqli_fetch_assoc($resultB1)) {
+  ?>
   .bgimg-1 {
             background-position: center;
             background-size: cover;
-            background-image: url('imagenes/banner1.jpg');
+            background-image: url("imagenes/<?php echo $rowB1['IMAGEN'] ?>");
             min-height: 100%;
            }
+           <?php }?>
   .w3-bar .w3-button {
             padding: 16px;
                      }
 </style>
 </head>
 <body>
+<br><br>
 
 <!-- Navbar (sit on top) -->
 <div class="w3-top">
@@ -75,7 +90,7 @@
 
 <!-- About Section -->
 <div class="w3-container" style="padding:128px 16px" id="about">
-  <h3 class="w3-center">SOBRE CONSTRUCTORA SEACCO</h3>  
+  <h3 class="w3-center" >SOBRE CONSTRUCTORA SEACCO </h3>  
 
 <center>   <p>Somos una firma constructora con personal calificado y listo para ejecutar
 cualquier obra civil a nivel nacional, brindamos un servicio de calidad con un
@@ -130,7 +145,12 @@ clientes y brindando oportunidades de trabajo para el hondureño.</p>
     </div>
   </div>
 </div>
-
+<?php 
+  include 'conexion/conexion.php';
+  $sql7 = "SELECT * FROM tbl_bienvenida_portafolio WHERE TIPO='BIENVENIDA' AND ID_IMAGEN=2";
+  $result7 = mysqli_query($conn, $sql7);
+  while($row = mysqli_fetch_assoc($result7)) {
+  ?>
 <!-- Promo Section - "We know design" -->
 <div class="w3-container w3-light-grey" style="padding:128px 16px">
   <div class="w3-row-padding">
@@ -144,54 +164,63 @@ actividades que se desarrollan en los proyectos ejecutados.</p>
       <p><a href="#work" class="w3-button w3-black"><i class="fa fa-th"> </i>Ver nustros trabajos</a></p>
     </div>
     <div class="w3-col m6">
-      <img class="w3-image w3-round-large" src='imagenes/imagen4.jpeg' alt="Buildings" width="700" height="394">
+      <img class="w3-image w3-round-large" src="imagenes/<?php echo $row['IMAGEN'] ?>" alt="Buildings" width="700" height="394">
     </div>
   </div>
 </div>
-
+<?php }?>
 <!-- Team Section -->
 
-<div class="w3-container" style="padding:128px 16px" id="team">
-  <h3 class="w3-center">Nuestro Equipo</h3>
- 
-  <div class="w3-row-padding w3-grayscale" style="margin-top:64px">
-    <div class="w3-col w3-third w3-margin-bottom">
-      <div class="w3-card">
-      <img src="https://www.w3schools.com/w3images/team2.jpg" alt="Jane" style="width:100%">
-        <div class="w3-container">
-          <h3>Vanessa Pineda</h3>
-          <p class="w3-opacity">Gerencial en Constructora Seacco</p>
-          <p>ingeniera Descripción</p>
-          <p><button class="w3-button w3-light-grey w3-block"><i class="fa fa-envelope"></i> Contact</button></p>
-        </div>
-      </div>
-    </div>
-    <div class="w3-col w3-third w3-margin-bottom">
-      <div class="w3-card">
-        <img src="https://www.w3schools.com/w3images/team2.jpg" alt="Jane" style="width:100%">
-        <div class="w3-container">
-          <h3>Carlos Palma</h3>
-          <p class="w3-opacity">Gerencial en Constructora Seacco</p>
-          <p>ingeniero Descripción</p>
-          <p><button class="w3-button w3-light-grey w3-block"><i class="fa fa-envelope"></i> Contact</button></p>
-        </div>
-      </div>
-    </div>
+  <!-- inicio card -->
 
-    <div class="w3-col w3-third w3-margin-bottom">
-      <div class="w3-card">
-        <img src="https://www.w3schools.com/w3images/team2.jpg" alt="Jane" style="width:100%">
-        <div class="w3-container">
-          <h3>Carlos Palma</h3>
-          <p class="w3-opacity">Gerencial en Constructora Seacco</p>
-          <p>ingeniero Descripción</p>
-          <p><button class="w3-button w3-light-grey w3-block"><i class="fa fa-envelope"></i> Contact</button></p>
+<div class="w3-container" style="padding:128px 16px" id="about">
+  <h3 class="w3-center">Nuestros Equipo</h3> 
+    <div class="w3-row-padding " style="margin-top:64px">
+
+      <?php 
+      include 'conexion/conexion.php';
+      $sql = "SELECT * FROM tbl_bienvenida_portafolio WHERE TIPO='NUESTRO_EQUIPO'";
+      $result = mysqli_query($conn, $sql);
+      while($row = mysqli_fetch_assoc($result)) {
+      ?>
+
+      <!-- inicio card 1 -->
+      <div class="w3-col w3-third w3-margin-bottom">
+        <div class="w3-card">
+          <img src="imagenes/<?php echo $row["IMAGEN"]; ?> " alt="Equipo" style="width:100%" width="500" height="300">
+          <div class="w3-container">
+          <h3><?php echo $row["TITULO"]; ?></h3>
+         
+          <!-- inicio boton informacion -->
+          <div class="container mt-3">                                          
+            <div class="dropdown">
+              <button type="button" class="btn btn-primary " data-bs-toggle="dropdown">
+                Ver Información
+              </button>
+              <textarea readonly class="dropdown-menu" style="background-color: white;" class="form-control"name="" 
+              id="" cols="40" rows="5"><?php echo $row["DESCRIPCION"]; ?></textarea>
+            </div>
+          </div>
+          <br>
+          <!-- fin  boton informacion -->  
+
         </div>
       </div>
     </div>
+     <!-- fin card 1 -->
+    <?php } ?>
+    
     
   </div> 
 </div>
+
+<!-- fin card -->
+    
+</div> 
+</div>
+
+
+
 
 
 <!-- Promo Section "Statistics" -->
@@ -235,31 +264,87 @@ actividades que se desarrollan en los proyectos ejecutados.</p>
  
   <div class="w3-row-padding" style="margin-top:64px">
     <div class="w3-col l3 m6">
-      <img src='imagenes/imagen8.jpeg' style="width:300px; height:150px" onclick="onClick(this)" class="w3-hover-opacity" alt="A microphone">
+    <?php 
+      include 'conexion/conexion.php';
+      $sqlB4 = "SELECT * FROM tbl_bienvenida_portafolio WHERE TIPO='BIENVENIDA' AND ID_IMAGEN=4";
+      $resultB4 = mysqli_query($conn, $sqlB4);
+      while($rowB4 = mysqli_fetch_assoc($resultB4)) {
+      ?>
+      <img src='imagenes/<?php echo $rowB4['IMAGEN'] ?>' style="width:300px; height:150px" onclick="onClick(this)" class="w3-hover-opacity" alt="<?php echo $rowB4['DESCRIPCION'] ?>">
+      <?php }?>
     </div>
      <div class="w3-col l3 m6">
-      <img src='imagenes/imagen7.jpeg'  style="width:300px; height:150px"  onclick="onClick(this)" class="w3-hover-opacity" alt="A phone">
+     <?php 
+      include 'conexion/conexion.php';
+      $sqlB4 = "SELECT * FROM tbl_bienvenida_portafolio WHERE TIPO='BIENVENIDA' AND ID_IMAGEN=5";
+      $resultB4 = mysqli_query($conn, $sqlB4);
+      while($rowB4 = mysqli_fetch_assoc($resultB4)) {
+      ?>
+      <img src='imagenes/<?php echo $rowB4['IMAGEN'] ?>' style="width:300px; height:150px" onclick="onClick(this)" class="w3-hover-opacity" alt="<?php echo $rowB4['DESCRIPCION'] ?>">
+      <?php }?>
     </div>
     <div class="w3-col l3 m6">
-      <img src='imagenes/imagen5.jpeg'  style="width:300px; height:150px"  onclick="onClick(this)" class="w3-hover-opacity" alt="A drone">
+    <?php 
+      include 'conexion/conexion.php';
+      $sqlB4 = "SELECT * FROM tbl_bienvenida_portafolio WHERE TIPO='BIENVENIDA' AND ID_IMAGEN=6";
+      $resultB4 = mysqli_query($conn, $sqlB4);
+      while($rowB4 = mysqli_fetch_assoc($resultB4)) {
+      ?>
+      <img src='imagenes/<?php echo $rowB4['IMAGEN'] ?>' style="width:300px; height:150px" onclick="onClick(this)" class="w3-hover-opacity" alt="<?php echo $rowB4['DESCRIPCION'] ?>">
+      <?php }?>
     </div>
     <div class="w3-col l3 m6">
-      <img src='imagenes/imagen4.jpeg' style="width:300px; height:150px"  onclick="onClick(this)" class="w3-hover-opacity" alt="Soundbox">
+    <?php 
+      include 'conexion/conexion.php';
+      $sqlB4 = "SELECT * FROM tbl_bienvenida_portafolio WHERE TIPO='BIENVENIDA' AND ID_IMAGEN=7";
+      $resultB4 = mysqli_query($conn, $sqlB4);
+      while($rowB4 = mysqli_fetch_assoc($resultB4)) {
+      ?>
+      <img src='imagenes/<?php echo $rowB4['IMAGEN'] ?>' style="width:300px; height:150px" onclick="onClick(this)" class="w3-hover-opacity" alt="<?php echo $rowB4['DESCRIPCION'] ?>">
+      <?php }?>
     </div>
   </div>
 
   <div class="w3-row-padding w3-section">
     <div class="w3-col l3 m6">
-      <img src='imagenes/imagen8.jpeg'  style="width:300px; height:150px"  onclick="onClick(this)" class="w3-hover-opacity" alt="A tablet">
+    <?php 
+      include 'conexion/conexion.php';
+      $sqlB4 = "SELECT * FROM tbl_bienvenida_portafolio WHERE TIPO='BIENVENIDA' AND ID_IMAGEN=8";
+      $resultB4 = mysqli_query($conn, $sqlB4);
+      while($rowB4 = mysqli_fetch_assoc($resultB4)) {
+      ?>
+      <img src='imagenes/<?php echo $rowB4['IMAGEN'] ?>' style="width:300px; height:150px" onclick="onClick(this)" class="w3-hover-opacity" alt="<?php echo $rowB4['DESCRIPCION'] ?>">
+      <?php }?>
     </div>
     <div class="w3-col l3 m6">
-      <img src='imagenes/imagen7.jpeg'  style="width:300px; height:150px"  onclick="onClick(this)" class="w3-hover-opacity" alt="A camera">
+    <?php 
+      include 'conexion/conexion.php';
+      $sqlB4 = "SELECT * FROM tbl_bienvenida_portafolio WHERE TIPO='BIENVENIDA' AND ID_IMAGEN=9";
+      $resultB4 = mysqli_query($conn, $sqlB4);
+      while($rowB4 = mysqli_fetch_assoc($resultB4)) {
+      ?>
+      <img src='imagenes/<?php echo $rowB4['IMAGEN'] ?>' style="width:300px; height:150px" onclick="onClick(this)" class="w3-hover-opacity" alt="<?php echo $rowB4['DESCRIPCION'] ?>">
+      <?php }?>
     </div>
     <div class="w3-col l3 m6">
-      <img src='imagenes/imagen5.jpeg'  style="width:300px; height:150px"  onclick="onClick(this)" class="w3-hover-opacity" alt="A typewriter">
+    <?php 
+      include 'conexion/conexion.php';
+      $sqlB4 = "SELECT * FROM tbl_bienvenida_portafolio WHERE TIPO='BIENVENIDA' AND ID_IMAGEN=10";
+      $resultB4 = mysqli_query($conn, $sqlB4);
+      while($rowB4 = mysqli_fetch_assoc($resultB4)) {
+      ?>
+      <img src='imagenes/<?php echo $rowB4['IMAGEN'] ?>' style="width:300px; height:150px" onclick="onClick(this)" class="w3-hover-opacity" alt="<?php echo $rowB4['DESCRIPCION'] ?>">
+      <?php }?>
     </div>
     <div class="w3-col l3 m6">
-      <img src='imagenes/imagen4.jpeg'  style="width:300px; height:150px"  onclick="onClick(this)" class="w3-hover-opacity" alt="A tableturner">
+    <?php 
+      include 'conexion/conexion.php';
+      $sqlB4 = "SELECT * FROM tbl_bienvenida_portafolio WHERE TIPO='BIENVENIDA' AND ID_IMAGEN=11";
+      $resultB4 = mysqli_query($conn, $sqlB4);
+      while($rowB4 = mysqli_fetch_assoc($resultB4)) {
+      ?>
+      <img src='imagenes/<?php echo $rowB4['IMAGEN'] ?>' style="width:300px; height:150px" onclick="onClick(this)" class="w3-hover-opacity" alt="<?php echo $rowB4['DESCRIPCION'] ?>">
+      <?php }?>
     </div>
   </div>
 </div>
@@ -275,7 +360,12 @@ actividades que se desarrollan en los proyectos ejecutados.</p>
 </center>
 
 
-
+<?php 
+  include 'conexion/conexion.php';
+  $sqlB3 = "SELECT * FROM tbl_bienvenida_portafolio WHERE TIPO='BIENVENIDA' AND ID_IMAGEN=3";
+  $resultB3 = mysqli_query($conn, $sqlB3);
+  while($rowB3 = mysqli_fetch_assoc($resultB3)) {
+  ?>
 <!-- Contact Section -->
 <div class="w3-container w3-light-grey" style="padding:128px 16px" id="contact">
   <h3 class="w3-center">CONTACTANOS</h3>
@@ -291,11 +381,11 @@ actividades que se desarrollan en los proyectos ejecutados.</p>
 <!-- Fin mapa -->
 
     <!-- Image of location/map -->
-    <img src="https://www.w3schools.com/w3images/map.jpg" class="w3-image w3-greyscale" style="width:100%;margin-top:48px">
+    <img src="imagenes/<?php echo $rowB3['IMAGEN'] ?>" class="w3-image w3-greyscale" style="width:100%;margin-top:48px">
   </div>
 </div>
 
-
+<?php }?>
 
 <!-- Footer -->
 <footer class="w3-center w3-black w3-padding-64">
