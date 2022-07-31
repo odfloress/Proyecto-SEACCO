@@ -350,6 +350,8 @@ if (mysqli_num_rows($roles35) > 0)
 <!-- AdminLTE for demo purposes -->
 <script src="../../plantilla/AdminLTE-3.2.0/dist/js/demo.js"></script>
 <!-- Page specific script -->
+<!-- INICIO muestra los botones, traduce y Agrupar -->
+
 <script>
   $(function () {
     $("#example1").DataTable({
@@ -390,14 +392,12 @@ if (mysqli_num_rows($roles35) > 0)
                          },
                          
                          "responsive": true, "lengthChange": true, "autoWidth": false,
-                          "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"],
-
-                        
-
-                         
+                          "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"],                   
         
     })
-    buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+
+      
+    .buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
     $('#example2').DataTable({
       "paging": true,
       "lengthChange": false,
