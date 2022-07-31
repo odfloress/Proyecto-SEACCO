@@ -141,7 +141,7 @@
 
                     }else{
                               echo '<script>
-                                        alert("EUsuario editado con exito");
+                                        alert("El Usuario fué editado con exito");
                                         window.location.href="../../vistas/personas/vista_administradores";
                                     </script>';
 
