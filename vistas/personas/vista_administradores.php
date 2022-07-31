@@ -431,9 +431,9 @@ include '../../controladores/crud_administradores.php';
                      <td><?php echo $filas['REFERENCIA'] ?></td>
                      <td><?php echo $filas['CEL_REFERENCIA'] ?></td>
                      <td><?php echo $filas['EXPERIENCIA_LABORAL'] ?></td>
-                     <td><?php echo $filas['CURRICULUM'] ?></td>                     
-                     <td><img class="img-thumbnail" width="100px" src="../../imagenes/<?php echo $filas['FOTO'] ?>" /></td>
-                     <td><?php echo $filas['ID_AREA'] ?></td>
+                     <td><a href="<?php echo $filas['CURRICULUM'] ?>" download>Descargar</a></td>                     
+                     <td><img class="img-thumbnail" width="100px" src="<?php echo $filas['FOTO'] ?>" /></td>
+                     <td><?php echo $filas['AREA'] ?></td>
 
                      
                      

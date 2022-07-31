@@ -101,7 +101,7 @@ if (mysqli_num_rows($roles35) > 0)
                 <div class="modal-body">
                   
                     <label for="">Estado</label>
-                    <input type="text" class="form-control" name="nombre" required value="" placeholder="" id="txtPrecio_Compra" onkeypress="return soloLetras(event);" minlength="3" maxlength="20" onkeyup="mayus(this);"   >
+                    <input type="text" class="form-control" name="nombre" value="<?php echo $nombre; ?>" required value="" placeholder="" id="txtPrecio_Compra" autocomplete="off" onkeypress="return soloLetras(event);" minlength="3" maxlength="20" onkeyup="mayus(this);"   >
                     <br>
                 
                 </div>
@@ -192,11 +192,12 @@ if (mysqli_num_rows($roles35) > 0)
 
                                 <!-- Cuerpo del modal Modal -->
                                           <div class="modal-body">
+                                          <input type="hidden" name="nombre_anterior" value="<?php echo $filas['NOMBRE'] ?>">
                                               <label for="">Id estado</label>
                                               <input type="number" class="form-control" name="id_estados" readonly required value="<?php echo $filas['ID_ESTADOS'] ?>" placeholder="" id="txtPrecio_Compra"   >
                                               <br>
                                               <label for="">Estado</label>
-                                              <input type="text" class="form-control" name="nombre" required value="<?php echo $filas['NOMBRE'] ?>" placeholder="" id="txtPrecio_Compra" onkeypress="return soloLetras(event);" minlength="3" maxlength="20"  onkeyup="mayus(this);  >
+                                              <input type="text" class="form-control" name="nombre" autocomplete="off" required value="<?php echo $filas['NOMBRE'] ?>" placeholder="" id="txtPrecio_Compra" onkeypress="return soloLetras(event);" minlength="3" maxlength="20"  onkeyup="mayus(this);" >
                                               <br>
                                           
                                           </div>

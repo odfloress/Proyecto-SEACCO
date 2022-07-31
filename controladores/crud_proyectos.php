@@ -1,8 +1,16 @@
 <?php
   require '../../conexion/conexion.php';
   //para mostrar los datos de la tabla mysql y mostrar en el crud
-  $sql = "SELECT * FROM tbl_proyectos";
+  $sql = "SELECT ID_PROYECTO, NOMBRE_CLIENTE, NOMBRE, ESTADO_PROYECTO, NOMBRE_PROYECTO, DESCRIPCION, DEPARTAMENTO, UBICACION, FECHA_INICIO, FECHA_FINAL FROM ((((tbl_proyectos p
+  INNER JOIN tbl_clientes c ON p.ID_CLIENTE = c.ID_CLIENTE)
+  INNER JOIN tbl_usuarios u ON p.ID_USUARIO = u.ID_USUARIO)
+  INNER JOIN tbl_estados_proyectos e ON p.ID_ESTADOS = e.ID_ESTADOS)
+  INNER JOIN tbl_departamentos d ON p.ID_DEPARTAMENTO = d.ID_DEPARTAMENTO)";
+
+  
+  
   $result = mysqli_query($conn, $sql);
+
 
 
   // //Variables para recuperar la información de los campos de la vista categorias de productos
