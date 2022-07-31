@@ -68,7 +68,7 @@ require 'controladores/co_login.php';
             </div>
 
             <div class="d-grid">
-              <button type="submit" name="accion" value="ingresar" class="btn btn-dark btn-block">ingresar</button>
+              <button type="submit" name="accion" value="ingresar" class="btn btn-dark btn-block">Ingresar</button>
             </div>
             
 
