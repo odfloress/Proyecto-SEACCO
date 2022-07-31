@@ -174,11 +174,12 @@ if (mysqli_num_rows($roles35) > 0)
                   <tr>
                   <th>Acciones</th>
                     <th>Id proyecto</th>
-                    <th>Id Cliente</th>
-                    <th>Id Encargado</th>
-                    <th>Id Estado</th>
+                    <th>Cliente</th>
+                    <th>Encargado</th>
+                    <th>Estado</th>
                     <th>Proyecto</th>
                     <th>Descripción</th>
+                    <th>Departamento</th>
                     <th>Ubicación</th>
                     <th>Fecha inicio</th>
                     <th>Fecha Final</th>
@@ -282,11 +283,12 @@ if (mysqli_num_rows($roles35) > 0)
                   </form>
 </td>
                             <td ><?php echo $filas['ID_PROYECTO'] ?></td>
-                            <td><?php echo $filas['ID_CLIENTE'] ?></td>
-                            <td><?php echo $filas['ID_USUARIO'] ?></td>
-                            <td><?php echo $filas['ID_ESTADOS'] ?></td>
+                            <td><?php echo $filas['NOMBRE_CLIENTE'] ?></td>
                             <td><?php echo $filas['NOMBRE'] ?></td>
+                            <td><?php echo $filas['ESTADO_PROYECTO'] ?></td>
+                            <td><?php echo $filas['NOMBRE_PROYECTO'] ?></td>
                             <td><?php echo $filas['DESCRIPCION'] ?></td>
+                            <td><?php echo $filas['DEPARTAMENTO'] ?></td>
                             <td><?php echo $filas['UBICACION'] ?></td>
                             <td><?php echo $filas['FECHA_INICIO'] ?></td>
                             <td><?php echo $filas['FECHA_FINAL'] ?></td>
