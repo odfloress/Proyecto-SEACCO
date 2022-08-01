@@ -1,6 +1,6 @@
 <?php
 session_start();
-if(!isset($_SESSION['usuario'])){
+if(!isset($_SESSION['nombre'])){
  
         header('Location: ../../_login.php');
         session_unset();
@@ -61,7 +61,7 @@ body {
 
             
                 <label for="sel1" class="form-label">Usuario:</label>
-                <input type="text" name="" value="<?php $usuario = $_SESSION; echo $usuario['usuario']; ?>" class="form-control" readonly>
+                <input type="text" name="" value="<?php $usuario = $_SESSION; echo $usuario['nombre']; ?>" class="form-control" readonly>
                 
 
                 <label for="sel1" class="form-label">Preguntas:</label>

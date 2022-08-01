@@ -25,7 +25,7 @@ body {
   function clave(e) {
   key = e.keyCode || e.which;
   tecla = String.fromCharCode(key).toString();
-  letras = "ABCDEFGHIJKLMNÑOPQRSTUVWXZabcdefghijklmnñopqrstuvwxyz0123456789";
+  letras = "ABCDEFGHIJKLMNÑOPQRSTUVWXYZabcdefghijklmnñopqrstuvwxyz";
   
   especiales = [8,13];
   tecla_especial = false;
@@ -42,7 +42,30 @@ body {
   }
 }
 </script>
+<script>
+  function clave1(e) {
+  key = e.keyCode || e.which;
+  tecla = String.fromCharCode(key).toString();
+  letras = "ABCDEFGHIJKLMNÑOPQRSTUVWXZabcdefghijklmnñopqrstuvwxyz0123456789,#$%&/=!¡?¿()*{}[]-_'.@<>";
+  
+  especiales = [8,13];
+  tecla_especial = false;
+  for(var i in especiales) {
+    if(key == especiales[i]){
+      tecla_especial = true;
+      break;
+    }
+  }
+  
+  if(letras.indexOf(tecla) == -1 && !tecla_especial){
+    alert("Sin espacios");
+    return false;
+  }
+}
+</script>
 
+<!-- enlace del scritpt para evitar si preciona F12, si preciona Ctrl+Shift+I, si preciona Ctr+u  -->
+<script type="text/javascript" src="js/evita_ver_codigo_utilizando_teclas.js"></script>
 
 </head>
 <!-- oncopy="return false" onpaste="return false"  esto no permite copiar ni pegar -->
@@ -57,7 +80,7 @@ body {
 
       <!--Inicio Cuerpo del modal -->
       <div class="modal-body ">
-        <form action="" method="POST">
+        <form action="" method="POST"  enctype="multipart/form-data">
             <div class="mb-3 mt-3">
                 <center><h4>Registrar usuario</h4></center><br>
                 
@@ -66,23 +89,23 @@ body {
             <div class="row">
                 <div class="col">
                   <label for="email"  class="form-label">Nombre:</label>
-                  <input style="background-color:rgb(240, 244, 245);" type="text" autocomplete="off"   onkeyup="mayus(this);" maxlength="30" class="form-control"  placeholder="Ingrese el nombre" name="nombre" required>
+                  <input style="background-color:rgb(240, 244, 245);" type="text" autocomplete="off"  value="<?php echo "$nombre"; ?>" onkeyup="mayus(this);" maxlength="30" class="form-control"  placeholder="Ingrese el nombre" name="nombre" required>
                 </div>
                 <div class="col">
                   <label for="pwd" class="form-label">Apellido:</label>
-                  <input style="background-color:rgb(240, 244, 245);" type="text" autocomplete="off"  onkeyup="mayus(this);" maxlength="30" class="form-control"  placeholder="Ingrese su apellido" name="apellido" required>
+                  <input style="background-color:rgb(240, 244, 245);" type="text" autocomplete="off" value="<?php echo "$apellido"; ?>" onkeyup="mayus(this);" maxlength="30" class="form-control"  placeholder="Ingrese su apellido" name="apellido" required>
                 </div>
             </div>
             <div class="row">
                 <div class="col">
                   <label for="pwd" class="form-label">Usuario:</label>
-                  <input style="background-color:rgb(240, 244, 245);" type="text" autocomplete="off" onkeypress="return clave(event);"  onKeyUP="this.value=this.value.toUpperCase();"  class="form-control" placeholder="Asignar usuario" name="usuario" required>
+                  <input style="background-color:rgb(240, 244, 245);" type="text" autocomplete="off" value="<?php echo "$usuario"; ?>" onkeypress="return clave(event);"  onKeyUP="this.value=this.value.toUpperCase();"  class="form-control" placeholder="Asignar usuario" name="usuario" required>
                 </div>
                 <div class="col">
                   <div class="form-group">
                   <label for="pwd" class="form-label">Contraseña:</label> 
                     <div class="input-group mb-3">
-                    <input style="background-color:rgb(240, 244, 245);" type="password" id="id_password"  autocomplete="off"  class="form-control"  placeholder="Ingrese la contraseña" name="contrasena" max="10" required pattern="(?=.*[\d])(?=.*[a-z])(?=.*[A-Z]).{8,}" onblur="quitarespacios(this);"  onkeyup="sinespacio(this);" required="" minlength="8" maxlength="9" >
+                    <input style="background-color:rgb(240, 244, 245);" type="password" id="id_password"  autocomplete="off" onkeypress="return clave1(event);"  class="form-control"  placeholder="Ingrese la contraseña" name="contrasena"  required pattern="(?=.*[\d])(?=.*[a-z])(?=.*[A-Z]).{8,}" onblur="quitarespacios(this);"  onkeyup="sinespacio(this);" required="" minlength="8" maxlength="40" >
                       <div class="input-group-append ">
                             
                           <div class="input-group-text">
@@ -93,7 +116,6 @@ body {
                           </div> 
                     </div>  
                     </div>
-                  
                   </div>
                   
                   <span>
@@ -105,74 +127,111 @@ body {
             <div class="row">
                 <div class="col">
                   <label for="pwd" class="form-label">Correo:</label>
-                  <input style="background-color:rgb(240, 244, 245);" type="email" autocomplete="off" class="form-control"  placeholder="Ingrese su correo" name="correo" required>
+                  <input style="background-color:rgb(240, 244, 245);" type="email" autocomplete="off" value="<?php echo "$correo"; ?>" onkeypress="return clave1(event);" class="form-control"  placeholder="Ingrese su correo" name="correo" required>
                 </div>
                 <div class="col">
                   <label for="pwd" class="form-label">DNI:</label>
-                  <input style="background-color:rgb(240, 244, 245);" type="text" autocomplete="off" class="form-control"  placeholder="0000-0000-000000" name="dni" minlength="13" maxlength="13" onkeypress="return solonumero(event)" required>
+                  <input style="background-color:rgb(240, 244, 245);" type="text" autocomplete="off" value="<?php echo "$dni"; ?>" class="form-control"  placeholder="" name="dni" minlength="13" maxlength="13" onkeypress="return solonumero(event)" required pattern="[0-9]+[1-9]+" title="13 caracteres y no todos ceros">
                 </div>
             </div>
             <div class="row">
                 <div class="col">
                   <label for="pwd" class="form-label">Profesión:</label>
-                  <input style="background-color:rgb(240, 244, 245);" type="text" autocomplete="off" onkeypress="return SoloLetras(event);"  onKeyUP="this.value=this.value.toUpperCase();" class="form-control"  placeholder="Ingrese su profesion" name="profesion" required>
+                  <select style="background-color:rgb(240, 244, 245);" value="<?php echo "$profesion"; ?>" class="form-select" id="lista1" name="profesion" required >
+                        <?php
+                            include 'conexion/conexion.php';
+                            $profesion = "SELECT * FROM tbl_profesiones ORDER BY ID_PROFESION";
+                            $profesion2 = mysqli_query($conn, $profesion);
+                            if (mysqli_num_rows($profesion2) > 0) {
+                                while($row = mysqli_fetch_assoc($profesion2))
+                                {
+                                $id_profesion = $row['ID_PROFESION'];
+                                $profesion3 =$row['PROFESION'];
+                         ?>
+                          <option value="<?php  echo $id_profesion ?>"><?php echo $profesion3 ?></option>
+                          <?php
+                           }}// finaliza el if y el while
+                           ?>
+                   </select>
                 </div>
                 <div class="col">
                   <label for="pwd" class="form-label">Dirección:</label>
-                  <input style="background-color:rgb(240, 244, 245);" type="text" autocomplete="off" onkeypress="return SoloLetras(event);"  onKeyUP="this.value=this.value.toUpperCase();" class="form-control"  placeholder="Ingrese su dirección" name="direccion" required>
+                  <input style="background-color:rgb(240, 244, 245);" type="text" autocomplete="off"  value="<?php echo "$direccion"; ?>" onkeypress="return SoloLetras(event);"  onKeyUP="this.value=this.value.toUpperCase();" class="form-control"  placeholder="Ingrese su dirección" name="direccion" required>
                 </div>
             </div>
             <div class="row"> 
                 <div class="col">
                   <label for="pwd" class="form-label">Celular:</label>
-                  <input style="background-color:rgb(240, 244, 245);" type="number" autocomplete="off" class="form-control"  placeholder="Ingrese su celular" name="celular" required>
+                  <input style="background-color:rgb(240, 244, 245);" type="text" autocomplete="off"  value="<?php echo "$celular"; ?>" class="form-control"  placeholder="Ingrese su celular" name="celular" required minlength="8" onkeypress="return solonumero(event)" maxlength="8" pattern="[0-9]+[1-9]+[0-9]+" title="8 caracteres y no todos ceros">
                 </div>
                 <div class="col">
                   <label for="pwd" class="form-label">Referencia:</label>
-                  <input style="background-color:rgb(240, 244, 245);" type="text" autocomplete="off" onkeypress="return SoloLetras(event);"  onKeyUP="this.value=this.value.toUpperCase();" class="form-control"  placeholder="Ingrese nombre referencia" name="referencia" required>
+                  <input style="background-color:rgb(240, 244, 245);" type="text" autocomplete="off"  value="<?php echo "$referencia"; ?>" onkeypress="return SoloLetras(event);"  onKeyUP="this.value=this.value.toUpperCase();" class="form-control"  placeholder="Ingrese nombre referencia" name="referencia" required>
                 </div>
             </div>
             <div class="row">
                 <div class="col">
                   <label for="pwd" class="form-label">Celular referencia:</label>
-                  <input style="background-color:rgb(240, 244, 245);" type="number" autocomplete="off" class="form-control"  placeholder="Opcional" name="celular_referencia" >
+                  <input style="background-color:rgb(240, 244, 245);" type="text" autocomplete="off"  value="<?php echo "$celular_referencia"; ?>" class="form-control"  placeholder="Opcional" name="celular_referencia" onkeypress="return solonumero(event)" required minlength="8" maxlength="8" pattern="[0-9]+[1-9]+[0-9]+" title="8 caracteres y no todos ceros">
                 </div>
                 <div class="col">
                   <label for="pwd" class="form-label">Experiencia laboral:</label>
-                  <input style="background-color:rgb(240, 244, 245);" type="text" autocomplete="off" onkeypress="return SoloLetras(event);"  onKeyUP="this.value=this.value.toUpperCase();" class="form-control"  placeholder="Ingrese su profesión u oficio" name="experiencia_laboral" required>
+                  <input style="background-color:rgb(240, 244, 245);" type="text" autocomplete="off"  value="<?php echo "$experiencia_laboral"; ?>" onkeypress="return SoloLetras(event);"  onKeyUP="this.value=this.value.toUpperCase();" class="form-control"  placeholder="Ingrese su profesión u oficio" name="experiencia_laboral" required>
                 </div>
             </div>
             <div class="row">
                 <div class="col"> 
                   <label for="pwd" class="form-label">Curriculum:</label>
-                  <input style="background-color:rgb(240, 244, 245);" type="file" autocomplete="off" class="form-control"  placeholder="Adjunte su curriculum" name="curriculum" required>
+                  <input style="background-color:rgb(240, 244, 245);" type="file" accept=".pdf, .docx" autocomplete="off"  value="<?php echo "$curriculum"; ?>" class="form-control"  placeholder="Adjunte su curriculum" name="curriculum" required>
                 </div>
                 <div class="col">
                   <label for="pwd" class="form-label">Foto:</label>
-                  <input style="background-color:rgb(240, 244, 245);" type="file" autocomplete="off" class="form-control"  placeholder="Adjunte su foto" name="foto">
+                  <input style="background-color:rgb(240, 244, 245);" type="file" accept=".jpg, .png, .jpej, .JPEG, .JPG, .PNG" autocomplete="off"  value="<?php echo "$foto"; ?>" class="form-control" required placeholder="Adjunte su foto" name="foto">
                 </div>
             </div>
             <div class="row">
                 <div class="col">
                 <label for="pwd" class="form-label">Genero:</label>
-                <input class="form-control" autocomplete="off" maxlength="1" list="browsers" type="text" id="calcular" name="genero"  id="browser" placeholder="Seleccione" pattern="([F-M])" required >
-                <datalist id="browsers">
-                  <option value="F">
-                  <option value="M">
-                </datalist> 
+                <select style="background-color:rgb(240, 244, 245);" value="<?php echo "$genero"; ?>" class="form-select" id="lista1" name="genero" required >
+                        <?php
+                            include 'conexion/conexion.php';
+                            $genero = "SELECT * FROM tbl_generos ORDER BY ID_GENERO";
+                            $genero2 = mysqli_query($conn, $genero);
+                            if (mysqli_num_rows($genero2) > 0) {
+                                while($row = mysqli_fetch_assoc($genero2))
+                                {
+                                $id_genero = $row['ID_GENERO'];
+                                $genero3 =$row['GENERO'];
+                         ?>
+                          <option value="<?php  echo $id_genero ?>"><?php echo $genero3 ?></option>
+                          <?php
+                           }}// finaliza el if y el while
+                           ?>
+                   </select>
                 </div>  
                 <div class="col">
                 <label for="pwd" class="form-label">Area:</label>
-                <input class="form-control" autocomplete="off" maxlength="20" list="browsers1" type="text" id="calcular" name="area"  id="browser" placeholder="Seleccione"  required >
-                <datalist id="browsers1">
-                  <option value="ADMINISTRATIVA">
-                  <option value="MANO DE OBRA">
-                </datalist> 
+                <select style="background-color:rgb(240, 244, 245);" value="<?php echo "$area"; ?>" class="form-select" id="lista1" name="area" required >
+                        <?php
+                            include 'conexion/conexion.php';
+                            $area = "SELECT * FROM tbl_areas ORDER BY ID_AREA";
+                            $area2 = mysqli_query($conn, $area);
+                            if (mysqli_num_rows($area2) > 0) {
+                                while($row = mysqli_fetch_assoc($area2))
+                                {
+                                $id_area = $row['ID_AREA'];
+                                $area3 =$row['AREA'];
+                         ?>
+                          <option value="<?php  echo $id_area ?>"><?php echo $area3 ?></option>
+                          <?php
+                           }}// finaliza el if y el while
+                           ?>
+                   </select>
                 </div>               
            </div><br>
             <div class="d-grid">
             <button type="submit" name="accion" value="registrar" class="btn btn-dark btn-block">Registrar</button><br>
-            <a href="http://localhost/SEACCO/_login" class="btn btn-danger btn-block">Cancelar</a>
+            <a href="/SEACCO/_login" class="btn btn-danger btn-block">Cancelar</a>
             </div>         
             
         </form>
@@ -243,11 +302,11 @@ function quitarespacios(e) {
     const togglePassword = document.querySelector('#togglePassword');
     const password = document.querySelector('#id_password');
 
-  togglePassword.addEventListener('click', function (e) {
+      togglePassword.addEventListener('click', function (e) {
     // toggle the type attribute
     const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
     password.setAttribute('type', type);
     // toggle the eye slash icon
     this.classList.toggle('fa-eye-slash');
-});
+      });
   </script>

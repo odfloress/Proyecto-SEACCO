@@ -66,21 +66,37 @@
   <!-- Indicators/dots -->
   <div class="carousel-indicators">
     <button type="button" data-bs-target="#demo" data-bs-slide-to="0" class="active"></button>
-    <button type="button" data-bs-target="#demo" data-bs-slide-to="1"></button>
-    <button type="button" data-bs-target="#demo" data-bs-slide-to="2"></button>
+   <?php 
+      include "../../conexion/conexion.php";
+      $sqlr = "SELECT * FROM tbl_bienvenida_portafolio WHERE TIPO='CARRUCEL_PORTAFOLIO'";
+      if ($resultr=mysqli_query($conn,$sqlr)) {
+          $rowcountr=mysqli_num_rows($resultr);  
+      
+          for ($x = 1; $x <=  $rowcountr; $x++) {         
+    ?> 
+    <button type="button" data-bs-target="#demo" data-bs-slide-to="<?php echo $x; ?>"></button>
+    <?php } ?>
+    <?php }?>
+
+    
   </div>
   
   <!-- The slideshow/carousel -->
   <div class="carousel-inner">
     <div class="carousel-item active">
-      <img src="../../imagenes/imagen1.1.jpg" alt="Los Angeles" class="d-block" style="width:100%;height:590px;" >
+      <img src="../../imagenes/fondo.jpg" alt="Los Angeles" class="d-block" style="width:100%;height:590px;" >
     </div>
+    <?php 
+  include '../../conexion/conexion.php';
+  $sql = "SELECT * FROM tbl_bienvenida_portafolio WHERE TIPO='CARRUCEL_PORTAFOLIO'";
+  $result = mysqli_query($conn, $sql);
+  while($muestra = mysqli_fetch_assoc($result)) {
+   
+  ?>
     <div class="carousel-item">
-      <img src="../../imagenes/imagen1.2.jpg" alt="Chicago" class="d-block" style="width:100%;height:590px;">
+      <img src="<?php echo $muestra["RUTA"]; ?>" alt="Chicago" class="d-block" style="width:100%;height:590px;">
     </div>
-    <div class="carousel-item">
-      <img src="../../imagenes/imagen1.3.jpg" alt="New York" class="d-block" style="width:100%;height:590px;">
-    </div>
+    <?php } ?>
   </div>
   
   <!-- Left and right controls/icons -->
@@ -101,7 +117,7 @@
 
   <?php 
   include '../../conexion/conexion.php';
-  $sql = "SELECT RUTA, TITULO, DESCRIPCION FROM tbl_bienvenida_portafolio";
+  $sql = "SELECT * FROM tbl_bienvenida_portafolio WHERE TIPO='PORTAFOLIO'";
   $result = mysqli_query($conn, $sql);
   while($row = mysqli_fetch_assoc($result)) {
    
@@ -164,7 +180,7 @@
 
 <!-- Footer -->
 <footer class="w3-center w3-black w3-padding-64">
-  <a href="#home" class="w3-button w3-light-grey"><i class="fa fa-arrow-up w3-margin-right"></i>Ir a inicio</a>
+  <a href="#demo" class="w3-button w3-light-grey"><i class="fa fa-arrow-up w3-margin-right"></i>Ir a inicio</a>
   <div class="w3-xlarge w3-section">
   <a href="https://www.facebook.com/pages/category/Construction-Company/Constructora-Seacco-658896417875063/"> <i class="fa fa-facebook-official w3-hover-opacity"></i></a>
     <i class="fa fa-instagram w3-hover-opacity"></i>
@@ -173,7 +189,7 @@
     <i class="fa fa-twitter w3-hover-opacity"></i>
     <i class="fa fa-linkedin w3-hover-opacity"></i>
   </div>
-  <p>Constructora <a href="https://www.w3schools.com/w3css/default.asp" title="W3.CSS" target="_blank" class="w3-hover-text-green">SEACCO</a></p>
+  <p>Constructora <a href="http://localhost/SEACCO/" title="W3.CSS" target="_blank" class="w3-hover-text-green">SEACCO</a></p>
 </footer>
  
 <script>
