@@ -80,16 +80,44 @@
                   </script>';
                   mysqli_close($conn);
 
-        }else{
+        }else
+        {
+
+          $permitidos = array("pdf", "docx");
+          $extencion = pathinfo($_FILES['curriculum']["name"], PATHINFO_EXTENSION);
+          
+          if(in_array($extencion, $permitidos)){
+              $Fecha= new DateTime();
+              $destino ="../../curriculum/";
+              $nombrecurriculum=($_FILES['curriculum']["name"]!="")?$Fecha->getTimestamp()."_".$_FILES["curriculum"]["name"]:"imagen.jpg";
+              $tmpArchivo= $_FILES["curriculum"]["tmp_name"];
+              if($tmpArchivo!="") 
+              {
+               move_uploaded_file($tmpArchivo,$destino.$nombrecurriculum);
+              } 
+  
+              $permitidos2 = array("jpg", "png", "jpeg", "JPEG", "JPG", "PNG");
+              $extencion = pathinfo($_FILES['foto']["name"], PATHINFO_EXTENSION);
+              
+              if(in_array($extencion, $permitidos2)){
+                  $Fecha1= new DateTime();
+                  $destino1 ="../../imagenes/";
+                  $nombrefoto=($_FILES['foto']["name"]!="")?$Fecha1->getTimestamp()."_".$_FILES["foto"]["name"]:"imagen.jpg";
+                  $tmpArchivo1= $_FILES["foto"]["tmp_name"];
+                  if($tmpArchivo1!="") 
+                  {
+                   move_uploaded_file($tmpArchivo1,$destino1.$nombrefoto);
+                  }
+          
 
               // Inserta en la tabla tbl_usuarios
-              $sql = "INSERT INTO tbl_usuarios (ID_ROL, ID_ESTADO_USUARIO, NOMBRE, APELLIDO, USUARIO, GENERO, CORREO, DNI, PROFESION, DIRECCION, CELULAR, REFERENCIA, CEL_REFERENCIA, EXPERIENCIA_LABORAL, CURRICULUM, CONTRASENA, FOTO, AREA)
-                            VALUES ($rol,$estado,'$nombre', '$apellido', '$usuario', '$genero', '$correo', '$dni', '$profesion',  '$direccion', '$celular', '$referencia', '$celular_referencia', '$experiencia_laboral', '$curriculum','$contrasena','$foto', '$area')";
+              $sql = "INSERT INTO tbl_usuarios (ID_ROL, ID_ESTADO_USUARIO, NOMBRE, APELLIDO, USUARIO, ID_GENERO, CORREO, DNI, ID_PROFESION, DIRECCION, CELULAR, REFERENCIA, CEL_REFERENCIA, EXPERIENCIA_LABORAL, CURRICULUM, CONTRASENA, FOTO, ID_AREA)
+                            VALUES ($rol,$estado,'$nombre', '$apellido', '$usuario', '$genero', '$correo', '$dni', '$profesion',  '$direccion', '$celular', '$referencia', '$celular_referencia', '$experiencia_laboral', '$destino$nombrecurriculum','$contrasena','$destino1$nombrefoto', '$area')";
               
               if (mysqli_query($conn, $sql)) {
                 echo '<script>
                               alert("Usuario creado con exito");
-                              window.location.href="../../vistas/iniciar_sesion/preguntas_seguridad.php";
+                              window.location.href="../../vistas/personas/vista_administradores.php";
                   </script>';
 
                   // inicio inserta en la tabla bitacora
@@ -111,8 +139,10 @@
             }
             }
            } // fin del else principal
-         
-             
+          }
+        }
+            
+        
       break;
 
        //para editar en la tabla mysl      
@@ -141,7 +171,7 @@
 
                     }else{
                               echo '<script>
-                                        alert("EUsuario editado con exito");
+                                        alert("El Usuario fué editado con exito");
                                         window.location.href="../../vistas/personas/vista_administradores";
                                     </script>';
 
