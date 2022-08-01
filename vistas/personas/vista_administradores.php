@@ -484,7 +484,7 @@ include '../../controladores/crud_administradores.php';
                      <td><?php echo $filas['CORREO'] ?></td>
                      <td><?php echo $filas['GENERO'] ?></td>
                      <td><?php echo $filas['DNI'] ?></td>
-                     <td><?php echo $filas['ID_PROFESION'] ?></td>
+                     <td><?php echo $filas['PROFESION'] ?></td>
                      <td><?php echo $filas['DIRECCION'] ?></td>
                      <td><?php echo $filas['CELULAR'] ?></td>
                      <td><?php echo $filas['REFERENCIA'] ?></td>
