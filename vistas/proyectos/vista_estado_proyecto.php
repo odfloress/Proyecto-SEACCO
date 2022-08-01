@@ -192,7 +192,7 @@ if (mysqli_num_rows($roles35) > 0)
 
                                 <!-- Cuerpo del modal Modal -->
                                           <div class="modal-body">
-                                          <input type="hidden" name="nombre_anterior" value="<?php echo $filas['NOMBRE'] ?>">
+                                          <input type="hidden" name="nombre_anterior" value="<?php echo $filas['ESTADO_PROYECTO'] ?>">
                                               <label for="">Id estado</label>
                                               <input type="number" class="form-control" name="id_estados" readonly required value="<?php echo $filas['ID_ESTADOS'] ?>" placeholder="" id="txtPrecio_Compra"   >
                                               <br>
@@ -390,3 +390,5 @@ if (mysqli_num_rows($roles35) > 0)
       }
     }
   </script>
+
+
