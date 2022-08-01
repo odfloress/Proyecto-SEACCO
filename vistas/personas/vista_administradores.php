@@ -379,15 +379,27 @@ include '../../controladores/crud_administradores.php';
                     <label for="">Foto:</label>
                   
                     <input type="file" class="form-control" name="foto" value="<?php echo $filas['FOTO'] ?>" placeholder="" >
-
+                     <!-- Probando modificar select area obed        -->
                     <label for="pwd" class="form-label">Area:</label>
-                    <input class="form-control" autocomplete="off" maxlength="20" list="browsers1" type="text" id="calcular" name="area"  id="browser"  required >
-                    <datalist id="browsers1">
-                      <option value="<?php echo $filas['AREA'] ?>">
-                      <option value="ADMINISTRATIVA">
-                      <option value="MANO DE OBRA">
-                    </datalist> 
-                
+                    <select class="form-select"  name="area" required >
+                      <option value="<?php echo $filas['ID_AREA']; ?>"> <?php echo $filas['AREA']; ?></option>
+
+                      <?php
+                        include '../../conexion/conexion.php';
+                        $area = "SELECT * FROM tbl_areas ORDER BY ID_AREA";
+                        $area2 = mysqli_query($conn, $area);
+                        if (mysqli_num_rows($profesion2) > 0) {
+                            while($row = mysqli_fetch_assoc($area2))
+                            {
+                              $id_area = $row['ID_AREA'];
+                              $area3 =$row['AREA'];
+                        ?>
+                          <option value="<?php  echo $id_area; ?>"><?php echo $area3?></option>
+                          <?php
+                           }}// finaliza el if y el while
+                           ?>
+
+                    </select>
                 </div>
                 <!-- Fin Cuerpo del modal Modal -->
 
@@ -425,7 +437,7 @@ include '../../controladores/crud_administradores.php';
                      <td><?php echo $filas['CORREO'] ?></td>
                      <td><?php echo $filas['GENERO'] ?></td>
                      <td><?php echo $filas['DNI'] ?></td>
-                     <td><?php echo $filas['PROFESION'] ?></td>
+                     <td><?php echo $filas['ID_PROFESION'] ?></td>
                      <td><?php echo $filas['DIRECCION'] ?></td>
                      <td><?php echo $filas['CELULAR'] ?></td>
                      <td><?php echo $filas['REFERENCIA'] ?></td>
