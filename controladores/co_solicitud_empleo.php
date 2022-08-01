@@ -35,7 +35,7 @@ session_start();
            if (mysqli_num_rows($result) > 0) {
                 // // inicio inserta en la tabla bitacora
                   $sql = "INSERT INTO tbl_bitacora (USUARIO, ACCION, OBSERVACION)
-                  VALUES ('$usuario', 'INTENTO', 'INTENTO REGISTRARSE PERO SU NOMBRE DE USUARIO YA EXISTE ($usuario)')";
+                  VALUES ('INVITADO', 'SOLICITUD', 'SOLICITUD DE EMPLEO')";
                   if (mysqli_query($conn, $sql)) {} else {}
                 // // fin inserta en la tabla bitacora
                 echo '<script>
@@ -52,7 +52,7 @@ session_start();
             if (mysqli_num_rows($result) > 0) {
                 // // inicio inserta en la tabla bitacora
                 $sql = "INSERT INTO tbl_bitacora (USUARIO, ACCION, OBSERVACION)
-                VALUES ('$usuario', 'INTENTO', 'INTENTO REGISTRARSE PERO EL CORREO YA EXISTE ($correo)')";
+                VALUES ('INVITADO', 'INTENTO', 'INTENTO REGISTRAR CORREO PERO YA EXISTE ($correo)')";
                 if (mysqli_query($conn, $sql)) {} else {}
               // // fin inserta en la tabla bitacora
                 echo '<script>
@@ -69,7 +69,7 @@ session_start();
             if (mysqli_num_rows($result) > 0) {
                 // // inicio inserta en la tabla bitacora
                 $sql = "INSERT INTO tbl_bitacora (USUARIO, ACCION, OBSERVACION)
-                VALUES ('$usuario', 'INTENTO', 'INTENTO REGISTRARSE PERO EL DNI YA EXISTE ($dni)')";
+                VALUES ('INVITADO', 'INTENTO', 'INTENTO REGISTRAR UN DNI PERO YA EXISTE ($dni)')";
                 if (mysqli_query($conn, $sql)) {} else {}
               // // fin inserta en la tabla bitacora
                 echo '<script>
@@ -117,11 +117,11 @@ session_start();
                     $_SESSION['nombre'] = $usuario;
                     // // inicio inserta en la tabla bitacora
                       $sql = "INSERT INTO tbl_bitacora (USUARIO, ACCION, OBSERVACION)
-                      VALUES ('$usuario', 'SE REGISTRO', 'SE REGISTRO CORRECTAMENTE ($usuario)')";
+                      VALUES ('INVITADO', 'SOLICITUD', 'SOLICITUD DE EMPLEO'')";
                       if (mysqli_query($conn, $sql)) {} else {}
                     // // fin inserta en la tabla bitacora
                     echo '<script>
-                                  alert("Usuario creado con exito");
+                                  alert("Solicitud de empleo enviada correctamente");
                                   
                       </script>';
        
@@ -136,7 +136,7 @@ session_start();
                 }else{
                     // // inicio inserta en la tabla bitacora
                     $sql = "INSERT INTO tbl_bitacora (USUARIO, ACCION, OBSERVACION)
-                    VALUES ('$usuario', 'INTENTO', 'INTENTO AGREGAR SU FOTO DE PERFIL PERO FORMATO INCORRECTO')";
+                    VALUES ('invitado', 'INTENTO', 'INTENTO AGREGAR SU FOTO DE PERFIL PERO FORMATO INCORRECTO')";
                     if (mysqli_query($conn, $sql)) {} else {}
                   // // fin inserta en la tabla bitacora
                   echo '<script type="text/javascript">
@@ -148,7 +148,7 @@ session_start();
                 }else{
                       // // inicio inserta en la tabla bitacora
                     $sql = "INSERT INTO tbl_bitacora (USUARIO, ACCION, OBSERVACION)
-                    VALUES ('$usuario', 'INTENTO', 'INTENTO AGREGAR SU CURRICULUM PERO FORMATO INCORRECTO')";
+                    VALUES ('invitado', 'INTENTO', 'INTENTO AGREGAR SU CURRICULUM PERO FORMATO INCORRECTO')";
                     if (mysqli_query($conn, $sql)) {} else {}
                   // // fin inserta en la tabla bitacora
                   echo '<script type="text/javascript">

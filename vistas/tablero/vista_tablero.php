@@ -150,61 +150,61 @@ if ($resultP=mysqli_query($conn,$sqlP)) {
               <?php
 include "../../conexion/conexion.php";
 
-$sqlU1 = "SELECT * FROM tbl_proyectos WHERE ID_DEPARTAMENTO=1"; if ($resultU1=mysqli_query($conn,$sqlU1)) {
+$sqlU1 = "SELECT * FROM tbl_proyectos WHERE ID_ESTADOS=4 AND ID_DEPARTAMENTO=1"; if ($resultU1=mysqli_query($conn,$sqlU1)) {
   $rowcountU1=mysqli_num_rows($resultU1);
   
-  $sqlU2 = "SELECT * FROM tbl_proyectos WHERE ID_DEPARTAMENTO=2"; if ($resultU2=mysqli_query($conn,$sqlU2)) {
+  $sqlU2 = "SELECT * FROM tbl_proyectos WHERE ID_ESTADOS=4 AND ID_DEPARTAMENTO=2"; if ($resultU2=mysqli_query($conn,$sqlU2)) {
   $rowcountU2=mysqli_num_rows($resultU2);
   
-  $sqlU3 = "SELECT * FROM tbl_proyectos WHERE ID_DEPARTAMENTO=3"; if ($resultU3=mysqli_query($conn,$sqlU3)) {
+  $sqlU3 = "SELECT * FROM tbl_proyectos WHERE ID_ESTADOS=4 AND ID_DEPARTAMENTO=3"; if ($resultU3=mysqli_query($conn,$sqlU3)) {
   $rowcountU3=mysqli_num_rows($resultU3);
   
-  $sqlU4 = "SELECT * FROM tbl_proyectos WHERE ID_DEPARTAMENTO=4"; if ($resultU4=mysqli_query($conn,$sqlU4)) {
+  $sqlU4 = "SELECT * FROM tbl_proyectos WHERE ID_ESTADOS=4 AND ID_DEPARTAMENTO=4"; if ($resultU4=mysqli_query($conn,$sqlU4)) {
   $rowcountU4=mysqli_num_rows($resultU4);
   
-  $sqlU5 = "SELECT * FROM tbl_proyectos WHERE ID_DEPARTAMENTO=5"; if ($resultU5=mysqli_query($conn,$sqlU5)) {
+  $sqlU5 = "SELECT * FROM tbl_proyectos WHERE ID_ESTADOS=4 AND ID_DEPARTAMENTO=5"; if ($resultU5=mysqli_query($conn,$sqlU5)) {
   $rowcountU5=mysqli_num_rows($resultU5);
   
-  $sqlU6 = "SELECT * FROM tbl_proyectos WHERE ID_DEPARTAMENTO=6"; if ($resultU6=mysqli_query($conn,$sqlU6)) {
+  $sqlU6 = "SELECT * FROM tbl_proyectos WHERE ID_ESTADOS=4 AND ID_DEPARTAMENTO=6"; if ($resultU6=mysqli_query($conn,$sqlU6)) {
   $rowcountU6=mysqli_num_rows($resultU6);
   
-  $sqlU7 = "SELECT * FROM tbl_proyectos WHERE ID_DEPARTAMENTO=7"; if ($resultU7=mysqli_query($conn,$sqlU7)) {
+  $sqlU7 = "SELECT * FROM tbl_proyectos WHERE ID_ESTADOS=4 AND ID_DEPARTAMENTO=7"; if ($resultU7=mysqli_query($conn,$sqlU7)) {
   $rowcountU7=mysqli_num_rows($resultU7);
   
-  $sqlU8 = "SELECT * FROM tbl_proyectos WHERE ID_DEPARTAMENTO=8"; if ($resultU8=mysqli_query($conn,$sqlU8)) {
+  $sqlU8 = "SELECT * FROM tbl_proyectos WHERE ID_ESTADOS=4 AND ID_DEPARTAMENTO=8"; if ($resultU8=mysqli_query($conn,$sqlU8)) {
   $rowcountU8=mysqli_num_rows($resultU8);
   
-  $sqlU9 = "SELECT * FROM tbl_proyectos WHERE ID_DEPARTAMENTO=9"; if ($resultU9=mysqli_query($conn,$sqlU9)) {
+  $sqlU9 = "SELECT * FROM tbl_proyectos WHERE ID_ESTADOS=4 AND ID_DEPARTAMENTO=9"; if ($resultU9=mysqli_query($conn,$sqlU9)) {
   $rowcountU9=mysqli_num_rows($resultU9);
   
-  $sqlU10 = "SELECT * FROM tbl_proyectos WHERE ID_DEPARTAMENTO=10"; if ($resultU10=mysqli_query($conn,$sqlU10)) {
+  $sqlU10 = "SELECT * FROM tbl_proyectos WHERE ID_ESTADOS=4 AND ID_DEPARTAMENTO=10"; if ($resultU10=mysqli_query($conn,$sqlU10)) {
   $rowcountU10=mysqli_num_rows($resultU10);
   
-  $sqlU11 = "SELECT * FROM tbl_proyectos WHERE ID_DEPARTAMENTO=11"; if ($resultU11=mysqli_query($conn,$sqlU11)) {
+  $sqlU11 = "SELECT * FROM tbl_proyectos WHERE ID_ESTADOS=4 AND ID_DEPARTAMENTO=11"; if ($resultU11=mysqli_query($conn,$sqlU11)) {
   $rowcountU11=mysqli_num_rows($resultU11);
   
-  $sqlU12 = "SELECT * FROM tbl_proyectos WHERE ID_DEPARTAMENTO=12"; if ($resultU12=mysqli_query($conn,$sqlU12)) {
+  $sqlU12 = "SELECT * FROM tbl_proyectos WHERE ID_ESTADOS=4 AND ID_DEPARTAMENTO=12"; if ($resultU12=mysqli_query($conn,$sqlU12)) {
   $rowcountU12=mysqli_num_rows($resultU12);
   
-  $sqlU13 = "SELECT * FROM tbl_proyectos WHERE ID_DEPARTAMENTO=13"; if ($resultU13=mysqli_query($conn,$sqlU13)) {
+  $sqlU13 = "SELECT * FROM tbl_proyectos WHERE ID_ESTADOS=4 AND ID_DEPARTAMENTO=13"; if ($resultU13=mysqli_query($conn,$sqlU13)) {
   $rowcountU13=mysqli_num_rows($resultU13);
   
-  $sqlU14 = "SELECT * FROM tbl_proyectos WHERE ID_DEPARTAMENTO=14"; if ($resultU14=mysqli_query($conn,$sqlU14)) {
+  $sqlU14 = "SELECT * FROM tbl_proyectos WHERE ID_ESTADOS=4 AND ID_DEPARTAMENTO=14"; if ($resultU14=mysqli_query($conn,$sqlU14)) {
   $rowcountU14=mysqli_num_rows($resultU14);
   
-  $sqlU15 = "SELECT * FROM tbl_proyectos WHERE ID_DEPARTAMENTO=15"; if ($resultU15=mysqli_query($conn,$sqlU15)) {
+  $sqlU15 = "SELECT * FROM tbl_proyectos WHERE ID_ESTADOS=4 AND ID_DEPARTAMENTO=15"; if ($resultU15=mysqli_query($conn,$sqlU15)) {
   $rowcountU15=mysqli_num_rows($resultU15);
   
-  $sqlU16 = "SELECT * FROM tbl_proyectos WHERE ID_DEPARTAMENTO=16"; if ($resultU16=mysqli_query($conn,$sqlU16)) {
+  $sqlU16 = "SELECT * FROM tbl_proyectos WHERE ID_ESTADOS=4 AND ID_DEPARTAMENTO=16"; if ($resultU16=mysqli_query($conn,$sqlU16)) {
   $rowcountU16=mysqli_num_rows($resultU16);
   
-  $sqlU17 = "SELECT * FROM tbl_proyectos WHERE ID_DEPARTAMENTO=17"; if ($resultU17=mysqli_query($conn,$sqlU17)) {
+  $sqlU17 = "SELECT * FROM tbl_proyectos WHERE ID_ESTADOS=4 AND ID_DEPARTAMENTO=17"; if ($resultU17=mysqli_query($conn,$sqlU17)) {
   $rowcountU17=mysqli_num_rows($resultU17);
   
-  $sqlU18 = "SELECT * FROM tbl_proyectos WHERE ID_DEPARTAMENTO=18"; if ($resultU18=mysqli_query($conn,$sqlU18)) {
+  $sqlU18 = "SELECT * FROM tbl_proyectos WHERE ID_ESTADOS=4 AND ID_DEPARTAMENTO=18"; if ($resultU18=mysqli_query($conn,$sqlU18)) {
     $rowcountU18=mysqli_num_rows($resultU18);
 
-    $sql = "SELECT * FROM tbl_proyectos"; if ($result=mysqli_query($conn,$sql)) {
+    $sql = "SELECT * FROM tbl_proyectos WHERE ID_ESTADOS=4"; if ($result=mysqli_query($conn,$sql)) {
       $rowcount=mysqli_num_rows($result);
 ?>                         
 <canvas id="myChart" style="width:100%;max-width:100%"></canvas>
