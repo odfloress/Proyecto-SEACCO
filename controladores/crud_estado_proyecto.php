@@ -20,7 +20,7 @@
       //para insertar en la tabla mysl
       case "agregar": 
         // valida si existe un estado con el mismo nombre
-        $validar_estados = "SELECT * FROM tbl_estados_proyectos WHERE NOMBRE='$nombre'";
+        $validar_estados = "SELECT * FROM tbl_estados_proyectos WHERE ESTADO_PROYECTO='$nombre'";
         $result1 = mysqli_query($conn, $validar_estados); 
          if (mysqli_num_rows($result1) > 0) { 
               
@@ -32,7 +32,7 @@
          }else{ 
 
                 //si no existe un estado permite insertar
-                $sql1 = "INSERT INTO tbl_estados_proyectos (NOMBRE)
+                $sql1 = "INSERT INTO tbl_estados_proyectos (ESTADO_PROYECTO)
                 VALUES ('$nombre')";
                 if (mysqli_query($conn, $sql1)) {
                   
@@ -64,11 +64,11 @@
        //para editar en la tabla mysl      
       case "editar";
        // valida si existe el provvedor con el mismo nombre
-      $validar_estados= "SELECT * FROM tbl_estados_proyectos WHERE NOMBRE='$nombre'";
+      $validar_estados= "SELECT * FROM tbl_estados_proyectos WHERE ESTADO_PROYECTO='$nombre'";
       $result2 = mysqli_query($conn, $validar_estados); 
        if (mysqli_num_rows($result2) > 0) { 
             
-          $sql2 = "UPDATE tbl_estados_proyectos SET NOMBRE='$anterior' WHERE ID_ESTADOS='$id_estados'";
+          $sql2 = "UPDATE tbl_estados_proyectos SET ESTADOS_PROYECTO='$anterior' WHERE ID_ESTADOS='$id_estados'";
               if (mysqli_query($conn, $sql2)) {
 
                  
@@ -94,7 +94,7 @@
                     mysqli_close($conn);
                      // si no existe el estado con el mismo nombre
           }else{
-                $sql2 = "UPDATE tbl_estados_proyectos SET  NOMBRE='$nombre' WHERE ID_ESTADOS='$id_estados'";
+                $sql2 = "UPDATE tbl_estados_proyectos SET ESTADO_PROYECTO='$nombre' WHERE ID_ESTADOS='$id_estados'";
                 if (mysqli_query($conn, $sql2)) {
                   // inicio inserta en la tabla bitacora
                   $sql9 = "INSERT INTO tbl_bitacora (USUARIO, ACCION, OBSERVACION)

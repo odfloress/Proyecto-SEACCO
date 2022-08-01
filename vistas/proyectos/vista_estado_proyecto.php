@@ -197,7 +197,7 @@ if (mysqli_num_rows($roles35) > 0)
                                               <input type="number" class="form-control" name="id_estados" readonly required value="<?php echo $filas['ID_ESTADOS'] ?>" placeholder="" id="txtPrecio_Compra"   >
                                               <br>
                                               <label for="">Estado</label>
-                                              <input type="text" class="form-control" name="nombre" autocomplete="off" required value="<?php echo $filas['NOMBRE'] ?>" placeholder="" id="txtPrecio_Compra" onkeypress="return soloLetras(event);" minlength="3" maxlength="20"  onkeyup="mayus(this);" >
+                                              <input type="text" class="form-control" name="nombre" autocomplete="off" required value="<?php echo $filas['ESTADO_PROYECTO'] ?>" placeholder="" id="txtPrecio_Compra" onkeypress="return soloLetras(event);" minlength="3" maxlength="20"  onkeyup="mayus(this);" >
                                               <br>
                                           
                                           </div>
@@ -233,7 +233,7 @@ if (mysqli_num_rows($roles35) > 0)
                   </form>
 </td>
                     <td ><?php echo $filas['ID_ESTADOS'] ?></td>
-                     <td><?php echo $filas['NOMBRE'] ?></td>
+                     <td><?php echo $filas['ESTADO_PROYECTO'] ?></td>
                      <?php } ?>
                     
       </tr>
@@ -331,14 +331,12 @@ if (mysqli_num_rows($roles35) > 0)
                          },
                          
                          "responsive": true, "lengthChange": true, "autoWidth": false,
-                          "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"],
-
-                        
-
-                         
+                          "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"],                   
         
     })
-    buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+
+      
+    .buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
     $('#example2').DataTable({
       "paging": true,
       "lengthChange": false,
@@ -392,5 +390,3 @@ if (mysqli_num_rows($roles35) > 0)
       }
     }
   </script>
-
-
