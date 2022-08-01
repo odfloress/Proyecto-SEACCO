@@ -1,4 +1,6 @@
-
+<?php
+require '../../controladores/co_solicitud_empleo.php';
+?>
 
 <!DOCTYPE html>
 <html>
@@ -12,6 +14,55 @@
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script>
+  function clave(e) {
+  key = e.keyCode || e.which;
+  tecla = String.fromCharCode(key).toString();
+  letras = "ABCDEFGHIJKLMNÑOPQRSTUVWXYZabcdefghijklmnñopqrstuvwxyz";
+  
+  especiales = [8,13];
+  tecla_especial = false;
+  for(var i in especiales) {
+    if(key == especiales[i]){
+      tecla_especial = true;
+      break;
+    }
+  }
+  
+  if(letras.indexOf(tecla) == -1 && !tecla_especial){
+    alert("Ingresar solo mayusculas");
+    return false;
+  }
+}
+</script>
+<script>
+  function clave1(e) {
+  key = e.keyCode || e.which;
+  tecla = String.fromCharCode(key).toString();
+  letras = "ABCDEFGHIJKLMNÑOPQRSTUVWXZabcdefghijklmnñopqrstuvwxyz0123456789,#$%&/=!¡?¿()*{}[]-_'.@<>";
+  
+  especiales = [8,13];
+  tecla_especial = false;
+  for(var i in especiales) {
+    if(key == especiales[i]){
+      tecla_especial = true;
+      break;
+    }
+  }
+  
+  if(letras.indexOf(tecla) == -1 && !tecla_especial){
+    alert("Sin espacios");
+    return false;
+  }
+}
+</script>
+
+<!-- enlace del scritpt para evitar si preciona F12, si preciona Ctrl+Shift+I, si preciona Ctr+u  -->
+<script type="text/javascript" src="js/evita_ver_codigo_utilizando_teclas.js"></script>
 
 
 </head>
@@ -90,67 +141,161 @@
       </div>
 
       <!-- Modal body -->
-      <div class="modal-body">
-       	<label for="nombre" class="form-label">Nombre Completo:</label>
-   		<input type="nombre" class="form-control" id="nombre" 
-            placeholder="Ingrese Nombre Completo" name="nombre">
-        <br>
-        <label for="rtn" class="form-label">Numero de Identidad:</label>
-   		<input type="rtn" class="form-control" id="rtn" 
-            placeholder="Ingrese Numero de Identidad" name="rtn">
-        <br>
-        <label for="profesion" class="form-label">Profesion:</label>
-   		<input type="profesion" class="form-control" id="profesion" 
-        	placeholder="Ingrese Profesion" name="profesion">
-       	<br>
-        <label for="direccion" class="form-label">Direccion:</label>
-   		<input type="direccion" class="form-control" id="direccion" 
-        	placeholder="Ingrese Direccion" name="direccion">
-        <br>
-        <label for="celular" class="form-label">Numero Celular:</label>
-   		<input type="celular" class="form-control" id="celular" 
-            placeholder="Ingrese Numero Celular" name="celular">
-        <br>
-        <label for="referencia" class="form-label">Referencia:</label>
-   		<input type="referencia" class="form-control" id="referencia" 
-           	placeholder="Ingrese Referencia" name="referencia">
-        <br>
-        <label for="celularreferencia" class="form-label">Numero Celular Referencia:</label>
-   		<input type="celularreferencia" class="form-control" id="celularreferencia" 
-            placeholder="Ingrese Numero Celular Referencia" name="celularreferencia">
-        <br>
-        <label for="experiencia" class="form-label">Experiencia Laboral:</label>
-   		<input type="experiencia" class="form-control" id="experiencia" 
-            placeholder="Ingrese Experiencia Laboral" name="experiencia">
-        <br>
-        <label for="email" class="form-label">Correo Electronico:</label>
-   		 <input type="email" class="form-control" id="email" 
-        	placeholder="Ingrese Correo Electronico" name="email">
-        <br>
-        <label for="email" class="form-label">Seleccione el area a la que desea aplicar:</label>
-        <select name="txtMetodo_Compra" class="form-control" required="true">
-	    <option  value="">Seleccionar</option>
-        <option  value="">Administrativo</option>
-        <option  value="">Mano de obra</option>  
-       </select>   		
-        <br>
-       	<label for="">Imagen:</label> 
-        <input type="file" class="form-control" accept="image/*"  name="" placeholder="" 
-        id="txtFoto" require="">
-        <br>
-        
-       	<label for="">Hoja de vida:</label> 
-        <input type="file" class="form-control" accept="image/*"  name="" placeholder="" 
-        id="txtFoto" require="">
-        <br>
-      </div>
+      <div class="modal-body ">
+      <form action="" method="POST"  enctype="multipart/form-data">
+      <center><img src="../../imagenes/seacco.jpg" alt="Girl in a jacket" width="150" height="150"><br></center>
+
+            <div class="row">
+                <div class="col">
+                  <label for="email"  class="form-label">Nombre:</label>
+                  <input style="background-color:rgb(240, 244, 245);" type="text" autocomplete="off"  value="<?php echo "$nombre"; ?>" onkeyup="mayus(this);" maxlength="30" class="form-control"  placeholder="Ingrese el nombre" name="nombre" required>
+                </div>
+                <div class="col">
+                  <label for="pwd" class="form-label">Apellido:</label>
+                  <input style="background-color:rgb(240, 244, 245);" type="text" autocomplete="off" value="<?php echo "$apellido"; ?>" onkeyup="mayus(this);" maxlength="30" class="form-control"  placeholder="Ingrese su apellido" name="apellido" required>
+                </div>
+            </div>
+           <div class="row">
+                 <!--<div class="col">
+                  <label for="pwd" class="form-label">Usuario:</label>
+                  <input style="background-color:rgb(240, 244, 245);" type="text" autocomplete="off" value="<?php echo "$usuario"; ?>" onkeypress="return clave(event);"  onKeyUP="this.value=this.value.toUpperCase();"  class="form-control" placeholder="Asignar usuario" name="usuario" required>
+                </div>-->
+                <!--<div class="col">
+                      <div class="form-group">
+                        <label for="pwd" class="form-label">Contraseña:</label> 
+                        <div class="input-group mb-3">
+                          <input style="background-color:rgb(240, 244, 245);" type="password" id="id_password"  autocomplete="off" onkeypress="return clave1(event);"  class="form-control"  placeholder="Ingrese la contraseña" name="contrasena"  required pattern="(?=.*[\d])(?=.*[a-z])(?=.*[A-Z]).{8,}" onblur="quitarespacios(this);"  onkeyup="sinespacio(this);" required="" minlength="8" maxlength="40" >
+                          <div class="input-group-append ">
+                            
+                            <div class="input-group-text">
+                              <span>
+                              <i class="far fa-eye" id="togglePassword"  ></i>
+                              </span>
+                            
+                            </div> 
+                          </div>  
+                        </div>
+                      </div>-->
+                  
+                  <span>
+                  
+                  </span>
+                  
+                
+            </div>
+            <div class="row">
+                <div class="col">
+                  <label for="pwd" class="form-label">Correo:</label>
+                  <input style="background-color:rgb(240, 244, 245);" type="email" autocomplete="off" value="<?php echo "$correo"; ?>" onkeypress="return clave1(event);" class="form-control"  placeholder="Ingrese su correo" name="correo" required>
+                </div>
+                <div class="col">
+                  <label for="pwd" class="form-label">DNI:</label>
+                  <input style="background-color:rgb(240, 244, 245);" type="text" autocomplete="off" value="<?php echo "$dni"; ?>" class="form-control"  placeholder="" name="dni" minlength="13" maxlength="13" onkeypress="return solonumero(event)" required pattern="[0-9]+[1-9]+" title="13 caracteres y no todos ceros">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                  <label for="pwd" class="form-label">Profesión:</label>
+                  <select style="background-color:rgb(240, 244, 245);" value="<?php echo "$profesion"; ?>" class="form-select" id="lista1" name="profesion" required >
+                        <?php
+                            include '../../conexion/conexion.php';
+                            $profesion = "SELECT * FROM tbl_profesiones ORDER BY ID_PROFESION";
+                            $profesion2 = mysqli_query($conn, $profesion);
+                            if (mysqli_num_rows($profesion2) > 0) {
+                                while($row = mysqli_fetch_assoc($profesion2))
+                                {
+                                $id_profesion = $row['ID_PROFESION'];
+                                $profesion3 =$row['PROFESION'];
+                         ?>
+                          <option value="<?php  echo $id_profesion ?>"><?php echo $profesion3 ?></option>
+                          <?php
+                           }}// finaliza el if y el while
+                           ?>
+                   </select>
+                </div>
+                <div class="col">
+                  <label for="pwd" class="form-label">Dirección:</label>
+                  <input style="background-color:rgb(240, 244, 245);" type="text" autocomplete="off"  value="<?php echo "$direccion"; ?>" onkeypress="return SoloLetras(event);"  onKeyUP="this.value=this.value.toUpperCase();" class="form-control"  placeholder="Ingrese su dirección" name="direccion" required>
+                </div>
+            </div>
+            <div class="row"> 
+                <div class="col">
+                  <label for="pwd" class="form-label">Celular:</label>
+                  <input style="background-color:rgb(240, 244, 245);" type="text" autocomplete="off"  value="<?php echo "$celular"; ?>" class="form-control"  placeholder="Ingrese su celular" name="celular" required minlength="8" onkeypress="return solonumero(event)" maxlength="8" pattern="[0-9]+[1-9]+[0-9]+" title="8 caracteres y no todos ceros">
+                </div>
+                <div class="col">
+                  <label for="pwd" class="form-label">Referencia:</label>
+                  <input style="background-color:rgb(240, 244, 245);" type="text" autocomplete="off"  value="<?php echo "$referencia"; ?>" onkeypress="return SoloLetras(event);"  onKeyUP="this.value=this.value.toUpperCase();" class="form-control"  placeholder="Ingrese nombre referencia" name="referencia" required>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                  <label for="pwd" class="form-label">Celular referencia:</label>
+                  <input style="background-color:rgb(240, 244, 245);" type="text" autocomplete="off"  value="<?php echo "$celular_referencia"; ?>" class="form-control"  placeholder="Opcional" name="celular_referencia" onkeypress="return solonumero(event)" required minlength="8" maxlength="8" pattern="[0-9]+[1-9]+[0-9]+" title="8 caracteres y no todos ceros">
+                </div>
+                <div class="col">
+                  <label for="pwd" class="form-label">Experiencia laboral:</label>
+                  <input style="background-color:rgb(240, 244, 245);" type="text" autocomplete="off"  value="<?php echo "$experiencia_laboral"; ?>" onkeypress="return SoloLetras(event);"  onKeyUP="this.value=this.value.toUpperCase();" class="form-control"  placeholder="Ingrese su profesión u oficio" name="experiencia_laboral" required>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col"> 
+                  <label for="pwd" class="form-label">Curriculum:</label>
+                  <input style="background-color:rgb(240, 244, 245);" type="file" accept=".pdf, .docx" autocomplete="off"  value="<?php echo "$curriculum"; ?>" class="form-control"  placeholder="Adjunte su curriculum" name="curriculum" required>
+                </div>
+                <div class="col">
+                  <label for="pwd" class="form-label">Foto:</label>
+                  <input style="background-color:rgb(240, 244, 245);" type="file" accept=".jpg, .png, .jpej, .JPEG, .JPG, .PNG" autocomplete="off"  value="<?php echo "$foto"; ?>" class="form-control" required placeholder="Adjunte su foto" name="foto">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                <label for="pwd" class="form-label">Genero:</label>
+                <select style="background-color:rgb(240, 244, 245);" value="<?php echo "$genero"; ?>" class="form-select" id="lista1" name="genero" required >
+                        <?php
+                            include '../../conexion/conexion.php';
+                            $genero = "SELECT * FROM tbl_generos ORDER BY ID_GENERO";
+                            $genero2 = mysqli_query($conn, $genero);
+                            if (mysqli_num_rows($genero2) > 0) {
+                                while($row = mysqli_fetch_assoc($genero2))
+                                {
+                                $id_genero = $row['ID_GENERO'];
+                                $genero3 =$row['GENERO'];
+                         ?>
+                          <option value="<?php  echo $id_genero ?>"><?php echo $genero3 ?></option>
+                          <?php
+                           }}// finaliza el if y el while
+                           ?>
+                   </select>
+                </div>  
+                <div class="col">
+                <label for="pwd" class="form-label">Area:</label>
+                <select style="background-color:rgb(240, 244, 245);" value="<?php echo "$area"; ?>" class="form-select" id="lista1" name="area" required >
+                        <?php
+                            include '../../conexion/conexion.php';
+                            $area = "SELECT * FROM tbl_areas ORDER BY ID_AREA";
+                            $area2 = mysqli_query($conn, $area);
+                            if (mysqli_num_rows($area2) > 0) {
+                                while($row = mysqli_fetch_assoc($area2))
+                                {
+                                $id_area = $row['ID_AREA'];
+                                $area3 =$row['AREA'];
+                         ?>
+                          <option value="<?php  echo $id_area ?>"><?php echo $area3 ?></option>
+                          <?php
+                           }}// finaliza el if y el while
+                           ?>
+                   </select>
+                </div>               
+           </div><br>
 
       <!-- Modal footer -->
       <div class="modal-footer">
-        <button type="button" class="btn btn-success">Enviar</button>
+      <button type="submit" name="accion" value="registrar" class="btn btn-dark btn-block">Enviar</button><br>
         <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cerrar</button>
       </div>
-
+      </form>
+      </div>
     </div>
   	</div>
 	</div>
@@ -230,3 +375,70 @@ function toggleFunction() {
 
 </body>
 </html>
+<script type="text/javascript" src="js/evitar_reenvio.js"></script>
+
+</html>
+<script type="text/javascript">
+ function mayus(e) {
+   e.value = e.value.toUpperCase();
+ }
+</script>
+
+<script type="text/javascript">
+
+function sinespacio(e) {
+
+  var cadena =  e.value;
+  var limpia = "";
+  var parts = cadena.split(" ");
+  var length = parts.length;
+
+  for (var i = 0; i < length; i++) {
+    nuevacadena = parts[i];
+    subcadena = nuevacadena.trim();
+
+    if(subcadena != "") {
+      limpia += subcadena + " ";
+    }
+  }
+  limpia = limpia.trim();
+  e.value = limpia;
+
+};
+</script>
+
+<script type="text/javascript">
+function quitarespacios(e) {
+
+  var cadena =  e.value;
+  cadena = cadena.trim();
+
+  e.value = cadena;
+
+};
+</script>
+
+<script type="text/javascript"> function solonumero(e) {
+        tecla = (document.all) ? e.keyCode : e.which;
+        if (tecla==8) return true;
+        else if (tecla==0||tecla==9)  return true;
+       // patron =/[0-9\s]/;// -> solo letras
+        patron =/[0-9\s]/;// -> solo numeros
+        te = String.fromCharCode(tecla);
+        return patron.test(te);
+    }
+	</script>
+
+              <!-- Script para ver contraseña de ver contraseña  -->
+  <script>
+    const togglePassword = document.querySelector('#togglePassword');
+    const password = document.querySelector('#id_password');
+
+      togglePassword.addEventListener('click', function (e) {
+    // toggle the type attribute
+    const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
+    password.setAttribute('type', type);
+    // toggle the eye slash icon
+    this.classList.toggle('fa-eye-slash');
+      });
+  </script>
