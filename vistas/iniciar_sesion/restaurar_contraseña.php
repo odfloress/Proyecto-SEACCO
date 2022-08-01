@@ -12,7 +12,27 @@ include '../../controladores/co_restablecer_contraseña.php';
 
 
 ?>
-
+<script>
+  function clave1(e) {
+  key = e.keyCode || e.which;
+  tecla = String.fromCharCode(key).toString();
+  letras = "ABCDEFGHIJKLMNÑOPQRSTUVWXZabcdefghijklmnñopqrstuvwxyz0123456789,#$%&/=!¡?¿()*{}[]-_'.@<>";
+  
+  especiales = [8,13];
+  tecla_especial = false;
+  for(var i in especiales) {
+    if(key == especiales[i]){
+      tecla_especial = true;
+      break;
+    }
+  }
+  
+  if(letras.indexOf(tecla) == -1 && !tecla_especial){
+    alert("Sin espacios");
+    return false;
+  }
+}
+</script>
                
               
 
@@ -64,11 +84,11 @@ body {
                 <input type="text" name="" value="<?php $usuario = $_SESSION; echo $usuario['nombre']; ?>" class="form-control" readonly>
 
                 <label for="sel1" class="form-label">Nueva contraseña</label>
-                <input type="password" name="nueva_contrasena" id="contrasena" value="" class="form-control"  minlength="8" maxlength="30" required onblur="quitarespacios(this);" onkeyup="sinespacio(this);" pattern="(?=.*[\d])(?=.*[a-z])(?=.*[A-Z]).{8,}">
+                <input type="password" name="nueva_contrasena" id="contrasena" value="" class="form-control"  minlength="8" maxlength="30" onkeypress="return clave1(event);" required onblur="quitarespacios(this);" onkeyup="sinespacio(this);" pattern="(?=.*[\d])(?=.*[a-z])(?=.*[A-Z]).{8,}">
                 <input type="checkbox" onclick="mostrarContrasena()" > Mostrar/Ocultar
                 <br>
                 <label for="sel1" class="form-label">Confirmar contraseña</label>
-                <input type="password" name="confirmar_contrasena" id="contrasena2" value="" class="form-control" minlength="8" maxlength="30" required onblur="quitarespacios(this);" onkeyup="sinespacio(this);" pattern="(?=.*[\d])(?=.*[a-z])(?=.*[A-Z]).{8,}">
+                <input type="password" name="confirmar_contrasena" id="contrasena2" value="" class="form-control" minlength="8" maxlength="30" onkeypress="return clave1(event);" required onblur="quitarespacios(this);" onkeyup="sinespacio(this);" pattern="(?=.*[\d])(?=.*[a-z])(?=.*[A-Z]).{8,}">
                 <input type="checkbox" onclick="mostrarContrasena2()" > Mostrar/Ocultar
 
             </div>

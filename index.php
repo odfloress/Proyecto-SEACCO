@@ -359,27 +359,32 @@ actividades que se desarrollan en los proyectos ejecutados.</p>
 </div>
 </center>
 
+<?php 
+  include 'conexion/conexion.php';
+  $sql = "SELECT * FROM tbl_nuestros_contactos ";
+  $result = mysqli_query($conn, $sql);
+  while($row = mysqli_fetch_assoc($result)) {
+  ?>
 
+<!-- Contact Section -->
+<div class="w3-container w3-light-grey" style="padding:128px 16px" id="contact">
+  <h3 class="w3-center">CONTACTANOS</h3>
+  <p class="w3-center w3-large">Mantengámonos en contacto. Mandanos un mensaje:</p>
+  <div style="margin-top:48px">
+    <p><i class="fa fa-map-marker fa-fw w3-xxlarge w3-margin-right"></i> <?php echo $row['DIRECCION'] ?></p>
+    <p><i class="fa fa-phone fa-fw w3-xxlarge w3-margin-right"></i> Telefono: <?php echo $row['TELEFONO'] ?></p>
+    <p><i class="fa fa-envelope fa-fw w3-xxlarge w3-margin-right"> </i> Correo: <?php echo $row['CORREO'] ?></p>
+    <br>
+    <?php } ?>
+  <!-- inicio mapa -->
+  <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3869.8943255546815!2d-87.1795425126564!3d14.083414958674373!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8f6fbdd69e8f86fd%3A0x29aa117c9a4923a1!2sConstructora%20SEACCO%20S.%20De.%20R.L.!5e0!3m2!1ses-419!2shn!4v1653890939969!5m2!1ses-419!2shn" width="100%" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+<!-- Fin mapa -->
 <?php 
   include 'conexion/conexion.php';
   $sqlB3 = "SELECT * FROM tbl_bienvenida_portafolio WHERE TIPO='BIENVENIDA' AND ID_IMAGEN=3";
   $resultB3 = mysqli_query($conn, $sqlB3);
   while($rowB3 = mysqli_fetch_assoc($resultB3)) {
   ?>
-<!-- Contact Section -->
-<div class="w3-container w3-light-grey" style="padding:128px 16px" id="contact">
-  <h3 class="w3-center">CONTACTANOS</h3>
-  <p class="w3-center w3-large">Mantengámonos en contacto. Mandanos un mensaje:</p>
-  <div style="margin-top:48px">
-    <p><i class="fa fa-map-marker fa-fw w3-xxlarge w3-margin-right"></i> Tegucigalpa, Honduras</p>
-    <p><i class="fa fa-phone fa-fw w3-xxlarge w3-margin-right"></i> Telefono: 9660-7632</p>
-    <p><i class="fa fa-envelope fa-fw w3-xxlarge w3-margin-right"> </i> Correo: proyectos@seaccoconstruye.com</p>
-    <br>
-    
-  <!-- inicio mapa -->
-  <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3869.8943255546815!2d-87.1795425126564!3d14.083414958674373!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8f6fbdd69e8f86fd%3A0x29aa117c9a4923a1!2sConstructora%20SEACCO%20S.%20De.%20R.L.!5e0!3m2!1ses-419!2shn!4v1653890939969!5m2!1ses-419!2shn" width="100%" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-<!-- Fin mapa -->
-
     <!-- Image of location/map -->
     <img src="imagenes/<?php echo $rowB3['IMAGEN'] ?>" class="w3-image w3-greyscale" style="width:100%;margin-top:48px">
   </div>
