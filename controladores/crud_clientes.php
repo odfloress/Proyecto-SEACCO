@@ -34,7 +34,7 @@
                  </script>';
                  mysqli_close($conn);
          }else{ 
-            $sql7 = "INSERT INTO tbl_clientes (CODIGO, NOMBRE, APELLIDO, CORREO, TELEFONO, DIRECCION, REFERENCIA, GENERO)
+            $sql7 = "INSERT INTO tbl_clientes (CODIGO, NOMBRE_CLIENTE, APELLIDO, CORREO, TELEFONO, DIRECCION, REFERENCIA, GENERO)
                     VALUES ('$codigo', '$nombre', '$apellido', '$correo', '$telefono', '$direccion', '$referencia', '$genero')";
 
                     if (mysqli_query($conn, $sql7)) {
@@ -54,7 +54,7 @@
       case "editar";
 
         // valida si existe una categoria con el mismo nombre
-        $validar_proveedor = "SELECT * FROM tbl_clientes WHERE NOMBRE='$nombre'";
+        $validar_proveedor = "SELECT * FROM tbl_clientes WHERE NOMBRE_CLIENTE='$nombre'";
         $result2 = mysqli_query($conn, $validar_clientes); 
          if (mysqli_num_rows($result2) > 0) { 
               
@@ -65,7 +65,7 @@
                  mysqli_close($conn);
          }else{ 
 
-                $sql2 = "UPDATE tbl_clientes SET NOMBRE='$nombre', APELLIDO='$apellido', CORREO='$correo',TELEFONO='$telefono', DIRECCION='$direccion', REFERENCIA='$referencia', GENERO='$genero , FOTO='$foto WHERE ID_CLIENTE='$id_cliente'";
+                $sql2 = "UPDATE tbl_clientes SET NOMBRE_CLIENTE='$nombre', APELLIDO='$apellido', CORREO='$correo',TELEFONO='$telefono', DIRECCION='$direccion', REFERENCIA='$referencia', GENERO='$genero , FOTO='$foto WHERE ID_CLIENTE='$id_cliente'";
                 if (mysqli_query($conn, $sql2)) {
                    header('Location: ../../vistas/personas/clientes.php');
 
