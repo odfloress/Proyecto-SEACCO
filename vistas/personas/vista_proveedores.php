@@ -102,22 +102,22 @@ if (mysqli_num_rows($roles35) > 0)
                 <div class="modal-body">
                 
                     <label for="">Proveedor</label>
-                    <input type="text" class="form-control" name="nombre" required value="" placeholder="" id="txtPrecio_Compra" onkeypress="return soloLetras(event);" minlength="3" maxlength="20" onkeyup="mayus(this);" >
+                    <input type="text" class="form-control" name="nombre"  value="<?php echo $nombre; ?>" required value="" placeholder="" id="txtPrecio_Compra" autocomplete = "off" onkeypress="return soloLetras(event);" minlength="3" maxlength="20" onkeyup="mayus(this);" >
                     <br>
                     <label for="">Nombre Referencia</label>
-                    <input type="text" class="form-control" name="nombre_referencia" required value="" placeholder="" id="txtnombrer" onkeypress="return soloLetras(event);" minlength="3" maxlength="20" onkeyup="mayus(this);" >
+                    <input type="text" class="form-control" name="nombre_referencia" value="<?php echo $nombre_referencia; ?>"  required value="" placeholder="" id="txtnombrer" autocomplete = "off" onkeypress="return soloLetras(event);" minlength="3" maxlength="20" onkeyup="mayus(this);" >
                     <br>
                     <label for="">Sector comercial</label>
-                    <input type="text" class="form-control" name="sector_comercial" required value="" placeholder="" id="txtsectorcomercial" onkeypress="return soloLetras(event);" minlength="3" maxlength="20" onkeyup="mayus(this);" >
+                    <input type="text" class="form-control" name="sector_comercial"  value="<?php echo $sector_comercial; ?>" required value="" placeholder="" id="txtsectorcomercial" autocomplete = "off" onkeypress="return soloLetras(event);" minlength="3" maxlength="20" onkeyup="mayus(this);" >
                     <br>
                     <label for="">direccion</label>
-                    <input type="text" class="form-control" name="direccion" required value="" placeholder="" id="txtdireccionproveedor"  onkeyup="mayus(this);" >
+                    <input type="text" class="form-control" name="direccion" required value=""  value="<?php echo $direccion; ?>" placeholder="" id="txtdireccionproveedor" autocomplete = "off" onkeyup="mayus(this);" >
                     <br>
                     <label for="">Telefono</label>
-                    <input type="number" class="form-control" name="telefono" required value="" placeholder="" id="txttelefono"   >
+                    <input type="number" class="form-control" name="telefono" required value="" value="<?php echo $telefono; ?>"  placeholder="" id="txttelefono" autocomplete = "off"  >
                     <br>
                     <label for="">Correo</label>
-                    <input type="email" class="form-control" name="correo" required value="" placeholder="" id="txtcorreo"   >
+                    <input type="email" class="form-control" name="correo" required value=""  value="<?php echo $correo; ?>" placeholder="" id="txtcorreo"  autocomplete = "off" >
                     <br>
                 </div>
                 <!-- Fin Cuerpo del modal Modal -->
@@ -211,26 +211,27 @@ if (mysqli_num_rows($roles35) > 0)
                                 <!-- Cuerpo del modal Modal -->
                                 <form action="" method="post">
                                           <div class="modal-body">
+                                          <input type="hidden" name="nombre_anterior" value="<?php echo $filas['NOMBRE'] ?>">
                                               <label for="">Id Proveedor</label>
                                               <input type="text" class="form-control" name="id_proveedor" readonly required value="<?php echo $filas['ID_PROVEEDOR'] ?>" placeholder="" id="txtPrecio_Compra"   >
                                               <br>
                                               <label for="">Proveedor</label>
-                                              <input type="text" class="form-control" name="nombre" required value="<?php echo $filas['NOMBRE'] ?>" placeholder="" id="txtPrecio_Compra" onkeypress="return soloLetras(event);" onkeyup="mayus(this);" >
+                                              <input type="text" class="form-control" name="nombre" autocomplete = "off" required value="<?php echo $filas['NOMBRE'] ?>" placeholder="" id="txtPrecio_Compra" onkeypress="return soloLetras(event);" onkeyup="mayus(this);" >
                                               <br>
                                               <label for="">Nombre Referencia</label>
-                                             <input type="text" class="form-control" name="nombre_referencia" required value="<?php echo $filas['NOMBRE_REFERENCIA'] ?>" placeholder="" id="txtnombrer" onkeypress="return soloLetras(event);" onkeyup="mayus(this);" >
+                                             <input type="text" class="form-control" name="nombre_referencia" autocomplete = "off" required value="<?php echo $filas['NOMBRE_REFERENCIA'] ?>" placeholder="" id="txtnombrer" onkeypress="return soloLetras(event);" onkeyup="mayus(this);" >
                                              <br>
                                              <label for="">Sector comercial</label>
-                                             <input type="text" class="form-control" name="sector_comercial" required value="<?php echo $filas['SECTOR_COMERCIAL'] ?>" placeholder="" id="txtsectorcomercial" onkeypress="return soloLetras(event);" onkeyup="mayus(this);" >
+                                             <input type="text" class="form-control" name="sector_comercial" autocomplete = "off" required value="<?php echo $filas['SECTOR_COMERCIAL'] ?>" placeholder="" id="txtsectorcomercial" onkeypress="return soloLetras(event);" onkeyup="mayus(this);" >
                                              <br>
                                              <label for="">direccion</label>
-                                             <input type="text" class="form-control" name="direccion" required value="<?php echo $filas['DIRECCION'] ?>" placeholder="" id="txtdireccionproveedor"  onkeyup="mayus(this);" >
+                                             <input type="text" class="form-control" name="direccion" autocomplete = "off" required value="<?php echo $filas['DIRECCION'] ?>" placeholder="" id="txtdireccionproveedor"  onkeyup="mayus(this);" >
                                              <br>
                                              <label for="">Telefono</label>
-                                             <input type="number" class="form-control" name="telefono" required value="<?php echo $filas['TELEFONO'] ?>" placeholder="" id="txttelefono"   >
+                                             <input type="number" class="form-control" name="telefono" autocomplete = "off" required value="<?php echo $filas['TELEFONO'] ?>" placeholder="" id="txttelefono"   >
                                              <br>
                                              <label for="">Correo</label>
-                                             <input type="email" class="form-control" name="correo" required value="<?php echo $filas['CORREO'] ?>" placeholder="" id="txtcorreo"  >
+                                             <input type="email" class="form-control" name="correo" autocomplete = "off" required value="<?php echo $filas['CORREO'] ?>" placeholder="" id="txtcorreo"  >
                                              <br>   
                                            </div>
                                 <!-- Fin Cuerpo del modal Modal -->
@@ -372,14 +373,12 @@ if (mysqli_num_rows($roles35) > 0)
                          },
                          
                          "responsive": true, "lengthChange": true, "autoWidth": false,
-                          "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"],
-
-                        
-
-                         
+                          "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"],                   
         
     })
-    buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+
+      
+    .buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
     $('#example2').DataTable({
       "paging": true,
       "lengthChange": false,
