@@ -36,8 +36,8 @@
       //para insertar en la tabla mysl
       case "agregar": 
         // valida si existe una proyecto con el mismo nombre
-        $validar_proveedor = "SELECT * FROM tbl_proyectos WHERE NOMBRE_PROYECTO='$nombre'";
-        $result1 = mysqli_query($conn, $validar_proveedor); 
+        $validar_proyecto = "SELECT * FROM tbl_proyectos WHERE NOMBRE_PROYECTO='$nombre'";
+        $result1 = mysqli_query($conn, $validar_proyecto); 
          if (mysqli_num_rows($result1) > 0) { 
               
          
