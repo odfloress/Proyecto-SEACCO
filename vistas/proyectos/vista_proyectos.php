@@ -349,13 +349,13 @@ if (mysqli_num_rows($roles35) > 0)
                 </div>
                 <div class="col"> 
                     <label for="">Nombre Proyecto</label>
-                    <input class="form-control" type="text" name="nombre" id="" required value="<?php echo $filas['NOMBRE_PROYECTO'] ?>" autocomplete="of" onkeypress="return soloLetras(event);" minlength="3" maxlength="255" onkeyup="mayus(this);" >
+                    <input class="form-control" type="text" name="nombre" id="" required value="<?php echo $filas['NOMBRE_PROYECTO'] ?>" autocomplete="off" onkeypress="return soloLetras(event);" minlength="3" maxlength="255" onkeyup="mayus(this);" >
                     <br>
                     <label for="">Descripción proyecto</label>
                     <input class="form-control" type="text" name="descripcion" id="" required value="<?php echo $filas['DESCRIPCION'] ?>" autocomplete="off" onkeypress="return soloLetras(event);" minlength="3" maxlength="300" onkeyup="mayus(this);" >
                     <br>
                     <label for="">Departamento del proyecto</label>
-                    <select style="background-color:rgb(240, 244, 245);" value="<?php echo "$id_departamento"; ?>" class="form-select" id="lista1" name="id_departamento" required >
+                    <select style="background-color:rgb(240, 244, 245);" class="form-select" id="lista1" name="id_departamento" required >
                     <option value="<?php echo $filas['ID_DEPARTAMENTO']; ?>"> <?php echo $filas['DEPARTAMENTO']; ?></option>
                         <?php
                             include 'conexion/conexion.php';
