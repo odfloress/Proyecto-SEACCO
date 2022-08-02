@@ -62,8 +62,8 @@ if(!isset($_SESSION['usuario'])){
                 <table id="example1" class="table table-bordered table-striped">
                   <thead>
                   <tr>
-                  <th>Id</th>
-                  <th>Producto</th>
+                  <th>Id Inventario</th>
+                  <th>Id Producto</th>
                   <th>Cantidad minima</th>
                   <th>Cantidad maxima</th>
                   <th>Cantidad disponible</th>
