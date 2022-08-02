@@ -117,15 +117,31 @@ if (mysqli_num_rows($roles35) > 0)
                     <label for="">Referencia</label>
                     <input type="text" class="form-control" name="nombre_referencia" required value="" placeholder="" id="txtReferencia" onkeypress="return soloLetras(event);" onkeyup="mayus(this);" >
                     <br>
-                    <label for="">Genero</label>
-                    <input type="text" class="form-control" name="Genero" required value="" placeholder="" id="txtGenero" onkeypress="return soloLetras(event);" onkeyup="mayus(this);" >
-                    <br>
-
+                    <label for="pwd" class="form-label">Genero:</label>
+                <select style="background-color:rgb(240, 244, 245);" value="<?php echo "$genero"; ?>" class="form-select" id="lista1" name="genero" required >
+                        <?php
+                            include 'conexion/conexion.php';
+                            $genero = "SELECT * FROM tbl_generos ORDER BY ID_GENERO";
+                            $genero2 = mysqli_query($conn, $genero);
+                            if (mysqli_num_rows($genero2) > 0) {
+                                while($row = mysqli_fetch_assoc($genero2))
+                                {
+                                $id_genero = $row['ID_GENERO'];
+                                $genero3 =$row['GENERO'];
+                         ?>
+                          <option value="<?php  echo $id_genero ?>"><?php echo $genero3 ?></option>
+                          <?php
+                           }}// finaliza el if y el while
+                    <label for="pwd" class="form-label">Foto:</label>
+                  <input style="background-color:rgb(240, 244, 245);" type="file" accept=".jpg, .png, .jpej, .JPEG, .JPG, .PNG" autocomplete="off"  value="<?php echo "$foto"; ?>" class="form-control" required placeholder="Adjunte su foto" name="foto">
+                  </div>
                 </div>
+                <div class="row">
+                <div class="col">
                 <!-- Fin Cuerpo del modal Modal -->
                 <!-- pie del modal -->
                 <div class="modal-footer">
-      	            <button type="submit" name="accion" value="agregar" class="btn btn-primary" onclick="return confirm('¿Desea agregar el proveedor?')">Agregar</button>
+      	            <button type="submit" name="accion" value="agregar" class="btn btn-primary" onclick="return confirm('¿Desea agregar el Cliente?')">Agregar</button>
                     <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
                 </div>
                 <!-- Fin pie del modal -->
