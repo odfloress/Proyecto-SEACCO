@@ -222,6 +222,7 @@ if (mysqli_num_rows($roles35) > 0)
                           if (mysqli_num_rows($estado2) > 0)
                           {?>
                           <input type="hidden" name="id_estados"  value="<?php echo $filas['ID_ESTADOS'] ?>">
+                          <input type="hidden" name="nombre_anterior" value="<?php echo $filas['ESTADO_PROYECTO'] ?>">
                       <button  value="eliminar" name="accion" 
                         onclick="return confirm('¿Quieres eliminar este dato?')"
                         type="submit" class="btn btn-danger " data-id="19">
