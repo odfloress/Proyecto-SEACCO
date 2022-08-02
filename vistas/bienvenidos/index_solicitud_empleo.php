@@ -8,7 +8,7 @@ require '../../controladores/co_solicitud_empleo.php';
 <meta name="viewport" content="width=device-width, initial-scale=1">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
-<title>Solicitud de empleo</title>
+<title>Solicitud de Empleo</title>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
@@ -18,6 +18,17 @@ require '../../controladores/co_solicitud_empleo.php';
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registrar Usuario</title>
+    
+    <style> 
+body {
+  background-image: url('../../imagenes/1659393257_fondo1.jpg');
+  background-repeat: no-repeat;
+  background-attachment: fixed; 
+  background-size: 100% 100%;
+}
+
+</style>
 <script>
   function clave(e) {
   key = e.keyCode || e.which;
@@ -64,9 +75,12 @@ require '../../controladores/co_solicitud_empleo.php';
 <!-- enlace del scritpt para evitar si preciona F12, si preciona Ctrl+Shift+I, si preciona Ctr+u  -->
 <script type="text/javascript" src="js/evita_ver_codigo_utilizando_teclas.js"></script>
 
-
 </head>
-<body>
+<!-- oncopy="return false" onpaste="return false"  esto no permite copiar ni pegar -->
+<body style="background-color:rgb(241, 243, 243);"   oncopy="return false" onpaste="return false">
+<!-- inicio oculta el codigo fuente de la pagina -->
+<body oncontextmenu="return false">
+<!-- Fin oculta el codigo fuente de la pagina -->
 
 
 <!-- inicio navbar -->
@@ -104,46 +118,18 @@ require '../../controladores/co_solicitud_empleo.php';
 
 <!-- First Parallax Image with Logo Text -->
 
-  <!-- contenido -->
-  <br><br>
-  <center>
-  <div class="container mt-3">
-		
-  	<center><h1>Solicitud de Empleo</h1></center>
-    
-	<br>
-  <div class="row">
-  <center><div class="col-sm-6 bg-light text-dark p-3">
-<div>
-    </div>
-     <div class="col-sm-6 bg-light text-dark p-3">
-      <div>
-<div class="container mt-3">
-  <h1></h1>
-  <br>
-  <h3></h3>
-  <br>
-  
-  <button type="button2" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#Modal">
-    Llenar Solicitud
-  </button>
-</div></center>
+  <!-- El Modal -->
 
-<!-- The Modal -->
-<div class="modal fade" id="Modal">
-  <div class="modal-dialog">
-    <div class="modal-content">
+  <div  class="modal-dialog" >
+    <div class="modal-content " >     
 
-      <!-- Modal Header -->
-      <div class="modal-header">
-        <h4 class="modal-title">Datos Personales</h4>
-        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-      </div>
-
-      <!-- Modal body -->
+      <!--Inicio Cuerpo del modal -->
       <div class="modal-body ">
-      <form action="" method="POST"  enctype="multipart/form-data">
-      <center><img src="../../imagenes/seacco.jpg" alt="Girl in a jacket" width="150" height="150"><br></center>
+        <form action="" method="POST"  enctype="multipart/form-data">
+            <div class="mb-3 mt-3">
+                <center><h4>Datos Personales</h4></center><br>
+                
+                <center><img src="../../imagenes/seacco.jpg" alt="Girl in a jacket" width="150" height="150"><br></center>
 
             <div class="row">
                 <div class="col">
@@ -155,27 +141,27 @@ require '../../controladores/co_solicitud_empleo.php';
                   <input style="background-color:rgb(240, 244, 245);" type="text" autocomplete="off" value="<?php echo "$apellido"; ?>" onkeyup="mayus(this);" maxlength="30" class="form-control"  placeholder="Ingrese su apellido" name="apellido" required>
                 </div>
             </div>
-           <div class="row">
-                 <!--<div class="col">
+            <!--<div class="row">
+                <div class="col">
                   <label for="pwd" class="form-label">Usuario:</label>
                   <input style="background-color:rgb(240, 244, 245);" type="text" autocomplete="off" value="<?php echo "$usuario"; ?>" onkeypress="return clave(event);"  onKeyUP="this.value=this.value.toUpperCase();"  class="form-control" placeholder="Asignar usuario" name="usuario" required>
-                </div>-->
-                <!--<div class="col">
-                      <div class="form-group">
-                        <label for="pwd" class="form-label">Contraseña:</label> 
-                        <div class="input-group mb-3">
-                          <input style="background-color:rgb(240, 244, 245);" type="password" id="id_password"  autocomplete="off" onkeypress="return clave1(event);"  class="form-control"  placeholder="Ingrese la contraseña" name="contrasena"  required pattern="(?=.*[\d])(?=.*[a-z])(?=.*[A-Z]).{8,}" onblur="quitarespacios(this);"  onkeyup="sinespacio(this);" required="" minlength="8" maxlength="40" >
-                          <div class="input-group-append ">
+                </div>
+                <div class="col">
+                  <div class="form-group">
+                  <label for="pwd" class="form-label">Contraseña:</label> 
+                    <div class="input-group mb-3">
+                    <input style="background-color:rgb(240, 244, 245);" type="password" id="id_password"  autocomplete="off" onkeypress="return clave1(event);"  class="form-control"  placeholder="Ingrese la contraseña" name="contrasena"  required pattern="(?=.*[\d])(?=.*[a-z])(?=.*[A-Z]).{8,}" onblur="quitarespacios(this);"  onkeyup="sinespacio(this);" required="" minlength="8" maxlength="40" >
+                      <div class="input-group-append ">
                             
-                            <div class="input-group-text">
-                              <span>
-                              <i class="far fa-eye" id="togglePassword"  ></i>
-                              </span>
+                          <div class="input-group-text">
+                            <span>
+                            <i class="far fa-eye" id="togglePassword"  ></i>
+                            </span>
                             
-                            </div> 
-                          </div>  
-                        </div>
-                      </div>-->
+                          </div> 
+                    </div>  
+                    </div>
+                  </div>-->
                   
                   <span>
                   
@@ -190,7 +176,7 @@ require '../../controladores/co_solicitud_empleo.php';
                 </div>
                 <div class="col">
                   <label for="pwd" class="form-label">DNI:</label>
-                  <input style="background-color:rgb(240, 244, 245);" type="text" autocomplete="off" value="<?php echo "$dni"; ?>" class="form-control"  placeholder="" name="dni" minlength="13" maxlength="13" onkeypress="return solonumero(event)" required pattern="[0-9]+[1-9]+" title="13 caracteres y no todos ceros">
+                  <input style="background-color:rgb(240, 244, 245);" type="text" autocomplete="off" value="<?php echo "$dni"; ?>"  class="form-control"  placeholder="" name="dni" minlength="13" maxlength="13" onkeypress="return solonumero(event)" required pattern="[0-9]+[1-9]+" title="13 caracteres y no todos ceros">
                 </div>
             </div>
             <div class="row">
@@ -272,7 +258,7 @@ require '../../controladores/co_solicitud_empleo.php';
                 <label for="pwd" class="form-label">Area:</label>
                 <select style="background-color:rgb(240, 244, 245);" value="<?php echo "$area"; ?>" class="form-select" id="lista1" name="area" required >
                         <?php
-                            include '../../conexion/conexion.php';
+                            include 'conexion/conexion.php';
                             $area = "SELECT * FROM tbl_areas ORDER BY ID_AREA";
                             $area2 = mysqli_query($conn, $area);
                             if (mysqli_num_rows($area2) > 0) {
@@ -288,93 +274,20 @@ require '../../controladores/co_solicitud_empleo.php';
                    </select>
                 </div>               
            </div><br>
-
-      <!-- Modal footer -->
-      <div class="modal-footer">
-      <button type="submit" name="accion" value="registrar" class="btn btn-dark btn-block">Enviar</button><br>
-        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cerrar</button>
+            <div class="d-grid">
+            <button type="submit" name="accion" value="registrar" class="btn btn-dark btn-block">Registrar</button><br>
+            <a href="/SEACCO/_login" class="btn btn-danger btn-block">Cancelar</a>
+            </div>         
+            
+        </form>
       </div>
-      </form>
-      </div>
-    </div>
-  	</div>
-	</div>
-	</div>
-    
-    </div>
-  </div>
-</div>
-  </center>
+       <!--Fin Cuerpo del modal -->
 
-<div class="container mt-3">
-<!-- Carousel -->
-<div id="demo" class="carousel slide" data-bs-ride="carousel">
-
-  <!-- Indicators/dots -->
-  <div class="carousel-indicators">
-    <button type="button" data-bs-target="#demo" data-bs-slide-to="0" class="active"></button>
-    <button type="button" data-bs-target="#demo" data-bs-slide-to="1"></button>
-    <button type="button" data-bs-target="#demo" data-bs-slide-to="2"></button>
+         </div>
   </div>
+
   
-  <!-- The slideshow/carousel -->
-  <div class="carousel-inner">
-    <div class="carousel-item active">
-      <img src='../../imagenes/banner3.jpg' alt="Los Angeles" class="d-block" style="width:1300px;height:770px;">
-    </div>
-    <div class="carousel-item">
-      <img src='../../imagenes/imagen1.jpeg' alt="cambiar" class="d-block" style="width:1300px;height:770px;">
-    </div>
-    <div class="carousel-item">
-      <img src='../../imagenes/banner2.jpg' alt="Chicago" class="d-block"  style="width:1300px;height:770px;">
-    </div>
-  </div>
-  
-  <!-- Left and right controls/icons -->
-  <button class="carousel-control-prev" type="button" data-bs-target="#demo" data-bs-slide="prev">
-    <span class="carousel-control-prev-icon"></span>
-  </button>
-  <button class="carousel-control-next" type="button" data-bs-target="#demo" data-bs-slide="next">
-    <span class="carousel-control-next-icon"></span>
-  </button>
-</div>
-</div>
-
-  <!-- fin contenido -->
-
-<script>
-// Modal Image Gallery
-function onClick(element) {
-  document.getElementById("img01").src = element.src;
-  document.getElementById("modal01").style.display = "block";
-  var captionText = document.getElementById("caption");
-  captionText.innerHTML = element.alt;
-}
-
-// Change style of navbar on scroll
-window.onscroll = function() {myFunction()};
-function myFunction() {
-    var navbar = document.getElementById("myNavbar");
-    if (document.body.scrollTop > 100 || document.documentElement.scrollTop > 100) {
-        navbar.className = "w3-bar" + " w3-card" + " w3-animate-top" + " w3-white";
-    } else {
-        navbar.className = navbar.className.replace(" w3-card w3-animate-top w3-white", "");
-    }
-}
-
-// Used to toggle the menu on small screens when clicking on the menu button
-function toggleFunction() {
-    var x = document.getElementById("navDemo");
-    if (x.className.indexOf("w3-show") == -1) {
-        x.className += " w3-show";
-    } else {
-        x.className = x.className.replace(" w3-show", "");
-    }
-}
-</script>
-
 </body>
-</html>
 <script type="text/javascript" src="js/evitar_reenvio.js"></script>
 
 </html>

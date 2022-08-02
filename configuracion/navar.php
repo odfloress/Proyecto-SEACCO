@@ -138,54 +138,153 @@
         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
           <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
-          <li class="nav-item menu-open">
-            <a href="http://localhost/SEACCO/vistas/tablero/vista_tablero.php" class="nav-link active">
-              <i class="fa fa-home"></i>
-              <p>
-                Dashboard
-              </p>
-            </a>
+               <!-- SELECCIONA  EL ROL DEL USUARIO -->
+               <?php 
+               include '../../conexion/conexion.php';
+               $usuario = $_SESSION;
+               $roles34 = "SELECT * FROM tbl_usuarios WHERE USUARIO='$usuario[usuario]'";
+               $roles35 = mysqli_query($conn, $roles34);
+               if (mysqli_num_rows($roles35) > 0)
+               {
+                while($row = mysqli_fetch_assoc($roles35))
+                 { 
+                     $id_rol7 = $row['ID_ROL'];
+                 } 
+               }
+               ?>
             
-          </li>
-          <li class="nav-item">
-            <a href="http://localhost/SEACCO/vistas/tablero/vista_perfil.php" class="nav-link">
-              <i class="fa fa-user"></i>
-              <p>
-                Perfil
-                <span class="right badge badge-danger">Editar</span>
-              </p>
-            </a>
-          </li>
+            <!-- Valida si tiene permiso para consultar la pantalla tablero -->
+            <?php 
+               include '../../conexion/conexion.php';
+               $tablero = "SELECT * FROM tbl_ms_roles_ojetos WHERE ID_ROL='$id_rol7' and ID_OBJETO=2 and PERMISO_CONSULTAR=1";
+               $tablero2 = mysqli_query($conn, $tablero);
+               if (mysqli_num_rows($tablero2) > 0)
+               {
+                  echo '<li class="nav-item menu-open">
+                  <a href="http://localhost/SEACCO/vistas/tablero/vista_tablero.php" class="nav-link active">
+                    <i class="fa fa-home"></i>
+                    <p>
+                      Dashboard
+                    </p>
+                  </a>
+                </li>';
+               }
+            ?>
+
+                <li class="nav-item">
+                  <a href="http://localhost/SEACCO/vistas/tablero/vista_perfil.php" class="nav-link">
+                    <i class="fa fa-user"></i>
+                    <p>
+                      Perfil
+                      <span class="right badge badge-danger">Editar</span>
+                    </p>
+                  </a>
+                </li>
+            
+
+           
+
+          
+          
           
          
           <li class="nav-header">Administrar sistema</li>
 
         <!-- Inicio Menu personas -->
           <li class="nav-item">
-            <a href="#" class="nav-link">
-            <i class="fas fa-users"></i>
-              <i class="fa-solid fa-people-arrows-left-right"></i>
-              <p>
-                Personas
-                <i class="fas fa-angle-left right"></i>
-              </p>
-            </a>
+           <!-- Valida si tiene permiso para consultar el modulo personas -->
+           <?php 
+               include '../../conexion/conexion.php'; //administradores
+               $personas = "SELECT * FROM tbl_ms_roles_ojetos WHERE ID_ROL='$id_rol7' and ID_OBJETO=1 and PERMISO_CONSULTAR=1";
+               $personas2 = mysqli_query($conn, $personas);
+               if (mysqli_num_rows($personas2) > 0)
+               {
+                  echo ' <a href="#" class="nav-link">
+                  <i class="fas fa-users"></i>
+                    <i class="fa-solid fa-people-arrows-left-right"></i>
+                    <p>
+                      Personas
+                      <i class="fas fa-angle-left right"></i>
+                    </p>
+                  </a>';
+               }else
+               {              //Clientes
+                  $tablero = "SELECT * FROM tbl_ms_roles_ojetos WHERE ID_ROL='$id_rol7' and ID_OBJETO=4 and PERMISO_CONSULTAR=1";
+                  $tablero2 = mysqli_query($conn, $tablero);
+                  if (mysqli_num_rows($tablero2) > 0)
+                  {
+                    echo ' <a href="#" class="nav-link">
+                    <i class="fas fa-users"></i>
+                      <i class="fa-solid fa-people-arrows-left-right"></i>
+                      <p>
+                        Personas
+                        <i class="fas fa-angle-left right"></i>
+                      </p>
+                    </a>';
+                  }else{     //PROVEEDORES
+                        $tablero = "SELECT * FROM tbl_ms_roles_ojetos WHERE ID_ROL='$id_rol7' and ID_OBJETO=5 and PERMISO_CONSULTAR=1";
+                        $tablero2 = mysqli_query($conn, $tablero);
+                        if (mysqli_num_rows($tablero2) > 0)
+                        {
+                          echo ' <a href="#" class="nav-link">
+                          <i class="fas fa-users"></i>
+                            <i class="fa-solid fa-people-arrows-left-right"></i>
+                            <p>
+                              Personas
+                              <i class="fas fa-angle-left right"></i>
+                            </p>
+                          </a>';
+                        }
+
+                  }
+
+               }
+            ?>
+
             <ul class="nav nav-treeview">
-              <li class="nav-item">
-                <a href="http://localhost/SEACCO/vistas/personas/vista_administradores.php" class="nav-link">
-                  <p>Administradores</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="http://localhost/SEACCO/vistas/personas/vista_clientes.php" class="nav-link">
-                  <p>Clientes</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="http://localhost/SEACCO/vistas/personas/vista_proveedores.php" class="nav-link">
-                  <p>Proveedores</p>
-                </a>
-              </li>
+              <!-- Valida si tiene permiso para consultar la pantalla administradores -->
+            <?php 
+               include '../../conexion/conexion.php';
+               $tablero = "SELECT * FROM tbl_ms_roles_ojetos WHERE ID_ROL='$id_rol7' and ID_OBJETO=1 and PERMISO_CONSULTAR=1";
+               $tablero2 = mysqli_query($conn, $tablero);
+               if (mysqli_num_rows($tablero2) > 0)
+               {
+                  echo '<li class="nav-item">
+                          <a href="http://localhost/SEACCO/vistas/personas/vista_administradores.php" class="nav-link">
+                            <p>Administradores</p>
+                          </a>
+                        </li>';
+               }
+            ?>
+             <!-- Valida si tiene permiso para consultar la pantalla Clientes -->
+             <?php 
+               include '../../conexion/conexion.php';
+               $tablero = "SELECT * FROM tbl_ms_roles_ojetos WHERE ID_ROL='$id_rol7' and ID_OBJETO=4 and PERMISO_CONSULTAR=1";
+               $tablero2 = mysqli_query($conn, $tablero);
+               if (mysqli_num_rows($tablero2) > 0)
+               {
+                  echo '<li class="nav-item">
+                          <a href="http://localhost/SEACCO/vistas/personas/vista_clientes.php" class="nav-link">
+                            <p>Clientes</p>
+                          </a>
+                        </li>';
+               }
+            ?>
+             <!-- Valida si tiene permiso para consultar la pantalla PROVEEDORES -->
+             <?php 
+               include '../../conexion/conexion.php';
+               $tablero = "SELECT * FROM tbl_ms_roles_ojetos WHERE ID_ROL='$id_rol7' and ID_OBJETO=5 and PERMISO_CONSULTAR=1";
+               $tablero2 = mysqli_query($conn, $tablero);
+               if (mysqli_num_rows($tablero2) > 0)
+               {
+                  echo '<li class="nav-item">
+                          <a href="http://localhost/SEACCO/vistas/personas/vista_proveedores.php" class="nav-link">
+                            <p>Proveedores</p>
+                          </a>
+                        </li>';
+               }
+            ?>          
+              
             </ul>
           </li>
           <!-- Fin Menu personas -->
@@ -200,19 +299,39 @@
               </p>
             </a>
             <ul class="nav nav-treeview">
-              <li class="nav-item">
-                <a href="http://localhost/SEACCO/vistas/catalogo/vista_bienvenida.php" class="nav-link">
-                  <p>Bienvenida</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="http://localhost/SEACCO/vistas/catalogo/vista_portafolio.php" class="nav-link">
-                  <p>Portafolio</p>
-                </a>
-              </li>
+              <!-- Valida si tiene permiso para consultar la pantalla del CRUD Bienvenida -->
+             <?php 
+               include '../../conexion/conexion.php';
+               $tablero = "SELECT * FROM tbl_ms_roles_ojetos WHERE ID_ROL='$id_rol7' and ID_OBJETO=6 and PERMISO_CONSULTAR=1";
+               $tablero2 = mysqli_query($conn, $tablero);
+               if (mysqli_num_rows($tablero2) > 0)
+               {
+                  echo '<li class="nav-item">
+                          <a href="http://localhost/SEACCO/vistas/catalogo/vista_bienvenida.php" class="nav-link">
+                            <p>Bienvenida</p>
+                          </a>
+                        </li>';
+               }
+            ?> 
+             <!-- Valida si tiene permiso para consultar la pantalla del CRUD PORTAFOLIO -->
+             <?php 
+               include '../../conexion/conexion.php';
+               $tablero = "SELECT * FROM tbl_ms_roles_ojetos WHERE ID_ROL='$id_rol7' and ID_OBJETO=7 and PERMISO_CONSULTAR=1";
+               $tablero2 = mysqli_query($conn, $tablero);
+               if (mysqli_num_rows($tablero2) > 0)
+               {
+                  echo '<li class="nav-item">
+                          <a href="http://localhost/SEACCO/vistas/catalogo/vista_portafolio.php" class="nav-link">
+                            <p>Portafolio</p>
+                          </a>
+                        </li>';
+               }
+            ?> 
+              
+              
             </ul>
           </li>
-          <!-- inicio Menu catalogo -->      
+          <!-- Fin Menu catalogo -->      
           
         <!-- inicio Menu inventario --> 
           <li class="nav-item">
@@ -308,18 +427,19 @@
           <!-- Fin Menu reportes -->
 
           <!-- inicio Menu Ajustes -->
+          
           <li class="nav-item">
-            <a href="#" class="nav-link">
-              <i class="fas fa-tools"></i>
+            <a href="#" class="nav-link">	
+              <i class="fas fa-user-shield"></i>
               <p>
-                Ajustes
+                Seguridad
                 <i class="fas fa-angle-left right"></i>
               </p>
             </a>
             <ul class="nav nav-treeview">
-              <li class="nav-item">
-                <a href="http://localhost/SEACCO/vistas/ajustes/vista_nuestros_contactos.php" class="nav-link">
-                  <p>Nuestros contactos</p>
+            <li class="nav-item">
+                <a href="http://localhost/SEACCO/vistas/ajustes/vista_parametro.php" class="nav-link">
+                  <p>Parametros</p>
                 </a>
               </li>
               <li class="nav-item">
@@ -328,10 +448,25 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a href="http://localhost/SEACCO/vistas/ajustes/vista_preguntas.php" class="nav-link">
-                  <p>Preguntas de seguridad</p>
+                <a href="http://localhost/SEACCO/vistas/ajustes/vista_permisos.php" class="nav-link">
+                  <p>Permisos de Roles</p>
                 </a>
               </li>
+               <!-- Valida si tiene permiso para consultar la pantalla preguntas de seguridad -->
+            <?php 
+               include '../../conexion/conexion.php';
+               $tablero = "SELECT * FROM tbl_ms_roles_ojetos WHERE ID_ROL='$id_rol7' and ID_OBJETO=21 and PERMISO_CONSULTAR=1";
+               $tablero2 = mysqli_query($conn, $tablero);
+               if (mysqli_num_rows($tablero2) > 0)
+               {
+                  echo '<li class="nav-item">
+                  <a href="http://localhost/SEACCO/vistas/ajustes/vista_preguntas.php" class="nav-link">
+                    <p>Preguntas de seguridad</p>
+                  </a>
+                </li>';
+               }
+            ?>
+              
               <li class="nav-item">
                 <a href="http://localhost/SEACCO/vistas/ajustes/vista_bitacora.php" class="nav-link">
                   <p>Bitacora</p>
@@ -346,6 +481,51 @@
           </li>
 
           <!-- fin Menu Ajustes -->
+          <!-- inicio Menu reportes -->
+          <li class="nav-item">
+            <a href="#" class="nav-link">
+              <i class="fas fa-tools"></i>
+              <p>
+                Mantenimiento
+                <i class="fas fa-angle-left right"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+             
+            <li class="nav-item">
+                <a href="/SEACCO/vistas/mantenimiento/vista_nuestros_contactos.php" class="nav-link">
+                  <p>Nuestros contactos</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="/SEACCO/vistas/mantenimiento/vista_profesiones.php" class="nav-link">
+                  <p>Profesiones</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="/SEACCO/vistas/mantenimiento/vista_departamentos.php" class="nav-link">
+                  <p>Departamentos</p>
+                </a>
+              </li>
+             
+              <li class="nav-item">
+                <a href="#" class="nav-link">
+                  <p>Generos</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="http://localhost/SEACCO/vistas/mantenimiento/vista_estados_asignacion.php" class="nav-link">
+                  <p>Estados de asignación</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="/SEACCO/vistas/mantenimiento/vista_estado_herramienta.php" class="nav-link">
+                  <p>Estados de herramientas</p>
+                </a>
+              </li>
+            </ul>
+          </li>
+          <!-- Fin Menu reportes -->
         </ul>
       </nav>
       <!-- /.sidebar-menu -->
