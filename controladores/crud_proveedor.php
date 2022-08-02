@@ -160,7 +160,7 @@
       }else{
          // inicio inserta en la tabla bitacora
          $sql10 = "INSERT INTO tbl_bitacora (USUARIO, ACCION, OBSERVACION)
-         VALUES ('$usuario1[usuario]', 'ERROR', 'ERROR AL ELIMINAR EL PROVEEDOR ($nombre)')";
+         VALUES ('$usuario1[usuario]', 'ERROR', 'ERROR AL ELIMINAR EL PROVEEDOR ($anterior)')";
           if (mysqli_query($conn, $sql7)) {} else { }
      // fin inserta en la tabla bitacora
               echo '<script>

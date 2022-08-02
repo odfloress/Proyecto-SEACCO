@@ -98,22 +98,22 @@ if (mysqli_num_rows($roles35) > 0)
            <br>
 
           <label for="">Numero telefono</label>
-          <input type="tel" name="telefono" class="form-control " placeholder="Ingrese su numero" value="<?php echo $filas['TELEFONO'] ?>" pattern="[0-9]{9}" onkeypress="return solonumero(event)">
+          <input type="tel" name="telefono" class="form-control " placeholder="Ingrese su numero(no menos de 9)" autocomplete="off" value="<?php echo $filas['TELEFONO'] ?>" pattern="[0-9]{9}" onkeypress="return solonumero(event)" required>
            <br>
 
            <label for="">Correo</label>
-           <input type="email" name="correo" class="form-control" value="<?php echo $filas['CORREO'] ?>" placeholder="Opcional Ingrese su correo" >
+           <input type="email" name="correo" class="form-control" value="<?php echo $filas['CORREO'] ?>" autocomplete="off" placeholder="Opcional Ingrese su correo" >
            <br>
 
            <label for="">Dirección</label>
-           <input type="text" name="direccion" class="form-control " value="<?php echo $filas['DIRECCION'] ?>" placeholder="Ingrese su direccion" onkeyup="mayus(this);" maxlength="30" >
+           <input type="text" name="direccion" class="form-control " value="<?php echo $filas['DIRECCION'] ?>" autocomplete="off" placeholder="Ingrese su direccion" onkeyup="mayus(this);" maxlength="30" required >
            <br>
 
             <label for="">Facebook</label>
-            <input type="text" name="facebook" class="form-control " value="<?php echo $filas['FACEBOOK'] ?>"placeholder="Ingrese su facebook" onkeyup="mayus(this);" maxlength="30">
+            <input type="text" name="facebook" class="form-control " value="<?php echo $filas['FACEBOOK'] ?>" autocomplete="off" placeholder="Ingrese su facebook" onkeyup="mayus(this);" maxlength="30" required>
             <br>
             <label for="">Instagram</label>
-            <input type="text" name="instagram" class="form-control " value="<?php echo $filas['INSTAGRAM'] ?>" placeholder="Ingrese su instagram" onkeyup="mayus(this);" maxlength="30" >
+            <input type="text" name="instagram" class="form-control " value="<?php echo $filas['INSTAGRAM'] ?>" autocomplete="off" placeholder="Ingrese su instagram" onkeyup="mayus(this);" maxlength="30" required>
             <br>       
   
       </div>
