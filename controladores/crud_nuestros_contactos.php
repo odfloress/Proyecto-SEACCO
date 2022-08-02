@@ -23,15 +23,15 @@
       case "agregar":
 
             //si no existe un proveedor permite insertar
-                $sql1 = "INSERT INTO tbl_nuestros_contactos ( ID_CONTACTO,	TELEFONO,	CORREO,	DIRECCION,	FACEBOOK,	INSTAGRAM)
-                VALUES ('$id_contacto','$telefono','$correo','$direccion','$facebook','$instagram')";
+                $sql1 = "INSERT INTO tbl_nuestros_contactos ( 	TELEFONO,	CORREO,	DIRECCION,	FACEBOOK,	INSTAGRAM)
+                VALUES ('$telefono','$correo','$direccion','$facebook','$instagram')";
                 if (mysqli_query($conn, $sql1)) {
                    // inicio inserta en la tabla bitacora
                    $sql7 = "INSERT INTO tbl_bitacora (USUARIO, ACCION, OBSERVACION)
                    VALUES ('$usuario1[usuario]', 'INSERTO', 'CREO EL CONTACTO')";
                     if (mysqli_query($conn, $sql7)) {} else { }
                // fin inserta en la tabla bitacora
-                    header('Location: ../../vistas/ajustes/vista_nuestros_contactos.php');
+                    header('Location: ../../vistas/mantenimiento/vista_nuestros_contactos.php');
 
                 } else {
                         echo '<script>
@@ -45,6 +45,34 @@
 
              
       break;
+      //para editar en la tabla mysl      
+      case "editar";
+      $sql2 = "UPDATE tbl_nuestros_contactos SET TELEFONO='$telefono', CORREO='$correo', DIRECCION='$direccion', FACEBOOK='$facebook',  INSTAGRAM='$instagram' WHERE ID_CONTACTO='$id_contacto'";
+                if (mysqli_query($conn, $sql2)) {
+                  // inicio inserta en la tabla bitacora
+                  $sql8 = "INSERT INTO tbl_bitacora (USUARIO, ACCION, OBSERVACION)
+                  VALUES ('$usuario1[usuario]', 'EDITO', 'EDITO EL CONTACTO ($id_contacto)')";
+                  
+                   if (mysqli_query($conn, $sql8)) {} else { }
+                 // fin inserta en la tabla bitacora
+                 echo '<script>
+                 alert("Contacto editado con exito");
+                 window.location.href="../../vistas/mantenimiento/vista_nuestros_contactos.php";                   
+               </script>';
+               mysqli_close($conn);
+                   
+
+                }else{
+                     echo '<script>
+                            alert("Error al tratar de editar el proveedor");
+                           </script>'; mysqli_error($conn);
+                     }
+
+                mysqli_close($conn);
+              
+                  
+      break;
+      
 
        
 
