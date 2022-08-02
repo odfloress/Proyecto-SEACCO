@@ -178,7 +178,7 @@ if (mysqli_num_rows($roles35) > 0)
                   <?php 
                           include '../../conexion/conexion.php';
                           $productos = "SELECT * FROM tbl_ms_roles_ojetos WHERE ID_ROL='$id_rol7' and ID_OBJETO=12 and PERMISO_ACTUALIZACION=1";
-                          $productos2 = mysqli_query($conn, $productoss);
+                          $productos2 = mysqli_query($conn, $productos);
                           if (mysqli_num_rows($productos2) > 0)
                           {?>
                         <!-- inicio boton editar -->
