@@ -240,16 +240,7 @@ if(!isset($_SESSION['usuario'])){
           };
   </script> -->
 
-        <script type="text/javascript">
-          function quitarespacios(e) {
-
-            var cadena =  e.value;
-            cadena = cadena.trim();
-
-            e.value = cadena;
-
-          };  
-        </script> -->
+       
 
             <script>
               function clave1(e) {
