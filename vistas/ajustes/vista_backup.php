@@ -10,6 +10,18 @@ if(!isset($_SESSION['usuario'])){
 }
 
 ?>
+<!-- js function mostrar contrasña -->
+    <script>
+    function mostrarContrasena2(){
+        var z = document.getElementById("contra");
+        if (z.type === "password"){
+          z.type = "text";
+        }else{
+          z.type = "password";
+        }
+      }
+    </script>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -82,7 +94,7 @@ if(!isset($_SESSION['usuario'])){
                                                     <form action="database_backup.php"  method="post" id="">
                                                       <div class="form-group">
                                                         <label class="control-label mb-10" >Host</label>
-                                                        <input type="text" style="width: 400px;" class="form-control" placeholder="Ingrese el  Server Name ejemplo: 127.0.0.1 " name="server" id="server" required="" autocomplete="on">
+                                                        <input   type="text" style="width: 400px;" class="form-control" placeholder="Ingrese el  Server Name ejemplo: 127.0.0.1 " name="server" id="server" required="" autocomplete="on">
                                                       </div>
                                                       <div class="form-group">
                                                         <label class="control-label mb-10" >Usuario Base de datos</label>
@@ -90,7 +102,9 @@ if(!isset($_SESSION['usuario'])){
                                                       </div>
                                                       <div class="form-group">
                                                         <label class="pull-left control-label mb-10" >Contraseña Base de datos</label>
-                                                        <input type="password" style="width: 400px;" class="form-control" placeholder="Ingrese Contraseña de la base de datos" name="password" id="password" >
+                                                        <input type="password" style="width: 400px;" class="form-control" placeholder="Ingrese Contraseña de la base de datos" name="password" id="contra" onkeypress="return clave1(event);" required onblur="quitarespacios(this);" onkeyup="sinespacio(this);" pattern="(?=.*[\d])(?=.*[a-z])(?=.*[A-Z]).{8,}">
+                                                         <!-- Chkbox mostrar contrasena  -->
+                                                        <input type="checkbox" onclick="mostrarContrasena2()" > Mostrar/Ocultar
                                                       </div>
                                                       <div class="form-group">
                                                         <label class="pull-left control-label mb-10">Nombre Base de datos</label>
@@ -203,6 +217,61 @@ if(!isset($_SESSION['usuario'])){
 
 <?php include '../../configuracion/footer.php' ?>
 
+  <!-- <script type="text/javascript">
+
+    function sinespacio(e) {
+
+          var cadena =  e.value;
+          var limpia = "";
+          var parts = cadena.split(" ");
+          var length = parts.length;
+
+            for (var i = 0; i < length; i++) {
+                nuevacadena = parts[i];
+                subcadena = nuevacadena.trim();
+
+            if(subcadena != "") {
+              limpia += subcadena + " ";
+                  }
+            }
+          limpia = limpia.trim();
+          e.value = limpia;
+
+          };
+  </script> -->
+
+        <!-- <script type="text/javascript">
+          function quitarespacios(e) {
+
+            var cadena =  e.value;
+            cadena = cadena.trim();
+
+            e.value = cadena;
+
+          };  
+        </script> -->
+
+            <script>
+              function clave1(e) {
+              key = e.keyCode || e.which;
+              tecla = String.fromCharCode(key).toString();
+              letras = "ABCDEFGHIJKLMNÑOPQRSTUVWXZabcdefghijklmnñopqrstuvwxyz0123456789,#$%&/=!¡?¿()*{}[]-_'.@<>";
+              
+              especiales = [8,13];
+              tecla_especial = false;
+              for(var i in especiales) {
+                if(key == especiales[i]){
+                  tecla_especial = true;
+                  break;
+                }
+              }
+              
+              if(letras.indexOf(tecla) == -1 && !tecla_especial){
+                alert("Escriba la contraseña sin espacios");
+                return false;
+              }
+            }
+            </script>
 
 
 
