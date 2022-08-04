@@ -102,7 +102,7 @@ if(!isset($_SESSION['usuario'])){
                                                       </div>
                                                       <div class="form-group">
                                                         <label class="pull-left control-label mb-10" >Contraseña Base de datos</label>
-                                                        <input type="password" style="width: 400px;" class="form-control" placeholder="Ingrese Contraseña de la base de datos" name="password" id="contra" onkeypress="return clave1(event);" required onblur="quitarespacios(this);" onkeyup="sinespacio(this);" pattern="(?=.*[\d])(?=.*[a-z])(?=.*[A-Z]).{8,}">
+                                                        <input type="password" style="width: 400px;" class="form-control" placeholder="Ingrese Contraseña de la base de datos" name="password" id="contra" onkeypress="return clave1(event);"  onkeyup="sinespacio(this);" pattern="(?=.*[\d])(?=.*[a-z])(?=.*[A-Z]).{8,}">
                                                          <!-- Chkbox mostrar contrasena  -->
                                                         <input type="checkbox" onclick="mostrarContrasena2()" > Mostrar/Ocultar
                                                       </div>
@@ -217,7 +217,7 @@ if(!isset($_SESSION['usuario'])){
 
 <?php include '../../configuracion/footer.php' ?>
 
-  <!-- <script type="text/javascript">
+  <script type="text/javascript">
 
     function sinespacio(e) {
 
@@ -240,7 +240,7 @@ if(!isset($_SESSION['usuario'])){
           };
   </script> -->
 
-        <!-- <script type="text/javascript">
+        <script type="text/javascript">
           function quitarespacios(e) {
 
             var cadena =  e.value;
