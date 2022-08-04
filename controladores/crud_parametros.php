@@ -21,7 +21,10 @@
        //para editar en la tabla mysl      
       case "editar";
 
-        $sql2 = "UPDATE tbl_parametros SET VALOR='$valor'  WHERE ID_PARAMETRO='$id_parametro'";
+      $fecha   = new DateTime();
+      $result = $fecha->format('Y-m-d-H-i-s');
+
+        $sql2 = "UPDATE tbl_parametros SET VALOR='$valor', FECHA_MODIFICACION	='$result'  WHERE ID_PARAMETRO='$id_parametro'";
             if (mysqli_query($conn, $sql2)) {
                 // inicio inserta en la tabla bitacora
                     $sql9 = "INSERT INTO tbl_bitacora (USUARIO, ACCION, OBSERVACION)
