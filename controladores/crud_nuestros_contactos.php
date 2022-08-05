@@ -31,7 +31,11 @@
                    VALUES ('$usuario1[usuario]', 'INSERTO', 'CREO EL CONTACTO')";
                     if (mysqli_query($conn, $sql7)) {} else { }
                // fin inserta en la tabla bitacora
-                    header('Location: ../../vistas/mantenimiento/vista_nuestros_contactos.php');
+               echo '<script>
+               alert("Contacto creado con exito");
+               window.location.href="../../vistas/mantenimiento/vista_nuestros_contactos.php";                   
+             </script>';
+             mysqli_close($conn); 
 
                 } else {
                         echo '<script>
@@ -64,7 +68,7 @@
 
                 }else{
                      echo '<script>
-                            alert("Error al tratar de editar el proveedor");
+                            alert("Error al tratar de editar el contacto");
                            </script>'; mysqli_error($conn);
                      }
 

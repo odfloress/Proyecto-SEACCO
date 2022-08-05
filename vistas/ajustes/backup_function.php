@@ -1,11 +1,15 @@
 <?php
-    
+	//funcion ejecuta el backup 
     error_reporting(0);
 	function backDb($host, $user, $pass, $dbname, $tables = '*'){
 	
 		$conn = new mysqli($host, $user, $pass, $dbname);
 		if ($conn->connect_error) {
-		    die("Algo salió mal: " . $conn->connect_error);
+		    
+			$connectError = addslashes(mysqli_connect_error());
+			echo('<script> alert("Algo debe haber salido mal :/'.$connectError.' asegurate que las credenciales sean las correctas e intenta nuevamente")
+			window.location.href="../../vistas/ajustes/vista_backup";
+			</script>');
 		}
 
 		
@@ -36,6 +40,7 @@
 		    $query = $conn->query($sql);
 		    
 		    $columnCount = $query->field_count;
+			
 
 		   
 		    for ($i = 0; $i < $columnCount; $i ++) {
@@ -53,18 +58,25 @@
 		                    $outsql .= ',';
 		                }
 		            }
+					
 		            $outsql .= ");\n";
+
 		        }
 		    }
 		    
-		    $outsql .= "\n"; 
+			$outsql .= "\n"; 
 		}
-
+		
 	
-	    $backup_file_name = $dbname . '_database.sql';
+	    $backup_file_name = $dbname . '.sql';
+		
 	    $fileHandler = fopen($backup_file_name, 'w+');
+		
 	    fwrite($fileHandler, $outsql);
 	    fclose($fileHandler);
+		
+
+		
 
 	   
 	    header('Content-Description: File Transfer');
