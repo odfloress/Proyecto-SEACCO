@@ -111,7 +111,7 @@ if (mysqli_num_rows($roles35) > 0)
                 <button type="submit"  name="accion" value="reporte_pdf" class="btn btn-secondary buttons-pdf buttons-html5"  onclick="return confirm('¿Quieres generar reporte de Parametros?')" onclick="textToPdf()"><span>Reporte PDF</span></button>
                 
               </div>
-              
+              </form>
               <!-- /.card-header -->
               <div class="card-body ">
                 <table id="example1" class="table table-bordered table-striped">
@@ -211,10 +211,11 @@ if (mysqli_num_rows($roles35) > 0)
                 </tbody>
                 </table>
               </div>
-                        </form>
+                        
               <!-- /.card-body -->
             </div>
             <!-- /.card -->
+            
           </div>
           <!-- /.col -->
         </div>
