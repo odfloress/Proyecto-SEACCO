@@ -107,7 +107,6 @@ case 'agregar':
                                 $sql7 = "INSERT INTO tbl_kardex (ID_PRODUCTO, USUARIO, CANTIDAD, TIPO_MOVIMIENTO)
                                 VALUES ('$id_producto', '$usuario1[usuario]', '$cantidad','SALIDA')";
                                 } else {
-                                        
                                 $sql8 = "INSERT INTO tbl_kardex (ID_PRODUCTO, USUARIO, CANTIDAD, TIPO_MOVIMIENTO)
                                 VALUES ('$id_producto', '$usuario1[usuario]', '$cantidad','ENTRADA')";                                
                           if (mysqli_query($conn, $sql8)) {
