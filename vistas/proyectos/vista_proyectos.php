@@ -55,6 +55,11 @@ if (mysqli_num_rows($roles35) > 0)
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+   <!-- enlace del scritpt para evitar si preciona F12, si preciona Ctrl+Shift+I, si preciona Ctr+u  -->
+   <script type="text/javascript" src="../../js/evita_ver_codigo_utilizando_teclas.js"></script>
+        <!-- /// para exportar en pdf /// -->
+   <script type="text/javascript" src="../../js/complemento_1_jspdf.min.js"></script>
+	<script type="text/javascript" src="../../js/complemento_2_jspdf.plugin.autotable.min.js"></script>
 
   <?php include '../../configuracion/navar.php' ?>
    <!-- Inicio evita el click derecho de la pagina -->
@@ -102,7 +107,8 @@ if (mysqli_num_rows($roles35) > 0)
                 <div class="modal-body">
                       
                   <label for="">Selecciona el nombre Cliente</label>
-                  <select style="background-color:rgb(240, 244, 245);" value="<?php echo "$id_cliente"; ?>" class="form-select" id="lista1" name="id_cliente" required >
+                  <select style="background-color:rgb(240, 244, 245);" value="<?php echo $id_cliente; ?>" class="form-select" id="lista1" name="id_cliente" required >
+                  <option > </option>
                         <?php
                             include 'conexion/conexion.php';
                             $cliente = "SELECT * FROM tbl_clientes ORDER BY ID_CLIENTE";
@@ -122,6 +128,7 @@ if (mysqli_num_rows($roles35) > 0)
                   <div class="col">
                     <label for="">Selecciona el nombre Encargado</label>
                     <select style="background-color:rgb(240, 244, 245);" value="<?php echo "$id_usuario"; ?>" class="form-select" id="lista1" name="id_usuario" required >
+                    <option > </option>
                         <?php
                             include 'conexion/conexion.php';
                             $idusuario= "SELECT * FROM tbl_usuarios ORDER BY ID_USUARIO";
@@ -141,6 +148,7 @@ if (mysqli_num_rows($roles35) > 0)
                   <div class="col"> 
                   <label for="" >Selecciona nombre del Estado</label>
                   <select style="background-color:rgb(240, 244, 245);" value="<?php echo "$id_estado"; ?>" class="form-select" id="lista1" name="id_estado" required >
+                  <option > </option>
                         <?php
                             include 'conexion/conexion.php';
                             $estado = "SELECT * FROM tbl_estados_proyectos ORDER BY ID_ESTADOS";
@@ -166,6 +174,7 @@ if (mysqli_num_rows($roles35) > 0)
                     <br>
                     <label for="">Departamento del proyecto</label>
                     <select style="background-color:rgb(240, 244, 245);" value="<?php echo "$id_departamento"; ?>" class="form-select" id="lista1" name="id_departamento" required >
+                    <option > </option>
                         <?php
                             include 'conexion/conexion.php';
                             $departamento = "SELECT * FROM tbl_departamentos ORDER BY ID_DEPARTAMENTO";
@@ -230,7 +239,10 @@ if (mysqli_num_rows($roles35) > 0)
             
             <div class="card">
               <div class="card-header">
-                <h3 class="card-title">Proyectos</h3>
+              <form id="form" action="" method="post">
+              <button type="submit"  name="accion" value="reporte_pdf" class="btn btn-secondary buttons-pdf buttons-html5"  onclick="return confirm('¿Quieres generar reporte de proyectos?')" onclick="textToPdf()"><span>Reporte PDF</span></button>
+	            </form>
+                 <!-- <h3 class="card-title">Proyectos</h3> -->
                 
               </div>
               
@@ -293,8 +305,8 @@ if (mysqli_num_rows($roles35) > 0)
                     <input class="form-control" type="number" name="id_proyecto" id="" readonly required value="<?php echo $filas['ID_PROYECTO'] ?>">
                    <br>            
                  <label for="">Nombre Cliente</label>
-                 <select class="form-select"  name="id_cliente" required >
-                        <option value="<?php echo $filas['ID_CLIENTE']; ?>"> <?php echo $filas['NOMBRE_CLIENTE']; ?></option>
+                 <select class="form-select"  name="id_cliente"  required >
+                 <option value="<?php echo $filas['ID_CLIENTE']; ?>"> <?php echo $filas['NOMBRE_CLIENTE']; ?></option>
                         <?php
                         include '../../conexion/conexion.php';
                         $cliente = "SELECT * FROM tbl_clientes ORDER BY ID_CLIENTE";
@@ -310,9 +322,9 @@ if (mysqli_num_rows($roles35) > 0)
                            }}// finaliza el if y el while
                            ?>
                    </select>
-                    <label for="">Nombre Encargado</label>
+                  <label for="">Nombre Encargado</label>
                     <select class="form-select"  name="id_usuario" required >
-                        <option value="<?php echo $filas['ID_USUARIO']; ?>"> <?php echo $filas['NOMBRE']; ?></option>
+                    <option value="<?php echo $filas['ID_USUARIO']; ?>"> <?php echo $filas['NOMBRE']; ?></option>   
                         <?php
                         include '../../conexion/conexion.php';
                         $idusuario = "SELECT * FROM tbl_usuarios ORDER BY ID_USUARIO";
@@ -322,7 +334,7 @@ if (mysqli_num_rows($roles35) > 0)
                             {
                               $id_usuario = $row['ID_USUARIO'];
                               $idusuario3 =$row['NOMBRE'];
-                        ?>
+                              ?>
                           <option value="<?php  echo $id_usuario; ?>"><?php echo $idusuario3?></option>
                           <?php
                            }}// finaliza el if y el while
@@ -544,45 +556,82 @@ if (mysqli_num_rows($roles35) > 0)
     });
   });
 </script>
+<!-- Fin muestra los botones y traduce y Agrupar -->
+
+
+<!-- Enlace Script para que solo permita letras -->
+<script type="text/javascript" src="../../js/solo_letras.js"></script>
+
+ <!-- Enlace Script para que convierta a mayusculas las teclas que se van pulsando -->
+ <script type="text/javascript" src="../../js/converir_a_mayusculas.js"></script>
+
+ <!-- Enlace Script para quitar espacios en blanco -->
+ <script type="text/javascript" src="../../js/quitar_espacios.js"></script>
 </body>
+
+<!-- // Inicio para exportar en pdf // -->
+<script>
+	//para descar al tocar el boton	
+	var form = document.getElementById("form")
+	form.addEventListener("submit",function(event) {
+   
+	event.preventDefault()
+ 
+				const pdf = new jsPDF('p', 'mm', 'letter');			
+        	
+
+				var columns = ["", "", "", "", ""];
+				var data = [
+				[1, "Hola", "hola@gmail.com", "Mexico"],
+				 ];
+
+				pdf.autoTable(columns,data,
+				{ 
+					html:'#example1',
+					margin:{ top: 30 }}
+				);
+						
+				//Inicio Encabezado y pie de pagina
+			const pageCount = pdf.internal.getNumberOfPages();
+			for(var i = 1; i <= pageCount; i++) 
+			{
+				pdf.setPage(i);
+												//////// Encabezado ///////
+				//Inicio para imagen de logo 
+				var logo = new Image();
+				logo.src = '../../imagenes/LoogSEACCO.jpg';
+				pdf.addImage(logo, 'JPEG',14,7,24,15);
+				//Fin para imagen de logo 
+
+				//muestra el titulo principal
+				pdf.setFont('Arial');
+				pdf.setFontSize(17);
+				pdf.text("Constructora SEACCO", 70,15,);
+
+				//muestra el titulo secundario
+				pdf.setFont('times');
+				pdf.setFontSize(10);
+				pdf.text("Reporte de proyectos", 84,20,);
+
+												//////// pie de Pagina ///////
+				//muestra la fecha
+				pdf.setFont('times');
+				pdf.setFontSize(9);
+				var today = new Date();
+				let horas = today.getHours()
+				let jornada = horas >=12 ? 'PM' : 'AM';
+				var newdat = "Fecha: " + today.getDate() + "/" + (today.getMonth()+1) + "/" + today.getFullYear() + " " + (horas % 12) + ":" + today.getMinutes() + ":" + today.getSeconds() + " " + jornada;
+				pdf.text(183-20,297-284,newdat);
+
+				//muestra el numero de pagina
+				pdf.text('Pagina ' + String(i) + '/' + String(pageCount),220-20,297-25,null,null,"right");
+			}
+				//Fin Encabezado y pie de pagina
+
+							pdf.save('Reporte de Proyectos.pdf');
+	})
+  
+</script>
+<!-- // Fin para exportar en pdf // -->
 <script type="text/javascript" src="../../js/evitar_reenvio.js"></script>
 </html>
-
-<script type="text/javascript">
-  
-        function mayus(e) {
-          e.value = e.value.toUpperCase();
-         }
-    </script>
-
-<script type="text/javascript"> function solonumero(e) {
-        tecla = (document.all) ? e.keyCode : e.which;
-        if (tecla==8) return true;
-        else if (tecla==0||tecla==9)  return true;
-       // patron =/[0-9\s]/;// -> solo letras
-        patron =/[0-9-\s]/;// -> solo numeros
-        te = String.fromCharCode(tecla);
-        return patron.test(te);
-    }
-	</script>
-
-<script>
-      function soloLetras(e){
-       key = e.keyCode || e.which;
-       tecla = String.fromCharCode(key).toLowerCase();
-       letras = " áéíóúabcdefghijklmnñopqrstuvwxyz";
-       especiales = ["8-37-39-46"];
-
-       tecla_especial = false
-       for(var i in especiales){
-        if(key == especiales[i]){
-          tecla_especial = true;
-          break;
-        }
-      }
-
-      if(letras.indexOf(tecla)==-1 && !tecla_especial){
-        return false;
-      }
-    }
-  </script>
