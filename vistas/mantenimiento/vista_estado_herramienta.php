@@ -57,6 +57,9 @@ if (mysqli_num_rows($roles35) > 0)
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
     <!-- enlace del scritpt para evitar si preciona F12, si preciona Ctrl+Shift+I, si preciona Ctr+u  -->
     <script type="text/javascript" src="../../js/evita_ver_codigo_utilizando_teclas.js"></script>
+    <!-- /// para exportar en pdf /// -->
+   <script type="text/javascript" src="../../js/complemento_1_jspdf.min.js"></script>
+	<script type="text/javascript" src="../../js/complemento_2_jspdf.plugin.autotable.min.js"></script>
     
   <?php include '../../configuracion/navar.php' ?>
   <!-- Inicio evita el click derecho de la pagina -->
@@ -68,23 +71,13 @@ if (mysqli_num_rows($roles35) > 0)
     <section class="content-header">
       <div class="container-fluid">
         <div class="row mb-2">
-          <div class="col-sm-2">
-            <h1></h1>
+          <div class="col-sm-7">
+          <h3>Estados de las herramientas</h3>
             <!-- Inicio de modal de agregar -->
 <div class="container mt-3">
   
-        <h3>Estados de las herramientas</h3> <br> 
-        <?php 
-      include '../../conexion/conexion.php';
-      $profesion4 = "SELECT * FROM tbl_ms_roles_ojetos WHERE ID_ROL='$id_rol7' and ID_OBJETO=26 and PERMISO_INSERCION=1";
-      $profesion5 = mysqli_query($conn, $profesion4);
-      if (mysqli_num_rows($profesion5) > 0)
-       {
-         echo '<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal">
-                    Nuevo estado
-                </button>';
-                          }
-                        ?> 
+       
+       
         
     </div>
 
@@ -120,7 +113,7 @@ if (mysqli_num_rows($roles35) > 0)
             </div>
         </div>
     </div>
-    <!-- Fin  de modal de agregar --> <br>
+    <!-- Fin  de modal de agregar --> 
           </div>
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
@@ -145,7 +138,23 @@ if (mysqli_num_rows($roles35) > 0)
             
             <div class="card table-responsive">
               <div class="card-header">
-                <h3 class="card-title">Estados</h3>
+              <form id="form" action="" method="post">
+                    <div class="btn-group">
+                    <?php 
+      include '../../conexion/conexion.php';
+      $profesion4 = "SELECT * FROM tbl_ms_roles_ojetos WHERE ID_ROL='$id_rol7' and ID_OBJETO=26 and PERMISO_INSERCION=1";
+      $profesion5 = mysqli_query($conn, $profesion4);
+      if (mysqli_num_rows($profesion5) > 0)
+       {
+         echo '<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal">
+                    Nuevo estado
+                </button>';
+                          }
+                        ?> 
+              <button type="submit"  name="accion" value="reporte_pdf" class="btn btn-secondary buttons-pdf buttons-html5"  onclick="return confirm('¿Quieres generar reporte de estado de herramientas?')" onclick="textToPdf()"><span>Reporte PDF</span></button>
+	               </div>
+            </form>
+                <!-- <h3 class="card-title">Estados</h3> -->
                 
               </div>
               
@@ -156,7 +165,7 @@ if (mysqli_num_rows($roles35) > 0)
                   <tr>
                   <th>Acciones</th>
                   <th>Id</th>
-                  <th>Profesión</th>
+                  <th>Estado de herramientas</th>
                   
                   
                   
@@ -176,7 +185,7 @@ if (mysqli_num_rows($roles35) > 0)
                           if (mysqli_num_rows($profesion5) > 0)
                           {?>
                                  <!-- inicio boton editar -->
-                      <button type="button"  class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#myModal2<?php echo $filas['ID_ESTADO'] ?>" >
+                      <button type="button"  class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#myModal2<?php echo $filas['ID_ESTADO_HERRAMIENTA'] ?>" >
                       <i class="fas fa-pencil-alt"></i>
                       </button> <?php 
                           }
@@ -185,7 +194,7 @@ if (mysqli_num_rows($roles35) > 0)
                      
 
                           <!-- El Modal -->
-                          <div class="modal" id="myModal2<?php echo $filas['ID_ESTADO'] ?>">
+                          <div class="modal" id="myModal2<?php echo $filas['ID_ESTADO_HERRAMIENTA'] ?>">
                             <div class="modal-dialog">
                               <div class="modal-content">
 
@@ -202,7 +211,7 @@ if (mysqli_num_rows($roles35) > 0)
                                           <div class="modal-body">
                                             <input type="hidden" name="nombre_anterior" value="<?php echo $filas['ESTADO'] ?>">
                                               <label for="">Id estado:</label>
-                                              <input type="text" readonly class="form-control" name="id_estado" required value="<?php echo $filas['ID_ESTADO'] ?>" placeholder=""  >
+                                              <input type="text" readonly class="form-control" name="id_estado" required value="<?php echo $filas['ID_ESTADO_HERRAMIENTA'] ?>" placeholder=""  >
                                               <br>
                                               <label for="">Estado:</label>
                                               <input type="text" class="form-control" name="estado" required value="<?php echo $filas['ESTADO'] ?>" placeholder=""  autocomplete = "off"  onkeypress="return soloLetras(event);" minlength="3" maxlength="20" 
@@ -242,7 +251,7 @@ if (mysqli_num_rows($roles35) > 0)
                       </form>
                     
 </td>
-                     <td ><?php echo $filas['ID_ESTADO'] ?></td>
+                     <td ><?php echo $filas['ID_ESTADO_HERRAMIENTA'] ?></td>
                      <td><?php echo $filas['ESTADO'] ?></td>
                      
                     
@@ -372,5 +381,70 @@ if (mysqli_num_rows($roles35) > 0)
  <!-- Enlace Script para quitar espacios en blanco -->
  <script type="text/javascript" src="../../js/quitar_espacios.js"></script>
 </body>
+
+<!-- // Inicio para exportar en pdf // -->
+<script>
+	//para descar al tocar el boton	
+	var form = document.getElementById("form")
+	form.addEventListener("submit",function(event) {
+   
+	event.preventDefault()
+ 
+				const pdf = new jsPDF('p', 'mm', 'letter');			
+        	
+
+				var columns = ["", "", "", "", ""];
+				var data = [
+				[1, "Hola", "hola@gmail.com", "Mexico"],
+				 ];
+
+				pdf.autoTable(columns,data,
+				{ 
+					html:'#example1',
+					margin:{ top: 30 }}
+				);
+						
+				//Inicio Encabezado y pie de pagina
+			const pageCount = pdf.internal.getNumberOfPages();
+			for(var i = 1; i <= pageCount; i++) 
+			{
+				pdf.setPage(i);
+												//////// Encabezado ///////
+				//Inicio para imagen de logo 
+				var logo = new Image();
+				logo.src = '../../imagenes/LoogSEACCO.jpg';
+				pdf.addImage(logo, 'JPEG',14,7,24,15);
+				//Fin para imagen de logo 
+
+				//muestra el titulo principal
+				pdf.setFont('Arial');
+				pdf.setFontSize(17);
+				pdf.text("Constructora SEACCO", 70,15,);
+
+				//muestra el titulo secundario
+				pdf.setFont('times');
+				pdf.setFontSize(10);
+				pdf.text("Reporte de estados herramientas", 75,20,);
+
+												//////// pie de Pagina ///////
+				//muestra la fecha
+				pdf.setFont('times');
+				pdf.setFontSize(9);
+				var today = new Date();
+				let horas = today.getHours()
+				let jornada = horas >=12 ? 'PM' : 'AM';
+				var newdat = "Fecha: " + today.getDate() + "/" + (today.getMonth()+1) + "/" + today.getFullYear() + " " + (horas % 12) + ":" + today.getMinutes() + ":" + today.getSeconds() + " " + jornada;
+				pdf.text(183-20,297-284,newdat);
+
+				//muestra el numero de pagina
+				pdf.text('Pagina ' + String(i) + '/' + String(pageCount),220-20,297-25,null,null,"right");
+			}
+				//Fin Encabezado y pie de pagina
+
+							pdf.save('Reporte de estados herramientas.pdf');
+	})
+  
+</script>
+<!-- // Fin para exportar en pdf // -->
 <script type="text/javascript" src="../../js/evitar_reenvio.js"></script>
 </html>

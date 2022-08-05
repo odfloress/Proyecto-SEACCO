@@ -20,7 +20,7 @@
 
        //para editar en la tabla mysl      
       case "editar";
-
+      date_default_timezone_set('America/Guatemala');
       $fecha   = new DateTime();
       $result = $fecha->format('Y-m-d-H-i-s');
 

@@ -102,7 +102,7 @@
       case "eliminar";
 
     //validar que no este asignado un proyecto
-    $validar_departamento = "SELECT * FROM tbl_proyectos WHERE UBICACION='$departamento'";
+    $validar_departamento = "SELECT * FROM tbl_proyectos WHERE ID_DEPARTAMENTO='$id_departamento'";
     $validar_departamento2 = mysqli_query($conn, $validar_departamento); 
      if (mysqli_num_rows($validar_departamento2) > 0) { 
          // inicio inserta en la tabla bitacora

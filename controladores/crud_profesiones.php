@@ -103,7 +103,7 @@
       case "eliminar";
 
     //validar que no este asignado a un usuario
-    $validar_profesion = "SELECT * FROM tbl_usuarios WHERE PROFESION='$profesion7'";
+    $validar_profesion = "SELECT * FROM tbl_usuarios WHERE ID_PROFESION='$id_profesion'";
     $result4 = mysqli_query($conn, $validar_profesion); 
      if (mysqli_num_rows($result4) > 0) { 
          // inicio inserta en la tabla bitacora

@@ -125,6 +125,7 @@ if(in_array($extencion, $permitidos))
 
 break;
 
+
 //para eliminar en la tabla mysl  
 case "eliminar";
 echo $ruta;
