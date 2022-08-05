@@ -168,6 +168,7 @@ DataTable.ext.buttons.print = {
 
 		// Inject the table and other surrounding information
 		win.document.body.innerHTML =
+		
 			'<h1>'+exportInfo.title+'</h1>'+
 			'<div>'+(exportInfo.messageTop || '')+'</div>'+
 			html+

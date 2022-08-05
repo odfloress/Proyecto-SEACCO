@@ -337,7 +337,7 @@ include '../../controladores/crud_administradores.php';
                             while($row = mysqli_fetch_assoc($estados2))
                             {
                               $id = $row['ID_ESTADO_USUARIO'];
-                              $estado =$row['NOMBRE'];
+                              $estado =$row['NOMBRE_ESTADO'];
                         ?>
                           <option value="<?php  echo $id; ?>"><?php echo $estado?></option>
                           <?php
