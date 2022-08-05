@@ -56,6 +56,10 @@ if (mysqli_num_rows($roles35) > 0)
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
    <!-- enlace del scritpt para evitar si preciona F12, si preciona Ctrl+Shift+I, si preciona Ctr+u  -->
    <script type="text/javascript" src="../../js/evita_ver_codigo_utilizando_teclas.js"></script>
+         <!-- /// para exportar en pdf /// -->
+   <script type="text/javascript" src="../../js/complemento_1_jspdf.min.js"></script>
+	<script type="text/javascript" src="../../js/complemento_2_jspdf.plugin.autotable.min.js"></script>
+
 
   <?php include '../../configuracion/navar.php' ?>
   <!-- Inicio evita el click derecho de la pagina -->
@@ -122,6 +126,7 @@ if (mysqli_num_rows($roles35) > 0)
                 <!-- Fin Cuerpo del modal Modal -->
                 <!-- pie del modal -->
                 <div class="modal-footer">
+                
       	            <button type="submit" name="accion" value="agregar" class="btn btn-primary" onclick="return confirm('¿Quieres insertar este dato?')">Agregar</button>
                     <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
                 </div>
@@ -157,10 +162,10 @@ if (mysqli_num_rows($roles35) > 0)
             
             <div class="card">
               <div class="card-header">
-                <h3 class="card-title">PORTAFOLIO</h3>
-                <!-- inicio ocultar html -->
-               
-              <!-- Fin ocultar html -->
+              <form id="form" action="" method="post">
+              <button type="submit"  name="accion" value="reporte_pdf" class="btn btn-secondary buttons-pdf buttons-html5"  onclick="return confirm('¿Quieres generar reporte de portafolio?')" onclick="textToPdf()"><span>Reporte PDF</span></button>
+	            </form>
+                <!-- <h3 class="card-title">PORTAFOLIO</h3> -->
               </div>
               
               <!-- /.card-header -->
@@ -232,11 +237,11 @@ if (mysqli_num_rows($roles35) > 0)
                                               </select>
                                               <label for="">Titulo</label>
                                               <input type="text" class="form-control"  name="titulo" required value="<?php echo $filas['TITULO'] ?>" placeholder="" 
-                                              autocomplete = "off"  onkeypress="return soloLetras(event);" minlength="3" maxlength="50" onkeyup="mayus(this);"  >
+                                              autocomplete = "off"  onkeypress="return soloLetras(event);" minlength="3" maxlength="255" onkeyup="mayus(this);"  >
                                               <br>
                                               <label for="">Descripción</label>
                                               <TEXtarea  style="background-color: white;" name="descripcion" class="form-control"name="" id="" cols="40" rows="5"
-                                              autocomplete = "off"  onkeypress="return soloLetras(event);" minlength="3" maxlength="50" onkeyup="mayus(this);" ><?php echo $filas['DESCRIPCION'] ?></TEXtarea>
+                                              autocomplete = "off"  onkeypress="return soloLetras(event);" minlength="3" maxlength="300" onkeyup="mayus(this);" ><?php echo $filas['DESCRIPCION'] ?></TEXtarea>
                                           
                                               <br>
                                           
@@ -322,6 +327,11 @@ if (mysqli_num_rows($roles35) > 0)
 <script src="../../plantilla/AdminLTE-3.2.0/plugins/datatables-buttons/js/dataTables.buttons.min.js"></script>
 <script src="../../plantilla/AdminLTE-3.2.0/plugins/datatables-buttons/js/buttons.bootstrap4.min.js"></script>
 <script src="../../plantilla/AdminLTE-3.2.0/plugins/jszip/jszip.min.js"></script>
+<script src="../../plantilla/AdminLTE-3.2.0/plugins/pdfmake/pdfmake.min.js"></script>
+<script src="../../plantilla/AdminLTE-3.2.0/plugins/pdfmake/vfs_fonts.js"></script>
+<!-- <script src="../../plantilla/AdminLTE-3.2.0/plugins/datatables-buttons/js/buttons.html5.min.js"></script> -->
+<!-- <script src="../../plantilla/AdminLTE-3.2.0/plugins/datatables-buttons/js/buttons.print.min.js"></script> -->
+
 
 
 <script src="../../plantilla/AdminLTE-3.2.0/plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
@@ -396,6 +406,71 @@ if (mysqli_num_rows($roles35) > 0)
 <!-- Enlace Script para quitar espacios en blanco -->
 <script type="text/javascript" src="../../js/quitar_espacios.js"></script>
 </body>
+
+<!-- // Inicio para exportar en pdf // -->
+<script>
+	//para descar al tocar el boton	
+	var form = document.getElementById("form")
+	form.addEventListener("submit",function(event) {
+   
+	event.preventDefault()
+ 
+				const pdf = new jsPDF('p', 'mm', 'letter');			
+        	
+
+				var columns = ["", "", "", "", ""];
+				var data = [
+				[1, "Hola", "hola@gmail.com", "Mexico"],
+				 ];
+
+				pdf.autoTable(columns,data,
+				{ 
+					html:'#example1',
+					margin:{ top: 30 }}
+				);
+						
+				//Inicio Encabezado y pie de pagina
+			const pageCount = pdf.internal.getNumberOfPages();
+			for(var i = 1; i <= pageCount; i++) 
+			{
+				pdf.setPage(i);
+												//////// Encabezado ///////
+				//Inicio para imagen de logo 
+				var logo = new Image();
+				logo.src = '../../imagenes/LoogSEACCO.jpg';
+				pdf.addImage(logo, 'JPEG',14,7,24,15);
+				//Fin para imagen de logo 
+
+				//muestra el titulo principal
+				pdf.setFont('Arial');
+				pdf.setFontSize(17);
+				pdf.text("Constructora SEACCO", 70,15,);
+
+				//muestra el titulo secundario
+				pdf.setFont('times');
+				pdf.setFontSize(10);
+				pdf.text("Reporte de portafolio", 84,20,);
+
+												//////// pie de Pagina ///////
+				//muestra la fecha
+				pdf.setFont('times');
+				pdf.setFontSize(9);
+				var today = new Date();
+				let horas = today.getHours()
+				let jornada = horas >=12 ? 'PM' : 'AM';
+				var newdat = "Fecha: " + today.getDate() + "/" + (today.getMonth()+1) + "/" + today.getFullYear() + " " + (horas % 12) + ":" + today.getMinutes() + ":" + today.getSeconds() + " " + jornada;
+				pdf.text(183-20,297-284,newdat);
+
+				//muestra el numero de pagina
+				pdf.text('Pagina ' + String(i) + '/' + String(pageCount),220-20,297-25,null,null,"right");
+			}
+				//Fin Encabezado y pie de pagina
+
+							pdf.save('Reporte de portafolio.pdf');
+	})
+  
+</script>
+<!-- // Fin para exportar en pdf // -->
 <script type="text/javascript" src="../../js/evitar_reenvio.js"></script>
 </html>
 

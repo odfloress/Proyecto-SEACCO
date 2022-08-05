@@ -50,7 +50,7 @@ if (mysqli_num_rows($roles35) > 0)
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Administracion</title>
+  <title>Nuestros Contactos</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
@@ -117,34 +117,96 @@ if (mysqli_num_rows($roles35) > 0)
             <br>       
   
       </div>
-
-      <!-- Modal footer -->
+        <!-- Modal footer -->
       <?php 
       include '../../conexion/conexion.php';
-      $tablero = "SELECT * FROM tbl_ms_roles_ojetos WHERE ID_ROL='$id_rol7' and ID_OBJETO=18 and PERMISO_INSERCION=1";
-      $tablero2 = mysqli_query($conn, $tablero);
-      if (mysqli_num_rows($tablero2) > 0)
-       {?>
-      </div> 
+      $contacto = "SELECT * FROM tbl_ms_roles_ojetos WHERE ID_ROL='$id_rol7' and ID_OBJETO=18 and PERMISO_INSERCION=1";
+      $contacto2 = mysqli_query($conn, $contacto);
+      if (mysqli_num_rows($contacto2) > 0)
+       {?> <!-- Modal footer -->
+        <?php 
+        include '../../conexion/conexion.php';
+        $contacto = "SELECT * FROM tbl_ms_roles_ojetos WHERE ID_ROL='$id_rol7' and ID_OBJETO=18 and PERMISO_ACTUALIZACION=1";
+        $contacto2 = mysqli_query($conn, $contacto);
+        if (mysqli_num_rows($contacto2) > 0)
+         {?>
       <div class="modal-footer">
-      	            <button type="submit" name="accion" value="agregar" class="btn btn-primary" onclick="return confirm('¿Desea agregar el contacto?')">Agregar</button>
-                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
+      	            
+                  <button type="submit" name="accion" value="agregar" class="btn btn-primary" onclick="return confirm('¿Desea agregar el contacto?')">Agregar</button>
+                  <button type="submit" name="accion" value="editar" class="btn btn-warning" onclick="return confirm('¿Desea editar el contacto?')">Editar</button>
+                  <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
                 </div><?php 
                           }
                         ?>
-      
+                     <?php 
+                          }
+                        ?>
                 </form> 
+            
                 <?php } ?>
     </div>
-  
+     <!-- /.card-body -->
+     </div>
+            <!-- /.card -->
+          </div>
+          <!-- /.col -->
+        </div>
+        <!-- /.row -->
+    </div>
+      <!-- /.container-fluid -->
+    </section>
+    <!-- /.content -->
     
 
 <!-- fin contenido -->
+<!-- /.content-wrapper -->
+<footer class="main-footer">
+    <!-- To the right -->
+    <div class="float-right d-none d-sm-inline">
+     
+    </div>
+    <!-- Default to the left -->
+    <strong>SEACCO &copy; 2022 </strong> 
+  </footer>
+
+  <!-- Control Sidebar -->
+  <aside class="control-sidebar control-sidebar-dark">
+    <!-- Control sidebar content goes here -->
+    <!-- Control sidebar content goes here -->
+    
+  </aside>
+  <!-- /.control-sidebar -->
+</div>
+<!-- REQUIRED SCRIPTS -->
+<!-- ./wrapper -->
+
+<!-- jQuery -->
+<script src="../../plantilla/AdminLTE-3.2.0/plugins/jquery/jquery.min.js"></script>
+<!-- Bootstrap 4 -->
+<script src="../../plantilla/AdminLTE-3.2.0/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+<!-- DataTables  & Plugins -->
+<script src="../../plantilla/AdminLTE-3.2.0/plugins/datatables/jquery.dataTables.min.js"></script>
+<script src="../../plantilla/AdminLTE-3.2.0/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
+<script src="../../plantilla/AdminLTE-3.2.0/plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
+<script src="../../plantilla/AdminLTE-3.2.0/plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
+<script src="../../plantilla/AdminLTE-3.2.0/plugins/datatables-buttons/js/dataTables.buttons.min.js"></script>
+<script src="../../plantilla/AdminLTE-3.2.0/plugins/datatables-buttons/js/buttons.bootstrap4.min.js"></script>
+<script src="../../plantilla/AdminLTE-3.2.0/plugins/jszip/jszip.min.js"></script>
 
 
-
-<?php include '../../configuracion/footer.php' ?>
-
+<script src="../../plantilla/AdminLTE-3.2.0/plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
+<!-- AdminLTE App -->
+<script src="../../plantilla/AdminLTE-3.2.0/dist/js/adminlte.min.js"></script>
+<!-- AdminLTE for demo purposes -->
+<script src="../../plantilla/AdminLTE-3.2.0/dist/js/demo.js"></script>
+<!-- Page specific script -->
+<!-- INICIO muestra los botones, traduce y Agrupar -->
+<!-- jQuery -->
+<script src="../../plantilla/AdminLTE-3.2.0/plugins/jquery/jquery.min.js"></script>
+<!-- Bootstrap 4 -->
+<script src="../../plantilla/AdminLTE-3.2.0/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+<!-- AdminLTE App -->
+<script src="../../plantilla/AdminLTE-3.2.0/dist/js/adminlte.min.js"></script>
 </body>
 <script type="text/javascript" src="../../js/evitar_reenvio.js"></script>
 </html>

@@ -45,7 +45,8 @@ include '../../controladores/crud_administradores.php';
         <div class="modal-dialog">
             <div class="modal-content">
                 <!-- Encabezado del modal -->
-                <form action="" method="post">
+                <!-- <form action="" method="post"> -->
+                <form action="" method="post" enctype="multipart/form-data">
                 <div class="modal-header">
                     <h4 class="modal-title">Nuevo usuario</h4>
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
@@ -87,7 +88,7 @@ include '../../controladores/crud_administradores.php';
                             while($row = mysqli_fetch_assoc($estados2))
                             {
                               $id = $row['ID_ESTADO_USUARIO'];
-                              $estado =$row['NOMBRE'];
+                              $estado =$row['NOMBRE_ESTADO'];
                         ?>
                           <option value="<?php  echo $id; ?>"><?php echo $estado?></option>
                           <?php
@@ -113,19 +114,53 @@ include '../../controladores/crud_administradores.php';
                     <label for="">Correo:</label>
                     <input type="email" class="form-control" name="correo" required value="" autocomplete="off" placeholder="" > 
                      
-                    <label for="">Genero:</label>
+                    <label for="pwd" class="form-label">Genero:</label>
+                    <select style="background-color:rgb(240, 244, 245);" value="<?php echo "$genero"; ?>" class="form-select" id="lista1" name="genero" required >
+                        <?php
+                            include 'conexion/conexion.php';
+                            $genero = "SELECT * FROM tbl_generos ORDER BY ID_GENERO";
+                            $genero2 = mysqli_query($conn, $genero);
+                            if (mysqli_num_rows($genero2) > 0) {
+                                while($row = mysqli_fetch_assoc($genero2))
+                                {
+                                $id_genero = $row['ID_GENERO'];
+                                $genero3 =$row['GENERO'];
+                         ?>
+                          <option value="<?php  echo $id_genero ?>"><?php echo $genero3 ?></option>
+                          <?php
+                           }}// finaliza el if y el while
+                           ?>
+                    </select>
+                    <!-- <label for="">Genero:</label>
                     <select class="form-select"  name="genero" required >
                       <option value=""></option>
                       <option value="M">M</option>
                       <option value="F">F</option>
-                    </select>
+                    </select> -->
 
                     <label for="">DNI:</label>
                     <input type="text" class="form-control" name="dni" required value="" autocomplete="off" minlength="15" maxlength="15"  onkeypress="return solonumero(event)" placeholder="0000-0000-000000" >
 
-                    <label for="">Profesion:</label>
-                    <input type="text" class="form-control" name="profesion" required value="" autocomplete="off" onkeyup="mayus(this);" maxlength="30" >
- 
+                    <label for="pwd" class="form-label">Profesión:</label>
+                      <select style="background-color:rgb(240, 244, 245);" value="<?php echo "$profesion"; ?>" class="form-select" id="lista1" name="profesion" required >
+                            <?php
+                                include 'conexion/conexion.php';
+                                $profesion = "SELECT * FROM tbl_profesiones ORDER BY ID_PROFESION";
+                                $profesion2 = mysqli_query($conn, $profesion);
+                                if (mysqli_num_rows($profesion2) > 0) {
+                                    while($row = mysqli_fetch_assoc($profesion2))
+                                    {
+                                    $id_profesion = $row['ID_PROFESION'];
+                                    $profesion3 =$row['PROFESION'];
+                            ?>
+                              <option value="<?php  echo $id_profesion ?>"><?php echo $profesion3 ?></option>
+                              <?php
+                              }}// finaliza el if y el while
+                              ?>
+                      </select>
+                    <!-- <label for="">Profesion:</label>
+                    <input type="text" class="form-control" name="profesion" required value="" autocomplete="off" onkeyup="mayus(this);" maxlength="30" > -->
+
                     <label for="">Dirección:</label>
                     <input type="text" class="form-control" name="direccion" required value="" autocomplete="off" onkeyup="mayus(this);" maxlength="70" >
 
@@ -148,11 +183,22 @@ include '../../controladores/crud_administradores.php';
                     <input type="file" class="form-control" name="foto" value="" placeholder="Opcional" >
 
                     <label for="pwd" class="form-label">Area:</label>
-                    <input class="form-control" autocomplete="off" maxlength="20" list="browsers1" type="text" id="calcular" name="area"  id="browser"  required autocomplete="off" onkeyup="mayus(this);" maxlength="30" >
-                    <datalist id="browsers1">
-                      <option value="ADMINISTRATIVA">
-                      <option value="MANO DE OBRA">
-                    </datalist> 
+                      <select style="background-color:rgb(240, 244, 245);" value="<?php echo "$area"; ?>" class="form-select" id="lista1" name="area" required >
+                              <?php
+                                  include 'conexion/conexion.php';
+                                  $area = "SELECT * FROM tbl_areas ORDER BY ID_AREA";
+                                  $area2 = mysqli_query($conn, $area);
+                                  if (mysqli_num_rows($area2) > 0) {
+                                      while($row = mysqli_fetch_assoc($area2))
+                                      {
+                                      $id_area = $row['ID_AREA'];
+                                      $area3 =$row['AREA'];
+                              ?>
+                                <option value="<?php  echo $id_area ?>"><?php echo $area3 ?></option>
+                                <?php
+                                }}// finaliza el if y el while
+                                ?>
+                        </select>
                     
                 
                 </div>
@@ -252,7 +298,8 @@ include '../../controladores/crud_administradores.php';
 
 
                                 <!-- Cuerpo del modal Modal -->
-                <form action="" method="post">
+                <!-- <form action="" method="post"> -->
+                <form action="" method="post" enctype="multipart/form-data">
                               
                 <div class="modal-body">
                     <label for="">Id del Usuario:</label>
@@ -290,7 +337,7 @@ include '../../controladores/crud_administradores.php';
                             while($row = mysqli_fetch_assoc($estados2))
                             {
                               $id = $row['ID_ESTADO_USUARIO'];
-                              $estado =$row['NOMBRE'];
+                              $estado =$row['NOMBRE_ESTADO'];
                         ?>
                           <option value="<?php  echo $id; ?>"><?php echo $estado?></option>
                           <?php
@@ -377,17 +424,29 @@ include '../../controladores/crud_administradores.php';
                     <input type="file" class="form-control" name="curriculum"  value="<?php echo $filas['CURRICULUM'] ?>" placeholder="" >
 
                     <label for="">Foto:</label>
-                  
                     <input type="file" class="form-control" name="foto" value="<?php echo $filas['FOTO'] ?>" placeholder="" >
 
+                     
                     <label for="pwd" class="form-label">Area:</label>
-                    <input class="form-control" autocomplete="off" maxlength="20" list="browsers1" type="text" id="calcular" name="area"  id="browser"  required >
-                    <datalist id="browsers1">
-                      <option value="<?php echo $filas['AREA'] ?>">
-                      <option value="ADMINISTRATIVA">
-                      <option value="MANO DE OBRA">
-                    </datalist> 
-                
+                    <select class="form-select"  name="area" required >
+                      <option value="<?php echo $filas['ID_AREA']; ?>"> <?php echo $filas['AREA']; ?></option>
+
+                      <?php
+                        include '../../conexion/conexion.php';
+                        $area = "SELECT * FROM tbl_areas ORDER BY ID_AREA";
+                        $area2 = mysqli_query($conn, $area);
+                        if (mysqli_num_rows($profesion2) > 0) {
+                            while($row = mysqli_fetch_assoc($area2))
+                            {
+                              $id_area = $row['ID_AREA'];
+                              $area3 =$row['AREA'];
+                        ?>
+                          <option value="<?php  echo $id_area; ?>"><?php echo $area3?></option>
+                          <?php
+                           }}// finaliza el if y el while
+                           ?>
+
+                    </select>
                 </div>
                 <!-- Fin Cuerpo del modal Modal -->
 
@@ -431,8 +490,8 @@ include '../../controladores/crud_administradores.php';
                      <td><?php echo $filas['REFERENCIA'] ?></td>
                      <td><?php echo $filas['CEL_REFERENCIA'] ?></td>
                      <td><?php echo $filas['EXPERIENCIA_LABORAL'] ?></td>
-                     <td><?php echo $filas['CURRICULUM'] ?></td>                     
-                     <td><img class="img-thumbnail" width="100px" src="../../imagenes/<?php echo $filas['FOTO'] ?>" /></td>
+                     <td><a href="<?php echo $filas['CURRICULUM'] ?>" download>Descargar</a></td>                     
+                     <td><img class="img-thumbnail" width="100px" src="<?php echo $filas['FOTO'] ?>" /></td>
                      <td><?php echo $filas['AREA'] ?></td>
 
                      

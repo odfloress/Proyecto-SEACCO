@@ -39,6 +39,27 @@ require "../../conexion/conexion.php";
     }
   }
 </script>
+<script>
+  function clave1(e) {
+  key = e.keyCode || e.which;
+  tecla = String.fromCharCode(key).toString();
+  letras = "ABCDEFGHIJKLMNÑOPQRSTUVWXZabcdefghijklmnñopqrstuvwxyz0123456789,#$%&/=!¡?¿()*{}[]-_'.@<>";
+  
+  especiales = [8,13];
+  tecla_especial = false;
+  for(var i in especiales) {
+    if(key == especiales[i]){
+      tecla_especial = true;
+      break;
+    }
+  }
+  
+  if(letras.indexOf(tecla) == -1 && !tecla_especial){
+    alert("Sin espacios");
+    return false;
+  }
+}
+</script>
 <script type="text/javascript">
   
         function mayus(e) {
@@ -256,7 +277,7 @@ function quitarespacios(e) {
               <div class="card-body">
                 <div class="tab-content">
                    <!-- <div class="active tab-pane" id="activity">
-                  codigo inicio perfil
+                  codigo inicio perfil-->
                   <!-- Colocar imagen -->
                   <!-- codigo fin perfil -->
                 </div>
@@ -271,21 +292,21 @@ function quitarespacios(e) {
                     <div class="form-group row">
                       <label for="inputName" class="col-sm-2 col-form-label">Contraseña actual</label>
                       <div class="col-sm-10">
-                        <input type="password" class="form-control" name="actual" id="myInput" placeholder="Contraseña actual" required onblur="quitarespacios(this);" onkeyup="sinespacio(this);" pattern="(?=.*[\d])(?=.*[a-z])(?=.*[A-Z]).{8,}">
+                        <input type="password" class="form-control" name="actual" id="myInput" placeholder="Contraseña actual" onkeypress="return clave1(event);" required onblur="quitarespacios(this);" onkeyup="sinespacio(this);" pattern="(?=.*[\d])(?=.*[a-z])(?=.*[A-Z]).{8,}">
                         <input type="checkbox" onclick="mostrarContrasena()" > Mostrar/Ocultar
                       </div>
                     </div>
                     <div class="form-group row">
                       <label for="inputEmail" class="col-sm-2 col-form-label">Nueva contraseña:</label>
                       <div class="col-sm-10">
-                        <input type="password" class="form-control" name="contrasena" id="contra" placeholder="Nueva contraseña" required onblur="quitarespacios(this);" onkeyup="sinespacio(this);" pattern="(?=.*[\d])(?=.*[a-z])(?=.*[A-Z]).{8,}">
+                        <input type="password" class="form-control" name="contrasena" id="contra" placeholder="Nueva contraseña" onkeypress="return clave1(event);" required onblur="quitarespacios(this);" onkeyup="sinespacio(this);" pattern="(?=.*[\d])(?=.*[a-z])(?=.*[A-Z]).{8,}">
                         <input type="checkbox" onclick="mostrarContrasena2()" > Mostrar/Ocultar
                       </div>
                     </div>
                     <div class="form-group row">
                       <label for="inputName2" class="col-sm-2 col-form-label">Confirmar contraseña</label>
                       <div class="col-sm-10">
-                        <input type="password" class="form-control" name="confirmar_contrasena" id="contrac" placeholder="Confirmar nueva contraseña" required onblur="quitarespacios(this);" onkeyup="sinespacio(this);" pattern="(?=.*[\d])(?=.*[a-z])(?=.*[A-Z]).{8,}">
+                        <input type="password" class="form-control" name="confirmar_contrasena" id="contrac" onkeypress="return clave1(event);" placeholder="Confirmar nueva contraseña" required onblur="quitarespacios(this);" onkeyup="sinespacio(this);" pattern="(?=.*[\d])(?=.*[a-z])(?=.*[A-Z]).{8,}">
                         <input type="checkbox" onclick="mostrarContrasena3()" > Mostrar/Ocultar
                       </div>
                     </div>

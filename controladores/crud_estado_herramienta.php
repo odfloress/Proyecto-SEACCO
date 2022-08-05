@@ -79,7 +79,7 @@
 
                // si no existe el estado con el mismo nombre
               }else{
-                        $sql2 = "UPDATE tbl_estado_herramienta SET ESTADO='$estado'  WHERE ID_ESTADO='$id_estado'";
+                        $sql2 = "UPDATE tbl_estado_herramienta SET ESTADO='$estado'  WHERE ID_ESTADO_HERRAMIENTA='$id_estado'";
                         if (mysqli_query($conn, $sql2)) {
 
                             // inicio inserta en la tabla bitacora
@@ -103,7 +103,7 @@
       case "eliminar";
 
     //validar que no este asignado a una herramienta
-    $validar_estado = "SELECT * FROM tbl_asignaciones WHERE ESTADO_HERRAMIENTA='$anterior'";
+    $validar_estado = "SELECT * FROM tbl_asignaciones WHERE ID_ESTADO_HERRAMIENTA='$id_estado'";
     $result7 = mysqli_query($conn, $validar_estado); 
      if (mysqli_num_rows($result7) > 0) { 
          // inicio inserta en la tabla bitacora
@@ -118,7 +118,7 @@
                mysqli_close($conn);
 
      }else{
-                        $sql3 = "DELETE FROM tbl_estado_herramienta WHERE ID_ESTADO='$id_estado'";
+                        $sql3 = "DELETE FROM tbl_estado_herramienta WHERE ID_ESTADO_HERRAMIENTA='$id_estado'";
                         if (mysqli_query($conn, $sql3)) {
                             // inicio inserta en la tabla bitacora
                             $sql7 = "INSERT INTO tbl_bitacora (USUARIO, ACCION, OBSERVACION)

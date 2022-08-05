@@ -101,7 +101,7 @@ if (mysqli_num_rows($roles35) > 0)
                 <div class="modal-body">
                   
                     <label for="">Estado</label>
-                    <input type="text" class="form-control" name="nombre" required value="" placeholder="" id="txtPrecio_Compra" onkeypress="return soloLetras(event);" minlength="3" maxlength="20" onkeyup="mayus(this);"   >
+                    <input type="text" class="form-control" name="nombre" value="<?php echo $nombre; ?>" required value="" placeholder="" id="txtPrecio_Compra" autocomplete="off" onkeypress="return soloLetras(event);" minlength="3" maxlength="20" onkeyup="mayus(this);"   >
                     <br>
                 
                 </div>
@@ -192,11 +192,12 @@ if (mysqli_num_rows($roles35) > 0)
 
                                 <!-- Cuerpo del modal Modal -->
                                           <div class="modal-body">
+                                          <input type="hidden" name="nombre_anterior" value="<?php echo $filas['ESTADO_PROYECTO'] ?>">
                                               <label for="">Id estado</label>
                                               <input type="number" class="form-control" name="id_estados" readonly required value="<?php echo $filas['ID_ESTADOS'] ?>" placeholder="" id="txtPrecio_Compra"   >
                                               <br>
                                               <label for="">Estado</label>
-                                              <input type="text" class="form-control" name="nombre" required value="<?php echo $filas['NOMBRE'] ?>" placeholder="" id="txtPrecio_Compra" onkeypress="return soloLetras(event);" minlength="3" maxlength="20"  onkeyup="mayus(this);  >
+                                              <input type="text" class="form-control" name="nombre" autocomplete="off" required value="<?php echo $filas['ESTADO_PROYECTO'] ?>" placeholder="" id="txtPrecio_Compra" onkeypress="return soloLetras(event);" minlength="3" maxlength="20"  onkeyup="mayus(this);" >
                                               <br>
                                           
                                           </div>
@@ -221,6 +222,7 @@ if (mysqli_num_rows($roles35) > 0)
                           if (mysqli_num_rows($estado2) > 0)
                           {?>
                           <input type="hidden" name="id_estados"  value="<?php echo $filas['ID_ESTADOS'] ?>">
+                          <input type="hidden" name="nombre_anterior" value="<?php echo $filas['ESTADO_PROYECTO'] ?>">
                       <button  value="eliminar" name="accion" 
                         onclick="return confirm('¿Quieres eliminar este dato?')"
                         type="submit" class="btn btn-danger " data-id="19">
@@ -232,7 +234,7 @@ if (mysqli_num_rows($roles35) > 0)
                   </form>
 </td>
                     <td ><?php echo $filas['ID_ESTADOS'] ?></td>
-                     <td><?php echo $filas['NOMBRE'] ?></td>
+                     <td><?php echo $filas['ESTADO_PROYECTO'] ?></td>
                      <?php } ?>
                     
       </tr>
@@ -330,14 +332,12 @@ if (mysqli_num_rows($roles35) > 0)
                          },
                          
                          "responsive": true, "lengthChange": true, "autoWidth": false,
-                          "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"],
-
-                        
-
-                         
+                          "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"],                   
         
     })
-    buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+
+      
+    .buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
     $('#example2').DataTable({
       "paging": true,
       "lengthChange": false,
@@ -391,5 +391,8 @@ if (mysqli_num_rows($roles35) > 0)
       }
     }
   </script>
+
+
+
 
 
