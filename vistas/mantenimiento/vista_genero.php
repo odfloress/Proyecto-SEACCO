@@ -8,7 +8,7 @@ if(!isset($_SESSION['usuario'])){
         die();
         
 }
-include '../../controladores/crud_parametros.php';
+include '../../controladores/crud_genero.php';
 // Selecciona el id del rol del usuario logueado
 include '../../conexion/conexion.php';
 $usuario = $_SESSION;
@@ -21,26 +21,27 @@ if (mysqli_num_rows($roles35) > 0)
       $id_rol7 = $row['ID_ROL'];
   } 
 }
-
                //valida si tiene permisos de consultar la pantalla 
-               $permiso1 = "SELECT * FROM tbl_ms_roles_ojetos WHERE ID_ROL='$id_rol7' and ID_OBJETO=28 and PERMISO_CONSULTAR=0";
-               $permiso2 = mysqli_query($conn, $permiso1);
-               if (mysqli_num_rows($permiso2) > 0)
+               $genero = "SELECT * FROM tbl_ms_roles_ojetos WHERE ID_ROL='$id_rol7' and ID_OBJETO=29 and PERMISO_CONSULTAR=0";
+               $generon = mysqli_query($conn, $genero);
+               if (mysqli_num_rows($generon) > 0)
                {
                 header('Location: ../../vistas/tablero/vista_perfil.php');
+                
                 die();
                }else{
-                      $permiso1 = "SELECT * FROM tbl_ms_roles_ojetos WHERE ID_ROL='$id_rol7' and ID_OBJETO=28 and PERMISO_CONSULTAR=1";
-                      $permiso2 = mysqli_query($conn, $permiso1);
-                      if (mysqli_num_rows($permiso2) > 0){}
+                      $genero = "SELECT * FROM tbl_ms_roles_ojetos WHERE ID_ROL='$id_rol7' and ID_OBJETO=29 and PERMISO_CONSULTAR=1";
+                      $generon = mysqli_query($conn, $genero);
+                      if (mysqli_num_rows($generon) > 0){}
                       else{
-                        header('Location: ../../vistas/tablero/vista_perfil.php');
+                        header('Location: ../../vistas/tablero/vista_perfil.php'); 
+                        
                         die();
                       }
                }
                 // inicio inserta en la tabla bitacora
                 $sql = "INSERT INTO tbl_bitacora (USUARIO, ACCION, OBSERVACION)
-                VALUES ('$usuario[usuario]', 'CONSULTO', 'CONSULTO LA PANTALLA DE SEGURIDAD DE PARAMETROS')";
+                VALUES ('$usuario1[usuario]', 'CONSULTO', 'CONSULTO LA PANTALLA  ADMINISTRATIVA DE GENEROS')";
                 if (mysqli_query($conn, $sql)) {} else {}
                 // fin inserta en la tabla bitacora
 
@@ -51,14 +52,14 @@ if (mysqli_num_rows($roles35) > 0)
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Parametros</title>
+  <title>Genero</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
     <!-- enlace del scritpt para evitar si preciona F12, si preciona Ctrl+Shift+I, si preciona Ctr+u  -->
     <script type="text/javascript" src="../../js/evita_ver_codigo_utilizando_teclas.js"></script>
     <!-- /// para exportar en pdf /// -->
-    <script type="text/javascript" src="../../js/complemento_1_jspdf.min.js"></script>
+   <script type="text/javascript" src="../../js/complemento_1_jspdf.min.js"></script>
 	<script type="text/javascript" src="../../js/complemento_2_jspdf.plugin.autotable.min.js"></script>
     
   <?php include '../../configuracion/navar.php' ?>
@@ -76,12 +77,54 @@ if (mysqli_num_rows($roles35) > 0)
             <!-- Inicio de modal de agregar -->
 <div class="container mt-3">
   
-        <h3>Parametros</h3> <br> 
-         
+        <h3>Genero </h3> <br> 
+        <?php 
+      include '../../conexion/conexion.php';
+      $genero1 = "SELECT * FROM tbl_ms_roles_ojetos WHERE ID_ROL='$id_rol7' and ID_OBJETO=19 and PERMISO_INSERCION=1";
+      $genero2 = mysqli_query($conn, $genero1);
+      if (mysqli_num_rows($genero2) > 0)
+       {
+         echo '<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal">
+                    Nuevo genero
+                </button>';
+                          }
+                        ?> 
         
     </div>
 
+<!-- El Modal -->
+    <div class="modal" id="myModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <!-- Encabezado del modal -->
+                <form action="" method="post">
+                <div class="modal-header">
+                    <h4 class="modal-title">Nuevo Genero</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <!-- Fin Encabezado del modal -->
 
+                <!-- Cuerpo del modal Modal -->
+                <div class="modal-body">
+               
+                    <label for="">Nombre  genero</label>
+                    <input type="text" class="form-control" name="genero"  value="<?php echo $genero7; ?>" placeholder="" autocomplete = "off"  onkeypress="return soloLetras(event);" minlength="3" maxlength="20" 
+                     onkeyup="mayus(this);" required onblur="quitarespacios(this);" onkeydown="sinespacio(this);" >
+                    <br>
+                
+                </div>
+                <!-- Fin Cuerpo del modal Modal -->
+                <!-- pie del modal -->
+                <div class="modal-footer">
+      	            <button type="submit" name="accion" value="agregar" class="btn btn-primary" onclick="return confirm('¿Desea agregar un nuevo genero?')">Agregar</button>
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
+                </div>
+                <!-- Fin pie del modal -->
+                </form>
+            </div>
+        </div>
+    </div>
+    <!-- Fin  de modal de agregar --> <br>
           </div>
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
@@ -106,12 +149,13 @@ if (mysqli_num_rows($roles35) > 0)
             
             <div class="card table-responsive">
               <div class="card-header">
-              <form id="form" action="" method="post">
-                <!-- inicio ocultar html -->
-                <button type="submit"  name="accion" value="reporte_pdf" class="btn btn-secondary buttons-pdf buttons-html5"  onclick="return confirm('¿Quieres generar reporte de Parametros?')" onclick="textToPdf()"><span>Reporte PDF</span></button>
-                
+                  <!-- Btn reporte pdf -->
+                  <form id="form" action="" method="post">
+                    <button type="submit"  name="accion" value="reporte_pdf" class="btn btn-secondary buttons-pdf buttons-html5"  onclick="return confirm('¿Quieres generar reporte de Genero?')" onclick="textToPdf()"><span>Reporte PDF</span></button>
+                  </form>
+                  <!--fin  Btn reporte pdf -->
               </div>
-              </form>
+              
               <!-- /.card-header -->
               <div class="card-body ">
                 <table id="example1" class="table table-bordered table-striped">
@@ -119,10 +163,10 @@ if (mysqli_num_rows($roles35) > 0)
                   <tr>
                   <th>Acciones</th>
                   <th>Id</th>
-                  <th>Parametro</th>
-                  <th>Valor</th>
-                  <th>Fecha Creacion</th>
-                  <th>Fecha Modificacion</th>
+                  <th>Genero</th>
+                  
+                  
+                  
                   </tr>
                   </thead>
                   <tbody>
@@ -134,12 +178,12 @@ if (mysqli_num_rows($roles35) > 0)
                   <td>
                   <?php 
                           include '../../conexion/conexion.php';
-                          $permiso_editar = "SELECT * FROM tbl_ms_roles_ojetos WHERE ID_ROL='$id_rol7' and ID_OBJETO=28 and PERMISO_ACTUALIZACION=1";
-                          $permiso_editar2 = mysqli_query($conn, $permiso_editar);
-                          if (mysqli_num_rows($permiso_editar2) > 0)
+                          $genero1 = "SELECT * FROM tbl_ms_roles_ojetos WHERE ID_ROL='$id_rol7' and ID_OBJETO=24 and PERMISO_ACTUALIZACION=1";
+                          $genero2 = mysqli_query($conn, $genero1);
+                          if (mysqli_num_rows($genero2) > 0)
                           {?>
                                  <!-- inicio boton editar -->
-                      <button type="button"  class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#myModal2<?php echo $filas['ID_PARAMETRO'] ?>" >
+                      <button type="button"  class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#myModal2<?php echo $filas['ID_GENERO'] ?>" >
                       <i class="fas fa-pencil-alt"></i>
                       </button> <?php 
                           }
@@ -148,13 +192,13 @@ if (mysqli_num_rows($roles35) > 0)
                      
 
                           <!-- El Modal -->
-                          <div class="modal" id="myModal2<?php echo $filas['ID_PARAMETRO'] ?>">
+                          <div class="modal" id="myModal2<?php echo $filas['ID_GENERO'] ?>">
                             <div class="modal-dialog">
                               <div class="modal-content">
 
                                 <!-- Encabezado del modal -->
                                 <div class="modal-header">
-                                  <h4 class="modal-title">Editar Parametro</h4>
+                                  <h4 class="modal-title">Editar genero</h4>
                                   <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                                 </div>
                                 <!-- Fin Encabezado del modal -->
@@ -163,28 +207,21 @@ if (mysqli_num_rows($roles35) > 0)
                                 <!-- Cuerpo del modal Modal -->
                                 <form action="" method="post">
                                           <div class="modal-body">
-                                            <input type="hidden" name="nombre_anterior" value="<?php echo $filas['ID_PARAMETRO'] ?>">
-                                              <label for="">Id Parametro:</label>
-                                              <input type="text" readonly class="form-control" name="id_parametro" required value="<?php echo $filas['ID_PARAMETRO'] ?>" placeholder=""  >
+                                            <input type="hidden" name="nombre_anterior" value="<?php echo $filas['GENERO'] ?>">
+                                              <label for="">Id genero</label>
+                                              <input type="text" readonly class="form-control" name="id_genero" required value="<?php echo $filas['ID_GENERO'] ?>" placeholder=""  >
                                               <br>
-                                              <label for="">Parametro:</label>
-                                              <input type="text" class="form-control" readonly name="parametro" required value="<?php echo $filas['PARAMETRO'] ?>" placeholder=""  autocomplete = "off"  onkeypress="return soloLetras(event);" minlength="3" maxlength="20" 
-                                                onkeyup="mayus(this);" required >
-                                                <label for="">Valor:</label>
-                                              <input type="text" class="form-control" name="valor" required value="<?php echo $filas['VALOR'] ?>" placeholder=""  autocomplete = "off"  onkeypress="return solonumero(event)" required minlength="1" maxlength="1" >
-                                                <label for="">Fecha de Creacion:</label>
-                                              <input type="text" class="form-control" readonly name="creado" required value="<?php echo $filas['FECHA_CREACION'] ?>" placeholder=""  autocomplete = "off"  onkeypress="return soloLetras(event);" minlength="3" maxlength="20" 
-                                                onkeyup="mayus(this);" required >
-                                                <label for="">Fecha de Modificacion:</label>
-                                              <input type="text" class="form-control" readonly name="mofificacion" required value="<?php echo $filas['FECHA_MODIFICACION'] ?>" placeholder=""  autocomplete = "off"  onkeypress="return soloLetras(event);" minlength="3" maxlength="20" 
-                                                onkeyup="mayus(this);" required >
+                                              <label for=""></label>
+                                              <input type="text" class="form-control" name="genero" required value="<?php echo $filas['GENERO'] ?>" placeholder=""  autocomplete = "off"  onkeypress="return soloLetras(event);" minlength="3" maxlength="20" 
+                                                onkeyup="mayus(this);" required onblur="quitarespacios(this);" onkeydown="sinespacio(this);"  >
+                                             
                                           
                                           </div>
                                 <!-- Fin Cuerpo del modal Modal -->
 
                                 <!-- pie del modal -->
                                 <div class="modal-footer">
-                                <button type="submit" name="accion" value="editar" class="btn btn-primary" onclick="return confirm('¿Desea editar el parametro?')">Guardar</button>
+                                <button type="submit" name="accion" value="editar" class="btn btn-primary" onclick="return confirm('¿Desea editar la profesión?')">Guardar</button>
                                   <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
                                 </div>
                              
@@ -195,15 +232,25 @@ if (mysqli_num_rows($roles35) > 0)
                           </div>
                           <!-- fin boton editar -->
                          
+                          <?php 
+                          include '../../conexion/conexion.php';
+                          $genero1 = "SELECT * FROM tbl_ms_roles_ojetos WHERE ID_ROL='$id_rol7' and ID_OBJETO=24 and PERMISO_ELIMINACION=1";
+                          $genero2 = mysqli_query($conn, $genero1);
+                          if (mysqli_num_rows($genero2) > 0)
+                          {?>
+                             <button  value="eliminar" name="accion" 
+                        onclick="return confirm('¿Quieres eliminar este dato?')"
+                        type="submit" class="btn btn-danger ">
+                        <i class="fas fa-trash-alt"></i>
+                    </button><?php 
+                          }
+                        ?>
                           
                       </form>
                     
 </td>
-                     <td ><?php echo $filas['ID_PARAMETRO'] ?></td>
-                     <td><?php echo $filas['PARAMETRO'] ?></td>
-                     <td ><?php echo $filas['VALOR'] ?></td>
-                     <td><?php echo $filas['FECHA_CREACION'] ?></td>
-                     <td><?php echo $filas['FECHA_MODIFICACION'] ?></td>
+                     <td ><?php echo $filas['ID_GENERO'] ?></td>
+                     <td><?php echo $filas['GENERO'] ?></td>
                      
                     
       </tr>
@@ -211,11 +258,9 @@ if (mysqli_num_rows($roles35) > 0)
                 </tbody>
                 </table>
               </div>
-                        
               <!-- /.card-body -->
             </div>
             <!-- /.card -->
-            
           </div>
           <!-- /.col -->
         </div>
@@ -334,79 +379,69 @@ if (mysqli_num_rows($roles35) > 0)
  <!-- Enlace Script para quitar espacios en blanco -->
  <script type="text/javascript" src="../../js/quitar_espacios.js"></script>
 </body>
-<!-- // Inicio para exportar en pdf // -->
-<script>
-	//para descar al tocar el boton	
-	var form = document.getElementById("form")
-	form.addEventListener("submit",function(event) {
-   
-	event.preventDefault()
- 
-				const pdf = new jsPDF('p', 'mm', 'letter');			
-        	
+      <!-- // Inicio para exportar en pdf // -->
+    <script>
+      //para descar al tocar el boton	
+      var form = document.getElementById("form")
+      form.addEventListener("submit",function(event) {
+      
+      event.preventDefault()
+    
+            const pdf = new jsPDF('p', 'mm', 'letter');			
+              
 
-				var columns = ["", "", "", "", ""];
-				var data = [
-				[1, "Hola", "hola@gmail.com", "Mexico"],
-				 ];
+            var columns = [ "", "","", "", ""];
+            var data = [
+            [1, "Hola", "hola@gmail.com", "Mexico"],
+            ];
 
-				pdf.autoTable(columns,data,
-				{ 
-					html:'#example1',
-					margin:{ top: 30 }}
-				);
-						
-				//Inicio Encabezado y pie de pagina
-			const pageCount = pdf.internal.getNumberOfPages();
-			for(var i = 1; i <= pageCount; i++) 
-			{
-				pdf.setPage(i);
-												//////// Encabezado ///////
-				//Inicio para imagen de logo 
-				var logo = new Image();
-				logo.src = '../../imagenes/LoogSEACCO.jpg';
-				pdf.addImage(logo, 'JPEG',14,7,24,15);
-				//Fin para imagen de logo 
+            pdf.autoTable(columns,data,
+            { 
+              html:'#example1',
+              margin:{ top: 30 }}
+            );
+                
+            //Inicio Encabezado y pie de pagina
+          const pageCount = pdf.internal.getNumberOfPages();
+          for(var i = 1; i <= pageCount; i++) 
+          {
+            pdf.setPage(i);
+                            //////// Encabezado ///////
+            //Inicio para imagen de logo 
+            var logo = new Image();
+            logo.src = '../../imagenes/LoogSEACCO.jpg';
+            pdf.addImage(logo, 'JPEG',14,7,24,15);
+            //Fin para imagen de logo 
 
-				//muestra el titulo principal
-				pdf.setFont('Arial');
-				pdf.setFontSize(17);
-				pdf.text("Constructora SEACCO", 70,15,);
+            //muestra el titulo principal
+            pdf.setFont('Arial');
+            pdf.setFontSize(17);
+            pdf.text("Constructora SEACCO", 70,15,);
 
-				//muestra el titulo secundario
-				pdf.setFont('times');
-				pdf.setFontSize(10);
-				pdf.text("Reporte de Parametros", 84,20,);
+            //muestra el titulo secundario
+            pdf.setFont('times');
+            pdf.setFontSize(10);
+            pdf.text("Reporte de genero", 84,20,);
 
-												//////// pie de Pagina ///////
-				//muestra la fecha
-				pdf.setFont('times');
-				pdf.setFontSize(9);
-				var today = new Date();
-				let horas = today.getHours()
-				let jornada = horas >=12 ? 'PM' : 'AM';
-				var newdat = "Fecha: " + today.getDate() + "/" + (today.getMonth()+1) + "/" + today.getFullYear() + " " + (horas % 12) + ":" + today.getMinutes() + ":" + today.getSeconds() + " " + jornada;
-				pdf.text(183-20,297-284,newdat);
+                            //////// pie de Pagina ///////
+            //muestra la fecha
+            pdf.setFont('times');
+            pdf.setFontSize(9);
+            var today = new Date();
+            let horas = today.getHours()
+            let jornada = horas >=12 ? 'PM' : 'AM';
+            var newdat = "Fecha: " + today.getDate() + "/" + (today.getMonth()+1) + "/" + today.getFullYear() + " " + (horas % 12) + ":" + today.getMinutes() + ":" + today.getSeconds() + " " + jornada;
+            pdf.text(183-20,297-284,newdat);
 
-				//muestra el numero de pagina
-				pdf.text('Pagina ' + String(i) + '/' + String(pageCount),220-20,297-25,null,null,"right");
-			}
-				//Fin Encabezado y pie de pagina
+            //muestra el numero de pagina
+            pdf.text('Pagina ' + String(i) + '/' + String(pageCount),220-20,297-25,null,null,"right");
+          }
+            //Fin Encabezado y pie de pagina
 
-							pdf.save('Reporte de Parametros.pdf');
-	})
-  
-</script>
+                  pdf.save('Reporte de Genero.pdf');
+      })
+      
+    </script>
 <!-- // Fin para exportar en pdf // -->
 <script type="text/javascript" src="../../js/evitar_reenvio.js"></script>
-<script type="text/javascript"> function solonumero(e) {
-        tecla = (document.all) ? e.keyCode : e.which;
-        if (tecla==8) return true;
-        else if (tecla==0||tecla==9)  return true;
-       // patron =/[0-9\s]/;// -> solo letras
-        patron =/[0-9\s]/;// -> solo numeros
-        te = String.fromCharCode(tecla);
-        return patron.test(te);
-    }
-	</script>
 </html>
