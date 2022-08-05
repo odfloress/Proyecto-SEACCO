@@ -66,23 +66,23 @@ if (mysqli_num_rows($roles35) > 0)
           <div class="col-sm-6">
             <h1></h1>
             <!-- Inicio de modal de agregar -->
-<div class="container mt-3">
-        <h3>Clientes</h3> <br> 
-         <?php 
-      include '../../conexion/conexion.php';
-      $clientes = "SELECT * FROM tbl_ms_roles_ojetos WHERE ID_ROL='$id_rol7' and ID_OBJETO=4 and PERMISO_INSERCION=1";
-      $clientes2 = mysqli_query($conn, $clientes);
-      if (mysqli_num_rows($clientes2) > 0)
-      {
-       echo ' <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal">
-       Nuevo Cliente
-   </button>';
-                }
-              ?> 
-    </div>
+          <div class="container mt-3">
+                <h3>Clientes</h3> <br> 
+                <?php 
+              include '../../conexion/conexion.php';
+              $clientes = "SELECT * FROM tbl_ms_roles_ojetos WHERE ID_ROL='$id_rol7' and ID_OBJETO=4 and PERMISO_INSERCION=1";
+              $clientes2 = mysqli_query($conn, $clientes);
+              if (mysqli_num_rows($clientes2) > 0)
+              {
+              echo ' <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal">
+              Nuevo Cliente
+                </button>';
+                        }
+                      ?> 
+            </div>
 
-<!-- El Modal -->
-    <div class="modal" id="myModal">
+      <!-- El Modal -->
+      <div class="modal" id="myModal">
         <div class="modal-dialog">
             <div class="modal-content">
                 <!-- Encabezado del modal -->
@@ -94,63 +94,65 @@ if (mysqli_num_rows($roles35) > 0)
 
                 <!-- Cuerpo del modal Modal -->
                 <form action="" method="post">
-                <div class="modal-body">
-                    
-                    <label for="">Codigo</label>
-                    <input type="text" class="form-control" name="codigo" required value="" placeholder=""  onkeypress="return soloLetras(event);" onkeyup="mayus(this);" >
-                    <br>
-                    <label for="">Nombre</label>
-                    <input type="text" class="form-control" name="nombre" required value="" placeholder="" id="txtnombre" onkeypress="return soloLetras(event);" onkeyup="mayus(this);" >
-                    <br>
-                    <label for="">Apellido</label>
-                    <input type="text" class="form-control" name="apellido" required value="" placeholder="" id="txtapellido" onkeypress="return soloLetras(event);" onkeyup="mayus(this);" >
-                    <br>
-                    <label for="">Correo</label>
-                    <input type="text" class="form-control" name="correo" required value="" placeholder="" id="txtcorreo"   >
-                    <br>
-                    <label for="">Telefono</label>
-                    <input type="number" class="form-control" name="telefono" required value="" placeholder="" id="txttelefono"   >
-                    <br>
-                    <label for="">Direccion</label>
-                    <input type="text" class="form-control" name="direccion" required value="" placeholder="" id="txtcorreo"   >
-                    <br>
-                    <label for="">Referencia</label>
-                    <input type="text" class="form-control" name="nombre_referencia" required value="" placeholder="" id="txtReferencia" onkeypress="return soloLetras(event);" onkeyup="mayus(this);" >
-                    <br>
-                    <label for="pwd" class="form-label">Genero:</label>
-                <select style="background-color:rgb(240, 244, 245);" value="<?php echo "$genero"; ?>" class="form-select" id="lista1" name="genero" required >
-                        <?php
-                            include 'conexion/conexion.php';
-                            $genero = "SELECT * FROM tbl_generos ORDER BY ID_GENERO";
-                            $genero2 = mysqli_query($conn, $genero);
-                            if (mysqli_num_rows($genero2) > 0) {
-                                while($row = mysqli_fetch_assoc($genero2))
-                                {
-                                $id_genero = $row['ID_GENERO'];
-                                $genero3 =$row['GENERO'];
-                         ?>
-                          <option value="<?php  echo $id_genero ?>"><?php echo $genero3 ?></option>
-                          <?php
-                           }}// finaliza el if y el while
-                    <label for="pwd" class="form-label">Foto:</label>
-                  <input style="background-color:rgb(240, 244, 245);" type="file" accept=".jpg, .png, .jpej, .JPEG, .JPG, .PNG" autocomplete="off"  value="<?php echo "$foto"; ?>" class="form-control" required placeholder="Adjunte su foto" name="foto">
-                  </div>
-                </div>
+                    <div class="modal-body">
+                        <label for="">Codigo</label>
+                        <input type="text" class="form-control" name="codigo" required value="" placeholder=""   onkeyup="mayus(this);" >
+                        <br>
+                        <label for="">Nombre</label>
+                        <input type="text" class="form-control" name="nombre" required value="" placeholder="" id="txtnombre" onkeypress="return soloLetras(event);" onkeyup="mayus(this);" >
+                        <br>
+                        <label for="">Apellido</label>
+                        <input type="text" class="form-control" name="apellido" required value="" placeholder="" id="txtapellido" onkeypress="return soloLetras(event);" onkeyup="mayus(this);" >
+                        <br>
+                        <label for="">Correo</label>
+                        <input type="text" class="form-control" name="correo" required value="" placeholder="" id="txtcorreo"   >
+                        <br>
+                        <label for="">Telefono</label>
+                        <input type="number" class="form-control" name="telefono" required value="" placeholder="" id="txttelefono"   >
+                        <br>
+                        <label for="">Direccion</label>
+                        <input type="text" class="form-control" name="direccion" required value="" placeholder="" id="txtcorreo"   >
+                        <br>
+                        <label for="">Referencia</label>
+                        <input type="text" class="form-control" name="nombre_referencia" required value="" placeholder="" id="txtReferencia" onkeypress="return soloLetras(event);" onkeyup="mayus(this);" >
+                        <br>
+                        <label for="pwd" class="form-label">Genero:</label>
+                          <select style="background-color:rgb(240, 244, 245);" value="<?php echo "$genero"; ?>" class="form-select" id="lista1" name="genero" required >
+                                  <?php
+                                      include 'conexion/conexion.php';
+                                      $genero = "SELECT * FROM tbl_generos ORDER BY ID_GENERO";
+                                      $genero2 = mysqli_query($conn, $genero);
+                                      if (mysqli_num_rows($genero2) > 0) {
+                                          while($row = mysqli_fetch_assoc($genero2))
+                                          {
+                                          $id_genero = $row['ID_GENERO'];
+                                          $genero3 =$row['GENERO'];
+                                  ?>
+                                    <option value="<?php  echo $id_genero ?>"><?php echo $genero3 ?></option>
+                                    <?php
+                                    }}// finaliza el if y el while
+                                    ?>
+                          </select>
+                        <label for="pwd" class="form-label">Foto:</label>
+                        <input style="background-color:rgb(240, 244, 245);" type="file" accept=".jpg, .png, .jpej, .JPEG, .JPG, .PNG" autocomplete="off"  value="<?php echo "$foto"; ?>" class="form-control" required placeholder="Adjunte su foto" name="foto">
+                    </div>
+                  </form>           
+                
                 <div class="row">
-                <div class="col">
-                <!-- Fin Cuerpo del modal Modal -->
-                <!-- pie del modal -->
-                <div class="modal-footer">
-      	            <button type="submit" name="accion" value="agregar" class="btn btn-primary" onclick="return confirm('¿Desea agregar el Cliente?')">Agregar</button>
-                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
-                </div>
-                <!-- Fin pie del modal -->
-                </form>
-            </div>
-        </div>
-    </div>
-    <!-- Fin  de modal de agregar --> <br>
+                  <div class="col">
+                      <!-- Fin Cuerpo del modal Modal -->
+                      <!-- pie del modal -->
+                      <div class="modal-footer">
+                          <button type="submit" name="accion" value="agregar" class="btn btn-primary" onclick="return confirm('¿Desea agregar el Cliente?')">Agregar</button>
+                          <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
+                      </div>
+                      <!-- Fin pie del modal -->
+                      
+                  </div>
+              </div>
           </div>
+            <!-- Fin  de modal de agregar --> <br>
+      </div>
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
               
