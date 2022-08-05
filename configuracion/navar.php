@@ -509,7 +509,7 @@
               </li>
              
               <li class="nav-item">
-                <a href="#" class="nav-link">
+                <a href="http://localhost/SEACCO/vistas/mantenimiento/vista_genero.php" class="nav-link">
                   <p>Generos</p>
                 </a>
               </li>
