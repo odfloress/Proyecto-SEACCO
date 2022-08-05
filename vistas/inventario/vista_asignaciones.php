@@ -398,7 +398,7 @@ include '../../controladores/co_asignaciones.php';
                      <td><?php echo $filas['ESTADO_ASIGNACION'] ?></td>
                      <td><?php echo $filas['FECHA_ASIGNADO'] ?></td>
                      <td><?php echo $filas['FECHA_ENTREGA'] ?></td>
-                     <td><?php echo $filas['ID_PRODUCTO'] ?></td>
+                     
       </tr>
       <?php } ?>  
                   </tbody>

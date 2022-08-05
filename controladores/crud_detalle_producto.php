@@ -8,7 +8,7 @@
  
 
   // //Variables para recuperar la información de los campos de la vista roles
-  $id_rol=(isset($_POST['id_rol']))?$_POST['id_rol']:"";
+  $id_detalle=(isset($_POST['id_detalle']))?$_POST['id_detalle']:"";
   $producto=(isset($_POST['producto']))?$_POST['producto']:"";
   $garantia14=(isset($_POST['garantia']))?$_POST['garantia']:"";
   $unidad_medida14=(isset($_POST['unidad_medida']))?$_POST['unidad_medida']:"";
@@ -49,155 +49,113 @@
                       mysqli_close($conn);
          }else{ 
 
-                    //si no esta agregado permite insertar
+                    ///////////// INSERTA EN LA TABLA TBL_DETALLE COMPRA /////////////
+
                     $sql1 = "INSERT INTO tbl_detalle_compra (ID_COMPRA, ID_PRODUCTO, GARANTIA, ID_UNIDAD_MEDIDA, CANTIDAD, PRECIO)
                     VALUES ('$id_compra', '$producto', '$garantia14', '$unidad_medida14', '$cantidad', '$precio')";
                     if (mysqli_query($conn, $sql1)) {
 
-                        //  // inicio inserta en la tabla bitacora
-                        //     $sql7 = "INSERT INTO tbl_bitacora (USUARIO, ACCION, OBSERVACION)
-                        //     VALUES ('$usuario1[usuario]', 'INSERTO', 'Agrego un producto a la compra con id ( $id_compra )')";
-                        //      if (mysqli_query($conn, $sql7)) {} else { }
-                        // // fin inserta en la tabla bitacora
-                        $total = $cantidad * $precio;
-                        $total_compra = "UPDATE tbl_compras SET TOTAL_COMPRA=TOTAL_COMPRA+ $total WHERE ID_COMPRA='$id_compra'";
-                        if (mysqli_query($conn, $total_compra)) 
-                        {
-                        }
+                   ///////////// SUMA EL PRECIO TOTAL EN LA TABLA TBL_COMPRA /////////////
 
-                        echo '<script>
+                   $total = $cantidad * $precio;
+                   $total_compra = "UPDATE tbl_compras SET TOTAL_COMPRA=TOTAL_COMPRA + $total WHERE ID_COMPRA='$id_compra'";
+                   if (mysqli_query($conn, $total_compra)) {}
+
+
+                  ///////////// INSERTA EN LA TABLA TBL_KARDEX /////////////
+                  $kardex = "INSERT INTO tbl_kardex (ID_PRODUCTO, ID_COMPRA, USUARIO, CANTIDAD, TIPO_MOVIMIENTO)
+                  VALUES ('$producto', '$id_compra', '$usuario1[usuario]', '$cantidad', 'ENTRADA')";
+                  if (mysqli_query($conn, $kardex)) 
+                      {
+                        ///////////// SUMA AL INVENTARIO /////////////
+                        $inventario = "UPDATE tbl_inventario SET CANTIDAD_DISPONIBLE=CANTIDAD_DISPONIBLE + $cantidad WHERE ID_PRODUCTOS='$producto'";
+                        if (mysqli_query($conn, $inventario)) {}
+
+                      }
+
+                      echo '<script>
                                 alert("Producto agregado con exito");
                                 window.location.href="../../vistas/inventario/vista_detalle_producto.php";                   
                             </script>';
-                             mysqli_close($conn);
+                               
+
                     } else {
                             echo '<script>
                                     alert("Error al tratar de agregar el producto");
                                   </script>'; 
-                                  mysqli_error($conn);
+                               
                            }
                     
-                    mysqli_close($conn);
-
-              }                      
+              }   mysqli_close($conn);                    
       break;
 
-       //para editar en la tabla mysl      
-      case "editar";
-
-        // valida si existe el rol con el mismo nombre
-        $validar_rol= "SELECT * FROM tbl_roles WHERE Rol='$rol'";
-        $result2 = mysqli_query($conn, $validar_rol); 
-         if (mysqli_num_rows($result2) > 0) { 
+      case "cancelar";
+      ///////////// ELIMINA DE LA TABLA DETALLE DE COMPRA /////////////
+      $detalle5 = "DELETE FROM tbl_detalle_compra WHERE ID_COMPRA='$id_compra'";
+      if (mysqli_query($conn, $detalle5)) 
+      {
+                ///////////// ELIMINA DE LA TABLA KARDEX /////////////
+                $kardex1 = "DELETE FROM tbl_kardex WHERE ID_COMPRA='$id_compra'";
+                if (mysqli_query($conn, $kardex1)) {}
+                ///////////// ELIMINA LA COMPRA DE LA TABLA DE COMPRAS /////////////
+                $compra1 = "DELETE FROM tbl_compras WHERE ID_COMPRA='$id_compra'";
+                if (mysqli_query($conn, $compra1)) {}
+                echo '<script>
+                                alert("Compra eliminada con exito");
+                                window.location.href="../../vistas/inventario/vista_compras.php";                   
+                            </script>';
+      }
+      case "confirmar";
+      $confirmar = "UPDATE tbl_compras SET ESTADO_COMPRA='FINALIZADO' WHERE ID_COMPRA='$id_compra'";
+      if (mysqli_query($conn, $confirmar)) 
+      {
+        echo '<script>
+                alert("Compra completada con exito");
+                window.location.href="../../vistas/inventario/vista_compras.php";                   
+              </script>';
+      }
               
-            $sql2 = "UPDATE tbl_roles SET ROL='$anterior', DESCRIPCION='$descripcion'  WHERE ID_ROL='$id_rol'";
-                if (mysqli_query($conn, $sql2)) {
-
-                   
-                           
-                     // inicio inserta en la tabla bitacora
-                     $sql8 = "INSERT INTO tbl_bitacora (USUARIO, ACCION, OBSERVACION)
-                     VALUES ('$usuario1[usuario]', 'EDITO', 'EDITO DESCRIPCION DEL ROL ($rol)')";
-                     
-                      if (mysqli_query($conn, $sql8)) {} else { }
-                    // fin inserta en la tabla bitacora
-                    echo '<script>
-                            alert("Descripción del rol editado con exito");
-                            window.location.href="../../vistas/ajustes/vista_roles.php";                   
-                          </script>';
-                          mysqli_close($conn);
-                        
-
-                }else{
-                         echo '<script>
-                                  alert("Error al tratar de editar rol");
-                               </script>'; mysqli_error($conn);
-                     }
-
-                     mysqli_close($conn);
-
-               // si no existe el rol con el mismo nombre
-              }else{
-                        $sql2 = "UPDATE tbl_roles SET ROL='$rol', DESCRIPCION='$descripcion'  WHERE ID_ROL='$id_rol'";
-                        if (mysqli_query($conn, $sql2)) {
-
-                            
-                                
-                            // inicio inserta en la tabla bitacora
-                            $sql9 = "INSERT INTO tbl_bitacora (USUARIO, ACCION, OBSERVACION)
-                            VALUES ('$usuario1[usuario]', 'EDITO', 'RENOMBRO EL ROL ($anterior) A $rol')";
-                            if (mysqli_query($conn, $sql9)) {} else { }
-                            // fin inserta en la tabla bitacora
-                            echo '<script>
-                                    alert("Rol editado con exito");
-                                    window.location.href="../../vistas/ajustes/vista_roles.php";                   
-                                </script>';
-                                mysqli_close($conn);
-                                
-                        }
-
-              }
-      
       break;
-      
+
+      break;
       //para eliminar en la tabla mysl  
       case "eliminar";
+      $total = $cantidad * $precio;
+      echo $total;
+       ///////////// Resta EL PRECIO TOTAL EN LA TABLA TBL_COMPRA /////////////
 
-    //validar que no este asignado a un usuario
-    $validar_rol = "SELECT * FROM tbl_usuarios WHERE ID_ROL='$id_rol'";
-    $result4 = mysqli_query($conn, $validar_rol); 
-     if (mysqli_num_rows($result4) > 0) { 
-         // inicio inserta en la tabla bitacora
-         $sql9 = "INSERT INTO tbl_bitacora (USUARIO, ACCION, OBSERVACION)
-         VALUES ('$usuario1[usuario]', 'INTENTO', 'NO LOGRO ELIMINAR YA QUE ESTABA EN USO EL ROL ($rol)')";
-         if (mysqli_query($conn, $sql9)) {} else { }
-         // fin inserta en la tabla bitacora
-         echo '<script>
-                 alert("No se puede eliminar el rol, ya que esta en uso");
-                 window.location.href="../../vistas/ajustes/vista_roles.php";                   
-               </script>';
-               mysqli_close($conn);
+       $total = $cantidad * $precio;
+       $total_compra = "UPDATE tbl_compras SET TOTAL_COMPRA=TOTAL_COMPRA - $total WHERE ID_COMPRA='$id_compra'";
+       if (mysqli_query($conn, $total_compra)) {}
 
-     }else{
+       ///////////// RESTA AL INVENTARIO /////////////
+       $inventario = "UPDATE tbl_inventario SET CANTIDAD_DISPONIBLE=CANTIDAD_DISPONIBLE - $cantidad WHERE ID_PRODUCTOS='$producto'";
+       if (mysqli_query($conn, $inventario)) {}
 
-                //validar que no este asignado en la tabla tbl_ms_roles_objetos
-                $validar_rol = "SELECT * FROM tbl_ms_roles_ojetos WHERE ID_ROL='$id_rol'";
-                $result5 = mysqli_query($conn, $validar_rol); 
-                if (mysqli_num_rows($result5) > 0) { 
-                        // inicio inserta en la tabla bitacora
-                        $sql9 = "INSERT INTO tbl_bitacora (USUARIO, ACCION, OBSERVACION)
-                        VALUES ('$usuario1[usuario]', 'INTENTO', 'NO LOGRO YA QUE ESTA EN USO EL ROL ($rol)')";
-                        if (mysqli_query($conn, $sql9)) {} else { }
-                        // fin inserta en la tabla bitacora
-
-                    echo '<script>
-                            alert("No se puede eliminar el rol, ya que esta en uso.");
-                            window.location.href="../../vistas/ajustes/vista_roles.php";                   
-                          </script>';
-                          mysqli_close($conn);
-                }else{
-                        $sql3 = "DELETE FROM tbl_roles WHERE ID_ROL='$id_rol'";
+        ///////////// ELIMINA DE LA TABLA KARDEX /////////////
+       $sql3 = "DELETE FROM tbl_kardex WHERE ID_PRODUCTO='$producto' and ID_COMPRA='$id_compra' ";
+        if (mysqli_query($conn, $sql3)) {}
+        ///////////// ELIMINA DE LA TABLA DETALLE DE COMPRA /////////////
+                        $sql3 = "DELETE FROM tbl_detalle_compra WHERE ID_PRODUCTO='$producto'";
                         if (mysqli_query($conn, $sql3)) {
-                            // inicio inserta en la tabla bitacora
-                            $sql7 = "INSERT INTO tbl_bitacora (USUARIO, ACCION, OBSERVACION)
-                            VALUES ('$usuario1[usuario]', 'ELIMINO', 'ELIMINO EL ROL ($anterior)')";
-                             if (mysqli_query($conn, $sql7)) {} else { }
-                        // fin inserta en la tabla bitacora
-                            header('Location: ../../vistas/ajustes/vista_roles.php');
+                               
+
+                            header('Location: ../../vistas/inventario/vista_detalle_producto.php');
                         }else{
                                 echo '<script>
-                                        alert("Error al tratar de eliminar el rol");
+                                        alert("Error al tratar de eliminar el producto");
                                     </script>'; mysqli_error($conn);
                             }
                         mysqli_close($conn);
-                     }
-          }
+                   
+          
 
       break;
       
       default:
           
-          $conn->close();   
+          
+      $conn->close();   
   }// Fin del switch, para validar el valor del boton accion
 
 

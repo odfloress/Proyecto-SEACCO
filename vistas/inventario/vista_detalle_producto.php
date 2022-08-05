@@ -8,11 +8,9 @@ if(!isset($_SESSION['usuario'])){
         die();
         
 }
-include '../../controladores/crud_compras.php';
+include '../../controladores/crud_detalle_producto.php';
 // Selecciona el id del rol del usuario logueado
 include '../../conexion/conexion.php';
-
-
 $usuario = $_SESSION;
 $roles34 = "SELECT * FROM tbl_usuarios WHERE USUARIO='$usuario[usuario]'";
 $roles35 = mysqli_query($conn, $roles34);
@@ -40,19 +38,9 @@ if (mysqli_num_rows($roles35) > 0)
                         die();
                       }
                }
-
-
-                //valida si hay una compra en proceso
-                $validar_compra7 = "SELECT * FROM tbl_compras WHERE USUARIO='$usuario[usuario]' and ESTADO_COMPRA='EN PROCESO'";
-                $validar_compra77 = mysqli_query($conn, $validar_compra7);
-                if (mysqli_num_rows($validar_compra77) > 0)
-                {
-                 header('Location: ../../vistas/inventario/vista_detalle_producto.php');
-                 die();
-                }else{}
                 // inicio inserta en la tabla bitacora
                 $sql = "INSERT INTO tbl_bitacora (USUARIO, ACCION, OBSERVACION)
-                VALUES ('$usuario1[usuario]', 'CONSULTO', 'CONSULTO LA PANTALLA  ADMINISTRATIVA DE COMPRAS')";
+                VALUES ('$usuario1[usuario]', 'CONSULTO', 'CONSULTO LA PANTALLA  ADMINISTRATIVA DE DETALLE DE COMPRAS')";
                 if (mysqli_query($conn, $sql)) {} else {}
                 // fin inserta en la tabla bitacora
 
@@ -63,7 +51,7 @@ if (mysqli_num_rows($roles35) > 0)
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>compras</title>
+  <title>Detalle de compra</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
@@ -81,13 +69,14 @@ if (mysqli_num_rows($roles35) > 0)
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <div class="container-fluid">
+      <h1>Detalle de compra</h1>
         <div class="row mb-2">
           <div class="col-sm-2">
             <h1></h1>
             <!-- Inicio de modal de agregar -->
 <div class="container mt-3">
   
-        <h3>Compras</h3> <br> 
+        <h3></h3> <br> 
         <?php 
       include '../../conexion/conexion.php'; 
 
@@ -96,7 +85,7 @@ if (mysqli_num_rows($roles35) > 0)
                 if (mysqli_num_rows($tablero2) > 0)
                 {
                   echo '<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal">
-                              Nueva compra
+                              Seleccione los productos
                           </button>';
                 }
          
@@ -111,7 +100,7 @@ if (mysqli_num_rows($roles35) > 0)
                 <!-- Encabezado del modal -->
                 <form action="" method="post">
                 <div class="modal-header">
-                    <h4 class="modal-title">Nueva compra</h4>
+                    <h4 class="modal-title">Añadir producto</h4>
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
                 <!-- Fin Encabezado del modal -->
@@ -119,29 +108,58 @@ if (mysqli_num_rows($roles35) > 0)
                 <!-- Cuerpo del modal Modal -->
                 <div class="modal-body">
                
-                <label for="">Seleccione el proveedor</label>
-                    <select class="form-select" id="lista1" name="proveedor" required >
+                <label for="">Seleccione el producto</label>
+                    <select class="form-select" id="lista1" name="producto" required >
                         <?php
                             include '../../conexion/conexion.php';
-                            $preveedor = "SELECT * FROM tbl_proveedores ORDER BY ID_PROVEEDOR";
-                            $preveedor2 = mysqli_query($conn, $preveedor);
-                            if (mysqli_num_rows($preveedor2) > 0) {
-                                while($row = mysqli_fetch_assoc($preveedor2))
+                            $productos = "SELECT * FROM tbl_productos ORDER BY ID_PRODUCTO";
+                            $productos2 = mysqli_query($conn, $productos);
+                            if (mysqli_num_rows($productos2) > 0) {
+                                while($row = mysqli_fetch_assoc($productos2))
                                 {
-                                $id_proveedor = $row['ID_PROVEEDOR'];
-                                $proveedor =$row['NOMBRE'];
+                                $id_productoss = $row['ID_PRODUCTO'];
+                                $producto =$row['NOMBRE'];
                          ?>
-                          <option value="<?php  echo $id_proveedor ?>"><?php echo $proveedor ?></option>
+                          <option value="<?php  echo $id_productoss ?>"><?php echo $producto ?></option>
                           <?php
                            }}// finaliza el if y el while
                            ?>
-                   </select>
+                   </select><br>
+
+                   <label for="">Garantia</label>
+                    <input type="text" class="form-control" name="garantia" required value="<?php echo $garantia14;?>" placeholder=""  autocomplete = "off"  onkeypress="return soloLetras(event);" minlength="3" maxlength="255" 
+                    onkeyup="mayus(this);" required ><br>
+
+                    <label for="">Seleccione la unidad de medida</label>
+                    <select class="form-select" id="lista1" name="unidad_medida" required >
+                        <?php
+                            include '../../conexion/conexion.php';
+                            $unidades = "SELECT * FROM tbl_unidad_medida ORDER BY ID_UNIDAD_MEDIDA";
+                            $unidades2 = mysqli_query($conn, $unidades);
+                            if (mysqli_num_rows($unidades2) > 0) {
+                                while($row = mysqli_fetch_assoc($unidades2))
+                                {
+                                $id_unidades = $row['ID_UNIDAD_MEDIDA'];
+                                $medidas =$row['UNIDAD_MEDIDA'];
+                         ?>
+                          <option value="<?php  echo $id_unidades ?>"><?php echo $medidas; ?></option>
+                          <?php
+                           }}// finaliza el if y el while
+                           ?>
+                   </select><br>
+                   <label for="">Cantidad</label>
+                   <input type="number" class="form-control" name="cantidad" required value="<?php echo $cantidad; ?>" placeholder=""  
+                    autocomplete = "off"   >
+
+                    <label for="">Precio</label>
+                    <input type="number" class="form-control" name="precio" required value="<?php echo $precio; ?>" placeholder=""  
+                    autocomplete = "off"   >
                 
                 </div>
                 <!-- Fin Cuerpo del modal Modal -->
                 <!-- pie del modal -->
                 <div class="modal-footer">
-      	            <button type="submit" name="accion" value="agregar" class="btn btn-primary" onclick="return confirm('¿Desea crear la compra?')">Agregar</button>
+      	            <button type="submit" name="accion" value="agregar" class="btn btn-primary" onclick="return confirm('¿Desea añadir el producto?')">Agregar</button>
                     <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
                 </div>
                 <!-- Fin pie del modal -->
@@ -151,9 +169,23 @@ if (mysqli_num_rows($roles35) > 0)
     </div>
     <!-- Fin  de modal de agregar --> <br>
           </div>
-          <div class="col-sm-6">
+          <div class="col-sm-12">
             <ol class="breadcrumb float-sm-right">
+              <?php 
+              //selecciona el id de la comra en proceso
+                $validar_compra7 = "SELECT * FROM tbl_compras WHERE USUARIO='$usuario1[usuario]' and ESTADO_COMPRA='EN PROCESO'";
+                $validar_compra77 = mysqli_query($conn, $validar_compra7);
+                if (mysqli_num_rows($validar_compra77) > 0)
+                {
+                      while($row = mysqli_fetch_assoc($validar_compra77)) 
+                      {
+                            $precio_total = $row["TOTAL_COMPRA"];
+                            
+                      }
+                }
+              ?>
               
+              <input  type="number" readonly class="form-control" value="<?php echo $precio_total;?>" id="">
             </ol>
             
           </div>
@@ -174,7 +206,13 @@ if (mysqli_num_rows($roles35) > 0)
             
             <div class="card table-responsive">
               <div class="card-header">
-                <h3 class="card-title">Compras</h3>
+                <!-- <h3 class="card-title">Compras</h3> -->
+                <form action="" method="post">
+                <button type="submit" name="accion" value="cancelar" class="btn btn-danger" onclick="return confirm('¿Desea cancelar la compra?')">Cancelar compra</button>
+                <button type="submit" name="accion" value="confirmar" class="btn btn-primary" onclick="return confirm('¿Desea terminar la compra?')">Confirmar compra</button>
+
+
+                </form>
                 
               </div>
               
@@ -183,13 +221,15 @@ if (mysqli_num_rows($roles35) > 0)
                 <table id="example1" class="table table-bordered table-striped">
                   <thead>
                   <tr>
-                    
                  <th>Acciones</th>
-                  <th>Id Compra</th>
-                  <th>Proveedores</th>
-                  <th>Total compra</th>
-                  <th>Usuario</th>
-                  <th>Fecha</th>
+                  <th>Id detalle</th>
+                  <th>Id compra</th>
+                  <th>producto</th>
+                  <th>Garantia</th>
+                  <th>Unidad de medida</th>
+                  <th>Cantidad</th>
+                  <th>Precio</th>
+
                   
                   
                   </tr>
@@ -201,17 +241,38 @@ if (mysqli_num_rows($roles35) > 0)
  
                      ?>
                   <tr>
-                      <td><form action="../../vistas/inventario/mostrar_detalle.php" method="post">
-                      <input type="hidden" name="fecha" value="<?php echo $filas['FECHA_COMPRA'] ?>">
-                            <input type="hidden" name="compra" value="<?php echo $filas['ID_COMPRA'] ?>">
-                          <button type="submit" name="accion" value="detalle" class="btn btn-primary" onclick="return confirm('¿Desea crear la compra?')">Ver detalle</button>
-                          </form>
-                      </td>
-                     <td ><?php echo $filas['ID_COMPRA'] ?></td>
+                  <td>
+                  <form action="" method="post">
+                         
+                          <!-- fin boton editar -->
+                          <input type="hidden" name="cantidad"  value="<?php echo $filas['CANTIDAD'] ?>">
+                          <input type="hidden" name="precio" value="<?php echo $filas['PRECIO'] ?>">
+                          <input type="hidden" name="producto" value="<?php echo $filas['ID_PRODUCTO'] ?>">
+                          <?php 
+                          include '../../conexion/conexion.php';
+                          $tablero = "SELECT * FROM tbl_ms_roles_ojetos WHERE ID_ROL='$id_rol7' and ID_OBJETO=8 and PERMISO_ELIMINACION=1";
+                          $tablero2 = mysqli_query($conn, $tablero);
+                          if (mysqli_num_rows($tablero2) > 0)
+                          {?>
+                             <button  value="eliminar" name="accion" 
+                        onclick="return confirm('¿Quieres eliminar este dato?')"
+                        type="submit" class="btn btn-danger ">
+                        <i class="fas fa-trash-alt"></i>
+                    </button><?php 
+                          }
+                        ?>
+                          
+                      </form>
+                    
+</td>
+                     <td ><?php echo $filas['ID_DETALLE'] ?></td>
+                     <td><?php echo $filas['ID_COMPRA'] ?></td>
                      <td><?php echo $filas['NOMBRE'] ?></td>
-                     <td><?php echo $filas['TOTAL_COMPRA'] ?></td>
-                     <td><?php echo $filas['USUARIO'] ?></td>
-                     <td><?php echo $filas['FECHA_COMPRA'] ?></td>
+                     <td><?php echo $filas['GARANTIA'] ?></td>
+                     <td><?php echo $filas['UNIDAD_MEDIDA'] ?></td>
+                     <td><?php echo $filas['CANTIDAD'] ?></td>
+                     <td><?php echo $filas['PRECIO'] ?></td>
+                     
                     
       </tr>
                 <?php } ?>  
