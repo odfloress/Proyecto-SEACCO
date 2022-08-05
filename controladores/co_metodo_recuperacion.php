@@ -15,12 +15,14 @@
      $validar_usuario = "SELECT * FROM tbl_usuarios WHERE USUARIO='$usuario'";
      $result = mysqli_query($conn, $validar_usuario); 
       if (mysqli_num_rows($result) > 0) { 
-        header('Location: ../iniciar_sesion/estilo_correo.html');                           
+        $_SESSION['nombre'] = $usuario;
+        header('Location: ../iniciar_sesion/recuperacion_correo.php');
+                                  
       }else{
            
                echo '<script>
                         alert("Usuario no existe");
-                        window.Location = "/_login.php";
+                        window.Location = "../iniciar_sesion/recuperacion_correo.php";
                      </script>';
                      mysqli_close($conn);
                
@@ -33,7 +35,7 @@
      $result = mysqli_query($conn, $validar_usuario); 
       if (mysqli_num_rows($result) > 0) { 
         $_SESSION['nombre'] = $usuario;
-        header('Location: ../iniciar_sesion/recuperacion_preguntas');
+        header('Location: ../iniciar_sesion/recuperacion_preguntas.php');
            echo "execelente";
                            
       }else{
