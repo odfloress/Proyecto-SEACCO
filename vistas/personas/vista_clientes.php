@@ -104,8 +104,8 @@ if (mysqli_num_rows($roles35) > 0)
                         <label for="">Codigo</label>
                         <input type="text" class="form-control" name="codigo" required value="" placeholder=""   onkeyup="mayus(this);" >
                         <br>
-                        <label for="">Nombre</label>
-                        <input type="text" class="form-control" name="nombre" required value="" placeholder="" id="txtnombre" onkeypress="return soloLetras(event);" onkeyup="mayus(this);" >
+                        <label for="">Nombre Cliente</label>
+                        <input type="text" class="form-control" name="nombre" required value="" placeholder="" id="txtnombre_cliente" onkeypress="return soloLetras(event);" onkeyup="mayus(this);" >
                         <br>
                         <label for="">Apellido</label>
                         <input type="text" class="form-control" name="apellido" required value="" placeholder="" id="txtapellido" onkeypress="return soloLetras(event);" onkeyup="mayus(this);" >
@@ -198,7 +198,7 @@ if (mysqli_num_rows($roles35) > 0)
                   <th>Acciones</th>
                   <th>Id Cliente</th>
                   <th>Codigo</th>
-                  <th>Nombre</th>
+                  <th>Nombre Cliente</th>
                   <th>Apellido</th>
                   <th>Correo</th>
                   <th>Telefono</th>
@@ -252,8 +252,8 @@ if (mysqli_num_rows($roles35) > 0)
                                               <label for="">Codigo</label>
                                               <input type="text" class="form-control" readonly name="id_codigo" required value="<?php echo $filas['ID_CODIGO'] ?>" placeholder="" id="txtid_codigo"   >
                                               <br>
-                                              <label for="">Nombre</label>
-                                              <input type="text" class="form-control" readonly name="nombre" required value="<?php echo $filas['NOMBRE'] ?>" placeholder="" id="txtnombre"   >
+                                              <label for="">Nombre Cliente</label>
+                                              <input type="text" class="form-control" readonly name="nombre" required value="<?php echo $filas['NOMBRE_CLIENTE'] ?>" placeholder="" id="txtnombre_cliente"   >
                                               <br>
                                               <label for="">Apellido</label>
                                               <input type="text" class="form-control" readonly name="apellido" required value="<?php echo $filas['APELLIDO'] ?>" placeholder="" id="txtapellido"   >
