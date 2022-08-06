@@ -52,6 +52,11 @@ if (mysqli_num_rows($roles35) > 0)
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+<!-- enlace del scritpt para evitar si preciona F12, si preciona Ctrl+Shift+I, si preciona Ctr+u  -->
+  <script type="text/javascript" src="../../js/evita_ver_codigo_utilizando_teclas.js"></script>
+         <!-- /// para exportar en pdf /// -->
+   <script type="text/javascript" src="../../js/complemento_1_jspdf.min.js"></script>
+	<script type="text/javascript" src="../../js/complemento_2_jspdf.plugin.autotable.min.js"></script>
 
   <?php include '../../configuracion/navar.php' ?>
  <!-- Inicio evita el click derecho de la pagina -->
@@ -95,6 +100,7 @@ if (mysqli_num_rows($roles35) > 0)
                 <!-- Cuerpo del modal Modal -->
                 <form action="" method="post">
                     <div class="modal-body">
+
                         <label for="">Codigo</label>
                         <input type="text" class="form-control" name="codigo" required value="" placeholder=""   onkeyup="mayus(this);" >
                         <br>
@@ -105,16 +111,16 @@ if (mysqli_num_rows($roles35) > 0)
                         <input type="text" class="form-control" name="apellido" required value="" placeholder="" id="txtapellido" onkeypress="return soloLetras(event);" onkeyup="mayus(this);" >
                         <br>
                         <label for="">Correo</label>
-                        <input type="text" class="form-control" name="correo" required value="" placeholder="" id="txtcorreo"   >
+                        <input type="text" class="form-control" name="correo" required value="" placeholder="" id="txtcorreo"   > autocomplete = "off" >
                         <br>
                         <label for="">Telefono</label>
-                        <input type="number" class="form-control" name="telefono" required value="" placeholder="" id="txttelefono"   >
+                        <input type="number" class="form-control" name="telefono" required value="" placeholder="" id="txttelefono"   > autocomplete = "off"  >
                         <br>
                         <label for="">Direccion</label>
                         <input type="text" class="form-control" name="direccion" required value="" placeholder="" id="txtcorreo"   >
                         <br>
                         <label for="">Referencia</label>
-                        <input type="text" class="form-control" name="nombre_referencia" required value="" placeholder="" id="txtReferencia" onkeypress="return soloLetras(event);" onkeyup="mayus(this);" >
+                        <input type="text" class="form-control" name="nombre_referencia" required value="" placeholder="" id="txtnombrer" autocomplete = "off" onkeypress="return soloLetras(event);" minlength="3" maxlength="20" onkeyup="mayus(this);" >
                         <br>
                         <label for="pwd" class="form-label">Genero:</label>
                           <select style="background-color:rgb(240, 244, 245);" value="<?php echo "$genero"; ?>" class="form-select" id="lista1" name="genero" required >
@@ -176,7 +182,11 @@ if (mysqli_num_rows($roles35) > 0)
             
             <div class="card">
               <div class="card-header">
-                <h3 class="card-title">Clientes</h3>
+              <form id="form" action="" method="post">
+              <button type="submit"  name="accion" value="reporte_pdf" class="btn btn-secondary buttons-pdf buttons-html5"  onclick="return confirm('¿Quieres generar reporte de proveedores?')" onclick="textToPdf()"><span>Reporte PDF</span></button>
+	            </form>
+                <!-- <h3 class="card-title">CLIENTES</h3> -->
+            
                 
               </div>
               
@@ -235,30 +245,31 @@ if (mysqli_num_rows($roles35) > 0)
                                 <!-- Cuerpo del modal Modal -->
                                 <form action="" method="post">
                                           <div class="modal-body">
+                                              <input type="hidden" name="nombre_anterior" value="<?php echo $filas['NOMBRE'] ?>">
                                               <label for="">Id Cliente</label>
-                                              <input type="text" class="form-control" readonly name="id_cliente" required value="<?php echo $filas['ID_CLIENTE'] ?>" placeholder="" id="txtxid_cliente"   >
+                                              <input type="text" class="form-control" readonly name="id_cliente" required value="<?php echo $filas['ID_CLIENTE'] ?>" placeholder="" id="txtid_cliente"   >
                                               <br>
                                               <label for="">Codigo</label>
-                                              <input type="text" class="form-control" name="nombre" required value="" placeholder="" id="txtcodigo" onkeypress="return soloLetras(event);" onkeyup="mayus(this);" >
+                                              <input type="text" class="form-control" readonly name="id_codigo" required value="<?php echo $filas['ID_CODIGO'] ?>" placeholder="" id="txtid_codigo"   >
                                               <br>
                                               <label for="">Nombre</label>
-                                              <input type="text" class="form-control" name="nombre" required value="" placeholder="" id="txtnombre" onkeypress="return soloLetras(event);" onkeyup="mayus(this);" >
+                                              <input type="text" class="form-control" readonly name="nombre" required value="<?php echo $filas['NOMBRE'] ?>" placeholder="" id="txtnombre"   >
                                               <br>
                                               <label for="">Apellido</label>
-                                              <input type="text" class="form-control" name="apellido" required value="" placeholder="" id="txtapellido" onkeypress="return soloLetras(event);" onkeyup="mayus(this);" >
+                                              <input type="text" class="form-control" readonly name="apellido" required value="<?php echo $filas['APELLIDO'] ?>" placeholder="" id="txtapellido"   >
                                               <br>
                                               <label for="">Correo</label>
-                                              <input type="text" class="form-control" name="correo" required value="" placeholder="" id="txtcorreo"   >
-                                              <br>
-                                              <label for="">Telefono</label>
-                                              <input type="number" class="form-control" name="telefono" required value="" placeholder="" id="txttelefono"   >
-                                              <br>
+                                             <input type="email" class="form-control" name="correo" autocomplete = "off" required value="<?php echo $filas['CORREO'] ?>" placeholder="" id="txtcorreo"  >
+                                             <br>  
+                                              label for="">Telefono</label>
+                                             <input type="number" class="form-control" name="telefono" autocomplete = "off" required value="<?php echo $filas['TELEFONO'] ?>" placeholder="" id="txttelefono"   >
+                                             <br>
                                               <label for="">Direccion</label>
-                                              <input type="text" class="form-control" name="correo" required value="" placeholder="" id="txtcorreo"   >
-                                              <br>
-                                              <label for="">Referencia</label>
-                                              <input type="text" class="form-control" name="nombre_referencia" required value="" placeholder="" id="txtReferencia" onkeypress="return soloLetras(event);" onkeyup="mayus(this);" >
-                                              <br>
+                                             <input type="text" class="form-control" name="direccion" autocomplete = "off" required value="<?php echo $filas['DIRECCION'] ?>" placeholder="" id="txtdireccion"  onkeyup="mayus(this);" >
+                                             <br>
+                                              <<label for="">Referencia</label>
+                                             <input type="text" class="form-control" name="nombre_referencia" autocomplete = "off" required value="<?php echo $filas['REFERENCIA'] ?>" placeholder="" id="txtnombre_referencia" onkeypress="return soloLetras(event);" onkeyup="mayus(this);" >
+                                             <br>
                                               <label for="">Genero</label>
                                               <input type="text" class="form-control" name="Genero" required value="" placeholder="" id="txtGenero" onkeypress="return soloLetras(event);" onkeyup="mayus(this);" >
                                               <br>
@@ -284,10 +295,11 @@ if (mysqli_num_rows($roles35) > 0)
                           {?>
                          
                           <input type="hidden" name="id_cliente"  value="<?php echo $filas['ID_CLIENTE'] ?>">
-                      <button  value="eliminar" name="accion" 
-                        onclick="return confirm('¿Quieres eliminar este dato?')"
-                        type="submit" class="btn btn-danger " data-id="19">
-                        <i class="fas fa-trash-alt"></i>
+                          input type="hidden" name="nombre_anterior" value="<?php echo $filas['NOMBRE'] ?>">
+                          <button  value="eliminar" name="accion" 
+                          onclick="return confirm('¿Quieres eliminar este Registro?')"
+                          type="submit" class="btn btn-danger " data-id="19">
+                          <i class="fas fa-trash-alt"></i>
                     </button></form>  <?php } ?>
 </td>
                          
@@ -360,6 +372,7 @@ if (mysqli_num_rows($roles35) > 0)
 <!-- AdminLTE for demo purposes -->
 <script src="../../plantilla/AdminLTE-3.2.0/dist/js/demo.js"></script>
 <!-- Page specific script -->
+<!-- INICIO muestra los botones, traduce y Agrupar -->
 <script>
   $(function () {
     $("#example1").DataTable({
@@ -415,45 +428,79 @@ if (mysqli_num_rows($roles35) > 0)
     });
   });
 </script>
+<!-- Fin muestra los botones y traduce y Agrupar -->
+<!-- Enlace Script para que convierta a mayusculas las teclas que se van pulsando -->
+<script type="text/javascript" src="../../js/converir_a_mayusculas.js"></script>
+
+<!-- Enlace Script para quitar espacios en blanco -->
+<script type="text/javascript" src="../../js/quitar_espacios.js"></script>
 </body>
+
+<!-- // Inicio para exportar en pdf // -->
+<script>
+	//para descar al tocar el boton	
+	var form = document.getElementById("form")
+	form.addEventListener("submit",function(event) {
+   
+	event.preventDefault()
+ 
+				const pdf = new jsPDF('p', 'mm', 'letter');			
+        	
+
+				var columns = ["", "", "", "", ""];
+				var data = [
+				[1, "Hola", "hola@gmail.com", "Mexico"],
+				 ];
+
+				pdf.autoTable(columns,data,
+				{ 
+					html:'#example1',
+					margin:{ top: 30 }}
+				);
+						
+				//Inicio Encabezado y pie de pagina
+			const pageCount = pdf.internal.getNumberOfPages();
+			for(var i = 1; i <= pageCount; i++) 
+			{
+				pdf.setPage(i);
+												//////// Encabezado ///////
+				//Inicio para imagen de logo 
+				var logo = new Image();
+				logo.src = '../../imagenes/LoogSEACCO.jpg';
+				pdf.addImage(logo, 'JPEG',14,7,24,15);
+				//Fin para imagen de logo 
+
+				//muestra el titulo principal
+				pdf.setFont('Arial');
+				pdf.setFontSize(17);
+				pdf.text("Constructora SEACCO", 70,15,);
+
+				//muestra el titulo secundario
+				pdf.setFont('times');
+				pdf.setFontSize(10);
+				pdf.text("Reporte de Clientes", 84,20,);
+
+												//////// pie de Pagina ///////
+				//muestra la fecha
+				pdf.setFont('times');
+				pdf.setFontSize(9);
+				var today = new Date();
+				let horas = today.getHours()
+				let jornada = horas >=12 ? 'PM' : 'AM';
+				var newdat = "Fecha: " + today.getDate() + "/" + (today.getMonth()+1) + "/" + today.getFullYear() + " " + (horas % 12) + ":" + today.getMinutes() + ":" + today.getSeconds() + " " + jornada;
+				pdf.text(183-20,297-284,newdat);
+
+				//muestra el numero de pagina
+				pdf.text('Pagina ' + String(i) + '/' + String(pageCount),220-20,297-25,null,null,"right");
+			}
+				//Fin Encabezado y pie de pagina
+
+							pdf.save('Reporte de Clientes.pdf');
+	})
+  
+</script>
+<!-- // Fin para exportar en pdf // -->
 <script type="text/javascript" src="../../js/evitar_reenvio.js"></script>
 </html>
 
-<script type="text/javascript">
-  
-        function mayus(e) {
-          e.value = e.value.toUpperCase();
-         }
-    </script>
 
-<script type="text/javascript"> function solonumero(e) {
-        tecla = (document.all) ? e.keyCode : e.which;
-        if (tecla==8) return true;
-        else if (tecla==0||tecla==9)  return true;
-       // patron =/[0-9\s]/;// -> solo letras
-        patron =/[0-9-\s]/;// -> solo numeros
-        te = String.fromCharCode(tecla);
-        return patron.test(te);
-    }
-	</script>
-
-<script>
-      function soloLetras(e){
-       key = e.keyCode || e.which;
-       tecla = String.fromCharCode(key).toLowerCase();
-       letras = " áéíóúabcdefghijklmnñopqrstuvwxyz";
-       especiales = ["8-37-39-46"];
-
-       tecla_especial = false
-       for(var i in especiales){
-        if(key == especiales[i]){
-          tecla_especial = true;
-          break;
-        }
-      }
-
-      if(letras.indexOf(tecla)==-1 && !tecla_especial){
-        return false;
-      }
-    }
-  </script>
