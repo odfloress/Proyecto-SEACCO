@@ -1,9 +1,22 @@
 <?php
   require '../../conexion/conexion.php';
+  $usuario1 = $_SESSION;
+   //selecciona el id de la comra en proceso
+   $validar_compra7 = "SELECT * FROM tbl_compras WHERE USUARIO='$usuario1[usuario]' and ESTADO_COMPRA='EN PROCESO'";
+   $validar_compra77 = mysqli_query($conn, $validar_compra7);
+   if (mysqli_num_rows($validar_compra77) > 0)
+   {
+         while($row = mysqli_fetch_assoc($validar_compra77)) 
+         {
+               $id_compra = $row["ID_COMPRA"];
+               $precio_anterior = $row["TOTAL_COMPRA"];
+         }
+   }
+
   //para mostrar los datos de la tabla mysql y mostrar en el crud
   $sql = "SELECT * FROM ((tbl_detalle_compra d
   INNER JOIN tbl_unidad_medida u ON d.ID_UNIDAD_MEDIDA = u.ID_UNIDAD_MEDIDA)
-  INNER JOIN tbl_productos p ON d.ID_PRODUCTO = p.ID_PRODUCTO)";
+  INNER JOIN tbl_productos p ON d.ID_PRODUCTO = p.ID_PRODUCTO) WHERE ID_COMPRA='$id_compra'";
   $result = mysqli_query($conn, $sql);
  
 
@@ -16,19 +29,9 @@
   $precio=(isset($_POST['precio']))?$_POST['precio']:"";
   $anterior=(isset($_POST['nombre_anterior']))?$_POST['nombre_anterior']:"";
   
-  $usuario1 = $_SESSION;
+  
 
-  //selecciona el id de la comra en proceso
-  $validar_compra7 = "SELECT * FROM tbl_compras WHERE USUARIO='$usuario1[usuario]' and ESTADO_COMPRA='EN PROCESO'";
-  $validar_compra77 = mysqli_query($conn, $validar_compra7);
-  if (mysqli_num_rows($validar_compra77) > 0)
-  {
-        while($row = mysqli_fetch_assoc($validar_compra77)) 
-        {
-              $id_compra = $row["ID_COMPRA"];
-              $precio_anterior = $row["TOTAL_COMPRA"];
-        }
-  }
+ 
 
 
   //variable para recuperar los botones de la vista roles  
@@ -39,7 +42,7 @@
   
       case "agregar": 
         // valida si ya esta agregado el producto
-        $validar_producto = "SELECT * FROM tbl_detalle_compra WHERE ID_PRODUCTO='$producto'";
+        $validar_producto = "SELECT * FROM tbl_detalle_compra WHERE ID_PRODUCTO='$producto' and ID_COMPRA='$id_compra'";
         $result1 = mysqli_query($conn, $validar_producto); 
          if (mysqli_num_rows($result1) > 0) { 
                 
@@ -86,7 +89,7 @@
                                
                            }
                     
-              }   mysqli_close($conn);                    
+              }                    
       break;
 
       case "cancelar";

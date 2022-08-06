@@ -18,6 +18,9 @@ include '../../controladores/crud_bitacora.php';
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Bitacora</title>
+  <!-- //para reporte pdf -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.3/jspdf.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.4/jspdf.plugin.autotable.min.js"></script>
 
   <?php include '../../configuracion/navar.php' ?>
   <!-- Content Wrapper. Contains page content -->
@@ -51,27 +54,21 @@ include '../../controladores/crud_bitacora.php';
             </div>
             <!-- /.card -->
              <!-- inicio rango de fechas -->
-            <form>
-            <div class="row">
-                <div class="col">
-                Fecha Inicial <input type="Date" class="form-control" >
-                </div>
-                <div class="col">
-                Fecha Final <input type="Date" class="form-control">
-                </div>
-                <div class="col"><br>
-                <button type="button" class="btn btn-danger">Filatrar</button>
-                </div>
-            </div>
-        </form>
+         
         <br>
         <!-- fin rango de fechas -->
             <div class="card">
               <div class="card-header">
-                <h3 class="card-title">Bitacora Universal</h3>
+              <form id="form">
+              <button onclick="textToPdf()" class="btn btn-secondary buttons-pdf buttons-html5"  type="submit"><span>Reporte PDF</span></button>
+	            </form>
+                <!-- <h3 class="card-title">Bitacora Universal</h3> -->
+              
               </div>
               <!-- /.card-header -->
+              
               <div class="card-body">
+             
                 <table id="example1" class="table table-bordered table-striped">
                   <thead>
                   <tr>
@@ -143,18 +140,19 @@ include '../../controladores/crud_bitacora.php';
 <script src="../../plantilla/AdminLTE-3.2.0/plugins/jszip/jszip.min.js"></script>
 <script src="../../plantilla/AdminLTE-3.2.0/plugins/pdfmake/pdfmake.min.js"></script>
 <script src="../../plantilla/AdminLTE-3.2.0/plugins/pdfmake/vfs_fonts.js"></script>
-<script src="../../plantilla/AdminLTE-3.2.0/plugins/datatables-buttons/js/buttons.html5.min.js"></script>
-<script src="../../plantilla/AdminLTE-3.2.0/plugins/datatables-buttons/js/buttons.print.min.js"></script>
+
+
 <script src="../../plantilla/AdminLTE-3.2.0/plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
 <!-- AdminLTE App -->
 <script src="../../plantilla/AdminLTE-3.2.0/dist/js/adminlte.min.js"></script>
 <!-- AdminLTE for demo purposes -->
 <script src="../../plantilla/AdminLTE-3.2.0/dist/js/demo.js"></script>
 <!-- Page specific script -->
+
 <script>
   $(function () {
     $("#example1").DataTable({
-
+      
       language: {
                           processing: "Tratamiento en curso...",
                           search: "Buscar&nbsp;:",
@@ -179,7 +177,6 @@ include '../../controladores/crud_bitacora.php';
 
                           buttons:{
                             "copy": "Copiar",
-                            "print": "Imprimir",
                             "colvis": "Visibilidad",
                             "collection": "Colección",
                             "colvisRestore": "Restaurar visibilidad",
@@ -190,10 +187,14 @@ include '../../controladores/crud_bitacora.php';
                                 },
                                 },    
                          },
+                         
+                         "responsive": true, "lengthChange": true, "autoWidth": false,
+                          "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"],                   
+        
+    })
 
-      "responsive": true, "lengthChange": false, "autoWidth": false,
-      "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
-    }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+      
+    .buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
     $('#example2').DataTable({
       "paging": true,
       "lengthChange": false,
@@ -204,6 +205,68 @@ include '../../controladores/crud_bitacora.php';
       "responsive": true,
     });
   });
+</script>
+
+<!-- reporte pdf -->
+<script>
+	//para descar al tocar el boton
+	
+	var form = document.getElementById("form")
+	form.addEventListener("submit",function(event) {
+	event.preventDefault()
+
+				const pdf = new jsPDF('p', 'mm', 'letter');					
+
+				var columns = ["Id", "Nombre", "Email", "Pais"];
+				var data = [
+				[1, "Hola", "hola@gmail.com", "Mexico"],
+				[2, "Hello", "hello@gmail.com", "Estados Unidos"],
+				[3, "Otro", "otro@gmail.com", "Otro"] ];
+
+				pdf.autoTable(columns,data,
+				{ 
+					html:'#example1',
+					margin:{ top: 30 }}
+				);
+						
+				//Inicio Encabezado y pie de pagina
+			const pageCount = pdf.internal.getNumberOfPages();
+			for(var i = 1; i <= pageCount; i++) 
+			{
+				pdf.setPage(i);
+												//////// Encabezado ///////
+				//Inicio para imagen de logo 
+				var logo = new Image();
+				logo.src = '../../imagenes/LoogSEACCO.jpg';
+				pdf.addImage(logo, 'JPEG',14,7,24,15);
+				//Fin para imagen de logo 
+
+				//muestra el titulo principal
+				pdf.setFont('Arial');
+				pdf.setFontSize(17);
+				pdf.text("Constructora SEACCO", 70,15,);
+
+				//muestra el titulo secundario
+				pdf.setFont('times');
+				pdf.setFontSize(10);
+				pdf.text("Reporte de bitacora", 87,20,);
+
+												//////// Footer ///////
+				//muestra la fecha
+				pdf.setFont('times');
+				pdf.setFontSize(9);
+				var today = new Date();
+				var newdat = "Date Printed : "+ today;
+				pdf.text(150-20,297-277,newdat);
+
+				//muestra el numero de pagina	
+				pdf.text('Pagina ' + String(i) + '/' + String(pageCount),220-20,297-30,null,null,"right");
+			}
+				//Fin Encabezado y pie de pagina
+
+							pdf.save('Reporte de bitacora.pdf');
+	})
+
 </script>
 </body>
 </html>

@@ -473,7 +473,8 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a href="http://localhost/SEACCO/vistas/ajustes/vista_backup.php" class="nav-link">
+              <a href="http://localhost/SEACCO/Respaldo_BD/php/index.php" class="nav-link">
+                <!-- <a href="http://localhost/SEACCO/vistas/ajustes/vista_backup.php" class="nav-link"> -->
                   <p>Backup BD</p>
                 </a>
               </li>
@@ -502,11 +503,11 @@
                   <p>Profesiones</p>
                 </a>
               </li>
-              <li class="nav-item">
+              <!-- <li class="nav-item">
                 <a href="/SEACCO/vistas/mantenimiento/vista_departamentos.php" class="nav-link">
                   <p>Departamentos</p>
                 </a>
-              </li>
+              </li> -->
              
               <li class="nav-item">
                 <a href="http://localhost/SEACCO/vistas/mantenimiento/vista_genero.php" class="nav-link">

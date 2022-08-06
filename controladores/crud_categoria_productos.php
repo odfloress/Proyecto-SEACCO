@@ -79,6 +79,22 @@
       
       //para eliminar en la tabla mysl  
       case "eliminar";
+          //validar que no este asignado a un producto
+    $validar_rol = "SELECT * FROM tbl_productos WHERE ID_CATEGORIA='$id_categoria'";
+    $result4 = mysqli_query($conn, $validar_rol); 
+     if (mysqli_num_rows($result4) > 0) { 
+        //  // inicio inserta en la tabla bitacora
+        //  $sql9 = "INSERT INTO tbl_bitacora (USUARIO, ACCION, OBSERVACION)
+        //  VALUES ('$usuario1[usuario]', 'INTENTO', 'NO LOGRO ELIMINAR YA QUE ESTABA EN USO EL ROL ($rol)')";
+        //  if (mysqli_query($conn, $sql9)) {} else { }
+        //  // fin inserta en la tabla bitacora
+         echo '<script>
+                 alert("No se puede eliminar la categoria, ya que esta en uso");
+                 window.location.href="../../vistas/inventario/vista_categorias_productos.php";                   
+               </script>';
+               mysqli_close($conn);
+
+     }else{
 
       $sql3 = "DELETE FROM tbl_categoria_producto WHERE ID_CATEGORIA='$id_categoria'";
       if (mysqli_query($conn, $sql3)) {
@@ -89,7 +105,7 @@
                         alert("Error al tratar de eliminar categoria");
                     </script>'; mysqli_error($conn);
            }
-        mysqli_close($conn);
+          }
 
       break;
       
