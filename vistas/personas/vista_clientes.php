@@ -196,6 +196,7 @@ if (mysqli_num_rows($roles35) > 0)
                   <thead>
                   <tr>
                   <th>Acciones</th>
+                  <!-- <th>Id</th> -->
                   <th>Id Cliente</th>
                   <th>Codigo</th>
                   <th>Nombre Cliente</th>
@@ -206,12 +207,18 @@ if (mysqli_num_rows($roles35) > 0)
                   <th>Referencia</th>
                   <th>Genero</th>
                   <th>Foto</th>
-
+                  include '../../conexion/conexion.php';
+                  //para mostrar los datos de la tabla mysql y mostrar en el crud
+                  $sql7 = "SELECT * FROM tbl_clientes WHERE TIPO NOT IN (SELECT TIPO FROM  tbl_clientes WHERE TIPO = 'ID_CLIENTE' )";
+                  $result = mysqli_query($conn, $sql7);
+                  if (mysqli_num_rows($result) > 0) {
+                  while ($filas= mysqli_fetch_assoc($result)){
+                    ?>
             
                   </tr>
                   </thead>
                   <tbody>
-                  <?php while ($filas= mysqli_fetch_assoc($result)){
+                  <?php 
 
                   ?>
                   <tr>
@@ -502,5 +509,8 @@ if (mysqli_num_rows($roles35) > 0)
 <!-- // Fin para exportar en pdf // -->
 <script type="text/javascript" src="../../js/evitar_reenvio.js"></script>
 </html>
+
+
+
 
 
