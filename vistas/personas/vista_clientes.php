@@ -119,7 +119,7 @@ if (mysqli_num_rows($roles35) > 0)
                         <label for="pwd" class="form-label">Genero:</label>
                           <select style="background-color:rgb(240, 244, 245);" value="<?php echo "$genero"; ?>" class="form-select" id="lista1" name="genero" required >
                                   <?php
-                                      include 'conexion/conexion.php';
+                                      include '../../conexion/conexion.php';
                                       $genero = "SELECT * FROM tbl_generos ORDER BY ID_GENERO";
                                       $genero2 = mysqli_query($conn, $genero);
                                       if (mysqli_num_rows($genero2) > 0) {
@@ -136,7 +136,7 @@ if (mysqli_num_rows($roles35) > 0)
                         <label for="pwd" class="form-label">Foto:</label>
                         <input style="background-color:rgb(240, 244, 245);" type="file" accept=".jpg, .png, .jpej, .JPEG, .JPG, .PNG" autocomplete="off"  value="<?php echo "$foto"; ?>" class="form-control" required placeholder="Adjunte su foto" name="foto">
                     </div>
-                  </form>           
+                           
                 
                 <div class="row">
                   <div class="col">
@@ -147,7 +147,7 @@ if (mysqli_num_rows($roles35) > 0)
                           <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
                       </div>
                       <!-- Fin pie del modal -->
-                      
+                      </form> 
                   </div>
               </div>
           </div>
