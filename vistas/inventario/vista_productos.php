@@ -209,7 +209,7 @@ if (mysqli_num_rows($roles35) > 0)
                 <table id="example1" class="table table-bordered table-striped">
                   <thead>
                   <tr>
-                  <th>Acciones</th>
+                
                   <th>ID PRODUCTO</th>
                   <th>ID CATEGORIA</th>
                   <th>CANTIDAD MINIMA</th>
@@ -301,15 +301,13 @@ if (mysqli_num_rows($roles35) > 0)
                 <label for="">Descripcion Modelo</label>
                 <input type="text" autocomplete="off"  value="<?php echo $filas['DESCRIPCION_MODELO'] ?>" onkeyup="mayus(this);" maxlength="255" class="form-control"  placeholder="" name="descripcion_modelo" required>
                 <br>
-                                     
-                
                 </div>
                                          
                                 <!-- Fin Cuerpo del modal Modal -->
 
                                 <!-- pie del modal -->
                                 <div class="modal-footer">
-                                <button type="submit" class="btn btn-primary" name="accion" value="editar" >Guardar</button>
+                                <button type="submit" class="btn btn-primary" name="accion" value="editar" ></button>
                                   <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
                                 </div>
                                   <!-- Fin pie del modal -->
@@ -317,7 +315,7 @@ if (mysqli_num_rows($roles35) > 0)
                             </div>
                           </div>
                           <!-- fin boton editar -->
-                          <input type="hidden" name="ruta"  value="<?php echo $filas['RUTA'] ?>">
+                          
                           <?php 
                           include '../../conexion/conexion.php';
                           $tablero = "SELECT * FROM tbl_ms_roles_ojetos WHERE ID_ROL='$id_rol7' and ID_OBJETO=12 and PERMISO_ELIMINACION=1";

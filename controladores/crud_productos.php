@@ -6,11 +6,11 @@ include '../../conexion/conexion.php';
 // $id_imagen=(isset($_POST['id_imagen']))?$_POST['id_imagen']:"";
 
 $id_categoria=(isset($_POST['id_categoria']))?$_POST['id_categoria']:"";
+$cantidad_min=(isset($_POST['cantidad_min']))?$_POST['cantidad_min']:"";
+$cantidad_max=(isset($_POST['cantidad_max']))?$_POST['cantidad_max']:"";
 $codigo=(isset($_POST['codigo']))?$_POST['codigo']:"";
 $nombre=(isset($_POST['nombre']))?$_POST['nombre']:"";
 $descripcion_modelo=(isset($_POST['descripcion_modelo']))?$_POST['descripcion_modelo']:"";
-
-
 //variable para recuperar los botones de la vista del crud del portafolio 
 $accion=(isset($_POST['accion']))?$_POST['accion']:"";
 
@@ -34,35 +34,35 @@ if(in_array($extencion, $permitidos)){
     } 
 
     //validar si existe un correo con el mismo nommbre
-    //$validar_correo = "SELECT * FROM tbl_clientes WHERE CORREO='$correo'";
-    //$result4 = mysqli_query($conn, $validar_correo); 
-     //if (mysqli_num_rows($result4) > 0) 
+    $validar_correo = "SELECT * FROM tbl_clientes WHERE CORREO='$correo'";
+    $result4 = mysqli_query($conn, $validar_correo); 
+     if (mysqli_num_rows($result4) > 0) 
      { 
-      //      echo '<script type="text/javascript">
-      //                 alert("Correo ya existe, intente con otro");
-       //           </script>';
-     //}else{
-            // INICIO INSERTA EN LA TABLA PRODUCTOS
-                $sql = "INSERT INTO tbl_productos ( ID_CATEGORIA, CANTIDAD_MIN, CANTIDAD_MAX, FOTO, CODIGO, NOMBRE, DESCRIPCION_MODELO )
-                VALUES ('$id_categoria','$cantidad_min', '$cantidad_max', '$nombreimagen', '$codigo', '$nombre', '$descripcion_modelo','$destino$nombreimagen')";
+            echo '<script type="text/javascript">
+                       alert("Correo ya existe, intente con otro");
+                  </script>';
+     }else{
+            // INICIO INSERTA EN LA TABLA CLIENTES
+                $sql = "INSERT INTO tbl_clientes (CODIGO, NOMBRE_CLIENTE, APELLIDO, CORREO, TELEFONO, DIRECCION, REFERENCIA, ID_GENERO, FOTO)
+                VALUES ('$codigo', '$nombre', '$apellido', '$correo', '$telefono', '$direccion', '$referencia', '$genero', '$destino$nombreimagen')";
                  $res = mysqli_query($conn, $sql);
                 if($res){
                     // inicio inserta en la tabla bitacora
                     $sql = "INSERT INTO tbl_bitacora (USUARIO, ACCION, OBSERVACION)
-                    VALUES ('$usuario1[usuario]', 'INSERTO', 'REGISTRO EL PRODUCTO ($nombre) EN LA PANTALLA PRODUCTOS')";
+                    VALUES ('$usuario1[usuario]', 'INSERTO', 'REGISTRO EL CLIENTE ($nombre) EN LA PANTALLA CLIENTES')";
                     if (mysqli_query($conn, $sql)) {} else {}
                     // fin inserta en la tabla bitacora
 
                     echo '<script type="text/javascript">
                             alert("Creado con exito");
-                            window.location.href="../../vistas/personas/vista_productos.php";
+                            window.location.href="../../vistas/personas/vista_clientes.php";
                         </script>';
                 }else{           
                         echo '<script type="text/javascript">
                                 alert("Error al insertar");
                             </script>';
                       }
-                // FIN INSERTA EN LA TABLA PRODUCTOS
+                // FIN INSERTA EN LA TABLA CLIENTES
 
           }
 
@@ -70,7 +70,7 @@ if(in_array($extencion, $permitidos)){
 }else{
     // inicio inserta en la tabla bitacora
     $sql = "INSERT INTO tbl_bitacora (USUARIO, ACCION, OBSERVACION)
-    VALUES ('$usuario1[usuario]', 'INTENTO', 'NO LOGRO INSERTAR YA QUE EL ARCHIVO NO ERA IMAGEN EN LA PATALLA PRODUCTOS')";
+    VALUES ('$usuario1[usuario]', 'INTENTO', 'NO LOGRO INSERTAR YA QUE EL ARCHIVO NO ERA IMAGEN EN LA PATALLA CLINETES')";
     if (mysqli_query($conn, $sql)) {} else {}
     // fin inserta en la tabla bitacora
     echo '<script type="text/javascript">
@@ -121,7 +121,7 @@ if(in_array($extencion, $permitidos))
          // fin inserta en la tabla bitacora
         echo '<script>
                  alert("Edición exitosa");
-                 window.location.href="../../vistas/catalogo/vista_producto";
+                 window.location.href="../../vistas/catalogo/vista_portafolio";
               </script>';
 
     }else{
@@ -138,7 +138,7 @@ if(in_array($extencion, $permitidos))
     // fin inserta en la tabla bitacora
     echo '<script type="text/javascript">
             alert("Archivo no permitido");
-            window.location.href="../../vistas/catalogo/vista_producto";
+            window.location.href="../../vistas/catalogo/vista_portafolio";
          </script>';
 }
   
@@ -173,4 +173,5 @@ break;
 
 }
 ?>
+
 
