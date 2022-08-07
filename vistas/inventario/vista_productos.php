@@ -267,7 +267,7 @@ if (mysqli_num_rows($roles35) > 0)
                   <select style="background-color:rgb(240, 244, 245);" class="form-select" id="lista1" name="id_categoria" required >
                     
                     <?php
-                        include 'conexion/conexion.php';
+                        include '../../conexion/conexion.php';
                         $id_categoria = "SELECT * FROM tbl_categoria_producto ORDER BY ID_CATEGORIA";
                         $genero2 = mysqli_query($conn, $id_categoria);
                         if (mysqli_num_rows($genero2) > 0) {
@@ -277,7 +277,7 @@ if (mysqli_num_rows($roles35) > 0)
                             $genero3 =$row['NOMBRE_CATEGORIA'];
     
                                 if($departamento3 == $filas["ID CATEGORIA"]){?>
-                                  <option value="<?php  echo $id_departamentos; ?>" selected><?php echo $departamento3; ?></option>
+                                  <option value="<?php  echo $id_categoria; ?>" selected><?php echo $genero3; ?></option>
                                  <?php
                             }}}// finaliza el if y el while
                        ?>
@@ -293,13 +293,13 @@ if (mysqli_num_rows($roles35) > 0)
                 <input type="file" class="form-control" accept=".jpg, .png, .jpeg, .JPEG, .JPG, .PNG" name="imagenes" required value="<?php echo "$nombreimagen"; ?>" placeholder=""  >
                 <br> 
                 <label for="">Codigo</label>
-                <input type="text" class="form-control" autocomplete="off" name="codigo" required value="<?php echo $filas['CODIGO'] ?>" placeholder="">
+                <input type="text" class="form-control" autocomplete="off" name="CODIGO" required value="<?php echo $filas['CODIGO'] ?>" placeholder="">
                 <br>
                 <label for="">Nombre</label>
                 <input type="text" autocomplete="off"  value="<?php echo $filas['NOMBRE'] ?>" onkeyup="mayus(this);" maxlength="255" class="form-control"  placeholder="" name="nombre" required>
                 <br>
                 <label for="">Descripcion Modelo</label>
-                <input type="text" autocomplete="off"  value="<?php echo $filas['DESCRIPCION MODELO'] ?>" onkeyup="mayus(this);" maxlength="255" class="form-control"  placeholder="" name="descripcion_modelo" required>
+                <input type="text" autocomplete="off"  value="<?php echo $filas['DESCRIPCION_MODELO'] ?>" onkeyup="mayus(this);" maxlength="255" class="form-control"  placeholder="" name="descripcion_modelo" required>
                 <br>
                                      
                 
@@ -338,9 +338,10 @@ if (mysqli_num_rows($roles35) > 0)
                      <td><?php echo $filas['CANTIDAD_MIN'] ?></td>
                      <td><?php echo $filas['CANTIDAD_MAX'] ?></td>
                      <td><img  width="100px" src="<?php echo $filas['FOTO'] ?>" /></td>
-                     <td><?php echo $filas['APELLIDO'] ?></td>
+                     <td><?php echo $filas['FOTO'] ?></td>
+                     <td><?php echo $filas['CODIGO'] ?></td>
                      <td><?php echo $filas['NOMBRE'] ?></td>
-                     <td><?php echo $filas['DESCRIPCION MODELO'] ?></td>
+                     <td><?php echo $filas['DESCRIPCION_MODELO'] ?></td>
                      
                     
       </tr>
@@ -481,7 +482,7 @@ if (mysqli_num_rows($roles35) > 0)
 				const pdf = new jsPDF('p', 'mm', 'letter');			
         	
 
-				var columns = ["", "", "", "", ""];
+				var columns = ["", "", "", "", "", "", ""];
 				var data = [
 				[1, "Hola", "hola@gmail.com", "Mexico"],
 				 ];
