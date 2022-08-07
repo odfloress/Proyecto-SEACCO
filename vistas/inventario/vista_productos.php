@@ -141,10 +141,10 @@ if (mysqli_num_rows($roles35) > 0)
                    </select>
                 <br>  
                 <label for="">Cantidad Minima</label>
-                <input type="text" class="form-control" autocomplete="off" onkeyup="mayus(this);" name="cantidad_minima" required value="<?php echo "$codigo"; ?>" placeholder="">
+                <input type="text" class="form-control" autocomplete="off" onkeyup="mayus(this);" name="cantidad_minima" required value="<?php echo "$cantidad_min"; ?>" placeholder="">
                 <br>  
                 <label for="">Cantidad Maxima</label>
-                <input type="text" class="form-control" autocomplete="off" onkeyup="mayus(this);" name="cantidad_maxima" required value="<?php echo "$codigo"; ?>" placeholder="">
+                <input type="text" class="form-control" autocomplete="off" onkeyup="mayus(this);" name="cantidad_maxima" required value="<?php echo "$cantidad_max"; ?>" placeholder="">
                 <br>
                 <label for="">Imagen</label>
                 <input type="file" class="form-control" accept=".jpg, .png, .jpeg, .JPEG, .JPG, .PNG" name="imagen" required value="<?php echo "$nombreimagen"; ?>" placeholder=""  >
