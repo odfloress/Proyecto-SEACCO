@@ -232,7 +232,7 @@ new Chart("myChart", {
     legend: {display: false},
     title: {
       display: true,
-      text: "Proyectos por Departamento"
+      text: "Proyectos por Departamento en Proceso"
     }
   }
 });
@@ -348,7 +348,7 @@ new Chart("myChart2", {
   options: {
     title: {
       display: true,
-      text: "Cotizaciones por ubicación"
+      text: "Cotizaciones de Proyectos por Departamento"
     }
   }
 });
