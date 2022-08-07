@@ -141,10 +141,10 @@ if (mysqli_num_rows($roles35) > 0)
                    </select>
                 <br>  
                 <label for="">Cantidad Minima</label>
-                <input type="text" class="form-control" autocomplete="off" onkeyup="mayus(this);" name="cantidad_minima" required value="<?php echo "$cantidad_min"; ?>" placeholder="">
+                <input type="text" class="form-control" autocomplete="off" onkeyup="mayus(this);" name="cantidad_minima" required value="<?php echo "$codigo"; ?>" placeholder="">
                 <br>  
                 <label for="">Cantidad Maxima</label>
-                <input type="text" class="form-control" autocomplete="off" onkeyup="mayus(this);" name="cantidad_maxima" required value="<?php echo "$cantidad_max"; ?>" placeholder="">
+                <input type="text" class="form-control" autocomplete="off" onkeyup="mayus(this);" name="cantidad_maxima" required value="<?php echo "$codigo"; ?>" placeholder="">
                 <br>
                 <label for="">Imagen</label>
                 <input type="file" class="form-control" accept=".jpg, .png, .jpeg, .JPEG, .JPG, .PNG" name="imagen" required value="<?php echo "$nombreimagen"; ?>" placeholder=""  >
@@ -268,13 +268,13 @@ if (mysqli_num_rows($roles35) > 0)
                     
                     <?php
                         include 'conexion/conexion.php';
-                            $genero = "SELECT * FROM tbl_categoria_producto ORDER BY ID_CATEGORIA";
-                            $departamento2 = mysqli_query($conn, $departamento);
-                            if (mysqli_num_rows($departamento2) > 0) {
-                                while($row = mysqli_fetch_assoc($departamento2))
-                                {
-                                $id_departamentos = $row['ID_CATEGORIA'];
-                                $departamento3 =$row['ID CATEGORIA'];
+                        $id_categoria = "SELECT * FROM tbl_categoria_producto ORDER BY ID_CATEGORIA";
+                        $genero2 = mysqli_query($conn, $id_categoria);
+                        if (mysqli_num_rows($genero2) > 0) {
+                            while($row = mysqli_fetch_assoc($genero2))
+                            {
+                            $id_genero = $row['ID_CATEGORIA'];
+                            $genero3 =$row['NOMBRE_CATEGORIA'];
     
                                 if($departamento3 == $filas["ID CATEGORIA"]){?>
                                   <option value="<?php  echo $id_departamentos; ?>" selected><?php echo $departamento3; ?></option>
