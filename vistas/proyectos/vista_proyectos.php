@@ -595,10 +595,10 @@ if (mysqli_num_rows($roles35) > 0)
    
 	event.preventDefault()
  
-				const pdf = new jsPDF('p', 'mm', 'letter');			
+				const pdf = new jsPDF('L', 'mm', 'letter');			
         	
 
-				var columns = ["", "", "", "", ""];
+				var columns = ["", "", "", "", "","", "", "", "", ""];
 				var data = [
 				[1, "Hola", "hola@gmail.com", "Mexico"],
 				 ];
@@ -629,7 +629,7 @@ if (mysqli_num_rows($roles35) > 0)
 				//muestra el titulo secundario
 				pdf.setFont('times');
 				pdf.setFontSize(10);
-				pdf.text("Reporte de proyectos", 84,20,);
+				pdf.text("Reporte de proyectos", 84,25,);
 
 												//////// pie de Pagina ///////
 				//muestra la fecha
@@ -639,7 +639,7 @@ if (mysqli_num_rows($roles35) > 0)
 				let horas = today.getHours()
 				let jornada = horas >=12 ? 'PM' : 'AM';
 				var newdat = "Fecha: " + today.getDate() + "/" + (today.getMonth()+1) + "/" + today.getFullYear() + " " + (horas % 12) + ":" + today.getMinutes() + ":" + today.getSeconds() + " " + jornada;
-				pdf.text(183-20,297-284,newdat);
+				pdf.text(250-20,297-284,newdat);
 
 				//muestra el numero de pagina
 				pdf.text('Pagina ' + String(i) + '/' + String(pageCount),220-20,297-25,null,null,"right");

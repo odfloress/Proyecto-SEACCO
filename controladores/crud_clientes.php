@@ -1,105 +1,181 @@
 <?php
-  require '../../conexion/conexion.php';
-  //para mostrar los datos de la tabla mysql y mostrar en el crud
-  $sql = "SELECT * FROM tbl_clientes";
-  $result = mysqli_query($conn, $sql);
+include '../../conexion/conexion.php';
 
 
-  // //Variables para recuperar la información de los campos de la vista clientes
-  $id_cliente=(isset($_POST['id_cliente']))?$_POST['id_cliente']:"";
-  $codigo=(isset($_POST['codigo']))?$_POST['codigo']:"";
-  $nombre=(isset($_POST['nombre']))?$_POST['nombre']:"";
-  $apellido=(isset($_POST['apellido']))?$_POST['apellido']:"";
-  $correo=(isset($_POST['correo']))?$_POST['correo']:"";
-  $telefono=(isset($_POST['telefono']))?$_POST['telefono']:"";
-  $direccion=(isset($_POST['direccion']))?$_POST['direccion']:"";
-  $referencia=(isset($_POST['nombre_referencia']))?$_POST['nombre_referencia']:"";
-  $genero=(isset($_POST['genero']))?$_POST['genero']:"";
-  $foto=(isset($_POST['foto']))?$_POST['foto']:"";
-  //variable para recuperar los botones de la vista clientes  
-  $accion=(isset($_POST['accion']))?$_POST['accion']:"";
-  
-  
-  switch($accion){
-      //para insertar en la tabla mysl
-      case "agregar": 
-        // valida si existe una categoria con el mismo nombre
-        $validar_cliente = "SELECT * FROM tbl_clientes WHERE NOMBRE='$nombre'";
-        $result1 = mysqli_query($conn, $validar_cliente); 
-         if (mysqli_num_rows($result1) > 0) { 
-              
-         
-           echo '<script>
-                    alert("cliente ya existe");
-                 </script>';
-                 mysqli_close($conn);
-         }else{ 
-            $sql7 = "INSERT INTO tbl_clientes (CODIGO, NOMBRE_CLIENTE, APELLIDO, CORREO, TELEFONO, DIRECCION, REFERENCIA, GENERO)
-                    VALUES ('$codigo', '$nombre', '$apellido', '$correo', '$telefono', '$direccion', '$referencia', '$genero')";
+// //Variables para recuperar la información de los campos de la vista del crud del portafolio 
+// $id_imagen=(isset($_POST['id_imagen']))?$_POST['id_imagen']:"";
+$codigo=(isset($_POST['codigo']))?$_POST['codigo']:"";
+$nombre=(isset($_POST['nombre']))?$_POST['nombre']:"";
+$apellido=(isset($_POST['apellido']))?$_POST['apellido']:"";
+$correo=(isset($_POST['nombre']))?$_POST['correo']:"";
+$telefono=(isset($_POST['telefono']))?$_POST['telefono']:"";
+$direccion=(isset($_POST['direccion']))?$_POST['direccion']:"";
+$referencia=(isset($_POST['referencia']))?$_POST['referencia']:"";
+$genero=(isset($_POST['genero']))?$_POST['genero']:"";
 
-                    if (mysqli_query($conn, $sql7)) {
-                    echo "New record created successfully";
-                    } else {
-                    echo "Error: " . $sql7 . "<br>" . mysqli_error($conn);
+// $ruta=(isset($_POST['ruta']))?$_POST['ruta']:"";
+// $foto=(isset($_POST['foto']))?$_POST['foto']:"";
+
+//variable para recuperar los botones de la vista del crud del portafolio 
+$accion=(isset($_POST['accion']))?$_POST['accion']:"";
+
+//variable de sesion
+$usuario1 = $_SESSION;
+                                      
+switch($accion){
+                                      ///////////  INSERTA EN CLIENTES /////////////
+case "agregar": 
+$permitidos = array("jpg", "png", "jpeg", "JPEG", "JPG", "PNG");
+$extencion = pathinfo($_FILES['imagenes']["name"], PATHINFO_EXTENSION);
+
+if(in_array($extencion, $permitidos)){
+    $Fecha= new DateTime();
+    $destino ="../../imagenes/";
+    $nombreimagen=($_FILES['imagenes']["name"]!="")?$Fecha->getTimestamp()."_".$_FILES["imagenes"]["name"]:"imagen.jpg";
+    $tmpFoto= $_FILES["imagenes"]["tmp_name"];
+    if($tmpFoto!="") 
+    {
+     move_uploaded_file($tmpFoto,$destino.$nombreimagen);
+    } 
+
+    //validar si existe un correo con el mismo nommbre
+    $validar_correo = "SELECT * FROM tbl_clientes WHERE CORREO='$correo'";
+    $result4 = mysqli_query($conn, $validar_correo); 
+     if (mysqli_num_rows($result4) > 0) 
+     { 
+            echo '<script type="text/javascript">
+                       alert("Correo ya existe, intente con otro");
+                  </script>';
+     }else{
+            // INICIO INSERTA EN LA TABLA CLIENTES
+                $sql = "INSERT INTO tbl_clientes (CODIGO, NOMBRE_CLIENTE, APELLIDO, CORREO, TELEFONO, DIRECCION, REFERENCIA, ID_GENERO, FOTO)
+                VALUES ('$codigo', '$nombre', '$apellido', '$correo', '$telefono', '$direccion', '$referencia', '$genero', '$destino$nombreimagen')";
+                 $res = mysqli_query($conn, $sql);
+                if($res){
+                    // inicio inserta en la tabla bitacora
+                    $sql = "INSERT INTO tbl_bitacora (USUARIO, ACCION, OBSERVACION)
+                    VALUES ('$usuario1[usuario]', 'INSERTO', 'REGISTRO EL CLIENTE ($nombre) EN LA PANTALLA CLIENTES')";
+                    if (mysqli_query($conn, $sql)) {} else {}
+                    // fin inserta en la tabla bitacora
+
+                    echo '<script type="text/javascript">
+                            alert("Creado con exito");
+                            window.location.href="../../vistas/personas/vista_clientes.php";
+                        </script>';
+                }else{           
+                        echo '<script type="text/javascript">
+                                alert("Error al insertar");
+                            </script>';
+                      }
+                // FIN INSERTA EN LA TABLA CLIENTES
+
+          }
+
+          
+}else{
+    // inicio inserta en la tabla bitacora
+    $sql = "INSERT INTO tbl_bitacora (USUARIO, ACCION, OBSERVACION)
+    VALUES ('$usuario1[usuario]', 'INTENTO', 'NO LOGRO INSERTAR YA QUE EL ARCHIVO NO ERA IMAGEN EN LA PATALLA CLINETES')";
+    if (mysqli_query($conn, $sql)) {} else {}
+    // fin inserta en la tabla bitacora
+    echo '<script type="text/javascript">
+             alert("Archivo no permitido");
+             window.location.href="../../vistas/catalogo/vista_portafolio";
+          </script>';
 }
 
-                
+break;
 
-              }                    
+case "editar": 
+  
 
-             
-      break;
+$tmpFoto1= $_FILES["imagenes"]["tmp_name"];
+if($tmpFoto1!="") {
+    $permitidos = array("jpg", "png", "jpeg", "JPEG", "JPG", "PNG");
+    $extencion = pathinfo($_FILES['imagenes']["name"], PATHINFO_EXTENSION);
+    
 
-       //para editar en la tabla mysl      
-      case "editar";
+}else{
+    $permitidos = array("jpg", "png", "jpeg", "JPEG", "JPG", "PNG");
+    $ultimo = "jpg";
+    $extencion = "$ultimo";
+}
+$direccion = "$ruta";
 
-        // valida si existe una categoria con el mismo nombre
-        $validar_proveedor = "SELECT * FROM tbl_clientes WHERE NOMBRE_CLIENTE='$nombre'";
-        $result2 = mysqli_query($conn, $validar_clientes); 
-         if (mysqli_num_rows($result2) > 0) { 
-              
-         
-           echo '<script>
-                    alert("No se puede editar, ya existe un cliente con ese nombre");
-                 </script>';
-                 mysqli_close($conn);
-         }else{ 
+if(in_array($extencion, $permitidos))
+{
+    $Fecha= new DateTime();
+    $destino ="../../imagenes/";
+    $nombreimagen=($_FILES['imagenes']["name"]!="")?$Fecha->getTimestamp()."_".$_FILES["imagenes"]["name"]:"$foto";
+    $tmpFoto= $_FILES["imagenes"]["tmp_name"];
+    if($tmpFoto!="") 
+    {
+     unlink($ruta); 
+     move_uploaded_file($tmpFoto,$destino.$nombreimagen);
+    } 
+    $direccion = "$destino$nombreimagen";
 
-                $sql2 = "UPDATE tbl_clientes SET NOMBRE_CLIENTE='$nombre', APELLIDO='$apellido', CORREO='$correo',TELEFONO='$telefono', DIRECCION='$direccion', REFERENCIA='$referencia', GENERO='$genero , FOTO='$foto WHERE ID_CLIENTE='$id_cliente'";
-                if (mysqli_query($conn, $sql2)) {
-                   header('Location: ../../vistas/personas/clientes.php');
+    
+    $sql2 = "UPDATE tbl_bienvenida_portafolio SET TIPO='$tipo', IMAGEN='$nombreimagen', RUTA='$direccion', TITULO='$titulo', DESCRIPCION='$descripcion' WHERE ID_IMAGEN='$id_imagen'";
+    if (mysqli_query($conn, $sql2)) 
+    {
+        // inicio inserta en la tabla bitacora
+        $sql = "INSERT INTO tbl_bitacora (USUARIO, ACCION, OBSERVACION)
+        VALUES ('$usuario1[usuario]', 'EDITO', 'EDITO UN REGISTRO DE TIPO ($tipo) Y TITULO ($titulo)')";
+        if (mysqli_query($conn, $sql)) {} else {}
+         // fin inserta en la tabla bitacora
+        echo '<script>
+                 alert("Edición exitosa");
+                 window.location.href="../../vistas/catalogo/vista_portafolio";
+              </script>';
 
-                }else{
-                     echo '<script>
-                            alert("Error al tratar de editar el cliente");
-                           </script>'; mysqli_error($conn);
-                     }
+    }else{
+         echo '<script>
+                alert("Error en la edición ");
+               </script>'; mysqli_error($conn);
+         }
+         mysqli_close($conn);
+}else{
+    // inicio inserta en la tabla bitacora
+    $sql = "INSERT INTO tbl_bitacora (USUARIO, ACCION, OBSERVACION)
+    VALUES ('$usuario1[usuario]', 'INTENTO', 'NO LOGRO EDITAR YA QUE EL ARCHIVO NO ERA IMAGEN')";
+    if (mysqli_query($conn, $sql)) {} else {}
+    // fin inserta en la tabla bitacora
+    echo '<script type="text/javascript">
+            alert("Archivo no permitido");
+            window.location.href="../../vistas/catalogo/vista_portafolio";
+         </script>';
+}
+  
 
-                mysqli_close($conn);
-              }
-      
-      break;
-      
-      //para eliminar en la tabla mysl  
-      case "eliminar";
-
-      $sql3 = "DELETE FROM tbl_clientes WHERE ID_CLIENTE='$id_cliente'";
-      if (mysqli_query($conn, $sql3)) {
-
-          header('Location: ../../vistas/personas/vista_clientes.php');
-      }else{
-              echo '<script>
-                        alert("Error al tratar de eliminar el cliente");
-                    </script>'; mysqli_error($conn);
-           }
-        mysqli_close($conn);
-
-      break;
-      
-      default:
-          
-          $conn->close();   
-  }// Fin del switch, para validar el valor del boton accion
+break;
 
 
+//para eliminar en la tabla mysl  
+case "eliminar";
+echo $ruta;
+echo $id_imagen;
+
+
+$sql3 = "DELETE FROM tbl_bienvenida_portafolio WHERE ID_IMAGEN='$id_imagen'";
+if (mysqli_query($conn, $sql3)) {
+    unlink($ruta);
+    // inicio inserta en la tabla bitacora
+    $sql = "INSERT INTO tbl_bitacora (USUARIO, ACCION, OBSERVACION)
+    VALUES ('$usuario1[usuario]', 'ELIMINO', 'ELIMINO UN REGISTRO DE TIPO ($tipo) Y TITULO ($titulo) ')";
+    if (mysqli_query($conn, $sql)) {} else {}
+    // fin inserta en la tabla bitacora
+    header('Location: ../../vistas/catalogo/vista_portafolio');
+}else{
+        echo '<script>
+                  alert("Error al tratar de eliminar categoria");
+              </script>'; mysqli_error($conn);
+     }
+  mysqli_close($conn);
+
+break;
+
+
+}
 ?>
+
