@@ -515,6 +515,11 @@
                 </a>
               </li>
               <li class="nav-item">
+                <a href="http://localhost/SEACCO/vistas/mantenimiento/vista_area.php" class="nav-link">
+                  <p>Areas de Empleo</p>
+                </a>
+              </li>
+              <li class="nav-item">
                 <a href="http://localhost/SEACCO/vistas/mantenimiento/vista_estados_asignacion.php" class="nav-link">
                   <p>Estados de asignación</p>
                 </a>
