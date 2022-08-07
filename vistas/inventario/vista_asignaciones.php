@@ -210,6 +210,9 @@ include '../../controladores/co_asignaciones.php';
             
             <div class="card table-responsive">
               <div class="card-header">
+              <form id="form" action="" method="post">
+              <button type="submit"  name="accion" value="reporte_pdf" class="btn btn-secondary buttons-pdf buttons-html5"  onclick="return confirm('¿Quieres generar reporte de asignaciones?')" onclick="textToPdf()"><span>Reporte PDF</span></button>
+	            </form>
                 <h3 class="card-title">Asignaciones de herramientas</h3>
                 
               </div>
@@ -381,9 +384,10 @@ include '../../controladores/co_asignaciones.php';
                             </div>
                           </div>
                           
-                          <!-- fin boton editar -->                         
-                      <button value="eliminar" name="accion" 
-                        onclick="return confirm('¿Quieres eliminar este dato?')"
+                          <!-- fin boton editar --> 
+                      </div>                        
+                      <button value="eliminar" name="accion"
+                        onclick="return confirm('¿Quieres eliminar esta asignacion?')"
                         type="submit" class="btn btn-danger ">
                         <i class="fas fa-trash-alt"></i>
                     </button></form>
@@ -398,7 +402,6 @@ include '../../controladores/co_asignaciones.php';
                      <td><?php echo $filas['ESTADO_ASIGNACION'] ?></td>
                      <td><?php echo $filas['FECHA_ASIGNADO'] ?></td>
                      <td><?php echo $filas['FECHA_ENTREGA'] ?></td>
-                     <td><?php echo $filas['ID_PRODUCTO'] ?></td>
       </tr>
       <?php } ?>  
                   </tbody>
@@ -520,5 +523,67 @@ include '../../controladores/co_asignaciones.php';
  <script type="text/javascript" src="../../js/converir_a_mayusculas.js"></script>
  
 </body>
+<!-- // Inicio para exportar en pdf // -->
+<script>
+	//para descar al tocar el boton	
+	var form = document.getElementById("form")
+	form.addEventListener("submit",function(event) {
+   
+	event.preventDefault()
+ 
+				const pdf = new jsPDF('p', 'mm', 'letter');			
+        	
+
+				var columns = ["", "", "", "", ""];
+				var data = [
+				[1, "Hola", "hola@gmail.com", "Mexico"],
+				 ];
+
+				pdf.autoTable(columns,data,
+				{ 
+					html:'#example1',
+					margin:{ top: 30 }}
+				);
+						
+				//Inicio Encabezado y pie de pagina
+			const pageCount = pdf.internal.getNumberOfPages();
+			for(var i = 1; i <= pageCount; i++) 
+			{
+				pdf.setPage(i);
+												//////// Encabezado ///////
+				//Inicio para imagen de logo 
+				var logo = new Image();
+				logo.src = '../../imagenes/LoogSEACCO.jpg';
+				pdf.addImage(logo, 'JPEG',14,7,24,15);
+				//Fin para imagen de logo 
+
+				//muestra el titulo principal
+				pdf.setFont('Arial');
+				pdf.setFontSize(17);
+				pdf.text("Constructora SEACCO", 70,15,);
+
+				//muestra el titulo secundario
+				pdf.setFont('times');
+				pdf.setFontSize(10);
+				pdf.text("Reporte de asignaciones", 84,20,);
+
+												//////// pie de Pagina ///////
+				//muestra la fecha
+				pdf.setFont('times');
+				pdf.setFontSize(9);
+				var today = new Date();
+				let horas = today.getHours()
+				let jornada = horas >=12 ? 'PM' : 'AM';
+				var newdat = "Fecha: " + today.getDate() + "/" + (today.getMonth()+1) + "/" + today.getFullYear() + " " + (horas % 12) + ":" + today.getMinutes() + ":" + today.getSeconds() + " " + jornada;
+				pdf.text(183-20,297-284,newdat);
+
+				//muestra el numero de pagina
+				pdf.text('Pagina ' + String(i) + '/' + String(pageCount),220-20,297-25,null,null,"right");
+			}
+				//Fin Encabezado y pie de pagina
+
+							pdf.save('Reporte de asignaciones.pdf');
+	})
+  
 <script type="text/javascript" src="../../js/evitar_reenvio.js"></script>
 </html>
