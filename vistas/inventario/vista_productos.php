@@ -122,8 +122,7 @@ if (mysqli_num_rows($roles35) > 0)
                 <form action="" method="post" enctype="multipart/form-data">
                 <!-- Cuerpo del modal Modal -->
                 <div class="modal-body">
-                
-                  <label for="pwd" class="form-label">Id Categoria:</label>
+                <label for="pwd" class="form-label">Id Categoria:</label>
                   <select  value="<?php echo "$genero"; ?>" class="form-select" id="lista1" name="id_categoria" required >
                         <?php
                             include 'conexion/conexion.php';
@@ -133,7 +132,7 @@ if (mysqli_num_rows($roles35) > 0)
                                 while($row = mysqli_fetch_assoc($genero2))
                                 {
                                 $id_genero = $row['ID_CATEGORIA'];
-                                $genero3 =$row['GENERO'];
+                                $genero3 =$row['ID CATEGORIA'];
                          ?>
                           <option value="<?php  echo $id_genero ?>"><?php echo $genero3 ?></option>
                           <?php
@@ -220,7 +219,7 @@ if (mysqli_num_rows($roles35) > 0)
                   include '../../conexion/conexion.php';
                   //para mostrar los datos de la tabla mysql y mostrar en el crud                
                   $sql7 = "SELECT * FROM (tbl_productos c
-                  INNER JOIN tbl_categoria_producto g ON c.ID_CATEGORIA = g.ID_CATEGORIA)";
+                  INNER JOIN tbl_productos g ON c.ID_CATEGORIA = g.ID_CATEGORIA)";
                   $result = mysqli_query($conn, $sql7);
                   if (mysqli_num_rows($result) > 0) {
                   while ($filas= mysqli_fetch_assoc($result)){
@@ -229,12 +228,12 @@ if (mysqli_num_rows($roles35) > 0)
                   <td>
                   <?php 
                           include '../../conexion/conexion.php';
-                          $tablero = "SELECT * FROM tbl_ms_roles_ojetos WHERE ID_ROL='$id_rol7' and ID_OBJETO=4 and PERMISO_ACTUALIZACION=1";
+                          $tablero = "SELECT * FROM tbl_ms_roles_ojetos WHERE ID_ROL='$id_rol7' and ID_OBJETO=12 and PERMISO_ACTUALIZACION=1";
                           $tablero2 = mysqli_query($conn, $tablero);
                           if (mysqli_num_rows($tablero2) > 0)
                           {?>
                               <!-- inicio boton editar -->
-                              <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#myModal2<?php echo $filas['ID_CATEGORIA'] ?>">
+                              <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#myModal2<?php echo $filas['ID_PRODUCTO'] ?>">
                               <i class="fas fa-pencil-alt"></i>
                               </button>  <?php 
                           }
@@ -267,10 +266,10 @@ if (mysqli_num_rows($roles35) > 0)
                             if (mysqli_num_rows($departamento2) > 0) {
                                 while($row = mysqli_fetch_assoc($departamento2))
                                 {
-                                $id_departamentos = $row['ID_GENERO'];
-                                $departamento3 =$row['GENERO'];
+                                $id_departamentos = $row['ID_CATEGORIA'];
+                                $departamento3 =$row['ID CATEGORIA'];
     
-                                if($departamento3 == $filas["GENERO"]){?>
+                                if($departamento3 == $filas["ID CATEGORIA"]){?>
                                   <option value="<?php  echo $id_departamentos; ?>" selected><?php echo $departamento3; ?></option>
                                  <?php
                             }}}// finaliza el if y el while
@@ -309,7 +308,7 @@ if (mysqli_num_rows($roles35) > 0)
                           <input type="hidden" name="ruta"  value="<?php echo $filas['RUTA'] ?>">
                           <?php 
                           include '../../conexion/conexion.php';
-                          $tablero = "SELECT * FROM tbl_ms_roles_ojetos WHERE ID_ROL='$id_rol7' and ID_OBJETO=4 and PERMISO_ELIMINACION=1";
+                          $tablero = "SELECT * FROM tbl_ms_roles_ojetos WHERE ID_ROL='$id_rol7' and ID_OBJETO=12 and PERMISO_ELIMINACION=1";
                           $tablero2 = mysqli_query($conn, $tablero);
                           if (mysqli_num_rows($tablero2) > 0)
                           {?>

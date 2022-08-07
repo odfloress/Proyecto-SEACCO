@@ -2,15 +2,13 @@
 include '../../conexion/conexion.php';
 
 
-// //Variables para recuperar la información de los campos de la vista del crud del portafolio 
+// //Variables para recuperar la información de los campos de la vista del crud de productos
 // $id_imagen=(isset($_POST['id_imagen']))?$_POST['id_imagen']:"";
 
 $id_categoria=(isset($_POST['id_categoria']))?$_POST['id_categoria']:"";
-// $ruta=(isset($_POST['ruta']))?$_POST['ruta']:"";
-// $foto=(isset($_POST['foto']))?$_POST['foto']:"";
 $codigo=(isset($_POST['codigo']))?$_POST['codigo']:"";
 $nombre=(isset($_POST['nombre']))?$_POST['nombre']:"";
-$descripcion_modelo=(isset($_POST['descripcion']))?$_POST['descripcion']:"";
+$descripcion_modelo=(isset($_POST['descripcion_modelo']))?$_POST['descripcion_modelo']:"";
 
 
 //variable para recuperar los botones de la vista del crud del portafolio 
@@ -123,7 +121,7 @@ if(in_array($extencion, $permitidos))
          // fin inserta en la tabla bitacora
         echo '<script>
                  alert("Edición exitosa");
-                 window.location.href="../../vistas/catalogo/vista_portafolio";
+                 window.location.href="../../vistas/catalogo/vista_producto";
               </script>';
 
     }else{
@@ -140,7 +138,7 @@ if(in_array($extencion, $permitidos))
     // fin inserta en la tabla bitacora
     echo '<script type="text/javascript">
             alert("Archivo no permitido");
-            window.location.href="../../vistas/catalogo/vista_portafolio";
+            window.location.href="../../vistas/catalogo/vista_producto";
          </script>';
 }
   
