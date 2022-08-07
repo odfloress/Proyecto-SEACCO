@@ -123,23 +123,28 @@ if (mysqli_num_rows($roles35) > 0)
                 <!-- Cuerpo del modal Modal -->
                 <div class="modal-body">
                 <label for="pwd" class="form-label">Id Categoria:</label>
-                  <select  value="<?php echo "$genero"; ?>" class="form-select" id="lista1" name="id_categoria" required >
+                  <select  value="<?php echo "$id_categoria"; ?>" class="form-select" id="lista1" name="id_categoria" required >
                         <?php
-                            include 'conexion/conexion.php';
-                            $genero = "SELECT * FROM tbl_categoria_producto ORDER BY ID_CATEGORIA";
-                            $genero2 = mysqli_query($conn, $genero);
+                           include '../../conexion/conexion.php';
+                            $id_categoria = "SELECT * FROM tbl_categoria_producto ORDER BY ID_CATEGORIA";
+                            $genero2 = mysqli_query($conn, $id_categoria);
                             if (mysqli_num_rows($genero2) > 0) {
                                 while($row = mysqli_fetch_assoc($genero2))
                                 {
                                 $id_genero = $row['ID_CATEGORIA'];
-                                $genero3 =$row['ID CATEGORIA'];
+                                $genero3 =$row['NOMBRE_CATEGORIA'];
                          ?>
-                          <option value="<?php  echo $id_genero ?>"><?php echo $genero3 ?></option>
+                          <option value="<?php  echo $id_categoria ?>"><?php echo $genero3 ?></option>
                           <?php
                            }}// finaliza el if y el while
                            ?>
                    </select>
-
+                <br>  
+                <label for="">Cantidad Minima</label>
+                <input type="text" class="form-control" autocomplete="off" onkeyup="mayus(this);" name="cantidad_minima" required value="<?php echo "$codigo"; ?>" placeholder="">
+                <br>  
+                <label for="">Cantidad Maxima</label>
+                <input type="text" class="form-control" autocomplete="off" onkeyup="mayus(this);" name="cantidad_maxima" required value="<?php echo "$codigo"; ?>" placeholder="">
                 <br>
                 <label for="">Imagen</label>
                 <input type="file" class="form-control" accept=".jpg, .png, .jpeg, .JPEG, .JPG, .PNG" name="imagen" required value="<?php echo "$nombreimagen"; ?>" placeholder=""  >
@@ -207,6 +212,8 @@ if (mysqli_num_rows($roles35) > 0)
                   <th>Acciones</th>
                   <th>ID PRODUCTO</th>
                   <th>ID CATEGORIA</th>
+                  <th>CANTIDAD MINIMA</th>
+                  <th>CANTIDAD MAXIMA</th>
                   <th>FOTO</th>
                   <th>CODIGO</th>
                   <th>NOMBRE</th>
@@ -276,6 +283,11 @@ if (mysqli_num_rows($roles35) > 0)
                        ?>
                   </select>
                 <br>
+                <label for="">Cantidad Minima</label>
+                <input type="text" class="form-control" autocomplete="off" name="cantidad_minima" required value="<?php echo $filas['CANTIDAD_MIN'] ?>" placeholder="">
+                <br>
+                <label for="">Cantidad Maxima</label>
+                <input type="text" class="form-control" autocomplete="off" name="cantidad_maxima" required value="<?php echo $filas['CANTIDAD_MAX'] ?>" placeholder="">
                 <label for="">Imagen</label><br>
                 <img class="img-thumbnail" width="100px" src="<?php echo $filas['FOTO'] ?>" /><br>
                 <input type="file" class="form-control" accept=".jpg, .png, .jpeg, .JPEG, .JPG, .PNG" name="imagenes" required value="<?php echo "$nombreimagen"; ?>" placeholder=""  >
@@ -323,6 +335,8 @@ if (mysqli_num_rows($roles35) > 0)
 </td>
                       <td><?php echo $filas['ID_PRODUCTO'] ?></td>
                      <td><?php echo $filas['ID_CATEGORIA'] ?></td>
+                     <td><?php echo $filas['CANTIDAD_MIN'] ?></td>
+                     <td><?php echo $filas['CANTIDAD_MAX'] ?></td>
                      <td><img  width="100px" src="<?php echo $filas['FOTO'] ?>" /></td>
                      <td><?php echo $filas['APELLIDO'] ?></td>
                      <td><?php echo $filas['NOMBRE'] ?></td>

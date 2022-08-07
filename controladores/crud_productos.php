@@ -43,8 +43,8 @@ if(in_array($extencion, $permitidos)){
        //           </script>';
      //}else{
             // INICIO INSERTA EN LA TABLA PRODUCTOS
-                $sql = "INSERT INTO tbl_productos ( ID_CATEGORIA, FOTO, CODIGO, NOMBRE, DESCRIPCION_MODELO )
-                VALUES ('$id_categoria', '$nombreimagen', '$codigo', '$nombre', '$descripcion_modelo','$destino$nombreimagen')";
+                $sql = "INSERT INTO tbl_productos ( ID_CATEGORIA, CANTIDAD_MIN, CANTIDAD_MAX, FOTO, CODIGO, NOMBRE, DESCRIPCION_MODELO )
+                VALUES ('$id_categoria','$cantidad_min', '$cantidad_max', '$nombreimagen', '$codigo', '$nombre', '$descripcion_modelo','$destino$nombreimagen')";
                  $res = mysqli_query($conn, $sql);
                 if($res){
                     // inicio inserta en la tabla bitacora
@@ -55,7 +55,7 @@ if(in_array($extencion, $permitidos)){
 
                     echo '<script type="text/javascript">
                             alert("Creado con exito");
-                            window.location.href="../../vistas/personas/vista_productOs.php";
+                            window.location.href="../../vistas/personas/vista_productos.php";
                         </script>';
                 }else{           
                         echo '<script type="text/javascript">
