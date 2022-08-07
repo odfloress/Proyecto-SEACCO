@@ -212,17 +212,13 @@ if (mysqli_num_rows($roles35) > 0)
                   <th>CODIGO</th>
                   <th>NOMBRE</th>
                   <th>DESCRIPCION MODELO</th>
-                  
+
                   </tr>
                   </thead>
                   <tbody>
                   <?php
                   include '../../conexion/conexion.php';
-                  //para mostrar los datos de la tabla mysql y mostrar en el crud
-                 
-
-
-
+                  //para mostrar los datos de la tabla mysql y mostrar en el crud                
                   $sql7 = "SELECT * FROM (tbl_productos c
                   INNER JOIN tbl_categoria_producto g ON c.ID_CATEGORIA = g.ID_CATEGORIA)";
                   $result = mysqli_query($conn, $sql7);
@@ -238,7 +234,7 @@ if (mysqli_num_rows($roles35) > 0)
                           if (mysqli_num_rows($tablero2) > 0)
                           {?>
                               <!-- inicio boton editar -->
-                              <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#myModal2<?php echo $filas['ID_PRODUCTO'] ?>">
+                              <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#myModal2<?php echo $filas['ID_CATEGORIA'] ?>">
                               <i class="fas fa-pencil-alt"></i>
                               </button>  <?php 
                           }
