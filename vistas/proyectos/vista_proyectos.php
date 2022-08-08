@@ -196,7 +196,7 @@ if (mysqli_num_rows($roles35) > 0)
                     <input class="form-control" type="text" name="ubicacion" value="<?php echo $ubicacion; ?>" autocomplete="off"  id="" required onkeypress="return soloLetras(event);" minlength="3" maxlength="255" onkeyup="mayus(this);">
                     <br>
                     <label for="">Fecha inicio</label>
-                    <input class="form-control" type="Date" name="fecha_inicio" value="<?php echo $fecha_inicio; ?>" autocomplete="off" id="" required> 
+                    <input class="form-control" type="Date" name="fecha_inicio" min="2022-08-08" value="<?php echo $fecha_inicio; ?>" autocomplete="off" id="" required> 
                     <br>
                     <label for="">Fecha final</label>
                     <input class="form-control" type="Date" name="fecha_final" value="<?php echo $fecha_final; ?>" autocomplete="off" id="" required>
