@@ -131,23 +131,23 @@ if (mysqli_num_rows($roles35) > 0)
                             if (mysqli_num_rows($genero2) > 0) {
                                 while($row = mysqli_fetch_assoc($genero2))
                                 {
-                                $id_genero = $row['ID_CATEGORIA'];
-                                $genero3 =$row['NOMBRE_CATEGORIA'];
+                                $id_categoria = $row['ID_CATEGORIA'];
+                                $categoria33 =$row['NOMBRE_CATEGORIA'];
                          ?>
-                          <option value="<?php  echo $id_categoria ?>"><?php echo $genero3 ?></option>
+                          <option value="<?php  echo $id_categoria ?>"><?php echo $categoria33 ?></option>
                           <?php
                            }}// finaliza el if y el while
                            ?>
                    </select>
                 <br>  
                 <label for="">Cantidad Minima</label>
-                <input type="text" class="form-control" autocomplete="off" onkeyup="mayus(this);" name="cantidad_minima" required value="<?php echo "$codigo"; ?>" placeholder="">
+                <input type="text" class="form-control" autocomplete="off" onkeyup="mayus(this);" name="cantidad_min" required value="<?php echo "$cantidad_min"; ?>" placeholder="">
                 <br>  
                 <label for="">Cantidad Maxima</label>
-                <input type="text" class="form-control" autocomplete="off" onkeyup="mayus(this);" name="cantidad_maxima" required value="<?php echo "$codigo"; ?>" placeholder="">
+                <input type="text" class="form-control" autocomplete="off" onkeyup="mayus(this);" name="cantidad_max" required value="<?php echo "$cantidad_max"; ?>" placeholder="">
                 <br>
                 <label for="">Imagen</label>
-                <input type="file" class="form-control" accept=".jpg, .png, .jpeg, .JPEG, .JPG, .PNG" name="imagen" required value="<?php echo "$nombreimagen"; ?>" placeholder=""  >
+                <input type="file" class="form-control" accept=".jpg, .png, .jpeg, .JPEG, .JPG, .PNG" name="imagenes" required value="<?php echo "$nombreimagen"; ?>" placeholder=""  >
                 <br>  
                 <label for="">Codigo</label>
                 <input type="text" class="form-control" autocomplete="off" onkeyup="mayus(this);" name="codigo" required value="<?php echo "$codigo"; ?>" placeholder="">
@@ -209,7 +209,7 @@ if (mysqli_num_rows($roles35) > 0)
                 <table id="example1" class="table table-bordered table-striped">
                   <thead>
                   <tr>
-                
+                  <th>ACCIONES</th>
                   <th>ID PRODUCTO</th>
                   <th>ID CATEGORIA</th>
                   <th>CANTIDAD MINIMA</th>
@@ -263,7 +263,7 @@ if (mysqli_num_rows($roles35) > 0)
                                 <!-- Cuerpo del modal Modal -->
                                 <div class="modal-body">
 
-                <label for="pwd" class="form-label">Id Categoria:</label>
+                  <label for="pwd" class="form-label">Id Categoria:</label>
                   <select style="background-color:rgb(240, 244, 245);" class="form-select" id="lista1" name="id_categoria" required >
                     
                     <?php
@@ -288,6 +288,7 @@ if (mysqli_num_rows($roles35) > 0)
                 <br>
                 <label for="">Cantidad Maxima</label>
                 <input type="text" class="form-control" autocomplete="off" name="cantidad_maxima" required value="<?php echo $filas['CANTIDAD_MAX'] ?>" placeholder="">
+                <br>
                 <label for="">Imagen</label><br>
                 <img class="img-thumbnail" width="100px" src="<?php echo $filas['FOTO'] ?>" /><br>
                 <input type="file" class="form-control" accept=".jpg, .png, .jpeg, .JPEG, .JPG, .PNG" name="imagenes" required value="<?php echo "$nombreimagen"; ?>" placeholder=""  >
@@ -307,7 +308,7 @@ if (mysqli_num_rows($roles35) > 0)
 
                                 <!-- pie del modal -->
                                 <div class="modal-footer">
-                                <button type="submit" class="btn btn-primary" name="accion" value="editar" ></button>
+                                <button type="submit" class="btn btn-primary" name="accion" value="editar" >Editar</button>
                                   <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
                                 </div>
                                   <!-- Fin pie del modal -->
@@ -336,7 +337,7 @@ if (mysqli_num_rows($roles35) > 0)
                      <td><?php echo $filas['CANTIDAD_MIN'] ?></td>
                      <td><?php echo $filas['CANTIDAD_MAX'] ?></td>
                      <td><img  width="100px" src="<?php echo $filas['FOTO'] ?>" /></td>
-                     <td><?php echo $filas['FOTO'] ?></td>
+                     
                      <td><?php echo $filas['CODIGO'] ?></td>
                      <td><?php echo $filas['NOMBRE'] ?></td>
                      <td><?php echo $filas['DESCRIPCION_MODELO'] ?></td>

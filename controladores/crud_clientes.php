@@ -75,7 +75,7 @@ if(in_array($extencion, $permitidos)){
 }else{
     // inicio inserta en la tabla bitacora
     $sql = "INSERT INTO tbl_bitacora (USUARIO, ACCION, OBSERVACION)
-    VALUES ('$usuario1[usuario]', 'INTENTO', 'NO LOGRO INSERTAR YA QUE EL ARCHIVO NO ERA IMAGEN EN LA PATALLA CLINETES')";
+    VALUES ('$usuario1[usuario]', 'INTENTO', 'NO LOGRO INSERTAR YA QUE EL ARCHIVO NO ERA IMAGEN EN LA PATALLA CLIENTES')";
     if (mysqli_query($conn, $sql)) {} else {}
     // fin inserta en la tabla bitacora
     echo '<script type="text/javascript">
