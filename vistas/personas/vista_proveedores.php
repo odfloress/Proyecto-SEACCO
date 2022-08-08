@@ -129,7 +129,7 @@ if (mysqli_num_rows($roles35) > 0)
                 <!-- Fin Cuerpo del modal Modal -->
                 <!-- pie del modal -->
                 <div class="modal-footer">
-      	            <button type="submit" name="accion" value="agregar" class="btn btn-primary" onclick="return confirm('¿Desea agregar el proveedor?')">Agregar</button>
+      	            <button type="submit" name="accion" value="agregar" class="btn btn-primary" >Agregar</button>
                     <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
                 </div>
                 <!-- Fin pie del modal -->
@@ -247,7 +247,7 @@ if (mysqli_num_rows($roles35) > 0)
 
                                 <!-- pie del modal -->
                                 <div class="modal-footer">
-                                <button type="submit" name="accion" value="editar" class="btn btn-primary" onclick="return confirm('¿Desea editar el proveedor?')">Guardar</button>
+                                <button type="submit" name="accion" value="editar" class="btn btn-primary">Guardar</button>
                                   <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
                                 </div>
                               </form>
@@ -404,6 +404,9 @@ if (mysqli_num_rows($roles35) > 0)
   });
 </script>
 <!-- Fin muestra los botones y traduce y Agrupar -->
+<!-- Enlace Script para que solo permita letras -->
+<script type="text/javascript" src="../../js/solo_letras.js"></script>
+
 <!-- Enlace Script para que convierta a mayusculas las teclas que se van pulsando -->
 <script type="text/javascript" src="../../js/converir_a_mayusculas.js"></script>
 
@@ -419,10 +422,10 @@ if (mysqli_num_rows($roles35) > 0)
    
 	event.preventDefault()
  
-				const pdf = new jsPDF('p', 'mm', 'letter');			
+				const pdf = new jsPDF('L', 'mm', 'letter');			
         	
 
-				var columns = ["", "", "", "", ""];
+				var columns = ["", "", "", "", "","",""];
 				var data = [
 				[1, "Hola", "hola@gmail.com", "Mexico"],
 				 ];
@@ -448,12 +451,12 @@ if (mysqli_num_rows($roles35) > 0)
 				//muestra el titulo principal
 				pdf.setFont('Arial');
 				pdf.setFontSize(17);
-				pdf.text("Constructora SEACCO", 70,15,);
+				pdf.text("Constructora SEACCO S.De R.L. ", 70,15,);
 
 				//muestra el titulo secundario
 				pdf.setFont('times');
-				pdf.setFontSize(10);
-				pdf.text("Reporte de proveedores", 84,20,);
+				pdf.setFontSize(14);
+				pdf.text("Reporte de proveedores", 84,25,);
 
 												//////// pie de Pagina ///////
 				//muestra la fecha
@@ -463,17 +466,19 @@ if (mysqli_num_rows($roles35) > 0)
 				let horas = today.getHours()
 				let jornada = horas >=12 ? 'PM' : 'AM';
 				var newdat = "Fecha: " + today.getDate() + "/" + (today.getMonth()+1) + "/" + today.getFullYear() + " " + (horas % 12) + ":" + today.getMinutes() + ":" + today.getSeconds() + " " + jornada;
-				pdf.text(183-20,297-284,newdat);
+				pdf.text(250-20,297-284,newdat);
 
 				//muestra el numero de pagina
 				pdf.text('Pagina ' + String(i) + '/' + String(pageCount),220-20,297-25,null,null,"right");
 			}
 				//Fin Encabezado y pie de pagina
 
-							pdf.save('Reporte de proveedores.pdf');
+							pdf.save('Reporte de Proveedores.pdf');
 	})
   
 </script>
 <!-- // Fin para exportar en pdf // -->
 <script type="text/javascript" src="../../js/evitar_reenvio.js"></script>
 </html>
+
+
