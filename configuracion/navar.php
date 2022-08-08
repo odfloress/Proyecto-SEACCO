@@ -397,7 +397,7 @@
           <!-- fin Menu proyectos --> 
 
           <!-- inicio Menu reportes -->
-          <li class="nav-item">
+          <!-- <li class="nav-item">
             <a href="#" class="nav-link">
               <i class="fas fa-chart-pie"></i>
               <p>
@@ -423,7 +423,7 @@
                 </a>
               </li>
             </ul>
-          </li>
+          </li> -->
           <!-- Fin Menu reportes -->
 
           <!-- inicio Menu Ajustes -->
