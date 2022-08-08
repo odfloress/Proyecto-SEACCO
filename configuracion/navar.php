@@ -397,7 +397,7 @@
           <!-- fin Menu proyectos --> 
 
           <!-- inicio Menu reportes -->
-          <li class="nav-item">
+          <!-- <li class="nav-item">
             <a href="#" class="nav-link">
               <i class="fas fa-chart-pie"></i>
               <p>
@@ -423,7 +423,7 @@
                 </a>
               </li>
             </ul>
-          </li>
+          </li> -->
           <!-- Fin Menu reportes -->
 
           <!-- inicio Menu Ajustes -->
@@ -512,6 +512,11 @@
               <li class="nav-item">
                 <a href="http://localhost/SEACCO/vistas/mantenimiento/vista_genero.php" class="nav-link">
                   <p>Generos</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="http://localhost/SEACCO/vistas/mantenimiento/vista_area.php" class="nav-link">
+                  <p>Areas de Empleo</p>
                 </a>
               </li>
               <li class="nav-item">

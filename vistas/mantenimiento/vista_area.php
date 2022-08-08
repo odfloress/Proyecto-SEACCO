@@ -8,7 +8,7 @@ if(!isset($_SESSION['usuario'])){
         die();
         
 }
-include '../../controladores/crud_parametros.php';
+include '../../controladores/crud_area.php';
 // Selecciona el id del rol del usuario logueado
 include '../../conexion/conexion.php';
 $usuario = $_SESSION;
@@ -23,16 +23,16 @@ if (mysqli_num_rows($roles35) > 0)
 }
 
                //valida si tiene permisos de consultar la pantalla 
-               $permiso1 = "SELECT * FROM tbl_ms_roles_ojetos WHERE ID_ROL='$id_rol7' and ID_OBJETO=28 and PERMISO_CONSULTAR=0";
-               $permiso2 = mysqli_query($conn, $permiso1);
-               if (mysqli_num_rows($permiso2) > 0)
+               $profesion = "SELECT * FROM tbl_ms_roles_ojetos WHERE ID_ROL='$id_rol7' and ID_OBJETO=30 and PERMISO_CONSULTAR=0";
+               $profesionn = mysqli_query($conn, $profesion);
+               if (mysqli_num_rows($profesionn) > 0)
                {
                 header('Location: ../../vistas/tablero/vista_perfil.php');
                 die();
                }else{
-                      $permiso1 = "SELECT * FROM tbl_ms_roles_ojetos WHERE ID_ROL='$id_rol7' and ID_OBJETO=28 and PERMISO_CONSULTAR=1";
-                      $permiso2 = mysqli_query($conn, $permiso1);
-                      if (mysqli_num_rows($permiso2) > 0){}
+                      $profesion = "SELECT * FROM tbl_ms_roles_ojetos WHERE ID_ROL='$id_rol7' and ID_OBJETO=30 and PERMISO_CONSULTAR=1";
+                      $profesionn = mysqli_query($conn, $profesion);
+                      if (mysqli_num_rows($profesionn) > 0){}
                       else{
                         header('Location: ../../vistas/tablero/vista_perfil.php');
                         die();
@@ -40,7 +40,7 @@ if (mysqli_num_rows($roles35) > 0)
                }
                 // inicio inserta en la tabla bitacora
                 $sql = "INSERT INTO tbl_bitacora (USUARIO, ACCION, OBSERVACION)
-                VALUES ('$usuario[usuario]', 'CONSULTO', 'CONSULTO LA PANTALLA DE SEGURIDAD DE PARAMETROS')";
+                VALUES ('$usuario1[usuario]', 'CONSULTO', 'CONSULTO LA PANTALLA  ADMINISTRATIVA DE AREAS')";
                 if (mysqli_query($conn, $sql)) {} else {}
                 // fin inserta en la tabla bitacora
 
@@ -51,14 +51,14 @@ if (mysqli_num_rows($roles35) > 0)
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Parametros</title>
+  <title>Areas</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
     <!-- enlace del scritpt para evitar si preciona F12, si preciona Ctrl+Shift+I, si preciona Ctr+u  -->
     <script type="text/javascript" src="../../js/evita_ver_codigo_utilizando_teclas.js"></script>
-    <!-- /// para exportar en pdf /// -->
-    <script type="text/javascript" src="../../js/complemento_1_jspdf.min.js"></script>
+      <!-- /// para exportar en pdf /// -->
+   <script type="text/javascript" src="../../js/complemento_1_jspdf.min.js"></script>
 	<script type="text/javascript" src="../../js/complemento_2_jspdf.plugin.autotable.min.js"></script>
     
   <?php include '../../configuracion/navar.php' ?>
@@ -76,25 +76,44 @@ if (mysqli_num_rows($roles35) > 0)
             <!-- Inicio de modal de agregar -->
 <div class="container mt-3">
   
-        <h3>Parametros</h3> <br> 
-          <!-- Valida si tiene permiso para insertar un PERMISO -->
-          <?php 
-                          include '../../conexion/conexion.php';
-                          $tablero = "SELECT * FROM tbl_ms_roles_ojetos WHERE ID_ROL='$id_rol7' and ID_OBJETO=28 and PERMISO_INSERCION=1";
-                          $tablero2 = mysqli_query($conn, $tablero);
-                          if (mysqli_num_rows($tablero2) > 0)
-                          {?>
-                             <button type="button" value="agregar" name="accion" 
-                        onclick="return confirm('¿La opcionde agregar no esta dismponible en esta vista?')"
-                        type="" class="btn btn-primary btn-lg">Agregar
-                        
-                    </button> <?php 
-                          }
-                        ?>
+        <h3>Areas</h3> 
+    
         
     </div>
 
+<!-- El Modal -->
+    <div class="modal" id="myModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <!-- Encabezado del modal -->
+                <form action="" method="post">
+                <div class="modal-header">
+                    <h4 class="modal-title">Nueva Area</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <!-- Fin Encabezado del modal -->
 
+                <!-- Cuerpo del modal Modal -->
+                <div class="modal-body">
+               
+                    <label for="">Nombre de la Area:</label>
+                    <input type="text" class="form-control" name="area"  value="<?php echo $area7; ?>" placeholder="" autocomplete = "off"  onkeypress="return soloLetras(event);" minlength="3" maxlength="100" 
+                     onkeyup="mayus(this);"  >
+                    <br>
+                
+                </div>
+                <!-- Fin Cuerpo del modal Modal -->
+                <!-- pie del modal -->
+                <div class="modal-footer">
+      	            <button type="submit" name="accion" value="agregar" class="btn btn-primary" onclick="return confirm('¿Desea agregar el Area?')">Agregar</button>
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
+                </div>
+                <!-- Fin pie del modal -->
+                </form>
+            </div>
+        </div>
+    </div>
+    <!-- Fin  de modal de agregar --> <br>
           </div>
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
@@ -120,11 +139,25 @@ if (mysqli_num_rows($roles35) > 0)
             <div class="card table-responsive">
               <div class="card-header">
               <form id="form" action="" method="post">
-                <!-- inicio ocultar html -->
-                <button type="submit"  name="accion" value="reporte_pdf" class="btn btn-secondary buttons-pdf buttons-html5"  onclick="return confirm('¿Quieres generar reporte de Parametros?')" onclick="textToPdf()"><span>Reporte PDF</span></button>
+                    <div class="btn-group">
+                    <?php 
+      include '../../conexion/conexion.php';
+      $area1 = "SELECT * FROM tbl_ms_roles_ojetos WHERE ID_ROL='$id_rol7' and ID_OBJETO=30 and PERMISO_INSERCION=1";
+      $area2 = mysqli_query($conn, $area1);
+      if (mysqli_num_rows($area2) > 0)
+       {
+         echo '<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal">
+                    Nueva Area
+                </button>';
+                          }
+                        ?> 
+              <button type="submit"  name="accion" value="reporte_pdf" class="btn btn-secondary buttons-pdf buttons-html5"  onclick="return confirm('¿Quieres generar reporte de Areas?')" onclick="textToPdf()"><span>Reporte PDF</span></button>
+	               </div>
+            </form>
+                <!-- <h3 class="card-title">Profesiones</h3> -->
                 
               </div>
-              </form>
+              
               <!-- /.card-header -->
               <div class="card-body ">
                 <table id="example1" class="table table-bordered table-striped">
@@ -132,10 +165,10 @@ if (mysqli_num_rows($roles35) > 0)
                   <tr>
                   <th>Acciones</th>
                   <th>Id</th>
-                  <th>Parametro</th>
-                  <th>Valor</th>
-                  <th>Fecha Creacion</th>
-                  <th>Fecha Modificacion</th>
+                  <th>Area</th>
+                  
+                  
+                  
                   </tr>
                   </thead>
                   <tbody>
@@ -147,12 +180,12 @@ if (mysqli_num_rows($roles35) > 0)
                   <td>
                   <?php 
                           include '../../conexion/conexion.php';
-                          $permiso_editar = "SELECT * FROM tbl_ms_roles_ojetos WHERE ID_ROL='$id_rol7' and ID_OBJETO=28 and PERMISO_ACTUALIZACION=1";
-                          $permiso_editar2 = mysqli_query($conn, $permiso_editar);
-                          if (mysqli_num_rows($permiso_editar2) > 0)
+                          $area1 = "SELECT * FROM tbl_ms_roles_ojetos WHERE ID_ROL='$id_rol7' and ID_OBJETO=30 and PERMISO_ACTUALIZACION=1";
+                          $area2 = mysqli_query($conn, $area1);
+                          if (mysqli_num_rows($area2) > 0)
                           {?>
                                  <!-- inicio boton editar -->
-                      <button type="button"  class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#myModal2<?php echo $filas['ID_PARAMETRO'] ?>" >
+                      <button type="button"  class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#myModal2<?php echo $filas['ID_AREA'] ?>" >
                       <i class="fas fa-pencil-alt"></i>
                       </button> <?php 
                           }
@@ -161,13 +194,13 @@ if (mysqli_num_rows($roles35) > 0)
                      
 
                           <!-- El Modal -->
-                          <div class="modal" id="myModal2<?php echo $filas['ID_PARAMETRO'] ?>">
+                          <div class="modal" id="myModal2<?php echo $filas['ID_AREA'] ?>">
                             <div class="modal-dialog">
                               <div class="modal-content">
 
                                 <!-- Encabezado del modal -->
                                 <div class="modal-header">
-                                  <h4 class="modal-title">Editar Parametro</h4>
+                                  <h4 class="modal-title">Editar Area</h4>
                                   <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                                 </div>
                                 <!-- Fin Encabezado del modal -->
@@ -176,28 +209,21 @@ if (mysqli_num_rows($roles35) > 0)
                                 <!-- Cuerpo del modal Modal -->
                                 <form action="" method="post">
                                           <div class="modal-body">
-                                            <input type="hidden" name="nombre_anterior" value="<?php echo $filas['ID_PARAMETRO'] ?>">
-                                              <label for="">Id Parametro:</label>
-                                              <input type="text" readonly class="form-control" name="id_parametro" required value="<?php echo $filas['ID_PARAMETRO'] ?>" placeholder=""  >
+                                            <input type="hidden" name="nombre_anterior" value="<?php echo $filas['AREA'] ?>">
+                                              <label for="">Id profesion</label>
+                                              <input type="text" readonly class="form-control" name="id_area" required value="<?php echo $filas['ID_AREA'] ?>" placeholder=""  >
                                               <br>
-                                              <label for="">Parametro:</label>
-                                              <input type="text" class="form-control" readonly name="parametro" required value="<?php echo $filas['PARAMETRO'] ?>" placeholder=""  autocomplete = "off"  onkeypress="return soloLetras(event);" minlength="3" maxlength="20" 
-                                                onkeyup="mayus(this);" required >
-                                                <label for="">Valor:</label>
-                                              <input type="text" class="form-control" name="valor" required value="<?php echo $filas['VALOR'] ?>" placeholder=""  autocomplete = "off"  onkeypress="return solonumero(event)" required minlength="1" maxlength="1" >
-                                                <label for="">Fecha de Creacion:</label>
-                                              <input type="text" class="form-control" readonly name="creado" required value="<?php echo $filas['FECHA_CREACION'] ?>" placeholder=""  autocomplete = "off"  onkeypress="return soloLetras(event);" minlength="3" maxlength="20" 
-                                                onkeyup="mayus(this);" required >
-                                                <label for="">Fecha de Modificacion:</label>
-                                              <input type="text" class="form-control" readonly name="mofificacion" required value="<?php echo $filas['FECHA_MODIFICACION'] ?>" placeholder=""  autocomplete = "off"  onkeypress="return soloLetras(event);" minlength="3" maxlength="20" 
-                                                onkeyup="mayus(this);" required >
+                                              <label for="">Profesión</label>
+                                              <input type="text" class="form-control" name="area" required value="<?php echo $filas['AREA'] ?>" placeholder=""  autocomplete = "off"  onkeypress="return soloLetras(event);" minlength="3" maxlength="100" 
+                                                onkeyup="mayus(this);"  >
+                                             
                                           
                                           </div>
                                 <!-- Fin Cuerpo del modal Modal -->
 
                                 <!-- pie del modal -->
                                 <div class="modal-footer">
-                                <button type="submit" name="accion" value="editar" class="btn btn-primary" onclick="return confirm('¿Desea editar el parametro?')">Guardar</button>
+                                <button type="submit" name="accion" value="editar" class="btn btn-primary" onclick="return confirm('¿Desea editar el Area?')">Guardar</button>
                                   <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
                                 </div>
                              
@@ -210,26 +236,23 @@ if (mysqli_num_rows($roles35) > 0)
                          
                           <?php 
                           include '../../conexion/conexion.php';
-                          $tablero = "SELECT * FROM tbl_ms_roles_ojetos WHERE ID_ROL='$id_rol7' and ID_OBJETO=28 and PERMISO_ELIMINACION=1";
-                          $tablero2 = mysqli_query($conn, $tablero);
-                          if (mysqli_num_rows($tablero2) > 0)
+                          $area1 = "SELECT * FROM tbl_ms_roles_ojetos WHERE ID_ROL='$id_rol7' and ID_OBJETO=30 and PERMISO_ELIMINACION=1";
+                          $area2 = mysqli_query($conn, $area1);
+                          if (mysqli_num_rows($area2) > 0)
                           {?>
                              <button  value="eliminar" name="accion" 
-                        onclick="return confirm('¿La opcion eliminar no esta disponible en esta vista?')"
+                        onclick="return confirm('¿Quieres eliminar este dato?')"
                         type="submit" class="btn btn-danger ">
                         <i class="fas fa-trash-alt"></i>
-                    </button> <?php 
+                    </button><?php 
                           }
                         ?>
                           
                       </form>
                     
 </td>
-                     <td ><?php echo $filas['ID_PARAMETRO'] ?></td>
-                     <td><?php echo $filas['PARAMETRO'] ?></td>
-                     <td ><?php echo $filas['VALOR'] ?></td>
-                     <td><?php echo $filas['FECHA_CREACION'] ?></td>
-                     <td><?php echo $filas['FECHA_MODIFICACION'] ?></td>
+                     <td ><?php echo $filas['ID_AREA'] ?></td>
+                     <td><?php echo $filas['AREA'] ?></td>
                      
                     
       </tr>
@@ -237,11 +260,9 @@ if (mysqli_num_rows($roles35) > 0)
                 </tbody>
                 </table>
               </div>
-                        
               <!-- /.card-body -->
             </div>
             <!-- /.card -->
-            
           </div>
           <!-- /.col -->
         </div>
@@ -360,6 +381,7 @@ if (mysqli_num_rows($roles35) > 0)
  <!-- Enlace Script para quitar espacios en blanco -->
  <script type="text/javascript" src="../../js/quitar_espacios.js"></script>
 </body>
+
 <!-- // Inicio para exportar en pdf // -->
 <script>
 	//para descar al tocar el boton	
@@ -402,7 +424,7 @@ if (mysqli_num_rows($roles35) > 0)
 				//muestra el titulo secundario
 				pdf.setFont('times');
 				pdf.setFontSize(10);
-				pdf.text("Reporte de Parametros", 84,20,);
+				pdf.text("Reporte de Areas de Empleo", 84,20,);
 
 												//////// pie de Pagina ///////
 				//muestra la fecha
@@ -419,20 +441,10 @@ if (mysqli_num_rows($roles35) > 0)
 			}
 				//Fin Encabezado y pie de pagina
 
-							pdf.save('Reporte de Parametros.pdf');
+							pdf.save('Reporte de Areas.pdf');
 	})
   
 </script>
 <!-- // Fin para exportar en pdf // -->
 <script type="text/javascript" src="../../js/evitar_reenvio.js"></script>
-<script type="text/javascript"> function solonumero(e) {
-        tecla = (document.all) ? e.keyCode : e.which;
-        if (tecla==8) return true;
-        else if (tecla==0||tecla==9)  return true;
-       // patron =/[0-9\s]/;// -> solo letras
-        patron =/[0-9\s]/;// -> solo numeros
-        te = String.fromCharCode(tecla);
-        return patron.test(te);
-    }
-	</script>
 </html>
