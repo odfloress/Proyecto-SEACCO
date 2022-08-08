@@ -52,7 +52,7 @@
 	<br>
 		<label>Selecciona un punto de restauración</label><br>
 		<select name="restorePoint">
-			<option value="" disabled="" selected="">Selecciona un punto de restauración</option>
+			<option value="" disabled="" selected="">Día_Mes_Año_(H:M:S)</option>
 			<?php
 				include_once './Connet.php';
 				$ruta=BACKUP_PATH;
