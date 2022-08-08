@@ -397,7 +397,7 @@
           <!-- fin Menu proyectos --> 
 
           <!-- inicio Menu reportes -->
-          <li class="nav-item">
+          <!-- <li class="nav-item">
             <a href="#" class="nav-link">
               <i class="fas fa-chart-pie"></i>
               <p>
@@ -423,7 +423,7 @@
                 </a>
               </li>
             </ul>
-          </li>
+          </li> -->
           <!-- Fin Menu reportes -->
 
           <!-- inicio Menu Ajustes -->
@@ -473,7 +473,8 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a href="http://localhost/SEACCO/vistas/ajustes/vista_backup.php" class="nav-link">
+              <a href="http://localhost/SEACCO/Respaldo_BD/php/index.php" class="nav-link">
+                <!-- <a href="http://localhost/SEACCO/vistas/ajustes/vista_backup.php" class="nav-link"> -->
                   <p>Backup BD</p>
                 </a>
               </li>
@@ -502,15 +503,20 @@
                   <p>Profesiones</p>
                 </a>
               </li>
-              <li class="nav-item">
+              <!-- <li class="nav-item">
                 <a href="/SEACCO/vistas/mantenimiento/vista_departamentos.php" class="nav-link">
                   <p>Departamentos</p>
                 </a>
-              </li>
+              </li> -->
              
               <li class="nav-item">
                 <a href="http://localhost/SEACCO/vistas/mantenimiento/vista_genero.php" class="nav-link">
                   <p>Generos</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="http://localhost/SEACCO/vistas/mantenimiento/vista_area.php" class="nav-link">
+                  <p>Areas de Empleo</p>
                 </a>
               </li>
               <li class="nav-item">

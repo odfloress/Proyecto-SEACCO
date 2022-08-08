@@ -77,7 +77,20 @@ if (mysqli_num_rows($roles35) > 0)
 <div class="container mt-3">
   
         <h3>Parametros</h3> <br> 
-         
+          <!-- Valida si tiene permiso para insertar un PERMISO -->
+          <?php 
+                          include '../../conexion/conexion.php';
+                          $tablero = "SELECT * FROM tbl_ms_roles_ojetos WHERE ID_ROL='$id_rol7' and ID_OBJETO=28 and PERMISO_INSERCION=1";
+                          $tablero2 = mysqli_query($conn, $tablero);
+                          if (mysqli_num_rows($tablero2) > 0)
+                          {?>
+                             <button type="button" value="agregar" name="accion" 
+                        onclick="return confirm('¿La opcionde agregar no esta dismponible en esta vista?')"
+                        type="" class="btn btn-primary btn-lg">Agregar
+                        
+                    </button> <?php 
+                          }
+                        ?>
         
     </div>
 
@@ -195,6 +208,19 @@ if (mysqli_num_rows($roles35) > 0)
                           </div>
                           <!-- fin boton editar -->
                          
+                          <?php 
+                          include '../../conexion/conexion.php';
+                          $tablero = "SELECT * FROM tbl_ms_roles_ojetos WHERE ID_ROL='$id_rol7' and ID_OBJETO=28 and PERMISO_ELIMINACION=1";
+                          $tablero2 = mysqli_query($conn, $tablero);
+                          if (mysqli_num_rows($tablero2) > 0)
+                          {?>
+                             <button  value="eliminar" name="accion" 
+                        onclick="return confirm('¿La opcion eliminar no esta disponible en esta vista?')"
+                        type="submit" class="btn btn-danger ">
+                        <i class="fas fa-trash-alt"></i>
+                    </button> <?php 
+                          }
+                        ?>
                           
                       </form>
                     

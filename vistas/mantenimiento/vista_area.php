@@ -2,14 +2,13 @@
 session_start();
 if(!isset($_SESSION['usuario'])){
  
-        header('Location: ../iniciar_sesion/index_login.php');
+        header('Location: ../../_login.php');
         session_unset();
         session_destroy();
         die();
         
 }
-
-include '../../controladores/crud_portafolio.php';
+include '../../controladores/crud_area.php';
 // Selecciona el id del rol del usuario logueado
 include '../../conexion/conexion.php';
 $usuario = $_SESSION;
@@ -24,120 +23,97 @@ if (mysqli_num_rows($roles35) > 0)
 }
 
                //valida si tiene permisos de consultar la pantalla 
-               $tablero = "SELECT * FROM tbl_ms_roles_ojetos WHERE ID_ROL='$id_rol7' and ID_OBJETO=7 and PERMISO_CONSULTAR=0";
-               $tablero2 = mysqli_query($conn, $tablero);
-               if (mysqli_num_rows($tablero2) > 0)
+               $profesion = "SELECT * FROM tbl_ms_roles_ojetos WHERE ID_ROL='$id_rol7' and ID_OBJETO=30 and PERMISO_CONSULTAR=0";
+               $profesionn = mysqli_query($conn, $profesion);
+               if (mysqli_num_rows($profesionn) > 0)
                {
                 header('Location: ../../vistas/tablero/vista_perfil.php');
                 die();
                }else{
-                $role = "SELECT * FROM tbl_ms_roles_ojetos WHERE ID_ROL='$id_rol7' and ID_OBJETO=7 and PERMISO_CONSULTAR=1";
-                $roless = mysqli_query($conn, $role);
-                if (mysqli_num_rows($roless) > 0){}
-                else{
-                  header('Location: ../../vistas/tablero/vista_perfil.php');
-                  die();
-                }
-         }
+                      $profesion = "SELECT * FROM tbl_ms_roles_ojetos WHERE ID_ROL='$id_rol7' and ID_OBJETO=30 and PERMISO_CONSULTAR=1";
+                      $profesionn = mysqli_query($conn, $profesion);
+                      if (mysqli_num_rows($profesionn) > 0){}
+                      else{
+                        header('Location: ../../vistas/tablero/vista_perfil.php');
+                        die();
+                      }
+               }
                 // inicio inserta en la tabla bitacora
                 $sql = "INSERT INTO tbl_bitacora (USUARIO, ACCION, OBSERVACION)
-                VALUES ('$usuario1[usuario]', 'CONSULTO', 'CONSULTO LA PANTALLA  ADMINISTRATIVA DEL PORTAFOLIO')";
+                VALUES ('$usuario1[usuario]', 'CONSULTO', 'CONSULTO LA PANTALLA  ADMINISTRATIVA DE AREAS')";
                 if (mysqli_query($conn, $sql)) {} else {}
                 // fin inserta en la tabla bitacora
+
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Portafolio</title>
+  <title>Areas</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
-   <!-- enlace del scritpt para evitar si preciona F12, si preciona Ctrl+Shift+I, si preciona Ctr+u  -->
-   <script type="text/javascript" src="../../js/evita_ver_codigo_utilizando_teclas.js"></script>
-         <!-- /// para exportar en pdf /// -->
+    <!-- enlace del scritpt para evitar si preciona F12, si preciona Ctrl+Shift+I, si preciona Ctr+u  -->
+    <script type="text/javascript" src="../../js/evita_ver_codigo_utilizando_teclas.js"></script>
+      <!-- /// para exportar en pdf /// -->
    <script type="text/javascript" src="../../js/complemento_1_jspdf.min.js"></script>
 	<script type="text/javascript" src="../../js/complemento_2_jspdf.plugin.autotable.min.js"></script>
-
-
+    
   <?php include '../../configuracion/navar.php' ?>
   <!-- Inicio evita el click derecho de la pagina -->
 <body oncontextmenu="return false">
 <!-- Fin evita el click derecho de la pagina --> 
   <!-- Content Wrapper. Contains page content -->
-  <div class="content-wrapper"><center> <BR></BR><h3>PORTAFOLIO</h3> </center>
+  <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <div class="container-fluid">
         <div class="row mb-2">
-          <div class="col-sm-6">
+          <div class="col-sm-2">
             <h1></h1>
             <!-- Inicio de modal de agregar -->
 <div class="container mt-3">
-<?php 
-      include '../../conexion/conexion.php';
-      $tablero = "SELECT * FROM tbl_ms_roles_ojetos WHERE ID_ROL='$id_rol7' and ID_OBJETO=7 and PERMISO_INSERCION=1";
-      $tablero2 = mysqli_query($conn, $tablero);
-      if (mysqli_num_rows($tablero2) > 0)
-       {
-         echo '<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal">
-                 Nuevo
-               </button>';
-                          }
-                        ?>
+  
+        <h3>Areas</h3> 
+    
         
     </div>
-    
+
 <!-- El Modal -->
     <div class="modal" id="myModal">
         <div class="modal-dialog">
             <div class="modal-content">
                 <!-- Encabezado del modal -->
+                <form action="" method="post">
                 <div class="modal-header">
-                    <h4 class="modal-title">Nuevo </h4>
+                    <h4 class="modal-title">Nueva Area</h4>
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
                 <!-- Fin Encabezado del modal -->
-                <form action="" method="post" enctype="multipart/form-data">
+
                 <!-- Cuerpo del modal Modal -->
                 <div class="modal-body">
-                <label for="">Tipo</label>
-                <select  class="form-select" id="sel2" name="tipo">
-                  <option value="PORTAFOLIO">PORTAFOLIO</option>
-                  <option value="CARRUCEL_PORTAFOLIO">CARRUCEL PORTAFOLIO</option>
-                </select>
+               
+                    <label for="">Nombre de la Area:</label>
+                    <input type="text" class="form-control" name="area"  value="<?php echo $area7; ?>" placeholder="" autocomplete = "off"  onkeypress="return soloLetras(event);" minlength="3" maxlength="100" 
+                     onkeyup="mayus(this);"  >
                     <br>
-                    <label for="">Imagen</label>
-                    <input type="file" class="form-control" accept=".jpg, .png, .jpej, .JPEG, .JPG, .PNG" name="imagenes" required value="<?php echo "$nombreimagen"; ?>" placeholder=""  >
-                    <br>
-                    <label for="">Titulo</label>
-                    <input type="text" class="form-control"  name="titulo" required value="<?php echo "$titulo"; ?>" placeholder="" 
-                    autocomplete = "off"  onkeypress="return soloLetras(event);" minlength="3" maxlength="50" onkeyup="mayus(this);"  >
-                    <br>
-                    <label for="">Descripción</label>
-                    <TEXtarea  style="background-color: white;" name="descripcion" class="form-control"name="" id="" cols="40" rows="5"
-                    autocomplete = "off"  onkeypress="return soloLetras(event);" minlength="3" maxlength="50" onkeyup="mayus(this);" ><?php echo "$descripcion"; ?></TEXtarea>
-                
-                    <br>
-                    
                 
                 </div>
                 <!-- Fin Cuerpo del modal Modal -->
                 <!-- pie del modal -->
                 <div class="modal-footer">
-                
-      	            <button type="submit" name="accion" value="agregar" class="btn btn-primary" onclick="return confirm('¿Quieres insertar este dato?')">Agregar</button>
+      	            <button type="submit" name="accion" value="agregar" class="btn btn-primary" onclick="return confirm('¿Desea agregar el Area?')">Agregar</button>
                     <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
                 </div>
                 <!-- Fin pie del modal -->
+                </form>
             </div>
         </div>
     </div>
-    </form>
     <!-- Fin  de modal de agregar --> <br>
-
- 
           </div>
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
@@ -160,129 +136,128 @@ if (mysqli_num_rows($roles35) > 0)
            
             <!-- /.card -->
             
-            <div class="card">
+            <div class="card table-responsive">
               <div class="card-header">
               <form id="form" action="" method="post">
-              <button type="submit"  name="accion" value="reporte_pdf" class="btn btn-secondary buttons-pdf buttons-html5"  onclick="return confirm('¿Quieres generar reporte de portafolio?')" onclick="textToPdf()"><span>Reporte PDF</span></button>
-	            </form>
-                <!-- <h3 class="card-title">PORTAFOLIO</h3> -->
+                    <div class="btn-group">
+                    <?php 
+      include '../../conexion/conexion.php';
+      $area1 = "SELECT * FROM tbl_ms_roles_ojetos WHERE ID_ROL='$id_rol7' and ID_OBJETO=30 and PERMISO_INSERCION=1";
+      $area2 = mysqli_query($conn, $area1);
+      if (mysqli_num_rows($area2) > 0)
+       {
+         echo '<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal">
+                    Nueva Area
+                </button>';
+                          }
+                        ?> 
+              <button type="submit"  name="accion" value="reporte_pdf" class="btn btn-secondary buttons-pdf buttons-html5"  onclick="return confirm('¿Quieres generar reporte de Areas?')" onclick="textToPdf()"><span>Reporte PDF</span></button>
+	               </div>
+            </form>
+                <!-- <h3 class="card-title">Profesiones</h3> -->
+                
               </div>
               
               <!-- /.card-header -->
-              <div class="card-body">
+              <div class="card-body ">
                 <table id="example1" class="table table-bordered table-striped">
                   <thead>
                   <tr>
                   <th>Acciones</th>
-                  <!-- <th>Id</th> -->
-                  <th>Tipo</th>
-                  <th>Imagen</th>
-                  <th>Titulo</th>
-                  <th>Descripción</th>
+                  <th>Id</th>
+                  <th>Area</th>
+                  
+                  
                   
                   </tr>
                   </thead>
                   <tbody>
-                  <?php
-                  include '../../conexion/conexion.php';
-                  //para mostrar los datos de la tabla mysql y mostrar en el crud
-                  $sql7 = "SELECT * FROM tbl_bienvenida_portafolio WHERE TIPO NOT IN (SELECT TIPO FROM  tbl_bienvenida_portafolio WHERE TIPO = 'BIENVENIDA' )";
-                  $result = mysqli_query($conn, $sql7);
-                  if (mysqli_num_rows($result) > 0) {
-                  while ($filas= mysqli_fetch_assoc($result)){
-                    ?>
+                    <?php 
+                    while ($filas= mysqli_fetch_assoc($result)){
+ 
+                     ?>
                   <tr>
                   <td>
                   <?php 
                           include '../../conexion/conexion.php';
-                          $tablero = "SELECT * FROM tbl_ms_roles_ojetos WHERE ID_ROL='$id_rol7' and ID_OBJETO=7 and PERMISO_ACTUALIZACION=1";
-                          $tablero2 = mysqli_query($conn, $tablero);
-                          if (mysqli_num_rows($tablero2) > 0)
+                          $area1 = "SELECT * FROM tbl_ms_roles_ojetos WHERE ID_ROL='$id_rol7' and ID_OBJETO=30 and PERMISO_ACTUALIZACION=1";
+                          $area2 = mysqli_query($conn, $area1);
+                          if (mysqli_num_rows($area2) > 0)
                           {?>
-                              <!-- inicio boton editar -->
-                              <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#myModal2<?php echo $filas['ID_IMAGEN'] ?>">
-                              <i class="fas fa-pencil-alt"></i>
-                              </button>  <?php 
+                                 <!-- inicio boton editar -->
+                      <button type="button"  class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#myModal2<?php echo $filas['ID_AREA'] ?>" >
+                      <i class="fas fa-pencil-alt"></i>
+                      </button> <?php 
                           }
                         ?>
                       
+                     
 
                           <!-- El Modal -->
-                          <div class="modal" id="myModal2<?php echo $filas['ID_IMAGEN'] ?>">
+                          <div class="modal" id="myModal2<?php echo $filas['ID_AREA'] ?>">
                             <div class="modal-dialog">
                               <div class="modal-content">
 
                                 <!-- Encabezado del modal -->
                                 <div class="modal-header">
-                                  <h4 class="modal-title">Editar </h4>
+                                  <h4 class="modal-title">Editar Area</h4>
                                   <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                                 </div>
                                 <!-- Fin Encabezado del modal -->
 
 
                                 <!-- Cuerpo del modal Modal -->
+                                <form action="" method="post">
                                           <div class="modal-body">
-                                              <form action="" method="post" enctype="multipart/form-data">
-                                                <input type="hidden" name="foto" value="<?php echo $filas['IMAGEN'] ?>">
-                                              <input type="hidden" name="id_imagen"  value="<?php echo $filas['ID_IMAGEN'] ?>">
-                                              <label for="">Imagen</label><br>
-                                              <img class="img-thumbnail" width="100px" src="<?php echo $filas['RUTA'] ?>" /><br><br>
-                                              <input type="file" class="form-control" accept=".jpg, .png, .jpeg, .JPEG, .JPG, .PNG" name="imagenes"  value="" placeholder=""  >
+                                            <input type="hidden" name="nombre_anterior" value="<?php echo $filas['AREA'] ?>">
+                                              <label for="">Id profesion</label>
+                                              <input type="text" readonly class="form-control" name="id_area" required value="<?php echo $filas['ID_AREA'] ?>" placeholder=""  >
                                               <br>
-                                              <label for="">Tipo:</label><br>
-                                              <select  class="form-select" id="sel2" name="tipo">
-                                                <option value="<?php echo $filas['TIPO'] ?>"><?php echo $filas['TIPO'] ?></option>
-                                                <option value="PORTAFOLIO">PORTAFOLIO</option>
-                                                <option value="CARRUCEL_PORTAFOLIO">CARRUCEL PORTAFOLIO</option>
-                                              </select>
-                                              <label for="">Titulo</label>
-                                              <input type="text" class="form-control"  name="titulo" required value="<?php echo $filas['TITULO'] ?>" placeholder="" 
-                                              autocomplete = "off"  onkeypress="return soloLetras(event);" minlength="3" maxlength="255" onkeyup="mayus(this);"  >
-                                              <br>
-                                              <label for="">Descripción</label>
-                                              <TEXtarea  style="background-color: white;" name="descripcion" class="form-control"name="" id="" cols="40" rows="5"
-                                              autocomplete = "off"  onkeypress="return soloLetras(event);" minlength="3" maxlength="300" onkeyup="mayus(this);" ><?php echo $filas['DESCRIPCION'] ?></TEXtarea>
-                                          
-                                              <br>
+                                              <label for="">Profesión</label>
+                                              <input type="text" class="form-control" name="area" required value="<?php echo $filas['AREA'] ?>" placeholder=""  autocomplete = "off"  onkeypress="return soloLetras(event);" minlength="3" maxlength="100" 
+                                                onkeyup="mayus(this);"  >
+                                             
                                           
                                           </div>
                                 <!-- Fin Cuerpo del modal Modal -->
 
                                 <!-- pie del modal -->
                                 <div class="modal-footer">
-                                <button type="submit" class="btn btn-primary" name="accion" value="editar" onclick="return confirm('¿Quieres editar este dato?')">Guardar</button>
+                                <button type="submit" name="accion" value="editar" class="btn btn-primary" onclick="return confirm('¿Desea editar el Area?')">Guardar</button>
                                   <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
                                 </div>
+                             
                                   <!-- Fin pie del modal -->
+                                 
                               </div>
                             </div>
                           </div>
                           <!-- fin boton editar -->
-                          <input type="hidden" name="ruta"  value="<?php echo $filas['RUTA'] ?>">
+                         
                           <?php 
                           include '../../conexion/conexion.php';
-                          $tablero = "SELECT * FROM tbl_ms_roles_ojetos WHERE ID_ROL='$id_rol7' and ID_OBJETO=7 and PERMISO_ELIMINACION=1";
-                          $tablero2 = mysqli_query($conn, $tablero);
-                          if (mysqli_num_rows($tablero2) > 0)
+                          $area1 = "SELECT * FROM tbl_ms_roles_ojetos WHERE ID_ROL='$id_rol7' and ID_OBJETO=30 and PERMISO_ELIMINACION=1";
+                          $area2 = mysqli_query($conn, $area1);
+                          if (mysqli_num_rows($area2) > 0)
                           {?>
                              <button  value="eliminar" name="accion" 
                         onclick="return confirm('¿Quieres eliminar este dato?')"
-                        type="submit" class="btn btn-danger " data-id="19">
+                        type="submit" class="btn btn-danger ">
                         <i class="fas fa-trash-alt"></i>
-                    </button> <?php 
+                    </button><?php 
                           }
                         ?>
-                     </form>
+                          
+                      </form>
+                    
 </td>
-                      <!-- <td><?php echo $filas['ID_IMAGEN'] ?></td> -->
-                     <td><?php echo $filas['TIPO'] ?></td>
-                     <td><img class="img-thumbnail" width="100px" src="<?php echo $filas['RUTA'] ?>" /></td>
-                     <td><?php echo $filas['TITULO'] ?></td>
-                     <td><TEXtarea readonly style="background-color: white;" class="form-control"name="" id="" cols="40" rows="5"><?php echo $filas['DESCRIPCION'] ?></TEXtarea></td>
+                     <td ><?php echo $filas['ID_AREA'] ?></td>
+                     <td><?php echo $filas['AREA'] ?></td>
+                     
                     
       </tr>
-      <?php }} ?>  
-                  </tfoot>
+                <?php } ?>  
+                </tbody>
                 </table>
               </div>
               <!-- /.card-body -->
@@ -327,11 +302,6 @@ if (mysqli_num_rows($roles35) > 0)
 <script src="../../plantilla/AdminLTE-3.2.0/plugins/datatables-buttons/js/dataTables.buttons.min.js"></script>
 <script src="../../plantilla/AdminLTE-3.2.0/plugins/datatables-buttons/js/buttons.bootstrap4.min.js"></script>
 <script src="../../plantilla/AdminLTE-3.2.0/plugins/jszip/jszip.min.js"></script>
-<script src="../../plantilla/AdminLTE-3.2.0/plugins/pdfmake/pdfmake.min.js"></script>
-<script src="../../plantilla/AdminLTE-3.2.0/plugins/pdfmake/vfs_fonts.js"></script>
-<!-- <script src="../../plantilla/AdminLTE-3.2.0/plugins/datatables-buttons/js/buttons.html5.min.js"></script> 
- <script src="../../plantilla/AdminLTE-3.2.0/plugins/datatables-buttons/js/buttons.print.min.js"></script> -->
-
 
 
 <script src="../../plantilla/AdminLTE-3.2.0/plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
@@ -340,6 +310,7 @@ if (mysqli_num_rows($roles35) > 0)
 <!-- AdminLTE for demo purposes -->
 <script src="../../plantilla/AdminLTE-3.2.0/dist/js/demo.js"></script>
 <!-- Page specific script -->
+
 <!-- INICIO muestra los botones, traduce y Agrupar -->
 
 <script>
@@ -400,11 +371,15 @@ if (mysqli_num_rows($roles35) > 0)
   });
 </script>
 <!-- Fin muestra los botones y traduce y Agrupar -->
-<!-- Enlace Script para que convierta a mayusculas las teclas que se van pulsando -->
-<script type="text/javascript" src="../../js/converir_a_mayusculas.js"></script>
 
-<!-- Enlace Script para quitar espacios en blanco -->
-<script type="text/javascript" src="../../js/quitar_espacios.js"></script>
+<!-- Enlace Script para que solo permita letras -->
+<script type="text/javascript" src="../../js/solo_letras.js"></script>
+
+ <!-- Enlace Script para que convierta a mayusculas las teclas que se van pulsando -->
+ <script type="text/javascript" src="../../js/converir_a_mayusculas.js"></script>
+
+ <!-- Enlace Script para quitar espacios en blanco -->
+ <script type="text/javascript" src="../../js/quitar_espacios.js"></script>
 </body>
 
 <!-- // Inicio para exportar en pdf // -->
@@ -449,7 +424,7 @@ if (mysqli_num_rows($roles35) > 0)
 				//muestra el titulo secundario
 				pdf.setFont('times');
 				pdf.setFontSize(10);
-				pdf.text("Reporte de portafolio", 84,20,);
+				pdf.text("Reporte de Areas de Empleo", 84,20,);
 
 												//////// pie de Pagina ///////
 				//muestra la fecha
@@ -466,37 +441,10 @@ if (mysqli_num_rows($roles35) > 0)
 			}
 				//Fin Encabezado y pie de pagina
 
-							pdf.save('Reporte de portafolio.pdf');
+							pdf.save('Reporte de Areas.pdf');
 	})
   
 </script>
 <!-- // Fin para exportar en pdf // -->
 <script type="text/javascript" src="../../js/evitar_reenvio.js"></script>
 </html>
-
-
-<script>
- // Inicio Script para que solo permita letras
-
- function soloLetras(e){
-      key = e.keyCode || e.which;
-      tecla = String.fromCharCode(key).toLowerCase();
-      letras = " áéíóúabcdefghijklmnñopqrstuvwxyz¿?";
-      especiales = ["8-37-39-46"];
-
-      tecla_especial = false
-      for(var i in especiales){
-       if(key == especiales[i]){
-         tecla_especial = true;
-         break;
-       }
-     }
-
-     if(letras.indexOf(tecla)==-1 && !tecla_especial){
-       return false;
-     }
-   }
-
-//   Fin Script para que solo permita letras
-</script>
-

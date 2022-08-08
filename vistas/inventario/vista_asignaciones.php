@@ -2,10 +2,10 @@
 session_start();
 if(!isset($_SESSION['usuario'])){
  
-        //header('Location: ../../_login.php');
-        //session_unset();
-        //session_destroy();
-       //die(); 
+        header('Location: ../../_login.php');
+        session_unset();
+       session_destroy();
+       die(); 
 }
 include '../../controladores/co_asignaciones.php';
 

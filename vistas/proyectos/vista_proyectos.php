@@ -306,7 +306,7 @@ if (mysqli_num_rows($roles35) > 0)
                    <br>            
                  <label for="">Nombre Cliente</label>
                  <select class="form-select"  name="id_cliente"  required >
-                 <option value="<?php echo $filas['ID_CLIENTE']; ?>"> <?php echo $filas['NOMBRE_CLIENTE']; ?></option>
+                 <option></option>
                         <?php
                         include '../../conexion/conexion.php';
                         $cliente = "SELECT * FROM tbl_clientes ORDER BY ID_CLIENTE";
@@ -316,15 +316,20 @@ if (mysqli_num_rows($roles35) > 0)
                             {
                               $id_cliente= $row['ID_CLIENTE'];
                               $cliente3 =$row['NOMBRE_CLIENTE'];
-                        ?>
-                          <option value="<?php  echo $id_cliente; ?>"><?php echo $cliente3?></option>
-                          <?php
-                           }}// finaliza el if y el while
-                           ?>
+
+                              if($cliente3 == $filas["NOMBRE_CLIENTE"]){?>
+                                <option value="<?php  echo $id_cliente; ?>" selected><?php echo $cliente3; ?></option>
+                              
+                       <?php
+                       }else{ ?>
+                        <option value="<?php  echo $id_cliente; ?>"><?php echo $cliente3; ?></option>
+                        <?php
+                              }}}// finaliza el if y el while
+                         ?>
                    </select>
                   <label for="">Nombre Encargado</label>
                     <select class="form-select"  name="id_usuario" required >
-                    <option value="<?php echo $filas['ID_USUARIO']; ?>"> <?php echo $filas['NOMBRE']; ?></option>   
+                    <option> </option>   
                         <?php
                         include '../../conexion/conexion.php';
                         $idusuario = "SELECT * FROM tbl_usuarios ORDER BY ID_USUARIO";
@@ -334,15 +339,19 @@ if (mysqli_num_rows($roles35) > 0)
                             {
                               $id_usuario = $row['ID_USUARIO'];
                               $idusuario3 =$row['NOMBRE'];
-                              ?>
-                          <option value="<?php  echo $id_usuario; ?>"><?php echo $idusuario3?></option>
-                          <?php
-                           }}// finaliza el if y el while
-                           ?>
+                              if($idusuario3 == $filas["NOMBRE"]){?>
+                                <option value="<?php  echo $id_usuario; ?>" selected><?php echo $idusuario3; ?></option>
+                              
+                       <?php
+                       }else{ ?>
+                        <option value="<?php  echo $id_usuario; ?>"><?php echo $idusuario3; ?></option>
+                        <?php
+                              }}}// finaliza el if y el while
+                         ?>
                    </select>
                     <label for="">Nombre Estado</label>
                     <select class="form-select"  name="id_estado" required >
-                    <option value="<?php echo $filas['ID_ESTADOS']; ?>"> <?php echo $filas['ESTADO_PROYECTO']; ?></option>
+                    <option> </option>
                     <?php
                             include 'conexion/conexion.php';
                             $estado = "SELECT * FROM tbl_estados_proyectos ORDER BY ID_ESTADOS";
@@ -352,12 +361,16 @@ if (mysqli_num_rows($roles35) > 0)
                                 {
                                 $id_estado = $row['ID_ESTADOS'];
                                 $estado3 =$row['ESTADO_PROYECTO'];
-                         ?>
-                          <option value="<?php  echo $id_estado; ?>"><?php echo $estado3 ?></option>
+                                if($estado3 == $filas["ESTADO_PROYECTO"]){?>
+                                  <option value="<?php  echo $id_estado; ?>" selected><?php echo $estado3; ?></option>
+                                
+                         <?php
+                         }else{ ?>
+                          <option value="<?php  echo $id_estado; ?>"><?php echo $estado3; ?></option>
                           <?php
-                           }}// finaliza el if y el while
-                           ?>
-                   </select>
+                                }}}// finaliza el if y el while
+                           ?> 
+                   </select>         
                 </div>
                 <div class="col"> 
                     <label for="">Nombre Proyecto</label>
@@ -368,7 +381,7 @@ if (mysqli_num_rows($roles35) > 0)
                     <br>
                     <label for="">Departamento del proyecto</label>
                     <select style="background-color:rgb(240, 244, 245);" class="form-select" id="lista1" name="id_departamento" required >
-                    <option value="<?php echo $filas['ID_DEPARTAMENTO']; ?>"><?php echo $filas['DEPARTAMENTO']; ?></option>
+                    
                         <?php
                             include 'conexion/conexion.php';
                             $departamento = "SELECT * FROM tbl_departamentos ORDER BY ID_DEPARTAMENTO";
@@ -376,12 +389,17 @@ if (mysqli_num_rows($roles35) > 0)
                             if (mysqli_num_rows($departamento2) > 0) {
                                 while($row = mysqli_fetch_assoc($departamento2))
                                 {
-                                $id_departamento = $row['ID_DEPARTAMENTO'];
+                                $id_departamentos = $row['ID_DEPARTAMENTO'];
                                 $departamento3 =$row['DEPARTAMENTO'];
-                         ?>
-                          <option value="<?php  echo $id_departamento; ?>"><?php echo $departamento3 ?></option>
+
+                                if($departamento3 == $filas["DEPARTAMENTO"]){?>
+                                  <option value="<?php  echo $id_departamentos; ?>" selected><?php echo $departamento3; ?></option>
+                                
+                         <?php
+                         }else{ ?>
+                          <option value="<?php  echo $id_departamentos; ?>"><?php echo $departamento3; ?></option>
                           <?php
-                           }}// finaliza el if y el while
+                                }}}// finaliza el if y el while
                            ?>
                    </select>
                 </div>  
@@ -577,10 +595,10 @@ if (mysqli_num_rows($roles35) > 0)
    
 	event.preventDefault()
  
-				const pdf = new jsPDF('p', 'mm', 'letter');			
+				const pdf = new jsPDF('L', 'mm', 'letter');			
         	
 
-				var columns = ["", "", "", "", ""];
+				var columns = ["", "", "", "", "","", "", "", "", ""];
 				var data = [
 				[1, "Hola", "hola@gmail.com", "Mexico"],
 				 ];
@@ -611,7 +629,7 @@ if (mysqli_num_rows($roles35) > 0)
 				//muestra el titulo secundario
 				pdf.setFont('times');
 				pdf.setFontSize(10);
-				pdf.text("Reporte de proyectos", 84,20,);
+				pdf.text("Reporte de proyectos", 84,25,);
 
 												//////// pie de Pagina ///////
 				//muestra la fecha
@@ -621,7 +639,7 @@ if (mysqli_num_rows($roles35) > 0)
 				let horas = today.getHours()
 				let jornada = horas >=12 ? 'PM' : 'AM';
 				var newdat = "Fecha: " + today.getDate() + "/" + (today.getMonth()+1) + "/" + today.getFullYear() + " " + (horas % 12) + ":" + today.getMinutes() + ":" + today.getSeconds() + " " + jornada;
-				pdf.text(183-20,297-284,newdat);
+				pdf.text(250-20,297-284,newdat);
 
 				//muestra el numero de pagina
 				pdf.text('Pagina ' + String(i) + '/' + String(pageCount),220-20,297-25,null,null,"right");

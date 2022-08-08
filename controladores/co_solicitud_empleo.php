@@ -5,7 +5,7 @@ session_start();
   //Variables para recuperar la información de los campos de la vista registro
   $nombre=(isset($_POST['nombre']))?$_POST['nombre']:"";
   $apellido=(isset($_POST['apellido']))?$_POST['apellido']:"";
-  $usuario=(isset($_POST['usuario']))?$_POST['usuario']:"";
+  //$usuario=(isset($_POST['usuario']))?$_POST['usuario']:"";
   $contrasena=(isset($_POST['contrasena']))?$_POST['contrasena']:"";
   $correo=(isset($_POST['correo']))?$_POST['correo']:"";
   $dni=(isset($_POST['dni']))?$_POST['dni']:"";
@@ -20,11 +20,23 @@ session_start();
   $genero=(isset($_POST['genero']))?$_POST['genero']:"";
   $area=(isset($_POST['area']))?$_POST['area']:"";
 
+  //Genera un nombre de usuario aleatorio
+  function generar_nombre_aleatorio(&$nombres, &$apellidos){
+    $nombreAleatorio = $nombres[ mt_rand(0, count($nombres) -1) ];
+    $apellidoAleatorio = $apellidos[ mt_rand(0, count($apellidos) -1) ];
+    $otroApellidoAleatorio = $apellidos[ mt_rand(0, count($apellidos) -1) ];
+    return "$nombreAleatorio$apellidoAleatorio";
+  }
+  $nombres = ["ABCD", "EFGH", "IJKL", "MNOP", "QRST", "UVWX", "YZab", "cdef"];
+  $apellidos = ["ghij", "klmn", "opqr", "stuv", "wxyz", "aBcD", "eFgH", "iJkL", "mNoP", "qRsT"];
+  $nombre_usuario = generar_nombre_aleatorio($nombres, $apellidos);
+
+ //Fin de generar un usuario aleatorio
  // recupera el botón
   $accion=(isset($_POST['accion']))?$_POST['accion']:"";
 
   // encripta la contraseña
-  //$contrasena= hash('sha512', $contrasena);
+  $contrasena= hash('sha512', $contrasena);
 
   switch($accion){
       case "registrar": 
@@ -89,11 +101,10 @@ session_start();
                 {
                  move_uploaded_file($tmpArchivo1,$destino1.$nombrefoto);
                 }
-                   
 
                   // Inserta en la tabla tbl_usuarios
                   $sql = "INSERT INTO tbl_usuarios (ID_ROL, ID_ESTADO_USUARIO, NOMBRE, APELLIDO, USUARIO, ID_GENERO, CORREO, DNI, ID_PROFESION, DIRECCION, CELULAR, REFERENCIA, CEL_REFERENCIA, EXPERIENCIA_LABORAL, CURRICULUM, CONTRASENA, FOTO, ID_AREA)
-                          VALUES (2,4,'$nombre', '$apellido', '$usuario', '$genero', '$correo', '$dni', '$profesion',  '$direccion', '$celular', '$referencia', '$celular_referencia', '$experiencia_laboral', '$destino$nombrecurriculum','$contrasena','$destino1$nombrefoto', '$area' )";
+                          VALUES (2,5,'$nombre', '$apellido', '$nombre_usuario', '$genero', '$correo', '$dni', '$profesion',  '$direccion', '$celular', '$referencia', '$celular_referencia', '$experiencia_laboral', '$destino$nombrecurriculum','$contrasena','$destino1$nombrefoto', '$area' )";
                   
                   if (mysqli_query($conn, $sql)) {
                     $_SESSION['nombre'] = $usuario;
