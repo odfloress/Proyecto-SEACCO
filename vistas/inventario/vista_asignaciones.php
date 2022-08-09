@@ -2,10 +2,10 @@
 session_start();
 if(!isset($_SESSION['usuario'])){
  
-        header('Location: ../../_login.php');
-        session_unset();
-        session_destroy();
-       die(); 
+        //header('Location: ../../_login.php');
+        //session_unset();
+       //session_destroy();
+       //die(); 
 }
 include '../../controladores/co_asignaciones.php';
 
@@ -95,7 +95,7 @@ include '../../controladores/co_asignaciones.php';
                 </select>
 
                     <label for="">Cantidad</label>
-                    <input type="text" class="form-control" name="cantidad" required value="" placeholder="Ingrese la cantidad" id="cantidad"   > 
+                    <input type="text" class="form-control" name="cantidad" onkeypress="return solonumero(event)" required value="" placeholder="Ingrese la cantidad" id="cantidad"   > 
                     <br>
                 <label for="" class="form-label">Empleado:</label>
                 <select placeholder="Seleccione" class="form-select" id="sel1" name="usuario1" required >
@@ -137,12 +137,12 @@ include '../../controladores/co_asignaciones.php';
                 ?>
                 </select>
 
-                <label for="sel1" class="form-label">Estado de la asignacion:</label>
+                <label for="sel1" readonly class="form-label">Estado de la asignacion:</label>
                 <select placeholder="Seleccione" class="form-select" id="sel1" name="id_estado_asignacion" required >
                   <option></option>
                   <?php
                       include '../../conexion/conexion.php';
-                      $getestado_asig = "SELECT * FROM tbl_estado_asignacion  WHERE ID_ESTADO_ASIGNACION  ORDER BY ID_ESTADO_ASIGNACION";
+                      $getestado_asig = "SELECT * FROM tbl_estado_asignacion  WHERE ID_ESTADO_ASIGNACION='1'  ORDER BY ID_ESTADO_ASIGNACION";
                       // $getpregunta1 = "SELECT * FROM tbl_preguntas  WHERE ID_PREGUNTA  NOT IN (SELECT ID_PREGUNTA  FROM  tbl_respuestas_usuario WHERE USUARIO = 'JO' ) ORDER BY ID_PREGUNTA";
                       $getestado_asig = mysqli_query($conn, $getestado_asig);
                       if (mysqli_num_rows($getestado_asig) > 0) {
@@ -164,11 +164,11 @@ include '../../controladores/co_asignaciones.php';
                     <div class="row">
                 <div class="col">
                   <label type="text"  class="form-label">Fecha de asignación:</label>
-                  <input style="background-color:rgb(240, 244, 245);" type="date" autocomplete="of" name="fecha_asignado" required>
+                  <input style="background-color:rgb(240, 244, 245);" type="date" min="2022-01-01" autocomplete="of" name="fecha_asignado" required>
                 </div>
                 <div class="col">
                   <label type="text" class="form-label">Fecha de entrega:</label>
-                  <input style="background-color:rgb(240, 244, 245);" type="date" autocomplete="off" name="fecha_entrega" required>
+                  <input style="background-color:rgb(240, 244, 245);" type="date" min="sysdate" autocomplete="off" name="fecha_entrega" required>
                 </div>
             </div>
                 
@@ -210,6 +210,9 @@ include '../../controladores/co_asignaciones.php';
             
             <div class="card table-responsive">
               <div class="card-header">
+              <form id="form" action="" method="post">
+              <button type="submit"  name="accion" value="reporte_pdf" class="btn btn-secondary buttons-pdf buttons-html5"  onclick="return confirm('¿Quieres generar reporte de asignaciones?')" onclick="textToPdf()"><span>Reporte PDF</span></button>
+	            </form>
                 <h3 class="card-title">Asignaciones de herramientas</h3>
                 
               </div>
@@ -289,7 +292,7 @@ include '../../controladores/co_asignaciones.php';
                 <input type="text" readonly class="form-control" name="id_producto" required value="<?php echo $filas['ID_PRODUCTO'] ?>" placeholder="" id="id_producto"   >
                 <br>
                     <label for="">Cantidad</label>
-                    <input type="text" class="form-control" name="cantidad" required value="" placeholder="Ingrese la cantidad" id="cantidad"   >
+                    <input type="text" class="form-control" name="cantidad" onkeypress="return solonumero(event)" required value="" placeholder="Ingrese la cantidad" id="cantidad"   >
                     <br>
                     <label for="" class="form-label">Empleado:</label>
                 <select placeholder="Seleccione" class="form-select" id="sel1" name="usuario1" required >
@@ -381,10 +384,9 @@ include '../../controladores/co_asignaciones.php';
                             </div>
                           </div>
                           
-                          <!-- fin boton editar -->                         
-                      <button value="eliminar" name="accion" 
-                        onclick="return confirm('¿Quieres eliminar este dato?')"
-                        type="submit" class="btn btn-danger ">
+                          <!-- fin boton editar --> 
+                      </div>                        
+                      <button type="submit" name="accion" value="eliminar" class="btn btn-danger" onclick="return confirm('¿Quieres eliminar esta asignacion?')">          
                         <i class="fas fa-trash-alt"></i>
                     </button></form>
 </td>                  
@@ -398,9 +400,21 @@ include '../../controladores/co_asignaciones.php';
                      <td><?php echo $filas['ESTADO_ASIGNACION'] ?></td>
                      <td><?php echo $filas['FECHA_ASIGNADO'] ?></td>
                      <td><?php echo $filas['FECHA_ENTREGA'] ?></td>
-                     
       </tr>
-      <?php } ?>  
+      <?php } ?>
+      
+      <script type="text/javascript"> function solonumero(e) {
+        tecla = (document.all) ? e.keyCode : e.which;
+        if (tecla==8) return true;
+        else if (tecla==0||tecla==9)  return true;
+       // patron =/[0-9\s]/;// -> solo letras
+        patron =/[0-9\s]/;// -> solo numeros
+        te = String.fromCharCode(tecla);
+        return patron.test(te);
+    }
+	</script>
+  
+
                   </tbody>
                 </table>
               </div>
@@ -520,5 +534,67 @@ include '../../controladores/co_asignaciones.php';
  <script type="text/javascript" src="../../js/converir_a_mayusculas.js"></script>
  
 </body>
+<!-- // Inicio para exportar en pdf // -->
+<script>
+	//para descar al tocar el boton	
+	var form = document.getElementById("form")
+	form.addEventListener("submit",function(event) {
+   
+	event.preventDefault()
+ 
+				const pdf = new jsPDF('p', 'mm', 'letter');			
+        	
+
+				var columns = ["", "", "", "", ""];
+				var data = [
+				[1, "Hola", "hola@gmail.com", "Mexico"],
+				 ];
+
+				pdf.autoTable(columns,data,
+				{ 
+					html:'#example1',
+					margin:{ top: 30 }}
+				);
+						
+				//Inicio Encabezado y pie de pagina
+			const pageCount = pdf.internal.getNumberOfPages();
+			for(var i = 1; i <= pageCount; i++) 
+			{
+				pdf.setPage(i);
+												//////// Encabezado ///////
+				//Inicio para imagen de logo 
+				var logo = new Image();
+				logo.src = '../../imagenes/LoogSEACCO.jpg';
+				pdf.addImage(logo, 'JPEG',14,7,24,15);
+				//Fin para imagen de logo 
+
+				//muestra el titulo principal
+				pdf.setFont('Arial');
+				pdf.setFontSize(17);
+				pdf.text("Constructora SEACCO", 70,15,);
+
+				//muestra el titulo secundario
+				pdf.setFont('times');
+				pdf.setFontSize(10);
+				pdf.text("Reporte de asignaciones", 84,20,);
+
+												//////// pie de Pagina ///////
+				//muestra la fecha
+				pdf.setFont('times');
+				pdf.setFontSize(9);
+				var today = new Date();
+				let horas = today.getHours()
+				let jornada = horas >=12 ? 'PM' : 'AM';
+				var newdat = "Fecha: " + today.getDate() + "/" + (today.getMonth()+1) + "/" + today.getFullYear() + " " + (horas % 12) + ":" + today.getMinutes() + ":" + today.getSeconds() + " " + jornada;
+				pdf.text(183-20,297-284,newdat);
+
+				//muestra el numero de pagina
+				pdf.text('Pagina ' + String(i) + '/' + String(pageCount),220-20,297-25,null,null,"right");
+			}
+				//Fin Encabezado y pie de pagina
+
+							pdf.save('Reporte de asignaciones.pdf');
+	})
+  
 <script type="text/javascript" src="../../js/evitar_reenvio.js"></script>
 </html>

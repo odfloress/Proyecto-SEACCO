@@ -116,33 +116,35 @@ case 'agregar':
                 }
                          // fin inserta en la tabla kardex
                         }else {
-                        echo "Error: " . $sql5 . "<br>" . mysqli_error($conn);
+                        echo "Error: " . $sql8 . "<br>" . mysqli_error($conn);
                         }
                                                                    
 break; 
 
-      //para eliminar en la tabla mysl  
-      case "eliminar":
+       //para editar en la tabla mysl      
+       case 'eliminar':
+        $sql9 = "DELETE FROM tbl_asignaciones WHERE ID_ASIGNADO='$id_asignado'";
+                 if (mysqli_query($conn, $sql9)) { 
+                        // fin inserta en la tabla bitacora
+                        echo '<script>
+                        alert("Asignacion eliminada con exito");
+                        window.location.href="../../vistas/inventario/vista_asignaciones.php";                   
+                        </script>';
+                        mysqli_close($conn);  
+                          // inicio inserta en la tabla bitacora
+                          $sql10 = "INSERT INTO tbl_bitacora (USUARIO, ACCION, OBSERVACION)
+                          VALUES ('$usuario1[usuario]', 'ELIMINO', 'ELIMINO LA ASIGNACIÓN DEL EMPLEADO $empleado')";
+                          
+                          if (mysqli_query($conn, $sql10)) {
 
-      $sql6 = "DELETE FROM tbl_asignaciones WHERE ID_ASIGNADO='$id_asignado'";
-      if (mysqli_query($conn, $sql6)) {
-        echo '<script>
-        alert("Asignación eliminada exitosamente");
-        window.location.href="../../vistas/inventario/vista_asignaciones.php";                     
-    </script>';
-    mysqli_close($conn);
-      }else{
-              echo '<script>
-                        alert("Error al tratar de eliminar la asignación");
-                    </script>'; mysqli_error($conn);
-           }
-        mysqli_close($conn);
+                }
+                         // fin inserta en la tabla kardex
+                        }else {
+                        echo "Error: " . $sql10 . "<br>" . mysqli_error($conn);
+                        }
 
       break;
-      
-      default:
-          
-          $conn->close();   
+  
   }// Fin del switch, para validar el valor del boton accion     
 
 ?>

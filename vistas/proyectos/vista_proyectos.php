@@ -148,7 +148,7 @@ if (mysqli_num_rows($roles35) > 0)
                   <div class="col"> 
                   <label for="" >Selecciona nombre del Estado</label>
                   <select style="background-color:rgb(240, 244, 245);" value="<?php echo "$id_estado"; ?>" class="form-select" id="lista1" name="id_estado" required >
-                  <option > </option>
+                  <option >Nuevo </option>
                         <?php
                             include 'conexion/conexion.php';
                             $estado = "SELECT * FROM tbl_estados_proyectos ORDER BY ID_ESTADOS";
@@ -196,7 +196,7 @@ if (mysqli_num_rows($roles35) > 0)
                     <input class="form-control" type="text" name="ubicacion" value="<?php echo $ubicacion; ?>" autocomplete="off"  id="" required onkeypress="return soloLetras(event);" minlength="3" maxlength="255" onkeyup="mayus(this);">
                     <br>
                     <label for="">Fecha inicio</label>
-                    <input class="form-control" type="Date" name="fecha_inicio" value="<?php echo $fecha_inicio; ?>" autocomplete="off" id="" required> 
+                    <input class="form-control" type="Date" name="fecha_inicio" min="2022-08-08" value="<?php echo $fecha_inicio; ?>" autocomplete="off" id="" required> 
                     <br>
                     <label for="">Fecha final</label>
                     <input class="form-control" type="Date" name="fecha_final" value="<?php echo $fecha_final; ?>" autocomplete="off" id="" required>
@@ -206,7 +206,7 @@ if (mysqli_num_rows($roles35) > 0)
                 <!-- Fin Cuerpo del modal Modal -->
                 <!-- pie del modal -->
                 <div class="modal-footer">
-      	            <button type="submit" name="accion" value="agregar" class="btn btn-primary" onclick="return confirm('¿Desea agregar el proyecto?')">Agregar</button>
+      	            <button type="submit" name="accion" value="agregar" class="btn btn-primary" >Agregar</button>
                     <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
                 </div>
                 <!-- Fin pie del modal -->
@@ -419,7 +419,7 @@ if (mysqli_num_rows($roles35) > 0)
 
                                 <!-- pie del modal -->
                                 <div class="modal-footer">
-                                <button <button type="submit" name="accion" value="editar" class="btn btn-primary" onclick="return confirm('¿Desea editar el proyecto?')">Guardar</button>
+                                <button <button type="submit" name="accion" value="editar" class="btn btn-primary" >Guardar</button>
                                     <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
                                 </div>
                                 </form>
@@ -624,12 +624,17 @@ if (mysqli_num_rows($roles35) > 0)
 				//muestra el titulo principal
 				pdf.setFont('Arial');
 				pdf.setFontSize(17);
-				pdf.text("Constructora SEACCO", 70,15,);
+				pdf.text("Constructora SEACCO S.De R.L.", 80,15,);
 
 				//muestra el titulo secundario
 				pdf.setFont('times');
+<<<<<<< HEAD
 				pdf.setFontSize(10);
 				pdf.text("Reporte de proyectos", 84,25,);
+=======
+				pdf.setFontSize(14);
+				pdf.text("Reporte de proyectos", 89,25,);
+>>>>>>> origin/rama01
 
 												//////// pie de Pagina ///////
 				//muestra la fecha
