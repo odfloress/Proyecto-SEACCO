@@ -41,20 +41,17 @@ if (mysqli_num_rows($roles35) > 0)
                       }
                }
 
-
-                //valida si hay una compra en proceso
-                $validar_compra7 = "SELECT * FROM tbl_asignaciones WHERE USUARIO='$usuario[usuario]' and ESTADO_ASIGNACION='EN PROCESO'";
-                $validar_compra77 = mysqli_query($conn, $validar_compra7);
-                if (mysqli_num_rows($validar_compra77) > 0)
-                {
-                 header('Location: ../../vistas/inventario/detalle_asignacion.php');
-                 die();
-                }else{}
                 // inicio inserta en la tabla bitacora
                 $sql = "INSERT INTO tbl_bitacora (USUARIO, ACCION, OBSERVACION)
                 VALUES ('$usuario1[usuario]', 'CONSULTO', 'CONSULTO LA PANTALLA  ADMINISTRATIVA DE ASIGNACIONES')";
                 if (mysqli_query($conn, $sql)) {} else {}
                 // fin inserta en la tabla bitacora
+
+                if(!isset($_POST['asignacion'])){
+                    header('Location: ../../vistas/inventario/vista_asignaciones.php');
+                }
+                $asignacion=(isset($_POST['asignacion']))?$_POST['asignacion']:"";  
+                $fecha=(isset($_POST['fecha']))?$_POST['fecha']:""; 
 
 
 ?>
@@ -69,7 +66,7 @@ if (mysqli_num_rows($roles35) > 0)
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
     <!-- enlace del scritpt para evitar si preciona F12, si preciona Ctrl+Shift+I, si preciona Ctr+u  -->
     <script type="text/javascript" src="../../js/evita_ver_codigo_utilizando_teclas.js"></script>
-            <!-- /// para exportar en pdf /// -->
+       <!-- /// para exportar en pdf /// -->
    <script type="text/javascript" src="../../js/complemento_1_jspdf.min.js"></script>
 	<script type="text/javascript" src="../../js/complemento_2_jspdf.plugin.autotable.min.js"></script>
 
@@ -85,74 +82,9 @@ if (mysqli_num_rows($roles35) > 0)
     <section class="content-header">
       <div class="container-fluid">
         <div class="row mb-2">
-          <div class="col-sm-2">
-            <h1></h1>
-            <!-- Inicio de modal de agregar -->
-<div class="container mt-3">
-  
-        <h3>Asignaciones</h3> <br> 
-        <?php 
-      include '../../conexion/conexion.php'; 
-
-                $tablero = "SELECT * FROM tbl_ms_roles_ojetos WHERE ID_ROL='$id_rol7' and ID_OBJETO=8 and PERMISO_INSERCION=1";
-                $tablero2 = mysqli_query($conn, $tablero);
-                if (mysqli_num_rows($tablero2) > 0)
-                {
-                  echo '<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal">
-                              Nueva asignacion
-                          </button>';
-                }
-         
-                                  ?> 
-        
-    </div>
-
-<!-- El Modal -->
-    <div class="modal" id="myModal">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <!-- Encabezado del modal -->
-                <form action="" method="post">
-                <div class="modal-header">
-                    <h4 class="modal-title">Nueva asignación</h4>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                </div>
-                <!-- Fin Encabezado del modal -->
-
-                <!-- Cuerpo del modal Modal -->
-                <div class="modal-body">
-               
-                <label for="">Seleccione el proyecto</label>
-                    <select class="form-select" id="lista1" name="id_proyecto" required >
-                        <?php
-                            include '../../conexion/conexion.php';
-                            $proyecto = "SELECT * FROM tbl_proyectos ORDER BY ID_PROYECTO";
-                            $proyecto1 = mysqli_query($conn, $proyecto);
-                            if (mysqli_num_rows($proyecto1) > 0) {
-                                while($row = mysqli_fetch_assoc($proyecto1))
-                                {
-                                $id_proyecto = $row['ID_PROYECTO'];
-                                $proyecto =$row['NOMBRE_PROYECTO'];
-                         ?>
-                          <option value="<?php  echo $id_proyecto ?>"><?php echo $proyecto ?></option>
-                          <?php
-                           }}// finaliza el if y el while
-                           ?>
-                   </select>
-                
-                </div>
-                <!-- Fin Cuerpo del modal Modal -->
-                <!-- pie del modal -->
-                <div class="modal-footer">
-      	            <button type="submit" name="accion" value="agregar" class="btn btn-primary" onclick="return confirm('¿Desea crear la asignación?')">Agregar</button>
-                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
-                </div>
-                <!-- Fin pie del modal -->
-                </form>
-            </div>
-        </div>
-    </div>
-    <!-- Fin  de modal de agregar --> <br>
+          <div class="col-sm-7">
+          <h3 class="card-title">Detalle de la asignación creada en la fecha <?php echo $fecha; ?></h3>
+     
           </div>
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
@@ -177,10 +109,10 @@ if (mysqli_num_rows($roles35) > 0)
             
             <div class="card table-responsive">
               <div class="card-header">
-              <form id="form" action="" method="post">
-              <button type="submit"  name="accion" value="reporte_pdf" class="btn btn-secondary buttons-pdf buttons-html5"  onclick="return confirm('¿Quieres generar reporte de asignaciones?')" onclick="textToPdf()"><span>Reporte PDF</span></button>
+                
+                <form id="form" action="" method="post">
+              <button type="submit"  name="accion" value="reporte_pdf" class="btn btn-secondary buttons-pdf buttons-html5"  onclick="return confirm('¿Desea generar reporte de detalle de asignaciones?')" onclick="textToPdf()"><span>Reporte PDF</span></button>
 	            </form>
-                <!-- <h3 class="card-title">Compras</h3> -->
                 
               </div>
               
@@ -190,45 +122,35 @@ if (mysqli_num_rows($roles35) > 0)
                   <thead>
                   <tr>
                     
-                  <th>Acciones</th>
+                  <th>Id Detalle</th>
                   <th>Id Asignación</th>
-                  <th>Producto</th>
+                  <th>Id Producto</th>
                   <th>Proyecto</th>
-                  <th>Empleado</th>
-                  <th>Descripción de asignación</th>
                   <th>Cantidad</th>
-                  <th>Estado herramienta</th>
-                  <th>Estado asignación</th>
-                  <th>Fecha asignado</th>
-                  <th>Fecha entrega</th>  
-
+                           
                   </tr>
                   </thead>
                   <tbody>
-                    <?php 
-                    
-                    while ($filas= mysqli_fetch_assoc($result)){
- 
-                     ?>
+                  <?php
+                  include '../../conexion/conexion.php';
+                  //para mostrar los datos de la tabla mysql y mostrar en el crud
+                  $sql7 = "SELECT * FROM ((tbl_detalle_asignacion d
+                  INNER JOIN tbl_asignaciones a ON d.ID_ASIGNADO = a.ID_ASIGNADO)
+                  INNER JOIN tbl_proyecto p ON a.ID_PROYECTO = p.ID_PROYECTO)";
+                  $result = mysqli_query($conn, $sql7);
+                  if (mysqli_num_rows($result) > 0) {
+                  while ($filas= mysqli_fetch_assoc($result)){
+                    ?>
                   <tr>
-                      <td><form action="../../vistas/inventario/mostrar_detalle_asignaciones.php" method="post">
-                      <input type="hidden" name="fecha" value="<?php echo $filas['FECHA_ASIGNADO'] ?>">
-                            <input type="hidden" name="asignacion" value="<?php echo $filas['ID_ASIGNADO'] ?>">
-                          <button type="submit" name="accion" value="detalle" class="btn btn-primary" onclick="return confirm('¿Desea ver detalles de la asignación?')">Ver detalle</button>
-                          </form>
-                      </td>
+                     
+                    <td >
+                    <td><?php echo $filas['ID_DETALLE_ASIGNACION'] ?></td>
                      <td><?php echo $filas['ID_ASIGNADO'] ?></td>
-                     <td><?php echo $filas['NOMBRE'] ?></td>
+                     <td><?php echo $filas['ID_PRODUCTO'] ?></td>
                      <td><?php echo $filas['NOMBRE_PROYECTO'] ?></td>
-                     <td><?php echo $filas['USUARIO'] ?></td>
-                     <td><?php echo $filas['DESCRIPCION_ASIGNACION'] ?></td>
                      <td><?php echo $filas['CANTIDAD'] ?></td>
-                     <td><?php echo $filas['ESTADO'] ?></td>
-                     <td><?php echo $filas['ESTADO_ASIGNACION'] ?></td>
-                     <td><?php echo $filas['FECHA_ASIGNADO'] ?></td>
-                     <td><?php echo $filas['FECHA_ENTREGA'] ?></td>    
       </tr>
-                <?php } ?>  
+                <?php } }?>  
                 </tbody>
                 </table>
               </div>
@@ -364,7 +286,7 @@ if (mysqli_num_rows($roles35) > 0)
 				const pdf = new jsPDF('p', 'mm', 'letter');			
         	
 
-				var columns = ["", "", "", "", ""];
+				var columns = ["", "", "", "", "", "",""];
 				var data = [
 				[1, "Hola", "hola@gmail.com", "Mexico"],
 				 ];
@@ -395,7 +317,7 @@ if (mysqli_num_rows($roles35) > 0)
 				//muestra el titulo secundario
 				pdf.setFont('times');
 				pdf.setFontSize(10);
-				pdf.text("Reporte de compras", 84,20,);
+				pdf.text("Detalle de la compra realizada en la fecha <?php echo $fecha ?>", 57,20,);
 
 												//////// pie de Pagina ///////
 				//muestra la fecha
@@ -412,7 +334,7 @@ if (mysqli_num_rows($roles35) > 0)
 			}
 				//Fin Encabezado y pie de pagina
 
-							pdf.save('Reporte de compras.pdf');
+							pdf.save('Reporte de detalle de compra.pdf');
 	})
   
 </script>
