@@ -1,5 +1,8 @@
 <?php
 include '../../conexion/conexion.php';
+//para mostrar los datos de la tabla mysql y mostrar en el crud
+$sql = "SELECT * FROM tbl_clientes";
+$result = mysqli_query($conn, $sql);
 
 
 // //Variables para recuperar la información de los campos de la vista del crud del portafolio 
@@ -12,7 +15,7 @@ $telefono=(isset($_POST['telefono']))?$_POST['telefono']:"";
 $direccion=(isset($_POST['direccion']))?$_POST['direccion']:"";
 $referencia=(isset($_POST['referencia']))?$_POST['referencia']:"";
 $genero=(isset($_POST['genero']))?$_POST['genero']:"";
-
+$usuario1 = $_SESSION;
 // $ruta=(isset($_POST['ruta']))?$_POST['ruta']:"";
 // $foto=(isset($_POST['foto']))?$_POST['foto']:"";
 
@@ -80,7 +83,7 @@ if(in_array($extencion, $permitidos)){
     // fin inserta en la tabla bitacora
     echo '<script type="text/javascript">
              alert("Archivo no permitido");
-             window.location.href="../../vistas/catalogo/vista_portafolio";
+             window.location.href="../../vistas/personas/vista_clientes.php";
           </script>';
 }
 
@@ -152,30 +155,54 @@ break;
 
 
 //para eliminar en la tabla mysl  
-case "eliminar";
-echo $ruta;
-echo $id_imagen;
+$validar_proveedor = "SELECT * FROM tbl_clientes WHERE ID_CLIENTE='$id_cliente'";
+    $result4 = mysqli_query($conn, $validar_proveedor); 
+     if (mysqli_num_rows($result4) > 0) { 
+         // inicio inserta en la tabla bitacora
+         $sql9 = "INSERT INTO tbl_bitacora (USUARIO, ACCION, OBSERVACION)
+         VALUES ('$usuario1[usuario]', 'INTENTO', 'NO LOGRO ELIMINAR YA QUE ESTABA EN USO EL cliente ($nombre)')";
+         if (mysqli_query($conn, $sql9)) {} else { }
+         // fin inserta en la tabla bitacora
+         echo '<script>
+                 alert("No se puede eliminar el producto, ya que esta en uso");
+                 window.location.href="../../vistas/inventario/vista_clientes.php";                   
+               </script>';
+               mysqli_close($conn);
 
-
-$sql3 = "DELETE FROM tbl_bienvenida_portafolio WHERE ID_IMAGEN='$id_imagen'";
-if (mysqli_query($conn, $sql3)) {
-    unlink($ruta);
-    // inicio inserta en la tabla bitacora
-    $sql = "INSERT INTO tbl_bitacora (USUARIO, ACCION, OBSERVACION)
-    VALUES ('$usuario1[usuario]', 'ELIMINO', 'ELIMINO UN REGISTRO DE TIPO ($tipo) Y TITULO ($titulo) ')";
-    if (mysqli_query($conn, $sql)) {} else {}
+     }else{
+      $sql3 = "DELETE FROM tbl_clientes WHERE ID_CLIENTE='$id_cliente'";
+      if (mysqli_query($conn, $sql3)) {
+        // inicio inserta en la tabla bitacora
+        $sql7 = "INSERT INTO tbl_bitacora (USUARIO, ACCION, OBSERVACION)
+        VALUES ('$usuario1[usuario]', 'ELIMINO', 'ELIMINO EL PRODUCTO ($nombre)')";
+         if (mysqli_query($conn, $sql7)) {} else { }
     // fin inserta en la tabla bitacora
-    header('Location: ../../vistas/catalogo/vista_portafolio');
-}else{
-        echo '<script>
-                  alert("Error al tratar de eliminar categoria");
-              </script>'; mysqli_error($conn);
-     }
-  mysqli_close($conn);
+    echo '<script>
+        alert("Elimino el cliente");
+        window.location.href="../../vistas/personas/vista_clientes.php";                   
+        </script>';
+        mysqli_close($conn);
+     
+          
+      }else{
+         // inicio inserta en la tabla bitacora
+         $sql10 = "INSERT INTO tbl_bitacora (USUARIO, ACCION, OBSERVACION)
+         VALUES ('$usuario1[usuario]', 'ERROR', 'ERROR AL ELIMINAR EL Producto ($id_cliente)')";
+          if (mysqli_query($conn, $sql7)) {} else { }
+     // fin inserta en la tabla bitacora
+              echo '<script>
+                        alert("Error al tratar de eliminar el producto");
+                    </script>'; mysqli_error($conn);
+           }
+        mysqli_close($conn);
+      }
+    
+      break;
+      
+      default:
+          
+          $conn->close();   
+  }// Fin del switch, para validar el valor del boton accion
 
-break;
 
-
-}
 ?>
-

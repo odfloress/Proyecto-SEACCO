@@ -335,11 +335,11 @@ if (mysqli_num_rows($roles35) > 0)
                                   <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
                                 </div>
                                   <!-- Fin pie del modal -->
+                                  <form action="" method="post">
                               </div>
                             </div>
                           </div>
                           <!-- fin boton editar -->
-                          
                           <?php 
                           include '../../conexion/conexion.php';
                           $tablero = "SELECT * FROM tbl_ms_roles_ojetos WHERE ID_ROL='$id_rol7' and ID_OBJETO=4 and PERMISO_ELIMINACION=1";
@@ -350,7 +350,8 @@ if (mysqli_num_rows($roles35) > 0)
                         onclick="return confirm('¿Quieres eliminar este dato?')"
                         type="submit" class="btn btn-danger " data-id="19">
                         <i class="fas fa-trash-alt"></i>
-                    </button> <?php 
+                    </button>
+                     <?php 
                           }
                         ?>
                      </form>
@@ -364,10 +365,9 @@ if (mysqli_num_rows($roles35) > 0)
                      <td><?php echo $filas['DIRECCION'] ?></td>
                      <td><?php echo $filas['REFERENCIA'] ?></td>
                      <td><?php echo $filas['GENERO'] ?></td>
-                     <td><img  width="100px" src="<?php echo $filas['FOTO'] ?>" /></td>
-                    
-      </tr>
-      <?php }} ?>  
+                     <td><img  width="100px" src="<?php echo $filas['FOTO'] ?>" /></td>              
+                    </tr>
+                    <?php }} ?>  
                   </tfoot>
                 </table>
               </div>
