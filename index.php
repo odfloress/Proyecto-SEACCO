@@ -26,7 +26,7 @@ require 'controladores/co_registrar.php';
 /* Encabezado de imagen de altura completa */
 <?php 
   include 'conexion/conexion.php';
-  $sqlB1 = "SELECT * FROM tbl_bienvenida_portafolio WHERE TIPO='BIENVENIDA' AND ID_IMAGEN=1";
+  $sqlB1 = "SELECT * FROM tbl_bienvenida_portafolio WHERE TIPO='BIENVENIDA' AND ID_IMAGEN=13";
   $resultB1 = mysqli_query($conn, $sqlB1);
   while($rowB1 = mysqli_fetch_assoc($resultB1)) {
   ?>
@@ -147,7 +147,7 @@ clientes y brindando oportunidades de trabajo para el hondureño.</p>
 </div>
 <?php 
   include 'conexion/conexion.php';
-  $sql7 = "SELECT * FROM tbl_bienvenida_portafolio WHERE TIPO='BIENVENIDA' AND ID_IMAGEN=2";
+  $sql7 = "SELECT * FROM tbl_bienvenida_portafolio WHERE TIPO='BIENVENIDA' AND ID_IMAGEN=14";
   $result7 = mysqli_query($conn, $sql7);
   while($row = mysqli_fetch_assoc($result7)) {
   ?>

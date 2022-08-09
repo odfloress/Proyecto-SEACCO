@@ -222,6 +222,7 @@ if (mysqli_num_rows($roles35) > 0)
                   </tr>
                   </thead>
                   <tbody>
+                    
                   <?php
                   include '../../conexion/conexion.php';
                   //para mostrar los datos de la tabla mysql y mostrar en el crud                
@@ -254,13 +255,14 @@ if (mysqli_num_rows($roles35) > 0)
 
                                 <!-- Encabezado del modal -->
                                 <div class="modal-header">
-                                  <h4 class="modal-title">Editar </h4>
+                                  <h4 class="modal-title">Editar Producto </h4>
                                   <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                                 </div>
                                 <!-- Fin Encabezado del modal -->
 
 
                                 <!-- Cuerpo del modal Modal -->
+                                <form action="" method="post">
                                 <div class="modal-body">
 
                   <label for="pwd" class="form-label">Id Categoria:</label>
@@ -284,17 +286,17 @@ if (mysqli_num_rows($roles35) > 0)
                   </select>
                 <br>
                 <label for="">Cantidad Minima</label>
-                <input type="text" class="form-control" autocomplete="off" name="cantidad_minima" required value="<?php echo $filas['CANTIDAD_MIN'] ?>" placeholder="">
+                <input type="text" class="form-control" autocomplete="off" name="cantidad_min" required value="<?php echo $filas['CANTIDAD_MIN'] ?>" placeholder="">
                 <br>
                 <label for="">Cantidad Maxima</label>
-                <input type="text" class="form-control" autocomplete="off" name="cantidad_maxima" required value="<?php echo $filas['CANTIDAD_MAX'] ?>" placeholder="">
+                <input type="text" class="form-control" autocomplete="off" name="cantidad_max" required value="<?php echo $filas['CANTIDAD_MAX'] ?>" placeholder="">
                 <br>
                 <label for="">Imagen</label><br>
                 <img class="img-thumbnail" width="100px" src="<?php echo $filas['FOTO'] ?>" /><br>
                 <input type="file" class="form-control" accept=".jpg, .png, .jpeg, .JPEG, .JPG, .PNG" name="imagenes" required value="<?php echo "$nombreimagen"; ?>" placeholder=""  >
                 <br> 
                 <label for="">Codigo</label>
-                <input type="text" class="form-control" autocomplete="off" name="CODIGO" required value="<?php echo $filas['CODIGO'] ?>" placeholder="">
+                <input type="text" class="form-control" autocomplete="off" name="codigo" required value="<?php echo $filas['CODIGO'] ?>" placeholder="">
                 <br>
                 <label for="">Nombre</label>
                 <input type="text" autocomplete="off"  value="<?php echo $filas['NOMBRE'] ?>" onkeyup="mayus(this);" maxlength="255" class="form-control"  placeholder="" name="nombre" required>
@@ -308,10 +310,12 @@ if (mysqli_num_rows($roles35) > 0)
 
                                 <!-- pie del modal -->
                                 <div class="modal-footer">
-                                <button type="submit" class="btn btn-primary" name="accion" value="editar" >Editar</button>
+                                <button type="submit" name="accion" value="editar" class="btn btn-primary" onclick="return confirm('¿Desea editar el Producto?')">Guardar</button>
                                   <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
                                 </div>
+                              </form>
                                   <!-- Fin pie del modal -->
+                                  <form action="" method="post">
                               </div>
                             </div>
                           </div>
@@ -327,23 +331,19 @@ if (mysqli_num_rows($roles35) > 0)
                         onclick="return confirm('¿Quieres eliminar este dato?')"
                         type="submit" class="btn btn-danger " data-id="19">
                         <i class="fas fa-trash-alt"></i>
-                    </button> <?php 
+                        </button> <?php 
                           }
                         ?>
                      </form>
 </td>
-                      <td><?php echo $filas['ID_PRODUCTO'] ?></td>
-                     <td><?php echo $filas['ID_CATEGORIA'] ?></td>
+      
                      <td><?php echo $filas['CANTIDAD_MIN'] ?></td>
                      <td><?php echo $filas['CANTIDAD_MAX'] ?></td>
-                     <td><img  width="100px" src="<?php echo $filas['FOTO'] ?>" /></td>
-                     
+                     <td><img  width="100px" src="<?php echo $filas['FOTO'] ?>" /></td>                    
                      <td><?php echo $filas['CODIGO'] ?></td>
                      <td><?php echo $filas['NOMBRE'] ?></td>
-                     <td><?php echo $filas['DESCRIPCION_MODELO'] ?></td>
-                     
-                    
-      </tr>
+                     <td><?php echo $filas['DESCRIPCION_MODELO'] ?></td>                                                           
+                     </tr>
       <?php }} ?>  
                   </tfoot>
                 </table>
@@ -369,8 +369,6 @@ if (mysqli_num_rows($roles35) > 0)
     <!-- Default to the left -->
     <strong>SEACCO &copy; 2022 </strong> 
   </footer>
-
-  <!-- Control Sidebar -->
   <aside class="control-sidebar control-sidebar-dark">
     <!-- Control sidebar content goes here -->
   </aside>
