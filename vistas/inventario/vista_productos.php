@@ -123,26 +123,31 @@ if (mysqli_num_rows($roles35) > 0)
                 <!-- Cuerpo del modal Modal -->
                 <div class="modal-body">
                 <label for="pwd" class="form-label">Id Categoria:</label>
-                  <select  value="<?php echo "$genero"; ?>" class="form-select" id="lista1" name="id_categoria" required >
+                  <select  value="<?php echo "$id_categoria"; ?>" class="form-select" id="lista1" name="id_categoria" required >
                         <?php
-                            include 'conexion/conexion.php';
-                            $genero = "SELECT * FROM tbl_categoria_producto ORDER BY ID_CATEGORIA";
-                            $genero2 = mysqli_query($conn, $genero);
+                           include '../../conexion/conexion.php';
+                            $id_categoria = "SELECT * FROM tbl_categoria_producto ORDER BY ID_CATEGORIA";
+                            $genero2 = mysqli_query($conn, $id_categoria);
                             if (mysqli_num_rows($genero2) > 0) {
                                 while($row = mysqli_fetch_assoc($genero2))
                                 {
-                                $id_genero = $row['ID_CATEGORIA'];
-                                $genero3 =$row['ID CATEGORIA'];
+                                $id_categoria = $row['ID_CATEGORIA'];
+                                $categoria33 =$row['NOMBRE_CATEGORIA'];
                          ?>
-                          <option value="<?php  echo $id_genero ?>"><?php echo $genero3 ?></option>
+                          <option value="<?php  echo $id_categoria ?>"><?php echo $categoria33 ?></option>
                           <?php
                            }}// finaliza el if y el while
                            ?>
                    </select>
-
+                <br>  
+                <label for="">Cantidad Minima</label>
+                <input type="text" class="form-control" autocomplete="off" onkeyup="mayus(this);" name="cantidad_min" required value="<?php echo "$cantidad_min"; ?>" placeholder="">
+                <br>  
+                <label for="">Cantidad Maxima</label>
+                <input type="text" class="form-control" autocomplete="off" onkeyup="mayus(this);" name="cantidad_max" required value="<?php echo "$cantidad_max"; ?>" placeholder="">
                 <br>
                 <label for="">Imagen</label>
-                <input type="file" class="form-control" accept=".jpg, .png, .jpeg, .JPEG, .JPG, .PNG" name="imagen" required value="<?php echo "$nombreimagen"; ?>" placeholder=""  >
+                <input type="file" class="form-control" accept=".jpg, .png, .jpeg, .JPEG, .JPG, .PNG" name="imagenes" required value="<?php echo "$nombreimagen"; ?>" placeholder=""  >
                 <br>  
                 <label for="">Codigo</label>
                 <input type="text" class="form-control" autocomplete="off" onkeyup="mayus(this);" name="codigo" required value="<?php echo "$codigo"; ?>" placeholder="">
@@ -204,9 +209,11 @@ if (mysqli_num_rows($roles35) > 0)
                 <table id="example1" class="table table-bordered table-striped">
                   <thead>
                   <tr>
-                  <th>Acciones</th>
+                  <th>ACCIONES</th>
                   <th>ID PRODUCTO</th>
                   <th>ID CATEGORIA</th>
+                  <th>CANTIDAD MINIMA</th>
+                  <th>CANTIDAD MAXIMA</th>
                   <th>FOTO</th>
                   <th>CODIGO</th>
                   <th>NOMBRE</th>
@@ -256,48 +263,52 @@ if (mysqli_num_rows($roles35) > 0)
                                 <!-- Cuerpo del modal Modal -->
                                 <div class="modal-body">
 
-                <label for="pwd" class="form-label">Id Categoria:</label>
+                  <label for="pwd" class="form-label">Id Categoria:</label>
                   <select style="background-color:rgb(240, 244, 245);" class="form-select" id="lista1" name="id_categoria" required >
                     
                     <?php
-                        include 'conexion/conexion.php';
-                            $genero = "SELECT * FROM tbl_categoria_producto ORDER BY ID_CATEGORIA";
-                            $departamento2 = mysqli_query($conn, $departamento);
-                            if (mysqli_num_rows($departamento2) > 0) {
-                                while($row = mysqli_fetch_assoc($departamento2))
-                                {
-                                $id_departamentos = $row['ID_CATEGORIA'];
-                                $departamento3 =$row['ID CATEGORIA'];
+                        include '../../conexion/conexion.php';
+                        $id_categoria = "SELECT * FROM tbl_categoria_producto ORDER BY ID_CATEGORIA";
+                        $genero2 = mysqli_query($conn, $id_categoria);
+                        if (mysqli_num_rows($genero2) > 0) {
+                            while($row = mysqli_fetch_assoc($genero2))
+                            {
+                            $id_genero = $row['ID_CATEGORIA'];
+                            $genero3 =$row['NOMBRE_CATEGORIA'];
     
                                 if($departamento3 == $filas["ID CATEGORIA"]){?>
-                                  <option value="<?php  echo $id_departamentos; ?>" selected><?php echo $departamento3; ?></option>
+                                  <option value="<?php  echo $id_categoria; ?>" selected><?php echo $genero3; ?></option>
                                  <?php
                             }}}// finaliza el if y el while
                        ?>
                   </select>
+                <br>
+                <label for="">Cantidad Minima</label>
+                <input type="text" class="form-control" autocomplete="off" name="cantidad_minima" required value="<?php echo $filas['CANTIDAD_MIN'] ?>" placeholder="">
+                <br>
+                <label for="">Cantidad Maxima</label>
+                <input type="text" class="form-control" autocomplete="off" name="cantidad_maxima" required value="<?php echo $filas['CANTIDAD_MAX'] ?>" placeholder="">
                 <br>
                 <label for="">Imagen</label><br>
                 <img class="img-thumbnail" width="100px" src="<?php echo $filas['FOTO'] ?>" /><br>
                 <input type="file" class="form-control" accept=".jpg, .png, .jpeg, .JPEG, .JPG, .PNG" name="imagenes" required value="<?php echo "$nombreimagen"; ?>" placeholder=""  >
                 <br> 
                 <label for="">Codigo</label>
-                <input type="text" class="form-control" autocomplete="off" name="codigo" required value="<?php echo $filas['CODIGO'] ?>" placeholder="">
+                <input type="text" class="form-control" autocomplete="off" name="CODIGO" required value="<?php echo $filas['CODIGO'] ?>" placeholder="">
                 <br>
                 <label for="">Nombre</label>
                 <input type="text" autocomplete="off"  value="<?php echo $filas['NOMBRE'] ?>" onkeyup="mayus(this);" maxlength="255" class="form-control"  placeholder="" name="nombre" required>
                 <br>
                 <label for="">Descripcion Modelo</label>
-                <input type="text" autocomplete="off"  value="<?php echo $filas['DESCRIPCION MODELO'] ?>" onkeyup="mayus(this);" maxlength="255" class="form-control"  placeholder="" name="descripcion_modelo" required>
+                <input type="text" autocomplete="off"  value="<?php echo $filas['DESCRIPCION_MODELO'] ?>" onkeyup="mayus(this);" maxlength="255" class="form-control"  placeholder="" name="descripcion_modelo" required>
                 <br>
-                                     
-                
                 </div>
                                          
                                 <!-- Fin Cuerpo del modal Modal -->
 
                                 <!-- pie del modal -->
                                 <div class="modal-footer">
-                                <button type="submit" class="btn btn-primary" name="accion" value="editar" >Guardar</button>
+                                <button type="submit" class="btn btn-primary" name="accion" value="editar" >Editar</button>
                                   <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
                                 </div>
                                   <!-- Fin pie del modal -->
@@ -305,7 +316,7 @@ if (mysqli_num_rows($roles35) > 0)
                             </div>
                           </div>
                           <!-- fin boton editar -->
-                          <input type="hidden" name="ruta"  value="<?php echo $filas['RUTA'] ?>">
+                          
                           <?php 
                           include '../../conexion/conexion.php';
                           $tablero = "SELECT * FROM tbl_ms_roles_ojetos WHERE ID_ROL='$id_rol7' and ID_OBJETO=12 and PERMISO_ELIMINACION=1";
@@ -323,10 +334,13 @@ if (mysqli_num_rows($roles35) > 0)
 </td>
                       <td><?php echo $filas['ID_PRODUCTO'] ?></td>
                      <td><?php echo $filas['ID_CATEGORIA'] ?></td>
+                     <td><?php echo $filas['CANTIDAD_MIN'] ?></td>
+                     <td><?php echo $filas['CANTIDAD_MAX'] ?></td>
                      <td><img  width="100px" src="<?php echo $filas['FOTO'] ?>" /></td>
-                     <td><?php echo $filas['APELLIDO'] ?></td>
+                     
+                     <td><?php echo $filas['CODIGO'] ?></td>
                      <td><?php echo $filas['NOMBRE'] ?></td>
-                     <td><?php echo $filas['DESCRIPCION MODELO'] ?></td>
+                     <td><?php echo $filas['DESCRIPCION_MODELO'] ?></td>
                      
                     
       </tr>
@@ -467,7 +481,7 @@ if (mysqli_num_rows($roles35) > 0)
 				const pdf = new jsPDF('p', 'mm', 'letter');			
         	
 
-				var columns = ["", "", "", "", ""];
+				var columns = ["", "", "", "", "", "", ""];
 				var data = [
 				[1, "Hola", "hola@gmail.com", "Mexico"],
 				 ];

@@ -147,7 +147,7 @@ clientes y brindando oportunidades de trabajo para el hondureño.</p>
 </div>
 <?php 
   include 'conexion/conexion.php';
-  $sql7 = "SELECT * FROM tbl_bienvenida_portafolio WHERE TIPO='BIENVENIDA' AND ID_IMAGEN=2";
+  $sql7 = "SELECT * FROM tbl_bienvenida_portafolio WHERE TIPO='BIENVENIDA' AND ID_IMAGEN=14";
   $result7 = mysqli_query($conn, $sql7);
   while($row = mysqli_fetch_assoc($result7)) {
   ?>

@@ -36,8 +36,8 @@
       //para insertar en la tabla mysl
       case "agregar": 
         // valida si existe una proyecto con el mismo nombre
-        $validar_proyecto = "SELECT * FROM tbl_proyectos WHERE NOMBRE_PROYECTO='$nombre'";
-        $result1 = mysqli_query($conn, $validar_proyecto); 
+        $validar_proveedor = "SELECT * FROM tbl_proyectos WHERE NOMBRE_PROYECTO='$nombre'";
+        $result1 = mysqli_query($conn, $validar_proveedor); 
          if (mysqli_num_rows($result1) > 0) { 
               
          
@@ -46,7 +46,14 @@
                  </script>';
                  mysqli_close($conn);
          }else{ 
-
+          if ($fecha_final<$fecha_inicio) { 
+              
+         
+            echo '<script>
+                     alert("Fecha incorrecta,intentelo de nuevo");
+                  </script>';
+                  mysqli_close($conn);
+          }else{ 
                 //si no existe un proyecto permite insertar
                 $sql1 = "INSERT INTO tbl_proyectos ( ID_PROYECTO,ID_CLIENTE, ID_USUARIO,ID_ESTADOS, NOMBRE_PROYECTO, DESCRIPCION, ID_DEPARTAMENTO,UBICACION, FECHA_INICIO, FECHA_FINAL)
                 VALUES ('$id_proyecto','$id_cliente','$id_usuario','$id_estado','$nombre','$descripcion','$id_departamento','$ubicacion','$fecha_inicio','$fecha_final')";
@@ -69,7 +76,7 @@
                 
                 mysqli_close($conn);
 
-              }                    
+              }}                    
 
              
       break;
@@ -93,7 +100,7 @@
                     if (mysqli_query($conn, $sql8)) {} else { }
                   // fin inserta en la tabla bitacora
                   echo '<script>
-                          alert("Campos del Proveedor editado con exito");
+                          alert("Campos del Proyecto editado con exito");
                           window.location.href="../../vistas/proyectos/vista_proyectos.php";                   
                         </script>';
                         mysqli_close($conn);
@@ -107,7 +114,7 @@
                   if (mysqli_query($conn, $sql9)) {} else { }
                 // fin inserta en la tabla bitacora
                        echo '<script>
-                                alert("Error al tratar de editar proveedor");
+                                alert("Error al tratar de editar proyecto");
                              </script>'; mysqli_error($conn);
                    }
 
@@ -124,7 +131,7 @@
                    if (mysqli_query($conn, $sql8)) {} else { }
                  // fin inserta en la tabla bitacora
                  echo '<script>
-                 alert("Proveedor editado con exito");
+                 alert("Proyecto editado con exito");
                  window.location.href="../../vistas/proyectos/vista_proyectos.php";                   
                </script>';
                mysqli_close($conn);
@@ -138,12 +145,16 @@
                   if (mysqli_query($conn, $sql9)) {} else { }
                 // fin inserta en la tabla bitacora
                      echo '<script>
-                            alert("Error al tratar de editar el provedor");
+                            alert("Error al tratar de editar el proyecto");
                            </script>'; mysqli_error($conn);
                      }
 
                 mysqli_close($conn);
               }
+            
+         
+             
+              
                 
                      
       

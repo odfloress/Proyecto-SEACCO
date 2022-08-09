@@ -339,7 +339,7 @@ if (mysqli_num_rows($roles35) > 0)
                             </div>
                           </div>
                           <!-- fin boton editar -->
-                          <input type="hidden" name="ruta"  value="<?php echo $filas['RUTA'] ?>">
+                          
                           <?php 
                           include '../../conexion/conexion.php';
                           $tablero = "SELECT * FROM tbl_ms_roles_ojetos WHERE ID_ROL='$id_rol7' and ID_OBJETO=4 and PERMISO_ELIMINACION=1";
