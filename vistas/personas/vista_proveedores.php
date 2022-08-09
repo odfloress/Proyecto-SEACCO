@@ -451,12 +451,12 @@ if (mysqli_num_rows($roles35) > 0)
 				//muestra el titulo principal
 				pdf.setFont('Arial');
 				pdf.setFontSize(17);
-				pdf.text("Constructora SEACCO S.De R.L. ", 70,15,);
+				pdf.text("Constructora SEACCO S.De R.L. ", 100,15,);
 
 				//muestra el titulo secundario
 				pdf.setFont('times');
 				pdf.setFontSize(14);
-				pdf.text("Reporte de proveedores", 84,25,);
+				pdf.text("Reporte de proveedores", 115,25,);
 
 												//////// pie de Pagina ///////
 				//muestra la fecha
@@ -469,7 +469,7 @@ if (mysqli_num_rows($roles35) > 0)
 				pdf.text(250-20,297-284,newdat);
 
 				//muestra el numero de pagina
-				pdf.text('Pagina ' + String(i) + '/' + String(pageCount),220-20,297-25,null,null,"right");
+				pdf.text('Pagina ' + String(i) + '/' + String(pageCount),280-20,230-25,null,null,"right");
 			}
 				//Fin Encabezado y pie de pagina
 
