@@ -17,6 +17,7 @@
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
 <style>
   body,h1,h2,h3,h4,h5,h6 {font-family: "Raleway", sans-serif}
   body, html {
@@ -108,59 +109,113 @@
   </button>
 </div>
 <!-- fin Carrucel -->
-
-<!-- inicio card -->
-
-<div class="w3-container" style="padding:128px 16px" id="about">
-  <h3 class="w3-center">Nuestros trabajos</h3> 
-  <div class="w3-row-padding " style="margin-top:64px">
-
-  <?php 
-  include '../../conexion/conexion.php';
-  $sql = "SELECT * FROM tbl_bienvenida_portafolio WHERE TIPO='PORTAFOLIO'";
-  $result = mysqli_query($conn, $sql);
-  while($row = mysqli_fetch_assoc($result)) {
-   
-  ?>
-
-    <!-- inicio card 1 -->
-  <div class="w3-col w3-third w3-margin-bottom">
-      <div class="w3-card">
-      <img src="<?php echo $row["RUTA"]; ?>" alt="Jane" style="width:100%" width="500" height="300">
-        <div class="w3-container">
-          <h3><?php echo $row["TITULO"]; ?></h3>
-         
-         <!-- inicio boton informacion -->
-      <div class="container mt-3">                                          
-        <div class="dropdown">
-          <button type="button" class="btn btn-primary " data-bs-toggle="dropdown">
-            ver información
-          </button>
-          
-           <textarea readonly class="dropdown-menu" style="background-color: white;" class="form-control"name="" id="" cols="40" rows="5"><?php echo $row["DESCRIPCION"]; ?></textarea>
-          
-        </div>
-      </div>
-      <br>
-      <!-- fin  boton informacion -->  
-
-        </div>
-      </div>
-    </div>
-     <!-- fin card 1 -->
-    <?php } ?>
-    
-    
-  </div> 
-</div>
-
-<!-- fin card -->
+<br>
 
 
 
 
+      <?php  
+      $id_catalogo=(isset($_POST['id_catalogo']))?$_POST['id_catalogo']:""; 
+      $catalogo=(isset($_POST['catalogo']))?$_POST['catalogo']:"";  
+        if(isset($_POST['catalogo']))
+        {  ?>                               
+                                  <!-- //////////////// SELECCIONA LAS IMAGENES DE LA CATEGORIA SELECCIONADA //////////////// -->
+                                
 
+                                        <?php echo "$id_catalogo";
+                                        include '../../conexion/conexion.php';
+                                        $sql = "SELECT * FROM (tbl_portafolio p
+                                        INNER JOIN tbl_catalogo c ON p.ID_CATALOGO = c.ID_CATALOGO=$id_catalogo)";
+                                        $result = mysqli_query($conn, $sql);
+                                        while($row = mysqli_fetch_assoc($result)) {
+                                        
+                                        ?>
+                                           <!-- inicio card -->
 
+                                        <div class="w3-container" style="padding:128px 16px" id="about">
+                                        <h3 class="w3-center"><b><?php echo $row["NOMBRE_CATALOGO"]; ?></b></h3> 
+                                        <div class="w3-row-padding " style="margin-top:64px">
+
+                                          <!-- inicio card 1 -->
+                                        <div class="w3-col w3-third w3-margin-bottom">
+                                            <div class="w3-card">
+                                            <img src="<?php echo $row["RUTA"]; ?>" alt="Jane" style="width:100%" width="500" height="300">
+                                              <div class="w3-container">
+                                                <h3><?php echo $row["TITULO"]; ?></h3>
+                                              
+                                              <!-- inicio boton informacion -->
+                                            <div class="container mt-3">                                          
+                                              <div class="dropdown">
+                                                <button type="button" class="btn btn-primary " data-bs-toggle="dropdown">
+                                                  ver información
+                                                </button>
+                                                
+                                                <textarea readonly class="dropdown-menu" style="background-color: white;" class="form-control"name="" id="" cols="40" rows="5"><?php echo $row["DESCRIPCION"]; ?></textarea>
+                                                
+                                              </div>
+                                            </div>
+                                            <br>
+                                            <!-- fin  boton informacion -->  
+
+                                              </div>
+                                            </div>
+                                          </div>
+                                          <!-- fin card 1 -->
+                                          <?php } ?>
+                                          
+                                          
+                                        </div> 
+                                      </div>
+
+                                      <!-- fin card -->     
+                                   <!-- //////////////// SELECCIONA LAS CATEGORIAS //////////////// -->         
+  <?php }  ?>
+  <!-- inicio card -->  <h3 class="w3-center"><b>Catálogo de SEACCO S. De. R.L.</b></h3> 
+                                         
+                                        <div class="w3-row-padding " style="margin-top:64px">
+
+                                        <?php 
+                                        include '../../conexion/conexion.php';
+                                        $sql = "SELECT * FROM tbl_catalogo";
+                                        $result = mysqli_query($conn, $sql);
+                                        while($row = mysqli_fetch_assoc($result)) {
+                                        
+                                        ?>
+                                          <!-- inicio card 1 -->
+                                        <div class="w3-col w3-third w3-margin-bottom">
+                                            <div class="w3-card">
+                                            <img src="<?php echo $row["RUTA"]; ?>" alt="Jane" style="width:100%" width="500" height="300">
+                                              <div class="w3-container">
+                                                <h3><?php echo $row["NOMBRE_CATALOGO"]; ?></h3>
+                                                <textarea readonly  style="background-color: white; border: white;" class="form-control" name="" id="" cols="40" rows="5"><?php echo $row["DESCRIPCION"]; ?></textarea>
+                                               
+                                              
+                                              <!-- inicio boton informacion -->
+                                            <div class="container mt-3">                                          
+                                              <div class="dropdown">
+                                                
+                                                <form action="" method="post">
+                                                  <input type="text" name="id_catalogo" value="<?php echo $row["ID_CATALOGO"]; ?>">
+                                                  <button class="btn btn-primary" name="catalogo" type="submit">Mostrar catálogo</button>
+                                                </form>                                                
+                                              
+                                                
+                                              </div>
+                                            </div>
+                                            <br>
+                                            <!-- fin  boton informacion -->  
+
+                                              </div>
+                                            </div>
+                                          </div>
+                                          <!-- fin card 1 -->
+                                          <?php } ?>
+                                          
+                                          
+                                        </div> 
+
+                                      <!-- fin card -->
+                
 
 <!-- Contact Section -->
 <div class="w3-container w3-light-grey" style="padding:128px 16px" id="contact">
@@ -216,4 +271,6 @@ function w3_close() {
 </script>
 
 </body>
+<!-- Enlace Script para evitar reenvio de forulario -->
+<script type="text/javascript" src="../../js/evitar_reenvio.js"></script>
 </html>
