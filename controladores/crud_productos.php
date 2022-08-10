@@ -90,7 +90,7 @@ if($tmpFoto1!="") {
     $ultimo = "jpg";
     $extencion = "$ultimo";
 }
-
+$direccion = "$foto";
 
 if(in_array($extencion, $permitidos))
 {
@@ -100,13 +100,13 @@ if(in_array($extencion, $permitidos))
     $tmpFoto= $_FILES["imagenes"]["tmp_name"];
     if($tmpFoto!="") 
     {
-     unlink($ruta); 
+     unlink($foto); 
      move_uploaded_file($tmpFoto,$destino.$nombreimagen);
     } 
     $direccion = "$destino$nombreimagen";
 
     
-    $sql2 = "UPDATE tbl_productos SET ID_CATEGORIA='$id_categoria', CANTIDAD_MIN='$cantidad_min', CANTIDAD_MAX='$cantidad_max', FOTO='$destino$nombreimagen', CODIGO='$codigo', NOMBRE='$nombre', DESCRIPCION_MODELO='$descripcion_modelo' WHERE ID_PRODUCTO='$id_productos'";
+    $sql2 = "UPDATE tbl_productos SET ID_CATEGORIA='$id_categoria', CANTIDAD_MIN='$cantidad_min', CANTIDAD_MAX='$cantidad_max', FOTO='$direccion$nombreimagen', CODIGO='$codigo', NOMBRE='$nombre', DESCRIPCION_MODELO='$descripcion_modelo' WHERE ID_PRODUCTO='$id_productos'";
     if (mysqli_query($conn, $sql2)) 
     {
         // inicio inserta en la tabla bitacora
