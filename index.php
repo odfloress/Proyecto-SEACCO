@@ -147,7 +147,7 @@ clientes y brindando oportunidades de trabajo para el hondureño.</p>
 </div>
 <?php 
   include 'conexion/conexion.php';
-  $sql7 = "SELECT * FROM tbl_bienvenida_portafolio WHERE TIPO='BIENVENIDA' AND ID_IMAGEN=14";
+  $sql7 = "SELECT * FROM tbl_bienvenida_portafolio WHERE TIPO='BIENVENIDA' AND ID_IMAGEN=2";
   $result7 = mysqli_query($conn, $sql7);
   while($row = mysqli_fetch_assoc($result7)) {
   ?>
@@ -392,20 +392,21 @@ actividades que se desarrollan en los proyectos ejecutados.</p>
 
 <?php }?>
 
+<?php 
+      include 'conexion/conexion.php';
+      $sqlB4 = "SELECT * FROM tbl_nuestros_contactos";
+      $resultB4 = mysqli_query($conn, $sqlB4);
+      while($rowB4 = mysqli_fetch_assoc($resultB4)) {
+      ?>
 <!-- Footer -->
 <footer class="w3-center w3-black w3-padding-64">
   <a href="#home" class="w3-button w3-light-grey"><i class="fa fa-arrow-up w3-margin-right"></i>Ir a inicio</a>
   <div class="w3-xlarge w3-section">
-  <a href="https://www.facebook.com/pages/category/Construction-Company/Constructora-Seacco-658896417875063/"> <i class="fa fa-facebook-official w3-hover-opacity"></i></a>
-    <i class="fa fa-instagram w3-hover-opacity"></i>
-    <i class="fa fa-snapchat w3-hover-opacity"></i>
-    <i class="fa fa-pinterest-p w3-hover-opacity"></i>
-    <i class="fa fa-twitter w3-hover-opacity"></i>
-    <i class="fa fa-linkedin w3-hover-opacity"></i>
+  <a href="<?php echo $rowB4['FACEBOOK'] ?>"> <i class="fa fa-facebook-official w3-hover-opacity"></i></a>
   </div>
-  <p>Constructora <a href="https://www.w3schools.com/w3css/default.asp" title="W3.CSS" target="_blank" class="w3-hover-text-green">SEACCO</a></p>
+  <p>Constructora <a href="<?php echo $rowB4['FACEBOOK'] ?>" title="W3.CSS" target="_blank" class="w3-hover-text-green">SEACCO</a></p>
 </footer>
- 
+<?php }?>
 <script>
 // Modal Image Gallery
 function onClick(element) {

@@ -138,13 +138,13 @@ if (mysqli_num_rows($roles35) > 0)
                   <input type="text" autocomplete="off"  value="<?php echo "$telefono"; ?>" class="form-control"  placeholder="" name="telefono" required minlength="8" onkeypress="return solonumero(event)" maxlength="8" pattern="[0-9]+[1-9]+[0-9]+" title="8 caracteres y no todos ceros">
                 <br>
                 <label for="" class="form-label">Dirección:</label>
-                  <input type="text" autocomplete="off"  value="<?php echo "$direccion"; ?>" onkeyup="mayus(this);"   class="form-control"  placeholder="" name="direccion" required>
+                  <input type="text" autocomplete="off"  value="<?php echo "$direccionp"; ?>" onkeyup="mayus(this);"   class="form-control"  placeholder="" name="direccion" required>
                   <br>
                   <label for="pwd" class="form-label">Referencia:</label>
                   <input type="text" autocomplete="off"  value="<?php echo "$referencia"; ?>"  onkeyup="mayus(this);"  class="form-control"  placeholder="" name="referencia" required>
                   <br>
                   <label for="pwd" class="form-label">Genero:</label>
-                  <select  value="<?php echo "$genero"; ?>" class="form-select" id="lista1" name="genero" required >
+                  <select  value="<?php echo "$genero3"; ?>" class="form-select" id="lista1" name="genero" required >
                         <?php
                             include 'conexion/conexion.php';
                             $genero = "SELECT * FROM tbl_generos ORDER BY ID_GENERO";
@@ -267,14 +267,16 @@ if (mysqli_num_rows($roles35) > 0)
 
                                 <!-- Encabezado del modal -->
                                 <div class="modal-header">
-                                  <h4 class="modal-title">Editar </h4>
+                                  <h4 class="modal-title">Editar Cliente</h4>
                                   <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                                 </div>
                                 <!-- Fin Encabezado del modal -->
 
 
                                 <!-- Cuerpo del modal Modal -->
+                                <form action="" method="post" enctype="multipart/form-data">
                                 <div class="modal-body">
+                                <input type="hidden" name="id_cliente" value="<?php echo $filas['ID_CLIENTE'] ?>">
                 <label for="">Codigo</label>
                 <input type="text" class="form-control" autocomplete="off" name="codigo" required value="<?php echo $filas['CODIGO'] ?>" placeholder="">
                 <br>
@@ -297,7 +299,7 @@ if (mysqli_num_rows($roles35) > 0)
                   <input type="text" autocomplete="off"  value="<?php echo $filas['REFERENCIA'] ?>"  onkeyup="mayus(this);"  class="form-control"  placeholder="" name="referencia" required>
                   <br>
                   <label for="pwd" class="form-label">Genero:</label>
-                  <select style="background-color:rgb(240, 244, 245);" class="form-select" id="lista1" name="id_departamento" required >
+                  <select style="background-color:rgb(240, 244, 245);" class="form-select" id="lista1" name="id_genero" required >
                     
                     <?php
                         include 'conexion/conexion.php';
@@ -321,8 +323,9 @@ if (mysqli_num_rows($roles35) > 0)
                </select>
                   <br>
                   <label for="">Imagen</label><br>
+                  <input type="hidden" name="foto" value="<?php echo $filas['FOTO'] ?>">
                   <img class="img-thumbnail" width="100px" src="<?php echo $filas['FOTO'] ?>" /><br>
-                    <input type="file" class="form-control" accept=".jpg, .png, .jpeg, .JPEG, .JPG, .PNG" name="imagenes" required value="<?php echo "$nombreimagen"; ?>" placeholder=""  >
+                    <input type="file" class="form-control" accept=".jpg, .png, .jpeg, .JPEG, .JPG, .PNG" name="imagenes" value="<?php echo "$nombreimagen"; ?>" placeholder=""  >
                     <br>                  
                 
                 </div>
@@ -334,6 +337,7 @@ if (mysqli_num_rows($roles35) > 0)
                                 <button type="submit" class="btn btn-primary" name="accion" value="editar" >Guardar</button>
                                   <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
                                 </div>
+                                </form>
                                   <!-- Fin pie del modal -->
                                   <form action="" method="post">
                               </div>
@@ -346,6 +350,7 @@ if (mysqli_num_rows($roles35) > 0)
                           $tablero2 = mysqli_query($conn, $tablero);
                           if (mysqli_num_rows($tablero2) > 0)
                           {?>
+                          <input type="hidden" name="id_cliente" value="<?php echo $filas['ID_CLIENTE'] ?>">
                              <button  value="eliminar" name="accion" 
                         onclick="return confirm('¿Quieres eliminar este dato?')"
                         type="submit" class="btn btn-danger " data-id="19">

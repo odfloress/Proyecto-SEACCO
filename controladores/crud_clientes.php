@@ -7,17 +7,21 @@ $result = mysqli_query($conn, $sql);
 
 // //Variables para recuperar la información de los campos de la vista del crud del portafolio 
 // $id_imagen=(isset($_POST['id_imagen']))?$_POST['id_imagen']:"";
+
+
+$id_cliente=(isset($_POST['id_cliente']))?$_POST['id_cliente']:"";
 $codigo=(isset($_POST['codigo']))?$_POST['codigo']:"";
 $nombre=(isset($_POST['nombre']))?$_POST['nombre']:"";
 $apellido=(isset($_POST['apellido']))?$_POST['apellido']:"";
-$correo=(isset($_POST['nombre']))?$_POST['correo']:"";
+$correo=(isset($_POST['correo']))?$_POST['correo']:"";
 $telefono=(isset($_POST['telefono']))?$_POST['telefono']:"";
-$direccion=(isset($_POST['direccion']))?$_POST['direccion']:"";
+$direccionp=(isset($_POST['direccion']))?$_POST['direccion']:"";
 $referencia=(isset($_POST['referencia']))?$_POST['referencia']:"";
 $genero=(isset($_POST['genero']))?$_POST['genero']:"";
+$id_genero=(isset($_POST['id_genero']))?$_POST['id_genero']:"";
 $usuario1 = $_SESSION;
 // $ruta=(isset($_POST['ruta']))?$_POST['ruta']:"";
-// $foto=(isset($_POST['foto']))?$_POST['foto']:"";
+$foto=(isset($_POST['foto']))?$_POST['foto']:"";
 
 //variable para recuperar los botones de la vista del crud del portafolio 
 $accion=(isset($_POST['accion']))?$_POST['accion']:"";
@@ -52,7 +56,7 @@ if(in_array($extencion, $permitidos)){
      }else{
             // INICIO INSERTA EN LA TABLA CLIENTES
                 $sql = "INSERT INTO tbl_clientes (CODIGO, NOMBRE_CLIENTE, APELLIDO, CORREO, TELEFONO, DIRECCION, REFERENCIA, ID_GENERO, FOTO)
-                VALUES ('$codigo', '$nombre', '$apellido', '$correo', '$telefono', '$direccion', '$referencia', '$genero', '$destino$nombreimagen')";
+                VALUES ('$codigo', '$nombre', '$apellido', '$correo', '$telefono', '$direccionp', '$referencia', '$genero', '$destino$nombreimagen')";
                  $res = mysqli_query($conn, $sql);
                 if($res){
                     // inicio inserta en la tabla bitacora
@@ -103,7 +107,7 @@ if($tmpFoto1!="") {
     $ultimo = "jpg";
     $extencion = "$ultimo";
 }
-$direccion = "$ruta";
+$direccion = "$foto";
 
 if(in_array($extencion, $permitidos))
 {
@@ -113,23 +117,25 @@ if(in_array($extencion, $permitidos))
     $tmpFoto= $_FILES["imagenes"]["tmp_name"];
     if($tmpFoto!="") 
     {
-     unlink($ruta); 
+     unlink($foto); 
      move_uploaded_file($tmpFoto,$destino.$nombreimagen);
     } 
     $direccion = "$destino$nombreimagen";
 
     
-    $sql2 = "UPDATE tbl_bienvenida_portafolio SET TIPO='$tipo', IMAGEN='$nombreimagen', RUTA='$direccion', TITULO='$titulo', DESCRIPCION='$descripcion' WHERE ID_IMAGEN='$id_imagen'";
+    $sql2 = "UPDATE tbl_clientes SET CODIGO='$codigo', NOMBRE_CLIENTE='$nombre', APELLIDO='$apellido', 
+        CORREO='$correo', TELEFONO='$telefono',  DIRECCION='$direccionp', REFERENCIA='$referencia', ID_GENERO='$id_genero' 
+        WHERE ID_CLIENTE='$id_cliente'";
     if (mysqli_query($conn, $sql2)) 
     {
         // inicio inserta en la tabla bitacora
         $sql = "INSERT INTO tbl_bitacora (USUARIO, ACCION, OBSERVACION)
-        VALUES ('$usuario1[usuario]', 'EDITO', 'EDITO UN REGISTRO DE TIPO ($tipo) Y TITULO ($titulo)')";
+        VALUES ('$usuario1[usuario]', 'EDITO', 'EDITO EL CLIENTE ($nombre)')";
         if (mysqli_query($conn, $sql)) {} else {}
          // fin inserta en la tabla bitacora
         echo '<script>
                  alert("Edición exitosa");
-                 window.location.href="../../vistas/catalogo/vista_portafolio";
+                 window.location.href="../../vistas/personas/vista_clientes.php";
               </script>';
 
     }else{
@@ -146,7 +152,7 @@ if(in_array($extencion, $permitidos))
     // fin inserta en la tabla bitacora
     echo '<script type="text/javascript">
             alert("Archivo no permitido");
-            window.location.href="../../vistas/catalogo/vista_portafolio";
+            window.location.href="../../vistas/personas/vista_clientes.php";
          </script>';
 }
   
@@ -155,17 +161,18 @@ break;
 
 
 //para eliminar en la tabla mysl  
-$validar_proveedor = "SELECT * FROM tbl_clientes WHERE ID_CLIENTE='$id_cliente'";
+case "eliminar";
+$validar_proveedor = "SELECT * FROM  tbl_proyectos WHERE ID_CLIENTE='$id_cliente'";
     $result4 = mysqli_query($conn, $validar_proveedor); 
      if (mysqli_num_rows($result4) > 0) { 
          // inicio inserta en la tabla bitacora
          $sql9 = "INSERT INTO tbl_bitacora (USUARIO, ACCION, OBSERVACION)
-         VALUES ('$usuario1[usuario]', 'INTENTO', 'NO LOGRO ELIMINAR YA QUE ESTABA EN USO EL cliente ($nombre)')";
+         VALUES ('$usuario1[usuario]', 'INTENTO', 'NO LOGRO ELIMINAR YA QUE ESTABA EN USO EL CLIENTE ($nombre)')";
          if (mysqli_query($conn, $sql9)) {} else { }
          // fin inserta en la tabla bitacora
          echo '<script>
-                 alert("No se puede eliminar el producto, ya que esta en uso");
-                 window.location.href="../../vistas/inventario/vista_clientes.php";                   
+                 alert("No se puede eliminar el cliente, ya que esta en uso");
+                 window.location.href="../../vistas/personas/vista_clientes.php";                   
                </script>';
                mysqli_close($conn);
 
@@ -174,7 +181,7 @@ $validar_proveedor = "SELECT * FROM tbl_clientes WHERE ID_CLIENTE='$id_cliente'"
       if (mysqli_query($conn, $sql3)) {
         // inicio inserta en la tabla bitacora
         $sql7 = "INSERT INTO tbl_bitacora (USUARIO, ACCION, OBSERVACION)
-        VALUES ('$usuario1[usuario]', 'ELIMINO', 'ELIMINO EL PRODUCTO ($nombre)')";
+        VALUES ('$usuario1[usuario]', 'ELIMINO', 'ELIMINO EL CLIENTE ($nombre)')";
          if (mysqli_query($conn, $sql7)) {} else { }
     // fin inserta en la tabla bitacora
     echo '<script>
@@ -187,11 +194,11 @@ $validar_proveedor = "SELECT * FROM tbl_clientes WHERE ID_CLIENTE='$id_cliente'"
       }else{
          // inicio inserta en la tabla bitacora
          $sql10 = "INSERT INTO tbl_bitacora (USUARIO, ACCION, OBSERVACION)
-         VALUES ('$usuario1[usuario]', 'ERROR', 'ERROR AL ELIMINAR EL Producto ($id_cliente)')";
+         VALUES ('$usuario1[usuario]', 'ERROR', 'ERROR AL ELIMINAR EL CLIENTE ($id_cliente)')";
           if (mysqli_query($conn, $sql7)) {} else { }
      // fin inserta en la tabla bitacora
               echo '<script>
-                        alert("Error al tratar de eliminar el producto");
+                        alert("Error al tratar de eliminar el cliente");
                     </script>'; mysqli_error($conn);
            }
         mysqli_close($conn);
