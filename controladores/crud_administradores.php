@@ -29,7 +29,7 @@
   $celular_referencia=(isset($_POST['celular_referencia']))?$_POST['celular_referencia']:"";
   $experiencia_laboral=(isset($_POST['experiencia_laboral']))?$_POST['experiencia_laboral']:"";
   $curriculum=(isset($_POST['curriculum']))?$_POST['curriculum']:"";
-  $foto=(isset($_POST['foto']))?$_POST['foto']:"";  
+  $foto=(isset($_POST['foto']))?$_POST['foto']:"";   
   $area=(isset($_POST['area']))?$_POST['area']:"";
   $ruta=(isset($_POST['ruta']))?$_POST['ruta']:"";
   
@@ -227,8 +227,25 @@
 
         //Final  codigo oscar -------------------------------------------------
 
+        $tmpFoto1= $_FILES["imagenes"]["tmp_name"];
+        if($tmpFoto1!="") {
+            $permitidos = array("jpg", "png", "jpeg", "JPEG", "JPG", "PNG");
+            $extencion = pathinfo($_FILES['imagenes']["name"], PATHINFO_EXTENSION);
+            
+        
+        }else{
+            $permitidos = array("jpg", "png", "jpeg", "JPEG", "JPG", "PNG");
+            $ultimo = "jpg";
+            $extencion = "$ultimo";
+        }
+        $direccion2 = "$ruta";
+        
+          echo $ruta . '<br>';
+    
+          echo $direccion2 ;
+        
 
-
+// ---------------------------------------------------------------------------------------
            $permitidos = array("pdf", "docx");
            $extencion = pathinfo($_FILES['curriculum']["name"], PATHINFO_EXTENSION);
           
@@ -236,14 +253,19 @@
                $Fecha= new DateTime();
                $destino ="../../curriculum/";
                $nombrecurriculum=($_FILES['curriculum']["name"]!="")?$Fecha->getTimestamp()."_".$_FILES["curriculum"]["name"]:"imagen.jpg";
-               $tmpArchivo= $_FILES["curriculum"]["tmp_name"];
-               if($tmpArchivo!="") 
+               $tmpFoto= $_FILES["curriculum"]["tmp_name"];
+               if($tmpFoto!="") 
                {
-                move_uploaded_file($tmpArchivo,$destino.$nombrecurriculum);
+                
+                move_uploaded_file($tmpFoto,$destino.$nombrecurriculum); 
                } 
   
                $permitidos2 = array("jpg", "png", "jpeg", "JPEG", "JPG", "PNG");
                $extencion = pathinfo($_FILES['foto']["name"], PATHINFO_EXTENSION);
+
+               $direccion2 = "$ruta";
+               echo $direccion2 ;
+               die ();
               
                if(in_array($extencion, $permitidos2)){
                    $Fecha1= new DateTime();
@@ -254,20 +276,46 @@
                    {
                     move_uploaded_file($tmpArchivo1,$destino1.$nombrefoto);
                    }
+
+                   $direccion2 = "$destino1$nombreimagen";
                }
            }
  
         // update en la tabla  tbl_usuarios
-        $sql113 = "UPDATE tbl_usuarios SET ID_ROL='$rol', ID_ESTADO_USUARIO='$estado', NOMBRE='$nombre', APELLIDO='$apellido', USUARIO='$usuario', ID_GENERO='$genero', CORREO='$correo', DNI='$dni', ID_PROFESION='$profesion', DIRECCION='$direccion', CELULAR='$celular', REFERENCIA='$referencia', CEL_REFERENCIA='$celular_referencia', EXPERIENCIA_LABORAL='$experiencia_laboral' , CURRICULUM='$destino$nombrecurriculum',CONTRASENA='$contrasena', FOTO='$destino1$nombrefoto' , ID_AREA='$area' WHERE ID_USUARIO='$id_usuario'";
+        $sql113 = "UPDATE tbl_usuarios SET ID_ROL='$rol', ID_ESTADO_USUARIO='$estado', NOMBRE='$nombre', 
+              APELLIDO='$apellido', USUARIO='$usuario', ID_GENERO='$genero', CORREO='$correo', DNI='$dni', 
+              ID_PROFESION='$profesion', DIRECCION='$direccion', CELULAR='$celular', REFERENCIA='$referencia', 
+              CEL_REFERENCIA='$celular_referencia', EXPERIENCIA_LABORAL='$experiencia_laboral' , 
+              CURRICULUM='$destino$nombrecurriculum',CONTRASENA='$contrasena', FOTO='$direccion2$nombrefoto' , 
+              -- CURRICULUM='$destino$nombrecurriculum',CONTRASENA='$contrasena', FOTO='$destino1$nombrefoto' , 
+              ID_AREA='$area' WHERE ID_USUARIO='$id_usuario'";
+        
+        
         if (mysqli_query($conn, $sql113)) {
-        echo '<script>
-                  window.location.href="../../vistas/personas/vista_administradores";
-              </script>';
 
-        } else {
-           echo "Error: " . $sql113 . "<br>" . mysqli_error($conn);
-     
-       }     
+            // echo '<script>
+            //       window.location.href="../../vistas/personas/vista_administradores";
+            //   </script>';
+
+                // inicio inserta en la tabla bitacora
+                           $sql = "INSERT INTO tbl_bitacora (USUARIO, ACCION, OBSERVACION)
+                           VALUES ('$usuario1[usuario]', 'EDITO', 'EL USUARIO $usuario')";
+                            if(mysqli_query($conn, $sql)){}else{}
+                              // fin insertar en la tabla bitacora
+                                echo '<script>window.location.href="../../vistas/personas/vista_administradores"; </script>';
+
+              }else{
+                // inicio inserta en la tabla bitacora
+            $sql = "INSERT INTO tbl_bitacora (USUARIO, ACCION, OBSERVACION)
+            VALUES ('$usuario1[usuario]', 'INTENTO', 'NO LOGRO EDITAR YA QUE EL ARCHIVO NO ERA IMAGEN')";
+                if (mysqli_query($conn, $sql113))  {} else {}
+                  // fin inserta en la tabla bitacora
+              //echo "Error: " . $sql113 . "<br>" . mysqli_error($conn);
+              echo '<script type="text/javascript"> alert("Archivo no permitido");
+                              window.location.href="../../vistas/personas/vista_administradores";
+                        </script>';
+                              echo '<script> alert("Error en la edición ");</script>'; mysqli_error($conn);
+              }
       break;
 
 
@@ -278,10 +326,8 @@
 
 
 
-
-
-
-
+      
+//---------------------------------------------------------------------------------------------------------
 
       
       //para eliminar en la tabla mysl  
@@ -297,8 +343,8 @@
         }
         // fin inserta en la tabla bitacora
 
-      $sql3 = "DELETE FROM tbl_usuarios WHERE ID_USUARIO='$id_usuario'";
-      if (mysqli_query($conn, $sql3)) {
+        $sql3 = "DELETE FROM tbl_usuarios WHERE ID_USUARIO='$id_usuario'";
+        if (mysqli_query($conn, $sql3)) {
         
 
           header('Location: ../../vistas/personas/vista_administradores');
