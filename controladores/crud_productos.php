@@ -4,13 +4,22 @@ include '../../conexion/conexion.php';
 
 // //Variables para recuperar la información de los campos de la vista del crud de productos
 // $id_imagen=(isset($_POST['id_imagen']))?$_POST['id_imagen']:"";
+<<<<<<< HEAD
 $id_productosr=(isset($_POST['id_productos']))?$_POST['id_productos']:"";
+=======
+$id_productos=(isset($_POST['id_productos']))?$_POST['id_productos']:"";
+>>>>>>> rama01
 $id_categoria=(isset($_POST['id_categoria']))?$_POST['id_categoria']:"";
 $cantidad_min=(isset($_POST['cantidad_min']))?$_POST['cantidad_min']:"";
 $cantidad_max=(isset($_POST['cantidad_max']))?$_POST['cantidad_max']:"";
 $codigo=(isset($_POST['codigo']))?$_POST['codigo']:"";
 $nombre=(isset($_POST['nombre']))?$_POST['nombre']:"";
 $descripcion_modelo=(isset($_POST['descripcion_modelo']))?$_POST['descripcion_modelo']:"";
+<<<<<<< HEAD
+=======
+$anterior=(isset($_POST['nombre_anterior']))?$_POST['nombre_anterior']:"";
+$foto=(isset($_POST['foto']))?$_POST['foto']:"";
+>>>>>>> rama01
 //variable para recuperar los botones de la vista del crud del portafolio 
 $accion=(isset($_POST['accion']))?$_POST['accion']:"";
 
@@ -68,7 +77,11 @@ if(in_array($extencion, $permitidos)){
     // fin inserta en la tabla bitacora
     echo '<script type="text/javascript">
              alert("Archivo no permitido");
+<<<<<<< HEAD
              window.location.href="../../vistas/catalogo/vista_portafolio";
+=======
+             window.location.href="../../vistas/inventario/vista_productos";
+>>>>>>> rama01
           </script>';
 }
 
@@ -77,7 +90,11 @@ break;
 case "editar": 
   
 
+<<<<<<< HEAD
 $tmpFoto1= $_FILES["$nombreimagen"]["tmp_name"];
+=======
+$tmpFoto1= $_FILES["imagenes"]["tmp_name"];
+>>>>>>> rama01
 if($tmpFoto1!="") {
     $permitidos = array("jpg", "png", "jpeg", "JPEG", "JPG", "PNG");
     $extencion = pathinfo($_FILES['imagenes']["name"], PATHINFO_EXTENSION);
@@ -88,13 +105,21 @@ if($tmpFoto1!="") {
     $ultimo = "jpg";
     $extencion = "$ultimo";
 }
+<<<<<<< HEAD
 $direccion = "$ruta";
+=======
+
+>>>>>>> rama01
 
 if(in_array($extencion, $permitidos))
 {
     $Fecha= new DateTime();
     $destino ="../../imagenes/";
+<<<<<<< HEAD
     $nombreimagen=($_FILES['imagen']["name"]!="")?$Fecha->getTimestamp()."_".$_FILES[" $nombreimagen"]["name"]:"$nombreimagen";
+=======
+    $nombreimagen=($_FILES['imagenes']["name"]!="")?$Fecha->getTimestamp()."_".$_FILES["imagenes"]["name"]:"$foto";
+>>>>>>> rama01
     $tmpFoto= $_FILES["imagenes"]["tmp_name"];
     if($tmpFoto!="") 
     {
@@ -104,17 +129,29 @@ if(in_array($extencion, $permitidos))
     $direccion = "$destino$nombreimagen";
 
     
+<<<<<<< HEAD
     $sql2 = "UPDATE tbl_productos SET ID_CATEGORIA='$id_categoria', CANTIDAD_MIN='$cantidad_min', CANTIDAD_MAX='$cantidad_max', FOTO=' $destino$nombreimagen', CODIGO='$codigo', NOMNRE='$nombre, DESCRIPCION_MODELO='$descripcion_modelo, WHERE ID_PRODUCTO='$id_producto'";
+=======
+    $sql2 = "UPDATE tbl_productos SET ID_CATEGORIA='$id_categoria', CANTIDAD_MIN='$cantidad_min', CANTIDAD_MAX='$cantidad_max', FOTO='$destino$nombreimagen', CODIGO='$codigo', NOMBRE='$nombre', DESCRIPCION_MODELO='$descripcion_modelo' WHERE ID_PRODUCTO='$id_productos'";
+>>>>>>> rama01
     if (mysqli_query($conn, $sql2)) 
     {
         // inicio inserta en la tabla bitacora
         $sql = "INSERT INTO tbl_bitacora (USUARIO, ACCION, OBSERVACION)
+<<<<<<< HEAD
         VALUES ('$usuario1[usuario]', 'EDITO', 'EDITO UN REGISTRO DE TIPO ($nombre)')";
+=======
+        VALUES ('$usuario1[usuario]', 'EDITO', 'EDITO UN REGISTRO DE PRODUCTOS ($nombre)')";
+>>>>>>> rama01
         if (mysqli_query($conn, $sql)) {} else {}
          // fin inserta en la tabla bitacora
         echo '<script>
                  alert("Edición exitosa");
+<<<<<<< HEAD
                  window.location.href="../../vistas/inventario/vista_producto.php";
+=======
+                 window.location.href="../../vistas/inventario/vista_productos.php";
+>>>>>>> rama01
               </script>';
               mysqli_close($conn);
 
@@ -132,7 +169,11 @@ if(in_array($extencion, $permitidos))
     // fin inserta en la tabla bitacora
     echo '<script type="text/javascript">
             alert("Archivo no permitido");
+<<<<<<< HEAD
             window.location.href="../../vistas/catalogo/vista_portafolio";
+=======
+            window.location.href="../../vistas/inventario/vista_productos";
+>>>>>>> rama01
          </script>';
 }
   
@@ -142,7 +183,11 @@ break;
 
 //para eliminar en la tabla mysl  
 case "eliminar";
+<<<<<<< HEAD
 $validar_proveedor = "SELECT * FROM tbl_kardex WHERE ID_PRODUCTO='$id_producto'";
+=======
+$validar_proveedor = "SELECT * FROM tbl_kardex WHERE ID_PRODUCTO='$id_productos'";
+>>>>>>> rama01
     $result4 = mysqli_query($conn, $validar_proveedor); 
      if (mysqli_num_rows($result4) > 0) { 
          // inicio inserta en la tabla bitacora
@@ -157,11 +202,19 @@ $validar_proveedor = "SELECT * FROM tbl_kardex WHERE ID_PRODUCTO='$id_producto'"
                mysqli_close($conn);
 
      }else{
+<<<<<<< HEAD
       $sql3 = "DELETE FROM tbl_productos WHERE ID_PRODUCTO='$id_producto'";
       if (mysqli_query($conn, $sql3)) {
         // inicio inserta en la tabla bitacora
         $sql7 = "INSERT INTO tbl_bitacora (USUARIO, ACCION, OBSERVACION)
         VALUES ('$usuario1[usuario]', 'ELIMINO', 'ELIMINO EL PRODUCTO ($nombre)')";
+=======
+      $sql3 = "DELETE FROM tbl_productos WHERE ID_PRODUCTO='$id_productos'";
+      if (mysqli_query($conn, $sql3)) {
+        // inicio inserta en la tabla bitacora
+        $sql7 = "INSERT INTO tbl_bitacora (USUARIO, ACCION, OBSERVACION)
+        VALUES ('$usuario1[usuario]', 'ELIMINO', 'ELIMINO EL PRODUCTO ($anterior)')";
+>>>>>>> rama01
          if (mysqli_query($conn, $sql7)) {} else { }
     // fin inserta en la tabla bitacora
     echo '<script>
@@ -192,7 +245,11 @@ $validar_proveedor = "SELECT * FROM tbl_kardex WHERE ID_PRODUCTO='$id_producto'"
   }// Fin del switch, para validar el valor del boton accion
 
 
+<<<<<<< HEAD
 ?>
 
 
 
+=======
+?>
+>>>>>>> rama01

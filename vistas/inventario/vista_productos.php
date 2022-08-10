@@ -41,7 +41,11 @@ if (mysqli_num_rows($roles35) > 0)
          }
                 // inicio inserta en la tabla bitacora
                 $sql = "INSERT INTO tbl_bitacora (USUARIO, ACCION, OBSERVACION)
+<<<<<<< HEAD
                 VALUES ('$usuario[usuario]', 'CONSULTO', 'CONSULTO LA PANTALLA  ADMINISTRATIVA DEL CLIENTES')";
+=======
+                VALUES ('$usuario[usuario]', 'CONSULTO', 'CONSULTO LA PANTALLA  ADMINISTRATIVA DEL PROYECTOS')";
+>>>>>>> rama01
                 if (mysqli_query($conn, $sql)) {} else {}
                 // fin inserta en la tabla bitacora
 ?>
@@ -139,6 +143,7 @@ if (mysqli_num_rows($roles35) > 0)
                            }}// finaliza el if y el while
                            ?>
                    </select>
+<<<<<<< HEAD
                 <br>  
                 <label for="">Cantidad Minima</label>
                 <input type="text" class="form-control" autocomplete="off" onkeyup="mayus(this);" name="cantidad_min" required value="<?php echo "$cantidad_min"; ?>" placeholder="">
@@ -149,6 +154,9 @@ if (mysqli_num_rows($roles35) > 0)
                 <label for="">Imagen</label>
                 <input type="file" class="form-control" accept=".jpg, .png, .jpeg, .JPEG, .JPG, .PNG" name="imagenes" required value="<?php echo "$nombreimagen"; ?>" placeholder=""  >
                 <br>  
+=======
+                <br>
+>>>>>>> rama01
                 <label for="">Codigo</label>
                 <input type="text" class="form-control" autocomplete="off" onkeyup="mayus(this);" name="codigo" required value="<?php echo "$codigo"; ?>" placeholder="">
                 <br>
@@ -157,7 +165,21 @@ if (mysqli_num_rows($roles35) > 0)
                 <br>
                 <label for="">Descripcion Modelo</label>
                 <input type="text" autocomplete="off"  value="<?php echo "$descripcion_modelo"; ?>" onkeyup="mayus(this);" maxlength="255" class="form-control"  placeholder="" name="descripcion_modelo" required>
+<<<<<<< HEAD
                 <br>                                  
+=======
+                <br>     
+                <label for="">Cantidad Minima</label>
+                <input type="text" class="form-control" autocomplete="off" onkeyup="mayus(this);" name="cantidad_min" required value="<?php echo "$cantidad_min"; ?>" placeholder="">
+                <br>  
+                <label for="">Cantidad Maxima</label>
+                <input type="text" class="form-control" autocomplete="off" onkeyup="mayus(this);" name="cantidad_max" required value="<?php echo "$cantidad_max"; ?>" placeholder="">
+                <br>
+                <label for="">Imagen</label>
+                <input type="file" class="form-control" accept=".jpg, .png, .jpeg, .JPEG, .JPG, .PNG" name="imagenes" required value="<?php echo "$nombreimagen"; ?>" placeholder=""  >
+                <br>  
+                                                  
+>>>>>>> rama01
                 </div>
                 <!-- Fin Cuerpo del modal Modal -->
                 <!-- pie del modal -->
@@ -212,12 +234,22 @@ if (mysqli_num_rows($roles35) > 0)
                   <th>ACCIONES</th>
                   <th>ID PRODUCTO</th>
                   <th>ID CATEGORIA</th>
+<<<<<<< HEAD
                   <th>CANTIDAD MINIMA</th>
                   <th>CANTIDAD MAXIMA</th>
                   <th>FOTO</th>
                   <th>CODIGO</th>
                   <th>NOMBRE</th>
                   <th>DESCRIPCION MODELO</th>
+=======
+                  <th>CODIGO</th>
+                  <th>NOMBRE</th>
+                  <th>DESCRIPCION MODELO</th>
+                  <th>CANTIDAD MINIMA</th>
+                  <th>CANTIDAD MAXIMA</th>
+                  <th>FOTO</th>
+                  
+>>>>>>> rama01
 
                   </tr>
                   </thead>
@@ -226,8 +258,13 @@ if (mysqli_num_rows($roles35) > 0)
                   <?php
                   include '../../conexion/conexion.php';
                   //para mostrar los datos de la tabla mysql y mostrar en el crud                
+<<<<<<< HEAD
                   $sql7 = "SELECT * FROM (tbl_productos c
                   INNER JOIN tbl_productos g ON c.ID_CATEGORIA = g.ID_CATEGORIA)";
+=======
+                  $sql7 = "SELECT * FROM (tbl_productos p
+                  INNER JOIN tbl_categoria_producto c ON p.ID_CATEGORIA = c.ID_CATEGORIA)";
+>>>>>>> rama01
                   $result = mysqli_query($conn, $sql7);
                   if (mysqli_num_rows($result) > 0) {
                   while ($filas= mysqli_fetch_assoc($result)){
@@ -264,17 +301,25 @@ if (mysqli_num_rows($roles35) > 0)
                                 <!-- Cuerpo del modal Modal -->
                                 <form action="" method="post">
                                 <div class="modal-body">
+<<<<<<< HEAD
 
                   <label for="pwd" class="form-label">Id Categoria:</label>
                   <select style="background-color:rgb(240, 244, 245);" class="form-select" id="lista1" name="id_categoria" required >
                     
                     <?php
+=======
+                                <input type="hidden" name="nombre_anterior" value="<?php echo $filas['NOMBRE'] ?>"> 
+                  <label for="pwd" class="form-label">Id Categoria:</label>
+                  <select style="background-color:rgb(240, 244, 245);" class="form-select" id="lista1" name="id_categoria" required >
+                  <?php
+>>>>>>> rama01
                         include '../../conexion/conexion.php';
                         $id_categoria = "SELECT * FROM tbl_categoria_producto ORDER BY ID_CATEGORIA";
                         $genero2 = mysqli_query($conn, $id_categoria);
                         if (mysqli_num_rows($genero2) > 0) {
                             while($row = mysqli_fetch_assoc($genero2))
                             {
+<<<<<<< HEAD
                             $id_genero = $row['ID_CATEGORIA'];
                             $genero3 =$row['NOMBRE_CATEGORIA'];
     
@@ -285,6 +330,32 @@ if (mysqli_num_rows($roles35) > 0)
                        ?>
                   </select>
                 <br>
+=======
+                            $id_categoria = $row['ID_CATEGORIA'];
+                            $categoria3 =$row['NOMBRE_CATEGORIA'];
+    
+                                if($categoria3 == $filas["NOMBRE_CATEGORIA"]){?>
+                                  <option value="<?php  echo $id_categoria; ?>" selected><?php echo $categoria3; ?></option>
+                                
+                                 <?php
+                                }else{ ?>
+                                 <option value="<?php  echo $id_categoria; ?>"><?php echo $categoria3; ?></option>
+                                 <?php
+                        }}}  // finaliza el if y el while
+                       ?>
+                  </select>
+                  <br> 
+                  <label for="">Codigo</label>
+                <input type="text" class="form-control" autocomplete="off" name="codigo" required value="<?php echo $filas['CODIGO'] ?>" placeholder="">
+                <br>
+                <label for="">Nombre</label>
+                <input type="text" autocomplete="off"  value="<?php echo $filas['NOMBRE'] ?>" onkeyup="mayus(this);" maxlength="255" class="form-control"  placeholder="" name="nombre" required>
+                <br>
+                <label for="">Descripcion Modelo</label>
+                <input type="text" autocomplete="off"  value="<?php echo $filas['DESCRIPCION_MODELO'] ?>" onkeyup="mayus(this);" maxlength="255" class="form-control"  placeholder="" name="descripcion_modelo" required>
+                <br> 
+                    
+>>>>>>> rama01
                 <label for="">Cantidad Minima</label>
                 <input type="text" class="form-control" autocomplete="off" name="cantidad_min" required value="<?php echo $filas['CANTIDAD_MIN'] ?>" placeholder="">
                 <br>
@@ -292,6 +363,7 @@ if (mysqli_num_rows($roles35) > 0)
                 <input type="text" class="form-control" autocomplete="off" name="cantidad_max" required value="<?php echo $filas['CANTIDAD_MAX'] ?>" placeholder="">
                 <br>
                 <label for="">Imagen</label><br>
+<<<<<<< HEAD
                 <img class="img-thumbnail" width="100px" src="<?php echo $filas['FOTO'] ?>" /><br>
                 <input type="file" class="form-control" accept=".jpg, .png, .jpeg, .JPEG, .JPG, .PNG" name="imagenes" required value="<?php echo "$nombreimagen"; ?>" placeholder=""  >
                 <br> 
@@ -304,6 +376,12 @@ if (mysqli_num_rows($roles35) > 0)
                 <label for="">Descripcion Modelo</label>
                 <input type="text" autocomplete="off"  value="<?php echo $filas['DESCRIPCION_MODELO'] ?>" onkeyup="mayus(this);" maxlength="255" class="form-control"  placeholder="" name="descripcion_modelo" required>
                 <br>
+=======
+                <img class="img-thumbnail" width="100px" src="<?php echo $filas['FOTO'] ?>"  /><br>
+                <input type="file" class="form-control" accept=".jpg, .png, .jpeg, .JPEG, .JPG, .PNG" name="imagenes" required value="<?php echo "$nombreimagen"; ?>" placeholder=""  >
+                <br> 
+                
+>>>>>>> rama01
                 </div>
                                          
                                 <!-- Fin Cuerpo del modal Modal -->
@@ -327,6 +405,11 @@ if (mysqli_num_rows($roles35) > 0)
                           $tablero2 = mysqli_query($conn, $tablero);
                           if (mysqli_num_rows($tablero2) > 0)
                           {?>
+<<<<<<< HEAD
+=======
+                          <input type="hidden" name="id_productos"  value="<?php echo $filas['ID_PRODUCTO'] ?>">
+                          <input type="hidden" name="nombre_anterior" value="<?php echo $filas['NOMBRE'] ?>">
+>>>>>>> rama01
                              <button  value="eliminar" name="accion" 
                         onclick="return confirm('¿Quieres eliminar este dato?')"
                         type="submit" class="btn btn-danger " data-id="19">
@@ -336,6 +419,7 @@ if (mysqli_num_rows($roles35) > 0)
                         ?>
                      </form>
 </td>
+<<<<<<< HEAD
       
                      <td><?php echo $filas['CANTIDAD_MIN'] ?></td>
                      <td><?php echo $filas['CANTIDAD_MAX'] ?></td>
@@ -343,6 +427,16 @@ if (mysqli_num_rows($roles35) > 0)
                      <td><?php echo $filas['CODIGO'] ?></td>
                      <td><?php echo $filas['NOMBRE'] ?></td>
                      <td><?php echo $filas['DESCRIPCION_MODELO'] ?></td>                                                           
+=======
+                     <td><?php echo $filas['ID_PRODUCTO'] ?></td>
+                     <td><?php echo $filas['NOMBRE_CATEGORIA'] ?></td>                  
+                     <td><?php echo $filas['CODIGO'] ?></td>
+                     <td><?php echo $filas['NOMBRE'] ?></td>
+                     <td><?php echo $filas['DESCRIPCION_MODELO'] ?></td> 
+                     <td><?php echo $filas['CANTIDAD_MIN'] ?></td>
+                     <td><?php echo $filas['CANTIDAD_MAX'] ?></td>
+                     <td><img  width="100px" src="<?php echo $filas['FOTO'] ?>" /></td>                                                          
+>>>>>>> rama01
                      </tr>
       <?php }} ?>  
                   </tfoot>
@@ -479,7 +573,11 @@ if (mysqli_num_rows($roles35) > 0)
 				const pdf = new jsPDF('p', 'mm', 'letter');			
         	
 
+<<<<<<< HEAD
 				var columns = ["", "", "", "", "", "", ""];
+=======
+				var columns = ["", "", "", "", "", "", "",""];
+>>>>>>> rama01
 				var data = [
 				[1, "Hola", "hola@gmail.com", "Mexico"],
 				 ];
@@ -505,7 +603,11 @@ if (mysqli_num_rows($roles35) > 0)
 				//muestra el titulo principal
 				pdf.setFont('Arial');
 				pdf.setFontSize(17);
+<<<<<<< HEAD
 				pdf.text("Constructora SEACCO", 70,15,);
+=======
+				pdf.text("Constructora SEACCO ", 70,15,);
+>>>>>>> rama01
 
 				//muestra el titulo secundario
 				pdf.setFont('times');
@@ -559,5 +661,9 @@ if (mysqli_num_rows($roles35) > 0)
    }
 
 //   Fin Script para que solo permita letras
+<<<<<<< HEAD
 </script>
 
+=======
+</script>
+>>>>>>> rama01
