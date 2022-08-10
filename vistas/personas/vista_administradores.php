@@ -180,10 +180,10 @@ include '../../controladores/crud_administradores.php';
                     <input type="text" class="form-control" name="experiencia_laboral" required value="" autocomplete="off" onkeyup="mayus(this);" maxlength="30" >
 
                     <label for="">Curriculum:</label>
-                    <input type="file" class="form-control" name="curriculum"  value="" placeholder="Opcional" >
+                    <input type="file" class="form-control" name="curriculum"  accept=".pdf, .doxc" value="" placeholder="Opcional" >
 
                     <label for="">Foto:</label>
-                    <input type="file" class="form-control" name="foto" value="" placeholder="Opcional" >
+                    <input type="file" class="form-control" name="foto" accept=".jpg, .png, .jpej, .JPEG, .JPG, .PNG" value="" placeholder="Opcional" >
 
                     <label for="pwd" class="form-label">Area:</label>
                       <select style="background-color:rgb(240, 244, 245);" value="<?php echo "$area"; ?>" class="form-select" id="lista1" name="area" required >
@@ -429,11 +429,14 @@ include '../../controladores/crud_administradores.php';
                     <input type="text" class="form-control" name="experiencia_laboral" required value="<?php echo $filas['EXPERIENCIA_LABORAL'] ?>" autocomplete="off" onkeyup="mayus(this);" maxlength="30" >
 
                     <label for="">Curriculum:</label>
-                    <input type="file" class="form-control" name="curriculum"  value="<?php echo $filas['CURRICULUM'] ?>" placeholder="" >
+                    <input type="file" class="form-control" name="curriculum" accept=".pdf, .doxc" value="<?php echo $filas['CURRICULUM'] ?>" placeholder="" >
 
                     <label for="">Foto:</label>
-                    <input type="file" class="form-control" name="foto" value="<?php echo $filas['FOTO'] ?>" placeholder="" >
+                    <input type="file" class="form-control" name="imagenes" accept=".jpg, .png, .jpej, .JPEG, .JPG, .PNG" value="<?php echo $filas['FOTO'] ?>" placeholder="" >
 
+                    <input type="hidden" name="ruta_curriculum" value="<?php echo $filas['CURRICULUM'] ?>">
+                    <input type="hidden" name="ruta_imagen" value="<?php echo $filas['FOTO'] ?>">
+ 
                      
                     <label for="pwd" class="form-label">Area:</label>
                     <select class="form-select"  name="area" required >

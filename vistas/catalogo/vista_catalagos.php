@@ -9,7 +9,7 @@ if(!isset($_SESSION['usuario'])){
         
 }
 
-include '../../controladores/crud_portafolio.php';
+include '../../controladores/crud_catalagos.php';
 // Selecciona el id del rol del usuario logueado
 include '../../conexion/conexion.php';
 $usuario = $_SESSION;
@@ -50,7 +50,7 @@ if (mysqli_num_rows($roles35) > 0)
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Portafolio</title>
+  <title>Catalagos</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
@@ -66,7 +66,7 @@ if (mysqli_num_rows($roles35) > 0)
 <body oncontextmenu="return false">
 <!-- Fin evita el click derecho de la pagina --> 
   <!-- Content Wrapper. Contains page content -->
-  <div class="content-wrapper"><center> <BR></BR><h3>PORTAFOLIO</h3> </center>
+  <div class="content-wrapper"><center> <BR></BR><h3>Catálagos</h3> </center>
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <div class="container-fluid">
@@ -101,25 +101,7 @@ if (mysqli_num_rows($roles35) > 0)
                 <!-- Fin Encabezado del modal -->
                 <form action="" method="post" enctype="multipart/form-data">
                 <!-- Cuerpo del modal Modal -->
-                <div class="modal-body">
-                <label for="">Catálago</label>
-                <select style="background-color:rgb(240, 244, 245);" value="<?php echo "$id_departamento"; ?>" class="form-select" id="lista1" name="tipo" required >
-                    
-                        <?php
-                            include 'conexion/conexion.php';
-                            $departamento = "SELECT * FROM tbl_catalogo ORDER BY ID_CATALOGO";
-                            $departamento2 = mysqli_query($conn, $departamento);
-                            if (mysqli_num_rows($departamento2) > 0) {
-                                while($row = mysqli_fetch_assoc($departamento2))
-                                {
-                                $id_departamento = $row['ID_CATALOGO'];
-                                $departamento3 =$row['NOMBRE_CATALOGO'];
-                         ?>
-                          <option value="<?php  echo $id_departamento ?>"><?php echo $departamento3 ?></option>
-                          <?php
-                           }}// finaliza el if y el while
-                           ?>
-                   </select>
+                <div class="modal-body">                
                     <br>
                     <label for="">Imagen</label>
                     <input type="file" class="form-control" accept=".jpg, .png, .jpej, .JPEG, .JPG, .PNG" name="imagenes" required value="<?php echo "$nombreimagen"; ?>" placeholder=""  >
@@ -188,7 +170,6 @@ if (mysqli_num_rows($roles35) > 0)
                   <tr>
                   <th>Acciones</th>
                   <th>Id</th>
-                  <th>Tipo</th>
                   <th>Imagen</th>
                   <th>Titulo</th>
                   <th>Descripción</th>
@@ -199,8 +180,7 @@ if (mysqli_num_rows($roles35) > 0)
                   <?php
                   include '../../conexion/conexion.php';
                   //para mostrar los datos de la tabla mysql y mostrar en el crud
-                  $sql77 = "SELECT * FROM (tbl_portafolio p
-                 INNER JOIN tbl_catalogo c ON p.ID_CATALOGO = c.ID_CATALOGO)";
+                  $sql77 = "SELECT * FROM tbl_catalogo WHERE ID_CATALOGO != 3";
                   $result = mysqli_query($conn, $sql77);
                   if (mysqli_num_rows($result) > 0) {
                   while ($filas= mysqli_fetch_assoc($result)){
@@ -214,7 +194,7 @@ if (mysqli_num_rows($roles35) > 0)
                           if (mysqli_num_rows($tablero2) > 0)
                           {?>
                               <!-- inicio boton editar -->
-                              <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#myModal2<?php echo $filas['ID_IMAGEN'] ?>">
+                              <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#myModal2<?php echo $filas['ID_CATALOGO'] ?>">
                               <i class="fas fa-pencil-alt"></i>
                               </button>  <?php 
                           }
@@ -222,7 +202,7 @@ if (mysqli_num_rows($roles35) > 0)
                       
 
                           <!-- El Modal -->
-                          <div class="modal" id="myModal2<?php echo $filas['ID_IMAGEN'] ?>">
+                          <div class="modal" id="myModal2<?php echo $filas['ID_CATALOGO'] ?>">
                             <div class="modal-dialog">
                               <div class="modal-content">
 
@@ -238,40 +218,19 @@ if (mysqli_num_rows($roles35) > 0)
                                           <div class="modal-body">
                                               <form action="" method="post" enctype="multipart/form-data">
                                                 <input type="hidden" name="foto" value="<?php echo $filas['IMAGEN'] ?>">
-                                              <input type="hidden" name="id_imagen"  value="<?php echo $filas['ID_IMAGEN'] ?>">
+                                              <input type="hidden" name="id_imagen"  value="<?php echo $filas['ID_CATALOGO'] ?>">
                                               <label for="">Imagen</label><br>
-                                              <img class="img-thumbnail" width="100px" src="<?php echo $filas['RUTA_PORTAFOLIO'] ?>" /><br><br>
+                                              <img class="img-thumbnail" width="100px" src="<?php echo $filas['RUTA'] ?>" /><br><br>
                                               <input type="file" class="form-control" accept=".jpg, .png, .jpeg, .JPEG, .JPG, .PNG" name="imagenes"  value="" placeholder=""  >
                                               <br>
-                                              <label for="">Catálago:</label><br>
-                                              <select class="form-select"  name="tipo" required >
-                                                    <option value="<?php echo $filas['ID_CATALOGO'] ?>"><?php echo $filas['NOMBRE_CATALOGO'] ?> </option>
-                                                    <?php
-                                                            include 'conexion/conexion.php';
-                                                            $estado = "SELECT * FROM tbl_catalogo ORDER BY ID_CATALOGO";
-                                                            $estado2 = mysqli_query($conn, $estado);
-                                                            if (mysqli_num_rows($estado2) > 0) {
-                                                                while($row = mysqli_fetch_assoc($estado2))
-                                                                {
-                                                                $id_estado = $row['ID_CATALOGO'];
-                                                                $estado3 =$row['NOMBRE_CATALOGO'];
-                                                                if($estado3 == $filas["NOMBRE_CATALOGO"]){?>
-                                                                  <option value="<?php  echo $id_estado; ?>" selected><?php echo $estado3; ?></option>
-                                                                
-                                                        <?php
-                                                        }else{ ?>
-                                                          <option value="<?php  echo $id_estado; ?>"><?php echo $estado3; ?></option>
-                                                          <?php
-                                                                }}}// finaliza el if y el while
-                                                          ?> 
-                                                  </select> 
+                                              
                                               <label for="">Título</label>
-                                              <input type="text" class="form-control"  name="titulo" required value="<?php echo $filas['TITULO'] ?>" placeholder="" 
+                                              <input type="text" class="form-control"  name="titulo" required value="<?php echo $filas['NOMBRE_CATALOGO'] ?>" placeholder="" 
                                               autocomplete = "off"  onkeypress="return soloLetras(event);" minlength="3" maxlength="255" onkeyup="mayus(this);"  >
                                               <br>
                                               <label for="">Descripción</label>
                                               <TEXtarea  style="background-color: white;" name="descripcion" class="form-control"name="" id="" cols="40" rows="5"
-                                              autocomplete = "off"  onkeypress="return soloLetras(event);" minlength="3" maxlength="300" onkeyup="mayus(this);" ><?php echo $filas['DESCRIPCION_PORTAFOLIO'] ?></TEXtarea>
+                                              autocomplete = "off"  onkeypress="return soloLetras(event);" minlength="3" maxlength="300" onkeyup="mayus(this);" ><?php echo $filas['DESCRIPCION'] ?></TEXtarea>
                                           
                                               <br>
                                           
@@ -304,11 +263,10 @@ if (mysqli_num_rows($roles35) > 0)
                         ?>
                      </form>
 </td>
-                      <td><?php echo $filas['ID_IMAGEN'] ?></td>
+                      <td><?php echo $filas['ID_CATALOGO'] ?></td>
+                     <td><img class="img-thumbnail" width="100px" src="<?php echo $filas['RUTA'] ?>" /></td>
                      <td><?php echo $filas['NOMBRE_CATALOGO'] ?></td>
-                     <td><img class="img-thumbnail" width="100px" src="<?php echo $filas['RUTA_PORTAFOLIO'] ?>" /></td>
-                     <td><?php echo $filas['TITULO'] ?></td>
-                     <td><TEXtarea readonly style="background-color: white;" class="form-control"name="" id="" cols="40" rows="5"><?php echo $filas['DESCRIPCION_PORTAFOLIO'] ?></TEXtarea></td>
+                     <td><TEXtarea readonly style="background-color: white;" class="form-control"name="" id="" cols="40" rows="5"><?php echo $filas['DESCRIPCION'] ?></TEXtarea></td>
                     
       </tr>
       <?php }} ?>  

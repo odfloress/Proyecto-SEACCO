@@ -327,7 +327,11 @@
                         </li>';
                }
             ?> 
-              
+              <li class="nav-item">
+                          <a href="http://localhost/SEACCO/vistas/catalogo/vista_catalagos.php" class="nav-link">
+                            <p>Catalagos</p>
+                          </a>
+                        </li>
               
             </ul>
           </li>
