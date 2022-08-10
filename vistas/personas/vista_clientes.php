@@ -278,7 +278,7 @@ if (mysqli_num_rows($roles35) > 0)
                                 <div class="modal-body">
                                 <input type="hidden" name="id_cliente" value="<?php echo $filas['ID_CLIENTE'] ?>">
                 <label for="">Codigo</label>
-                <input type="text" class="form-control" autocomplete="off" name="codigo" required value="<?php echo $filas['CODIGO'] ?>" placeholder="">
+                <input type="text" class="form-control" autocomplete="off" name="codigo" required value="<?php echo $filas['CODIGO'] ?>" placeholder="" onkeyup="mayus(this);">
                 <br>
                 <label for="">Nombre</label>
                 <input type="text" autocomplete="off"  value="<?php echo $filas['NOMBRE_CLIENTE'] ?>" onkeyup="mayus(this);" maxlength="255" class="form-control"  placeholder="" name="nombre" required>
@@ -540,7 +540,7 @@ if (mysqli_num_rows($roles35) > 0)
 				//muestra el titulo secundario
 				pdf.setFont('times');
 				pdf.setFontSize(10);
-				pdf.text("Reporte de portafolio", 84,20,);
+				pdf.text("Reporte de Clientes", 84,20,);
 
 												//////// pie de Pagina ///////
 				//muestra la fecha
@@ -557,7 +557,7 @@ if (mysqli_num_rows($roles35) > 0)
 			}
 				//Fin Encabezado y pie de pagina
 
-							pdf.save('Reporte de portafolio.pdf');
+							pdf.save('Reporte de Clientes.pdf');
 	})
   
 </script>

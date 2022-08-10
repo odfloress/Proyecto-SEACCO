@@ -477,7 +477,9 @@
                 </a>
               </li>
               <li class="nav-item">
-              <a href="http://localhost/SEACCO/Respaldo_BD/php/index.php" class="nav-link">
+              <a href="http://localhost/SEACCO/Restauracion_BD/php/index.php" class="nav-link">
+              
+              <!-- <a href="http://localhost/SEACCO/Respaldo_BD/php/index.php" class="nav-link"> -->
                 <!-- <a href="http://localhost/SEACCO/vistas/ajustes/vista_backup.php" class="nav-link"> -->
                   <p>Backup BD</p>
                 </a>

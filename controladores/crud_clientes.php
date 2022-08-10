@@ -21,7 +21,8 @@ $genero=(isset($_POST['genero']))?$_POST['genero']:"";
 $id_genero=(isset($_POST['id_genero']))?$_POST['id_genero']:"";
 $usuario1 = $_SESSION;
 // $ruta=(isset($_POST['ruta']))?$_POST['ruta']:"";
-$foto=(isset($_POST['foto']))?$_POST['foto']:"";
+$foto2=(isset($_POST['foto']))?$_POST['foto']:"";
+$foto1 = substr($foto2, 15); 
 
 //variable para recuperar los botones de la vista del crud del portafolio 
 $accion=(isset($_POST['accion']))?$_POST['accion']:"";
@@ -107,13 +108,13 @@ if($tmpFoto1!="") {
     $ultimo = "jpg";
     $extencion = "$ultimo";
 }
-$direccion = "$foto";
+$direccion = "$foto2";
 
 if(in_array($extencion, $permitidos))
 {
     $Fecha= new DateTime();
     $destino ="../../imagenes/";
-    $nombreimagen=($_FILES['imagenes']["name"]!="")?$Fecha->getTimestamp()."_".$_FILES["imagenes"]["name"]:"$foto";
+    $nombreimagen=($_FILES['imagenes']["name"]!="")?$Fecha->getTimestamp()."_".$_FILES["imagenes"]["name"]:"$foto1";
     $tmpFoto= $_FILES["imagenes"]["tmp_name"];
     if($tmpFoto!="") 
     {
@@ -124,7 +125,7 @@ if(in_array($extencion, $permitidos))
 
     
     $sql2 = "UPDATE tbl_clientes SET CODIGO='$codigo', NOMBRE_CLIENTE='$nombre', APELLIDO='$apellido', 
-        CORREO='$correo', TELEFONO='$telefono',  DIRECCION='$direccionp', REFERENCIA='$referencia', ID_GENERO='$id_genero' 
+        CORREO='$correo', TELEFONO='$telefono',  DIRECCION='$direccionp', REFERENCIA='$referencia', ID_GENERO='$id_genero',FOTO='$direccion' 
         WHERE ID_CLIENTE='$id_cliente'";
     if (mysqli_query($conn, $sql2)) 
     {
