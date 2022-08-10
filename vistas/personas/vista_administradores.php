@@ -21,6 +21,9 @@ include '../../controladores/crud_administradores.php';
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+  <!-- /// para exportar en pdf /// -->
+  <script type="text/javascript" src="../../js/complemento_1_jspdf.min.js"></script>
+	<script type="text/javascript" src="../../js/complemento_2_jspdf.plugin.autotable.min.js"></script>
   
 
 
@@ -242,7 +245,12 @@ include '../../controladores/crud_administradores.php';
             
             <div class="card table-responsive">
               <div class="card-header">
-                <h3 class="card-title">Usuarios</h3>
+                <!-- <h3 class="card-title">Usuarios</h3> -->
+                  <form id="form" action="" method="post">
+                    <button type="submit"  name="accion" value="reporte_pdf" class="btn btn-secondary buttons-pdf buttons-html5"  onclick="return confirm('¿Quieres generar reporte de roles?')" onclick="textToPdf()"><span>Reporte PDF</span></button>
+                    </form>
+                      <!-- <h3 class="card-title">Roles</h3> -->
+                
                 
               </div>
               
@@ -700,3 +708,68 @@ include '../../controladores/crud_administradores.php';
         return patron.test(te);
     }
 	</script>
+
+  <!-- // Inicio para exportar en pdf // -->
+<script>
+	//para descar al tocar el boton	
+	var form = document.getElementById("form")
+	form.addEventListener("submit",function(event) {
+   
+	event.preventDefault()
+ 
+				const pdf = new jsPDF('p', 'mm', 'letter');			
+        	
+
+				var columns = ["", "", "", "", ""];
+				var data = [
+				[1, "Hola", "hola@gmail.com", "Mexico"],
+				 ];
+
+				pdf.autoTable(columns,data,
+				{ 
+					html:'#example1',
+					margin:{ top: 30 }}
+				);
+						
+				//Inicio Encabezado y pie de pagina
+			const pageCount = pdf.internal.getNumberOfPages();
+			for(var i = 1; i <= pageCount; i++) 
+			{
+				pdf.setPage(i);
+												//////// Encabezado ///////
+				//Inicio para imagen de logo 
+				var logo = new Image();
+				logo.src = '../../imagenes/LoogSEACCO.jpg';
+				pdf.addImage(logo, 'JPEG',14,7,24,15);
+				//Fin para imagen de logo 
+
+				//muestra el titulo principal
+				pdf.setFont('Arial');
+				pdf.setFontSize(17);
+				pdf.text("Constructora SEACCO", 70,15,);
+
+				//muestra el titulo secundario
+				pdf.setFont('times');
+				pdf.setFontSize(10);
+				pdf.text("Reporte de roles", 84,20,);
+
+												//////// pie de Pagina ///////
+				//muestra la fecha
+				pdf.setFont('times');
+				pdf.setFontSize(9);
+				var today = new Date();
+				let horas = today.getHours()
+				let jornada = horas >=12 ? 'PM' : 'AM';
+				var newdat = "Fecha: " + today.getDate() + "/" + (today.getMonth()+1) + "/" + today.getFullYear() + " " + (horas % 12) + ":" + today.getMinutes() + ":" + today.getSeconds() + " " + jornada;
+				pdf.text(183-20,297-284,newdat);
+
+				//muestra el numero de pagina
+				pdf.text('Pagina ' + String(i) + '/' + String(pageCount),220-20,297-25,null,null,"right");
+			}
+				//Fin Encabezado y pie de pagina
+
+							pdf.save('Reporte de Roles.pdf');
+	})
+  
+</script>
+<!-- // Fin para exportar en pdf // -->
