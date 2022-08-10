@@ -63,14 +63,14 @@ if($result){
             </script>';
         }else{
             echo '<script>
-            alert("Ocurrio un error inesperado al crear la copia de seguridad");
+            alert("Ocurrio un error inesperado al crear la copia de seguridad.");
             window.location.href="./index.php";                   
             </script>';
         }
     }
 }else{
             echo '<script>
-            alert("Ocurrio un error inesperado");
+            alert("Ocurrio un error inesperado.");
             window.location.href="./index.php";                   
             </script>';
 }

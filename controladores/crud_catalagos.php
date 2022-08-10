@@ -4,11 +4,11 @@ include '../../conexion/conexion.php';
 
 // //Variables para recuperar la información de los campos de la vista del crud del portafolio 
 $id_imagen=(isset($_POST['id_imagen']))?$_POST['id_imagen']:"";
-$tipo=(isset($_POST['tipo']))?$_POST['tipo']:"";
 $titulo=(isset($_POST['titulo']))?$_POST['titulo']:"";
 $descripcion=(isset($_POST['descripcion']))?$_POST['descripcion']:"";
 $ruta=(isset($_POST['ruta']))?$_POST['ruta']:"";
-$foto=(isset($_POST['foto']))?$_POST['foto']:"";
+$foto = substr($ruta, 15);
+
 
 //variable para recuperar los botones de la vista del crud del portafolio 
 $accion=(isset($_POST['accion']))?$_POST['accion']:"";
@@ -31,18 +31,18 @@ if(in_array($extencion, $permitidos)){
     {
      move_uploaded_file($tmpFoto,$destino.$nombreimagen);
     } 
-        $sql = "INSERT INTO tbl_portafolio (ID_CATALOGO, IMAGEN, RUTA_PORTAFOLIO, TITULO, DESCRIPCION_PORTAFOLIO)
-                VALUES ('$tipo', '$nombreimagen', '$destino$nombreimagen', '$titulo', '$descripcion')";
+        $sql = "INSERT INTO tbl_catalogo (RUTA, NOMBRE_CATALOGO, DESCRIPCION)
+                VALUES ('$destino$nombreimagen', '$titulo', '$descripcion')";
         $res = mysqli_query($conn, $sql);
          if($res){
              // inicio inserta en la tabla bitacora
              $sql = "INSERT INTO tbl_bitacora (USUARIO, ACCION, OBSERVACION)
-             VALUES ('$usuario1[usuario]', 'INSERTO', 'INSERTO UN REGISTRO DE TIPO ($tipo) Y TITULO ($titulo) ')";
+             VALUES ('$usuario1[usuario]', 'INSERTO', 'INSERTO UN REGISTRO DE TIPO () Y TITULO ($titulo) ')";
              if (mysqli_query($conn, $sql)) {} else {}
              // fin inserta en la tabla bitacora
             echo '<script type="text/javascript">
                      alert("Agregado correctamente");
-                     window.location.href="../../vistas/catalogo/vista_portafolio";
+                     window.location.href="../../vistas/catalogo/vista_catalagos";
                  </script>';
          }else{
                 die("Error". mysqli_error($conn));
@@ -55,14 +55,14 @@ if(in_array($extencion, $permitidos)){
     // fin inserta en la tabla bitacora
     echo '<script type="text/javascript">
              alert("Archivo no permitido");
-             window.location.href="../../vistas/catalogo/vista_portafolio";
+             window.location.href="../../vistas/catalogo/vista_catalagos.php";
           </script>';
 }
 
 break;
 
 case "editar": 
-  
+    
 
 $tmpFoto1= $_FILES["imagenes"]["tmp_name"];
 if($tmpFoto1!="") {
@@ -91,22 +91,23 @@ if(in_array($extencion, $permitidos))
     $direccion = "$destino$nombreimagen";
 
     
-    $sql2 = "UPDATE tbl_portafolio SET ID_CATALOGO='$tipo', IMAGEN='$nombreimagen', RUTA_PORTAFOLIO='$direccion', TITULO='$titulo', DESCRIPCION_PORTAFOLIO='$descripcion' WHERE ID_IMAGEN='$id_imagen'";
+    $sql2 = "UPDATE tbl_catalogo SET   RUTA='$direccion', NOMBRE_CATALOGO='$titulo', DESCRIPCION='$descripcion' WHERE ID_CATALOGO='$id_imagen'";
     if (mysqli_query($conn, $sql2)) 
     {
         // inicio inserta en la tabla bitacora
         $sql = "INSERT INTO tbl_bitacora (USUARIO, ACCION, OBSERVACION)
-        VALUES ('$usuario1[usuario]', 'EDITO', 'EDITO UN REGISTRO DE TIPO ($tipo) Y TITULO ($titulo)')";
+        VALUES ('$usuario1[usuario]', 'EDITO', 'EDITO UN REGISTRO DE TIPO () Y TITULO ($titulo)')";
         if (mysqli_query($conn, $sql)) {} else {}
          // fin inserta en la tabla bitacora
         echo '<script>
                  alert("Edición exitosa");
-                 window.location.href="../../vistas/catalogo/vista_portafolio";
+                 window.location.href="../../vistas/catalogo/vista_catalagos";
               </script>';
 
     }else{
          echo '<script>
                 alert("Error en la edición ");
+                window.location.href="../../vistas/catalogo/vista_catalagos";
                </script>'; mysqli_error($conn);
          }
          mysqli_close($conn);
@@ -118,7 +119,7 @@ if(in_array($extencion, $permitidos))
     // fin inserta en la tabla bitacora
     echo '<script type="text/javascript">
             alert("Archivo no permitido");
-            window.location.href="../../vistas/catalogo/vista_portafolio";
+            window.location.href="../../vistas/catalogo/vista_catalagos";
          </script>';
 }
   
@@ -132,15 +133,15 @@ echo $ruta;
 echo $id_imagen;
 
 
-$sql3 = "DELETE FROM tbl_portafolio WHERE ID_IMAGEN='$id_imagen'";
+$sql3 = "DELETE FROM tbl_catalogo WHERE ID_CATALOGO='$id_imagen'";
 if (mysqli_query($conn, $sql3)) {
     unlink($ruta);
     // inicio inserta en la tabla bitacora
     $sql = "INSERT INTO tbl_bitacora (USUARIO, ACCION, OBSERVACION)
-    VALUES ('$usuario1[usuario]', 'ELIMINO', 'ELIMINO UN REGISTRO DE TIPO ($tipo) Y TITULO ($titulo) ')";
+    VALUES ('$usuario1[usuario]', 'ELIMINO', 'ELIMINO UN REGISTRO DE TIPO () Y TITULO ($titulo) ')";
     if (mysqli_query($conn, $sql)) {} else {}
     // fin inserta en la tabla bitacora
-    header('Location: ../../vistas/catalogo/vista_portafolio');
+    header('Location: ../../vistas/catalogo/vista_catalagos');
 }else{
         echo '<script>
                   alert("Error al tratar de eliminar categoria");

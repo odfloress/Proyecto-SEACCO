@@ -64,7 +64,7 @@ $con->close();
 if($totalErrors<=0){
 	
 	echo '<script>
-	alert("Restauración completada con éxito");
+	alert("Restauración completada con éxito.");
 	window.location.href="./index.php";                  
 	</script>';
 	

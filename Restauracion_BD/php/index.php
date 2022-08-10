@@ -39,7 +39,7 @@
             <div class="mb-3 mt-3">
 			<br>
 			<center><h4>EXPORTACION Y RESTAURACIÓN</h4></center>
-			<center><h4> DE BASE DE DATOS</h4></center><br>
+			<center><h4>DE BASE DE DATOS</h4></center><br>
                 <center><img src="../../imagenes/seacco.jpg" alt="Girl in a jacket" width="150" height="150"><br></center>
 				<br>				
 <body>
