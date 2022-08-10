@@ -122,7 +122,7 @@ if (mysqli_num_rows($roles35) > 0)
                   <thead>
                   <tr>
                     
-                  <th>Id Detalle</th>
+                  <th>Id Detalle asignación</th>
                   <th>Id Asignación</th>
                   <th>Id Producto</th>
                   <th>Proyecto</th>
@@ -136,14 +136,14 @@ if (mysqli_num_rows($roles35) > 0)
                   //para mostrar los datos de la tabla mysql y mostrar en el crud
                   $sql7 = "SELECT * FROM ((tbl_detalle_asignacion d
                   INNER JOIN tbl_asignaciones a ON d.ID_ASIGNADO = a.ID_ASIGNADO)
-                  INNER JOIN tbl_proyecto p ON a.ID_PROYECTO = p.ID_PROYECTO)";
+                  INNER JOIN tbl_proyectos p ON a.ID_PROYECTO = p.ID_PROYECTO)";
                   $result = mysqli_query($conn, $sql7);
                   if (mysqli_num_rows($result) > 0) {
                   while ($filas= mysqli_fetch_assoc($result)){
                     ?>
                   <tr>
                      
-                    <td >
+  
                     <td><?php echo $filas['ID_DETALLE_ASIGNACION'] ?></td>
                      <td><?php echo $filas['ID_ASIGNADO'] ?></td>
                      <td><?php echo $filas['ID_PRODUCTO'] ?></td>

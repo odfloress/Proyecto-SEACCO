@@ -189,19 +189,13 @@ if (mysqli_num_rows($roles35) > 0)
                 <table id="example1" class="table table-bordered table-striped">
                   <thead>
                   <tr>
-                    
-                  <th>Acciones</th>
+                  <th>Accion</th>
                   <th>Id Asignación</th>
-                  <th>Producto</th>
                   <th>Proyecto</th>
-                  <th>Empleado</th>
                   <th>Descripción de asignación</th>
-                  <th>Cantidad</th>
-                  <th>Estado herramienta</th>
-                  <th>Estado asignación</th>
                   <th>Fecha asignado</th>
                   <th>Fecha entrega</th>  
-
+                  <th>Usuario</th>                 
                   </tr>
                   </thead>
                   <tbody>
@@ -218,15 +212,11 @@ if (mysqli_num_rows($roles35) > 0)
                           </form>
                       </td>
                      <td><?php echo $filas['ID_ASIGNADO'] ?></td>
-                     <td><?php echo $filas['NOMBRE'] ?></td>
                      <td><?php echo $filas['NOMBRE_PROYECTO'] ?></td>
-                     <td><?php echo $filas['USUARIO'] ?></td>
                      <td><?php echo $filas['DESCRIPCION_ASIGNACION'] ?></td>
-                     <td><?php echo $filas['CANTIDAD'] ?></td>
-                     <td><?php echo $filas['ESTADO'] ?></td>
-                     <td><?php echo $filas['ESTADO_ASIGNACION'] ?></td>
                      <td><?php echo $filas['FECHA_ASIGNADO'] ?></td>
-                     <td><?php echo $filas['FECHA_ENTREGA'] ?></td>    
+                     <td><?php echo $filas['FECHA_ENTREGA'] ?></td> 
+                     <td><?php echo $filas['USUARIO'] ?></td>    
       </tr>
                 <?php } ?>  
                 </tbody>
