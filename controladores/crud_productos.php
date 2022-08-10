@@ -3,7 +3,7 @@ include '../../conexion/conexion.php';
 
 
 // //Variables para recuperar la información de los campos de la vista del crud de productos
-// $id_imagen=(isset($_POST['id_imagen']))?$_POST['id_imagen']:"";
+
 $id_productos=(isset($_POST['id_productos']))?$_POST['id_productos']:"";
 $id_categoria=(isset($_POST['id_categoria']))?$_POST['id_categoria']:"";
 $cantidad_min=(isset($_POST['cantidad_min']))?$_POST['cantidad_min']:"";
