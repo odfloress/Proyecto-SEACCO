@@ -38,8 +38,18 @@ if (mysqli_num_rows($roles35) > 0)
                         die();
                       }
                }
-                // inicio inserta en la tabla bitacora
-                $sql = "INSERT INTO tbl_bitacora (USUARIO, ACCION, OBSERVACION)
+
+                               //valida si hay una compra en proceso
+                               $validar_compra7 = "SELECT * FROM tbl_asignaciones WHERE USUARIO='$usuario[usuario]' and ESTADO_ASIGNACION='EN PROCESO'";
+                               $validar_compra77 = mysqli_query($conn, $validar_compra7);
+                               if (mysqli_num_rows($validar_compra77) > 0)
+                               {
+
+                               }else{
+                                header('Location: ../../vistas/inventario/vista_asignaciones.php');
+                                die();
+                               }
+                               $sql = "INSERT INTO tbl_bitacora (USUARIO, ACCION, OBSERVACION)
                 VALUES ('$usuario1[usuario]', 'CONSULTO', 'CONSULTO LA PANTALLA  ADMINISTRATIVA DE DETALLE DE ASIGNACIONES')";
                 if (mysqli_query($conn, $sql)) {} else {}
                 // fin inserta en la tabla bitacora
@@ -96,33 +106,13 @@ if (mysqli_num_rows($roles35) > 0)
                 <!-- Encabezado del modal -->
                 <form action="" method="post">
                 <div class="modal-header">
-                    <h4 class="modal-title">Añadir producto</h4>
+                    <h4 class="modal-title">Agregar asignación</h4>
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
                 <!-- Fin Encabezado del modal -->
 
                 <!-- Cuerpo del modal Modal -->
                 <div class="modal-body">
-
-                    <label for="">Proyecto:</label>
-                <select placeholder="Seleccione" class="form-select" id="sel1" name="id_proyecto" required >
-                  <option></option>
-                  <?php
-                      include '../../conexion/conexion.php';
-                      $getproyecto1 = "SELECT * FROM tbl_proyectos  WHERE ID_ESTADOS='1' ORDER BY ID_PROYECTO";
-                      $getproyecto2 = mysqli_query($conn, $getproyecto1);
-                      if (mysqli_num_rows($getproyecto2) > 0) {
-                          while($row = mysqli_fetch_assoc($getproyecto2))
-                            {
-                              $id_proyecto = $row['ID_PROYECTO'];
-                              $proyecto =$row['NOMBRE_PROYECTO'];
-                           ?>
-                              <option value="<?php  echo $id_proyecto ?>"><?php echo $id_proyecto .' '.($proyecto)?></option>
-                          <?php
-                    }}// finaliza el if y el while
-
-                ?>
-                </select>
 
 
                 <label for="" class="form-label">Producto:</label>
@@ -290,16 +280,12 @@ if (mysqli_num_rows($roles35) > 0)
                   <thead>
                   <tr>
                   <th>Acciones</th>
-                  <th>Id Asignación</th>
-                  <th>Producto</th>
-                  <th>Proyecto</th>
-                  <th>Empleado</th>
-                  <th>Descripción de asignación</th>
+                  <th>Id detalle asignación</th>
+                  <th>Id asignado</th>
+                  <th>Id Producto</th>
                   <th>Cantidad</th>
                   <th>Estado herramienta</th>
-                  <th>Estado asignación</th>
-                  <th>Fecha asignado</th>
-                  <th>Fecha entrega</th>                
+                  <th>Estado asignación</th>             
                   </tr>
                   </thead>
                   <tbody>
@@ -330,16 +316,12 @@ if (mysqli_num_rows($roles35) > 0)
                       </form>
                     
 </td>                  
+                     <td><?php echo $filas['ID_DETALLE_ASIGNACION'] ?></td>
                      <td><?php echo $filas['ID_ASIGNADO'] ?></td>
-                     <td><?php echo $filas['NOMBRE'] ?></td>
-                     <td><?php echo $filas['NOMBRE_PROYECTO'] ?></td>
-                     <td><?php echo $filas['USUARIO'] ?></td>
-                     <td><?php echo $filas['DESCRIPCION_ASIGNACION'] ?></td>
+                     <td><?php echo $filas['ID_PRODUCTO'] ?></td>
                      <td><?php echo $filas['CANTIDAD'] ?></td>
-                     <td><?php echo $filas['ESTADO'] ?></td>
-                     <td><?php echo $filas['ESTADO_ASIGNACION'] ?></td>
-                     <td><?php echo $filas['FECHA_ASIGNADO'] ?></td>
-                     <td><?php echo $filas['FECHA_ENTREGA'] ?></td>
+                     <td><?php echo $filas['ID_ESTADO_HERRAMIENTA'] ?></td>
+                     <td><?php echo $filas['ID_ESTADO_ASIGNACION'] ?></td>
 </tr>
                 <?php } ?>  
                 </tbody>
@@ -455,6 +437,17 @@ if (mysqli_num_rows($roles35) > 0)
     });
   });
 </script>
+
+<script type="text/javascript"> function solonumero(e) {
+        tecla = (document.all) ? e.keyCode : e.which;
+        if (tecla==8) return true;
+        else if (tecla==0||tecla==9)  return true;
+       // patron =/[0-9\s]/;// -> solo letras
+        patron =/[0-9\s]/;// -> solo numeros
+        te = String.fromCharCode(tecla);
+        return patron.test(te);
+    }
+	</script>
 <!-- Fin muestra los botones y traduce y Agrupar -->
 
 <!-- Enlace Script para que solo permita letras -->
