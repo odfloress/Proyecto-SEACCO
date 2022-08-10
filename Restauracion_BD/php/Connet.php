@@ -24,7 +24,7 @@ date_default_timezone_set('America/Tegucigalpa');
 
 
 class SGBD{
-    //Funcion para hacer consultas a la base de datos
+    //Funcion para hacer consultas a la Base de Datos
     public static function sql($query){
         $con=mysqli_connect(SERVER, USER, PASS, BD);
         mysqli_set_charset($con, "utf8");
