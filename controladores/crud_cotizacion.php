@@ -23,7 +23,8 @@
         $ubicacion=(isset($_POST['ubicacion']))?$_POST['ubicacion']:"";
         $fecha_inicio=(isset($_POST['fecha_inicio']))?$_POST['fecha_inicio']:"";
         $fecha_final=(isset($_POST['fecha_final']))?$_POST['fecha_final']:"";
-        $anterior=(isset($_POST['nombre_anterior']))?$_POST['nombre_anterior']:"";
+        //$anterior=(isset($_POST['celular']))?$_POST['nombre_anterior']:"";
+        $celular=(isset($_POST['celular']))?$_POST['celular']:"";
 
 
         //variable para recuperar los botones de la vista categprias de productos  

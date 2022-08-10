@@ -125,7 +125,7 @@ body {
 
       <!--Inicio Cuerpo del modal -->
       <div class="modal-body ">
-        <form action="" method="POST"  enctype="multipart/form-data">
+        <form action="" method="POST"  enctype="multipart/form-data" class="needs-validation" novalidate>
             <div class="mb-3 mt-3">
                 <center><h2>Cotiza con nosotros </h2></center><br>
                 
@@ -135,10 +135,12 @@ body {
                 <div class="col">
                   <label for="email"  class="form-label">Nombre:</label>
                   <input style="background-color:rgb(240, 244, 245);" type="text" autocomplete="off"  value="<?php echo "$nombre"; ?>" onkeyup="mayus(this);" maxlength="30" class="form-control"  placeholder="Ingrese el nombre" name="nombre" required>
+                      <div class="invalid-feedback">Campo requerido.</div>
                 </div>
                 <div class="col">
                   <label for="pwd" class="form-label">Apellido:</label>
                   <input style="background-color:rgb(240, 244, 245);" type="text" autocomplete="off" value="<?php echo "$apellido"; ?>" onkeyup="mayus(this);" maxlength="30" class="form-control"  placeholder="Ingrese su apellido" name="apellido" required>
+                  <div class="invalid-feedback">Campo requerido.</div>
                 </div>
             </div>       
                   <span>
@@ -149,6 +151,7 @@ body {
                 <div class="col">
                   <label for="pwd" class="form-label">Correo:</label>
                   <input style="background-color:rgb(240, 244, 245);" type="email" autocomplete="off" value="<?php echo "$correo"; ?>" onkeypress="return clave1(event);" class="form-control"  placeholder="Ingrese su correo" name="correo" required>
+                  <div class="invalid-feedback">Campo requerido.</div>
                 </div>
                 <div class="col">
                   <label for="pwd" class="form-label">Celular:</label>
@@ -292,6 +295,29 @@ function quitarespacios(e) {
     // toggle the eye slash icon
     this.classList.toggle('fa-eye-slash');
       });
+  </script>
+
+  <script>
+
+          // Example starter JavaScript for disabling form submissions if there are invalid fields
+      (() => {
+        'use strict'
+
+        // Fetch all the forms we want to apply custom Bootstrap validation styles to
+        const forms = document.querySelectorAll('.needs-validation')
+
+        // Loop over them and prevent submission
+        Array.from(forms).forEach(form => {
+          form.addEventListener('submit', event => {
+            if (!form.checkValidity()) {
+              event.preventDefault()
+              event.stopPropagation()
+            }
+
+            form.classList.add('was-validated')
+          }, false)
+        })
+      })()
   </script>
 
 
