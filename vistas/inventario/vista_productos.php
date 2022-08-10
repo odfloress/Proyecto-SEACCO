@@ -299,7 +299,7 @@ if (mysqli_num_rows($roles35) > 0)
 
 
                                 <!-- Cuerpo del modal Modal -->
-                                <form action="" method="post">
+                                <form action="" method="post" enctype="multipart/form-data">
                                 <div class="modal-body">
 <<<<<<< HEAD
 
@@ -309,6 +309,9 @@ if (mysqli_num_rows($roles35) > 0)
                     <?php
 =======
                                 <input type="hidden" name="nombre_anterior" value="<?php echo $filas['NOMBRE'] ?>"> 
+                                <label for="">Id Productos</label>
+                                <input type="text" class="form-control" name="id_productos" readonly required value="<?php echo $filas['ID_PRODUCTO'] ?>" placeholder="" id="txtPrecio_Compra"   >
+                                <br>
                   <label for="pwd" class="form-label">Id Categoria:</label>
                   <select style="background-color:rgb(240, 244, 245);" class="form-select" id="lista1" name="id_categoria" required >
                   <?php
@@ -362,6 +365,7 @@ if (mysqli_num_rows($roles35) > 0)
                 <label for="">Cantidad Maxima</label>
                 <input type="text" class="form-control" autocomplete="off" name="cantidad_max" required value="<?php echo $filas['CANTIDAD_MAX'] ?>" placeholder="">
                 <br>
+                <input type="hidden" name="foto" value="<?php echo $filas['FOTO'] ?>">
                 <label for="">Imagen</label><br>
 <<<<<<< HEAD
                 <img class="img-thumbnail" width="100px" src="<?php echo $filas['FOTO'] ?>" /><br>
@@ -378,7 +382,7 @@ if (mysqli_num_rows($roles35) > 0)
                 <br>
 =======
                 <img class="img-thumbnail" width="100px" src="<?php echo $filas['FOTO'] ?>"  /><br>
-                <input type="file" class="form-control" accept=".jpg, .png, .jpeg, .JPEG, .JPG, .PNG" name="imagenes" required value="<?php echo "$nombreimagen"; ?>" placeholder=""  >
+                <input type="file" class="form-control" accept=".jpg, .png, .jpeg, .JPEG, .JPG, .PNG" name="imagenes"  value="" placeholder=""  >
                 <br> 
                 
 >>>>>>> rama01
