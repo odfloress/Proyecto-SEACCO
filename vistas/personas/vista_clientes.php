@@ -540,7 +540,7 @@ if (mysqli_num_rows($roles35) > 0)
 				//muestra el titulo secundario
 				pdf.setFont('times');
 				pdf.setFontSize(10);
-				pdf.text("Reporte de portafolio", 84,20,);
+				pdf.text("Reporte de Clientes", 84,20,);
 
 												//////// pie de Pagina ///////
 				//muestra la fecha
@@ -557,7 +557,7 @@ if (mysqli_num_rows($roles35) > 0)
 			}
 				//Fin Encabezado y pie de pagina
 
-							pdf.save('Reporte de portafolio.pdf');
+							pdf.save('Reporte de Clientes.pdf');
 	})
   
 </script>
