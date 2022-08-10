@@ -60,6 +60,11 @@
   <a href="#contact" onclick="w3_close()" class="w3-bar-item w3-button">CONTACTANOS</a>  
 </nav>
 <br><br>
+<?php  
+      $id_catalogo=(isset($_POST['id_catalogo']))?$_POST['id_catalogo']:""; 
+      $catalogo=(isset($_POST['catalogo']))?$_POST['catalogo']:"";  
+        if(!isset($_POST['catalogo']))
+        {  ?> 
  
 <!-- Carousel -->
 <div id="demo" class="carousel slide" data-bs-ride="carousel" >
@@ -69,7 +74,7 @@
     <button type="button" data-bs-target="#demo" data-bs-slide-to="0" class="active"></button>
    <?php 
       include "../../conexion/conexion.php";
-      $sqlr = "SELECT * FROM tbl_bienvenida_portafolio WHERE TIPO='CARRUCEL_PORTAFOLIO'";
+      $sqlr = "SELECT * FROM tbl_portafolio WHERE ID_CATALOGO=3";
       if ($resultr=mysqli_query($conn,$sqlr)) {
           $rowcountr=mysqli_num_rows($resultr);  
       
@@ -89,13 +94,13 @@
     </div>
     <?php 
   include '../../conexion/conexion.php';
-  $sql = "SELECT * FROM tbl_bienvenida_portafolio WHERE TIPO='CARRUCEL_PORTAFOLIO'";
+  $sql = "SELECT * FROM tbl_portafolio WHERE ID_CATALOGO=3";
   $result = mysqli_query($conn, $sql);
   while($muestra = mysqli_fetch_assoc($result)) {
    
   ?>
     <div class="carousel-item">
-      <img src="<?php echo $muestra["RUTA"]; ?>" alt="Chicago" class="d-block" style="width:100%;height:590px;">
+      <img src="<?php echo $muestra["RUTA_PORTAFOLIO"]; ?>" alt="Chicago" class="d-block" style="width:100%;height:590px;">
     </div>
     <?php } ?>
   </div>
@@ -109,37 +114,45 @@
   </button>
 </div>
 <!-- fin Carrucel -->
+<?php }  ?>
 <br>
 
-
-
+                                  <!--     si existe un post muestra las imagenes  -->
 
       <?php  
       $id_catalogo=(isset($_POST['id_catalogo']))?$_POST['id_catalogo']:""; 
       $catalogo=(isset($_POST['catalogo']))?$_POST['catalogo']:"";  
         if(isset($_POST['catalogo']))
-        {  ?>                               
-                                  <!-- //////////////// SELECCIONA LAS IMAGENES DE LA CATEGORIA SELECCIONADA //////////////// -->
-                                
+        {  ?>        
+                  <!-- //////////////// SELECCIONA LAS IMAGENES DE LA CATEGORIA SELECCIONADA //////////////// --> 
+                  <?php 
+                            include '../../conexion/conexion.php';
+                            $sql777 = "SELECT * FROM tbl_catalogo WHERE ID_CATALOGO='$id_catalogo'";
+                            $result777 = mysqli_query($conn, $sql777);
+                           while($mostrar = mysqli_fetch_assoc($result777)) {
+                            $nombre = $mostrar["NOMBRE_CATALOGO"];
+                            $id_catalagos = $mostrar["ID_CATALOGO"];
+                            }  ?>
+                                  
+                                  <div class="w3-container" style="padding:128px 16px" id="about">
+                                        <h3 class="w3-center"><b><?php echo 'CATÁLOGO DE '.$nombre; ?></b></h3> 
+                                        <div class="w3-row-padding " style="margin-top:64px">
 
-                                        <?php echo "$id_catalogo";
+
+                                        <?php 
                                         include '../../conexion/conexion.php';
-                                        $sql = "SELECT * FROM (tbl_portafolio p
-                                        INNER JOIN tbl_catalogo c ON p.ID_CATALOGO = c.ID_CATALOGO=$id_catalogo)";
+                                        $sql = "SELECT * FROM tbl_portafolio WHERE ID_CATALOGO='$id_catalagos'";
                                         $result = mysqli_query($conn, $sql);
                                         while($row = mysqli_fetch_assoc($result)) {
-                                        
+                                        echo $mostrar['NOMBRE_CATALOGO'];
                                         ?>
                                            <!-- inicio card -->
 
-                                        <div class="w3-container" style="padding:128px 16px" id="about">
-                                        <h3 class="w3-center"><b><?php echo $row["NOMBRE_CATALOGO"]; ?></b></h3> 
-                                        <div class="w3-row-padding " style="margin-top:64px">
-
+                                        
                                           <!-- inicio card 1 -->
                                         <div class="w3-col w3-third w3-margin-bottom">
                                             <div class="w3-card">
-                                            <img src="<?php echo $row["RUTA"]; ?>" alt="Jane" style="width:100%" width="500" height="300">
+                                            <img src="<?php echo $row["RUTA_PORTAFOLIO"]; ?>" alt="Jane" style="width:100%" width="500" height="300">
                                               <div class="w3-container">
                                                 <h3><?php echo $row["TITULO"]; ?></h3>
                                               
@@ -150,7 +163,7 @@
                                                   ver información
                                                 </button>
                                                 
-                                                <textarea readonly class="dropdown-menu" style="background-color: white;" class="form-control"name="" id="" cols="40" rows="5"><?php echo $row["DESCRIPCION"]; ?></textarea>
+                                                <textarea readonly class="dropdown-menu" style="background-color: white;" class="form-control"name="" id="" cols="40" rows="5"><?php echo $row["DESCRIPCION_PORTAFOLIO"]; ?></textarea>
                                                 
                                               </div>
                                             </div>
@@ -170,13 +183,23 @@
                                       <!-- fin card -->     
                                    <!-- //////////////// SELECCIONA LAS CATEGORIAS //////////////// -->         
   <?php }  ?>
-  <!-- inicio card -->  <h3 class="w3-center"><b>Catálogo de SEACCO S. De. R.L.</b></h3> 
+
+                          <?php 
+                              include '../../conexion/conexion.php';
+                              $validar_nombre = "SELECT * FROM tbl_parametros WHERE PARAMETRO='NOMBRE'";
+                              $resultado_nombre = mysqli_query($conn, $validar_nombre);
+                            while($mostrar7 = mysqli_fetch_assoc($resultado_nombre)) {
+                              $nombre_contructora = $mostrar7["VALOR"];
+                              }  
+                            ?>
+                                         <!-- inicio card -->  
+                                        <h3 class="w3-center"><b>Catálogos de <?php echo $nombre_contructora; ?></b></h3> 
                                          
                                         <div class="w3-row-padding " style="margin-top:64px">
 
                                         <?php 
                                         include '../../conexion/conexion.php';
-                                        $sql = "SELECT * FROM tbl_catalogo";
+                                        $sql = "SELECT * FROM tbl_catalogo WHERE ID_CATALOGO != 3";
                                         $result = mysqli_query($conn, $sql);
                                         while($row = mysqli_fetch_assoc($result)) {
                                         
@@ -193,9 +216,9 @@
                                               <!-- inicio boton informacion -->
                                             <div class="container mt-3">                                          
                                               <div class="dropdown">
-                                                
+                                               
                                                 <form action="" method="post">
-                                                  <input type="text" name="id_catalogo" value="<?php echo $row["ID_CATALOGO"]; ?>">
+                                                  <input type="hidden" name="id_catalogo" value="<?php echo $row["ID_CATALOGO"]; ?>">
                                                   <button class="btn btn-primary" name="catalogo" type="submit">Mostrar catálogo</button>
                                                 </form>                                                
                                               
@@ -222,9 +245,21 @@
   <h3 class="w3-center">CONTACTANOS</h3>
   <p class="w3-center w3-large">Mantengámonos en contacto. Mandanos un mensaje:</p>
   <div style="margin-top:48px">
-    <p><i class="fa fa-map-marker fa-fw w3-xxlarge w3-margin-right"></i> Tegucigalpa, Honduras</p>
-    <p><i class="fa fa-phone fa-fw w3-xxlarge w3-margin-right"></i> Telefono: 9660-7632</p>
-    <p><i class="fa fa-envelope fa-fw w3-xxlarge w3-margin-right"> </i> Correo: proyectos@seaccoconstruye.com</p>
+                          <?php 
+                              include '../../conexion/conexion.php';
+                              $validar_contactos = "SELECT * FROM tbl_nuestros_contactos";
+                              $resultado_contactos = mysqli_query($conn, $validar_contactos);
+                            while($mostrar74 = mysqli_fetch_assoc($resultado_contactos)) {
+                              $direccion = $mostrar74["DIRECCION"];
+                              $telefono = $mostrar74["TELEFONO"];
+                              $correo = $mostrar74["CORREO"];
+                              $facebook = $mostrar74["FACEBOOK"];
+                              $instagram = $mostrar74["INSTAGRAM"];
+                              }  
+                            ?>
+    <p><i class="fa fa-map-marker fa-fw w3-xxlarge w3-margin-right"></i> <?php echo $direccion; ?></p>
+    <p><i class="fa fa-phone fa-fw w3-xxlarge w3-margin-right"></i> Telefono: <?php echo $telefono; ?></p>
+    <p><i class="fa fa-envelope fa-fw w3-xxlarge w3-margin-right"> </i> Correo: <?php echo $correo; ?></p>
     <br>
      <!-- inicio mapa -->
   <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3869.8943255546815!2d-87.1795425126564!3d14.083414958674373!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8f6fbdd69e8f86fd%3A0x29aa117c9a4923a1!2sConstructora%20SEACCO%20S.%20De.%20R.L.!5e0!3m2!1ses-419!2shn!4v1653890939969!5m2!1ses-419!2shn" width="100%" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
@@ -237,14 +272,10 @@
 <footer class="w3-center w3-black w3-padding-64">
   <a href="#demo" class="w3-button w3-light-grey"><i class="fa fa-arrow-up w3-margin-right"></i>Ir a inicio</a>
   <div class="w3-xlarge w3-section">
-  <a href="https://www.facebook.com/pages/category/Construction-Company/Constructora-Seacco-658896417875063/"> <i class="fa fa-facebook-official w3-hover-opacity"></i></a>
-    <i class="fa fa-instagram w3-hover-opacity"></i>
-    <i class="fa fa-snapchat w3-hover-opacity"></i>
-    <i class="fa fa-pinterest-p w3-hover-opacity"></i>
-    <i class="fa fa-twitter w3-hover-opacity"></i>
-    <i class="fa fa-linkedin w3-hover-opacity"></i>
+  <a href="<?php echo $facebook; ?>"> <i class="fa fa-facebook-official w3-hover-opacity"></i></a>
+  <a href="<?php echo $instagram; ?>"><i class="fa fa-instagram w3-hover-opacity"></i></a>
   </div>
-  <p>Constructora <a href="http://localhost/SEACCO/" title="W3.CSS" target="_blank" class="w3-hover-text-green">SEACCO</a></p>
+  <p>Constructora <a href="http://localhost/SEACCO/" title="W3.CSS" target="_blank" class="w3-hover-text-green"><?php echo $nombre_contructora; ?></a></p>
 </footer>
  
 <script>

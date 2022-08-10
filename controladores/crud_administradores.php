@@ -29,9 +29,11 @@
   $celular_referencia=(isset($_POST['celular_referencia']))?$_POST['celular_referencia']:"";
   $experiencia_laboral=(isset($_POST['experiencia_laboral']))?$_POST['experiencia_laboral']:"";
   $curriculum=(isset($_POST['curriculum']))?$_POST['curriculum']:"";
-  $foto=(isset($_POST['foto']))?$_POST['foto']:"";   
   $area=(isset($_POST['area']))?$_POST['area']:"";
-  $ruta=(isset($_POST['ruta']))?$_POST['ruta']:"";
+  $ruta=(isset($_POST['ruta_curriculum']))?$_POST['ruta_curriculum']:"";
+  $ruta2=(isset($_POST['ruta_imagen']))?$_POST['ruta_imagen']:"";
+  $curriculum_persona = substr($ruta, 16); 
+  $foto = substr($ruta2, 15); 
   
   $usuario1 = $_SESSION; 
 
@@ -158,164 +160,115 @@
 
        //para editar en la tabla mysl      
       case "editar";
-      
-        // Codigo de prueba -----------------------------------------------------------------------
-      //   $tmpFoto1= $_FILES["imagenes"]["tmp_name"];
-      //   if($tmpFoto1!="") {
-      //       $permitidos = array("jpg", "png", "jpeg", "JPEG", "JPG", "PNG");
-      //       $extencion = pathinfo($_FILES['imagenes']["name"], PATHINFO_EXTENSION);
-            
+      ////////// extrae la extencion de la imagen ///////////
+$tmpFoto1= $_FILES["imagenes"]["tmp_name"];
+if($tmpFoto1!="") {
+    $permitidos = array("jpg", "png", "jpeg", "JPEG", "JPG", "PNG");
+    $extencion = pathinfo($_FILES['imagenes']["name"], PATHINFO_EXTENSION);
+}else{
+  $permitidos = array("jpg", "png", "jpeg", "JPEG", "JPG", "PNG");
+    $extencion = "jpg";
+}
+$direccion = "$ruta2";
 
-      //   }else{
-      //       $permitidos = array("jpg", "png", "jpeg", "JPEG", "JPG", "PNG");
-      //       $ultimo = "jpg";
-      //       $extencion = "$ultimo";
-      //   }
-      //   $direccion = "$ruta";
 
-      //   if(in_array($extencion, $permitidos))
-      //   {
-      //       $Fecha= new DateTime();
-      //       $destino ="../../imagenes/";
-      //       $nombrefoto=($_FILES['imagenes']["name"]!="")?$Fecha->getTimestamp()."_".$_FILES["imagenes"]["name"]:"$foto";
-      //       $tmpFoto= $_FILES["imagenes"]["tmp_name"];
-      //       if($tmpFoto!="") 
-      //       {
-      //       unlink($ruta); 
-      //       move_uploaded_file($tmpFoto,$destino.$nombrefoto);
-      //       } 
-      //       $direccion = "$destino1$nombrefoto";
+if(in_array($extencion, $permitidos))
+{
+    ///////// elimina la imagen anterior para colocar la nueva /////////
+    $Fecha= new DateTime();
+    $destino ="../../imagenes/";
+    $nombreimagen=($_FILES['imagenes']["name"]!="")?$Fecha->getTimestamp()."_".$_FILES["imagenes"]["name"]:"$foto";
+    $tmpFoto= $_FILES["imagenes"]["tmp_name"];
+    if($tmpFoto!="") 
+    {
+     unlink($ruta2); 
+     move_uploaded_file($tmpFoto,$destino.$nombreimagen);
+    } 
+    $direccion = "$destino$nombreimagen";
 
-            
-      //       $sql12 = "UPDATE tbl_usuarios SET ID_ROL='$rol', ID_ESTADO_USUARIO='$estado', NOMBRE='$nombre', APELLIDO='$apellido', USUARIO='$usuario', ID_GENERO='$genero', CORREO='$correo', DNI='$dni', ID_PROFESION='$profesion', DIRECCION='$direccion', CELULAR='$celular', REFERENCIA='$referencia', CEL_REFERENCIA='$celular_referencia', EXPERIENCIA_LABORAL='$experiencia_laboral' , CURRICULUM='$destino$nombrecurriculum',CONTRASENA='$contrasena', FOTO='$destino1$nombrefoto' , ID_AREA='$area' WHERE ID_USUARIO='$id_usuario'";
-      //         if (mysqli_query($conn, $sql12)) {
-      //         echo '<script>
-              
-      //         window.location.href="../../vistas/personas/vista_administradores";
-      //           </script>';
-      //       if (mysqli_query($conn, $sql2)) 
-      //       {
-      //           // inicio inserta en la tabla bitacora
-      //           $sql = "INSERT INTO tbl_bitacora (USUARIO, ACCION, OBSERVACION)
-      //           VALUES ('$usuario1[usuario]', 'EDITO', 'EDITO UN REGISTRO DE TIPO ($tipo) Y TITULO ($titulo)')";
-      //           if (mysqli_query($conn, $sql)) {} else {}
-      //           // fin inserta en la tabla bitacora
-      //           echo '<script>
-      //                   alert("Edición exitosa");
-      //                   window.location.href="../../vistas/personas/vista_administradores";
-      //                 </script>';
+          ////////// extrae la extencion del curriculum ///////////
+          $tmpFoto2= $_FILES["curriculum"]["tmp_name"];
+          if($tmpFoto2!="") {
+              $permitidos2 = array("pdf", "docx");
+              $extencion2 = pathinfo($_FILES['curriculum']["name"], PATHINFO_EXTENSION);
+          }else{
+            $permitidos2 = array("pdf", "docx");
+              $extencion2 = "pdf";
+          }
+          $direccion2 = "$ruta";
 
-      //       }else{
-      //           echo '<script>
-      //                   alert("Error en la edición ");
-      //                 </script>'; mysqli_error($conn);
-      //           }
-      //           mysqli_close($conn);
-      //   }else{
-      //       // inicio inserta en la tabla bitacora
-      //       $sql = "INSERT INTO tbl_bitacora (USUARIO, ACCION, OBSERVACION)
-      //       VALUES ('$usuario1[usuario]', 'INTENTO', 'NO LOGRO EDITAR YA QUE EL ARCHIVO NO ERA IMAGEN')";
-      //       if (mysqli_query($conn, $sql)) {} else {}
-      //       // fin inserta en la tabla bitacora
-      //       echo '<script type="text/javascript">
-      //               alert("Archivo no permitido");
-      //               window.location.href="../../vistas/personas/vista_administradores";
-      //           </script>';
-      //   }
-
-      // }
-
-        //Final  codigo oscar -------------------------------------------------
-
-        $tmpFoto1= $_FILES["imagenes"]["tmp_name"];
-        if($tmpFoto1!="") {
-            $permitidos = array("jpg", "png", "jpeg", "JPEG", "JPG", "PNG");
-            $extencion = pathinfo($_FILES['imagenes']["name"], PATHINFO_EXTENSION);
-            
-        
-        }else{
-            $permitidos = array("jpg", "png", "jpeg", "JPEG", "JPG", "PNG");
-            $ultimo = "jpg";
-            $extencion = "$ultimo";
-        }
-        $direccion2 = "$ruta";
-        
-          echo $ruta . '<br>';
-    
-          echo $direccion2 ;
-        
-
-// ---------------------------------------------------------------------------------------
-           $permitidos = array("pdf", "docx");
-           $extencion = pathinfo($_FILES['curriculum']["name"], PATHINFO_EXTENSION);
+          if(in_array($extencion2, $permitidos2))
+            {
+                ///////// elimina el curriculum anterior para colocar el nuevo /////////
+                $Fecha1= new DateTime();
+                $destino1 ="../../curriculum/";
+                $nombre_curriculum=($_FILES['curriculum']["name"]!="")?$Fecha1->getTimestamp()."_".$_FILES["curriculum"]["name"]:"$curriculum_persona";
+                $tmpFoto7= $_FILES["curriculum"]["tmp_name"];
+                if($tmpFoto7!="") 
+                {
+                 unlink($ruta); 
+                 move_uploaded_file($tmpFoto7,$destino1.$nombre_curriculum);
+                } 
+                $direccion2 = "$destino1$nombre_curriculum";
           
-           if(in_array($extencion, $permitidos)){
-               $Fecha= new DateTime();
-               $destino ="../../curriculum/";
-               $nombrecurriculum=($_FILES['curriculum']["name"]!="")?$Fecha->getTimestamp()."_".$_FILES["curriculum"]["name"]:"imagen.jpg";
-               $tmpFoto= $_FILES["curriculum"]["tmp_name"];
-               if($tmpFoto!="") 
-               {
-                
-                move_uploaded_file($tmpFoto,$destino.$nombrecurriculum); 
-               } 
+                        //////////// inicio realiza el update ////////
+                          $sql2 = "UPDATE tbl_usuarios SET ID_ROL='$rol', ID_ESTADO_USUARIO='$estado', NOMBRE='$nombre', 
+                          APELLIDO='$apellido', USUARIO='$usuario', ID_GENERO='$genero', CORREO='$correo', DNI='$dni', 
+                          ID_PROFESION='$profesion', DIRECCION='$direccion', CELULAR='$celular', REFERENCIA='$referencia', 
+                          CEL_REFERENCIA='$celular_referencia', EXPERIENCIA_LABORAL='$experiencia_laboral' , 
+                          CURRICULUM='$direccion2',CONTRASENA='$contrasena', FOTO='$direccion' ,  
+                          ID_AREA='$area' WHERE ID_USUARIO='$id_usuario'";
+         
+                                        
   
-               $permitidos2 = array("jpg", "png", "jpeg", "JPEG", "JPG", "PNG");
-               $extencion = pathinfo($_FILES['foto']["name"], PATHINFO_EXTENSION);
+                                        if (mysqli_query($conn, $sql2)) 
+                                        {
+                                            // inicio inserta en la tabla bitacora
+                                            // $sql = "INSERT INTO tbl_bitacora (USUARIO, ACCION, OBSERVACION)
+                                            // VALUES ('$usuario1[usuario]', 'EDITO', 'EDITO UN REGISTRO DE TIPO () Y TITULO ($titulo)')";
+                                            // if (mysqli_query($conn, $sql)) {} else {}
+                                            // fin inserta en la tabla bitacora
+                                            echo '<script>
+                                                    alert("Edición exitosa");
+                                                    window.location.href="../../vistas/personas/vista_administradores";
+                                                  </script>';
 
-               $direccion2 = "$ruta";
-               echo $direccion2 ;
-               die ();
-              
-               if(in_array($extencion, $permitidos2)){
-                   $Fecha1= new DateTime();
-                  $destino1 ="../../imagenes/";
-                   $nombrefoto=($_FILES['foto']["name"]!="")?$Fecha1->getTimestamp()."_".$_FILES["foto"]["name"]:"imagen.jpg";
-                   $tmpArchivo1= $_FILES["foto"]["tmp_name"];
-                   if($tmpArchivo1!="") 
-                   {
-                    move_uploaded_file($tmpArchivo1,$destino1.$nombrefoto);
-                   }
+                                        }else{
+                                            echo '<script>
+                                                    alert("Error en la edición ");
+                                                    window.location.href="../../vistas/personas/vista_administradores";
+                                                  </script>'; mysqli_error($conn);
+                                            }
+                                            mysqli_close($conn);
+                                              //////////// fin realiza el update ////////
 
-                   $direccion2 = "$destino1$nombreimagen";
-               }
-           }
- 
-        // update en la tabla  tbl_usuarios
-        $sql113 = "UPDATE tbl_usuarios SET ID_ROL='$rol', ID_ESTADO_USUARIO='$estado', NOMBRE='$nombre', 
-              APELLIDO='$apellido', USUARIO='$usuario', ID_GENERO='$genero', CORREO='$correo', DNI='$dni', 
-              ID_PROFESION='$profesion', DIRECCION='$direccion', CELULAR='$celular', REFERENCIA='$referencia', 
-              CEL_REFERENCIA='$celular_referencia', EXPERIENCIA_LABORAL='$experiencia_laboral' , 
-              CURRICULUM='$destino$nombrecurriculum',CONTRASENA='$contrasena', FOTO='$direccion2$nombrefoto' , 
-              -- CURRICULUM='$destino$nombrecurriculum',CONTRASENA='$contrasena', FOTO='$destino1$nombrefoto' , 
-              ID_AREA='$area' WHERE ID_USUARIO='$id_usuario'";
-        
-        
-        if (mysqli_query($conn, $sql113)) {
+         ///////// else de no permitido de curriculum //////////////
+        }else{
+          // inicio inserta en la tabla bitacora
+          $sql = "INSERT INTO tbl_bitacora (USUARIO, ACCION, OBSERVACION)
+          VALUES ('$usuario1[usuario]', 'INTENTO', 'NO LOGRO EDITAR YA QUE EL ARCHIVO NO ERA IMAGEN')";
+          if (mysqli_query($conn, $sql)) {} else {}
+          // fin inserta en la tabla bitacora
+          echo '<script type="text/javascript">
+                  alert("Archivo de curriculum, no permitido");
+                  window.location.href="../../vistas/personas/vista_administradores";
+               </script>';
+      }
 
-            // echo '<script>
-            //       window.location.href="../../vistas/personas/vista_administradores";
-            //   </script>';
+         ///////// else de no permitido de imagen //////////////
+}else{
+    // inicio inserta en la tabla bitacora
+    $sql = "INSERT INTO tbl_bitacora (USUARIO, ACCION, OBSERVACION)
+    VALUES ('$usuario1[usuario]', 'INTENTO', 'NO LOGRO EDITAR YA QUE EL ARCHIVO NO ERA IMAGEN')";
+    if (mysqli_query($conn, $sql)) {} else {}
+    // fin inserta en la tabla bitacora
+    echo '<script type="text/javascript">
+            alert("Archivo de imagen, no permitido");
+            window.location.href="../../vistas/personas/vista_administradores";
+         </script>';
+}
+  
 
-                // inicio inserta en la tabla bitacora
-                           $sql = "INSERT INTO tbl_bitacora (USUARIO, ACCION, OBSERVACION)
-                           VALUES ('$usuario1[usuario]', 'EDITO', 'EL USUARIO $usuario')";
-                            if(mysqli_query($conn, $sql)){}else{}
-                              // fin insertar en la tabla bitacora
-                                echo '<script>window.location.href="../../vistas/personas/vista_administradores"; </script>';
-
-              }else{
-                // inicio inserta en la tabla bitacora
-            $sql = "INSERT INTO tbl_bitacora (USUARIO, ACCION, OBSERVACION)
-            VALUES ('$usuario1[usuario]', 'INTENTO', 'NO LOGRO EDITAR YA QUE EL ARCHIVO NO ERA IMAGEN')";
-                if (mysqli_query($conn, $sql113))  {} else {}
-                  // fin inserta en la tabla bitacora
-              //echo "Error: " . $sql113 . "<br>" . mysqli_error($conn);
-              echo '<script type="text/javascript"> alert("Archivo no permitido");
-                              window.location.href="../../vistas/personas/vista_administradores";
-                        </script>';
-                              echo '<script> alert("Error en la edición ");</script>'; mysqli_error($conn);
-              }
       break;
 
 
