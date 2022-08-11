@@ -1,12 +1,14 @@
 <?php
 session_start();
 if(!isset($_SESSION['usuario'])){
-         header('Location: ../iniciar_sesion/index_login.php');
+ 
+        header('Location: ../../_login.php');
         session_unset();
         session_destroy();
         die();
-      
+        
 }
+
 include '../../controladores/crud_productos.php';
 // Selecciona el id del rol del usuario logueado
 include '../../conexion/conexion.php';
@@ -22,9 +24,9 @@ if (mysqli_num_rows($roles35) > 0)
 }
 
                //valida si tiene permisos de consultar la pantalla 
-               $productos = "SELECT * FROM tbl_ms_roles_ojetos WHERE ID_ROL='$id_rol7' and ID_OBJETO=12 and PERMISO_CONSULTAR=0";
-               $productos2 = mysqli_query($conn, $productos);
-               if (mysqli_num_rows($productos2) > 0)
+               $tablero = "SELECT * FROM tbl_ms_roles_ojetos WHERE ID_ROL='$id_rol7' and ID_OBJETO=12 and PERMISO_CONSULTAR=0";
+               $tablero2 = mysqli_query($conn, $tablero);
+               if (mysqli_num_rows($tablero2) > 0)
                {
                 header('Location: ../../vistas/tablero/vista_perfil.php');
                 die();
@@ -36,27 +38,53 @@ if (mysqli_num_rows($roles35) > 0)
                   header('Location: ../../vistas/tablero/vista_perfil.php');
                   die();
                 }
-               }
-               // inicio inserta en la tabla bitacora
-               $sql = "INSERT INTO tbl_bitacora (USUARIO, ACCION, OBSERVACION)
-               VALUES ('$usuario[usuario]', 'CONSULTO', 'CONSULTO LA PANTALLA ADMINISTRATIVA DE PRODUCTOS')";
-               if (mysqli_query($conn, $sql)) {} else {}
-               // fin inserta en la tabla bitacora
+         }
+                // inicio inserta en la tabla bitacora
+                $sql = "INSERT INTO tbl_bitacora (USUARIO, ACCION, OBSERVACION)
+                VALUES ('$usuario[usuario]', 'CONSULTO', 'CONSULTO LA PANTALLA  ADMINISTRATIVA DEL PROYECTOS')";
+                if (mysqli_query($conn, $sql)) {} else {}
+                // fin inserta en la tabla bitacora
 ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Clientes</title>
+  <title>Productos</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+   <!-- enlace del scritpt para evitar si preciona F12, si preciona Ctrl+Shift+I, si preciona Ctr+u  -->
+   <script type="text/javascript" src="../../js/evita_ver_codigo_utilizando_teclas.js"></script>
+         <!-- /// para exportar en pdf /// -->
+   <script type="text/javascript" src="../../js/complemento_1_jspdf.min.js"></script>
+	<script type="text/javascript" src="../../js/complemento_2_jspdf.plugin.autotable.min.js"></script>
 
+  <script>
+  function clave1(e) {
+  key = e.keyCode || e.which;
+  tecla = String.fromCharCode(key).toString();
+  letras = "ABCDEFGHIJKLMNÑOPQRSTUVWXZabcdefghijklmnñopqrstuvwxyz0123456789,#$%&/=!¡?¿()*{}[]-_'.@<>";
+  
+  especiales = [8,13];
+  tecla_especial = false;
+  for(var i in especiales) {
+    if(key == especiales[i]){
+      tecla_especial = true;
+      break;
+    }
+  }
+  
+  if(letras.indexOf(tecla) == -1 && !tecla_especial){
+    alert("Sin espacios");
+    return false;
+  }
+}
+</script>
   <?php include '../../configuracion/navar.php' ?>
-<!-- Inicio evita el click derecho de la pagina -->
+  <!-- Inicio evita el click derecho de la pagina -->
 <body oncontextmenu="return false">
-<!-- Fin evita el click derecho de la pagina -->
+<!-- Fin evita el click derecho de la pagina --> 
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
     <!-- Content Header (Page header) -->
@@ -64,68 +92,90 @@ if (mysqli_num_rows($roles35) > 0)
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1></h1>
+          <h3>Productos</h3>
             <!-- Inicio de modal de agregar -->
 <div class="container mt-3">
-        <h3>Productos</h3> <br>  
-        <?php 
+<?php 
       include '../../conexion/conexion.php';
-      $productos = "SELECT * FROM tbl_ms_roles_ojetos WHERE ID_ROL='$id_rol7' and ID_OBJETO=12 and PERMISO_INSERCION=1";
-      $productos2 = mysqli_query($conn, $productos);
-      if (mysqli_num_rows($productos2) > 0){
-        echo '<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal">
-        Nuevo Producto
-    </button>';
-      }?>
+      $tablero = "SELECT * FROM tbl_ms_roles_ojetos WHERE ID_ROL='$id_rol7' and ID_OBJETO=12 and PERMISO_INSERCION=1";
+      $tablero2 = mysqli_query($conn, $tablero);
+      if (mysqli_num_rows($tablero2) > 0)
+       {
+         echo '<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal">
+                 Nuevo
+               </button>';
+       }
+ ?>
         
     </div>
-
+    
 <!-- El Modal -->
     <div class="modal" id="myModal">
         <div class="modal-dialog">
             <div class="modal-content">
                 <!-- Encabezado del modal -->
                 <div class="modal-header">
-                    <h4 class="modal-title">Nuevo Cliente</h4>
+                    <h4 class="modal-title">Nuevo Producto</h4>
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
                 <!-- Fin Encabezado del modal -->
-
+                <form action="" method="post" enctype="multipart/form-data">
                 <!-- Cuerpo del modal Modal -->
-                <form action="" method="post">
                 <div class="modal-body">
-                    
-                    <label for="">Id_Producto</label>
-                    <input type="text" class="form-control" name="id_producto" required value="" placeholder=""  onkeypress="return soloLetras(event);" onkeyup="mayus(this);" >
-                    <br>
-                    <label for="">Id_Categoria</label>
-                    <input type="text" class="form-control" name="id_categoria" required value="" placeholder="" id="txtid_categoria" onkeypress="return soloLetras(event);" onkeyup="mayus(this);" >
-                    <br>
-                    <label for="">foto</label>
-                    <input type="text" class="form-control" name="foto" required value="" placeholder="" id="txtfoto" onkeypress="return soloLetras(event);" onkeyup="mayus(this);" >
-                    <br>
-                    <label for="">Codigo</label>
-                    <input type="text" class="form-control" name="codigo" required value="" placeholder="" id="txtcodigo"   >
-                    <br>
-                    <label for="">Nombre</label>
-                    <input type="number" class="form-control" name="nombre" required value="" placeholder="" id="txtnombre"   >
-                    <br>
-                    <label for="">Descripcion_Modelo</label>
-                    <input type="text" class="form-control" name="descripcion_modelo" required value="" placeholder="" id="descripcion_modelo"   >
-                    <br>
+                <label for="pwd" class="form-label">Categoria:</label>
+                  <select  value="<?php echo "$id_categoria"; ?>" class="form-select" id="lista1" name="id_categoria" required >
+                  <option>Seleccione Categoria</option>
+                        <?php
+                           include '../../conexion/conexion.php';
+                            $id_categoria = "SELECT * FROM tbl_categoria_producto ORDER BY ID_CATEGORIA";
+                            $genero2 = mysqli_query($conn, $id_categoria);
+                            if (mysqli_num_rows($genero2) > 0) {
+                                while($row = mysqli_fetch_assoc($genero2))
+                                {
+                                $id_categoria = $row['ID_CATEGORIA'];
+                                $categoria33 =$row['NOMBRE_CATEGORIA'];
+                         ?>
+                          <option value="<?php  echo $id_categoria ?>"><?php echo $categoria33 ?></option>
+                          <?php
+                           }}// finaliza el if y el while
+                           ?>
+                   </select>
+                <br>
+                <label for="">Codigo</label>
+                <input type="text" class="form-control" autocomplete="off" onkeyup="mayus(this);" name="codigo" required value="<?php echo "$codigo"; ?>" placeholder="">
+                <br>
+                <label for="">Nombre</label>
+                <input type="text" autocomplete="off"  value="<?php echo "$nombre"; ?>" onkeyup="mayus(this);" maxlength="255" class="form-control"  placeholder="" name="nombre" required>
+                <br>
+                <label for="">Descripcion Modelo</label>
+                <input type="text" autocomplete="off"  value="<?php echo "$descripcion_modelo"; ?>" onkeyup="mayus(this);" maxlength="255" class="form-control"  placeholder="" name="descripcion_modelo" required>
+                <br>     
+                <label for="">Cantidad Minima</label>
+                <input type="number" class="form-control" min="0" autocomplete="off" onkeyup="mayus(this);" name="cantidad_min" required value="<?php echo "$cantidad_min"; ?>" placeholder="">
+                <br>  
+                <label for="">Cantidad Maxima</label>
+                <input type="number" class="form-control" min="0" autocomplete="off" onkeyup="mayus(this);" name="cantidad_max" required value="<?php echo "$cantidad_max"; ?>" placeholder="">
+                <br>
+                <label for="">Imagen</label>
+                <input type="file" class="form-control" accept=".jpg, .png, .jpeg, .JPEG, .JPG, .PNG" name="imagenes" required value="<?php echo "$nombreimagen"; ?>" placeholder=""  >
+                <br>  
+                                                  
                 </div>
                 <!-- Fin Cuerpo del modal Modal -->
                 <!-- pie del modal -->
                 <div class="modal-footer">
-      	            <button type="submit" name="accion" value="agregar" class="btn btn-primary" onclick="return confirm('¿Desea agregar el producto?')">Agregar</button>
+                
+      	            <button type="submit" name="accion" value="agregar" class="btn btn-primary">Agregar</button>
                     <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
                 </div>
                 <!-- Fin pie del modal -->
-                </form>
             </div>
         </div>
     </div>
-    <!-- Fin  de modal de agregar --> <br>
+    </form>
+    <!-- Fin  de modal de agregar --> 
+
+ 
           </div>
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
@@ -150,8 +200,10 @@ if (mysqli_num_rows($roles35) > 0)
             
             <div class="card">
               <div class="card-header">
-                <h3 class="card-title">Productos</h3>
-                
+              <form id="form" action="" method="post">
+              <button type="submit"  name="accion" value="reporte_pdf" class="btn btn-secondary buttons-pdf buttons-html5"  onclick="return confirm('¿Quieres generar reporte de Productos?')" onclick="textToPdf()"><span>Reporte PDF</span></button>
+	            </form>
+                <!-- <h3 class="card-title">PRODUCTOS</h3> -->
               </div>
               
               <!-- /.card-header -->
@@ -159,32 +211,45 @@ if (mysqli_num_rows($roles35) > 0)
                 <table id="example1" class="table table-bordered table-striped">
                   <thead>
                   <tr>
-                  <th>Acciones</th>
-                  <th>Id_Producto</th>
-                  <th>Id_Categoria</th>
-                  <th>Foto</th>
-                  <th>Codigo</th>
-                  <th>Nombre</th>
-                  <th>Descripcion_Modelo</th>
-                           
+                  <th>ACCIONES</th>
+                  <th>ID PRODUCTO</th>
+                  <th>CATEGORIA</th>
+                  <th>CODIGO</th>
+                  <th>NOMBRE</th>
+                  <th>DESCRIPCION MODELO</th>
+                  <th>CANTIDAD MINIMA</th>
+                  <th>CANTIDAD MAXIMA</th>
+                  <th>FOTO</th>
+                  
+
                   </tr>
                   </thead>
                   <tbody>
-                  <?php while ($filas= mysqli_fetch_assoc($result)){
-
-                  ?>
+                    
+                  <?php
+                  include '../../conexion/conexion.php';
+                  //para mostrar los datos de la tabla mysql y mostrar en el crud                
+                  $sql7 = "SELECT * FROM (tbl_productos p
+                  INNER JOIN tbl_categoria_producto c ON p.ID_CATEGORIA = c.ID_CATEGORIA)";
+                  $result = mysqli_query($conn, $sql7);
+                  if (mysqli_num_rows($result) > 0) {
+                  while ($filas= mysqli_fetch_assoc($result)){
+                    ?>
                   <tr>
                   <td>
                   <?php 
                           include '../../conexion/conexion.php';
-                          $productos = "SELECT * FROM tbl_ms_roles_ojetos WHERE ID_ROL='$id_rol7' and ID_OBJETO=12 and PERMISO_ACTUALIZACION=1";
-                          $productos2 = mysqli_query($conn, $productos);
-                          if (mysqli_num_rows($productos2) > 0)
+                          $tablero = "SELECT * FROM tbl_ms_roles_ojetos WHERE ID_ROL='$id_rol7' and ID_OBJETO=12 and PERMISO_ACTUALIZACION=1";
+                          $tablero2 = mysqli_query($conn, $tablero);
+                          if (mysqli_num_rows($tablero2) > 0)
                           {?>
-                        <!-- inicio boton editar -->
-                      <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#myModal2<?php echo $filas['ID_PRODUCTO'] ?>">
-                      <i class="fas fa-pencil-alt"></i>
-                      </button><?php } ?>
+                              <!-- inicio boton editar -->
+                              <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#myModal2<?php echo $filas['ID_PRODUCTO'] ?>">
+                              <i class="fas fa-pencil-alt"></i>
+                              </button>  <?php 
+                          }
+                        ?>
+                      
 
                           <!-- El Modal -->
                           <div class="modal" id="myModal2<?php echo $filas['ID_PRODUCTO'] ?>">
@@ -193,39 +258,72 @@ if (mysqli_num_rows($roles35) > 0)
 
                                 <!-- Encabezado del modal -->
                                 <div class="modal-header">
-                                  <h4 class="modal-title">Editar Producto</h4>
+                                  <h4 class="modal-title">Editar Producto </h4>
                                   <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                                 </div>
                                 <!-- Fin Encabezado del modal -->
 
 
                                 <!-- Cuerpo del modal Modal -->
-                                <form action="" method="post">
-                                          <div class="modal-body">
-                                              <label for="">Id Producto</label>
-                                              <input type="text" class="form-control" readonly name="id_producto" required value="<?php echo $filas['ID_PRODUCTO'] ?>" placeholder="" id="txtxid_producto"   >
-                                              <br>
-                                              <label for="">Id Categoria</label>
-                                              <input type="text" class="form-control" name="id_categoria" required value="" placeholder="" id="txtid_categoria" onkeypress="return soloLetras(event);" onkeyup="mayus(this);" >
-                                              <br>
-                                              <label for="">Foto</label>
-                                              <input type="text" class="form-control" name="foto" required value="" placeholder="" id="foto" onkeypress="return soloLetras(event);" onkeyup="mayus(this);" >
-                                              <br>
-                                              <label for="">Codigo</label>
-                                              <input type="text" class="form-control" name="codigo" required value="" placeholder="" id="txtcodigo" onkeypress="return soloLetras(event);" onkeyup="mayus(this);" >
-                                              <br>
-                                              <label for="">Nombre</label>
-                                              <input type="text" class="form-control" name="nombre" required value="" placeholder="" id="txtnombre"   >
-                                              <br>
-                                              <label for="">Descripcion Modelo</label>
-                                              <input type="number" class="form-control" name="descripcion_modelo" required value="" placeholder="" id="descripcion_modelo"   >
-                                              <br>
-                                           </div>
+                                <form action="" method="post" enctype="multipart/form-data">
+                                <div class="modal-body">
+                                <input type="hidden" name="nombre_anterior" value="<?php echo $filas['NOMBRE'] ?>"> 
+                                <label for="">Id Productos</label>
+                                <input type="text" class="form-control" name="id_productos" readonly required value="<?php echo $filas['ID_PRODUCTO'] ?>" placeholder="" id="txtPrecio_Compra"   >
+                                <br>
+                  <label for="pwd" class="form-label">Id Categoria:</label>
+                  <select style="background-color:rgb(240, 244, 245);" class="form-select" id="lista1" name="id_categoria" required >
+                  <?php
+                        include '../../conexion/conexion.php';
+                        $id_categoria = "SELECT * FROM tbl_categoria_producto ORDER BY ID_CATEGORIA";
+                        $genero2 = mysqli_query($conn, $id_categoria);
+                        if (mysqli_num_rows($genero2) > 0) {
+                            while($row = mysqli_fetch_assoc($genero2))
+                            {
+                            $id_categoria = $row['ID_CATEGORIA'];
+                            $categoria3 =$row['NOMBRE_CATEGORIA'];
+    
+                                if($categoria3 == $filas["NOMBRE_CATEGORIA"]){?>
+                                  <option value="<?php  echo $id_categoria; ?>" selected><?php echo $categoria3; ?></option>
+                                
+                                 <?php
+                                }else{ ?>
+                                 <option value="<?php  echo $id_categoria; ?>"><?php echo $categoria3; ?></option>
+                                 <?php
+                        }}}  // finaliza el if y el while
+                       ?>
+                  </select>
+                  <br> 
+                  <label for="">Codigo</label>
+                <input type="text" class="form-control" autocomplete="off" name="codigo" required value="<?php echo $filas['CODIGO'] ?>" placeholder="">
+                <br>
+                <label for="">Nombre</label>
+                <input type="text" autocomplete="off"  value="<?php echo $filas['NOMBRE'] ?>" onkeyup="mayus(this);" maxlength="255" class="form-control"  placeholder="" name="nombre" required>
+                <br>
+                <label for="">Descripcion Modelo</label>
+                <input type="text" autocomplete="off"  value="<?php echo $filas['DESCRIPCION_MODELO'] ?>" onkeyup="mayus(this);" maxlength="255" class="form-control"  placeholder="" name="descripcion_modelo" required>
+                <br> 
+                    
+                <label for="">Cantidad Minima</label>
+                <input type="number" class="form-control" min="0" autocomplete="off" name="cantidad_min" required value="<?php echo $filas['CANTIDAD_MIN'] ?>" placeholder="">
+                <br>
+                <label for="">Cantidad Maxima</label>
+                <input type="number" class="form-control" min="0" autocomplete="off" name="cantidad_max" required value="<?php echo $filas['CANTIDAD_MAX'] ?>" placeholder="">
+                <br>
+                <input type="hidden" name="foto" value="<?php echo $filas['FOTO'] ?>">
+                <input type="hidden" name="ruta" value="<?php echo $filas['FOTO'] ?>">
+                <label for="">Imagen</label><br>
+                <img class="img-thumbnail" width="100px" src="<?php echo $filas['FOTO'] ?>"  /><br>
+                <input type="file" class="form-control" accept=".jpg, .png, .jpeg, .JPEG, .JPG, .PNG" name="imagenes"  value="" placeholder=""  >
+                <br> 
+                
+                </div>
+                                         
                                 <!-- Fin Cuerpo del modal Modal -->
 
                                 <!-- pie del modal -->
                                 <div class="modal-footer">
-                                <button type="submit" name="accion" value="editar" class="btn btn-primary" onclick="return confirm('¿Desea editar el producto?')">Guardar</button>
+                                <button type="submit" name="accion" value="editar" class="btn btn-primary" onclick="return confirm('¿Desea editar el Producto?')">Guardar</button>
                                   <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
                                 </div>
                               </form>
@@ -234,35 +332,35 @@ if (mysqli_num_rows($roles35) > 0)
                               </div>
                             </div>
                           </div>
+                          <!-- fin boton editar -->
                           
                           <?php 
                           include '../../conexion/conexion.php';
-                          $productos = "SELECT * FROM tbl_ms_roles_ojetos WHERE ID_ROL='$id_rol7' and ID_OBJETO=12 and PERMISO_ELIMINACION=1";
-                          $productos2 = mysqli_query($conn, $productos);
-                          if (mysqli_num_rows($productos2) > 0)
+                          $tablero = "SELECT * FROM tbl_ms_roles_ojetos WHERE ID_ROL='$id_rol7' and ID_OBJETO=12 and PERMISO_ELIMINACION=1";
+                          $tablero2 = mysqli_query($conn, $tablero);
+                          if (mysqli_num_rows($tablero2) > 0)
                           {?>
-                          <!-- fin boton editar -->
-                          <input type="hidden" name="id_producto"  value="<?php echo $filas['ID_PRODUCTO'] ?>">
-                      <button  value="eliminar" name="accion" 
+                          <input type="hidden" name="id_productos"  value="<?php echo $filas['ID_PRODUCTO'] ?>">
+                          <input type="hidden" name="nombre_anterior" value="<?php echo $filas['NOMBRE'] ?>">
+                             <button  value="eliminar" name="accion" 
                         onclick="return confirm('¿Quieres eliminar este dato?')"
                         type="submit" class="btn btn-danger " data-id="19">
                         <i class="fas fa-trash-alt"></i>
-                    </button></form><?php } ?>
+                        </button> <?php 
+                          }
+                        ?>
+                     </form>
 </td>
-                         
-                      </td>
-                                         <td ><?php echo $filas['ID_PRODUCTO'] ?></td>
-                                         <td><?php echo $filas['ID_CATEGORIA'] ?></td>
-                                         <td><?php echo $filas['FOTO'] ?></td>
-                                         <td><?php echo $filas['CODIGO'] ?></td>
-                                         <td><?php echo $filas['NOMBRE'] ?></td>
-                                         <td><?php echo $filas['DESCRIPCION_MODELO'] ?></td>
-                                         
-                                        </tr>
-                                    <?php } ?>
-                    
-      </tr>
-                  
+                     <td><?php echo $filas['ID_PRODUCTO'] ?></td>
+                     <td><?php echo $filas['NOMBRE_CATEGORIA'] ?></td>                  
+                     <td><?php echo $filas['CODIGO'] ?></td>
+                     <td><?php echo $filas['NOMBRE'] ?></td>
+                     <td><?php echo $filas['DESCRIPCION_MODELO'] ?></td> 
+                     <td><?php echo $filas['CANTIDAD_MIN'] ?></td>
+                     <td><?php echo $filas['CANTIDAD_MAX'] ?></td>
+                     <td><img  width="100px" src="<?php echo $filas['FOTO'] ?>" /></td>                                                          
+                     </tr>
+      <?php }} ?>  
                   </tfoot>
                 </table>
               </div>
@@ -287,8 +385,6 @@ if (mysqli_num_rows($roles35) > 0)
     <!-- Default to the left -->
     <strong>SEACCO &copy; 2022 </strong> 
   </footer>
-
-  <!-- Control Sidebar -->
   <aside class="control-sidebar control-sidebar-dark">
     <!-- Control sidebar content goes here -->
   </aside>
@@ -308,6 +404,11 @@ if (mysqli_num_rows($roles35) > 0)
 <script src="../../plantilla/AdminLTE-3.2.0/plugins/datatables-buttons/js/dataTables.buttons.min.js"></script>
 <script src="../../plantilla/AdminLTE-3.2.0/plugins/datatables-buttons/js/buttons.bootstrap4.min.js"></script>
 <script src="../../plantilla/AdminLTE-3.2.0/plugins/jszip/jszip.min.js"></script>
+<script src="../../plantilla/AdminLTE-3.2.0/plugins/pdfmake/pdfmake.min.js"></script>
+<script src="../../plantilla/AdminLTE-3.2.0/plugins/pdfmake/vfs_fonts.js"></script>
+<!-- <script src="../../plantilla/AdminLTE-3.2.0/plugins/datatables-buttons/js/buttons.html5.min.js"></script> 
+ <script src="../../plantilla/AdminLTE-3.2.0/plugins/datatables-buttons/js/buttons.print.min.js"></script> -->
+
 
 
 <script src="../../plantilla/AdminLTE-3.2.0/plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
@@ -316,10 +417,13 @@ if (mysqli_num_rows($roles35) > 0)
 <!-- AdminLTE for demo purposes -->
 <script src="../../plantilla/AdminLTE-3.2.0/dist/js/demo.js"></script>
 <!-- Page specific script -->
+<!-- INICIO muestra los botones, traduce y Agrupar -->
+
 <script>
   $(function () {
     $("#example1").DataTable({
- language: {
+      
+      language: {
                           processing: "Tratamiento en curso...",
                           search: "Buscar&nbsp;:",
                           lengthMenu: "Agrupar de _MENU_ items",
@@ -353,10 +457,14 @@ if (mysqli_num_rows($roles35) > 0)
                                 },
                                 },    
                          },
+                         
+                         "responsive": true, "lengthChange": true, "autoWidth": false,
+                          "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"],                   
+        
+    })
 
-      "responsive": true, "lengthChange": false, "autoWidth": false,
-      "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
-    }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+      
+    .buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
     $('#example2').DataTable({
       "paging": true,
       "lengthChange": false,
@@ -368,45 +476,103 @@ if (mysqli_num_rows($roles35) > 0)
     });
   });
 </script>
+<!-- Fin muestra los botones y traduce y Agrupar -->
+<!-- Enlace Script para que convierta a mayusculas las teclas que se van pulsando -->
+<script type="text/javascript" src="../../js/converir_a_mayusculas.js"></script>
+
+<!-- Enlace Script para quitar espacios en blanco -->
+<script type="text/javascript" src="../../js/quitar_espacios.js"></script>
 </body>
+
+<!-- // Inicio para exportar en pdf // -->
+<script>
+	//para descar al tocar el boton	
+	var form = document.getElementById("form")
+	form.addEventListener("submit",function(event) {
+   
+	event.preventDefault()
+ 
+				const pdf = new jsPDF('p', 'mm', 'letter');			
+        	
+
+				var columns = ["", "", "", "", "", "", "",""];
+				var data = [
+				[1, "Hola", "hola@gmail.com", "Mexico"],
+				 ];
+
+				pdf.autoTable(columns,data,
+				{ 
+					html:'#example1',
+					margin:{ top: 30 }}
+				);
+						
+				//Inicio Encabezado y pie de pagina
+			const pageCount = pdf.internal.getNumberOfPages();
+			for(var i = 1; i <= pageCount; i++) 
+			{
+				pdf.setPage(i);
+												//////// Encabezado ///////
+				//Inicio para imagen de logo 
+				var logo = new Image();
+				logo.src = '../../imagenes/LoogSEACCO.jpg';
+				pdf.addImage(logo, 'JPEG',14,7,24,15);
+				//Fin para imagen de logo 
+
+				//muestra el titulo principal
+				pdf.setFont('Arial');
+				pdf.setFontSize(17);
+				pdf.text("Constructora SEACCO ", 70,15,);
+
+				//muestra el titulo secundario
+				pdf.setFont('times');
+				pdf.setFontSize(10);
+				pdf.text("Reporte de portafolio", 84,20,);
+
+												//////// pie de Pagina ///////
+				//muestra la fecha
+				pdf.setFont('times');
+				pdf.setFontSize(9);
+				var today = new Date();
+				let horas = today.getHours()
+				let jornada = horas >=12 ? 'PM' : 'AM';
+				var newdat = "Fecha: " + today.getDate() + "/" + (today.getMonth()+1) + "/" + today.getFullYear() + " " + (horas % 12) + ":" + today.getMinutes() + ":" + today.getSeconds() + " " + jornada;
+				pdf.text(183-20,297-284,newdat);
+
+				//muestra el numero de pagina
+				pdf.text('Pagina ' + String(i) + '/' + String(pageCount),220-20,297-25,null,null,"right");
+			}
+				//Fin Encabezado y pie de pagina
+
+							pdf.save('Reporte de productos.pdf');
+	})
+  
+</script>
+<!-- // Fin para exportar en pdf // -->
 <script type="text/javascript" src="../../js/evitar_reenvio.js"></script>
 </html>
 
-<script type="text/javascript">
-  
-        function mayus(e) {
-          e.value = e.value.toUpperCase();
-         }
-    </script>
-
-<script type="text/javascript"> function solonumero(e) {
-        tecla = (document.all) ? e.keyCode : e.which;
-        if (tecla==8) return true;
-        else if (tecla==0||tecla==9)  return true;
-       // patron =/[0-9\s]/;// -> solo letras
-        patron =/[0-9-\s]/;// -> solo numeros
-        te = String.fromCharCode(tecla);
-        return patron.test(te);
-    }
-	</script>
 
 <script>
-      function soloLetras(e){
-       key = e.keyCode || e.which;
-       tecla = String.fromCharCode(key).toLowerCase();
-       letras = " áéíóúabcdefghijklmnñopqrstuvwxyz";
-       especiales = ["8-37-39-46"];
+ // Inicio Script para que solo permita letras
 
-       tecla_especial = false
-       for(var i in especiales){
-        if(key == especiales[i]){
-          tecla_especial = true;
-          break;
-        }
-      }
+ function soloLetras(e){
+      key = e.keyCode || e.which;
+      tecla = String.fromCharCode(key).toLowerCase();
+      letras = " áéíóúabcdefghijklmnñopqrstuvwxyz¿?";
+      especiales = ["8-37-39-46"];
 
-      if(letras.indexOf(tecla)==-1 && !tecla_especial){
-        return false;
-      }
-    }
-  </script>
+      tecla_especial = false
+      for(var i in especiales){
+       if(key == especiales[i]){
+         tecla_especial = true;
+         break;
+       }
+     }
+
+     if(letras.indexOf(tecla)==-1 && !tecla_especial){
+       return false;
+     }
+   }
+
+//   Fin Script para que solo permita letras
+</script>
