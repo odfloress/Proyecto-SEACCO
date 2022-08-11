@@ -80,7 +80,7 @@ body {
 
       <!--Inicio Cuerpo del modal -->
       <div class="modal-body ">
-        <form action="" method="POST"  enctype="multipart/form-data">
+        <form action="" method="POST" class="was-validated"  class="needs-validation" enctype="multipart/form-data">
             <div class="mb-3 mt-3">
                 <center><h4>Registrar Usuario</h4></center><br>
                 
@@ -104,6 +104,7 @@ body {
                 <div class="col">
                   <div class="form-group">
                   <label for="pwd" class="form-label">Contraseña:</label> 
+                  <div class="invalid-feedback">Un caracter, Mayuscula, y numero</div>
                     <div class="input-group mb-3">
                     <input style="background-color:rgb(240, 244, 245);" type="password" id="id_password"  autocomplete="off" onkeypress="return clave1(event);"  class="form-control"  placeholder="Ingrese la contraseña" name="contrasena"  required pattern="(?=.*[\d])(?=.*[a-z])(?=.*[A-Z]).{8,}" onblur="quitarespacios(this);"  onkeyup="sinespacio(this);" required="" minlength="8" maxlength="40" >
                       <div class="input-group-append ">
@@ -132,6 +133,7 @@ body {
                 <div class="col">
                   <label for="pwd" class="form-label">DNI:</label>
                   <input style="background-color:rgb(240, 244, 245);" type="text" autocomplete="off" value="<?php echo "$dni"; ?>" class="form-control"  placeholder="Ingrese su DNI" name="dni" minlength="13" maxlength="13" onkeypress="return solonumero(event)" required pattern="[0-9]+[1-9]+" title="13 caracteres y no todos ceros">
+                  <div class="invalid-feedback">Ingrese du DNI sin espacion ni guiones.</div>
                 </div>
             </div>
             <div class="row">
@@ -310,3 +312,27 @@ function quitarespacios(e) {
     this.classList.toggle('fa-eye-slash');
       });
   </script>
+
+        <!-- Validaciones campos registrar -->
+<script>
+
+// Example starter JavaScript for disabling form submissions if there are invalid fields
+(() => {
+'use strict'
+
+// Fetch all the forms we want to apply custom Bootstrap validation styles to
+const forms = document.querySelectorAll('.needs-validation')
+
+// Loop over them and prevent submission
+Array.from(forms).forEach(form => {
+form.addEventListener('submit', event => {
+  if (!form.checkValidity()) {
+    event.preventDefault()
+    event.stopPropagation()
+  }
+
+  form.classList.add('was-validated')
+}, false)
+})
+})()
+</script>
