@@ -82,14 +82,14 @@ body {
       <div class="modal-body ">
         <form action="" method="POST"  enctype="multipart/form-data">
             <div class="mb-3 mt-3">
-                <center><h4>Registrar usuario</h4></center><br>
+                <center><h4>Registrar Usuario</h4></center><br>
                 
                 <center><img src="imagenes/seacco.jpg" alt="Girl in a jacket" width="150" height="150"><br></center>
 
             <div class="row">
                 <div class="col">
                   <label for="email"  class="form-label">Nombre:</label>
-                  <input style="background-color:rgb(240, 244, 245);" type="text" autocomplete="off"  value="<?php echo "$nombre"; ?>" onkeyup="mayus(this);" maxlength="30" class="form-control"  placeholder="Ingrese el nombre" name="nombre" required>
+                  <input style="background-color:rgb(240, 244, 245);" type="text" autocomplete="off"  value="<?php echo "$nombre"; ?>" onkeyup="mayus(this);" maxlength="30" class="form-control"  placeholder="Ingrese su nombre" name="nombre" required>
                 </div>
                 <div class="col">
                   <label for="pwd" class="form-label">Apellido:</label>
@@ -131,7 +131,7 @@ body {
                 </div>
                 <div class="col">
                   <label for="pwd" class="form-label">DNI:</label>
-                  <input style="background-color:rgb(240, 244, 245);" type="text" autocomplete="off" value="<?php echo "$dni"; ?>" class="form-control"  placeholder="" name="dni" minlength="13" maxlength="13" onkeypress="return solonumero(event)" required pattern="[0-9]+[1-9]+" title="13 caracteres y no todos ceros">
+                  <input style="background-color:rgb(240, 244, 245);" type="text" autocomplete="off" value="<?php echo "$dni"; ?>" class="form-control"  placeholder="Ingrese su DNI" name="dni" minlength="13" maxlength="13" onkeypress="return solonumero(event)" required pattern="[0-9]+[1-9]+" title="13 caracteres y no todos ceros">
                 </div>
             </div>
             <div class="row">
@@ -162,7 +162,7 @@ body {
             <div class="row"> 
                 <div class="col">
                   <label for="pwd" class="form-label">Celular:</label>
-                  <input style="background-color:rgb(240, 244, 245);" type="text" autocomplete="off"  value="<?php echo "$celular"; ?>" class="form-control"  placeholder="Ingrese su celular" name="celular" required minlength="8" onkeypress="return solonumero(event)" maxlength="8" pattern="[0-9]+[1-9]+[0-9]+" title="8 caracteres y no todos ceros">
+                  <input style="background-color:rgb(240, 244, 245);" type="text" autocomplete="off"  value="<?php echo "$celular"; ?>" class="form-control"  placeholder="Numero de celular" name="celular" required minlength="8" onkeypress="return solonumero(event)" maxlength="8" pattern="[0-9]+[1-9]+[0-9]+" title="8 caracteres y no todos ceros">
                 </div>
                 <div class="col">
                   <label for="pwd" class="form-label">Referencia:</label>
@@ -171,17 +171,17 @@ body {
             </div>
             <div class="row">
                 <div class="col">
-                  <label for="pwd" class="form-label">Celular referencia:</label>
-                  <input style="background-color:rgb(240, 244, 245);" type="text" autocomplete="off"  value="<?php echo "$celular_referencia"; ?>" class="form-control"  placeholder="Opcional" name="celular_referencia" onkeypress="return solonumero(event)" required minlength="8" maxlength="8" pattern="[0-9]+[1-9]+[0-9]+" title="8 caracteres y no todos ceros">
+                  <label for="pwd" class="form-label">Celular de Referencia:</label>
+                  <input style="background-color:rgb(240, 244, 245);" type="text" autocomplete="off"  value="<?php echo "$celular_referencia"; ?>" class="form-control"  placeholder="Numero opcional" name="celular_referencia" onkeypress="return solonumero(event)" required minlength="8" maxlength="8" pattern="[0-9]+[1-9]+[0-9]+" title="8 caracteres y no todos ceros">
                 </div>
                 <div class="col">
-                  <label for="pwd" class="form-label">Experiencia laboral:</label>
-                  <input style="background-color:rgb(240, 244, 245);" type="text" autocomplete="off"  value="<?php echo "$experiencia_laboral"; ?>" onkeypress="return SoloLetras(event);"  onKeyUP="this.value=this.value.toUpperCase();" class="form-control"  placeholder="Ingrese su profesión u oficio" name="experiencia_laboral" required>
+                  <label for="pwd" class="form-label">Experiencia Laboral:</label>
+                  <input style="background-color:rgb(240, 244, 245);" type="text" autocomplete="off"  value="<?php echo "$experiencia_laboral"; ?>" onkeypress="return SoloLetras(event);"  onKeyUP="this.value=this.value.toUpperCase();" class="form-control"  placeholder="Ingrese experiencia laboral" name="experiencia_laboral" required>
                 </div>
             </div>
             <div class="row">
                 <div class="col"> 
-                  <label for="pwd" class="form-label">Curriculum:</label>
+                  <label for="pwd" class="form-label">Currículum:</label>
                   <input style="background-color:rgb(240, 244, 245);" type="file" accept=".pdf, .docx" autocomplete="off"  value="<?php echo "$curriculum"; ?>" class="form-control"  placeholder="Adjunte su curriculum" name="curriculum" required>
                 </div>
                 <div class="col">
@@ -210,7 +210,7 @@ body {
                    </select>
                 </div>  
                 <div class="col">
-                <label for="pwd" class="form-label">Area:</label>
+                <label for="pwd" class="form-label">Área de Trabajo:</label>
                 <select style="background-color:rgb(240, 244, 245);" value="<?php echo "$area"; ?>" class="form-select" id="lista1" name="area" required >
                         <?php
                             include 'conexion/conexion.php';
