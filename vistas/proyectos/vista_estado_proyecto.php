@@ -50,7 +50,7 @@ if (mysqli_num_rows($roles35) > 0)
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Estados</title>
+  <title>Estados Proyectos</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
@@ -74,18 +74,7 @@ if (mysqli_num_rows($roles35) > 0)
             <h1></h1>
             <!-- Inicio de modal de agregar -->
 <div class="container mt-3">
-        <h3>Estados de los proyectos</h3> <br> 
-        <?php 
-      include '../../conexion/conexion.php';
-      $estado = "SELECT * FROM tbl_ms_roles_ojetos WHERE ID_ROL='$id_rol7' and ID_OBJETO=14 and PERMISO_INSERCION=1";
-      $estado2 = mysqli_query($conn, $estado);
-      if (mysqli_num_rows($estado2) > 0)
-       {
-         echo '<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal">
-                    Nuevo Estado de Proyecto
-                </button>';
-                          }
-                        ?> 
+        <h3>Estados de Proyectos</h3> <br> 
         
     </div> 
         
@@ -147,9 +136,21 @@ if (mysqli_num_rows($roles35) > 0)
             <div class="card">
               <div class="card-header">
               <form id="form" action="" method="post">
-              <button type="submit"  name="accion" value="reporte_pdf" class="btn btn-secondary buttons-pdf buttons-html5"  onclick="return confirm('¿Quieres generar reporte de Estado de proyectos?')" onclick="textToPdf()"><span>Reporte PDF</span></button>
-	            </form>
-                 <!-- <h3 class="card-title">Estado Proyectos</h3> -->
+                    <div class="btn-group">
+                    <?php 
+      include '../../conexion/conexion.php';
+      $area1 = "SELECT * FROM tbl_ms_roles_ojetos WHERE ID_ROL='$id_rol7' and ID_OBJETO=30 and PERMISO_INSERCION=1";
+      $area2 = mysqli_query($conn, $area1);
+      if (mysqli_num_rows($area2) > 0)
+       {
+         echo '<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal">
+                    Nueva Estado
+                </button>';
+                          }
+                        ?> 
+              <button type="submit"  name="accion" value="reporte_pdf" class="btn btn-secondary buttons-pdf buttons-html5"  onclick="return confirm('¿Quieres generar reporte de Estados de Proyectos?')" onclick="textToPdf()"><span>Reporte PDF</span></button>
+	               </div>
+            </form>
                 
               </div>
               
@@ -159,7 +160,7 @@ if (mysqli_num_rows($roles35) > 0)
                   <thead>
                   <tr>
                   <th>Acciones</th>
-                  <th>Id estado</th>
+                  <th>Id</th>
                   <th>Estado</th>
                   
                   </tr>
@@ -192,7 +193,7 @@ if (mysqli_num_rows($roles35) > 0)
                                 <!-- Encabezado del modal -->
                                 <form action="" method="post">
                                 <div class="modal-header">
-                                  <h4 class="modal-title">Editar estado</h4>
+                                  <h4 class="modal-title">Editar Estado</h4>
                                   <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                                 </div>
                                 <!-- Fin Encabezado del modal -->
@@ -201,10 +202,10 @@ if (mysqli_num_rows($roles35) > 0)
                                 <!-- Cuerpo del modal Modal -->
                                           <div class="modal-body">
                                           <input type="hidden" name="nombre_anterior" value="<?php echo $filas['ESTADO_PROYECTO'] ?>">
-                                              <label for="">Id estado</label>
+                                              <label for="">Id:</label>
                                               <input type="number" class="form-control" name="id_estados" readonly required value="<?php echo $filas['ID_ESTADOS'] ?>" placeholder="" id="txtPrecio_Compra"   >
                                               <br>
-                                              <label for="">Estado</label>
+                                              <label for="">Estado:</label>
                                               <input type="text" class="form-control" name="nombre" autocomplete="off" required value="<?php echo $filas['ESTADO_PROYECTO'] ?>" placeholder="" id="txtPrecio_Compra" onkeypress="return soloLetras(event);" minlength="3" maxlength="20"  onkeyup="mayus(this);" >
                                               <br>
                                           
