@@ -31,6 +31,7 @@ if(isset($_POST['submit'])){
      
     $correo=(isset($_POST['correo']))?$_POST['correo']:"";
     $token=(isset($_POST['token']))?$_POST['token']:"";
+  
       
     
     $mail = new PHPMailer(true);
@@ -43,12 +44,7 @@ if(isset($_POST['submit'])){
      {
        $nombre_persona = $row['NOMBRE']. " ". $row['APELLIDO'] ;
      }
-      //Inicio inserta el token
-      include '../../conexion/conexion.php';
-      $sql77 = "UPDATE tbl_usuarios SET TOKEN='$token', VENCIMIENTO_TOKEN='$fecha_siguiente' WHERE USUARIO='$_SESSION[correo]'";
-      if ($conn->query($sql77) === TRUE) {}
-      // fin inserta el token
-
+     
 
 
       try {
@@ -117,6 +113,13 @@ if(isset($_POST['submit'])){
           // else{
           //     $result="Gracias correo enviado exitosamente. Revise su correo!!!";
           // }
+          $token= hash('sha512', $token);
+          //Inicio inserta el token
+          include '../../conexion/conexion.php';
+          $sql77 = "UPDATE tbl_usuarios SET TOKEN='$token', VENCIMIENTO_TOKEN='$fecha_siguiente' WHERE USUARIO='$_SESSION[correo]'";
+          if ($conn->query($sql77) === TRUE) {}
+          // fin inserta el token
+    
   }else{
     echo '<script>
             alert("correo  electrónico no coincide");

@@ -7,6 +7,7 @@
 
     $usuario=(isset($_POST['usuario']))?$_POST['usuario']:"";
     $token=(isset($_POST['token']))?$_POST['token']:"";
+    $token= hash('sha512', $token);
 
     date_default_timezone_set('America/Guatemala');
       $fecha_actual = date("Y-m-d H:i:s");
@@ -143,6 +144,8 @@ function SoloLetras(e) {
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+   <!-- enlace del scritpt para evitar si preciona F12, si preciona Ctrl+Shift+I, si preciona Ctr+u  -->
+   <script type="text/javascript" src="../../js/evita_ver_codigo_utilizando_teclas.js"></script>
   <style> 
 body {
   background-image: url('../../imagenes/fondo.jpg');
@@ -155,6 +158,9 @@ body {
  
 </head>
 <body style="background-color:rgb(241, 243, 243);" >
+<!-- Inicio evita el click derecho de la pagina -->
+<body oncontextmenu="return false">
+<!-- Fin evita el click derecho de la pagina --> 
 
 
 <br><br>
