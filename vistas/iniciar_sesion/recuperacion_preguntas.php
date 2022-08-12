@@ -19,7 +19,7 @@ include '../../controladores/co_recuperacion_preguntas.php';
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>Configuración preguntas</title>
+  <title>Configuración Preguntas</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -54,7 +54,7 @@ body {
             <div class="mb-3 mt-3">
               <center><h3>Configuración</h3></center><br>
             <div class="alert alert-success">
-            <strong>¡Hola!</strong> Configure sus preguntas y respuestas antes de ingresar al sistema
+            <strong>¡Hola!</strong> Configure sus preguntas y respuestas antes de ingresar al sistema.
             </div>            
            
             <div class="container mt-3">
@@ -94,11 +94,15 @@ body {
            
             <div class="d-grid">
             <button type="submit" name="accion" value="validar" class="btn btn-primary btn-block">Validar</button><br>
+            </div>
+            </form>
+            <form action="" method="POST">
+            <div class="d-grid">
             <button type="submit" name="accion" value="cancelar" class="btn btn-danger btn-block">Cancelar</button>
             </div>
           
             
-        </form>
+            </form>
       </div>
        <!--Fin Cuerpo del modal -->
 

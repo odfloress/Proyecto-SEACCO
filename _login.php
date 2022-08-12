@@ -46,7 +46,7 @@ require 'controladores/co_login.php';
               
                 <label for="usuario" class="form-label">Usuario:</label>
                 <input type="text" style="background-color:rgb(240, 244, 245);" name="usuario" class="form-control" 
-                placeholder="Ingrese el Usuaio" autocomplete = "off"  onkeypress="return soloLetras(event);" minlength="3" maxlength="20" 
+                placeholder="Ingrese el usuario" autocomplete = "off"  onkeypress="return soloLetras(event);" minlength="3" maxlength="20" 
                 onkeyup="mayus(this);" required onblur="quitarespacios(this);" onkeydown="sinespacio(this);">
            </div>
 
@@ -74,7 +74,7 @@ require 'controladores/co_login.php';
 
             <div class="row">
                 <div class="col"> 
-                <a href="http://localhost/SEACCO/vistas/iniciar_sesion/metodo_recuperacion">Olvido la contraseña?</a>
+                <a href="http://localhost/SEACCO/vistas/iniciar_sesion/metodo_recuperacion">¿Olvido la contraseña?</a>
                 </div>
                 <div class="col">
                   <a href="/SEACCO/_registrar">Registrar un usuario</a>

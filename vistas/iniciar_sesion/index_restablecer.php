@@ -1,43 +1,44 @@
 <?php
 
   if(isset($_POST['accion'])){
+    session_start();
     require "../../conexion/conexion.php";
     
-    //$contrasena1 = $mysqli->real_scape_string($_POST['nueva_contrasena']);
-    //$contrasena2 = $mysqli->real_scape_string($_POST['confirmar_contrasena']);
+
     $usuario=(isset($_POST['usuario']))?$_POST['usuario']:"";
-    $contrasena1=(isset($_POST['nueva_contrasena']))?$_POST['nueva_contrasena']:"";
-    $contrasena2=(isset($_POST['confirmar_contrasena']))?$_POST['confirmar_contrasena']:"";
-    $_SESSION['usuario'] = $usuario;
+    $token=(isset($_POST['token']))?$_POST['token']:"";
+    $token= hash('sha512', $token);
+
+    date_default_timezone_set('America/Guatemala');
+      $fecha_actual = date("Y-m-d H:i:s");
+     
 
     // Valida que exista el usuario
-    $validar_usuario = "SELECT * FROM tbl_usuarios WHERE USUARIO='$usuario'";
+    $validar_usuario = "SELECT * FROM tbl_usuarios WHERE USUARIO='$usuario' and TOKEN='$token'";
     $result = mysqli_query($conn, $validar_usuario); 
-
      if (mysqli_num_rows($result) > 0) { 
-      if ($contrasena1 == $contrasena2) {
+            while($row1 = mysqli_fetch_assoc($result))
+            {
+              $fecha_evaluar = $row1['VENCIMIENTO_TOKEN'];
+            }
 
-        // encripta la contraseña
-        $contrasena1= hash('sha512', $contrasena1);
-        $contrasena2= hash('sha512', $contrasena2);
-    
-          $conn = new mysqli($servername, $username, $password, $dbname);
-          $sql =  "UPDATE tbl_usuarios SET CONTRASENA='$contrasena1' WHERE USUARIO='".$_SESSION['usuario']."'";
-            if ($conn->query($sql) === TRUE) {
-            echo '<script>
-             alert("Contraseña actualizada");
-             window.Location = "/_login.php";
-          </script>';
-                  
-                   exit();
-             } 
-          
-        } else {
-          echo "Las contraseñas no coinciden";
-        }
+            if($fecha_actual<=$fecha_evaluar)
+            {
+              $_SESSION['recuperacion'] = $usuario;
+              $_SESSION['nombre'] = $usuario;
+              header('Location: ../../vistas/iniciar_sesion/restaurar_contraseña.php');
+            }else{
+              echo '<script>
+                    alert("Su token a expirado");
+              </script>';
+
+            }
+            
 
      }else{
-      echo "Usuario incorrecto";
+         echo '<script>
+                    alert("Información no coincide");
+              </script>';
       mysqli_close($conn);      
     }
     
@@ -143,6 +144,8 @@ function SoloLetras(e) {
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+   <!-- enlace del scritpt para evitar si preciona F12, si preciona Ctrl+Shift+I, si preciona Ctr+u  -->
+   <script type="text/javascript" src="../../js/evita_ver_codigo_utilizando_teclas.js"></script>
   <style> 
 body {
   background-image: url('../../imagenes/fondo.jpg');
@@ -155,6 +158,9 @@ body {
  
 </head>
 <body style="background-color:rgb(241, 243, 243);" >
+<!-- Inicio evita el click derecho de la pagina -->
+<body oncontextmenu="return false">
+<!-- Fin evita el click derecho de la pagina --> 
 
 
 <br><br>
@@ -169,19 +175,21 @@ body {
             <div class="mb-3 mt-3">
             <center><img src="../../imagenes/seacco.jpg" alt="Girl in a jacket" width="150" height="150"><br></center>
             <div class="alert alert-success">
-                <strong>¡Hola!</strong> Ingrese su nueva contraseña para su usuario.
+                <strong>¡Hola!</strong> Ingrese el usuario y el token para cambiar su contraseña.
             </div>
             <label for="email" class="form-label">Usuario:</label>
             <input type="text" style="background-color:rgb(240, 244, 245);" name="usuario" id="ingUsuario" class="form-control" placeholder="Ingrese el usuario" autocomplete = "off"  onkeypress="return soloLetras(event);" minlength="3" maxlength="20" onkeyup="mayus(this);" required onblur="quitarespacios(this);" onkeydown="sinespacio(this);">
-            <label for="email" class="form-label">Nueva contraseña:</label>
-            <input style="background-color:rgb(240, 244, 245);" type="password" class="form-control" placeholder="Nueva contraseña"  name="nueva_contrasena" id="Ncontrasena" aria-label="Username" aria-describedby="basic-addon1"   minlength="8" maxlength="30" required onblur="quitarespacios(this);" onkeyup="sinespacio(this);" pattern="(?=.*[\d])(?=.*[a-z])(?=.*[A-Z]).{8,}">
-            <label for="email" class="form-label">Confirmar nueva contraseña:</label>
-            <input style="background-color:rgb(240, 244, 245);" type="password" class="form-control"  placeholder="Confirmar nueva contraseña" name="confirmar_contrasena" id="FNcontrasena" aria-label="Username" aria-describedby="basic-addon1"   minlength="8" maxlength="30" required onblur="quitarespacios(this);" onkeyup="sinespacio(this);" pattern="(?=.*[\d])(?=.*[a-z])(?=.*[A-Z]).{8,}">
+            <br>
+            <label for="">Token:</label>
+            <input type="text" style="background-color:rgb(240, 244, 245);" autocomplete = "off" class="form-control" minlength="7" maxlength="7" title="Colocar 7 caracteres" placeholder="Ingrese el token" name="token" required onblur="quitarespacios(this);" onkeydown="sinespacio(this);">
+           
             </div>
             
         
-            <center><button type="submit" name="accion" class="btn btn-primary btn-block">Enviar</button></center>
             
+            <div class="d-grid">
+              <button type="submit" name="accion" value="ingresar" class="btn btn-primary btn-block">Ingresar</button>
+            </div>
             
         </form>
       </div>

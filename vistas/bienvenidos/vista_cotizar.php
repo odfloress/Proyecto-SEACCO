@@ -224,7 +224,7 @@ body {
       </div>
        <!--Fin Cuerpo del modal -->
 
-         </div> 
+    </div> 
   </div>
 
   
