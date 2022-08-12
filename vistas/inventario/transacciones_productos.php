@@ -1,14 +1,18 @@
 <?php
 session_start();
 if(!isset($_SESSION['usuario'])){
-         header('Location: ../iniciar_sesion/index_login.php');
+ 
+        header('Location: ../../_login.php');
         session_unset();
         session_destroy();
         die();
-      
+        
 }
+include '../../controladores/co_asignaciones.php';
 // Selecciona el id del rol del usuario logueado
 include '../../conexion/conexion.php';
+
+
 $usuario = $_SESSION;
 $roles34 = "SELECT * FROM tbl_usuarios WHERE USUARIO='$usuario[usuario]'";
 $roles35 = mysqli_query($conn, $roles34);
@@ -21,76 +25,67 @@ if (mysqli_num_rows($roles35) > 0)
 }
 
                //valida si tiene permisos de consultar la pantalla 
-               $inventario = "SELECT * FROM tbl_ms_roles_ojetos WHERE ID_ROL='$id_rol7' and ID_OBJETO=10 and PERMISO_CONSULTAR=0";
-               $inventario2 = mysqli_query($conn, $inventario);
-               if (mysqli_num_rows($inventario2) > 0)
+               $role = "SELECT * FROM tbl_ms_roles_ojetos WHERE ID_ROL='$id_rol7' and ID_OBJETO=8 and PERMISO_CONSULTAR=0";
+               $roless = mysqli_query($conn, $role);
+               if (mysqli_num_rows($roless) > 0)
                {
                 header('Location: ../../vistas/tablero/vista_perfil.php');
                 die();
                }else{
-                $role = "SELECT * FROM tbl_ms_roles_ojetos WHERE ID_ROL='$id_rol7' and ID_OBJETO=10 and PERMISO_CONSULTAR=1";
-                $roless = mysqli_query($conn, $role);
-                if (mysqli_num_rows($roless) > 0){}
-                else{
-                  header('Location: ../../vistas/tablero/vista_perfil.php');
-                  die();
-                }
+                      $role = "SELECT * FROM tbl_ms_roles_ojetos WHERE ID_ROL='$id_rol7' and ID_OBJETO=8 and PERMISO_CONSULTAR=1";
+                      $roless = mysqli_query($conn, $role);
+                      if (mysqli_num_rows($roless) > 0){}
+                      else{
+                        header('Location: ../../vistas/tablero/vista_perfil.php');
+                        die();
+                      }
                }
-               // inicio inserta en la tabla bitacora
-               $sql = "INSERT INTO tbl_bitacora (USUARIO, ACCION, OBSERVACION)
-               VALUES ('$usuario[usuario]', 'CONSULTO', 'CONSULTO LA PANTALLA ADMINISTRATIVA DE INVENTARIO')";
-               if (mysqli_query($conn, $sql)) {} else {}
-               // fin inserta en la tabla bitacora
+
+                // inicio inserta en la tabla bitacora
+                $sql = "INSERT INTO tbl_bitacora (USUARIO, ACCION, OBSERVACION)
+                VALUES ('$usuario1[usuario]', 'CONSULTO', 'CONSULTO LA PANTALLA  ADMINISTRATIVA DE ASIGNACIONES')";
+                if (mysqli_query($conn, $sql)) {} else {}
+                // fin inserta en la tabla bitacora
+
+                if(!isset($_POST['producto'])){
+                    header('Location: ../../vistas/inventario/vista_inventario.php');
+                }
+                $producto=(isset($_POST['producto']))?$_POST['producto']:"";  
+                $nombre=(isset($_POST['nombre']))?$_POST['nombre']:"";  
+              
+
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Inventario</title>
+  <title>Asignaciones</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
- <!-- enlace del scritpt para evitar si preciona F12, si preciona Ctrl+Shift+I, si preciona Ctr+u  -->
- <script type="text/javascript" src="../../js/evita_ver_codigo_utilizando_teclas.js"></script>
-         <!-- /// para exportar en pdf /// -->
+    <!-- enlace del scritpt para evitar si preciona F12, si preciona Ctrl+Shift+I, si preciona Ctr+u  -->
+    <script type="text/javascript" src="../../js/evita_ver_codigo_utilizando_teclas.js"></script>
+       <!-- /// para exportar en pdf /// -->
    <script type="text/javascript" src="../../js/complemento_1_jspdf.min.js"></script>
 	<script type="text/javascript" src="../../js/complemento_2_jspdf.plugin.autotable.min.js"></script>
 
-  <script>
-  function clave1(e) {
-  key = e.keyCode || e.which;
-  tecla = String.fromCharCode(key).toString();
-  letras = "ABCDEFGHIJKLMNÑOPQRSTUVWXZabcdefghijklmnñopqrstuvwxyz0123456789,#$%&/=!¡?¿()*{}[]-_'.@<>";
-  
-  especiales = [8,13];
-  tecla_especial = false;
-  for(var i in especiales) {
-    if(key == especiales[i]){
-      tecla_especial = true;
-      break;
-    }
-  }
-  
-  if(letras.indexOf(tecla) == -1 && !tecla_especial){
-    alert("Sin espacios");
-    return false;
-  }
-}
-</script>
+
+
   <?php include '../../configuracion/navar.php' ?>
- <!-- Inicio evita el click derecho de la pagina -->
+  <!-- Inicio evita el click derecho de la pagina -->
 <body oncontextmenu="return false">
-<!-- Fin evita el click derecho de la pagina -->
- <!-- Content Wrapper. Contains page content -->
-  <div class="content-wrapper">
+<!-- Fin evita el click derecho de la pagina --> 
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper"> <br><center><h3 ><b>Transacciones del producto <?php echo $nombre; ?></b></h3></center>
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <div class="container-fluid">
-        <div class="row mb-2">
-          <div class="col-sm-6">
-            <h1></h1>
-        
+        <div class="row mb-12">
+          <div class="col-sm-12">
+         
+     
           </div>
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
@@ -113,80 +108,49 @@ if (mysqli_num_rows($roles35) > 0)
            
             <!-- /.card -->
             
-            <div class="card">
+            <div class="card table-responsive">
               <div class="card-header">
-                <h3 class="card-title">Inventario</h3>
+                
+                <form id="form" action="" method="post">
+              <button type="submit"  name="accion" value="reporte_pdf" class="btn btn-secondary buttons-pdf buttons-html5"  onclick="return confirm('¿Desea generar reporte de detalle de asignaciones?')" onclick="textToPdf()"><span>Reporte PDF</span></button>
+	            </form>
                 
               </div>
               
               <!-- /.card-header -->
-              <div class="card-body">
+              <div class="card-body ">
                 <table id="example1" class="table table-bordered table-striped">
                   <thead>
                   <tr>
-                    <th>Acciones</th>
+                    
                   <th>Id</th>
-                  <th>Productos</th>
-                  <th>Cantidad minima</th>
-                  <th>Cantidad maxima</th>
-                  <th>Cantidad disponible</th>
+                  <th>Usuario</th>
+                  <th>Cantidad</th>
+                  <th>Movimiento</th>
+                  <th>Fecha</th>
+                           
                   </tr>
                   </thead>
                   <tbody>
                   <?php
                   include '../../conexion/conexion.php';
-                  //para mostrar los datos de la tabla mysql y mostrar en el crud                
-                  $sql7 = "SELECT * FROM (tbl_inventario i
-                  INNER JOIN tbl_productos p ON i.ID_PRODUCTOS = p.ID_PRODUCTO)";
+                  //para mostrar los datos de la tabla mysql y mostrar en el crud
+                  $sql7 = "SELECT * FROM tbl_kardex WHERE ID_PRODUCTO=$producto";
                   $result = mysqli_query($conn, $sql7);
-                  if (mysqli_num_rows($result) > 0) 
+                  if (mysqli_num_rows($result) > 0) {
                   while ($filas= mysqli_fetch_assoc($result)){
                     ?>
                   <tr>
-                  <td>
-                  
-                  <form action="../../vistas/inventario/transacciones_productos.php" method="post">
-                          <input type="hidden" name="nombre"  value="<?php echo $filas['NOMBRE'] ?>">
-                          <input type="hidden" name="producto"  value="<?php echo $filas['ID_PRODUCTOS'] ?>">
-                          <button type="submit" name="accion" value="detalle" class="btn btn-primary" >Ver transacciones</button>
-                          </form>     
-                  </td>
-                         
-                      </td>
-                      
-                                         <td ><?php echo $filas['ID_INVENTARIO'] ?></td>
-                                         <td><?php echo $filas['NOMBRE'] ?></td>
-                                         <td><?php echo $filas['CANTIDAD_MINIMA'] ?></td>
-                                         <td><?php echo $filas['CANTIDAD_MAXIMA'] ?></td>
-                                         <td><center>
-                                          <?php if ($filas['CANTIDAD_DISPONIBLE']>$filas['CANTIDAD_MINIMA'] && $filas['CANTIDAD_DISPONIBLE']<$filas['CANTIDAD_MAXIMA'])
-                                          {?>
-                                          <h3 style="background-color:rgb(138, 198, 255);"><?php echo $filas['CANTIDAD_DISPONIBLE'] ?></h3>
-                                          <?php }else{
-                                            if ($filas['CANTIDAD_DISPONIBLE']>$filas['CANTIDAD_MINIMA'])
-                                            {?>
-                                             <h3 style="background-color:rgb(168, 255, 138);"><?php echo $filas['CANTIDAD_DISPONIBLE'] ?></h3>
-                                             <?php }else
-                                              {?>
-                                              <h3 style="background-color:rgb(255, 154, 138);"><?php echo $filas['CANTIDAD_DISPONIBLE'] ?></h3>
-
-                                              <?php }
-
-                                          } ?>
-                                          </center>
-                                        </td>
-
-
-
-                                        
-                                       
-                                         
-                                        </tr>
-                                    <?php } ?>
-                    
+                     
+  
+                    <td><?php echo $filas['ID_KARDEX'] ?></td>
+                     <td><?php echo $filas['USUARIO'] ?></td>
+                     <td><?php echo $filas['CANTIDAD'] ?></td>
+                     <td><?php echo $filas['TIPO_MOVIMIENTO'] ?></td>
+                     <td><?php echo $filas['FECHA_HORA'] ?></td>
       </tr>
-                  
-                  </tfoot>
+                <?php } }?>  
+                </tbody>
                 </table>
               </div>
               <!-- /.card-body -->
@@ -231,11 +195,6 @@ if (mysqli_num_rows($roles35) > 0)
 <script src="../../plantilla/AdminLTE-3.2.0/plugins/datatables-buttons/js/dataTables.buttons.min.js"></script>
 <script src="../../plantilla/AdminLTE-3.2.0/plugins/datatables-buttons/js/buttons.bootstrap4.min.js"></script>
 <script src="../../plantilla/AdminLTE-3.2.0/plugins/jszip/jszip.min.js"></script>
-<script src="../../plantilla/AdminLTE-3.2.0/plugins/pdfmake/pdfmake.min.js"></script>
-<script src="../../plantilla/AdminLTE-3.2.0/plugins/pdfmake/vfs_fonts.js"></script>
-<!-- <script src="../../plantilla/AdminLTE-3.2.0/plugins/datatables-buttons/js/buttons.html5.min.js"></script> 
- <script src="../../plantilla/AdminLTE-3.2.0/plugins/datatables-buttons/js/buttons.print.min.js"></script> -->
-
 
 
 <script src="../../plantilla/AdminLTE-3.2.0/plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
@@ -244,6 +203,7 @@ if (mysqli_num_rows($roles35) > 0)
 <!-- AdminLTE for demo purposes -->
 <script src="../../plantilla/AdminLTE-3.2.0/dist/js/demo.js"></script>
 <!-- Page specific script -->
+
 <!-- INICIO muestra los botones, traduce y Agrupar -->
 
 <script>
@@ -304,13 +264,16 @@ if (mysqli_num_rows($roles35) > 0)
   });
 </script>
 <!-- Fin muestra los botones y traduce y Agrupar -->
-<!-- Enlace Script para que convierta a mayusculas las teclas que se van pulsando -->
-<script type="text/javascript" src="../../js/converir_a_mayusculas.js"></script>
 
-<!-- Enlace Script para quitar espacios en blanco -->
-<script type="text/javascript" src="../../js/quitar_espacios.js"></script>
+<!-- Enlace Script para que solo permita letras -->
+<script type="text/javascript" src="../../js/solo_letras.js"></script>
+
+ <!-- Enlace Script para que convierta a mayusculas las teclas que se van pulsando -->
+ <script type="text/javascript" src="../../js/converir_a_mayusculas.js"></script>
+
+ <!-- Enlace Script para quitar espacios en blanco -->
+ <script type="text/javascript" src="../../js/quitar_espacios.js"></script>
 </body>
-
 <!-- // Inicio para exportar en pdf // -->
 <script>
 	//para descar al tocar el boton	
@@ -322,7 +285,7 @@ if (mysqli_num_rows($roles35) > 0)
 				const pdf = new jsPDF('p', 'mm', 'letter');			
         	
 
-				var columns = ["", "", "", "", "", "", ""];
+				var columns = ["", "", "", "", "", "",""];
 				var data = [
 				[1, "Hola", "hola@gmail.com", "Mexico"],
 				 ];
@@ -353,7 +316,7 @@ if (mysqli_num_rows($roles35) > 0)
 				//muestra el titulo secundario
 				pdf.setFont('times');
 				pdf.setFontSize(10);
-				pdf.text("Reporte de portafolio", 84,20,);
+				pdf.text("Detalle de la compra realizada en la fecha <?php echo $fecha ?>", 57,20,);
 
 												//////// pie de Pagina ///////
 				//muestra la fecha
@@ -370,36 +333,10 @@ if (mysqli_num_rows($roles35) > 0)
 			}
 				//Fin Encabezado y pie de pagina
 
-							pdf.save('Reporte de productos.pdf');
+							pdf.save('Reporte de detalle de compra.pdf');
 	})
   
 </script>
 <!-- // Fin para exportar en pdf // -->
 <script type="text/javascript" src="../../js/evitar_reenvio.js"></script>
 </html>
-
-
-<script>
- // Inicio Script para que solo permita letras
-
- function soloLetras(e){
-      key = e.keyCode || e.which;
-      tecla = String.fromCharCode(key).toLowerCase();
-      letras = " áéíóúabcdefghijklmnñopqrstuvwxyz¿?";
-      especiales = ["8-37-39-46"];
-
-      tecla_especial = false
-      for(var i in especiales){
-       if(key == especiales[i]){
-         tecla_especial = true;
-         break;
-       }
-     }
-
-     if(letras.indexOf(tecla)==-1 && !tecla_especial){
-       return false;
-     }
-   }
-
-//   Fin Script para que solo permita letras
-</script>

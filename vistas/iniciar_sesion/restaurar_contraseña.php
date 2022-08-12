@@ -42,6 +42,7 @@ include '../../controladores/co_restablecer_contraseña.php';
   <title>Cambio de contraseña</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
   <style> 
@@ -74,7 +75,7 @@ body {
             <div class="mb-3 mt-3">
               <center><h3>Cambio de contraseña</h3></center><br>
             <div class="alert alert-success">
-            <strong>¡Hola!</strong> Para realializar el cambio de contraseña debe colocar su nueva contraseña
+            <strong>¡Hola!</strong> Para realizar el cambio de contraseña debe, colocar su nueva contraseña.
             </div>            
            
             <div class="container mt-3">
@@ -82,14 +83,26 @@ body {
             
                 <label for="sel1" class="form-label">Usuario:</label>
                 <input type="text" name="" value="<?php $usuario = $_SESSION; echo $usuario['nombre']; ?>" class="form-control" readonly>
-
+                <div class="mb-3">
                 <label for="sel1" class="form-label">Nueva contraseña</label>
-                <input type="password" name="nueva_contrasena" id="contrasena" value="" class="form-control"  minlength="8" maxlength="30" onkeypress="return clave1(event);" required onblur="quitarespacios(this);" onkeyup="sinespacio(this);" pattern="(?=.*[\d])(?=.*[a-z])(?=.*[A-Z]).{8,}">
-                <input type="checkbox" onclick="mostrarContrasena()" > Mostrar/Ocultar
-                <br>
+                <div class="input-group mb-3">
+                <input type="password" name="nueva_contrasena" id="id_password" value="" class="form-control"  minlength="8" maxlength="30" onkeypress="return clave1(event);" required onblur="quitarespacios(this);" onkeyup="sinespacio(this);" pattern="(?=.*[\d])(?=.*[a-z])(?=.*[A-Z]).{8,}">
+                <div class="input-group-append ">
+                <div class="input-group-text">
+                            <span>
+                            <i class="far fa-eye" id="togglePassword"  ></i>
+                            </span>
+                          </div> </div></div>
+                <div class="mb-3">
                 <label for="sel1" class="form-label">Confirmar contraseña</label>
-                <input type="password" name="confirmar_contrasena" id="contrasena2" value="" class="form-control" minlength="8" maxlength="30" onkeypress="return clave1(event);" required onblur="quitarespacios(this);" onkeyup="sinespacio(this);" pattern="(?=.*[\d])(?=.*[a-z])(?=.*[A-Z]).{8,}">
-                <input type="checkbox" onclick="mostrarContrasena2()" > Mostrar/Ocultar
+                <div class="input-group mb-3">
+                <input type="password" name="confirmar_contrasena" id="id_password2" value="" class="form-control" minlength="8" maxlength="30" onkeypress="return clave1(event);" required onblur="quitarespacios(this);" onkeyup="sinespacio(this);" pattern="(?=.*[\d])(?=.*[a-z])(?=.*[A-Z]).{8,}">
+                <div class="input-group-append ">
+                <div class="input-group-text">
+                            <span>
+                            <i class="far fa-eye" id="togglePassword2"  ></i>
+                            </span>
+                          </div> </div></div>
 
             </div>
             </div>
@@ -108,24 +121,33 @@ body {
   </div>
 
 
-  <script>
-  function mostrarContrasena(){
-    var x = document.getElementById("contrasena");
-    if (x.type === "password"){
-      x.type = "text";
-    }else{
-      x.type = "password";
-    }
-  }
-  function mostrarContrasena2(){
-    var z = document.getElementById("contrasena2");
-    if (z.type === "password"){
-      z.type = "text";
-    }else{
-      z.type = "password";
-    }
-  }
-  </script>
+     <!-- Script para ver contraseña de ver contraseña  -->
+     <script>
+              const togglePassword = document.querySelector('#togglePassword');
+              const password = document.querySelector('#id_password');
+
+                togglePassword.addEventListener('click', function (e) {
+              // toggle the type attribute
+              const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
+              password.setAttribute('type', type);
+              // toggle the eye slash icon
+              this.classList.toggle('fa-eye-slash');
+                });
+         </script>
+
+              <!-- Muestra pass del input  nueva contraseña a -->
+      <script>
+        const togglePassword2 = document.querySelector('#togglePassword2');
+        const password2 = document.querySelector('#id_password2');
+
+          togglePassword2.addEventListener('click', function (e) {
+        // toggle the type attribute
+        const type = password2.getAttribute('type') === 'password' ? 'text' : 'password';
+        password2.setAttribute('type', type);
+        // toggle the eye slash icon
+        this.classList.toggle('fa-eye-slash');
+          });
+      </script>
 
 
 </body>
