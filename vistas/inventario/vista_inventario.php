@@ -47,7 +47,7 @@ if (mysqli_num_rows($roles35) > 0)
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Clientes</title>
+  <title>Inventario</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
@@ -90,68 +90,7 @@ if (mysqli_num_rows($roles35) > 0)
         <div class="row mb-2">
           <div class="col-sm-6">
             <h1></h1>
-            <!-- Inicio de modal de agregar -->
-<div class="container mt-3">
-        <h3>Inventario</h3> <br> 
-         <?php 
-      include '../../conexion/conexion.php';
-      $inventario = "SELECT * FROM tbl_ms_roles_ojetos WHERE ID_ROL='$id_rol7' and ID_OBJETO=10 and PERMISO_INSERCION=1";
-      $inventario2 = mysqli_query($conn, $inventario);
-      if (mysqli_num_rows($inventario2) > 0)
-      {
-       echo ' <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal">
-       Nuevo Inventario
-   </button>';
-                }
-              ?> 
-    </div>
-
-<!-- El Modal -->
-    <div class="modal" id="myModal">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <!-- Encabezado del modal -->
-                <div class="modal-header">
-                    <h4 class="modal-title">Nuevo Inventario</h4>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                </div>
-                <!-- Fin Encabezado del modal -->
-
-                <!-- Cuerpo del modal Modal -->
-                <form action="" method="post">
-                <div class="modal-body">
-                    
-                    <label for="">Id Inventario</label>
-                    <input type="text" class="form-control" name="id_inventario" required value="" placeholder=""  onkeypress="return soloLetras(event);" onkeyup="mayus(this);" >
-                    <br>
-                    <label for="">Id Productos</label>
-                    <input type="text" class="form-control" name="id_productos" required value="" placeholder="" id="txtid_productos" onkeypress="return soloLetras(event);" onkeyup="mayus(this);" >
-                    <br>
-                    <label for="">Cantidad Minima</label>
-                    <input type="text" class="form-control" name="cantidad_minima" required value="" placeholder="" id="txtcantidad_minima" onkeypress="return soloLetras(event);" onkeyup="mayus(this);" >
-                    <br>
-                    <label for="">Cantidad Maxima</label>
-                    <input type="text" class="form-control" name="cantidad_maxima" required value="" placeholder="" id="txtcantidad_minima"   >
-                    <br>
-                    <label for="">Cantidad Disponible</label>
-                    <input type="number" class="form-control" name="cantidad_disponible" required value="" placeholder="" id="txtcantidad_disponible"   >
-                    <br>
-                   </div>
-                </div>
-                <div class="row">
-                <div class="col">
-                <!-- Fin Cuerpo del modal Modal -->
-                <!-- pie del modal -->
-                <div class="modal-footer">
-      	            <button type="submit" name="accion" value="agregar" class="btn btn-primary" onclick="return confirm('¿Desea agregar el Nuevo Inventario?')">Agregar</button>
-                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
-                </div>
-                <!-- Fin pie del modal -->
-                </form>
-            </div>
-        </div>
-    </div>
-    <!-- Fin  de modal de agregar --> <br>
+        
           </div>
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
@@ -185,8 +124,9 @@ if (mysqli_num_rows($roles35) > 0)
                 <table id="example1" class="table table-bordered table-striped">
                   <thead>
                   <tr>
-                  <th>Id Inventario</th>
-                  <th>Id Producto</th>
+                    <th>Acciones</th>
+                  <th>Id</th>
+                  <th>Productos</th>
                   <th>Cantidad minima</th>
                   <th>Cantidad maxima</th>
                   <th>Cantidad disponible</th>
@@ -196,94 +136,50 @@ if (mysqli_num_rows($roles35) > 0)
                   <?php
                   include '../../conexion/conexion.php';
                   //para mostrar los datos de la tabla mysql y mostrar en el crud                
-                  $sql7 = "SELECT * FROM (tbl_productos c
-                  INNER JOIN tbl_productos g ON c.ID_CATEGORIA = g.ID_CATEGORIA)";
+                  $sql7 = "SELECT * FROM (tbl_inventario i
+                  INNER JOIN tbl_productos p ON i.ID_PRODUCTOS = p.ID_PRODUCTO)";
                   $result = mysqli_query($conn, $sql7);
                   if (mysqli_num_rows($result) > 0) 
                   while ($filas= mysqli_fetch_assoc($result)){
                     ?>
                   <tr>
                   <td>
-                  <?php 
-                          include '../../conexion/conexion.php';
-                          $inventario = "SELECT * FROM tbl_ms_roles_ojetos WHERE ID_ROL='$id_rol7' and ID_OBJETO=10 and PERMISO_ACTUALIZACION=1";
-                          $inventario2 = mysqli_query($conn, $inventario);
-                          if (mysqli_num_rows($inventario2) > 0)
-                          {?>
-                        <!-- inicio boton editar -->
-                      <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#myModal2<?php echo $filas['ID_INVENTARIO'] ?>">
-                      <i class="fas fa-pencil-alt"></i>
-                      </button>
-                      <?php 
-                          }
-                        ?>
-                          <!-- El Modal -->
-                          <div class="modal" id="myModal2<?php echo $filas['ID_INVENTARIO'] ?>">
-                            <div class="modal-dialog">
-                              <div class="modal-content">
-
-                                <!-- Encabezado del modal -->
-                                <div class="modal-header">
-                                  <h4 class="modal-title">Editar Inventario</h4>
-                                  <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                                </div>
-                                <!-- Fin Encabezado del modal -->
-
-
-                                <!-- Cuerpo del modal Modal -->
-                                <form action="" method="post">
-                                          <div class="modal-body">
-                                              <label for="">Id Inventario</label>
-                                              <input type="text" class="form-control" readonly name="id_inventario" required value="<?php echo $filas['ID_INVENTARIO'] ?>" placeholder="" id="txtxid_inventario"   >
-                                              <br>
-                                              <label for="">Id Productos</label>
-                                              <input type="text" class="form-control" name="id_productos" required value="" placeholder="" id="txtid_productos" onkeypress="return soloLetras(event);" onkeyup="mayus(this);" >
-                                              <br>
-                                              <label for="">Cantidad Minima</label>
-                                              <input type="text" class="form-control" name="cantidad_minima" required value="" placeholder="" id="txtcantidad_minima" onkeypress="return soloLetras(event);" onkeyup="mayus(this);" >
-                                              <br>
-                                              <label for="">Cantidad Maxima</label>
-                                              <input type="text" class="form-control" name="cantidad_maxima" required value="" placeholder="" id="txtcantidad_maxima" onkeypress="return soloLetras(event);" onkeyup="mayus(this);" >
-                                              <br>
-                                              <label for="">Cantidad Disponible</label>
-                                              <input type="text" class="form-control" name="cantidad_disponible" required value="" placeholder="" id="txtcantidad_disponible"   >
-                                              <br>
-                                              
-                                           </div>
-                                <!-- Fin Cuerpo del modal Modal -->
-
-                                <!-- pie del modal -->
-                                <div class="modal-footer">
-                                <button type="submit" name="accion" value="editar" class="btn btn-primary" onclick="return confirm('¿Desea editar el inventario?')">Guardar</button>
-                                  <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
-                                </div>
-                              </form>
-                                  <!-- Fin pie del modal -->
-                                  <form action="" method="post">
-                              </div>
-                            </div>
-                          </div>
-                          <?php 
-                          include '../../conexion/conexion.php';
-                          $inventario = "SELECT * FROM tbl_ms_roles_ojetos WHERE ID_ROL='$id_rol7' and ID_OBJETO=4 and PERMISO_ELIMINACION=1";
-                          $inventario2 = mysqli_query($conn, $inventario);
-                          if (mysqli_num_rows($inventario2) > 0)
-                          {?>
-                         
-                          <input type="hidden" name="id_inventario"  value="<?php echo $filas['ID_INVENTARIO'] ?>">
-                      <button  value="eliminar" name="accion" 
-                        onclick="return confirm('¿Quieres eliminar este dato?')"
-                        type="submit" class="btn btn-danger " data-id="19">
-                        <i class="fas fa-trash-alt"></i>
-                    </button></form>  <?php } ?>
-</td>
+                  
+                  <form action="../../vistas/inventario/transacciones_productos.php" method="post">
+                          <input type="hidden" name="nombre"  value="<?php echo $filas['NOMBRE'] ?>">
+                          <input type="hidden" name="producto"  value="<?php echo $filas['ID_PRODUCTOS'] ?>">
+                          <button type="submit" name="accion" value="detalle" class="btn btn-primary" >Ver transacciones</button>
+                          </form>     
+                  </td>
                          
                       </td>
+                      
                                          <td ><?php echo $filas['ID_INVENTARIO'] ?></td>
-                                         <td><?php echo $filas['ID_PRODUCTOS'] ?></td>
+                                         <td><?php echo $filas['NOMBRE'] ?></td>
                                          <td><?php echo $filas['CANTIDAD_MINIMA'] ?></td>
                                          <td><?php echo $filas['CANTIDAD_MAXIMA'] ?></td>
-                                         <td><?php echo $filas['CANTIDAD_DISPONIBLE'] ?></td>
+                                         <td><center>
+                                          <?php if ($filas['CANTIDAD_DISPONIBLE']>$filas['CANTIDAD_MINIMA'] && $filas['CANTIDAD_DISPONIBLE']<$filas['CANTIDAD_MAXIMA'])
+                                          {?>
+                                          <h3 style="background-color:rgb(138, 198, 255);"><?php echo $filas['CANTIDAD_DISPONIBLE'] ?></h3>
+                                          <?php }else{
+                                            if ($filas['CANTIDAD_DISPONIBLE']>$filas['CANTIDAD_MINIMA'])
+                                            {?>
+                                             <h3 style="background-color:rgb(168, 255, 138);"><?php echo $filas['CANTIDAD_DISPONIBLE'] ?></h3>
+                                             <?php }else
+                                              {?>
+                                              <h3 style="background-color:rgb(255, 154, 138);"><?php echo $filas['CANTIDAD_DISPONIBLE'] ?></h3>
+
+                                              <?php }
+
+                                          } ?>
+                                          </center>
+                                        </td>
+
+
+
+                                        
+                                       
                                          
                                         </tr>
                                     <?php } ?>

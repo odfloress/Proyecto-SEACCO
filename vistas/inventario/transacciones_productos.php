@@ -8,7 +8,51 @@ if(!isset($_SESSION['usuario'])){
         die();
         
 }
-include '../../controladores/crud_bitacora.php';
+include '../../controladores/co_asignaciones.php';
+// Selecciona el id del rol del usuario logueado
+include '../../conexion/conexion.php';
+
+
+$usuario = $_SESSION;
+$roles34 = "SELECT * FROM tbl_usuarios WHERE USUARIO='$usuario[usuario]'";
+$roles35 = mysqli_query($conn, $roles34);
+if (mysqli_num_rows($roles35) > 0)
+{
+ while($row = mysqli_fetch_assoc($roles35))
+  { 
+      $id_rol7 = $row['ID_ROL'];
+  } 
+}
+
+               //valida si tiene permisos de consultar la pantalla 
+               $role = "SELECT * FROM tbl_ms_roles_ojetos WHERE ID_ROL='$id_rol7' and ID_OBJETO=8 and PERMISO_CONSULTAR=0";
+               $roless = mysqli_query($conn, $role);
+               if (mysqli_num_rows($roless) > 0)
+               {
+                header('Location: ../../vistas/tablero/vista_perfil.php');
+                die();
+               }else{
+                      $role = "SELECT * FROM tbl_ms_roles_ojetos WHERE ID_ROL='$id_rol7' and ID_OBJETO=8 and PERMISO_CONSULTAR=1";
+                      $roless = mysqli_query($conn, $role);
+                      if (mysqli_num_rows($roless) > 0){}
+                      else{
+                        header('Location: ../../vistas/tablero/vista_perfil.php');
+                        die();
+                      }
+               }
+
+                // inicio inserta en la tabla bitacora
+                $sql = "INSERT INTO tbl_bitacora (USUARIO, ACCION, OBSERVACION)
+                VALUES ('$usuario1[usuario]', 'CONSULTO', 'CONSULTO LA PANTALLA  ADMINISTRATIVA DE ASIGNACIONES')";
+                if (mysqli_query($conn, $sql)) {} else {}
+                // fin inserta en la tabla bitacora
+
+                if(!isset($_POST['producto'])){
+                    header('Location: ../../vistas/inventario/vista_inventario.php');
+                }
+                $producto=(isset($_POST['producto']))?$_POST['producto']:"";  
+                $nombre=(isset($_POST['nombre']))?$_POST['nombre']:"";  
+              
 
 
 ?>
@@ -17,28 +61,43 @@ include '../../controladores/crud_bitacora.php';
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Bitácora</title>
-  <!-- //para reporte pdf -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.3/jspdf.min.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.4/jspdf.plugin.autotable.min.js"></script>
+  <title>Asignaciones</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- enlace del scritpt para evitar si preciona F12, si preciona Ctrl+Shift+I, si preciona Ctr+u  -->
+    <script type="text/javascript" src="../../js/evita_ver_codigo_utilizando_teclas.js"></script>
+       <!-- /// para exportar en pdf /// -->
+   <script type="text/javascript" src="../../js/complemento_1_jspdf.min.js"></script>
+	<script type="text/javascript" src="../../js/complemento_2_jspdf.plugin.autotable.min.js"></script>
+
+
 
   <?php include '../../configuracion/navar.php' ?>
+  <!-- Inicio evita el click derecho de la pagina -->
+<body oncontextmenu="return false">
+<!-- Fin evita el click derecho de la pagina --> 
   <!-- Content Wrapper. Contains page content -->
-  <div class="content-wrapper">
+  <div class="content-wrapper"> <br><center><h3 ><b>Transacciones del producto <?php echo $nombre; ?></b></h3></center>
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <div class="container-fluid">
-        <div class="row mb-2">
-          <div class="col-sm-6">
-            <h1>Bitácora</h1>
+        <div class="row mb-12">
+          <div class="col-sm-12">
+         
+     
           </div>
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
               
             </ol>
+            
           </div>
+          
         </div>
+        
       </div><!-- /.container-fluid -->
+      
     </section>
 
     <!-- Main content -->
@@ -46,54 +105,52 @@ include '../../controladores/crud_bitacora.php';
       <div class="container-fluid">
         <div class="row">
           <div class="col-12">
-            <div class="card">
-              
-              <!-- /.card-header -->
-              
-              <!-- /.card-body -->
-            </div>
+           
             <!-- /.card -->
-             <!-- inicio rango de fechas -->
-         
-        <br>
-        <!-- fin rango de fechas -->
-            <div class="card">
+            
+            <div class="card table-responsive">
               <div class="card-header">
-              <form id="form">
-              <button onclick="textToPdf()" class="btn btn-secondary buttons-pdf buttons-html5"  type="submit"><span>Reporte PDF</span></button>
+                
+                <form id="form" action="" method="post">
+              <button type="submit"  name="accion" value="reporte_pdf" class="btn btn-secondary buttons-pdf buttons-html5"  onclick="return confirm('¿Desea generar reporte de detalle de asignaciones?')" onclick="textToPdf()"><span>Reporte PDF</span></button>
 	            </form>
-                <!-- <h3 class="card-title">Bitacora Universal</h3> -->
-              
+                
               </div>
-              <!-- /.card-header -->
               
-              <div class="card-body">
-             
+              <!-- /.card-header -->
+              <div class="card-body ">
                 <table id="example1" class="table table-bordered table-striped">
                   <thead>
                   <tr>
-                    <th>Fecha</th>
-                    <th>Usuario</th>
-                    <th>Acción</th>
-                    <th>Observacion</th>
+                    
+                  <th>Id</th>
+                  <th>Usuario</th>
+                  <th>Cantidad</th>
+                  <th>Movimiento</th>
+                  <th>Fecha</th>
+                           
                   </tr>
                   </thead>
                   <tbody>
-                  <?php 
-                  
-                 
+                  <?php
+                  include '../../conexion/conexion.php';
+                  //para mostrar los datos de la tabla mysql y mostrar en el crud
+                  $sql7 = "SELECT * FROM tbl_kardex WHERE ID_PRODUCTO=$producto";
+                  $result = mysqli_query($conn, $sql7);
+                  if (mysqli_num_rows($result) > 0) {
                   while ($filas= mysqli_fetch_assoc($result)){
                     ?>
                   <tr>
-                    <td><?php echo $filas['FECHA'] ?></td>
-                    <td><?php echo $filas['USUARIO'] ?></td>
-                    <td><?php echo $filas['ACCION'] ?></td> 
-                    <td><?php echo $filas['OBSERVACION'] ?></td>                         
-                 </tr>  
-               
-                 <?php } ?>  
-                  
-                  </tfoot>
+                     
+  
+                    <td><?php echo $filas['ID_KARDEX'] ?></td>
+                     <td><?php echo $filas['USUARIO'] ?></td>
+                     <td><?php echo $filas['CANTIDAD'] ?></td>
+                     <td><?php echo $filas['TIPO_MOVIMIENTO'] ?></td>
+                     <td><?php echo $filas['FECHA_HORA'] ?></td>
+      </tr>
+                <?php } }?>  
+                </tbody>
                 </table>
               </div>
               <!-- /.card-body -->
@@ -138,8 +195,6 @@ include '../../controladores/crud_bitacora.php';
 <script src="../../plantilla/AdminLTE-3.2.0/plugins/datatables-buttons/js/dataTables.buttons.min.js"></script>
 <script src="../../plantilla/AdminLTE-3.2.0/plugins/datatables-buttons/js/buttons.bootstrap4.min.js"></script>
 <script src="../../plantilla/AdminLTE-3.2.0/plugins/jszip/jszip.min.js"></script>
-<script src="../../plantilla/AdminLTE-3.2.0/plugins/pdfmake/pdfmake.min.js"></script>
-<script src="../../plantilla/AdminLTE-3.2.0/plugins/pdfmake/vfs_fonts.js"></script>
 
 
 <script src="../../plantilla/AdminLTE-3.2.0/plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
@@ -148,6 +203,8 @@ include '../../controladores/crud_bitacora.php';
 <!-- AdminLTE for demo purposes -->
 <script src="../../plantilla/AdminLTE-3.2.0/dist/js/demo.js"></script>
 <!-- Page specific script -->
+
+<!-- INICIO muestra los botones, traduce y Agrupar -->
 
 <script>
   $(function () {
@@ -206,22 +263,32 @@ include '../../controladores/crud_bitacora.php';
     });
   });
 </script>
+<!-- Fin muestra los botones y traduce y Agrupar -->
 
-<!-- reporte pdf -->
+<!-- Enlace Script para que solo permita letras -->
+<script type="text/javascript" src="../../js/solo_letras.js"></script>
+
+ <!-- Enlace Script para que convierta a mayusculas las teclas que se van pulsando -->
+ <script type="text/javascript" src="../../js/converir_a_mayusculas.js"></script>
+
+ <!-- Enlace Script para quitar espacios en blanco -->
+ <script type="text/javascript" src="../../js/quitar_espacios.js"></script>
+</body>
+<!-- // Inicio para exportar en pdf // -->
 <script>
-	//para descar al tocar el boton
-	
+	//para descar al tocar el boton	
 	var form = document.getElementById("form")
 	form.addEventListener("submit",function(event) {
+   
 	event.preventDefault()
+ 
+				const pdf = new jsPDF('p', 'mm', 'letter');			
+        	
 
-				const pdf = new jsPDF('p', 'mm', 'letter');					
-
-				var columns = ["Id", "Nombre", "Email", "Pais"];
+				var columns = ["", "", "", "", "", "",""];
 				var data = [
 				[1, "Hola", "hola@gmail.com", "Mexico"],
-				[2, "Hello", "hello@gmail.com", "Estados Unidos"],
-				[3, "Otro", "otro@gmail.com", "Otro"] ];
+				 ];
 
 				pdf.autoTable(columns,data,
 				{ 
@@ -249,24 +316,27 @@ include '../../controladores/crud_bitacora.php';
 				//muestra el titulo secundario
 				pdf.setFont('times');
 				pdf.setFontSize(10);
-				pdf.text("Reporte de bitacora", 87,20,);
+				pdf.text("Detalle de la compra realizada en la fecha <?php echo $fecha ?>", 57,20,);
 
-												//////// Footer ///////
+												//////// pie de Pagina ///////
 				//muestra la fecha
 				pdf.setFont('times');
 				pdf.setFontSize(9);
 				var today = new Date();
-				var newdat = "Date Printed : "+ today;
-				pdf.text(150-20,297-277,newdat);
+				let horas = today.getHours()
+				let jornada = horas >=12 ? 'PM' : 'AM';
+				var newdat = "Fecha: " + today.getDate() + "/" + (today.getMonth()+1) + "/" + today.getFullYear() + " " + (horas % 12) + ":" + today.getMinutes() + ":" + today.getSeconds() + " " + jornada;
+				pdf.text(183-20,297-284,newdat);
 
-				//muestra el numero de pagina	
-				pdf.text('Pagina ' + String(i) + '/' + String(pageCount),220-20,297-30,null,null,"right");
+				//muestra el numero de pagina
+				pdf.text('Pagina ' + String(i) + '/' + String(pageCount),220-20,297-25,null,null,"right");
 			}
 				//Fin Encabezado y pie de pagina
 
-							pdf.save('Reporte de bitacora.pdf');
+							pdf.save('Reporte de detalle de compra.pdf');
 	})
-
+  
 </script>
-</body>
+<!-- // Fin para exportar en pdf // -->
+<script type="text/javascript" src="../../js/evitar_reenvio.js"></script>
 </html>

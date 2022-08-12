@@ -310,6 +310,7 @@ if (mysqli_num_rows($roles35) > 0)
                 <input type="text" class="form-control" autocomplete="off" name="cantidad_max" required value="<?php echo $filas['CANTIDAD_MAX'] ?>" placeholder="">
                 <br>
                 <input type="hidden" name="foto" value="<?php echo $filas['FOTO'] ?>">
+                <input type="hidden" name="ruta" value="<?php echo $filas['FOTO'] ?>">
                 <label for="">Imagen</label><br>
                 <img class="img-thumbnail" width="100px" src="<?php echo $filas['FOTO'] ?>"  /><br>
                 <input type="file" class="form-control" accept=".jpg, .png, .jpeg, .JPEG, .JPG, .PNG" name="imagenes"  value="" placeholder=""  >

@@ -13,6 +13,7 @@ $nombre=(isset($_POST['nombre']))?$_POST['nombre']:"";
 $descripcion_modelo=(isset($_POST['descripcion_modelo']))?$_POST['descripcion_modelo']:"";
 $anterior=(isset($_POST['nombre_anterior']))?$_POST['nombre_anterior']:"";
 $foto=(isset($_POST['foto']))?$_POST['foto']:"";
+$ruta=(isset($_POST['ruta']))?$_POST['ruta']:"";
 //variable para recuperar los botones de la vista del crud del portafolio 
 $accion=(isset($_POST['accion']))?$_POST['accion']:"";
 
@@ -90,7 +91,7 @@ if($tmpFoto1!="") {
     $ultimo = "jpg";
     $extencion = "$ultimo";
 }
-$direccion = "$foto";
+$direccion = "$ruta";
 
 if(in_array($extencion, $permitidos))
 {
@@ -100,7 +101,7 @@ if(in_array($extencion, $permitidos))
     $tmpFoto= $_FILES["imagenes"]["tmp_name"];
     if($tmpFoto!="") 
     {
-     unlink($foto); 
+     unlink($ruta); 
      move_uploaded_file($tmpFoto,$destino.$nombreimagen);
     } 
     $direccion = "$destino$nombreimagen";
