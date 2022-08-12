@@ -166,7 +166,7 @@ function quitarespacios(e) {
 
                         <!-- Modal Header -->
                         <div class="modal-header">
-                          <h4 class="modal-title">Editar foto de perfil</h4>
+                           <h4 class="modal-title">Editar foto de perfil</h4>
                           <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                         </div>
 
@@ -193,6 +193,8 @@ function quitarespacios(e) {
                   </div>
 
                 <!-- <h3 class="profile-username text-center" >DAVIDS</h3> -->
+                <br>
+                <br>
                 <p class="text-muted text-center">Información</p>
                 <ul class="list-group list-group-unbordered mb-3">
                 <label for="inputusuario" class="col-sm-10 col-form-label">Usuario:</label>
@@ -211,7 +213,7 @@ function quitarespacios(e) {
                 
                 <div class="container mt-3">
                   <button type="button" name="accion" value="editar" class="btn btn-primary btn-block" data-bs-toggle="modal" data-bs-target="#myModal">
-                    Editar
+                    Actualizar información
                   </button>
                 </div>
 
@@ -290,7 +292,7 @@ function quitarespacios(e) {
                 <div class="tab-pane" id="settings" >
                   <form class="form-horizontal" acction="" method="post">
                     <div class="form-group row">
-                      <label for="inputName" class="col-sm-2 col-form-label">Contraseña actual</label>
+                      <label for="inputName" class="col-sm-2 col-form-label">Contraseña actual:</label>
                       <div class="col-sm-10">
                         <input type="password" class="form-control" name="actual" id="myInput" placeholder="Contraseña actual" onkeypress="return clave1(event);" required onblur="quitarespacios(this);" onkeyup="sinespacio(this);" pattern="(?=.*[\d])(?=.*[a-z])(?=.*[A-Z]).{8,}">
                         <input type="checkbox" onclick="mostrarContrasena()" > Mostrar/Ocultar
@@ -304,7 +306,7 @@ function quitarespacios(e) {
                       </div>
                     </div>
                     <div class="form-group row">
-                      <label for="inputName2" class="col-sm-2 col-form-label">Confirmar contraseña</label>
+                      <label for="inputName2" class="col-sm-2 col-form-label">Confirmar contraseña:</label>
                       <div class="col-sm-10">
                         <input type="password" class="form-control" name="confirmar_contrasena" id="contrac" onkeypress="return clave1(event);" placeholder="Confirmar nueva contraseña" required onblur="quitarespacios(this);" onkeyup="sinespacio(this);" pattern="(?=.*[\d])(?=.*[a-z])(?=.*[A-Z]).{8,}">
                         <input type="checkbox" onclick="mostrarContrasena3()" > Mostrar/Ocultar
@@ -312,7 +314,7 @@ function quitarespacios(e) {
                     </div>
                       <div class="form-group row">
                         <div class="offset-sm-2 col-sm-10">
-                          <button type="submit" name="accion" value="actualizar" class="btn btn-primary">Actualizar</button>
+                          <button type="submit" name="accion" value="actualizar" class="btn btn-primary">Actualizar contraseña</button>
                         </div>
                       </div>
                   </form>
