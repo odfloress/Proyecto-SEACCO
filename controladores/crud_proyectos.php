@@ -42,7 +42,7 @@
               
          
            echo '<script>
-                    alert("proyecto ya existe");
+                    alert("Proyecto ya existe");
                  </script>';
                  mysqli_close($conn);
          }else{ 
@@ -50,7 +50,7 @@
               
          
             echo '<script>
-                     alert("Fecha incorrecta,intentelo de nuevo");
+                     alert("Fecha incorrecta, intentelo de nuevo");
                   </script>';
                   mysqli_close($conn);
           }else{ 
@@ -60,11 +60,11 @@
                 if (mysqli_query($conn, $sql1)) {
                   // inicio inserta en la tabla bitacora
                   $sql7 = "INSERT INTO tbl_bitacora (USUARIO, ACCION, OBSERVACION)
-                  VALUES ('$usuario1[usuario]', 'INSERTO', 'CREO EL PROYECTO ($nombre)')";
+                  VALUES ('$usuario1[usuario]', 'INSERTO', 'CREO EL PROYECTO ($nombre) EN LA PANTALLA ADMINISTRATIVA DE PROYECTOS')";
                    if (mysqli_query($conn, $sql7)) {} else { }
               // fin inserta en la tabla bitacora
               echo '<script>
-              alert("Inserto un nuevo proyecto");
+              alert("Proyecto creado con exito");
               window.location.href="../../vistas/proyectos/vista_proyectos.php";                   
             </script>';
             mysqli_close($conn);
@@ -95,7 +95,7 @@
                          
                    // inicio inserta en la tabla bitacora
                    $sql8 = "INSERT INTO tbl_bitacora (USUARIO, ACCION, OBSERVACION)
-                   VALUES ('$usuario1[usuario]', 'EDITO', 'EDITO LOS CAMPOS DEL PROYECTO ($nombre)')";
+                   VALUES ('$usuario1[usuario]', 'EDITO', 'EDITO LOS CAMPOS DEL PROYECTO ($nombre) EN LA PANTALLA ADMINISTRATIVA DE PROYECTOS')";
                    
                     if (mysqli_query($conn, $sql8)) {} else { }
                   // fin inserta en la tabla bitacora
@@ -109,7 +109,7 @@
               }else{
                  // inicio inserta en la tabla bitacora
                  $sql9 = "INSERT INTO tbl_bitacora (USUARIO, ACCION, OBSERVACION)
-                 VALUES ('$usuario1[usuario]', 'ERROR', 'ERROR AL EDITAR DEL PROYECTO ($nombre)')";
+                 VALUES ('$usuario1[usuario]', 'ERROR', 'ERROR AL EDITAR DEL PROYECTO ($nombre) EN LA PANTALLA ADMINISTRATIVA DE PROYECTOS')";
                  
                   if (mysqli_query($conn, $sql9)) {} else { }
                 // fin inserta en la tabla bitacora
@@ -126,7 +126,7 @@
                 if (mysqli_query($conn, $sql4)) {
                   // inicio inserta en la tabla bitacora
                   $sql8 = "INSERT INTO tbl_bitacora (USUARIO, ACCION, OBSERVACION)
-                  VALUES ('$usuario1[usuario]', 'EDITO', 'RENOMBRO EL PROYECTO ($anterior) A ($nombre)')";
+                  VALUES ('$usuario1[usuario]', 'EDITO', 'RENOMBRO EL PROYECTO ($anterior) A ($nombre) EN LA PANTALLA ADMINISTRATIVA DE PROYECTOS')";
                   
                    if (mysqli_query($conn, $sql8)) {} else { }
                  // fin inserta en la tabla bitacora
@@ -140,7 +140,7 @@
                 }else{
                   // inicio inserta en la tabla bitacora
                  $sql9 = "INSERT INTO tbl_bitacora (USUARIO, ACCION, OBSERVACION)
-                 VALUES ('$usuario1[usuario]', 'ERROR', 'ERROR AL EDITAR DEL PROYECTO ($nombre)')";
+                 VALUES ('$usuario1[usuario]', 'ERROR', 'ERROR AL EDITAR DEL PROYECTO ($nombre) EN LA PANTALLA ADMINISTRATIVA DE PROYECTOS')";
                  
                   if (mysqli_query($conn, $sql9)) {} else { }
                 // fin inserta en la tabla bitacora
@@ -167,7 +167,7 @@
       if (mysqli_query($conn, $sql3)) {
         // inicio inserta en la tabla bitacora
         $sql7 = "INSERT INTO tbl_bitacora (USUARIO, ACCION, OBSERVACION)
-        VALUES ('$usuario1[usuario]', 'ELIMINO', 'ELIMINO EL PROYECTO ($anterior)')";
+        VALUES ('$usuario1[usuario]', 'ELIMINO', 'ELIMINO EL PROYECTO ($anterior) EN LA PANTALLA ADMINISTRATIVA DE PROYECTOS')";
          if (mysqli_query($conn, $sql7)) {} else { }
     // fin inserta en la tabla bitacora
     echo '<script>

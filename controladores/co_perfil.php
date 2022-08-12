@@ -40,7 +40,7 @@ switch ($accion){
           // fin inserta en la tabla bitacora
 
           echo '<script>
-            alert("Contraseña actualizada");
+            alert("Contraseña actualizada exitosamente");
             window.Location = "/_login.php";
           </script>';
             
@@ -53,7 +53,7 @@ switch ($accion){
         if (mysqli_query($conn, $sqlB2)) {} else { }
       // fin inserta en la tabla bitacora
         echo '<script>
-          alert("Las contraseñas no coinciden");
+          alert("Las contraseñas ingresadas no coinciden");
           window.Location = "/_login.php";
         </script>';
       }
@@ -85,7 +85,7 @@ switch ($accion){
       // fin inserta en la tabla bitacora
 
         echo '<script>
-          alert("Datos actualizados");
+          alert("Información actualizada exitosamente");
           window.Location = "/_login.php";
         </script>';
       } else {
@@ -95,7 +95,7 @@ switch ($accion){
         if (mysqli_query($conn, $sqlB5)) {} else { }
       // fin inserta en la tabla bitacora
         echo '<script>
-        alert("Error al actualizar datos");
+        alert("Error al actualizar la información");
         window.Location = "/_login.php";
       </script>';
       }
@@ -144,7 +144,7 @@ switch ($accion){
               if (mysqli_query($conn, $sqlB6)) {} else { }
             // fin inserta en la tabla bitacora
               echo '<script type="text/javascript">
-                 alert("Foto de perfil actualizada");  
+                 alert("Foto de perfil actualizada exitosamente");  
               </script>';
           }else{
             // inicio inserta en la tabla bitacora

@@ -17,7 +17,7 @@ include '../../controladores/crud_bitacora.php';
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Bitacora</title>
+  <title>Bitácora</title>
   <!-- //para reporte pdf -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.3/jspdf.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.4/jspdf.plugin.autotable.min.js"></script>
@@ -30,7 +30,7 @@ include '../../controladores/crud_bitacora.php';
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1>Bitacora</h1>
+            <h1>Bitácora</h1>
           </div>
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">

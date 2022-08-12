@@ -42,7 +42,7 @@
                 if (mysqli_query($conn, $sql1)) {
                    // inicio inserta en la tabla bitacora
                    $sql7 = "INSERT INTO tbl_bitacora (USUARIO, ACCION, OBSERVACION)
-                   VALUES ('$usuario1[usuario]', 'INSERTO', 'CREO EL PROVEEDOR ($nombre)')";
+                   VALUES ('$usuario1[usuario]', 'INSERTO', 'CREO EL PROVEEDOR ($nombre) EN LA PANTALLA ADMINISTRATIVA DE PROVEEDORES')";
                     if (mysqli_query($conn, $sql7)) {} else { }
                // fin inserta en la tabla bitacora
                     
@@ -78,7 +78,7 @@
                          
                    // inicio inserta en la tabla bitacora
                    $sql8 = "INSERT INTO tbl_bitacora (USUARIO, ACCION, OBSERVACION)
-                   VALUES ('$usuario1[usuario]', 'EDITO', 'EDITO LOS CAMPOS DEL PROVEEDOR ($nombre)')";
+                   VALUES ('$usuario1[usuario]', 'EDITO', 'EDITO LOS CAMPOS DEL PROVEEDOR ($nombre) EN LA PANTALLA ADMINISTRATIVA DE PROVEEDORES')";
                    
                     if (mysqli_query($conn, $sql8)) {} else { }
                   // fin inserta en la tabla bitacora
@@ -103,7 +103,7 @@
                 if (mysqli_query($conn, $sql2)) {
                   // inicio inserta en la tabla bitacora
                   $sql8 = "INSERT INTO tbl_bitacora (USUARIO, ACCION, OBSERVACION)
-                  VALUES ('$usuario1[usuario]', 'EDITO', 'RENOMBRO EL PROVEEDOR ($anterior) A ($nombre)')";
+                  VALUES ('$usuario1[usuario]', 'EDITO', 'RENOMBRO EL PROVEEDOR ($anterior) A ($nombre) EN LA PANTALLA ADMINISTRATIVA DE PROVEEDORES')";
                   
                    if (mysqli_query($conn, $sql8)) {} else { }
                  // fin inserta en la tabla bitacora
@@ -133,7 +133,7 @@
      if (mysqli_num_rows($result4) > 0) { 
          // inicio inserta en la tabla bitacora
          $sql9 = "INSERT INTO tbl_bitacora (USUARIO, ACCION, OBSERVACION)
-         VALUES ('$usuario1[usuario]', 'INTENTO', 'NO LOGRO ELIMINAR YA QUE ESTABA EN USO EL PROVEEDOR ($nombre)')";
+         VALUES ('$usuario1[usuario]', 'INTENTO', 'NO LOGRO ELIMINAR YA QUE ESTABA EN USO EL PROVEEDOR ($nombre) EN LA PANTALLA ADMINISTRATIVA DE PROVEEDORES')";
          if (mysqli_query($conn, $sql9)) {} else { }
          // fin inserta en la tabla bitacora
          echo '<script>
@@ -147,7 +147,7 @@
       if (mysqli_query($conn, $sql3)) {
         // inicio inserta en la tabla bitacora
         $sql7 = "INSERT INTO tbl_bitacora (USUARIO, ACCION, OBSERVACION)
-        VALUES ('$usuario1[usuario]', 'ELIMINO', 'ELIMINO EL PROVEEDOR ($nombre)')";
+        VALUES ('$usuario1[usuario]', 'ELIMINO', 'ELIMINO EL PROVEEDOR ($nombre) EN LA PANTALLA ADMINISTRATIVA DE PROVEEDORES')";
          if (mysqli_query($conn, $sql7)) {} else { }
     // fin inserta en la tabla bitacora
     echo '<script>
@@ -160,7 +160,7 @@
       }else{
          // inicio inserta en la tabla bitacora
          $sql10 = "INSERT INTO tbl_bitacora (USUARIO, ACCION, OBSERVACION)
-         VALUES ('$usuario1[usuario]', 'ERROR', 'ERROR AL ELIMINAR EL PROVEEDOR ($anterior)')";
+         VALUES ('$usuario1[usuario]', 'ERROR', 'ERROR AL ELIMINAR EL PROVEEDOR ($anterior) EN LA PANTALLA ADMINISTRATIVA DE PROVEEDORES')";
           if (mysqli_query($conn, $sql7)) {} else { }
      // fin inserta en la tabla bitacora
               echo '<script>

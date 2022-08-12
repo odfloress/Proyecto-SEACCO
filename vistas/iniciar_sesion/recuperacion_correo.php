@@ -54,7 +54,7 @@ body {
             <div class="mb-3 mt-3">
               <center><h3>Restablecer contraseña</h3></center><br>
             <div class="alert alert-success">
-            <strong>¡Hola!</strong> Por favor ingrese su dirección de correo
+            <strong></strong> <center>Por favor ingrese su dirección de correo electrónico</center>
             </div>            
            
             <div class="container mt-3">

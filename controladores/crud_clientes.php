@@ -62,12 +62,12 @@ if(in_array($extencion, $permitidos)){
                 if($res){
                     // inicio inserta en la tabla bitacora
                     $sql = "INSERT INTO tbl_bitacora (USUARIO, ACCION, OBSERVACION)
-                    VALUES ('$usuario1[usuario]', 'INSERTO', 'REGISTRO EL CLIENTE ($nombre) EN LA PANTALLA CLIENTES')";
+                    VALUES ('$usuario1[usuario]', 'INSERTO', 'REGISTRO EL CLIENTE ($nombre) EN LA PANTALLA ADMINISTRATIVA CLIENTES')";
                     if (mysqli_query($conn, $sql)) {} else {}
                     // fin inserta en la tabla bitacora
 
                     echo '<script type="text/javascript">
-                            alert("Creado con exito");
+                            alert("Cliente creado con exito");
                             window.location.href="../../vistas/personas/vista_clientes.php";
                         </script>';
                 }else{           
@@ -83,7 +83,7 @@ if(in_array($extencion, $permitidos)){
 }else{
     // inicio inserta en la tabla bitacora
     $sql = "INSERT INTO tbl_bitacora (USUARIO, ACCION, OBSERVACION)
-    VALUES ('$usuario1[usuario]', 'INTENTO', 'NO LOGRO INSERTAR YA QUE EL ARCHIVO NO ERA IMAGEN EN LA PATALLA CLIENTES')";
+    VALUES ('$usuario1[usuario]', 'INTENTO', 'NO LOGRO INSERTAR YA QUE EL ARCHIVO NO ERA IMAGEN EN LA PANTALLA ADMINISTRATIVA CLIENTES')";
     if (mysqli_query($conn, $sql)) {} else {}
     // fin inserta en la tabla bitacora
     echo '<script type="text/javascript">
@@ -131,7 +131,7 @@ if(in_array($extencion, $permitidos))
     {
         // inicio inserta en la tabla bitacora
         $sql = "INSERT INTO tbl_bitacora (USUARIO, ACCION, OBSERVACION)
-        VALUES ('$usuario1[usuario]', 'EDITO', 'EDITO EL CLIENTE ($nombre)')";
+        VALUES ('$usuario1[usuario]', 'EDITO', 'EDITO EL CLIENTE ($nombre) EN LA PANTALLA ADMINISTRATIVA CLIENTES')";
         if (mysqli_query($conn, $sql)) {} else {}
          // fin inserta en la tabla bitacora
         echo '<script>
@@ -148,7 +148,7 @@ if(in_array($extencion, $permitidos))
 }else{
     // inicio inserta en la tabla bitacora
     $sql = "INSERT INTO tbl_bitacora (USUARIO, ACCION, OBSERVACION)
-    VALUES ('$usuario1[usuario]', 'INTENTO', 'NO LOGRO EDITAR YA QUE EL ARCHIVO NO ERA IMAGEN')";
+    VALUES ('$usuario1[usuario]', 'INTENTO', 'NO LOGRO EDITAR YA QUE EL ARCHIVO NO ERA IMAGEN EN LA PANTALLA ADMINISTRATIVA CLIENTES')";
     if (mysqli_query($conn, $sql)) {} else {}
     // fin inserta en la tabla bitacora
     echo '<script type="text/javascript">
@@ -168,7 +168,7 @@ $validar_proveedor = "SELECT * FROM  tbl_proyectos WHERE ID_CLIENTE='$id_cliente
      if (mysqli_num_rows($result4) > 0) { 
          // inicio inserta en la tabla bitacora
          $sql9 = "INSERT INTO tbl_bitacora (USUARIO, ACCION, OBSERVACION)
-         VALUES ('$usuario1[usuario]', 'INTENTO', 'NO LOGRO ELIMINAR YA QUE ESTABA EN USO EL CLIENTE ($nombre)')";
+         VALUES ('$usuario1[usuario]', 'INTENTO', 'NO LOGRO ELIMINAR YA QUE ESTABA EN USO EL CLIENTE ($nombre) EN LA PANTALLA ADMINISTRATIVA CLIENTES')";
          if (mysqli_query($conn, $sql9)) {} else { }
          // fin inserta en la tabla bitacora
          echo '<script>
@@ -186,7 +186,7 @@ $validar_proveedor = "SELECT * FROM  tbl_proyectos WHERE ID_CLIENTE='$id_cliente
          if (mysqli_query($conn, $sql7)) {} else { }
     // fin inserta en la tabla bitacora
     echo '<script>
-        alert("Elimino el cliente");
+        alert("Cliente eliminado con exito");
         window.location.href="../../vistas/personas/vista_clientes.php";                   
         </script>';
         mysqli_close($conn);
@@ -195,7 +195,7 @@ $validar_proveedor = "SELECT * FROM  tbl_proyectos WHERE ID_CLIENTE='$id_cliente
       }else{
          // inicio inserta en la tabla bitacora
          $sql10 = "INSERT INTO tbl_bitacora (USUARIO, ACCION, OBSERVACION)
-         VALUES ('$usuario1[usuario]', 'ERROR', 'ERROR AL ELIMINAR EL CLIENTE ($id_cliente)')";
+         VALUES ('$usuario1[usuario]', 'ERROR', 'ERROR AL ELIMINAR EL CLIENTE ($id_cliente) EN LA PANTALLA ADMINISTRATIVA CLIENTES')";
           if (mysqli_query($conn, $sql7)) {} else { }
      // fin inserta en la tabla bitacora
               echo '<script>

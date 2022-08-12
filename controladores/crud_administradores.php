@@ -23,7 +23,7 @@
   $genero=(isset($_POST['genero']))?$_POST['genero']:"";
   $dni=(isset($_POST['dni']))?$_POST['dni']:"";
   $profesion=(isset($_POST['profesion']))?$_POST['profesion']:"";
-  $direccion=(isset($_POST['direccion']))?$_POST['direccion']:"";
+  $direccionp=(isset($_POST['direccion']))?$_POST['direccion']:"";
   $celular=(isset($_POST['celular']))?$_POST['celular']:"";
   $referencia=(isset($_POST['referencia']))?$_POST['referencia']:"";
   $celular_referencia=(isset($_POST['celular_referencia']))?$_POST['celular_referencia']:"";
@@ -116,7 +116,7 @@
 
               // Inserta en la tabla tbl_usuarios
               $sql = "INSERT INTO tbl_usuarios (ID_ROL, ID_ESTADO_USUARIO, NOMBRE, APELLIDO, USUARIO, ID_GENERO, CORREO, DNI, ID_PROFESION, DIRECCION, CELULAR, REFERENCIA, CEL_REFERENCIA, EXPERIENCIA_LABORAL, CURRICULUM, CONTRASENA, FOTO, ID_AREA)
-                            VALUES ($rol,$estado,'$nombre', '$apellido', '$usuario', '$genero', '$correo', '$dni', '$profesion',  '$direccion', '$celular', '$referencia', '$celular_referencia', '$experiencia_laboral', '$destino$nombrecurriculum','$contrasena','$destino1$nombrefoto', '$area')";
+                            VALUES ($rol,$estado,'$nombre', '$apellido', '$usuario', '$genero', '$correo', '$dni', '$profesion',  '$direccionp', '$celular', '$referencia', '$celular_referencia', '$experiencia_laboral', '$destino$nombrecurriculum','$contrasena','$destino1$nombrefoto', '$area')";
               
               if (mysqli_query($conn, $sql)) {
                 echo '<script>
@@ -126,7 +126,7 @@
 
                   // inicio inserta en la tabla bitacora
                   $sql = "INSERT INTO tbl_bitacora (ID_USUARIO, ID_OBJETO, USUARIO, ACCION, OBSERVACION)
-                  VALUES (2, 1, '$usuario1[usuario]', 'INSERTO', 'CREO AL USUARIO $usuario')";
+                  VALUES (2, 1, '$usuario1[usuario]', 'INSERTO', 'CREO AL USUARIO $usuario' EN LA PANTALLA ADMINISTRATIVA DE USUARIOS)";
                   
                   if (mysqli_query($conn, $sql)) {
                     
@@ -148,15 +148,6 @@
             
         
       break;
-
-
-
-
-
-
-
-
-
 
        //para editar en la tabla mysl      
       case "editar";
@@ -214,7 +205,7 @@ if(in_array($extencion, $permitidos))
                         //////////// inicio realiza el update ////////
                           $sql2 = "UPDATE tbl_usuarios SET ID_ROL='$rol', ID_ESTADO_USUARIO='$estado', NOMBRE='$nombre', 
                           APELLIDO='$apellido', USUARIO='$usuario', ID_GENERO='$genero', CORREO='$correo', DNI='$dni', 
-                          ID_PROFESION='$profesion', DIRECCION='$direccion', CELULAR='$celular', REFERENCIA='$referencia', 
+                          ID_PROFESION='$profesion', DIRECCION='$direccionp', CELULAR='$celular', REFERENCIA='$referencia', 
                           CEL_REFERENCIA='$celular_referencia', EXPERIENCIA_LABORAL='$experiencia_laboral' , 
                           CURRICULUM='$direccion2',CONTRASENA='$contrasena', FOTO='$direccion' ,  
                           ID_AREA='$area' WHERE ID_USUARIO='$id_usuario'";
@@ -224,9 +215,9 @@ if(in_array($extencion, $permitidos))
                                         if (mysqli_query($conn, $sql2)) 
                                         {
                                             // inicio inserta en la tabla bitacora
-                                            // $sql = "INSERT INTO tbl_bitacora (USUARIO, ACCION, OBSERVACION)
-                                            // VALUES ('$usuario1[usuario]', 'EDITO', 'EDITO UN REGISTRO DE TIPO () Y TITULO ($titulo)')";
-                                            // if (mysqli_query($conn, $sql)) {} else {}
+                                            $sql = "INSERT INTO tbl_bitacora (USUARIO, ACCION, OBSERVACION)
+                                             VALUES ('$usuario1[usuario]', 'EDITO', 'EDITO UN USUARIO ($usuario) EN LA PANTALLA ADMINISTRATIVA DE USUARIOS')";
+                                             if (mysqli_query($conn, $sql)) {} else {}
                                             // fin inserta en la tabla bitacora
                                             echo '<script>
                                                     alert("Edición exitosa");
@@ -246,7 +237,7 @@ if(in_array($extencion, $permitidos))
         }else{
           // inicio inserta en la tabla bitacora
           $sql = "INSERT INTO tbl_bitacora (USUARIO, ACCION, OBSERVACION)
-          VALUES ('$usuario1[usuario]', 'INTENTO', 'NO LOGRO EDITAR YA QUE EL ARCHIVO NO ERA IMAGEN')";
+          VALUES ('$usuario1[usuario]', 'INTENTO', 'NO LOGRO EDITAR YA QUE EL ARCHIVO NO ERA PDF O DOCX EN LA PANTALLA ADMINISTRATIVA DE USUARIOS')";
           if (mysqli_query($conn, $sql)) {} else {}
           // fin inserta en la tabla bitacora
           echo '<script type="text/javascript">
@@ -259,7 +250,7 @@ if(in_array($extencion, $permitidos))
 }else{
     // inicio inserta en la tabla bitacora
     $sql = "INSERT INTO tbl_bitacora (USUARIO, ACCION, OBSERVACION)
-    VALUES ('$usuario1[usuario]', 'INTENTO', 'NO LOGRO EDITAR YA QUE EL ARCHIVO NO ERA IMAGEN')";
+    VALUES ('$usuario1[usuario]', 'INTENTO', 'NO LOGRO EDITAR YA QUE EL ARCHIVO NO ERA IMAGEN EN LA PANTALLA ADMINISTRATIVA DE USUARIOS')";
     if (mysqli_query($conn, $sql)) {} else {}
     // fin inserta en la tabla bitacora
     echo '<script type="text/javascript">
@@ -271,23 +262,14 @@ if(in_array($extencion, $permitidos))
 
       break;
 
-
-
-
-
-
-
-
-
-      
 //---------------------------------------------------------------------------------------------------------
 
       
       //para eliminar en la tabla mysl  
       case "eliminar";
         // inicio inserta en la tabla bitacora
-        $sql = "INSERT INTO tbl_bitacora (ID_USUARIO, ID_OBJETO, USUARIO, ACCION, OBSERVACION)
-        VALUES (2, 1, '$usuario1[usuario]', 'ELIMINO', 'ELIMINO AL USUARIO CON ID: $id_usuario')";
+        $sql = "INSERT INTO tbl_bitacora (USUARIO, ACCION, OBSERVACION)
+        VALUES ('$usuario1[usuario]', 'ELIMINO', 'ELIMINO AL USUARIO CON ID: $id_usuario EN LA PANTALLA ADMINISTRATIVA DE USUARIOS')";
         
         if (mysqli_query($conn, $sql)) {
           
