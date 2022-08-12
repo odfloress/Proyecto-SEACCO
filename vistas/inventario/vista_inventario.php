@@ -115,7 +115,10 @@ if (mysqli_num_rows($roles35) > 0)
             
             <div class="card">
               <div class="card-header">
-                <h3 class="card-title">Inventario</h3>
+              <form id="form" action="" method="post">
+              <button type="submit"  name="accion" value="reporte_pdf" class="btn btn-secondary buttons-pdf buttons-html5"  onclick="return confirm('¿Quieres generar reporte de inventario?')" onclick="textToPdf()"><span>Reporte PDF</span></button>
+	            </form>
+                <!-- <h3 class="card-title">Inventario</h3> -->
                 
               </div>
               
@@ -125,10 +128,11 @@ if (mysqli_num_rows($roles35) > 0)
                   <thead>
                   <tr>
                     <th>Acciones</th>
-                  <th>Id</th>
+                  <th>ID</th>
+                  <th>Imagen</th>
                   <th>Productos</th>
-                  <th>Cantidad minima</th>
-                  <th>Cantidad maxima</th>
+                  <!-- <th>Cantidad minima</th>
+                  <th>Cantidad maxima</th> -->
                   <th>Cantidad disponible</th>
                   </tr>
                   </thead>
@@ -155,9 +159,10 @@ if (mysqli_num_rows($roles35) > 0)
                       </td>
                       
                                          <td ><?php echo $filas['ID_INVENTARIO'] ?></td>
+                                         <td><img  width="100px" src="<?php echo $filas['FOTO'] ?>" /></td>
                                          <td><?php echo $filas['NOMBRE'] ?></td>
-                                         <td><?php echo $filas['CANTIDAD_MINIMA'] ?></td>
-                                         <td><?php echo $filas['CANTIDAD_MAXIMA'] ?></td>
+                                         <!-- <td><?php echo $filas['CANTIDAD_MINIMA'] ?></td>
+                                         <td><?php echo $filas['CANTIDAD_MAXIMA'] ?></td> -->
                                          <td><center>
                                           <?php if ($filas['CANTIDAD_DISPONIBLE']>$filas['CANTIDAD_MINIMA'] && $filas['CANTIDAD_DISPONIBLE']<$filas['CANTIDAD_MAXIMA'])
                                           {?>
@@ -322,7 +327,7 @@ if (mysqli_num_rows($roles35) > 0)
 				const pdf = new jsPDF('p', 'mm', 'letter');			
         	
 
-				var columns = ["", "", "", "", "", "", ""];
+				var columns = ["", "", "", "", ""];
 				var data = [
 				[1, "Hola", "hola@gmail.com", "Mexico"],
 				 ];
@@ -353,7 +358,7 @@ if (mysqli_num_rows($roles35) > 0)
 				//muestra el titulo secundario
 				pdf.setFont('times');
 				pdf.setFontSize(10);
-				pdf.text("Reporte de portafolio", 84,20,);
+				pdf.text("Reporte de inventario", 84,20,);
 
 												//////// pie de Pagina ///////
 				//muestra la fecha
@@ -370,7 +375,7 @@ if (mysqli_num_rows($roles35) > 0)
 			}
 				//Fin Encabezado y pie de pagina
 
-							pdf.save('Reporte de productos.pdf');
+							pdf.save('Reporte de inventario.pdf');
 	})
   
 </script>

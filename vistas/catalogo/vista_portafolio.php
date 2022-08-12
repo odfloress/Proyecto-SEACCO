@@ -2,7 +2,7 @@
 session_start();
 if(!isset($_SESSION['usuario'])){
  
-        header('Location: ../iniciar_sesion/index_login.php');
+        header('Location: ../../_login.php');
         session_unset();
         session_destroy();
         die();
@@ -66,26 +66,16 @@ if (mysqli_num_rows($roles35) > 0)
 <body oncontextmenu="return false">
 <!-- Fin evita el click derecho de la pagina --> 
   <!-- Content Wrapper. Contains page content -->
-  <div class="content-wrapper"><center> <BR></BR><h3>PORTAFOLIO</h3> </center>
+  <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1></h1>
+          <h3>Portafolio</h3> 
             <!-- Inicio de modal de agregar -->
 <div class="container mt-3">
-<?php 
-      include '../../conexion/conexion.php';
-      $tablero = "SELECT * FROM tbl_ms_roles_ojetos WHERE ID_ROL='$id_rol7' and ID_OBJETO=7 and PERMISO_INSERCION=1";
-      $tablero2 = mysqli_query($conn, $tablero);
-      if (mysqli_num_rows($tablero2) > 0)
-       {
-         echo '<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal">
-                 Nuevo
-               </button>';
-                          }
-                        ?>
+
         
     </div>
     
@@ -104,7 +94,7 @@ if (mysqli_num_rows($roles35) > 0)
                 <div class="modal-body">
                 <label for="">Catálago</label>
                 <select style="background-color:rgb(240, 244, 245);" value="<?php echo "$id_departamento"; ?>" class="form-select" id="lista1" name="tipo" required >
-                    
+                    <option value="">Selecciona un catálago</option>
                         <?php
                             include 'conexion/conexion.php';
                             $departamento = "SELECT * FROM tbl_catalogo ORDER BY ID_CATALOGO";
@@ -140,7 +130,7 @@ if (mysqli_num_rows($roles35) > 0)
                 <!-- pie del modal -->
                 <div class="modal-footer">
                 
-      	            <button type="submit" name="accion" value="agregar" class="btn btn-primary" onclick="return confirm('¿Quieres insertar este dato?')">Agregar</button>
+      	            <button type="submit" name="accion" value="agregar" class="btn btn-primary" >Agregar</button>
                     <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
                 </div>
                 <!-- Fin pie del modal -->
@@ -148,7 +138,7 @@ if (mysqli_num_rows($roles35) > 0)
         </div>
     </div>
     </form>
-    <!-- Fin  de modal de agregar --> <br>
+    <!-- Fin  de modal de agregar --> 
 
  
           </div>
@@ -176,8 +166,21 @@ if (mysqli_num_rows($roles35) > 0)
             <div class="card">
               <div class="card-header">
               <form id="form" action="" method="post">
+                    <div class="btn-group">
+                    <?php 
+                                include '../../conexion/conexion.php';
+                                $tablero = "SELECT * FROM tbl_ms_roles_ojetos WHERE ID_ROL='$id_rol7' and ID_OBJETO=7 and PERMISO_INSERCION=1";
+                                $tablero2 = mysqli_query($conn, $tablero);
+                                if (mysqli_num_rows($tablero2) > 0)
+                                {
+                                  echo '<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal">
+                                          Nuevo
+                                        </button>';
+                                                    }
+                        ?>
               <button type="submit"  name="accion" value="reporte_pdf" class="btn btn-secondary buttons-pdf buttons-html5"  onclick="return confirm('¿Quieres generar reporte de portafolio?')" onclick="textToPdf()"><span>Reporte PDF</span></button>
-	            </form>
+	               </div>
+            </form>
                 <!-- <h3 class="card-title">PORTAFOLIO</h3> -->
               </div>
               
@@ -190,7 +193,7 @@ if (mysqli_num_rows($roles35) > 0)
                   <th>Id</th>
                   <th>Tipo</th>
                   <th>Imagen</th>
-                  <th>Titulo</th>
+                  <th>Título</th>
                   <th>Descripción</th>
                   
                   </tr>
@@ -238,6 +241,7 @@ if (mysqli_num_rows($roles35) > 0)
                                           <div class="modal-body">
                                               <form action="" method="post" enctype="multipart/form-data">
                                                 <input type="hidden" name="foto" value="<?php echo $filas['IMAGEN'] ?>">
+                                                <input type="hidden" name="catalogo" value="<?php echo $filas['NOMBRE_CATALOGO'] ?>">
                                               <input type="hidden" name="id_imagen"  value="<?php echo $filas['ID_IMAGEN'] ?>">
                                               <label for="">Imagen</label><br>
                                               <img class="img-thumbnail" width="100px" src="<?php echo $filas['RUTA_PORTAFOLIO'] ?>" /><br><br>

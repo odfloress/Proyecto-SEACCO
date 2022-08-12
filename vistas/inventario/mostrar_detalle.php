@@ -42,11 +42,7 @@ if (mysqli_num_rows($roles35) > 0)
                       }
                }
 
-                // inicio inserta en la tabla bitacora
-                $sql = "INSERT INTO tbl_bitacora (USUARIO, ACCION, OBSERVACION)
-                VALUES ('$usuario1[usuario]', 'CONSULTO', 'CONSULTO LA PANTALLA  ADMINISTRATIVA DE COMPRAS')";
-                if (mysqli_query($conn, $sql)) {} else {}
-                // fin inserta en la tabla bitacora
+                
 
                 if(!isset($_POST['compra'])){
                     header('Location: ../../vistas/inventario/vista_compras.php');
@@ -84,12 +80,13 @@ if (mysqli_num_rows($roles35) > 0)
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-7">
+            
           <h3 class="card-title">Detalle de la compra realizada en la fecha <?php echo $fecha; ?></h3>
      
           </div>
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
-              
+            
             </ol>
             
           </div>
@@ -110,7 +107,7 @@ if (mysqli_num_rows($roles35) > 0)
             
             <div class="card table-responsive">
               <div class="card-header">
-                
+             
                 <form id="form" action="" method="post">
               <button type="submit"  name="accion" value="reporte_pdf" class="btn btn-secondary buttons-pdf buttons-html5"  onclick="return confirm('¿Quieres generar reporte detalle de compra?')" onclick="textToPdf()"><span>Reporte PDF</span></button>
 	            </form>
@@ -123,10 +120,10 @@ if (mysqli_num_rows($roles35) > 0)
                   <thead>
                   <tr>
                     
-                  <th>Id detalle</th>
-                  <th>Id compra</th>
-                  <th>producto</th>
-                  <th>Garantia</th>
+                  <th>ID</th>
+                  <th>ID compra</th>
+                  <th>Producto</th>
+                  <th>Garantía</th>
                   <th>Unidad de medida</th>
                   <th>Cantidad</th>
                   <th>Precio</th>

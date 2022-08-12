@@ -9,6 +9,8 @@ $titulo=(isset($_POST['titulo']))?$_POST['titulo']:"";
 $descripcion=(isset($_POST['descripcion']))?$_POST['descripcion']:"";
 $ruta=(isset($_POST['ruta']))?$_POST['ruta']:"";
 $foto=(isset($_POST['foto']))?$_POST['foto']:"";
+$catalogo=(isset($_POST['catalogo']))?$_POST['catalogo']:"";
+
 
 //variable para recuperar los botones de la vista del crud del portafolio 
 $accion=(isset($_POST['accion']))?$_POST['accion']:"";
@@ -37,7 +39,7 @@ if(in_array($extencion, $permitidos)){
          if($res){
              // inicio inserta en la tabla bitacora
              $sql = "INSERT INTO tbl_bitacora (USUARIO, ACCION, OBSERVACION)
-             VALUES ('$usuario1[usuario]', 'INSERTO', 'INSERTO UN REGISTRO DE TIPO ($tipo) Y TITULO ($titulo) ')";
+             VALUES ('$usuario1[usuario]', 'INSERTO', 'CON EL TITULO ($titulo) EN LA PANTALLA PORTAFOLIO')";
              if (mysqli_query($conn, $sql)) {} else {}
              // fin inserta en la tabla bitacora
             echo '<script type="text/javascript">
@@ -50,7 +52,7 @@ if(in_array($extencion, $permitidos)){
 }else{
     // inicio inserta en la tabla bitacora
     $sql = "INSERT INTO tbl_bitacora (USUARIO, ACCION, OBSERVACION)
-    VALUES ('$usuario1[usuario]', 'INTENTO', 'NO LOGRO INSERTAR YA QUE EL ARCHIVO NO ERA IMAGEN')";
+    VALUES ('$usuario1[usuario]', 'INTENTO', 'NO LOGRO INSERTAR YA QUE EL ARCHIVO NO ERA IMAGEN EN LA PANTALLA PORTAFOLIO')";
     if (mysqli_query($conn, $sql)) {} else {}
     // fin inserta en la tabla bitacora
     echo '<script type="text/javascript">
@@ -61,8 +63,7 @@ if(in_array($extencion, $permitidos)){
 
 break;
 
-case "editar": 
-  
+case "editar":   
 
 $tmpFoto1= $_FILES["imagenes"]["tmp_name"];
 if($tmpFoto1!="") {
@@ -96,7 +97,7 @@ if(in_array($extencion, $permitidos))
     {
         // inicio inserta en la tabla bitacora
         $sql = "INSERT INTO tbl_bitacora (USUARIO, ACCION, OBSERVACION)
-        VALUES ('$usuario1[usuario]', 'EDITO', 'EDITO UN REGISTRO DE TIPO ($tipo) Y TITULO ($titulo)')";
+        VALUES ('$usuario1[usuario]', 'EDITO', 'DEL CATALAGO ($catalogo) Y TITULO ($titulo) EN LA PANTALLA PORTAFOLIO')";
         if (mysqli_query($conn, $sql)) {} else {}
          // fin inserta en la tabla bitacora
         echo '<script>
@@ -113,7 +114,7 @@ if(in_array($extencion, $permitidos))
 }else{
     // inicio inserta en la tabla bitacora
     $sql = "INSERT INTO tbl_bitacora (USUARIO, ACCION, OBSERVACION)
-    VALUES ('$usuario1[usuario]', 'INTENTO', 'NO LOGRO EDITAR YA QUE EL ARCHIVO NO ERA IMAGEN')";
+    VALUES ('$usuario1[usuario]', 'INTENTO', 'NO LOGRO EDITAR YA QUE EL ARCHIVO NO ERA IMAGEN EN LA PANTALLA PORTAFOLIO')";
     if (mysqli_query($conn, $sql)) {} else {}
     // fin inserta en la tabla bitacora
     echo '<script type="text/javascript">
@@ -137,7 +138,7 @@ if (mysqli_query($conn, $sql3)) {
     unlink($ruta);
     // inicio inserta en la tabla bitacora
     $sql = "INSERT INTO tbl_bitacora (USUARIO, ACCION, OBSERVACION)
-    VALUES ('$usuario1[usuario]', 'ELIMINO', 'ELIMINO UN REGISTRO DE TIPO ($tipo) Y TITULO ($titulo) ')";
+    VALUES ('$usuario1[usuario]', 'ELIMINO', 'UN REGISTRO DE TIPO ($catalogo) Y TITULO ($titulo) ')";
     if (mysqli_query($conn, $sql)) {} else {}
     // fin inserta en la tabla bitacora
     header('Location: ../../vistas/catalogo/vista_portafolio');
