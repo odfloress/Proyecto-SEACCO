@@ -22,6 +22,7 @@ if (mysqli_num_rows($roles35) > 0)
   } 
 }
 
+
                //valida si tiene permisos de consultar la pantalla 
                $role = "SELECT * FROM tbl_ms_roles_ojetos WHERE ID_ROL='$id_rol7' and ID_OBJETO=8 and PERMISO_CONSULTAR=0";
                $roless = mysqli_query($conn, $role);
@@ -86,6 +87,18 @@ if (mysqli_num_rows($roles35) > 0)
         <?php 
       include '../../conexion/conexion.php'; 
 
+
+$validar_empleado= "SELECT * FROM tbl_usuarios WHERE DNI='$empleado'";
+$validar_empleado1 = mysqli_query($conn, $validar_empleado);
+if (mysqli_num_rows($validar_empleado1) > 0)
+{
+      while($row = mysqli_fetch_assoc($validar_empleado1)) 
+      {
+            $empleado1 = $row["USUARIO"];
+      }
+}
+
+
                 $tablero = "SELECT * FROM tbl_ms_roles_ojetos WHERE ID_ROL='$id_rol7' and ID_OBJETO=8 and PERMISO_INSERCION=1";
                 $tablero2 = mysqli_query($conn, $tablero);
                 if (mysqli_num_rows($tablero2) > 0)
@@ -117,7 +130,7 @@ if (mysqli_num_rows($roles35) > 0)
 
                 <label for="" class="form-label">Producto:</label>
                 <select placeholder="Seleccione" class="form-select" id="sel1" name="id_producto" required >
-                  <option></option>
+                <option></option>
                   <?php
                       include '../../conexion/conexion.php';
                       $getproducto = "SELECT * FROM tbl_productos  WHERE ID_PRODUCTO  ORDER BY ID_PRODUCTO";
@@ -128,7 +141,7 @@ if (mysqli_num_rows($roles35) > 0)
                               $id_producto = $row['ID_PRODUCTO'];
                               $producto =$row['NOMBRE'];
                            ?>
-                              <option value="<?php  echo $id_producto ?>"><?php echo $id_producto .' '.($producto)?></option>
+                              <option value="<?php  echo $id_producto ?>"><?php echo $id_producto .' - '.($producto)?></option>
                           <?php
                     }}// finaliza el if y el while
 
@@ -136,27 +149,34 @@ if (mysqli_num_rows($roles35) > 0)
                 </select>
 
                     <label for="">Cantidad</label>
-                    <input type="text" class="form-control" name="cantidad" onkeypress="return solonumero(event)" required value="" placeholder="Ingrese la cantidad" id="cantidad"   > 
+                    <input type="text" class="form-control" name="cantidad" onkeypress="return solonumero(event)" required value="<?php echo "$cantidad"; ?>" onkeyup="mayus(this);" placeholder="Ingrese la cantidad" id="cantidad"   > 
                     <br>
+                    <?php
+                    include '../../conexion/conexion.php';
+                    $validar_usuario = "SELECT * from tbl_usuarios WHERE DNI='$empleado'";
+                    ?>
+
                 <label for="" class="form-label">Empleado:</label>
-                <select placeholder="Seleccione" class="form-select" id="sel1" name="usuario1" required >
-                  <option></option>
+                <select placeholder="Seleccione" class="form-select" id="sel1" name="id_usuario" required >
+                <option></option>
                   <?php
                       include '../../conexion/conexion.php';
-                      $getempleado = "SELECT * FROM tbl_usuarios  WHERE ID_ROL= 2 AND ID_ESTADO_USUARIO = 1 ORDER BY ID_ROL";
-                      $getempleado1 = mysqli_query($conn, $getempleado);
-                      if (mysqli_num_rows($getempleado1) > 0) {
-                          while($row = mysqli_fetch_assoc($getempleado1))
+                      $getusuario = "SELECT * FROM tbl_usuarios  WHERE ID_ROL = 1 OR ID_ROL = 2 AND ID_ESTADO_USUARIO= 1  ORDER BY ID_USUARIO";
+                      $getusuario1 = mysqli_query($conn, $getusuario);
+                      if (mysqli_num_rows($getusuario1) > 0) {
+                          while($row = mysqli_fetch_assoc($getusuario1))
                             {
-                              $id_empleado = $row['ID_USUARIO'];
+                              $DNI = $row['DNI'];
                               $usuario =$row['USUARIO'];
                            ?>
-                              <option value="<?php  echo $id_empleado ?>"><?php echo $id_empleado .' '.($usuario)?></option>
+                              <option value="<?php  echo $DNI ?>"><?php echo $usuario .' - '.($DNI)?></option>
                           <?php
                     }}// finaliza el if y el while
 
                 ?>
-                </select>                   
+                </select>
+                    <br> 
+                          
                     <label for="sel1" class="form-label">Estado de la herramienta:</label>
                 <select placeholder="Seleccione" class="form-select" id="sel1" name="id_estado_herramienta" required >
                   <option></option>
@@ -171,45 +191,20 @@ if (mysqli_num_rows($roles35) > 0)
                               $id_estado_herramienta = $row['ID_ESTADO_HERRAMIENTA'];
                               $estado_herramienta =$row['ESTADO'];
                            ?>
-                              <option value="<?php  echo $id_estado_herramienta ?>"><?php echo $id_estado_herramienta .' '.($estado_herramienta)?></option>
+                              <option value="<?php  echo $id_estado_herramienta ?>"><?php echo $id_estado_herramienta .' - '.($estado_herramienta)?></option>
                           <?php
                     }}// finaliza el if y el while
 
                 ?>
                 </select>
 
-                <label for="sel1" readonly class="form-label">Estado de la asignacion:</label>
-                <select placeholder="Seleccione" class="form-select" id="sel1" name="id_estado_asignacion" required >
-                  <option></option>
-                  <?php
-                      include '../../conexion/conexion.php';
-                      $getestado_asig = "SELECT * FROM tbl_estado_asignacion  WHERE ID_ESTADO_ASIGNACION='1'  ORDER BY ID_ESTADO_ASIGNACION";
-                      // $getpregunta1 = "SELECT * FROM tbl_preguntas  WHERE ID_PREGUNTA  NOT IN (SELECT ID_PREGUNTA  FROM  tbl_respuestas_usuario WHERE USUARIO = 'JO' ) ORDER BY ID_PREGUNTA";
-                      $getestado_asig = mysqli_query($conn, $getestado_asig);
-                      if (mysqli_num_rows($getestado_asig) > 0) {
-                          while($row = mysqli_fetch_assoc($getestado_asig))
-                            {
-                              $id_estado_asignacion = $row['ID_ESTADO_ASIGNACION'];
-                              $estado_asignacion =$row['ESTADO_ASIGNACION'];
-                           ?>
-                              <option value="<?php  echo $id_estado_asignacion ?>"><?php echo $id_estado_asignacion .' '.($estado_asignacion)?></option>
-                          <?php
-                    }}// finaliza el if y el while
-
-                ?>
-                </select>
-                </select>
                     <label for="">Descripción de la asignación</label>
-                    <input type="text" class="form-control" name="descripcion_asignacion" required value="" placeholder="Ingrese un breve comentario sobre la asignación" id="descripción_asignacion"   >
+                    <input type="text" class="form-control" name="descripcion_asignacion" required value="<?php echo "$descripcion_asignacion"; ?>" onKeyUP="this.value=this.value.toUpperCase();" placeholder="Ingrese un breve comentario sobre la asignación" id="descripción_asignacion"   >
                     <br>
                     <div class="row">
                 <div class="col">
-                  <label type="text"  class="form-label">Fecha de asignación:</label>
-                  <input style="background-color:rgb(240, 244, 245);" type="date" min="2022-01-01" autocomplete="of" name="fecha_asignado" required>
-                </div>
-                <div class="col">
-                  <label type="text" class="form-label">Fecha de entrega:</label>
-                  <input style="background-color:rgb(240, 244, 245);" type="date" min="sysdate" autocomplete="off" name="fecha_entrega" required>
+                  <label type="date" class="form-label">Fecha de devolución:</label>
+                  <input class="form-control" type="Date" name="fecha_entrega" value="" autocomplete="off" id="" required>
                 </div>
             </div>
                 
@@ -217,7 +212,7 @@ if (mysqli_num_rows($roles35) > 0)
                 <!-- Fin Cuerpo del modal Modal -->
                 <!-- pie del modal -->
                 <div class="modal-footer">
-      	            <button type="submit" name="accion" value="agregar" class="btn btn-primary" onclick="return confirm('¿Desea añadir el producto?')">Agregar</button>
+      	            <button type="submit" name="accion" value="agregar" class="btn btn-primary" onclick="return confirm('¿Desea añadir el producto a la asignación del empleado <?php  echo $empleado1 ?>?')">Agregar</button>
                     <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
                 </div>
                 <!-- Fin pie del modal -->
@@ -267,7 +262,7 @@ if (mysqli_num_rows($roles35) > 0)
                 <!-- <h3 class="card-title">Compras</h3> -->
                 <form action="" method="post">
                 <button type="submit" name="accion" value="cancelar" class="btn btn-danger" onclick="return confirm('¿Desea cancelar la asignación?')">Cancelar asignación</button>
-                <button type="submit" name="accion" value="confirmar" class="btn btn-primary" onclick="return confirm('¿Desea terminar la asignación?')">Confirmar asignación</button>
+                <button type="submit" name="accion" value="confirmar" class="btn btn-primary" onclick="return confirm('¿Desea completar la asignación?')">Confirmar asignación</button>
 
 
                 </form>
@@ -281,11 +276,11 @@ if (mysqli_num_rows($roles35) > 0)
                   <tr>
                   <th>Acciones</th>
                   <th>Id detalle asignación</th>
-                  <th>Id asignado</th>
-                  <th>Id Producto</th>
+                  <th>Producto</th>
                   <th>Cantidad</th>
+                  <th>Descripción de asignacion</th>
                   <th>Estado herramienta</th>
-                  <th>Estado asignación</th>             
+                  <th>Estado asignación</th>           
                   </tr>
                   </thead>
                   <tbody>
@@ -317,11 +312,11 @@ if (mysqli_num_rows($roles35) > 0)
                     
 </td>                  
                      <td><?php echo $filas['ID_DETALLE_ASIGNACION'] ?></td>
-                     <td><?php echo $filas['ID_ASIGNADO'] ?></td>
-                     <td><?php echo $filas['ID_PRODUCTO'] ?></td>
+                     <td><?php echo $filas['NOMBRE'] ?></td>
                      <td><?php echo $filas['CANTIDAD'] ?></td>
-                     <td><?php echo $filas['ID_ESTADO_HERRAMIENTA'] ?></td>
-                     <td><?php echo $filas['ID_ESTADO_ASIGNACION'] ?></td>
+                     <td><?php echo $filas['DESCRIPCION_ASIGNACION1'] ?></td>
+                     <td><?php echo $filas['ESTADO'] ?></td>
+                     <td><?php echo $filas['ESTADO_ASIGNACION'] ?></td>
 </tr>
                 <?php } ?>  
                 </tbody>

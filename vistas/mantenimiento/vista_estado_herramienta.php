@@ -151,7 +151,7 @@ if (mysqli_num_rows($roles35) > 0)
                 </button>';
                           }
                         ?> 
-              <button type="submit"  name="accion" value="reporte_pdf" class="btn btn-secondary buttons-pdf buttons-html5"  onclick="return confirm('¿Quieres generar reporte de estado de herramientas?')" onclick="textToPdf()"><span>Reporte PDF</span></button>
+              <button type="submit"  name="accion" value="reporte_pdf" class="btn btn-secondary buttons-pdf buttons-html5"  onclick="return confirm('¿Quieres generar reporte de estados de herramientas?')" onclick="textToPdf()"><span>Reporte PDF</span></button>
 	               </div>
             </form>
                 <!-- <h3 class="card-title">Estados</h3> -->
@@ -424,7 +424,7 @@ if (mysqli_num_rows($roles35) > 0)
 				//muestra el titulo secundario
 				pdf.setFont('times');
 				pdf.setFontSize(10);
-				pdf.text("Reporte de estados herramientas", 75,20,);
+				pdf.text("Reporte de estados de herramientas", 75,20,);
 
 												//////// pie de Pagina ///////
 				//muestra la fecha
@@ -441,7 +441,7 @@ if (mysqli_num_rows($roles35) > 0)
 			}
 				//Fin Encabezado y pie de pagina
 
-							pdf.save('Reporte de estados herramientas.pdf');
+							pdf.save('Reporte de estados de herramientas.pdf');
 	})
   
 </script>

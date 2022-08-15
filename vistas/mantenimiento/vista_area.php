@@ -151,7 +151,7 @@ if (mysqli_num_rows($roles35) > 0)
                 </button>';
                           }
                         ?> 
-              <button type="submit"  name="accion" value="reporte_pdf" class="btn btn-secondary buttons-pdf buttons-html5"  onclick="return confirm('¿Quieres generar reporte de Areas?')" onclick="textToPdf()"><span>Reporte PDF</span></button>
+              <button type="submit"  name="accion" value="reporte_pdf" class="btn btn-secondary buttons-pdf buttons-html5"  onclick="return confirm('¿Quieres generar reporte de las áreas?')" onclick="textToPdf()"><span>Reporte PDF</span></button>
 	               </div>
             </form>
                 <!-- <h3 class="card-title">Profesiones</h3> -->
@@ -424,7 +424,7 @@ if (mysqli_num_rows($roles35) > 0)
 				//muestra el titulo secundario
 				pdf.setFont('times');
 				pdf.setFontSize(10);
-				pdf.text("Reporte de Areas de Empleo", 84,20,);
+				pdf.text("Reporte de áreas", 84,20,);
 
 												//////// pie de Pagina ///////
 				//muestra la fecha
@@ -441,7 +441,7 @@ if (mysqli_num_rows($roles35) > 0)
 			}
 				//Fin Encabezado y pie de pagina
 
-							pdf.save('Reporte de Areas.pdf');
+							pdf.save('Reporte de áreas.pdf');
 	})
   
 </script>

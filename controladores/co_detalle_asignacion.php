@@ -11,16 +11,22 @@
                $id_asignado = $row["ID_ASIGNADO"];
          }
    }
+   
 
   //para mostrar los datos de la tabla mysql y mostrar en el crud
-  $sql = "SELECT * FROM tbl_detalle_asignacion WHERE ID_ASIGNADO='$id_asignado'";
+  $sql = "SELECT * FROM (((tbl_detalle_asignacion da
+          INNER JOIN tbl_productos pr ON da.ID_PRODUCTO = pr.ID_PRODUCTO)
+          INNER JOIN tbl_estado_herramienta eh ON da.ID_ESTADO_HERRAMIENTA = eh.ID_ESTADO_HERRAMIENTA)
+          INNER JOIN tbl_estado_asignacion ea ON da.ID_ESTADO_ASIGNACION = ea.ID_ESTADO_ASIGNACION)
+  WHERE ID_ASIGNADO='$id_asignado'";
   $result = mysqli_query($conn, $sql);
 
  
 
-  // //Variables para recuperar la información de los campos de la vista roles
+  // //Variables para recuperar la información de los campos de la vista detalle
   //$id_asignado=(isset($_POST['id_asignado']))?$_POST['id_asignado']:"";
   $id_producto=(isset($_POST['id_producto']))?$_POST['id_producto']:"";
+  $empleado=(isset($_POST['id_usuario']))?$_POST['id_usuario']:"";
   $descripcion_asignacion=(isset($_POST['descripcion_asignacion']))?$_POST['descripcion_asignacion']:"";
   $cantidad=(isset($_POST['cantidad']))?$_POST['cantidad']:"";
   $id_estado_herramienta=(isset($_POST['id_estado_herramienta']))?$_POST['id_estado_herramienta']:"";
@@ -50,33 +56,35 @@
 
                     ///////////// INSERTA EN LA TABLA TBL_DETALLE_ASIGACIONES /////////////
 
-                    $sql1 = "INSERT INTO tbl_detalle_asignacion (ID_ASIGNADO, DESCRIPCION_ASIGNACION, ID_PRODUCTO, CANTIDAD, ID_ESTADO_HERRAMIENTA, ID_ESTADO_ASIGNACION)
-                    VALUES ('$id_asignado', '$descripcion_asignacion', '$id_producto', '$cantidad','$id_estado_herramienta','$id_estado_asignacion')";
-                    if (mysqli_query($conn, $sql1)) {
-
-
-                  ///////////// INSERTA EN LA TABLA TBL_KARDEX /////////////
-                  $kardex = "INSERT INTO tbl_kardex (ID_PRODUCTO, ID_COMPRA, ID_ASIGNACION, USUARIO, CANTIDAD, TIPO_MOVIMIENTO)
-                  VALUES ('$id_producto', NULL, '$id_asignado', '$usuario1[usuario]', '$cantidad', 'SALIDA')";
-                  if (mysqli_query($conn, $kardex)) 
-                      {
-
-                      }
-
-                      echo '<script>
-                                alert("Producto agregado con exito");
-                                window.location.href="../../vistas/inventario/detalle_asignacion.php";                   
-                            </script>';
+                        $sql1 = "INSERT INTO tbl_detalle_asignacion (ID_ASIGNADO, DESCRIPCION_ASIGNACION1, ID_PRODUCTO, CANTIDAD, ID_ESTADO_HERRAMIENTA, ID_ESTADO_ASIGNACION)
+                        VALUES ('$id_asignado', '$descripcion_asignacion', '$id_producto', '$cantidad','$id_estado_herramienta','1')";
+                        if (mysqli_query($conn, $sql1)) {
+    
+    
+                      ///////////// INSERTA EN LA TABLA TBL_KARDEX /////////////
+                      $kardex = "INSERT INTO tbl_kardex (ID_PRODUCTO, ID_COMPRA, ID_ASIGNACION, USUARIO, CANTIDAD, TIPO_MOVIMIENTO)
+                      VALUES ('$id_producto', NULL, '$id_asignado', '$usuario1[usuario]', '$cantidad', 'SALIDA')";
+                      if (mysqli_query($conn, $kardex)) 
+                          {
+    
+                          }
+    
+                          echo '<script>
+                                    alert("Producto agregado con exito al empleado");
+                                    window.location.href="../../vistas/inventario/detalle_asignacion.php";                   
+                                </script>';
+                                   
+    
+                        } else {
+                                echo '<script>
+                                        alert("Error al tratar de agregar el producto");
+                                      </script>'; 
+                                   
                                
+                        
+                  }          
 
-                    } else {
-                            echo '<script>
-                                    alert("Error al tratar de agregar el producto");
-                                  </script>'; 
-                               
-                           
-                    
-              }                    
+
       break;
 
       case "cancelar";

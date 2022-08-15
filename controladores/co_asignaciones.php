@@ -1,9 +1,9 @@
 <?php
   require '../../conexion/conexion.php';
   //para mostrar los datos de la tabla mysql y mostrar en el crud
-  $sql = "SELECT * FROM ((tbl_asignaciones a
+  $sql = "SELECT * FROM (tbl_asignaciones a
           INNER JOIN tbl_proyectos p ON a.ID_PROYECTO = p.ID_PROYECTO)
-          INNER JOIN tbl_detalle_asignacion da ON a.ID_ASIGNADO = da.ID_ASIGNADO)";
+          ORDER BY ID_ASIGNADO";
   $result = mysqli_query($conn, $sql);
 
 
@@ -11,8 +11,8 @@
   $asignacion=(isset($_POST['asignacion']))?$_POST['asignacion']:"";  
   $id_producto=(isset($_POST['id_producto']))?$_POST['id_producto']:"";
   $id_proyecto=(isset($_POST['id_proyecto']))?$_POST['id_proyecto']:"";
-  $empleado=(isset($_POST['usuario1']))?$_POST['usuario1']:"";
-  $descripcion_asignacion=(isset($_POST['descripcion_asignacion']))?$_POST['descripcion_asignacion']:"";
+  $empleado1=(isset($_POST['id_usuario']))?$_POST['id_usuario']:"";
+  //$descripcion_asignacion=(isset($_POST['descripcion_asignacion']))?$_POST['descripcion_asignacion']:"";
   $cantidad=(isset($_POST['cantidad']))?$_POST['cantidad']:"";
   $id_estado_herramienta=(isset($_POST['id_estado_herramienta']))?$_POST['id_estado_herramienta']:"";
   $id_estado_asignacion=(isset($_POST['id_estado_asignacion']))?$_POST['id_estado_asignacion']:"";
@@ -30,8 +30,8 @@
       case "agregar": 
         
                     //si no existe el rol permite insertar
-                    $sql1 = "INSERT INTO tbl_asignaciones (ID_PROYECTO, DESCRIPCION_ASIGNACION, FECHA_ASIGNADO, FECHA_ENTREGA, USUARIO, ESTADO_ASIGNACION)
-                    VALUES ('$id_proyecto', '$descripcion_asignacion', '$fecha_asignado', '$fecha_entrega', '$usuario1[usuario]', 'EN PROCESO')";
+                    $sql1 = "INSERT INTO tbl_asignaciones (ID_PROYECTO, DESCRIPCION_ASIGNACION, FECHA_ENTREGA, USUARIO, ESTADO_ASIGNACION)
+                    VALUES ('$id_proyecto', '$descripcion_asignacion', '$fecha_entrega', '$usuario1[usuario]', 'EN PROCESO')";
                     if (mysqli_query($conn, $sql1)) {
 
                          // inicio inserta en la tabla bitacora

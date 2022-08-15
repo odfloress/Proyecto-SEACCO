@@ -77,7 +77,11 @@ if (mysqli_num_rows($roles35) > 0)
             <!-- Inicio de modal de agregar -->
 <div class="container mt-3">
   
-        <h3>Genero </h3> <br> 
+        <h3>Genero </h3> <br>
+        <div class="card table-responsive">
+              <div class="card-header">
+              <form id="form" action="" method="post">
+                    <div class="btn-group">
         <?php 
       include '../../conexion/conexion.php';
       $genero1 = "SELECT * FROM tbl_ms_roles_ojetos WHERE ID_ROL='$id_rol7' and ID_OBJETO=19 and PERMISO_INSERCION=1";
@@ -89,9 +93,10 @@ if (mysqli_num_rows($roles35) > 0)
                 </button>';
                           }
                         ?> 
-        
+                        <button type="submit"  name="accion" value="reporte_pdf" class="btn btn-secondary buttons-pdf buttons-html5"  onclick="return confirm('¿Quieres generar reporte de géneros?')" onclick="textToPdf()"><span>Reporte PDF</span></button>
+                     
     </div>
-
+    </form> 
 <!-- El Modal -->
     <div class="modal" id="myModal">
         <div class="modal-dialog">
@@ -151,8 +156,7 @@ if (mysqli_num_rows($roles35) > 0)
               <div class="card-header">
                   <!-- Btn reporte pdf -->
                   <form id="form" action="" method="post">
-                    <button type="submit"  name="accion" value="reporte_pdf" class="btn btn-secondary buttons-pdf buttons-html5"  onclick="return confirm('¿Quieres generar reporte de Genero?')" onclick="textToPdf()"><span>Reporte PDF</span></button>
-                  </form>
+
                   <!--fin  Btn reporte pdf -->
               </div>
               
@@ -421,7 +425,7 @@ if (mysqli_num_rows($roles35) > 0)
             //muestra el titulo secundario
             pdf.setFont('times');
             pdf.setFontSize(10);
-            pdf.text("Reporte de genero", 84,20,);
+            pdf.text("Reporte de géneros", 84,20,);
 
                             //////// pie de Pagina ///////
             //muestra la fecha
@@ -438,7 +442,7 @@ if (mysqli_num_rows($roles35) > 0)
           }
             //Fin Encabezado y pie de pagina
 
-                  pdf.save('Reporte de Genero.pdf');
+                  pdf.save('Reporte de géneros.pdf');
       })
       
     </script>
