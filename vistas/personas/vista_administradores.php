@@ -9,6 +9,40 @@ if(!isset($_SESSION['usuario'])){
         
 }
 include '../../controladores/crud_administradores.php';
+// Selecciona el id del rol del usuario logueado
+include '../../conexion/conexion.php';
+$usuario = $_SESSION;
+$roles34 = "SELECT * FROM tbl_usuarios WHERE USUARIO='$usuario[usuario]'";
+$roles35 = mysqli_query($conn, $roles34);
+if (mysqli_num_rows($roles35) > 0)
+{
+ while($row = mysqli_fetch_assoc($roles35))
+  { 
+      $id_rol7 = $row['ID_ROL'];
+  } 
+}
+
+               //valida si tiene permisos de consultar la pantalla 
+               $profesion = "SELECT * FROM tbl_ms_roles_ojetos WHERE ID_ROL='$id_rol7' and ID_OBJETO=1 and PERMISO_CONSULTAR=0";
+               $profesionn = mysqli_query($conn, $profesion);
+               if (mysqli_num_rows($profesionn) > 0)
+               {
+                header('Location: ../../vistas/tablero/vista_perfil.php');
+                die();
+               }else{
+                      $profesion = "SELECT * FROM tbl_ms_roles_ojetos WHERE ID_ROL='$id_rol7' and ID_OBJETO=1 and PERMISO_CONSULTAR=1";
+                      $profesionn = mysqli_query($conn, $profesion);
+                      if (mysqli_num_rows($profesionn) > 0){}
+                      else{
+                        header('Location: ../../vistas/tablero/vista_perfil.php');
+                        die();
+                      }
+               }
+                // inicio inserta en la tabla bitacora
+                $sql = "INSERT INTO tbl_bitacora (USUARIO, ACCION, OBSERVACION)
+                VALUES ('$usuario1[usuario]', 'CONSULTO', 'CONSULTO LA PANTALLA  ADMINISTRATIVA DE USUARIOS')";
+                if (mysqli_query($conn, $sql)) {} else {}
+                // fin inserta en la tabla bitacora
 
 
 ?>
@@ -40,9 +74,6 @@ include '../../controladores/crud_administradores.php';
             <!-- Inicio de modal de agregar -->
 <div class="container mt-3">
         <h3>Usuarios</h3> <br>  
-        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal">
-            Nuevo usuario
-        </button>
         <!-- El Modal -->
     <div class="modal" id="myModal">
         <div class="modal-dialog">
@@ -62,7 +93,7 @@ include '../../controladores/crud_administradores.php';
                     <!-- Inicio del select de rol -->
                     <label for="sel1" class="form-label">Rol:</label>
                     <select  class="form-select"  name="rol" required >
-                        <option></option>
+                    <option value="">Seleccione un Rol</option>
                         <?php
                         include '../../conexion/conexion.php';
                         $roles = "SELECT * FROM tbl_roles ORDER BY ID_ROL";
@@ -82,7 +113,7 @@ include '../../controladores/crud_administradores.php';
                     <!-- Inicio del select deL estado -->
                     <label for="sel1" class="form-label">Estado:</label>
                     <select class="form-select"  name="estado" required >
-                        <option></option>
+                    <option value="">Seleccione una Estado</option>
                         <?php
                         include '../../conexion/conexion.php';
                         $estados = "SELECT * FROM tbl_estado_usuario ORDER BY ID_ESTADO_USUARIO";
@@ -112,13 +143,17 @@ include '../../controladores/crud_administradores.php';
                     <input type="text" class="form-control" name="usuario" required value="" autocomplete = "off"  onkeypress="return soloLetras(event);" minlength="3" maxlength="20" onkeyup="mayus(this);" required onblur="quitarespacios(this);" onkeydown="sinespacio(this);">
 
                     <label for="">Contraseña:</label>
-                    <input type="password" class="form-control" name="contrasena" title="una mayuscula, minuscula, 8 caracteres, un 1 numero  " value="" minlength="8" maxlength="30" required onblur="quitarespacios(this);" onkeyup="sinespacio(this);" pattern="(?=.*[\d])(?=.*[a-z])(?=.*[A-Z]).{8,}">
-                  
+                    <div class="col-sm-15">
+                      <input type="password" class="form-control" name="contrasena" id="myInput" title="una mayuscula, minuscula, 8 caracteres, un 1 numero  " value="" minlength="8" maxlength="30" onkeypress="return clave1(event);" required onblur="quitarespacios(this);" onkeyup="sinespacio(this);" pattern="(?=.*[\d])(?=.*[a-z])(?=.*[A-Z]).{8,}">
+                      <input type="checkbox" onclick="mostrarContrasena()" > Mostrar/Ocultar
+                    </div>
+
                     <label for="">Correo:</label>
                     <input type="email" class="form-control" name="correo" required value="" autocomplete="off" placeholder="" > 
                      
                     <label for="pwd" class="form-label">Genero:</label>
                     <select style="background-color:rgb(240, 244, 245);" value="<?php echo "$genero"; ?>" class="form-select" id="lista1" name="genero" required >
+                    <option value="">Seleccione un Genero</option>
                         <?php
                             include 'conexion/conexion.php';
                             $genero = "SELECT * FROM tbl_generos ORDER BY ID_GENERO";
@@ -142,10 +177,11 @@ include '../../controladores/crud_administradores.php';
                     </select> -->
 
                     <label for="">DNI:</label>
-                    <input type="text" class="form-control" name="dni" required value="" autocomplete="off" minlength="15" maxlength="15"  onkeypress="return solonumero(event)" placeholder="0000-0000-000000" >
+                    <input type="text" class="form-control" name="dni" required value="" autocomplete="off" minlength="13" maxlength="13" onkeypress="return solonumero(event)" required pattern="[0-9]+[1-9]+" title="13 caracteres y no todos ceros">
 
                     <label for="pwd" class="form-label">Profesión:</label>
                       <select style="background-color:rgb(240, 244, 245);" value="<?php echo "$profesion"; ?>" class="form-select" id="lista1" name="profesion" required >
+                      <option value="">Seleccione una Profesión</option>
                             <?php
                                 include 'conexion/conexion.php';
                                 $profesion = "SELECT * FROM tbl_profesiones ORDER BY ID_PROFESION";
@@ -167,26 +203,27 @@ include '../../controladores/crud_administradores.php';
                     <label for="">Dirección:</label>
                     <input type="text" class="form-control" name="direccion" required value="" autocomplete="off" onkeyup="mayus(this);" maxlength="70" >
 
-                    <label for="">Telefono:</label>
-                    <input type="number" autocomplete="off" class="form-control" name="celular" required value="" placeholder="" >
+                    <label for="">Teléfono:</label>
+                    <input type="text" autocomplete="off" class="form-control" name="celular" minlength="8" maxlength="8" required value="" placeholder="" required pattern="[0-9]+[1-9]+[0-9]+" title="8 caracteres y no todos ceros" onkeypress="return solonumero(event)" >
                     
                     <label for="">Referencia:</label>
                     <input type="text" class="form-control" name="referencia" required value="" autocomplete="off" onkeyup="mayus(this);" maxlength="30" >
 
-                    <label for="">Telefono de referencia:</label>
-                    <input type="number" autocomplete="off"  class="form-control" name="celular_referencia" required value="" placeholder="" >
+                    <label for="">Teléfono de referencia:</label>
+                    <input type="text" autocomplete="off"  class="form-control" name="celular_referencia" minlength="8" maxlength="8" required value="" placeholder="" required pattern="[0-9]+[1-9]+[0-9]+" title="8 caracteres y no todos ceros" onkeypress="return solonumero(event)">
 
                     <label for="">Experiencia laboral:</label>
                     <input type="text" class="form-control" name="experiencia_laboral" required value="" autocomplete="off" onkeyup="mayus(this);" maxlength="30" >
 
-                    <label for="">Curriculum:</label>
+                    <label for="">Currículum:</label>
                     <input type="file" class="form-control" name="curriculum"  accept=".pdf, .doxc" value="" placeholder="Opcional" >
 
                     <label for="">Foto:</label>
                     <input type="file" class="form-control" name="foto" accept=".jpg, .png, .jpej, .JPEG, .JPG, .PNG" value="" placeholder="Opcional" >
 
-                    <label for="pwd" class="form-label">Area:</label>
+                    <label for="pwd" class="form-label">Área:</label>
                       <select style="background-color:rgb(240, 244, 245);" value="<?php echo "$area"; ?>" class="form-select" id="lista1" name="area" required >
+                      <option value="">Seleccione un Área</option>
                               <?php
                                   include 'conexion/conexion.php';
                                   $area = "SELECT * FROM tbl_areas ORDER BY ID_AREA";
@@ -208,7 +245,7 @@ include '../../controladores/crud_administradores.php';
                 <!-- Fin Cuerpo del modal Modal -->               
                 <!-- pie del modal -->
                 <div class="modal-footer">
-      	            <button type="submit" name="accion" value="agregar" class="btn btn-primary" onclick="return confirm('¿Desea agregar un usuario?')">Agregar</button>
+      	            <button type="submit" name="accion" value="agregar" class="btn btn-primary">Agregar</button>
                     <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
                 </div>
                 <!-- Fin pie del modal -->
@@ -223,8 +260,7 @@ include '../../controladores/crud_administradores.php';
 
           </div>
           <div class="col-sm-6">
-            <ol class="breadcrumb float-sm-right">
-              
+            <ol class="breadcrumb float-sm-right"> 
             </ol>
             
           </div>
@@ -247,12 +283,26 @@ include '../../controladores/crud_administradores.php';
               <div class="card-header">
                 <!-- <h3 class="card-title">Usuarios</h3> -->
                   <form id="form" action="" method="post">
-                    <button type="submit"  name="accion" value="reporte_pdf" class="btn btn-secondary buttons-pdf buttons-html5"  onclick="return confirm('¿Quieres generar reporte de roles?')" onclick="textToPdf()"><span>Reporte PDF</span></button>
-                    </form>
-                      <!-- <h3 class="card-title">Roles</h3> -->
-                
+                  <div class="btn-group">
+                    <?php 
+      include '../../conexion/conexion.php';
+      $area1 = "SELECT * FROM tbl_ms_roles_ojetos WHERE ID_ROL='$id_rol7' and ID_OBJETO=1 and PERMISO_INSERCION=1";
+      $area2 = mysqli_query($conn, $area1);
+      if (mysqli_num_rows($area2) > 0)
+       {
+         echo '<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal">
+                    Nuevo Usuario
+                </button>';
+                          }
+                        ?> 
+              <button type="submit"  name="accion" value="reporte_pdf" class="btn btn-secondary buttons-pdf buttons-html5"  onclick="return confirm('¿Quieres generar reporte de Usuarios?')" onclick="textToPdf()"><span>Reporte PDF</span></button>
+	               </div>
+            </form>
+                <!-- <h3 class="card-title">Profesiones</h3> -->
                 
               </div>
+                
+             
               
               <!-- /.card-header -->
               <div class="card-body ">
@@ -262,22 +312,22 @@ include '../../controladores/crud_administradores.php';
                   <th>Acciones</th>
                   <th>Id</th>
                   <th>Rol</th>
-                  <th>estado</th>
+                  <th>Estado</th>
                   <th>Nombre</th>
                   <th>Apellido</th>
                   <th>Usuario</th>
                   <th>Correo</th>
                   <th>Genero</th>                  
                   <th>DNI</th>
-                  <th>Profesion</th>
+                  <th>Profesión</th>
                   <th>Dirección</th>
-                  <th>Telefono</th>
+                  <th>Teléfono</th>
                   <th>Referencia</th>
-                  <th>Telefono referencia</th>
+                  <th>Teléfono Referencia</th>
                   <th>Experiencia laboral</th>
-                  <th>Curriculum</th>                                                    
+                  <th>Currículum</th>                                                    
                   <th>Foto</th>
-                  <th>Area</th>
+                  <th>Área</th>
                   
                   </tr>
                   </thead>
@@ -287,10 +337,19 @@ include '../../controladores/crud_administradores.php';
                      ?>
                   <tr>
                   <td>  
-                        <!-- inicio boton editar -->
+                  <?php 
+                          include '../../conexion/conexion.php';
+                          $area1 = "SELECT * FROM tbl_ms_roles_ojetos WHERE ID_ROL='$id_rol7' and ID_OBJETO=1 and PERMISO_ACTUALIZACION=1";
+                          $area2 = mysqli_query($conn, $area1);
+                          if (mysqli_num_rows($area2) > 0)
+                          {?>
+                                 <!-- inicio boton editar -->
                       <button type="button"  class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#myModal2<?php echo $filas['ID_USUARIO'] ?>" >
                       <i class="fas fa-pencil-alt"></i>
-                      </button>
+                      </button> <?php 
+                          }
+                        ?>
+                        
 
                           <!-- El Modal -->
                           <div class="modal" id="myModal2<?php echo $filas['ID_USUARIO'] ?>">
@@ -393,7 +452,7 @@ include '../../controladores/crud_administradores.php';
                     <label for="">DNI:</label>
                     <input type="text" class="form-control" name="dni" required value="<?php echo $filas['DNI'] ?>" autocomplete="off" minlength="15" maxlength="15"  onkeypress="return solonumero(event)" placeholder="0000-0000-000000" >
 
-                    <label for="">Profesion:</label>
+                    <label for="">Profesión:</label>
                     <select class="form-select"  name="profesion" required >
                     <option value="<?php echo $filas['ID_PROFESION']; ?>"> <?php echo $filas['PROFESION']; ?></option>
                        
@@ -416,19 +475,19 @@ include '../../controladores/crud_administradores.php';
                     <label for="">Dirección:</label>
                     <input type="text" class="form-control" name="direccion" required value="<?php echo $filas['DIRECCION'] ?>" autocomplete="off" onkeyup="mayus(this);" maxlength="70" >
 
-                    <label for="">Telefono:</label>
+                    <label for="">Teléfono:</label>
                     <input type="number" class="form-control" name="celular" required value="<?php echo $filas['CELULAR'] ?>" placeholder="" >
                     
                     <label for="">Referencia:</label>
                     <input type="text" class="form-control" name="referencia" required value="<?php echo $filas['REFERENCIA'] ?>" autocomplete="off" onkeyup="mayus(this);" maxlength="70" >
 
-                    <label for="">Telefono de referencia:</label>
+                    <label for="">Teléfono de referencia:</label>
                     <input type="number" class="form-control" name="celular_referencia" required value="<?php echo $filas['CEL_REFERENCIA'] ?>" placeholder="" >
 
                     <label for="">Experiencia laboral:</label>
                     <input type="text" class="form-control" name="experiencia_laboral" required value="<?php echo $filas['EXPERIENCIA_LABORAL'] ?>" autocomplete="off" onkeyup="mayus(this);" maxlength="30" >
 
-                    <label for="">Curriculum:</label>
+                    <label for="">Currículum:</label>
                     <input type="file" class="form-control" name="curriculum" accept=".pdf, .doxc" value="<?php echo $filas['CURRICULUM'] ?>" placeholder="" >
 
                     <label for="">Foto:</label>
@@ -438,7 +497,7 @@ include '../../controladores/crud_administradores.php';
                     <input type="hidden" name="ruta_imagen" value="<?php echo $filas['FOTO'] ?>">
  
                      
-                    <label for="pwd" class="form-label">Area:</label>
+                    <label for="pwd" class="form-label">Área:</label>
                     <select class="form-select"  name="area" required >
                       <option value="<?php echo $filas['ID_AREA']; ?>"> <?php echo $filas['AREA']; ?></option>
 
@@ -477,13 +536,19 @@ include '../../controladores/crud_administradores.php';
                           
                           
                             <input type="hidden" name="id_usuario"  value="<?php echo $filas['ID_USUARIO'] ?>">
-                            
-                          
-                      <button  value="eliminar" name="accion" 
+                            <?php 
+                          include '../../conexion/conexion.php';
+                          $area1 = "SELECT * FROM tbl_ms_roles_ojetos WHERE ID_ROL='$id_rol7' and ID_OBJETO=1 and PERMISO_ELIMINACION=1";
+                          $area2 = mysqli_query($conn, $area1);
+                          if (mysqli_num_rows($area2) > 0)
+                          {?>
+                             <button  value="eliminar" name="accion" 
                         onclick="return confirm('¿Quieres eliminar este dato?')"
                         type="submit" class="btn btn-danger ">
                         <i class="fas fa-trash-alt"></i>
-                    </button></form>
+                    </button><?php 
+                          }
+                        ?></form>
                     
 </td>
                      <td ><?php echo $filas['ID_USUARIO'] ?></td>
@@ -695,7 +760,36 @@ include '../../controladores/crud_administradores.php';
     };
 
   </script>
+<script>
+  function clave1(e) {
+  key = e.keyCode || e.which;
+  tecla = String.fromCharCode(key).toString();
+  letras = "ABCDEFGHIJKLMNÑOPQRSTUVWXZabcdefghijklmnñopqrstuvwxyz0123456789,#$%&/=!¡?¿()*{}[]-_'.@<>";
+  
+  especiales = [8,13];
+  tecla_especial = false;
+  for(var i in especiales) {
+    if(key == especiales[i]){
+      tecla_especial = true;
+      break;
+    }
+  }
+  
+  if(letras.indexOf(tecla) == -1 && !tecla_especial){
+    alert("Sin espacios");
+    return false;
+  }
+}
 
+  function mostrarContrasena(){
+    var x = document.getElementById("myInput");
+    if (x.type === "password"){
+      x.type = "text";
+    }else{
+      x.type = "password";
+    }
+  }
+</script>
 
 
 
@@ -720,7 +814,7 @@ include '../../controladores/crud_administradores.php';
    
 	event.preventDefault()
  
-				const pdf = new jsPDF('p', 'mm', 'letter');			
+				const pdf = new jsPDF('L', 'mm', 'letter');			
         	
 
 				var columns = ["", "", "", "", ""];
@@ -754,7 +848,7 @@ include '../../controladores/crud_administradores.php';
 				//muestra el titulo secundario
 				pdf.setFont('times');
 				pdf.setFontSize(10);
-				pdf.text("Reporte de roles", 84,20,);
+				pdf.text("Reporte de Usuarios", 84,20,);
 
 												//////// pie de Pagina ///////
 				//muestra la fecha
@@ -771,7 +865,7 @@ include '../../controladores/crud_administradores.php';
 			}
 				//Fin Encabezado y pie de pagina
 
-							pdf.save('Reporte de Roles.pdf');
+							pdf.save('Reporte de Usuarios.pdf');
 	})
   
 </script>

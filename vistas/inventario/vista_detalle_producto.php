@@ -38,11 +38,23 @@ if (mysqli_num_rows($roles35) > 0)
                         die();
                       }
                }
-                // inicio inserta en la tabla bitacora
-                $sql = "INSERT INTO tbl_bitacora (USUARIO, ACCION, OBSERVACION)
-                VALUES ('$usuario1[usuario]', 'CONSULTO', 'CONSULTO LA PANTALLA  ADMINISTRATIVA DE DETALLE DE COMPRAS')";
-                if (mysqli_query($conn, $sql)) {} else {}
-                // fin inserta en la tabla bitacora
+
+               //valida si hay una compra en proceso
+               $validar_compra7 = "SELECT * FROM (tbl_compras c
+               INNER JOIN tbl_proveedores p ON c.ID_PROVEEDOR = p.ID_PROVEEDOR) WHERE USUARIO='$usuario[usuario]' and ESTADO_COMPRA='EN PROCESO'";
+               $validar_compra77 = mysqli_query($conn, $validar_compra7);
+               if (mysqli_num_rows($validar_compra77) > 0)
+               {
+                while($row1 = mysqli_fetch_assoc($validar_compra77))
+                    { 
+                      $proveedor = $row1['NOMBRE'];
+                    } 
+              
+               }else{
+                header('Location: ../../vistas/inventario/vista_compras.php');
+                die();
+               }
+              
 
 
 ?>
@@ -108,8 +120,9 @@ if (mysqli_num_rows($roles35) > 0)
                 <!-- Cuerpo del modal Modal -->
                 <div class="modal-body">
                
-                <label for="">Seleccione el producto</label>
+                <label for="">Producto</label>
                     <select class="form-select" id="lista1" name="producto" required >
+                    <option value="">Selecciona el producto</option>
                         <?php
                             include '../../conexion/conexion.php';
                             $productos = "SELECT * FROM tbl_productos ORDER BY ID_PRODUCTO";
@@ -126,12 +139,13 @@ if (mysqli_num_rows($roles35) > 0)
                            ?>
                    </select><br>
 
-                   <label for="">Garantia</label>
-                    <input type="text" class="form-control" name="garantia" required value="<?php echo $garantia14;?>" placeholder=""  autocomplete = "off"  onkeypress="return soloLetras(event);" minlength="3" maxlength="255" 
+                   <label for="">Garantía</label>
+                    <input type="text" class="form-control" name="garantia" required value="<?php echo $garantia14;?>" placeholder=""  autocomplete = "off"   minlength="3" maxlength="255" 
                     onkeyup="mayus(this);" required ><br>
 
-                    <label for="">Seleccione la unidad de medida</label>
+                    <label for="">unidad de medida</label>
                     <select class="form-select" id="lista1" name="unidad_medida" required >
+                    <option value="">Selecciona la unidad de medida</option>
                         <?php
                             include '../../conexion/conexion.php';
                             $unidades = "SELECT * FROM tbl_unidad_medida ORDER BY ID_UNIDAD_MEDIDA";
@@ -148,12 +162,12 @@ if (mysqli_num_rows($roles35) > 0)
                            ?>
                    </select><br>
                    <label for="">Cantidad</label>
-                   <input type="number" class="form-control" name="cantidad" required value="<?php echo $cantidad; ?>" placeholder=""  
-                    autocomplete = "off"   >
+                   <input type="text" class="form-control" name="cantidad" required value="<?php echo $cantidad; ?>" placeholder=""  
+                    autocomplete = "off"  onkeypress="return solonumero1(event)"  minlength="1" maxlength="10"onblur="quitarespacios(this);" onkeydown="sinespacio(this);" >
 
-                    <label for="">Precio</label>
-                    <input type="number" class="form-control" name="precio" required value="<?php echo $precio; ?>" placeholder=""  
-                    autocomplete = "off"   >
+                    <label for="">Precio de compra</label>
+                    <input type="text" class="form-control" name="precio" required value="<?php echo $precio; ?>" placeholder=""  
+                    autocomplete = "off" onkeypress="return solonumero(event)"  minlength="1" maxlength="10"  onblur="quitarespacios(this);" onkeydown="sinespacio(this);">
                 
                 </div>
                 <!-- Fin Cuerpo del modal Modal -->
@@ -167,7 +181,7 @@ if (mysqli_num_rows($roles35) > 0)
             </div>
         </div>
     </div>
-    <!-- Fin  de modal de agregar --> <br>
+    <!-- Fin  de modal de agregar --> 
           </div>
           <div class="col-sm-12">
             <ol class="breadcrumb float-sm-right">
@@ -222,10 +236,11 @@ if (mysqli_num_rows($roles35) > 0)
                   <thead>
                   <tr>
                  <th>Acciones</th>
-                  <th>Id detalle</th>
-                  <th>Id compra</th>
-                  <th>producto</th>
-                  <th>Garantia</th>
+                  <th>ID</th>
+                  <th>ID compra</th>
+                  <th>Proveedor</th>
+                  <th>Producto</th>
+                  <th>Garantía</th>
                   <th>Unidad de medida</th>
                   <th>Cantidad</th>
                   <th>Precio</th>
@@ -267,6 +282,7 @@ if (mysqli_num_rows($roles35) > 0)
 </td>
                      <td ><?php echo $filas['ID_DETALLE'] ?></td>
                      <td><?php echo $filas['ID_COMPRA'] ?></td>
+                     <td><?php echo $proveedor; ?></td>
                      <td><?php echo $filas['NOMBRE'] ?></td>
                      <td><?php echo $filas['GARANTIA'] ?></td>
                      <td><?php echo $filas['UNIDAD_MEDIDA'] ?></td>
@@ -331,6 +347,27 @@ if (mysqli_num_rows($roles35) > 0)
 <!-- Page specific script -->
 
 <!-- INICIO muestra los botones, traduce y Agrupar -->
+<script type="text/javascript"> function solonumero(e) {
+        tecla = (document.all) ? e.keyCode : e.which;
+        if (tecla==8) return true;
+        else if (tecla==0||tecla==9)  return true;
+       // patron =/[0-9\s]/;// -> solo letras
+        patron =/[0-9.\s]/;// -> solo numeros
+        te = String.fromCharCode(tecla);
+        return patron.test(te);
+    }
+	</script>
+
+  <script type="text/javascript"> function solonumero1(e) {
+        tecla = (document.all) ? e.keyCode : e.which;
+        if (tecla==8) return true;
+        else if (tecla==0||tecla==9)  return true;
+       // patron =/[0-9\s]/;// -> solo letras
+        patron =/[0-9\s]/;// -> solo numeros
+        te = String.fromCharCode(tecla);
+        return patron.test(te);
+    }
+	</script>
 
 <script>
   $(function () {

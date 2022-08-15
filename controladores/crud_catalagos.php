@@ -37,7 +37,7 @@ if(in_array($extencion, $permitidos)){
          if($res){
              // inicio inserta en la tabla bitacora
              $sql = "INSERT INTO tbl_bitacora (USUARIO, ACCION, OBSERVACION)
-             VALUES ('$usuario1[usuario]', 'INSERTO', 'INSERTO UN REGISTRO DE TIPO () Y TITULO ($titulo) ')";
+             VALUES ('$usuario1[usuario]', 'INSERTO', 'UN REGISTRO CON TITULO ($titulo) EN LA PANTALLA CATALOGOS')";
              if (mysqli_query($conn, $sql)) {} else {}
              // fin inserta en la tabla bitacora
             echo '<script type="text/javascript">
@@ -50,7 +50,7 @@ if(in_array($extencion, $permitidos)){
 }else{
     // inicio inserta en la tabla bitacora
     $sql = "INSERT INTO tbl_bitacora (USUARIO, ACCION, OBSERVACION)
-    VALUES ('$usuario1[usuario]', 'INTENTO', 'NO LOGRO INSERTAR YA QUE EL ARCHIVO NO ERA IMAGEN')";
+    VALUES ('$usuario1[usuario]', 'INTENTO', 'NO LOGRO INSERTAR, YA QUE EL ARCHIVO NO ERA IMAGEN EN LA PANTALLA CATALOGOS')";
     if (mysqli_query($conn, $sql)) {} else {}
     // fin inserta en la tabla bitacora
     echo '<script type="text/javascript">
@@ -96,7 +96,7 @@ if(in_array($extencion, $permitidos))
     {
         // inicio inserta en la tabla bitacora
         $sql = "INSERT INTO tbl_bitacora (USUARIO, ACCION, OBSERVACION)
-        VALUES ('$usuario1[usuario]', 'EDITO', 'EDITO UN REGISTRO DE TIPO () Y TITULO ($titulo)')";
+        VALUES ('$usuario1[usuario]', 'EDITO', 'EL CATALAGO ($titulo) EN LA PANTALLA CATALOGOS')";
         if (mysqli_query($conn, $sql)) {} else {}
          // fin inserta en la tabla bitacora
         echo '<script>
@@ -114,7 +114,7 @@ if(in_array($extencion, $permitidos))
 }else{
     // inicio inserta en la tabla bitacora
     $sql = "INSERT INTO tbl_bitacora (USUARIO, ACCION, OBSERVACION)
-    VALUES ('$usuario1[usuario]', 'INTENTO', 'NO LOGRO EDITAR YA QUE EL ARCHIVO NO ERA IMAGEN')";
+    VALUES ('$usuario1[usuario]', 'INTENTO', 'NO LOGRO EDITAR YA QUE EL ARCHIVO NO ERA IMAGEN EN LA PANTALLA CATALOGOS')";
     if (mysqli_query($conn, $sql)) {} else {}
     // fin inserta en la tabla bitacora
     echo '<script type="text/javascript">
@@ -129,27 +129,36 @@ break;
 
 //para eliminar en la tabla mysl  
 case "eliminar";
-echo $ruta;
-echo $id_imagen;
+$validar_rol = "SELECT * FROM tbl_portafolio WHERE ID_CATALOGO='$id_imagen'";
+$result4 = mysqli_query($conn, $validar_rol); 
+ if (mysqli_num_rows($result4) > 0) { 
+    echo '<script>
+                 alert("No se puede eliminar el catalogo, ya que esta en uso");
+                 window.location.href="../../vistas/catalogo/vista_catalagos";                   
+               </script>';
+               mysqli_close($conn);
 
+ }else{
 
-$sql3 = "DELETE FROM tbl_catalogo WHERE ID_CATALOGO='$id_imagen'";
-if (mysqli_query($conn, $sql3)) {
-    unlink($ruta);
-    // inicio inserta en la tabla bitacora
-    $sql = "INSERT INTO tbl_bitacora (USUARIO, ACCION, OBSERVACION)
-    VALUES ('$usuario1[usuario]', 'ELIMINO', 'ELIMINO UN REGISTRO DE TIPO () Y TITULO ($titulo) ')";
-    if (mysqli_query($conn, $sql)) {} else {}
-    // fin inserta en la tabla bitacora
-    header('Location: ../../vistas/catalogo/vista_catalagos');
-}else{
-        echo '<script>
-                  alert("Error al tratar de eliminar categoria");
-              </script>'; mysqli_error($conn);
-     }
-  mysqli_close($conn);
+        $sql3 = "DELETE FROM tbl_catalogo WHERE ID_CATALOGO='$id_imagen'";
+        if (mysqli_query($conn, $sql3)) {
+            unlink($ruta);
+            // inicio inserta en la tabla bitacora
+            $sql = "INSERT INTO tbl_bitacora (USUARIO, ACCION, OBSERVACION)
+            VALUES ('$usuario1[usuario]', 'ELIMINO', 'CATALOGO ($titulo) EN LA PANTALLA CATALOGOS')";
+            if (mysqli_query($conn, $sql)) {} else {}
+            // fin inserta en la tabla bitacora
+            header('Location: ../../vistas/catalogo/vista_catalagos');
+        }else{
+                echo '<script>
+                        alert("Error al tratar de eliminar categoria");
+                    </script>'; mysqli_error($conn);
+            }
+        mysqli_close($conn);
+        }
 
 break;
+
 
 
 }

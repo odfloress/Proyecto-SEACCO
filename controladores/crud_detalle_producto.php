@@ -103,6 +103,12 @@
                 ///////////// ELIMINA LA COMPRA DE LA TABLA DE COMPRAS /////////////
                 $compra1 = "DELETE FROM tbl_compras WHERE ID_COMPRA='$id_compra'";
                 if (mysqli_query($conn, $compra1)) {}
+                ///////////// INSERTA EN BITACORA /////////////
+                // inicio inserta en la tabla bitacora
+                $sql = "INSERT INTO tbl_bitacora (USUARIO, ACCION, OBSERVACION)
+                VALUES ('$usuario1[usuario]', 'ELIMINO', 'CANCELO UNA COMPRA')";
+                if (mysqli_query($conn, $sql)) {} else {}
+                // fin inserta en la tabla bitacora
                 echo '<script>
                                 alert("Compra eliminada con exito");
                                 window.location.href="../../vistas/inventario/vista_compras.php";                   
@@ -112,6 +118,12 @@
       $confirmar = "UPDATE tbl_compras SET ESTADO_COMPRA='FINALIZADO' WHERE ID_COMPRA='$id_compra'";
       if (mysqli_query($conn, $confirmar)) 
       {
+        ///////////// INSERTA EN BITACORA /////////////
+                // inicio inserta en la tabla bitacora
+                $sql = "INSERT INTO tbl_bitacora (USUARIO, ACCION, OBSERVACION)
+                VALUES ('$usuario1[usuario]', 'FINALIZO', 'COMPLETO UNA COMPRA')";
+                if (mysqli_query($conn, $sql)) {} else {}
+                // fin inserta en la tabla bitacora
         echo '<script>
                 alert("Compra completada con exito");
                 window.location.href="../../vistas/inventario/vista_compras.php";                   
@@ -123,17 +135,19 @@
       break;
       //para eliminar en la tabla mysl  
       case "eliminar";
-      $total = $cantidad * $precio;
-      echo $total;
+    
+      
+     
+     
        ///////////// Resta EL PRECIO TOTAL EN LA TABLA TBL_COMPRA /////////////
 
        $total = $cantidad * $precio;
-       $total_compra = "UPDATE tbl_compras SET TOTAL_COMPRA=TOTAL_COMPRA - $total WHERE ID_COMPRA='$id_compra'";
-       if (mysqli_query($conn, $total_compra)) {}
-
+       $total_compras = "UPDATE tbl_compras SET TOTAL_COMPRA=TOTAL_COMPRA - $total WHERE ID_COMPRA=$id_compra";
+       if (mysqli_query($conn, $total_compras)) {}
+      
        ///////////// RESTA AL INVENTARIO /////////////
-       $inventario = "UPDATE tbl_inventario SET CANTIDAD_DISPONIBLE=CANTIDAD_DISPONIBLE - $cantidad WHERE ID_PRODUCTOS='$producto'";
-       if (mysqli_query($conn, $inventario)) {}
+//        $inventario = "UPDATE tbl_inventario SET CANTIDAD_DISPONIBLE=CANTIDAD_DISPONIBLE - $cantidad WHERE ID_PRODUCTOS='$producto'";
+//        if (mysqli_query($conn, $inventario)) {}
 
         ///////////// ELIMINA DE LA TABLA KARDEX /////////////
        $sql3 = "DELETE FROM tbl_kardex WHERE ID_PRODUCTO='$producto' and ID_COMPRA='$id_compra' ";
@@ -151,6 +165,7 @@
                             }
                         mysqli_close($conn);
                    
+                        
           
 
       break;

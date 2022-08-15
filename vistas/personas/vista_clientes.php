@@ -41,7 +41,7 @@ if (mysqli_num_rows($roles35) > 0)
          }
                 // inicio inserta en la tabla bitacora
                 $sql = "INSERT INTO tbl_bitacora (USUARIO, ACCION, OBSERVACION)
-                VALUES ('$usuario[usuario]', 'CONSULTO', 'CONSULTO LA PANTALLA  ADMINISTRATIVA DEL CLIENTES')";
+                VALUES ('$usuario[usuario]', 'CONSULTO', 'CONSULTO LA PANTALLA  ADMINISTRATIVA DE CLIENTES')";
                 if (mysqli_query($conn, $sql)) {} else {}
                 // fin inserta en la tabla bitacora
 ?>
@@ -95,17 +95,6 @@ if (mysqli_num_rows($roles35) > 0)
           <h3>Clientes</h3>
             <!-- Inicio de modal de agregar -->
 <div class="container mt-3">
-<?php 
-      include '../../conexion/conexion.php';
-      $tablero = "SELECT * FROM tbl_ms_roles_ojetos WHERE ID_ROL='$id_rol7' and ID_OBJETO=4 and PERMISO_INSERCION=1";
-      $tablero2 = mysqli_query($conn, $tablero);
-      if (mysqli_num_rows($tablero2) > 0)
-       {
-         echo '<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal">
-                 Nuevo
-               </button>';
-       }
- ?>
         
     </div>
     
@@ -122,17 +111,17 @@ if (mysqli_num_rows($roles35) > 0)
                 <form action="" method="post" enctype="multipart/form-data">
                 <!-- Cuerpo del modal Modal -->
                 <div class="modal-body">
-                <label for="">Codigo</label>
-                <input type="text" class="form-control" autocomplete="off" onkeyup="mayus(this);" name="codigo" required value="<?php echo "$codigo"; ?>" placeholder="">
+                <label for="">Codigo:</label>
+                <input type="text" class="form-control" autocomplete="off" onkeyup="mayus(this);" minlength="6" maxlength="8" name="codigo" required value="<?php echo "$codigo"; ?>" placeholder="">
                 <br>
-                <label for="">Nombre</label>
+                <label for="">Nombre:</label>
                 <input type="text" autocomplete="off"  value="<?php echo "$nombre"; ?>" onkeyup="mayus(this);" maxlength="255" class="form-control"  placeholder="" name="nombre" required>
                 <br>
-                <label for="">Apellido</label>
+                <label for="">Apellido:</label>
                 <input type="text" autocomplete="off"  value="<?php echo "$apellido"; ?>" onkeyup="mayus(this);" maxlength="255" class="form-control"  placeholder="" name="apellido" required>
                 <br>
                 <label for="" class="form-label">Correo:</label>
-                  <input  type="email" autocomplete="off" value="<?php echo "$correo"; ?>" onkeypress="return clave1(event);" class="form-control"  placeholder="" name="correo" >   
+                  <input  type="email" autocomplete="off" value="<?php echo "$correo"; ?>" class="form-control"  placeholder="" name="correo" required>   
                 <br>
                 <label for="" class="form-label">Teléfeno:</label>
                   <input type="text" autocomplete="off"  value="<?php echo "$telefono"; ?>" class="form-control"  placeholder="" name="telefono" required minlength="8" onkeypress="return solonumero(event)" maxlength="8" pattern="[0-9]+[1-9]+[0-9]+" title="8 caracteres y no todos ceros">
@@ -145,6 +134,7 @@ if (mysqli_num_rows($roles35) > 0)
                   <br>
                   <label for="pwd" class="form-label">Genero:</label>
                   <select  value="<?php echo "$genero3"; ?>" class="form-select" id="lista1" name="genero" required >
+                  <option value="">Seleccione un Genero</option>
                         <?php
                             include 'conexion/conexion.php';
                             $genero = "SELECT * FROM tbl_generos ORDER BY ID_GENERO";
@@ -161,7 +151,7 @@ if (mysqli_num_rows($roles35) > 0)
                            ?>
                    </select>
                   <br>
-                  <label for="">Imagen</label>
+                  <label for="">Imagen:</label>
                     <input type="file" class="form-control" accept=".jpg, .png, .jpeg, .JPEG, .JPG, .PNG" name="imagenes" required value="<?php echo "$nombreimagen"; ?>" placeholder=""  >
                     <br>                  
                 
@@ -206,9 +196,21 @@ if (mysqli_num_rows($roles35) > 0)
             <div class="card">
               <div class="card-header">
               <form id="form" action="" method="post">
+                    <div class="btn-group">
+                    <?php 
+      include '../../conexion/conexion.php';
+      $area1 = "SELECT * FROM tbl_ms_roles_ojetos WHERE ID_ROL='$id_rol7' and ID_OBJETO=4 and PERMISO_INSERCION=1";
+      $area2 = mysqli_query($conn, $area1);
+      if (mysqli_num_rows($area2) > 0)
+       {
+         echo '<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal">
+                    Nuevo Cliente
+                </button>';
+                          }
+                        ?> 
               <button type="submit"  name="accion" value="reporte_pdf" class="btn btn-secondary buttons-pdf buttons-html5"  onclick="return confirm('¿Quieres generar reporte de Clientes?')" onclick="textToPdf()"><span>Reporte PDF</span></button>
-	            </form>
-                <!-- <h3 class="card-title">PORTAFOLIO</h3> -->
+	               </div>
+            </form>
               </div>
               
               <!-- /.card-header -->
@@ -217,8 +219,8 @@ if (mysqli_num_rows($roles35) > 0)
                   <thead>
                   <tr>
                   <th>Acciones</th>
-                  <th>Id cliente</th>
-                  <th>Codigo</th>
+                  <th>Id</th>
+                  <th>Código</th>
                   <th>Nombre</th>
                   <th>Apellido</th>
                   <th>Correo</th>

@@ -91,19 +91,7 @@ if (mysqli_num_rows($roles35) > 0)
 <div class="container mt-3">
   
         <h3>Compras</h3> <br> 
-        <?php 
-      include '../../conexion/conexion.php'; 
-
-                $tablero = "SELECT * FROM tbl_ms_roles_ojetos WHERE ID_ROL='$id_rol7' and ID_OBJETO=8 and PERMISO_INSERCION=1";
-                $tablero2 = mysqli_query($conn, $tablero);
-                if (mysqli_num_rows($tablero2) > 0)
-                {
-                  echo '<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal">
-                              Nueva compra
-                          </button>';
-                }
-         
-                                  ?> 
+      
         
     </div>
 
@@ -144,7 +132,7 @@ if (mysqli_num_rows($roles35) > 0)
                 <!-- Fin Cuerpo del modal Modal -->
                 <!-- pie del modal -->
                 <div class="modal-footer">
-      	            <button type="submit" name="accion" value="agregar" class="btn btn-primary" onclick="return confirm('¿Desea crear la compra?')">Agregar</button>
+      	            <button type="submit" name="accion" value="agregar" class="btn btn-primary">Agregar</button>
                     <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
                 </div>
                 <!-- Fin pie del modal -->
@@ -152,7 +140,7 @@ if (mysqli_num_rows($roles35) > 0)
             </div>
         </div>
     </div>
-    <!-- Fin  de modal de agregar --> <br>
+    <!-- Fin  de modal de agregar --> 
           </div>
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
@@ -178,8 +166,21 @@ if (mysqli_num_rows($roles35) > 0)
             <div class="card table-responsive">
               <div class="card-header">
               <form id="form" action="" method="post">
+                    <div class="btn-group">
+                    <?php 
+                                include '../../conexion/conexion.php';
+                                $tablero = "SELECT * FROM tbl_ms_roles_ojetos WHERE ID_ROL='$id_rol7' and ID_OBJETO=8 and PERMISO_INSERCION=1";
+                                $tablero2 = mysqli_query($conn, $tablero);
+                                if (mysqli_num_rows($tablero2) > 0)
+                                {
+                                  echo '<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal">
+                                          Nueva compra
+                                        </button>';
+                                                    }
+                        ?>
               <button type="submit"  name="accion" value="reporte_pdf" class="btn btn-secondary buttons-pdf buttons-html5"  onclick="return confirm('¿Quieres generar reporte de compras?')" onclick="textToPdf()"><span>Reporte PDF</span></button>
-	            </form>
+	               </div>
+            </form>
                 <!-- <h3 class="card-title">Compras</h3> -->
                 
               </div>
@@ -191,7 +192,7 @@ if (mysqli_num_rows($roles35) > 0)
                   <tr>
                     
                  <th>Acciones</th>
-                  <th>Id Compra</th>
+                  <th>ID</th>
                   <th>Proveedores</th>
                   <th>Total compra</th>
                   <th>Usuario</th>
@@ -210,7 +211,7 @@ if (mysqli_num_rows($roles35) > 0)
                       <td><form action="../../vistas/inventario/mostrar_detalle.php" method="post">
                       <input type="hidden" name="fecha" value="<?php echo $filas['FECHA_COMPRA'] ?>">
                             <input type="hidden" name="compra" value="<?php echo $filas['ID_COMPRA'] ?>">
-                          <button type="submit" name="accion" value="detalle" class="btn btn-primary" onclick="return confirm('¿Desea ver detalles de la compra?')">Ver detalle</button>
+                          <button type="submit" name="accion" value="detalle" class="btn btn-primary" >Ver detalle</button>
                           </form>
                       </td>
                      <td ><?php echo $filas['ID_COMPRA'] ?></td>

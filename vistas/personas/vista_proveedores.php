@@ -46,6 +46,7 @@ if (mysqli_num_rows($roles35) > 0)
            
 
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -77,17 +78,7 @@ if (mysqli_num_rows($roles35) > 0)
             <!-- Inicio de modal de agregar -->
 <div class="container mt-3">
         <h3>Proveedores</h3> <br>  
-        <?php 
-      include '../../conexion/conexion.php';
-      $proveedor = "SELECT * FROM tbl_ms_roles_ojetos WHERE ID_ROL='$id_rol7' and ID_OBJETO=5 and PERMISO_INSERCION=1";
-      $proveedor2 = mysqli_query($conn, $proveedor);
-      if (mysqli_num_rows($proveedor2) > 0)
-       {
-         echo '<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal">
-                    Nuevo Proveedor
-                </button>';
-                          }
-                        ?> 
+    
         
     </div>
         
@@ -107,20 +98,20 @@ if (mysqli_num_rows($roles35) > 0)
                 <form action="" method="post">
                 <div class="modal-body">
                 
-                    <label for="">Proveedor</label>
-                    <input type="text" class="form-control" name="nombre"  value="<?php echo $nombre; ?>" required value="" placeholder="" id="txtPrecio_Compra" autocomplete = "off" onkeypress="return soloLetras(event);" minlength="3" maxlength="20" onkeyup="mayus(this);" >
+                    <label for="">Nombre Proveedor:</label>
+                    <input type="text" class="form-control" name="nombre"  value="<?php echo $nombre; ?>" required value="" placeholder="" id="txtPrecio_Compra" autocomplete = "off" onkeypress="return soloLetras(event);" minlength="4" maxlength="50" onkeyup="mayus(this);" >
                     <br>
-                    <label for="">Nombre Referencia</label>
-                    <input type="text" class="form-control" name="nombre_referencia" value="<?php echo $nombre_referencia; ?>"  required value="" placeholder="" id="txtnombrer" autocomplete = "off" onkeypress="return soloLetras(event);" minlength="3" maxlength="20" onkeyup="mayus(this);" >
+                    <label for="">Nombre Referencia:</label>
+                    <input type="text" class="form-control" name="nombre_referencia" value="<?php echo $nombre_referencia; ?>"  required value="" placeholder="" id="txtnombrer" autocomplete = "off" onkeypress="return soloLetras(event);" minlength="4" maxlength="50" onkeyup="mayus(this);" >
                     <br>
-                    <label for="">Sector comercial</label>
-                    <input type="text" class="form-control" name="sector_comercial"  value="<?php echo $sector_comercial; ?>" required value="" placeholder="" id="txtsectorcomercial" autocomplete = "off" onkeypress="return soloLetras(event);" minlength="3" maxlength="20" onkeyup="mayus(this);" >
+                    <label for="">Sector Comercial:</label>
+                    <input type="text" class="form-control" name="sector_comercial"  value="<?php echo $sector_comercial; ?>" required value="" placeholder="" id="txtsectorcomercial" autocomplete = "off" onkeypress="return soloLetras(event);" minlength="4" maxlength="50" onkeyup="mayus(this);" >
                     <br>
-                    <label for="">direccion</label>
+                    <label for="">Dirección:</label>
                     <input type="text" class="form-control" name="direccion" required value=""  value="<?php echo $direccion; ?>" placeholder="" id="txtdireccionproveedor" autocomplete = "off" onkeyup="mayus(this);" >
                     <br>
-                    <label for="">Telefono</label>
-                    <input type="number" class="form-control" name="telefono" required value="" value="<?php echo $telefono; ?>"  placeholder="" id="txttelefono" autocomplete = "off"  >
+                    <label for="">Teléfono</label>
+                    <input type="number" class="form-control" name="telefono" required value="" value="<?php echo $telefono; ?>"  placeholder="" id="txttelefono" autocomplete = "off" minlength="8" maxlength="8" required value="" placeholder="" required pattern="[0-9]+[1-9]+[0-9]+" title="8 caracteres y no todos ceros" onkeypress="return solonumero(event)" >
                     <br>
                     <label for="">Correo</label>
                     <input type="email" class="form-control" name="correo" required value=""  value="<?php echo $correo; ?>" placeholder="" id="txtcorreo"  autocomplete = "off" >
@@ -163,9 +154,21 @@ if (mysqli_num_rows($roles35) > 0)
             <div class="card">
               <div class="card-header">
               <form id="form" action="" method="post">
-              <button type="submit"  name="accion" value="reporte_pdf" class="btn btn-secondary buttons-pdf buttons-html5"  onclick="return confirm('¿Quieres generar reporte de proveedores?')" onclick="textToPdf()"><span>Reporte PDF</span></button>
-	            </form>
-                <!-- <h3 class="card-title">PROVEEDORES</h3> -->
+                    <div class="btn-group">
+                    <?php 
+      include '../../conexion/conexion.php';
+      $area1 = "SELECT * FROM tbl_ms_roles_ojetos WHERE ID_ROL='$id_rol7' and ID_OBJETO=30 and PERMISO_INSERCION=1";
+      $area2 = mysqli_query($conn, $area1);
+      if (mysqli_num_rows($area2) > 0)
+       {
+         echo '<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal">
+                    Nuevo Proveedor
+                </button>';
+                          }
+                        ?> 
+              <button type="submit"  name="accion" value="reporte_pdf" class="btn btn-secondary buttons-pdf buttons-html5"  onclick="return confirm('¿Quieres generar reporte de Proveedores?')" onclick="textToPdf()"><span>Reporte PDF</span></button>
+	               </div>
+            </form>
                 
               </div>
               
@@ -176,11 +179,11 @@ if (mysqli_num_rows($roles35) > 0)
                   <tr>
                   <th>Acciones</th>
                   <th>Id</th>
-                  <th>Nombre</th>
-                  <th>Nombre referencia</th>
-                  <th>Seactor comercial</th>
+                  <th>Nombre Proveedor</th>
+                  <th>Nombre Referencia</th>
+                  <th>Sector Comercial</th>
                   <th>Dirección</th>
-                  <th>Telefono</th>
+                  <th>Teléfono</th>
                   <th>Correo</th>
                   
                   </tr>
@@ -221,25 +224,25 @@ if (mysqli_num_rows($roles35) > 0)
                                 <form action="" method="post">
                                           <div class="modal-body">
                                           <input type="hidden" name="nombre_anterior" value="<?php echo $filas['NOMBRE'] ?>">
-                                              <label for="">Id Proveedor</label>
-                                              <input type="text" class="form-control" name="id_proveedor" readonly required value="<?php echo $filas['ID_PROVEEDOR'] ?>" placeholder="" id="txtPrecio_Compra"   >
+                                              <!--<label  for="">Id Proveedor:</label> -->
+                                              <input type="hidden" class="form-control" name="id_proveedor" readonly required value="<?php echo $filas['ID_PROVEEDOR'] ?>" placeholder="" id="txtPrecio_Compra"   >
                                               <br>
-                                              <label for="">Proveedor</label>
+                                              <label for="">Nombre Proveedor:</label>
                                               <input type="text" class="form-control" name="nombre" autocomplete = "off" required value="<?php echo $filas['NOMBRE'] ?>" placeholder="" id="txtPrecio_Compra" onkeypress="return soloLetras(event);" onkeyup="mayus(this);" >
                                               <br>
-                                              <label for="">Nombre Referencia</label>
+                                              <label for="">Nombre Referencia:</label>
                                              <input type="text" class="form-control" name="nombre_referencia" autocomplete = "off" required value="<?php echo $filas['NOMBRE_REFERENCIA'] ?>" placeholder="" id="txtnombrer" onkeypress="return soloLetras(event);" onkeyup="mayus(this);" >
                                              <br>
-                                             <label for="">Sector comercial</label>
+                                             <label for="">Sector Comercial:</label>
                                              <input type="text" class="form-control" name="sector_comercial" autocomplete = "off" required value="<?php echo $filas['SECTOR_COMERCIAL'] ?>" placeholder="" id="txtsectorcomercial" onkeypress="return soloLetras(event);" onkeyup="mayus(this);" >
                                              <br>
-                                             <label for="">direccion</label>
+                                             <label for="">Dirección:</label>
                                              <input type="text" class="form-control" name="direccion" autocomplete = "off" required value="<?php echo $filas['DIRECCION'] ?>" placeholder="" id="txtdireccionproveedor"  onkeyup="mayus(this);" >
                                              <br>
-                                             <label for="">Telefono</label>
-                                             <input type="number" class="form-control" name="telefono" autocomplete = "off" required value="<?php echo $filas['TELEFONO'] ?>" placeholder="" id="txttelefono"   >
+                                             <label for="">Teléfono:</label>
+                                             <input type="text" class="form-control" name="telefono" autocomplete = "off" required value="<?php echo $filas['TELEFONO'] ?>" placeholder="" id="txttelefono" minlength="8" maxlength="8" required value="" placeholder="" required pattern="[0-9]+[1-9]+[0-9]+" title="8 caracteres y no todos ceros" onkeypress="return solonumero(event)"  >
                                              <br>
-                                             <label for="">Correo</label>
+                                             <label for="">Correo:</label>
                                              <input type="email" class="form-control" name="correo" autocomplete = "off" required value="<?php echo $filas['CORREO'] ?>" placeholder="" id="txtcorreo"  >
                                              <br>   
                                            </div>
@@ -479,6 +482,16 @@ if (mysqli_num_rows($roles35) > 0)
 </script>
 <!-- // Fin para exportar en pdf // -->
 <script type="text/javascript" src="../../js/evitar_reenvio.js"></script>
+<script type="text/javascript"> function solonumero(e) {
+        tecla = (document.all) ? e.keyCode : e.which;
+        if (tecla==8) return true;
+        else if (tecla==0||tecla==9)  return true;
+       // patron =/[0-9\s]/;// -> solo letras
+        patron =/[0-9-\s]/;// -> solo numeros
+        te = String.fromCharCode(tecla);
+        return patron.test(te);
+    }
+	</script>
 </html>
 
 

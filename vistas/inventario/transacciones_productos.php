@@ -1,3 +1,4 @@
+
 <?php
 session_start();
 if(!isset($_SESSION['usuario'])){
@@ -8,7 +9,7 @@ if(!isset($_SESSION['usuario'])){
         die();
         
 }
-include '../../controladores/co_asignaciones.php';
+include '../../controladores/crud_compras.php';
 // Selecciona el id del rol del usuario logueado
 include '../../conexion/conexion.php';
 
@@ -25,14 +26,14 @@ if (mysqli_num_rows($roles35) > 0)
 }
 
                //valida si tiene permisos de consultar la pantalla 
-               $role = "SELECT * FROM tbl_ms_roles_ojetos WHERE ID_ROL='$id_rol7' and ID_OBJETO=8 and PERMISO_CONSULTAR=0";
+               $role = "SELECT * FROM tbl_ms_roles_ojetos WHERE ID_ROL='$id_rol7' and ID_OBJETO=10 and PERMISO_CONSULTAR=0";
                $roless = mysqli_query($conn, $role);
                if (mysqli_num_rows($roless) > 0)
                {
                 header('Location: ../../vistas/tablero/vista_perfil.php');
                 die();
                }else{
-                      $role = "SELECT * FROM tbl_ms_roles_ojetos WHERE ID_ROL='$id_rol7' and ID_OBJETO=8 and PERMISO_CONSULTAR=1";
+                      $role = "SELECT * FROM tbl_ms_roles_ojetos WHERE ID_ROL='$id_rol7' and ID_OBJETO=10 and PERMISO_CONSULTAR=1";
                       $roless = mysqli_query($conn, $role);
                       if (mysqli_num_rows($roless) > 0){}
                       else{
@@ -41,19 +42,13 @@ if (mysqli_num_rows($roles35) > 0)
                       }
                }
 
-                // inicio inserta en la tabla bitacora
-                $sql = "INSERT INTO tbl_bitacora (USUARIO, ACCION, OBSERVACION)
-                VALUES ('$usuario1[usuario]', 'CONSULTO', 'CONSULTO LA PANTALLA  ADMINISTRATIVA DE ASIGNACIONES')";
-                if (mysqli_query($conn, $sql)) {} else {}
-                // fin inserta en la tabla bitacora
+                
 
                 if(!isset($_POST['producto'])){
-                    header('Location: ../../vistas/inventario/vista_inventario.php');
+                  header('Location: ../../vistas/inventario/vista_inventario.php');
                 }
                 $producto=(isset($_POST['producto']))?$_POST['producto']:"";  
-                $nombre=(isset($_POST['nombre']))?$_POST['nombre']:"";  
-              
-
+                $nombre=(isset($_POST['nombre']))?$_POST['nombre']:"";
 
 ?>
 <!DOCTYPE html>
@@ -61,7 +56,7 @@ if (mysqli_num_rows($roles35) > 0)
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Asignaciones</title>
+  <title>Transacciones</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
@@ -78,18 +73,19 @@ if (mysqli_num_rows($roles35) > 0)
 <body oncontextmenu="return false">
 <!-- Fin evita el click derecho de la pagina --> 
   <!-- Content Wrapper. Contains page content -->
-  <div class="content-wrapper"> <br><center><h3 ><b>Transacciones del producto <?php echo $nombre; ?></b></h3></center>
+  <div class="content-wrapper"><br><center><h3 ><b>Transacciones del producto <?php echo $nombre; ?></b></h3></center>
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <div class="container-fluid">
         <div class="row mb-12">
           <div class="col-sm-12">
-         
+            
+          
      
           </div>
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
-              
+            
             </ol>
             
           </div>
@@ -110,9 +106,9 @@ if (mysqli_num_rows($roles35) > 0)
             
             <div class="card table-responsive">
               <div class="card-header">
-                
+             
                 <form id="form" action="" method="post">
-              <button type="submit"  name="accion" value="reporte_pdf" class="btn btn-secondary buttons-pdf buttons-html5"  onclick="return confirm('¿Desea generar reporte de detalle de asignaciones?')" onclick="textToPdf()"><span>Reporte PDF</span></button>
+              <button type="submit"  name="accion" value="reporte_pdf" class="btn btn-secondary buttons-pdf buttons-html5"  onclick="return confirm('¿Quieres generar reporte de transacciones?')" onclick="textToPdf()"><span>Reporte PDF</span></button>
 	            </form>
                 
               </div>
@@ -123,12 +119,15 @@ if (mysqli_num_rows($roles35) > 0)
                   <thead>
                   <tr>
                     
+                    
                   <th>Id</th>
-                  <th>Usuario</th>
+                  <th>Producto</th>
                   <th>Cantidad</th>
                   <th>Movimiento</th>
                   <th>Fecha</th>
-                           
+                  <th>Usuario</th>
+                  
+                  
                   </tr>
                   </thead>
                   <tbody>
@@ -142,12 +141,13 @@ if (mysqli_num_rows($roles35) > 0)
                     ?>
                   <tr>
                      
-  
-                    <td><?php echo $filas['ID_KARDEX'] ?></td>
-                     <td><?php echo $filas['USUARIO'] ?></td>
+                  <td><?php echo $filas['ID_KARDEX'] ?></td>
+                     <td><?php echo $nombre; ?></td>
                      <td><?php echo $filas['CANTIDAD'] ?></td>
                      <td><?php echo $filas['TIPO_MOVIMIENTO'] ?></td>
                      <td><?php echo $filas['FECHA_HORA'] ?></td>
+                     <td><?php echo $filas['USUARIO'] ?></td>
+                    
       </tr>
                 <?php } }?>  
                 </tbody>
@@ -316,7 +316,7 @@ if (mysqli_num_rows($roles35) > 0)
 				//muestra el titulo secundario
 				pdf.setFont('times');
 				pdf.setFontSize(10);
-				pdf.text("Detalle de la compra realizada en la fecha <?php echo $fecha ?>", 57,20,);
+				pdf.text("Transacciones del producto: <?php echo $nombre ?>", 57,20,);
 
 												//////// pie de Pagina ///////
 				//muestra la fecha
@@ -333,7 +333,7 @@ if (mysqli_num_rows($roles35) > 0)
 			}
 				//Fin Encabezado y pie de pagina
 
-							pdf.save('Reporte de detalle de compra.pdf');
+							pdf.save('Reporte de transacciones de prodictos.pdf');
 	})
   
 </script>
