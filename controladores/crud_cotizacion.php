@@ -1,180 +1,117 @@
 <?php
     //conexion bd 
     require '../../conexion/conexion.php';
-    //para mostrar los datos de la tabla mysql y mostrar en el crud
-    $sql = "SELECT ID_PROYECTO, NOMBRE_CLIENTE, NOMBRE, ESTADO_PROYECTO, NOMBRE_PROYECTO, DESCRIPCION, DEPARTAMENTO, UBICACION, FECHA_INICIO, FECHA_FINAL FROM ((((tbl_proyectos p
-    INNER JOIN tbl_clientes c ON p.ID_CLIENTE = c.ID_CLIENTE)
-    INNER JOIN tbl_usuarios u ON p.ID_USUARIO = u.ID_USUARIO)
-    INNER JOIN tbl_estados_proyectos e ON p.ID_ESTADOS = e.ID_ESTADOS)
-    INNER JOIN tbl_departamentos d ON p.ID_DEPARTAMENTO = d.ID_DEPARTAMENTO)";
-        
-        $result = mysqli_query($conn, $sql);
 
-        // //Variables para recuperar la información de los campos de la vista categorias de productos
-        $id_proyecto=(isset($_POST['id_proyecto']))?$_POST['id_proyecto']:"";
-        $id_cliente=(isset($_POST['id_cliente']))?$_POST['id_cliente']:"";
-        $id_usuario=(isset($_POST['id_usuario']))?$_POST['id_usuario']:"";
-        $id_estado=(isset($_POST['id_estado']))?$_POST['id_estado']:"";
         $nombre=(isset($_POST['nombre']))?$_POST['nombre']:"";
         $apellido=(isset($_POST['apellido']))?$_POST['apellido']:"";
         $correo=(isset($_POST['correo']))?$_POST['correo']:"";
-        $descripcion=(isset($_POST['descripcion']))?$_POST['descripcion']:"";
-        $id_departamento=(isset($_POST['id_departamento']))?$_POST['id_departamento']:"";
-        $ubicacion=(isset($_POST['ubicacion']))?$_POST['ubicacion']:"";
-        $fecha_inicio=(isset($_POST['fecha_inicio']))?$_POST['fecha_inicio']:"";
-        $fecha_final=(isset($_POST['fecha_final']))?$_POST['fecha_final']:"";
-        //$anterior=(isset($_POST['celular']))?$_POST['nombre_anterior']:"";
-        $celular=(isset($_POST['celular']))?$_POST['celular']:"";
+        $telefono=(isset($_POST['telefono']))?$_POST['telefono']:"";
+        $dni=(isset($_POST['dni']))?$_POST['dni']:"";
+        $direccionPersonal=(isset($_POST['direccionPersonal']))?$_POST['direccionPersonal']:"";
+        $referencia=(isset($_POST['referencia']))?$_POST['referencia']:"";
+        $genero=(isset($_POST['genero']))?$_POST['genero']:"";
+        $foto=(isset($_POST['foto']))?$_POST['foto']:"";
+        //$id_genero=(isset($_POST['id_genero']))?$_POST['id_genero']:"";
 
+        $descripcion=(isset($_POST['descripcion']))?$_POST['descripcion']:"";
+        $depto=(isset($_POST['departamento']))?$_POST['departamento']:"";
+        $ubicacion=(isset($_POST['ubicacion']))?$_POST['ubicacion']:"";
+        $proyecto=(isset($_POST['proyecto']))?$_POST['proyecto']:"";
+        
 
         //variable para recuperar los botones de la vista categprias de productos  
         $accion=(isset($_POST['accion']))?$_POST['accion']:"";
 
-        switch($accion){
-            //para insertar en la tabla mysl
-            case "agregar": 
-              // valida si existe una proyecto con el mismo nombre
-              $validar_proyecto = "SELECT * FROM tbl_proyectos WHERE NOMBRE_PROYECTO='$nombre'";
-              $result1 = mysqli_query($conn, $validar_proyecto); 
-               if (mysqli_num_rows($result1) > 0) { 
-                    
+switch($accion){
+ //para insertar en la tabla mysl
+  case "registrar": 
+        
+            $permitidos2 = array("jpg", "png", "jpeg", "JPEG", "JPG", "PNG");
+            $extencion = pathinfo($_FILES['foto']["name"], PATHINFO_EXTENSION);
+            
+            if(in_array($extencion, $permitidos2)){
+                $Fecha1= new DateTime();
+                $destino1 ="../../imagenes/";
+                $nombrefoto=($_FILES['foto']["name"]!="")?$Fecha1->getTimestamp()."_".$_FILES["foto"]["name"]:"imagen.jpg";
+                $tmpArchivo1= $_FILES["foto"]["tmp_name"];
+                if($tmpArchivo1!="") 
+                {
+                 move_uploaded_file($tmpArchivo1,$destino1.$nombrefoto);
+                }
                
-                 echo '<script>
-                          alert("proyecto ya existe");
-                       </script>';
-                       mysqli_close($conn);
-               }else{ 
-      
-                      //si no existe un proyecto permite insertar
-                      $sql1 = "INSERT INTO tbl_proyectos ( ID_PROYECTO,ID_CLIENTE, ID_USUARIO,ID_ESTADOS, NOMBRE_PROYECTO, DESCRIPCION, ID_DEPARTAMENTO,UBICACION, FECHA_INICIO, FECHA_FINAL)
-                      VALUES ('$id_proyecto','$id_cliente','$id_usuario','$id_estado','$nombre','$descripcion','$id_departamento','$ubicacion','$fecha_inicio','$fecha_final')";
-                      if (mysqli_query($conn, $sql1)) {
-                        // inicio inserta en la tabla bitacora
-                        $sql7 = "INSERT INTO tbl_bitacora (USUARIO, ACCION, OBSERVACION)
-                        VALUES ('$usuario1[usuario]', 'INSERTO', 'CREO EL PROYECTO ($nombre)')";
-                         if (mysqli_query($conn, $sql7)) {} else { }
-                    // fin inserta en la tabla bitacora
-                    echo '<script>
-                    alert("Inserto un nuevo proyecto");
-                    window.location.href="../../vistas/proyectos/vista_proyectos.php";                   
-                  </script>';
-                  mysqli_close($conn);
-                      } else {
-                              echo '<script>
-                                      alert("Error al tratar de crear el proyecto");
-                                    </script>'; mysqli_error($conn);
-                             }
-                      
-                      mysqli_close($conn);
-      
-                    }                    
-      
-                   
-            break;
-      
-             //para editar en la tabla mysl      
-            case "editar";
-            // valida si existe el proyecto con el mismo nombre
-            $validar_proyecto= "SELECT * FROM tbl_proyectos WHERE NOMBRE_PROYECTO='$nombre'";
-            $result2 = mysqli_query($conn, $validar_proyecto); 
-            if (mysqli_num_rows($result2) > 0) { 
-                  
-                    $sql2 = "UPDATE tbl_proyectos SET ID_CLIENTE='$id_cliente', ID_USUARIO='$id_usuario',	ID_ESTADOS='$id_estado', NOMBRE_PROYECTO='$anterior', DESCRIPCION='$descripcion',  ID_DEPARTAMENTO='$id_departamento', UBICACION='$ubicacion', FECHA_INICIO='$fecha_inicio', FECHA_FINAL='$fecha_final' WHERE ID_PROYECTO='$id_proyecto'";
-                    if (mysqli_query($conn, $sql2)) {
-      
-                       
-                               
-                         // inicio inserta en la tabla bitacora
-                         $sql8 = "INSERT INTO tbl_bitacora (USUARIO, ACCION, OBSERVACION)
-                         VALUES ('$usuario1[usuario]', 'EDITO', 'EDITO LOS CAMPOS DEL PROYECTO ($nombre)')";
-                         
-                          if (mysqli_query($conn, $sql8)) {} else { }
-                        // fin inserta en la tabla bitacora
-                        echo '<script>
-                                alert("Campos del Proveedor editado con exito");
-                                window.location.href="../../vistas/proyectos/vista_proyectos.php";                   
-                              </script>';
-                              mysqli_close($conn);
-                            
-      
-                    }else{
-                       // inicio inserta en la tabla bitacora
-                       $sql9 = "INSERT INTO tbl_bitacora (USUARIO, ACCION, OBSERVACION)
-                       VALUES ('$usuario1[usuario]', 'ERROR', 'ERROR AL EDITAR DEL PROYECTO ($nombre)')";
-                       
-                        if (mysqli_query($conn, $sql9)) {} else { }
-                      // fin inserta en la tabla bitacora
-                             echo '<script>
-                                      alert("Error al tratar de editar proveedor");
-                                   </script>'; mysqli_error($conn);
-                         }
-      
-                         mysqli_close($conn);
-      
-                   // si no existe el proveedor con el mismo nombre
-                }else{
-                $sql4 = "UPDATE tbl_proyectos SET ID_CLIENTE='$id_cliente', ID_USUARIO='$id_usuario', ID_ESTADOS='$id_estado', NOMBRE_PROYECTO='$nombre', DESCRIPCION='$descripcion',  ID_DEPARTAMENTO='$id_departamento', UBICACION='$ubicacion', FECHA_INICIO='$fecha_inicio', FECHA_FINAL='$fecha_final' WHERE ID_PROYECTO='$id_proyecto'"; 
-                      if (mysqli_query($conn, $sql4)) {
-                        // inicio inserta en la tabla bitacora
-                        $sql8 = "INSERT INTO tbl_bitacora (USUARIO, ACCION, OBSERVACION)
-                        VALUES ('$usuario1[usuario]', 'EDITO', 'RENOMBRO EL PROYECTO ($anterior) A ($nombre)')";
-                        
-                         if (mysqli_query($conn, $sql8)) {} else { }
-                       // fin inserta en la tabla bitacora
-                       echo '<script>
-                       alert("Proveedor editado con exito");
-                       window.location.href="../../vistas/proyectos/vista_proyectos.php";                   
-                     </script>';
-                     mysqli_close($conn);
-                         
-      
-                      }else{
-                        // inicio inserta en la tabla bitacora
-                       $sql9 = "INSERT INTO tbl_bitacora (USUARIO, ACCION, OBSERVACION)
-                       VALUES ('$usuario1[usuario]', 'ERROR', 'ERROR AL EDITAR DEL PROYECTO ($nombre)')";
-                       
-                        if (mysqli_query($conn, $sql9)) {} else { }
-                      // fin inserta en la tabla bitacora
-                           echo '<script>
-                                  alert("Error al tratar de editar el provedor");
-                                 </script>'; mysqli_error($conn);
-                           }
-      
-                      mysqli_close($conn);
-                    }
-                      
-                           
-            
-            break;
-            
-            //para eliminar en la tabla mysl  
-            case "eliminar";
-      
-                    $sql3 = "DELETE FROM tbl_proyectos WHERE ID_PROYECTO='$id_proyecto'";
-                    if (mysqli_query($conn, $sql3)) {
-                    // inicio inserta en la tabla bitacora
+
+              $sqlcliente = "INSERT INTO tbl_clientes (CODIGO,NOMBRE_CLIENTE,APELLIDO,CORREO,TELEFONO,DIRECCION,REFERENCIA,ID_GENERO,FOTO
+                ) 
+                VALUES ('$dni','$nombre','$apellido','$correo','$telefono','$direccionPersonal','$referencia','$genero','$destino1$nombrefoto')";
+                if (mysqli_query($conn,$sqlcliente)){
+                  // inicio inserta en la tabla bitacora
                     $sql7 = "INSERT INTO tbl_bitacora (USUARIO, ACCION, OBSERVACION)
-                    VALUES ('$usuario1[usuario]', 'ELIMINO', 'ELIMINO EL PROYECTO ($anterior)')";
+                    VALUES ('INVITADO', 'SOLICITUD', 'COTIZACION DE PROYECTO EN LA PANTALLA COTIZAR PROYECTO, CLIENTE $nombre $apellido')";
                     if (mysqli_query($conn, $sql7)) {} else { }
-                        // fin inserta en la tabla bitacora
-                        echo '<script>
-                        alert("Elimino el proyecto");
-                        window.location.href="../../vistas/proyectos/vista_proyectos.php";                   
-                        </script>';
-                        mysqli_close($conn);
-                                
-                    }else{
-                            echo '<script>
-                                    alert("Error al tratar de eliminar el proyecto");
-                                </script>'; mysqli_error($conn);
-                        }
-                    mysqli_close($conn);
-      
-            break;
-            
+                  // fin inserta en la tabla bitacora
+
+                  //Inicio consulta para seleccionar el ultimo cliente registrado
+                  $idcliente = "SELECT * FROM tbl_clientes ORDER BY ID_CLIENTE DESC limit 1;";
+                  $idcliente2 = mysqli_query($conn, $idcliente);
+                  if (mysqli_num_rows($idcliente2) > 0)
+                  {
+                  while($row = mysqli_fetch_assoc($idcliente2))
+                    { 
+                        $idcliente3 = $row['ID_CLIENTE'];
+                    } 
+                  }
+                  //Fin consulta para seleccionar el ultimo cliente registrado
+
+                  //Inicio consulta para seleccionar el ultimo cliente registrado
+                  $idusuario= "SELECT * FROM tbl_usuarios ORDER BY ID_USUARIO ASC limit 1;";
+                  $idusuario2 = mysqli_query($conn, $idusuario);
+                  if (mysqli_num_rows($idusuario2) > 0)
+                  {
+                  while($row = mysqli_fetch_assoc($idusuario2))
+                    { 
+                        $idusuario3 = $row['ID_USUARIO'];
+                    } 
+                  }
+                  //Fin consulta para seleccionar el ultimo cliente registrado
+
+                  date_default_timezone_set('America/Guatemala');
+                  $fecha   = new DateTime();
+                  $result = $fecha->format('Y-m-d-H-i-s');
+
+                  $sqlproyecto ="INSERT INTO tbl_proyectos (ID_CLIENTE,ID_USUARIO,ID_ESTADOS,NOMBRE_PROYECTO,DESCRIPCION,
+                    ID_DEPARTAMENTO,UBICACION,FECHA_INICIO,FECHA_FINAL)
+                    VALUES ('$idcliente3','$idusuario3',1,'$proyecto','$descripcion','$depto','$ubicacion','$result','$result')";
+                    if (mysqli_query($conn,$sqlproyecto)){}
+
+                  echo '<script>
+                    alert("Cotización enviada correctamente");
+                    window.location.href="/SEACCO/";      
+                  </script>';
+                mysqli_close($conn);
+                } else {
+                  echo '<script>
+                    alert("Erro al enviar Cotización");
+                                   
+                  </script>';
+                mysqli_close($conn);
+                }
+              }else{
+              echo '<script type="text/javascript">
+                       alert("En foto solo archivos de imagen JPEG, JPG, PNG ");
+                    </script>';
+          }
+                  
+                  
+                  /*$sqlproyecto ="INSERT INTO tbl_proyectos (ID_CLIENTE,ID_USUARIO,ID_ESTADOS,NOMBRE_PROYECTO,DESCRIPCION,
+                    ID_DEPARTAMENTO,UBICACION,FECHA_INICIO,FECHA_FINAL)
+                    VALUES (2,33,1,'$proyecto','$descripcion','$depto','$ubicacion','$result','$result')";*/
+
+                  
+            break; 
+
             default:
-                
-                $conn->close();   
-        }// Fin del switch, para validar el valor del boton accion
+          
+          $conn->close(); 
+  } // Fin del switch, para validar el valor del boton accion
 
 ?>

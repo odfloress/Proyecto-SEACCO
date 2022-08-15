@@ -18,7 +18,7 @@ require '../../controladores/co_solicitud_empleo.php';
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Registrar Usuario</title>
+    <title>Solicitud de Empleo</title>
     
     <style> 
 body {
@@ -89,8 +89,8 @@ body {
     <a href="http://localhost/SEACCO/" class="w3-bar-item w3-button w3-wide"><i class="fa fa-home"></i>Inicio</a>
     <!-- Right-sided navbar links -->
     <div class="w3-right w3-hide-small">
-      <a href="http://localhost/SEACCO/vistas/bienvenidos/index_solicitud_empleo.php" class="w3-bar-item w3-button"><i class="fa fa-user"></i> Solicitud empleo</a>
-      <a href="http://localhost/SEACCO/vistas/bienvenidos/vista_cotizar.php" class="w3-bar-item w3-button"><i class="fa fa-list-alt"></i> Cotizar</a>
+      <a href="http://localhost/SEACCO/vistas/bienvenidos/index_solicitud_empleo.php" class="w3-bar-item w3-button"><i class="fa fa-user"></i> Solicitud de Empleo</a>
+      <a href="http://localhost/SEACCO/vistas/bienvenidos/vista_cotizar.php" class="w3-bar-item w3-button"><i class="fa fa-list-alt"></i> Cotizar Proyecto</a>
       <a href="http://localhost/SEACCO/vistas/bienvenidos/vista_portafolio.php" class="w3-bar-item w3-button"><i class="fa fa-th"></i> Portafolio</a>
      
       
@@ -216,17 +216,17 @@ body {
             </div>
             <div class="row">
                 <div class="col">
-                  <label for="pwd" class="form-label">Celular referencia:</label>
+                  <label for="pwd" class="form-label">Celular Referencia:</label>
                   <input style="background-color:rgb(240, 244, 245);" type="text" autocomplete="off"  value="<?php echo "$celular_referencia"; ?>" class="form-control"  placeholder="Opcional" name="celular_referencia" onkeypress="return solonumero(event)" required minlength="8" maxlength="8" pattern="[0-9]+[1-9]+[0-9]+" title="8 caracteres y no todos ceros">
                 </div>
                 <div class="col">
-                  <label for="pwd" class="form-label">Experiencia laboral:</label>
+                  <label for="pwd" class="form-label">Experiencia Laboral:</label>
                   <input style="background-color:rgb(240, 244, 245);" type="text" autocomplete="off"  value="<?php echo "$experiencia_laboral"; ?>" onkeypress="return SoloLetras(event);"  onKeyUP="this.value=this.value.toUpperCase();" class="form-control"  placeholder="Ingrese su profesión u oficio" name="experiencia_laboral" required>
                 </div>
             </div>
             <div class="row">
                 <div class="col"> 
-                  <label for="pwd" class="form-label">Curriculum:</label>
+                  <label for="pwd" class="form-label">Currículum:</label>
                   <input style="background-color:rgb(240, 244, 245);" type="file" accept=".pdf, .docx" autocomplete="off"  value="<?php echo "$curriculum"; ?>" class="form-control"  placeholder="Adjunte su curriculum" name="curriculum" required>
                 </div>
                 <div class="col">
@@ -255,7 +255,7 @@ body {
                    </select>
                 </div>  
                 <div class="col">
-                <label for="pwd" class="form-label">Area:</label>
+                <label for="pwd" class="form-label">Área:</label>
                 <select style="background-color:rgb(240, 244, 245);" value="<?php echo "$area"; ?>" class="form-select" id="lista1" name="area" required >
                         <?php
                             include 'conexion/conexion.php';
@@ -276,7 +276,7 @@ body {
            </div><br>
             <div class="d-grid">
             <button type="submit" name="accion" value="registrar" class="btn btn-dark btn-block">Registrar</button><br>
-            <a href="/SEACCO/_login" class="btn btn-danger btn-block">Cancelar</a>
+            <a href="/SEACCO/" class="btn btn-danger btn-block">Cancelar</a>
             </div>         
             
         </form>

@@ -76,18 +76,7 @@ if (mysqli_num_rows($roles35) > 0)
           <h1>Permisos</h1>
             <!-- Inicio de modal de agregar -->
 <div class="container mt-3">
-         <!-- Valida si tiene permiso para insertar un PERMISO -->
-         <?php 
-                          include '../../conexion/conexion.php';
-                          $tablero = "SELECT * FROM tbl_ms_roles_ojetos WHERE ID_ROL='$id_rol7' and ID_OBJETO=20 and PERMISO_INSERCION=1";
-                          $tablero2 = mysqli_query($conn, $tablero);
-                          if (mysqli_num_rows($tablero2) > 0)
-                          {
-                              echo '<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal">
-                              Agregar permisos
-                          </button>';
-                          }
-                        ?>
+         
         
     </div>
 
@@ -140,7 +129,7 @@ if (mysqli_num_rows($roles35) > 0)
                 <!-- Fin Cuerpo del modal Modal -->
                 <!-- pie del modal -->
                 <div class="modal-footer">
-      	            <button type="submit" name="accion" value="agregar" class="btn btn-primary" onclick="return confirm('¿Desea agregar el permiso?')">Agregar</button>
+      	            <button type="submit" name="accion" value="agregar" class="btn btn-primary">Agregar</button>
                     <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
                 </div>
                 <!-- Fin pie del modal -->
@@ -174,8 +163,21 @@ if (mysqli_num_rows($roles35) > 0)
             <div class="card table-responsive">
               <div class="card-header">
               <form id="form" action="" method="post">
-              <button type="submit"  name="accion" value="reporte_pdf" class="btn btn-secondary buttons-pdf buttons-html5"  onclick="return confirm('¿Quieres generar reporte de permisos?')" onclick="textToPdf()"><span>Reporte PDF</span></button>
-	            </form>
+                    <div class="btn-group">
+                    <?php 
+      include '../../conexion/conexion.php';
+      $area1 = "SELECT * FROM tbl_ms_roles_ojetos WHERE ID_ROL='$id_rol7' and ID_OBJETO=20 and PERMISO_INSERCION=1";
+      $area2 = mysqli_query($conn, $area1);
+      if (mysqli_num_rows($area2) > 0)
+       {
+         echo '<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal">
+                    Nuevo Permiso
+                </button>';
+                          }
+                        ?> 
+              <button type="submit"  name="accion" value="reporte_pdf" class="btn btn-secondary buttons-pdf buttons-html5"  onclick="return confirm('¿Quieres generar reporte de Permisos?')" onclick="textToPdf()"><span>Reporte PDF</span></button>
+	               </div>
+            </form>
                 <!-- <h3 class="card-title">Permisos de los roles</h3> -->
                 
               </div>
@@ -266,7 +268,7 @@ if (mysqli_num_rows($roles35) > 0)
                                 <!-- pie del modal -->
                                 <div class="modal-footer">
                                   
-                                <button type="submit" name="accion" value="editar" class="btn btn-primary" onclick="return confirm('¿Desea editar el permiso?')">Guardar</button>
+                                <button type="submit" name="accion" value="editar" class="btn btn-primary" >Guardar</button>
                                   <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
                                 </div>
                              
@@ -470,7 +472,7 @@ if (mysqli_num_rows($roles35) > 0)
 				//muestra el titulo secundario
 				pdf.setFont('times');
 				pdf.setFontSize(10);
-				pdf.text("Reporte de permisos", 84,20,);
+				pdf.text("Reporte de Permisos", 84,20,);
 
 												//////// pie de Pagina ///////
 				//muestra la fecha
@@ -487,7 +489,7 @@ if (mysqli_num_rows($roles35) > 0)
 			}
 				//Fin Encabezado y pie de pagina
 
-							pdf.save('Reporte de permisos.pdf');
+							pdf.save('Reporte de Permisos.pdf');
 	})
   
 </script>

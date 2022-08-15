@@ -75,17 +75,7 @@ if (mysqli_num_rows($roles35) > 0)
             <!-- CMENTADO PARA NO MOSTRAR EL BOTON AGREGAR EN LA VISTA BIENVENIDA-->
             <!-- Inicio de modal de agregar -->
   <div class="container mt-3">
-  <?php 
-      include '../../conexion/conexion.php';
-      $tablero = "SELECT * FROM tbl_ms_roles_ojetos WHERE ID_ROL='$id_rol7' and ID_OBJETO=6 and PERMISO_INSERCION=1";
-      $tablero2 = mysqli_query($conn, $tablero);
-      if (mysqli_num_rows($tablero2) > 0)
-       {
-         echo '<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal">
-                 Nuevo
-               </button>';
-                          }
-                        ?>
+
     </div>
     
   <!-- El Modal -->
@@ -160,9 +150,21 @@ if (mysqli_num_rows($roles35) > 0)
               <div class="card-header">
                 <!--<h3 class="card-title">BIENVENIDA</h3>-->
                 <form id="form" action="" method="post">
-                <!-- inicio ocultar html -->
-                <button type="submit"  name="accion" value="reporte_pdf" class="btn btn-secondary buttons-pdf buttons-html5"  onclick="return confirm('¿Quieres generar reporte de Bienvenida?')" onclick="textToPdf()"><span>Reporte PDF</span></button>
-                
+                    <div class="btn-group">
+                    <?php 
+      include '../../conexion/conexion.php';
+      $area1 = "SELECT * FROM tbl_ms_roles_ojetos WHERE ID_ROL='$id_rol7' and ID_OBJETO=6 and PERMISO_INSERCION=1";
+      $area2 = mysqli_query($conn, $area1);
+      if (mysqli_num_rows($area2) > 0)
+       {
+         echo '<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal">
+                    Nuevo
+                </button>';
+                          }
+                        ?> 
+              <button type="submit"  name="accion" value="reporte_pdf" class="btn btn-secondary buttons-pdf buttons-html5"  onclick="return confirm('¿Quieres generar reporte de Bienvenida?')" onclick="textToPdf()"><span>Reporte PDF</span></button>
+	               </div>
+            </form>
               <!-- Fin ocultar html -->
               </div>
               
@@ -176,7 +178,7 @@ if (mysqli_num_rows($roles35) > 0)
                   <th>Tipo</th>
                   <th>Imagen</th>
                   <th>Titulo</th>
-                  <th>Descripcion</th>
+                  <th>Descripción</th>
                   
                   </tr>
                   </thead>
@@ -335,9 +337,10 @@ if (mysqli_num_rows($roles35) > 0)
 <script src="../../plantilla/AdminLTE-3.2.0/dist/js/demo.js"></script>
 <!-- Page specific script -->
 <script>
-  $(function () {
+ $(function () {
     $("#example1").DataTable({
-              language: {
+      
+      language: {
                           processing: "Tratamiento en curso...",
                           search: "Buscar&nbsp;:",
                           lengthMenu: "Agrupar de _MENU_ items",
@@ -357,11 +360,28 @@ if (mysqli_num_rows($roles35) > 0)
                               aria: {
                                       sortAscending: ": active para ordenar la columna en orden ascendente",
                                       sortDescending: ": active para ordenar la columna en orden descendente"
-                                    }
+                                    },
+
+                          buttons:{
+                            "copy": "Copiar",
+                            "colvis": "Visibilidad",
+                            "collection": "Colección",
+                            "colvisRestore": "Restaurar visibilidad",
+                            "copyKeys": "Presione ctrl o u2318 + C para copiar los datos de la tabla al portapapeles del sistema. <br \/> <br \/> Para cancelar, haga clic en este mensaje o presione escape.",
+                            "copySuccess": {
+                                "1": "Copiada 1 fila al portapapeles",
+                                "_": "Copiadas %ds fila al portapapeles"
+                                },
+                                },    
                          },
-      "responsive": true, "lengthChange": true, "autoWidth": false,
-      "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
-    }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+                         
+                         "responsive": true, "lengthChange": true, "autoWidth": false,
+                          "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"],                   
+        
+    })
+
+      
+    .buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
     $('#example2').DataTable({
       "paging": true,
       "lengthChange": false,
