@@ -38,10 +38,10 @@
     
       <!-- Right-sided navbar links -->
       <div class="w3-right w3-hide-small">        
-      <a href="http://localhost/SEACCO/vistas/bienvenidos/index_solicitud_empleo.php" class="w3-bar-item w3-button"><i class="fa fa-user"></i> Solicitud empleo</a>
-      <a href="http://localhost/SEACCO/vistas/bienvenidos/vista_cotizar.php" class="w3-bar-item w3-button"><i class="fa fa-list-alt"></i> Cotizar</a>
+      <a href="http://localhost/SEACCO/vistas/bienvenidos/index_solicitud_empleo.php" class="w3-bar-item w3-button"><i class="fa fa-user"></i> Solicitud de Empleo</a>
+      <a href="http://localhost/SEACCO/vistas/bienvenidos/vista_cotizar.php" class="w3-bar-item w3-button"><i class="fa fa-list-alt"></i> Cotizar Proyecto</a>
       <a href="http://localhost/SEACCO/vistas/bienvenidos/vista_portafolio.php" class="w3-bar-item w3-button"><i class="fa fa-th"></i> Portafolio</a>
-      <a href="#contact" class="w3-bar-item w3-button"><i class="fa fa-envelope"></i> CONTACTANOS</a>      
+      <a href="#contact" class="w3-bar-item w3-button"><i class="fa fa-envelope"></i> Contáctanos</a>       
     </div>
 
     <!-- Hide right-floated links on small screens and replace them with a menu icon -->
@@ -54,10 +54,10 @@
 <!-- Sidebar on small screens when clicking the menu icon -->
 <nav class="w3-sidebar w3-bar-block w3-white w3-card w3-animate-left w3-hide-medium w3-hide-large" style="display:none" id="mySidebar">
   <a href="javascript:void(0)" onclick="w3_close()" class="w3-bar-item w3-button w3-large w3-padding-16"> Cerrar X</a>
-  <a href="http://localhost/SEACCO/vistas/bienvenidos/index_solicitud_empleo.php" onclick="w3_close()" class="w3-bar-item w3-button">Solicitud empleo</a>
-  <a href="http://localhost/SEACCO/vistas/bienvenidos/vista_cotizar.php" onclick="w3_close()" class="w3-bar-item w3-button">Cotizar</a>
+  <a href="http://localhost/SEACCO/vistas/bienvenidos/index_solicitud_empleo.php" onclick="w3_close()" class="w3-bar-item w3-button"> Solicitud de Empleo</a>
+  <a href="http://localhost/SEACCO/vistas/bienvenidos/vista_cotizar.php" onclick="w3_close()" class="w3-bar-item w3-button"> Cotizar Proyecto</a>
   <a href="http://localhost/SEACCO/vistas/bienvenidos/vista_portafolio.php" onclick="w3_close()" class="w3-bar-item w3-button">Portafolio</a>
-  <a href="#contact" onclick="w3_close()" class="w3-bar-item w3-button">CONTACTANOS</a>  
+  <a href="#contact" onclick="w3_close()" class="w3-bar-item w3-button"> Contáctanos</a>  
 </nav>
 <br><br>
 <?php  
@@ -160,7 +160,7 @@
                                             <div class="container mt-3">                                          
                                               <div class="dropdown">
                                                 <button type="button" class="btn btn-primary " data-bs-toggle="dropdown">
-                                                  ver información
+                                                Ver Información
                                                 </button>
                                                 
                                                 <textarea readonly class="dropdown-menu" style="background-color: white;" class="form-control"name="" id="" cols="40" rows="5"><?php echo $row["DESCRIPCION_PORTAFOLIO"]; ?></textarea>
@@ -219,7 +219,7 @@
                                                
                                                 <form action="" method="post">
                                                   <input type="hidden" name="id_catalogo" value="<?php echo $row["ID_CATALOGO"]; ?>">
-                                                  <button class="btn btn-primary" name="catalogo" type="submit">Mostrar catálogo</button>
+                                                  <button class="btn btn-primary" name="catalogo" type="submit">Mostrar Catálogo</button>
                                                 </form>                                                
                                               
                                                 
@@ -242,7 +242,7 @@
 
 <!-- Contact Section -->
 <div class="w3-container w3-light-grey" style="padding:128px 16px" id="contact">
-  <h3 class="w3-center">CONTACTANOS</h3>
+  <h3 class="w3-center">Contáctanos</h3>
   <p class="w3-center w3-large">Mantengámonos en contacto. Mandanos un mensaje:</p>
   <div style="margin-top:48px">
                           <?php 
@@ -257,8 +257,8 @@
                               $instagram = $mostrar74["INSTAGRAM"];
                               }  
                             ?>
-    <p><i class="fa fa-map-marker fa-fw w3-xxlarge w3-margin-right"></i> <?php echo $direccion; ?></p>
-    <p><i class="fa fa-phone fa-fw w3-xxlarge w3-margin-right"></i> Telefono: <?php echo $telefono; ?></p>
+    <p><i class="fa fa-map-marker fa-fw w3-xxlarge w3-margin-right"></i> Dirección: <?php echo $direccion; ?></p>
+    <p><i class="fa fa-phone fa-fw w3-xxlarge w3-margin-right"></i> Teléfono: <?php echo $telefono; ?></p>
     <p><i class="fa fa-envelope fa-fw w3-xxlarge w3-margin-right"> </i> Correo: <?php echo $correo; ?></p>
     <br>
      <!-- inicio mapa -->
@@ -270,7 +270,7 @@
 
 <!-- Footer -->
 <footer class="w3-center w3-black w3-padding-64">
-  <a href="#demo" class="w3-button w3-light-grey"><i class="fa fa-arrow-up w3-margin-right"></i>Ir a inicio</a>
+  <a href="#demo" class="w3-button w3-light-grey"><i class="fa fa-arrow-up w3-margin-right"></i>Ir al Inicio</a>
   <div class="w3-xlarge w3-section">
   <a href="<?php echo $facebook; ?>"> <i class="fa fa-facebook-official w3-hover-opacity"></i></a>
   <a href="<?php echo $instagram; ?>"><i class="fa fa-instagram w3-hover-opacity"></i></a>

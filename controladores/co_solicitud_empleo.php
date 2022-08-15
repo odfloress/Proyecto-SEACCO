@@ -115,7 +115,7 @@ session_start();
                     // // fin inserta en la tabla bitacora
                     echo '<script>
                                   alert("Solicitud de empleo enviada con exito");
-                                  window.location.href="/SEACCO/vistas/bienvenidos/index_solicitud_empleo.php";
+                                  window.location.href="/SEACCO/";
                       </script>';
        
                      

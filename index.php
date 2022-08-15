@@ -48,14 +48,14 @@ require 'controladores/co_registrar.php';
 <!-- Navbar (sit on top) -->
 <div class="w3-top">
     <div class="w3-bar w3-white w3-card" id="myNavbar">
-      <a href="http://localhost/SEACCO/" class="w3-bar-item w3-button w3-wide"><i class="fa fa-home"></i>Inicio</a>
+      <a href="http://localhost/SEACCO/" class="w3-bar-item w3-button w3-wide"><i class="fa fa-home"></i> Inicio</a>
     
       <!-- Right-sided navbar links -->
       <div class="w3-right w3-hide-small">        
-      <a href="http://localhost/SEACCO/vistas/bienvenidos/index_solicitud_empleo.php" class="w3-bar-item w3-button"><i class="fa fa-user"></i> Solicitud empleo</a>
-      <a href="http://localhost/SEACCO/vistas/bienvenidos/vista_cotizar.php" class="w3-bar-item w3-button"><i class="fa fa-list-alt"></i> Cotizar</a>
+      <a href="http://localhost/SEACCO/vistas/bienvenidos/index_solicitud_empleo.php" class="w3-bar-item w3-button"><i class="fa fa-user"></i> Solicitud de Empleo</a>
+      <a href="http://localhost/SEACCO/vistas/bienvenidos/vista_cotizar.php" class="w3-bar-item w3-button"><i class="fa fa-list-alt"></i> Cotizar Proyecto</a>
       <a href="http://localhost/SEACCO/vistas/bienvenidos/vista_portafolio.php" class="w3-bar-item w3-button"><i class="fa fa-th"></i> Portafolio</a>
-      <a href="#contact" class="w3-bar-item w3-button"><i class="fa fa-envelope"></i> CONTACTANOS</a>      
+      <a href="#contact" class="w3-bar-item w3-button"><i class="fa fa-envelope"></i> Contáctanos</a>      
     </div>
 
     <!-- Hide right-floated links on small screens and replace them with a menu icon -->
@@ -68,23 +68,18 @@ require 'controladores/co_registrar.php';
 <!-- Sidebar on small screens when clicking the menu icon -->
 <nav class="w3-sidebar w3-bar-block w3-white w3-card w3-animate-left w3-hide-medium w3-hide-large" style="display:none" id="mySidebar">
   <a href="javascript:void(0)" onclick="w3_close()" class="w3-bar-item w3-button w3-large w3-padding-16"> Cerrar X</a>
-  <a href="http://localhost/SEACCO/vistas/bienvenidos/index_solicitud_empleo.php" onclick="w3_close()" class="w3-bar-item w3-button">Solicitud empleo</a>
-  <a href="http://localhost/SEACCO/vistas/bienvenidos/vista_cotizar.php" onclick="w3_close()" class="w3-bar-item w3-button">Cotizar</a>
-  <a href="http://localhost/SEACCO/vistas/bienvenidos/vista_portafolio.php" onclick="w3_close()" class="w3-bar-item w3-button">Portafolio</a>
-  <a href="#contact" onclick="w3_close()" class="w3-bar-item w3-button">CONTACTANOS</a>  
+  <a href="http://localhost/SEACCO/vistas/bienvenidos/index_solicitud_empleo.php" onclick="w3_close()" class="w3-bar-item w3-button"> Solicitud de Empleo</a>
+  <a href="http://localhost/SEACCO/vistas/bienvenidos/vista_cotizar.php" onclick="w3_close()" class="w3-bar-item w3-button"> Cotizar Proyecto</a>
+  <a href="http://localhost/SEACCO/vistas/bienvenidos/vista_portafolio.php" onclick="w3_close()" class="w3-bar-item w3-button"> Portafolio</a>
+  <a href="#contact" onclick="w3_close()" class="w3-bar-item w3-button"> Contáctanos</a>  
 </nav>
 
 <header class="bgimg-1 w3-display-container w3-grayscale-min" id="home">  
   <div class="w3-display-left w3-text-white" style="padding:48px">    
-    <p><a href="#about" class="w3-button w3-blue w3-padding-large w3-large w3-margin-top w3-opacity w3-hover-opacity-off">Sobre nosotros</a></p>
+    <p><a href="#about" class="w3-button w3-blue w3-padding-large w3-large w3-margin-top w3-opacity w3-hover-opacity-off">Sobre Nosotros</a></p>
   </div> 
   <div class="w3-display-bottomleft w3-text-grey w3-large" style="padding:24px 48px">
    <a href="https://www.facebook.com/pages/category/Construction-Company/Constructora-Seacco-658896417875063/"> <i class="fa fa-facebook-official w3-hover-opacity"></i></a>
-    <i class="fa fa-instagram w3-hover-opacity"></i>
-    <i class="fa fa-snapchat w3-hover-opacity"></i>
-    <i class="fa fa-pinterest-p w3-hover-opacity"></i>
-    <i class="fa fa-twitter w3-hover-opacity"></i>
-    <i class="fa fa-linkedin w3-hover-opacity"></i>
   </div>
 </header>
 
@@ -161,7 +156,7 @@ clientes y brindando oportunidades de trabajo para el hondureño.</p>
 que favorecen a la preservación del medioambiente, con el compromiso de
 utilizar de manera racional y eficiente los recursos naturales necesarios para las
 actividades que se desarrollan en los proyectos ejecutados.</p>
-      <p><a href="#work" class="w3-button w3-black"><i class="fa fa-th"> </i>Ver nustros trabajos</a></p>
+      <p><a href="#work" class="w3-button w3-black"><i class="fa fa-th"> </i> Ver Nuestros Trabajos</a></p>
     </div>
     <div class="w3-col m6">
       <img class="w3-image w3-round-large" src="imagenes/<?php echo $row['IMAGEN'] ?>" alt="Buildings" width="700" height="394">
@@ -174,7 +169,7 @@ actividades que se desarrollan en los proyectos ejecutados.</p>
   <!-- inicio card -->
 
 <div class="w3-container" style="padding:128px 16px" id="about">
-  <h3 class="w3-center">Nuestros Equipo</h3> 
+  <h3 class="w3-center"> Nuestro Equipo</h3> 
     <div class="w3-row-padding " style="margin-top:64px">
 
       <?php 
@@ -260,7 +255,7 @@ actividades que se desarrollan en los proyectos ejecutados.</p>
 <!-- Work Section -->
 <center>
 <div class="w3-container" style="padding:128px 16px" id="work">
-  <h3 class="w3-center">Nuestros trabajos</h3>
+  <h3 class="w3-center">Nuestros Trabajos</h3>
  
   <div class="w3-row-padding" style="margin-top:64px">
     <div class="w3-col l3 m6">
@@ -368,11 +363,11 @@ actividades que se desarrollan en los proyectos ejecutados.</p>
 
 <!-- Contact Section -->
 <div class="w3-container w3-light-grey" style="padding:128px 16px" id="contact">
-  <h3 class="w3-center">CONTACTANOS</h3>
+  <h3 class="w3-center">Contáctanos</h3>
   <p class="w3-center w3-large">Mantengámonos en contacto. Mandanos un mensaje:</p>
   <div style="margin-top:48px">
-    <p><i class="fa fa-map-marker fa-fw w3-xxlarge w3-margin-right"></i> <?php echo $row['DIRECCION'] ?></p>
-    <p><i class="fa fa-phone fa-fw w3-xxlarge w3-margin-right"></i> Telefono: <?php echo $row['TELEFONO'] ?></p>
+    <p><i class="fa fa-map-marker fa-fw w3-xxlarge w3-margin-right"></i> Dirección: <?php echo $row['DIRECCION'] ?></p>
+    <p><i class="fa fa-phone fa-fw w3-xxlarge w3-margin-right"></i> Teléfono: <?php echo $row['TELEFONO'] ?></p>
     <p><i class="fa fa-envelope fa-fw w3-xxlarge w3-margin-right"> </i> Correo: <?php echo $row['CORREO'] ?></p>
     <br>
     <?php } ?>
@@ -391,7 +386,14 @@ actividades que se desarrollan en los proyectos ejecutados.</p>
 </div>
 
 <?php }?>
-
+<?php 
+                              include 'conexion/conexion.php';
+                              $validar_nombre = "SELECT * FROM tbl_parametros WHERE PARAMETRO='NOMBRE'";
+                              $resultado_nombre = mysqli_query($conn, $validar_nombre);
+                            while($mostrar7 = mysqli_fetch_assoc($resultado_nombre)) {
+                              $nombre_contructora = $mostrar7["VALOR"];
+                              }  
+                            ?>
 <?php 
       include 'conexion/conexion.php';
       $sqlB4 = "SELECT * FROM tbl_nuestros_contactos";
@@ -400,13 +402,14 @@ actividades que se desarrollan en los proyectos ejecutados.</p>
       ?>
 <!-- Footer -->
 <footer class="w3-center w3-black w3-padding-64">
-  <a href="#home" class="w3-button w3-light-grey"><i class="fa fa-arrow-up w3-margin-right"></i>Ir a inicio</a>
+  <a href="#home" class="w3-button w3-light-grey"><i class="fa fa-arrow-up w3-margin-right"></i>Ir al Inicio</a>
   <div class="w3-xlarge w3-section">
   <a href="<?php echo $rowB4['FACEBOOK'] ?>"> <i class="fa fa-facebook-official w3-hover-opacity"></i></a>
   </div>
-  <p>Constructora <a href="<?php echo $rowB4['FACEBOOK'] ?>" title="W3.CSS" target="_blank" class="w3-hover-text-green">SEACCO</a></p>
+  <p>Constructora <a href="<?php echo $rowB4['FACEBOOK'] ?>" title="W3.CSS" target="_blank" class="w3-hover-text-green"><?php echo $nombre_contructora; ?></a></p>
 </footer>
 <?php }?>
+
 <script>
 // Modal Image Gallery
 function onClick(element) {
