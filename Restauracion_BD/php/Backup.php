@@ -1,4 +1,11 @@
 <?php
+session_start();
+require '../../conexion/conexion.php';
+ // inicio inserta en la tabla bitacora
+ $sql7 = "INSERT INTO tbl_bitacora (USUARIO, ACCION, OBSERVACION)
+ VALUES ('$_SESSION[usuario]', 'CREO', 'CREO COPIA DE LA BD')";
+  if (mysqli_query($conn, $sql7)) {} else { }
+// fin inserta en la tabla bitacora
 include './Connet.php';
 $day=date("d");
 $mont=date("m");
