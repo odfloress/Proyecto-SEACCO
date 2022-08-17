@@ -143,7 +143,7 @@ if (mysqli_num_rows($roles35) > 0)
                     <div class="btn-group">
                     <?php 
       include '../../conexion/conexion.php';
-      $area1 = "SELECT * FROM tbl_ms_roles_ojetos WHERE ID_ROL='$id_rol7' and ID_OBJETO=30 and PERMISO_INSERCION=1";
+      $area1 = "SELECT * FROM tbl_ms_roles_ojetos WHERE ID_ROL='$id_rol7' and ID_OBJETO=29 and PERMISO_INSERCION=1";
       $area2 = mysqli_query($conn, $area1);
       if (mysqli_num_rows($area2) > 0)
        {
