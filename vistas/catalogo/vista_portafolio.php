@@ -199,7 +199,7 @@ if (mysqli_num_rows($roles35) > 0)
                                         
                         </form> <br><!-- ///////////////////// -->
                 <!-- /// fin filtrar reporte /// -->
-              <form id="form">
+              <form id="form"> 
                     <div class="btn-group">
                     <?php 
                                 include '../../conexion/conexion.php';
