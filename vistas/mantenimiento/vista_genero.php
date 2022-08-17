@@ -78,17 +78,6 @@ if (mysqli_num_rows($roles35) > 0)
 <div class="container mt-3">
   
         <h3>Genero </h3> <br> 
-        <?php 
-      include '../../conexion/conexion.php';
-      $genero1 = "SELECT * FROM tbl_ms_roles_ojetos WHERE ID_ROL='$id_rol7' and ID_OBJETO=19 and PERMISO_INSERCION=1";
-      $genero2 = mysqli_query($conn, $genero1);
-      if (mysqli_num_rows($genero2) > 0)
-       {
-         echo '<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal">
-                    Nuevo genero
-                </button>';
-                          }
-                        ?> 
         
     </div>
 
@@ -151,8 +140,21 @@ if (mysqli_num_rows($roles35) > 0)
               <div class="card-header">
                   <!-- Btn reporte pdf -->
                   <form id="form" action="" method="post">
-                    <button type="submit"  name="accion" value="reporte_pdf" class="btn btn-secondary buttons-pdf buttons-html5"  onclick="return confirm('¿Quieres generar reporte de Genero?')" onclick="textToPdf()"><span>Reporte PDF</span></button>
-                  </form>
+                    <div class="btn-group">
+                    <?php 
+      include '../../conexion/conexion.php';
+      $area1 = "SELECT * FROM tbl_ms_roles_ojetos WHERE ID_ROL='$id_rol7' and ID_OBJETO=30 and PERMISO_INSERCION=1";
+      $area2 = mysqli_query($conn, $area1);
+      if (mysqli_num_rows($area2) > 0)
+       {
+         echo '<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal">
+                    Nuevo Genero
+                </button>';
+                          }
+                        ?> 
+              <button type="submit"  name="accion" value="reporte_pdf" class="btn btn-secondary buttons-pdf buttons-html5"  onclick="return confirm('¿Quieres generar reporte de Generos?')" onclick="textToPdf()"><span>Reporte PDF</span></button>
+	               </div>
+            </form>
                   <!--fin  Btn reporte pdf -->
               </div>
               
