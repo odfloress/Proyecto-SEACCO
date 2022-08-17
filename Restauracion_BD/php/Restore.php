@@ -1,3 +1,6 @@
+<?php
+session_start();
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -62,11 +65,18 @@ for($i = 0; $i < (count($sql)-1); $i++){
 $con->query("SET FOREIGN_KEY_CHECKS=1");
 $con->close();
 if($totalErrors<=0){
+
 	
 	echo '<script>
 	alert("Restauración completada con éxito.");
 	window.location.href="./index.php";                  
 	</script>';
+  require '../../conexion/conexion.php';
+ // inicio inserta en la tabla bitacora
+ $sql7 = "INSERT INTO tbl_bitacora (USUARIO, ACCION, OBSERVACION)
+ VALUES ('$_SESSION[usuario]', 'RESTAURO', 'RESTAURO LA BD')";
+  if (mysqli_query($conn, $sql7)) {} else { }
+// fin inserta en la tabla bitacora
 	
 
 }else{

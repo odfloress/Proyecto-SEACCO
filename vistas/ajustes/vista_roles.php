@@ -79,17 +79,7 @@ if (mysqli_num_rows($roles35) > 0)
 <div class="container mt-3">
   
         <h3>Roles</h3> <br> 
-        <?php 
-      include '../../conexion/conexion.php';
-      $tablero = "SELECT * FROM tbl_ms_roles_ojetos WHERE ID_ROL='$id_rol7' and ID_OBJETO=19 and PERMISO_INSERCION=1";
-      $tablero2 = mysqli_query($conn, $tablero);
-      if (mysqli_num_rows($tablero2) > 0)
-       {
-         echo '<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal">
-                    Nuevo rol
-                </button>';
-                          }
-                        ?> 
+    
         
     </div>
 
@@ -129,7 +119,7 @@ if (mysqli_num_rows($roles35) > 0)
             </div>
         </div>
     </div>
-    <!-- Fin  de modal de agregar --> <br>
+    <!-- Fin  de modal de agregar --> 
           </div>
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
@@ -155,8 +145,21 @@ if (mysqli_num_rows($roles35) > 0)
             <div class="card table-responsive">
               <div class="card-header">
               <form id="form" action="" method="post">
+                    <div class="btn-group">
+                    <?php 
+                            include '../../conexion/conexion.php';
+                            $tablero = "SELECT * FROM tbl_ms_roles_ojetos WHERE ID_ROL='$id_rol7' and ID_OBJETO=19 and PERMISO_INSERCION=1";
+                            $tablero2 = mysqli_query($conn, $tablero);
+                            if (mysqli_num_rows($tablero2) > 0)
+                            {
+                              echo '<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal">
+                                          Nuevo rol
+                                      </button>';
+                                                }
+                        ?> 
               <button type="submit"  name="accion" value="reporte_pdf" class="btn btn-secondary buttons-pdf buttons-html5"  onclick="return confirm('¿Quieres generar reporte de roles?')" onclick="textToPdf()"><span>Reporte PDF</span></button>
-	            </form>
+	               </div>
+            </form>
                 <!-- <h3 class="card-title">Roles</h3> -->
                 
               </div>
@@ -167,7 +170,7 @@ if (mysqli_num_rows($roles35) > 0)
                   <thead>
                   <tr>
                   <th>Acciones</th>
-                  <th>Id</th>
+                  <th>ID</th>
                   <th>Rol</th>
                   <th>Descripción</th>
                   
@@ -213,7 +216,7 @@ if (mysqli_num_rows($roles35) > 0)
                                 <form action="" method="post">
                                           <div class="modal-body">
                                             <input type="hidden" name="nombre_anterior" value="<?php echo $filas['ROL'] ?>">
-                                              <label for="">Id rol</label>
+                                              <label for="">ID rol</label>
                                               <input type="text" readonly class="form-control" name="id_rol" required value="<?php echo $filas['ID_ROL'] ?>" placeholder=""  >
                                               <br>
                                               <label for="">Rol</label>

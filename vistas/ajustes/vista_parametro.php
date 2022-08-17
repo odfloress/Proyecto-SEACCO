@@ -51,7 +51,7 @@ if (mysqli_num_rows($roles35) > 0)
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Parametros</title>
+  <title>Parámetros</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
@@ -76,21 +76,9 @@ if (mysqli_num_rows($roles35) > 0)
             <!-- Inicio de modal de agregar -->
 <div class="container mt-3">
   
-        <h3>Parametros</h3> <br> 
+        <h3>Párametros</h3> <br> 
           <!-- Valida si tiene permiso para insertar un PERMISO -->
-          <?php 
-                          include '../../conexion/conexion.php';
-                          $tablero = "SELECT * FROM tbl_ms_roles_ojetos WHERE ID_ROL='$id_rol7' and ID_OBJETO=28 and PERMISO_INSERCION=1";
-                          $tablero2 = mysqli_query($conn, $tablero);
-                          if (mysqli_num_rows($tablero2) > 0)
-                          {?>
-                             <button type="button" value="agregar" name="accion" 
-                        onclick="return confirm('¿La opcionde agregar no esta dismponible en esta vista?')"
-                        type="" class="btn btn-primary btn-lg">Agregar
-                        
-                    </button> <?php 
-                          }
-                        ?>
+        
         
     </div>
 
@@ -120,11 +108,23 @@ if (mysqli_num_rows($roles35) > 0)
             <div class="card table-responsive">
               <div class="card-header">
               <form id="form" action="" method="post">
-                <!-- inicio ocultar html -->
-                <button type="submit"  name="accion" value="reporte_pdf" class="btn btn-secondary buttons-pdf buttons-html5"  onclick="return confirm('¿Quieres generar reporte de Parametros?')" onclick="textToPdf()"><span>Reporte PDF</span></button>
-                
-              </div>
-              </form>
+                    <div class="btn-group">
+                    <?php 
+                          include '../../conexion/conexion.php';
+                          $tablero = "SELECT * FROM tbl_ms_roles_ojetos WHERE ID_ROL='$id_rol7' and ID_OBJETO=28 and PERMISO_INSERCION=1";
+                          $tablero2 = mysqli_query($conn, $tablero);
+                          if (mysqli_num_rows($tablero2) > 0)
+                          {?>
+                             <button type="button" value="agregar" name="accion" 
+                        onclick="return confirm('La opción de agregar no esta dismponible en esta vista.')"
+                        type="" class="btn btn-primary btn-lg">Agregar
+                        
+                    </button> <?php 
+                          }
+                        ?>
+              <button type="submit"  name="accion" value="reporte_pdf" class="btn btn-secondary buttons-pdf buttons-html5"  onclick="return confirm('¿Quieres generar reporte de parametros?')" onclick="textToPdf()"><span>Reporte PDF</span></button>
+	               </div>
+            </form>
               <!-- /.card-header -->
               <div class="card-body ">
                 <table id="example1" class="table table-bordered table-striped">
@@ -132,10 +132,10 @@ if (mysqli_num_rows($roles35) > 0)
                   <tr>
                   <th>Acciones</th>
                   <th>Id</th>
-                  <th>Parametro</th>
+                  <th>Párametro</th>
                   <th>Valor</th>
-                  <th>Fecha Creacion</th>
-                  <th>Fecha Modificacion</th>
+                  <th>Fecha Creación</th>
+                  <th>Fecha Modificación</th>
                   </tr>
                   </thead>
                   <tbody>
@@ -177,18 +177,18 @@ if (mysqli_num_rows($roles35) > 0)
                                 <form action="" method="post">
                                           <div class="modal-body">
                                             <input type="hidden" name="nombre_anterior" value="<?php echo $filas['ID_PARAMETRO'] ?>">
-                                              <label for="">Id Parametro:</label>
+                                              <label for="">ID Parametro:</label>
                                               <input type="text" readonly class="form-control" name="id_parametro" required value="<?php echo $filas['ID_PARAMETRO'] ?>" placeholder=""  >
                                               <br>
-                                              <label for="">Parametro:</label>
+                                              <label for="">Parámetro:</label>
                                               <input type="text" class="form-control" readonly name="parametro" required value="<?php echo $filas['PARAMETRO'] ?>" placeholder=""  autocomplete = "off"  onkeypress="return soloLetras(event);" minlength="3" maxlength="20" 
                                                 onkeyup="mayus(this);" required >
                                                 <label for="">Valor:</label>
                                               <input type="text" class="form-control" name="valor" required value="<?php echo $filas['VALOR'] ?>" placeholder=""  autocomplete = "off"  required minlength="1" maxlength="100" onkeyup="mayus(this);" >
-                                                <label for="">Fecha de Creacion:</label>
+                                                <label for="">Fecha de Creación:</label>
                                               <input type="text" class="form-control" readonly name="creado" required value="<?php echo $filas['FECHA_CREACION'] ?>" placeholder=""  autocomplete = "off"  onkeypress="return soloLetras(event);" minlength="3" maxlength="20" 
                                                 onkeyup="mayus(this);" required >
-                                                <label for="">Fecha de Modificacion:</label>
+                                                <label for="">Fecha de Modificación:</label>
                                               <input type="text" class="form-control" readonly name="mofificacion" required value="<?php echo $filas['FECHA_MODIFICACION'] ?>" placeholder=""  autocomplete = "off"  onkeypress="return soloLetras(event);" minlength="3" maxlength="20" 
                                                 onkeyup="mayus(this);" required >
                                           

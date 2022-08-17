@@ -55,7 +55,7 @@
                 if (mysqli_query($conn, $sql2)) {
                   // inicio inserta en la tabla bitacora
                   $sql8 = "INSERT INTO tbl_bitacora (USUARIO, ACCION, OBSERVACION)
-                  VALUES ('$usuario1[usuario]', 'EDITO', 'EDITO EL CONTACTO ($id_contacto)')";
+                  VALUES ('$usuario1[usuario]', 'EDITO', 'EDITO CONTACTOS DE PANTALLA NUESTROS CONTACTOS')";
                   
                    if (mysqli_query($conn, $sql8)) {} else { }
                  // fin inserta en la tabla bitacora

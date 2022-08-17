@@ -165,7 +165,41 @@ if (mysqli_num_rows($roles35) > 0)
             
             <div class="card">
               <div class="card-header">
-              <form id="form" action="" method="post">
+                <!-- /// filtrar reporte //// -->
+                <form action="" method="post">
+                <div class="row">
+                    <div class="col">
+                      <!-- ///////////////////// -->
+                      <?php $asignacion=(isset($_POST['reporte_catalogo']))?$_POST['reporte_catalogo']:"";   ?> 
+                      <!-- <?php echo $asignacion; ?> -->
+                      <br>
+                        <select style="background-color:rgb(240, 244, 245);" value="<?php echo $id_cliente; ?>" required  class="form-select" id="lista1" name="reporte_catalogo"  >
+                                          <option >Seleccione un tipo</option>
+                                              <?php
+                                                  include '../../conexion/conexion.php';
+                                                  $catalago777 = "SELECT * FROM tbl_catalogo";
+                                                  $catalago7777 = mysqli_query($conn, $catalago777);
+                                                  if (mysqli_num_rows($catalago7777) > 0) {
+                                                      while($row = mysqli_fetch_assoc($catalago7777))
+                                                      {
+                                                        $id_catalogoo = $row['ID_CATALOGO'];
+                                                      $catalago77777 =$row['NOMBRE_CATALOGO'];
+                                              ?>
+                                                <option value="<?php  echo $id_catalogoo; ?>"><?php echo $catalago77777; ?></option>
+                                                <?php
+                                          }}// finaliza el if y el while
+                                          ?>
+                                        </select>
+                                                          </div>
+                    <div class="col"><br>
+                    <button class="btn btn-danger" type="submit">Filtrar reporte</button>
+                    </div>
+               </div>
+                                 
+                                        
+                        </form> <br><!-- ///////////////////// -->
+                <!-- /// fin filtrar reporte /// -->
+              <form id="form">
                     <div class="btn-group">
                     <?php 
                                 include '../../conexion/conexion.php';
@@ -442,28 +476,59 @@ if (mysqli_num_rows($roles35) > 0)
 </body>
 
 <!-- // Inicio para exportar en pdf // -->
+<?php
+if(!isset($_POST['reporte_catalogo']))
+{
+	require '../../conexion/conexion.php';
+	$sql = "SELECT * FROM (tbl_portafolio p
+  INNER JOIN tbl_catalogo c ON p.ID_CATALOGO = c.ID_CATALOGO) 
+  ORDER BY p.ID_CATALOGO desc";
+	$query = $conn->query($sql);
+	$data = array();
+	while($r=$query->fetch_object()){
+	$data[] =$r;
+	}
+}else{		
+			  
+			require '../../conexion/conexion.php';
+			$asignacion=(isset($_POST['reporte_catalogo']))?$_POST['reporte_catalogo']:"";
+			$sql = "SELECT * FROM (tbl_portafolio p
+      INNER JOIN tbl_catalogo c ON p.ID_CATALOGO = c.ID_CATALOGO) 
+      WHERE p.ID_CATALOGO='$asignacion'";
+			$query = $conn->query($sql);
+			$data = array();
+			while($r=$query->fetch_object()){
+			$data[] =$r;
+			}
+				
+			}
+     
+
+?>
+
 <script>
-	//para descar al tocar el boton	
+	//para descar al tocar el boton
 	var form = document.getElementById("form")
 	form.addEventListener("submit",function(event) {
-   
 	event.preventDefault()
- 
-				const pdf = new jsPDF('p', 'mm', 'letter');			
-        	
 
-				var columns = ["", "", "", "", ""];
-				var data = [
-				[1, "Hola", "hola@gmail.com", "Mexico"],
-				 ];
-
+			
+			const pdf = new jsPDF('p', 'mm', 'letter');
+						
+			var columns = ["Tipo", "Título", "Descripción"];
+			var data = [
+  <?php foreach($data as $d):?>
+	
+      ["<?php echo $d->NOMBRE_CATALOGO; ?>", "<?php echo $d->TITULO; ?>", "<?php echo $d->DESCRIPCION_PORTAFOLIO; ?>"],
+      <?php endforeach; ?>
+  ];
 				pdf.autoTable(columns,data,
 				{ 
-					html:'#example1',
+					
 					margin:{ top: 30 }}
 				);
-						
-				//Inicio Encabezado y pie de pagina
+		
+			//Inicio Encabezado y pie de pagina
 			const pageCount = pdf.internal.getNumberOfPages();
 			for(var i = 1; i <= pageCount; i++) 
 			{
@@ -496,13 +561,13 @@ if (mysqli_num_rows($roles35) > 0)
 				pdf.text(183-20,297-284,newdat);
 
 				//muestra el numero de pagina
-				pdf.text('Pagina ' + String(i) + '/' + String(pageCount),220-20,297-25,null,null,"right");
+				pdf.text('Pagina ' + String(i) + '/' + String(pageCount),220-20,297-27,null,null,"right");
 			}
 				//Fin Encabezado y pie de pagina
 
 							pdf.save('Reporte de portafolio.pdf');
 	})
-  
+
 </script>
 <!-- // Fin para exportar en pdf // -->
 <script type="text/javascript" src="../../js/evitar_reenvio.js"></script>

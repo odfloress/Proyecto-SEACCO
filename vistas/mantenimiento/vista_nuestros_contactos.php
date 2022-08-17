@@ -93,37 +93,32 @@ if (mysqli_num_rows($roles35) > 0)
 
 ?>
           <form action="" method="post">
-          <label for="">Id Contactos</label>
-          <input type="number" name="id_contacto" class="form-control " readonly value="<?php echo $filas['ID_CONTACTO'] ?>" placeholder="Ingrese su id">
+          <!-- <label for="">ID Contactos</label> -->
+          <input type="hidden" name="id_contacto" class="form-control " readonly value="<?php echo $filas['ID_CONTACTO'] ?>" placeholder="Ingrese su id">
            <br>
 
-          <label for="">Numero telefono</label>
-          <input type="tel" name="telefono" class="form-control " placeholder="Ingrese su numero" value="<?php echo $filas['TELEFONO'] ?>" pattern="[0-9]{9}" onkeypress="return solonumero(event)">
+          <label for="">Número teléfono</label>
+          <input  type="text" autocomplete="off" name="telefono" value="<?php echo $filas['TELEFONO'] ?>" class="form-control"  placeholder="Numero de celular"  required minlength="8" onkeypress="return solonumero(event)" maxlength="8" pattern="[0-9]+[1-9]+[0-9]+" title="8 caracteres y no todos ceros">
+        
            <br>
 
            <label for="">Correo</label>
-           <input type="email" name="correo" class="form-control" value="<?php echo $filas['CORREO'] ?>" placeholder="Opcional Ingrese su correo" >
+           <input type="email" name="correo" class="form-control" value="<?php echo $filas['CORREO'] ?>" placeholder="Opcional Ingrese su correo" maxlength="255">
            <br>
 
            <label for="">Dirección</label>
-           <input type="text" name="direccion" class="form-control " value="<?php echo $filas['DIRECCION'] ?>" placeholder="Ingrese su direccion" onkeyup="mayus(this);" maxlength="30" >
+           <input type="text" name="direccion" class="form-control " maxlength="255" value="<?php echo $filas['DIRECCION'] ?>" placeholder="Ingrese su direccion" onkeyup="mayus(this);"  >
            <br>
 
             <label for="">Facebook</label>
-            <input type="text" name="facebook" class="form-control " value="<?php echo $filas['FACEBOOK'] ?>"placeholder="Ingrese su facebook" onkeyup="mayus(this);" maxlength="30">
+            <input type="text" name="facebook" class="form-control " value="<?php echo $filas['FACEBOOK'] ?>"placeholder="Ingrese su facebook"  maxlength="255">
             <br>
             <label for="">Instagram</label>
-            <input type="text" name="instagram" class="form-control " value="<?php echo $filas['INSTAGRAM'] ?>" placeholder="Ingrese su instagram" onkeyup="mayus(this);" maxlength="30" >
+            <input type="text" name="instagram" class="form-control " value="<?php echo $filas['INSTAGRAM'] ?>" placeholder="Ingrese su instagram" maxlength="255" >
             <br>       
   
       </div>
         <!-- Modal footer -->
-      <?php 
-      include '../../conexion/conexion.php';
-      $contacto = "SELECT * FROM tbl_ms_roles_ojetos WHERE ID_ROL='$id_rol7' and ID_OBJETO=18 and PERMISO_INSERCION=1";
-      $contacto2 = mysqli_query($conn, $contacto);
-      if (mysqli_num_rows($contacto2) > 0)
-       {?> <!-- Modal footer -->
         <?php 
         include '../../conexion/conexion.php';
         $contacto = "SELECT * FROM tbl_ms_roles_ojetos WHERE ID_ROL='$id_rol7' and ID_OBJETO=18 and PERMISO_ACTUALIZACION=1";
@@ -132,9 +127,9 @@ if (mysqli_num_rows($roles35) > 0)
          {?>
       <div class="modal-footer">
       	            
-                  <button type="submit" name="accion" value="agregar" class="btn btn-primary" onclick="return confirm('¿Desea agregar el contacto?')">Agregar</button>
-                  <button type="submit" name="accion" value="editar" class="btn btn-warning" onclick="return confirm('¿Desea editar el contacto?')">Editar</button>
-                  <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
+                  <!-- <button type="submit" name="accion" value="agregar" class="btn btn-primary" onclick="return confirm('¿Desea agregar el contacto?')">Agregar</button> -->
+                  <button type="submit" name="accion" value="editar" class="btn btn-primary" onclick="return confirm('¿Desea editar el contacto?')">Guardar</button>
+                  <!-- <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button> -->
                 </div><?php 
                           }
                         ?>
@@ -143,7 +138,7 @@ if (mysqli_num_rows($roles35) > 0)
                         ?>
                 </form> 
             
-                <?php } ?>
+               
     </div>
      <!-- /.card-body -->
      </div>
