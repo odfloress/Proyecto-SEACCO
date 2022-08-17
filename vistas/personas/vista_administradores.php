@@ -134,10 +134,10 @@ if (mysqli_num_rows($roles35) > 0)
 
 
                     <label for="">Nombres:</label>
-                    <input type="text" class="form-control" name="nombre" required value="" placeholder="" autocomplete="on" onkeyup="mayus(this);" maxlength="30">
+                    <input type="text" class="form-control" name="nombre" required value="<?php echo "$nombre"; ?>" placeholder="" autocomplete="on" onkeyup="mayus(this);" maxlength="30">
 
                     <label for="">Apellidos:</label>
-                    <input type="text" class="form-control" name="apellido" required value="" placeholder="" autocomplete="off" onkeyup="mayus(this);" maxlength="30" >
+                    <input type="text" class="form-control" name="apellido" required value="<?php echo "$apellido"; ?>" placeholder="" autocomplete="off" onkeyup="mayus(this);" maxlength="30" >
 
                     <label for="">Usuario:</label>
                     <input type="text" class="form-control" name="usuario" required value="" autocomplete = "off"  onkeypress="return soloLetras(event);" minlength="3" maxlength="20" onkeyup="mayus(this);" required onblur="quitarespacios(this);" onkeydown="sinespacio(this);">
@@ -149,7 +149,7 @@ if (mysqli_num_rows($roles35) > 0)
                     </div>
 
                     <label for="">Correo:</label>
-                    <input type="email" class="form-control" name="correo" required value="" autocomplete="off" placeholder="" > 
+                    <input type="email" class="form-control" name="correo" required value="<?php echo "$correo"; ?>" autocomplete="off" placeholder="" > 
                      
                     <label for="pwd" class="form-label">Genero:</label>
                     <select style="background-color:rgb(240, 244, 245);" value="<?php echo "$genero"; ?>" class="form-select" id="lista1" name="genero" required >
@@ -177,7 +177,7 @@ if (mysqli_num_rows($roles35) > 0)
                     </select> -->
 
                     <label for="">DNI:</label>
-                    <input type="text" class="form-control" name="dni" required value="" autocomplete="off" minlength="13" maxlength="13" onkeypress="return solonumero(event)" required pattern="[0-9]+[1-9]+" title="13 caracteres y no todos ceros">
+                    <input type="text" class="form-control" name="dni" required value="<?php echo "$dni"; ?>" autocomplete="off" minlength="13" maxlength="13" onkeypress="return solonumero(event)" required pattern="[0-9]+[1-9]+" title="13 caracteres y no todos ceros">
 
                     <label for="pwd" class="form-label">Profesión:</label>
                       <select style="background-color:rgb(240, 244, 245);" value="<?php echo "$profesion"; ?>" class="form-select" id="lista1" name="profesion" required >
@@ -201,22 +201,22 @@ if (mysqli_num_rows($roles35) > 0)
                     <input type="text" class="form-control" name="profesion" required value="" autocomplete="off" onkeyup="mayus(this);" maxlength="30" > -->
 
                     <label for="">Dirección:</label>
-                    <input type="text" class="form-control" name="direccion" required value="" autocomplete="off" onkeyup="mayus(this);" maxlength="70" >
+                    <input type="text" class="form-control" name="direccion" required value="<?php echo "$direccionp"; ?>" autocomplete="off" onkeyup="mayus(this);" maxlength="70" >
 
                     <label for="">Teléfono:</label>
-                    <input type="text" autocomplete="off" class="form-control" name="celular" minlength="8" maxlength="8" required value="" placeholder="" required pattern="[0-9]+[1-9]+[0-9]+" title="8 caracteres y no todos ceros" onkeypress="return solonumero(event)" >
+                    <input type="text" autocomplete="off" class="form-control" name="celular" value="<?php echo "$celular"; ?>" minlength="8" maxlength="8" required value="" placeholder="" required pattern="[0-9]+[1-9]+[0-9]+" title="8 caracteres y no todos ceros" onkeypress="return solonumero(event)" >
                     
                     <label for="">Referencia:</label>
-                    <input type="text" class="form-control" name="referencia" required value="" autocomplete="off" onkeyup="mayus(this);" maxlength="30" >
+                    <input type="text" class="form-control" name="referencia" required value="<?php echo "$referencia"; ?>" autocomplete="off" onkeyup="mayus(this);" maxlength="30" >
 
                     <label for="">Teléfono de referencia:</label>
-                    <input type="text" autocomplete="off"  class="form-control" name="celular_referencia" minlength="8" maxlength="8" required value="" placeholder="" required pattern="[0-9]+[1-9]+[0-9]+" title="8 caracteres y no todos ceros" onkeypress="return solonumero(event)">
+                    <input type="text" autocomplete="off"  class="form-control" value="<?php echo "$celular_referencia"; ?>" name="celular_referencia" minlength="8" maxlength="8" required value="" placeholder="" required pattern="[0-9]+[1-9]+[0-9]+" title="8 caracteres y no todos ceros" onkeypress="return solonumero(event)">
 
                     <label for="">Experiencia laboral:</label>
-                    <input type="text" class="form-control" name="experiencia_laboral" required value="" autocomplete="off" onkeyup="mayus(this);" maxlength="30" >
+                    <input type="text" class="form-control" name="experiencia_laboral" required value="<?php echo "$experiencia_laboral"; ?>" autocomplete="off" onkeyup="mayus(this);" maxlength="30" >
 
                     <label for="">Currículum:</label>
-                    <input type="file" class="form-control" name="curriculum"  accept=".pdf, .doxc" value="" placeholder="Opcional" >
+                    <input type="file" class="form-control" name="curriculum"  accept=".pdf, .doxc" value="<?php echo "$curriculum"; ?>" placeholder="Opcional" >
 
                     <label for="">Foto:</label>
                     <input type="file" class="form-control" name="foto" accept=".jpg, .png, .jpej, .JPEG, .JPG, .PNG" value="" placeholder="Opcional" >
