@@ -130,7 +130,7 @@ if (mysqli_num_rows($validar_empleado1) > 0)
 
                 <label for="" class="form-label">Producto:</label>
                 <select placeholder="Seleccione" class="form-select" id="sel1" name="id_producto" required >
-                <option></option>
+                <option>Seleccione</option>
                   <?php
                       include '../../conexion/conexion.php';
                       $getproducto = "SELECT * FROM tbl_productos  WHERE ID_PRODUCTO  ORDER BY ID_PRODUCTO";
@@ -151,14 +151,10 @@ if (mysqli_num_rows($validar_empleado1) > 0)
                     <label for="">Cantidad</label>
                     <input type="text" class="form-control" name="cantidad" onkeypress="return solonumero(event)" required value="<?php echo "$cantidad"; ?>" onkeyup="mayus(this);" placeholder="Ingrese la cantidad" id="cantidad"   > 
                     <br>
-                    <?php
-                    include '../../conexion/conexion.php';
-                    $validar_usuario = "SELECT * from tbl_usuarios WHERE DNI='$empleado'";
-                    ?>
 
                 <label for="" class="form-label">Empleado:</label>
                 <select placeholder="Seleccione" class="form-select" id="sel1" name="id_usuario" required >
-                <option></option>
+                <option>Seleccione</option>
                   <?php
                       include '../../conexion/conexion.php';
                       $getusuario = "SELECT * FROM tbl_usuarios  WHERE ID_ROL = 1 OR ID_ROL = 2 AND ID_ESTADO_USUARIO= 1  ORDER BY ID_USUARIO";
@@ -169,7 +165,7 @@ if (mysqli_num_rows($validar_empleado1) > 0)
                               $DNI = $row['DNI'];
                               $usuario =$row['USUARIO'];
                            ?>
-                              <option value="<?php  echo $DNI ?>"><?php echo $usuario .' - '.($DNI)?></option>
+                              <option value="<?php  echo $usuario ?>"><?php echo $usuario .' - '.($DNI)?></option>
                           <?php
                     }}// finaliza el if y el while
 
@@ -179,7 +175,7 @@ if (mysqli_num_rows($validar_empleado1) > 0)
                           
                     <label for="sel1" class="form-label">Estado de la herramienta:</label>
                 <select placeholder="Seleccione" class="form-select" id="sel1" name="id_estado_herramienta" required >
-                  <option></option>
+                  <option>Seleccione</option>
                   <?php
                       include '../../conexion/conexion.php';
                       $getestado_herr = "SELECT * FROM tbl_estado_herramienta  WHERE ID_ESTADO_HERRAMIENTA  ORDER BY ID_ESTADO_HERRAMIENTA";
@@ -249,6 +245,8 @@ if (mysqli_num_rows($validar_empleado1) > 0)
       
     </section>
 
+    
+
     <!-- Main content -->
     <section class="content">
       <div class="container-fluid">
@@ -269,6 +267,8 @@ if (mysqli_num_rows($validar_empleado1) > 0)
                 
               </div>
               
+
+              
               <!-- /.card-header -->
               <div class="card-body ">
                 <table id="example1" class="table table-bordered table-striped">
@@ -279,6 +279,7 @@ if (mysqli_num_rows($validar_empleado1) > 0)
                   <th>Producto</th>
                   <th>Cantidad</th>
                   <th>Descripción de asignacion</th>
+                  <th>Empleado</th>
                   <th>Estado herramienta</th>
                   <th>Estado asignación</th>           
                   </tr>
@@ -315,6 +316,7 @@ if (mysqli_num_rows($validar_empleado1) > 0)
                      <td><?php echo $filas['NOMBRE'] ?></td>
                      <td><?php echo $filas['CANTIDAD'] ?></td>
                      <td><?php echo $filas['DESCRIPCION_ASIGNACION1'] ?></td>
+                     <td><?php echo $filas['USUARIO1'] ?></td>
                      <td><?php echo $filas['ESTADO'] ?></td>
                      <td><?php echo $filas['ESTADO_ASIGNACION'] ?></td>
 </tr>
