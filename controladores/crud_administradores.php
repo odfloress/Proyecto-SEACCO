@@ -55,7 +55,7 @@
 
             echo '<script>
                     alert("El usuario ya existe, intente con otro");
-                                       
+                    window.location.href="../../vistas/personas/vista_administradores";                   
                   </script>';
                   mysqli_close($conn);              
       }else{  
@@ -67,7 +67,7 @@
 
             echo '<script>
                     alert("El correo ya existe, intente con otro");
-                     
+                    window.location.href="../../vistas/personas/vista_administradores"; 
                   </script>';
                   mysqli_close($conn);
 
@@ -80,7 +80,7 @@
 
             echo '<script>
                     alert("El DNI ya esta registrado, verifique que el ingresado sea el correcto");
-                    
+                    window.location.href="../../vistas/personas/vista_administradores";
                   </script>';
                   mysqli_close($conn);
 

@@ -72,7 +72,7 @@ if (mysqli_num_rows($roles35) > 0)
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-5">
-          <h3>Estados de las asignaciones</h3> 
+          <h3>Estados de asignaciones</h3> 
             <!-- Inicio de modal de agregar -->
 <div class="container mt-3">
   
@@ -151,7 +151,7 @@ if (mysqli_num_rows($roles35) > 0)
                         ?> 
         
    
-              <button type="submit"  name="accion" value="reporte_pdf" class="btn btn-secondary buttons-pdf buttons-html5"  onclick="return confirm('¿Quieres generar reporte de estados de asignación?')" onclick="textToPdf()"><span>Reporte PDF</span></button>
+              <button type="submit"  name="accion" value="reporte_pdf" class="btn btn-secondary buttons-pdf buttons-html5"  onclick="return confirm('¿Quieres generar reporte de estados de asignaciones?')" onclick="textToPdf()"><span>Reporte PDF</span></button>
 	               </div>
             </form>
                 <!-- <h3 class="card-title">Estados</h3> -->
@@ -424,7 +424,7 @@ if (mysqli_num_rows($roles35) > 0)
 				//muestra el titulo secundario
 				pdf.setFont('times');
 				pdf.setFontSize(10);
-				pdf.text("Reporte de estados de asignación", 75,20,);
+				pdf.text("Reporte estados de asignaciones", 75,20,);
 
 												//////// pie de Pagina ///////
 				//muestra la fecha
@@ -441,7 +441,7 @@ if (mysqli_num_rows($roles35) > 0)
 			}
 				//Fin Encabezado y pie de pagina
 
-							pdf.save('Reporte de estados de asignacion.pdf');
+							pdf.save('Reporte estados de asignaciones.pdf');
 	})
   
 </script>
