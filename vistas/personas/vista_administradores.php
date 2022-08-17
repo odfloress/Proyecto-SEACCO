@@ -282,41 +282,6 @@ if (mysqli_num_rows($roles35) > 0)
             <div class="card table-responsive">
               <div class="card-header">
                 <!-- <h3 class="card-title">Usuarios</h3> -->
-                <form id="form" action="" method="post">
-                <!-- /// filtrar reporte //// -->
-                <form action="" method="post">
-                <div class="row">
-                    <div class="col">
-                      <!-- ///////////////////// -->
-                      <?php $asignacion=(isset($_POST['reporte_catalogo']))?$_POST['reporte_catalogo']:"";   ?> 
-                      <!-- <?php echo $asignacion; ?> -->
-                      <br>
-                        <select style="background-color:rgb(240, 244, 245);" value="<?php echo $id_cliente; ?>" required  class="form-select" id="lista1" name="reporte_catalogo"  >
-                                          <option >Seleccione un tipo</option>
-                                              <?php
-                                                  include '../../conexion/conexion.php';
-                                                  $catalago777 = "SELECT * FROM tbl_catalogo";
-                                                  $catalago7777 = mysqli_query($conn, $catalago777);
-                                                  if (mysqli_num_rows($catalago7777) > 0) {
-                                                      while($row = mysqli_fetch_assoc($catalago7777))
-                                                      {
-                                                        $id_catalogoo = $row['ID_CATALOGO'];
-                                                      $catalago77777 =$row['NOMBRE_CATALOGO'];
-                                              ?>
-                                                <option value="<?php  echo $id_catalogoo; ?>"><?php echo $catalago77777; ?></option>
-                                                <?php
-                                          }}// finaliza el if y el while
-                                          ?>
-                                        </select>
-                                                          </div>
-                    <div class="col"><br>
-                    <button class="btn btn-danger" type="submit">Filtrar reporte</button>
-                    </div>
-               </div>
-
-
-                        </form> <br><!-- ///////////////////// -->
-                <!-- /// fin filtrar reporte /// -->
                   <form id="form" action="" method="post">
                   <div class="btn-group">
                     <?php 
