@@ -229,7 +229,7 @@ if (mysqli_num_rows($roles35) > 0)
                     <div class="btn-group">
                     <?php 
       include '../../conexion/conexion.php';
-      $area1 = "SELECT * FROM tbl_ms_roles_ojetos WHERE ID_ROL='$id_rol7' and ID_OBJETO=30 and PERMISO_INSERCION=1";
+      $area1 = "SELECT * FROM tbl_ms_roles_ojetos WHERE ID_ROL='$id_rol7' and ID_OBJETO=13 and PERMISO_INSERCION=1";
       $area2 = mysqli_query($conn, $area1);
       if (mysqli_num_rows($area2) > 0)
        {
@@ -258,7 +258,7 @@ if (mysqli_num_rows($roles35) > 0)
                     <th>Descripción</th>
                     <th>Departamento</th>
                     <th>Ubicación</th>
-                    <th>Fecha Fnicio</th>
+                    <th>Fecha Inicio</th>
                     <th>Fecha Final</th>
                     
                   </tr>
@@ -594,7 +594,7 @@ if (mysqli_num_rows($roles35) > 0)
 				const pdf = new jsPDF('p', 'mm', 'letter');			
         	
 
-				var columns = ["", "", "", "", ""];
+				var columns = ["", "", "", "", "","", "", "", "", ""];
 				var data = [
 				[1, "Hola", "hola@gmail.com", "Mexico"],
 				 ];
