@@ -8,18 +8,8 @@
 
 
   // //Variables para recuperar la información de los campos de la vista roles
-  $asignacion=(isset($_POST['asignacion']))?$_POST['asignacion']:"";  
-  $id_producto=(isset($_POST['id_producto']))?$_POST['id_producto']:"";
+
   $id_proyecto=(isset($_POST['id_proyecto']))?$_POST['id_proyecto']:"";
-  $empleado1=(isset($_POST['id_usuario']))?$_POST['id_usuario']:"";
-  //$descripcion_asignacion=(isset($_POST['descripcion_asignacion']))?$_POST['descripcion_asignacion']:"";
-  $cantidad=(isset($_POST['cantidad']))?$_POST['cantidad']:"";
-  $id_estado_herramienta=(isset($_POST['id_estado_herramienta']))?$_POST['id_estado_herramienta']:"";
-  $id_estado_asignacion=(isset($_POST['id_estado_asignacion']))?$_POST['id_estado_asignacion']:"";
-  $fecha_asignado=(isset($_POST['fecha_asignado']))?$_POST['fecha_asignado']:"";
-  $fecha_entrega=(isset($_POST['fecha_entrega']))?$_POST['fecha_entrega']:"";
-  $id_estado_herramienta=(isset($_POST['id_estado_herramienta']))?$_POST['id_estado_herramienta']:"";
-  $id_estado_asignacion=(isset($_POST['id_estado_asignacion']))?$_POST['id_estado_asignacion']:"";
   $usuario1 = $_SESSION;
   //variable para recuperar los botones de la vista roles  
   $accion=(isset($_POST['accion']))?$_POST['accion']:"";
@@ -30,8 +20,8 @@
       case "agregar": 
         
                     //si no existe el rol permite insertar
-                    $sql1 = "INSERT INTO tbl_asignaciones (ID_PROYECTO, DESCRIPCION_ASIGNACION, FECHA_ENTREGA, USUARIO, ESTADO_ASIGNACION)
-                    VALUES ('$id_proyecto', '$descripcion_asignacion', '$fecha_entrega', '$usuario1[usuario]', 'EN PROCESO')";
+                    $sql1 = "INSERT INTO tbl_asignaciones (ID_PROYECTO, DESCRIPCION_ASIGNACION, USUARIO, ESTADO_ASIGNACION)
+                    VALUES ('$id_proyecto', '$descripcion_asignacion', '$usuario1[usuario]', 'EN PROCESO')";
                     if (mysqli_query($conn, $sql1)) {
 
                          // inicio inserta en la tabla bitacora
