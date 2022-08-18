@@ -150,9 +150,6 @@ if (mysqli_num_rows($roles35) > 0)
                       </button> <?php 
                           }
                         ?>
- 
-
-
                             <!-- El Modal -->
                             <div class="modal" id="myModal2<?php echo $filas['ID_DETALLE_ASIGNACION'] ?>">
                             <div class="modal-dialog">

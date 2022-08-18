@@ -60,7 +60,16 @@
                         $sql1 = "INSERT INTO tbl_detalle_asignacion (ID_ASIGNADO, DESCRIPCION_ASIGNACION1, ID_PRODUCTO, CANTIDAD, USUARIO1, FECHA_ENTREGA, ID_ESTADO_HERRAMIENTA, ID_ESTADO_ASIGNACION)
                         VALUES ('$id_asignado', '$descripcion_asignacion', '$id_producto', '$cantidad', '$empleado', '$fecha_entrega', '$id_estado_herramienta','1')";
                         if (mysqli_query($conn, $sql1)) {
-    
+ 
+                              $restar_inventario = "UPDATE tbl_inventario SET CANTIDAD_DISPONIBLE = CANTIDAD_DISPONIBLE-'$cantidad' WHERE ID_PRODUCTOS = '$id_producto'";
+                              if (mysqli_query($conn, $restar_inventario)) {
+                                    if ($restar_inventario < $cantidad) {
+                                          echo '<script>
+                                          alert("No es posible procesar la asignación, inventario insuficiente");
+                                                           
+                                      </script>'; 
+                                      mysqli_close($conn);     
+                                    }else{
     
                       ///////////// INSERTA EN LA TABLA TBL_KARDEX /////////////
                       $kardex = "INSERT INTO tbl_kardex (ID_PRODUCTO, ID_COMPRA, ID_ASIGNACION, USUARIO, CANTIDAD, TIPO_MOVIMIENTO)
@@ -76,11 +85,7 @@
                               $result = mysqli_query($conn, $validar_inventario); 
                               if ($cantidad > $result)
                               {
-                                    echo '<script>
-                                    alert("No es posible procesar la asignación, inventario insuficiente");
-                                                     
-                                </script>'; 
-                                mysqli_close($conn);     
+
                               } else {
     
                           echo '<script>
@@ -88,7 +93,9 @@
                                     window.location.href="../../vistas/inventario/detalle_asignacion.php";                   
                                 </script>';
                               }           
-    
+                        }
+
+                  }
                         } else {
                                 echo '<script>
                                         alert("Error al tratar de agregar el producto");
@@ -106,6 +113,10 @@
 
                       ///////////// ELIMINA DE LA TABLA KARDEX /////////////
                       $kardex1 = "UPDATE tbl_kardex SET TIPO_MOVIMIENTO='ENTRADA' WHERE ID_ASIGNACION='$id_asignado'";
+                      if (mysqli_query($conn, $kardex1)) 
+                          { }
+
+
                       if (mysqli_query($conn, $kardex1)) 
                           { }
       ///////////// ELIMINA DE LA TABLA DETALLE DE ASIGNACION /////////////
@@ -136,6 +147,12 @@
       break;
       //para eliminar en la tabla mysl  
       case "eliminar";
+
+            ///////////// ELIMINA DE LA TABLA INVENTARIO /////////////
+            $devolver_inventario = "UPDATE tbl_inventario SET CANTIDAD_DISPONIBLE = CANTIDAD_DISPONIBLE+'$cantidad' WHERE ID_PRODUCTOS = '$id_producto'";
+            if (mysqli_query($conn, $devolver_inventario)) 
+            { }
+            
       $eliminar_producto = "SELECT * FROM tbl_detalle_asignacion";
       $eliminar_producto1 = mysqli_query($conn, $eliminar_producto);
       if (mysqli_num_rows($eliminar_producto1) > 0)
@@ -148,7 +165,11 @@
 
       $kardex2 = "UPDATE tbl_kardex SET TIPO_MOVIMIENTO='ENTRADA' WHERE ID_ASIGNACION='$id_asignado'";
       if (mysqli_query($conn, $kardex2)) 
-          { }
+          { 
+
+
+          }
+
                         $sql3 = "DELETE FROM tbl_detalle_asignacion WHERE ID_DETALLE_ASIGNACION='$id_detalle_asignacion'";
                         if (mysqli_query($conn, $sql3)) {
 

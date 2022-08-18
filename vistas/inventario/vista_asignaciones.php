@@ -206,7 +206,7 @@ if (mysqli_num_rows($roles35) > 0)
                       <td><form action="../../vistas/inventario/mostrar_detalle_asignaciones.php" method="post">
                             <input type="hidden" name="asignacion" value="<?php echo $filas['ID_ASIGNADO'] ?>">
 
-                          <button type="submit" name="accion" value="detalle" class="btn btn-primary" onclick="return confirm('¿Desea ver detalles de la asignación?')">Ver detalle</button>
+                          <button type="submit" name="accion" value="detalle" class="btn btn-primary">Ver detalle</button>
                           </form>
                       </td>
                      <td><?php echo $filas['ID_ASIGNADO'] ?></td>

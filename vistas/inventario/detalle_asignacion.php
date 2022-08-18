@@ -148,7 +148,7 @@ if (mysqli_num_rows($validar_empleado1) > 0)
                 ?>
                 </select>
 
-                    <label for="">Cantidad</label>
+                    <label for="">Cantidad:</label>
                     <input type="text" class="form-control" name="cantidad" onkeypress="return solonumero(event)" required value="<?php echo "$cantidad"; ?>" onkeyup="mayus(this);" placeholder="Ingrese la cantidad" id="cantidad"   > 
                     <br>
 
@@ -194,7 +194,7 @@ if (mysqli_num_rows($validar_empleado1) > 0)
                 ?>
                 </select>
 
-                    <label for="">Descripción de la asignación</label>
+                    <label for="">Descripción de la asignación:</label>
                     <input type="text" class="form-control" name="descripcion_asignacion" required value="<?php echo "$descripcion_asignacion"; ?>" onKeyUP="this.value=this.value.toUpperCase();" placeholder="Ingrese un breve comentario sobre la asignación" id="descripción_asignacion"   >
                     <br>
                     <div class="row">
