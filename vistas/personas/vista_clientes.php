@@ -195,6 +195,39 @@ if (mysqli_num_rows($roles35) > 0)
             
             <div class="card">
               <div class="card-header">
+                  <!-- /// filtrar reporte //// -->
+                  <form action="" method="post">
+                <div class="row">
+                    <div class="col">
+                      <!-- ///////////////////// -->
+                      <?php $asignacion=(isset($_POST['reporte_catalogo']))?$_POST['reporte_catalogo']:"";   ?> 
+                     <?php echo $asignacion; ?> 
+                      <br>
+                        <select style="background-color:rgb(240, 244, 245);" value="<?php echo $id_cliente; ?>" required  class="form-select" id="lista1" name="reporte_catalogo"  >
+                                          <option >Seleccione un tipo</option>
+                                              <?php
+                                                  include '../../conexion/conexion.php';
+                                                  $catalago777 = "SELECT * FROM tbl_clientes";
+                                                  $catalago7777 = mysqli_query($conn, $catalago777);
+                                                  if (mysqli_num_rows($catalago7777) > 0) {
+                                                      while($row = mysqli_fetch_assoc($catalago7777))
+                                                      {
+                                                      $catalago77777 =$row['NOMBRE_CLIENTE'];
+                                              ?>
+                                                <option value="<?php  echo $catalago77777; ?>"><?php echo $catalago77777; ?></option>
+                                                <?php
+                                          }}// finaliza el if y el while
+                                          ?>
+                                        </select>
+                                                          </div>
+                    <div class="col"><br>
+                    <button class="btn btn-danger" type="submit">Filtrar reporte</button>
+                    </div>
+               </div>
+                                 
+                                        
+                        </form> <br><!-- ///////////////////// -->
+                <!-- /// fin filtrar reporte /// -->
               <form id="form" action="" method="post">
                     <div class="btn-group">
                     <?php 
@@ -501,28 +534,59 @@ if (mysqli_num_rows($roles35) > 0)
 </body>
 
 <!-- // Inicio para exportar en pdf // -->
+<?php
+if(!isset($_POST['reporte_catalogo']))
+{
+	require '../../conexion/conexion.php';
+	$sql = "SELECT * FROM (tbl_clientes c
+  INNER JOIN tbl_generos g ON c.ID_GENERO = g.ID_GENERO) 
+  ORDER BY c.NOMBRE_CLIENTE desc";
+	$query = $conn->query($sql);
+	$data = array();
+	while($r=$query->fetch_object()){
+	$data[] =$r;
+	}
+}else{		
+			  
+			require '../../conexion/conexion.php';
+			$asignacion=(isset($_POST['reporte_catalogo']))?$_POST['reporte_catalogo']:"";
+			$sql = "SELECT * FROM (tbl_clientes c
+      INNER JOIN tbl_generos g ON c.ID_GENERO = g.ID_GENERO) 
+      WHERE c.NOMBRE_CLIENTE='$asignacion'";
+			$query = $conn->query($sql);
+			$data = array();
+			while($r=$query->fetch_object()){
+			$data[] =$r;
+			}
+				
+			}
+     
+
+?>
+
 <script>
-	//para descar al tocar el boton	
+	//para descar al tocar el boton
 	var form = document.getElementById("form")
 	form.addEventListener("submit",function(event) {
-   
 	event.preventDefault()
- 
-				const pdf = new jsPDF('p', 'mm', 'letter');			
-        	
 
-				var columns = ["", "", "", "", ""];
-				var data = [
-				[1, "Hola", "hola@gmail.com", "Mexico"],
-				 ];
-
+			
+			const pdf = new jsPDF('L', 'mm', 'letter');
+						
+			var columns = ["Código", "Nombre", "Apellido", "Correo", "Teléfono", "Dirección", "Referencia", "Genero"];
+			var data = [
+  <?php foreach($data as $d):?>
+	
+      ["<?php echo $d->CODIGO; ?>", "<?php echo $d->NOMBRE_CLIENTE; ?>", "<?php echo $d->APELLIDO; ?>", "<?php echo $d->CORREO; ?>", "<?php echo $d->TELEFONO; ?>", "<?php echo $d->DIRECCION; ?>", "<?php echo $d->REFERENCIA; ?>", "<?php echo $d->GENERO; ?>"],
+      <?php endforeach; ?>
+  ];
 				pdf.autoTable(columns,data,
 				{ 
-					html:'#example1',
+					
 					margin:{ top: 30 }}
 				);
-						
-				//Inicio Encabezado y pie de pagina
+		
+			//Inicio Encabezado y pie de pagina
 			const pageCount = pdf.internal.getNumberOfPages();
 			for(var i = 1; i <= pageCount; i++) 
 			{
@@ -530,19 +594,19 @@ if (mysqli_num_rows($roles35) > 0)
 												//////// Encabezado ///////
 				//Inicio para imagen de logo 
 				var logo = new Image();
-				logo.src = '../../imagenes/LoogSEACCO.jpg';
+				logo.src = '../../imagenes/seacco.jpg';
 				pdf.addImage(logo, 'JPEG',14,7,24,15);
 				//Fin para imagen de logo 
 
 				//muestra el titulo principal
 				pdf.setFont('Arial');
 				pdf.setFontSize(17);
-				pdf.text("Constructora SEACCO", 70,15,);
+				pdf.text("Constructora SEACCO", 117,15,);
 
 				//muestra el titulo secundario
 				pdf.setFont('times');
 				pdf.setFontSize(10);
-				pdf.text("Reporte de Clientes", 84,20,);
+				pdf.text("Reporte de clientes", 127,20,);
 
 												//////// pie de Pagina ///////
 				//muestra la fecha
@@ -552,16 +616,16 @@ if (mysqli_num_rows($roles35) > 0)
 				let horas = today.getHours()
 				let jornada = horas >=12 ? 'PM' : 'AM';
 				var newdat = "Fecha: " + today.getDate() + "/" + (today.getMonth()+1) + "/" + today.getFullYear() + " " + (horas % 12) + ":" + today.getMinutes() + ":" + today.getSeconds() + " " + jornada;
-				pdf.text(183-20,297-284,newdat);
+				pdf.text(245-20,297-284,newdat);
 
 				//muestra el numero de pagina
-				pdf.text('Pagina ' + String(i) + '/' + String(pageCount),220-20,297-25,null,null,"right");
+				pdf.text('Pagina ' + String(i) + '/' + String(pageCount),282-20,297-89,null,null,"right");
 			}
 				//Fin Encabezado y pie de pagina
 
-							pdf.save('Reporte de Clientes.pdf');
+							pdf.save('Reporte de clientes.pdf');
 	})
-  
+
 </script>
 <!-- // Fin para exportar en pdf // -->
 <script type="text/javascript" src="../../js/evitar_reenvio.js"></script>
