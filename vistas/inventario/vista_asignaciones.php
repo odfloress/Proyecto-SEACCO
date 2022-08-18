@@ -92,6 +92,7 @@ if (mysqli_num_rows($roles35) > 0)
 <div class="container mt-3">
   
         <h3>Asignaciones</h3> <br> 
+        <form id="form" action="" method="post">
         <?php 
       include '../../conexion/conexion.php'; 
 
@@ -106,7 +107,10 @@ if (mysqli_num_rows($roles35) > 0)
                 }
          
                                   ?> 
- </div>
+
+        <button type="submit"  name="accion" value="reporte_pdf" class="btn btn-secondary buttons-pdf buttons-html5"  onclick="return confirm('¿Quieres generar reporte de asignaciones?')" onclick="textToPdf()"><span>Reporte PDF</span></button>
+        </div>
+      </form>
 
 <!-- El Modal -->
 <div class="modal" id="myModal">
@@ -124,7 +128,7 @@ if (mysqli_num_rows($roles35) > 0)
                 <div class="modal-body">               
                 <label for="">Seleccione el proyecto</label>
                     <select class="form-select" id="lista1" name="id_proyecto" required >
-                    <option></option>
+                    <option>Seleccione</option>
                         <?php
                             include '../../conexion/conexion.php';
                             $proyecto = "SELECT * FROM tbl_proyectos ORDER BY ID_PROYECTO";
@@ -178,9 +182,6 @@ if (mysqli_num_rows($roles35) > 0)
             
             <div class="card table-responsive">
               <div class="card-header">
-              <form id="form" action="" method="post">
-              <button type="submit"  name="accion" value="reporte_pdf" class="btn btn-secondary buttons-pdf buttons-html5"  onclick="return confirm('¿Quieres generar reporte de asignaciones?')" onclick="textToPdf()"><span>Reporte PDF</span></button>
-	            </form>
                 <!-- <h3 class="card-title">Compras</h3> -->
                 
               </div>
@@ -192,10 +193,7 @@ if (mysqli_num_rows($roles35) > 0)
                   <tr>
                   <th>Accion</th>
                   <th>Id Asignación</th>
-                  <th>Proyecto</th>
-                  <th>Fecha asignado</th>
-                  <th>Fecha entrega</th>  
-                  <th>Usuario</th>                 
+                  <th>Proyecto</th>               
                   </tr>
                   </thead>
                   <tbody>
@@ -206,17 +204,13 @@ if (mysqli_num_rows($roles35) > 0)
                      ?>
                   <tr>
                       <td><form action="../../vistas/inventario/mostrar_detalle_asignaciones.php" method="post">
-                      <input type="hidden" name="fecha" value="<?php echo $filas['FECHA_ASIGNADO'] ?>">
                             <input type="hidden" name="asignacion" value="<?php echo $filas['ID_ASIGNADO'] ?>">
 
-                          <button type="submit" name="accion" value="detalle" class="btn btn-primary" onclick="return confirm('¿Desea ver detalles de la asignación?')">Ver detalle</button>
+                          <button type="submit" name="accion" value="detalle" class="btn btn-primary">Ver detalle</button>
                           </form>
                       </td>
                      <td><?php echo $filas['ID_ASIGNADO'] ?></td>
-                     <td><?php echo $filas['NOMBRE_PROYECTO'] ?></td>
-                     <td><?php echo $filas['FECHA_ASIGNADO'] ?></td>
-                     <td><?php echo $filas['FECHA_ENTREGA'] ?></td> 
-                     <td><?php echo $filas['USUARIO'] ?></td>    
+                     <td><?php echo $filas['NOMBRE_PROYECTO'] ?></td>  
       </tr>
                 <?php } ?>  
                 </tbody>
