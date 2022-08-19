@@ -449,8 +449,8 @@ if (mysqli_num_rows($roles35) > 0)
 
 				//muestra el titulo secundario
 				pdf.setFont('times');
-				pdf.setFontSize(10);
-				pdf.text("Reporte de profesiones", 84,20,);
+				pdf.setFontSize(12);
+				pdf.text("Reporte de profesiones", 77,20,);
 
 												//////// pie de Pagina ///////
 				//muestra la fecha

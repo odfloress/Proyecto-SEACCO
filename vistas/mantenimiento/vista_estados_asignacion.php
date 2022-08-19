@@ -449,8 +449,8 @@ event.preventDefault()
 
       //muestra el titulo secundario
       pdf.setFont('times');
-      pdf.setFontSize(10);
-      pdf.text("Reporte de estados de asignaciones", 84,20,);
+      pdf.setFontSize(12);
+      pdf.text("Reporte de estados de asignaciones", 66,20,);
 
                       //////// pie de Pagina ///////
       //muestra la fecha

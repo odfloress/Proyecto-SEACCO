@@ -178,7 +178,7 @@ if (mysqli_num_rows($roles35) > 0)
           <!-- /.col -->
         </div>
         <!-- /.row -->
-      </div>
+      
       <!-- /.container-fluid -->
     </section>
     <!-- /.content -->
@@ -304,11 +304,12 @@ if (mysqli_num_rows($roles35) > 0)
           INNER JOIN tbl_estado_asignacion ea ON da.ID_ESTADO_ASIGNACION = ea.ID_ESTADO_ASIGNACION)
           INNER JOIN tbl_inventario i ON da.ID_PRODUCTO = i.ID_PRODUCTOS)
           INNER JOIN tbl_proyectos p ON a.ID_PROYECTO = p.ID_PROYECTO)
-  ORDER BY ID_DETALLE_ASIGNACION'";
+  ORDER BY ID_DETALLE_ASIGNACION asc";
 	$query = $conn->query($sql1);
 	$data = array();
-	while($r=$query->fetch_object())
-	$data[] =$r;    
+	while($r=$query->fetch_object()){
+    $data[] =$r; 
+  }
 
 ?>
 
@@ -337,7 +338,9 @@ if (mysqli_num_rows($roles35) > 0)
 			var data = [
   <?php foreach($data as $d):?>
 	
-      ["<?php echo $d->ID_DETALLE_ASIGNACION; ?>", "<?php echo $d->NOMBRE; ?>", "<?php echo $d->CANTIDAD; ?>", "<?php echo $d->DESCRIPCION_ASIGNACION1; ?>", "<?php echo $d->USUARIO1; ?>", "<?php echo $d->NOMBRE_PROYECTO; ?>", "<?php echo $d->FECHA_ASIGNADO; ?>", "<?php echo $d->FECHA_ENTREGA; ?>"],
+      ["<?php echo $d->ID_DETALLE_ASIGNACION; ?>", "<?php echo $d->NOMBRE; ?>", "<?php echo $d->CANTIDAD; ?>",
+       "<?php echo $d->DESCRIPCION_ASIGNACION1; ?>", "<?php echo $d->USUARIO1; ?>", "<?php echo $d->NOMBRE_PROYECTO; ?>", 
+       "<?php echo $d->FECHA_ASIGNADO; ?>", "<?php echo $d->FECHA_ENTREGA; ?>"],
       <?php endforeach; ?>
   ];
 				pdf.autoTable(columns,data,
@@ -361,12 +364,12 @@ if (mysqli_num_rows($roles35) > 0)
 				//muestra el titulo principal
 				pdf.setFont('Arial');
 				pdf.setFontSize(17);
-				pdf.text("<?php echo $nombre_constructora;?>", 70,15,);
+				pdf.text("<?php echo $nombre_constructora;?>", 113,15,);
 
 				//muestra el titulo secundario
 				pdf.setFont('times');
-				pdf.setFontSize(10);
-				pdf.text("Reporte de detalle de asignaciones", 84,20,);
+				pdf.setFontSize(12);
+				pdf.text("Reporte de detalle de asignaciones", 110,20,);
 
 												//////// pie de Pagina ///////
 				//muestra la fecha
@@ -376,7 +379,7 @@ if (mysqli_num_rows($roles35) > 0)
 				let horas = today.getHours()
 				let jornada = horas >=12 ? 'PM' : 'AM';
 				var newdat = "Fecha: " + today.getDate() + "/" + (today.getMonth()+1) + "/" + today.getFullYear() + " " + (horas % 12) + ":" + today.getMinutes() + ":" + today.getSeconds() + " " + jornada;
-				pdf.text(183-20,297-284,newdat);
+				pdf.text(250-20,297-284,newdat);
 
 				//muestra el numero de pagina
 				pdf.text('Pagina ' + String(i) + '/' + String(pageCount),220-20,297-27,null,null,"right");
