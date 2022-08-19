@@ -114,6 +114,7 @@
                                 window.location.href="../../vistas/inventario/vista_compras.php";                   
                             </script>';
       }
+      break;
       case "confirmar";
       $confirmar = "UPDATE tbl_compras SET ESTADO_COMPRA='FINALIZADO' WHERE ID_COMPRA='$id_compra'";
       if (mysqli_query($conn, $confirmar)) 
