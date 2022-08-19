@@ -23,7 +23,7 @@
               
          
            echo '<script>
-                    alert("Categoria ya existe");
+                    alert("El nombre de categoría ingresado ya existe, intente con otro");
                  </script>';
                  mysqli_close($conn);
          }else{ 
@@ -57,7 +57,7 @@
               
          
            echo '<script>
-                    alert("No se puede editar, ya existe una caregoria con ese nombre");
+                    alert("No se puede editar, ya existe una categoría con ese nombre");
                  </script>';
                  mysqli_close($conn);
          }else{ 
@@ -68,7 +68,7 @@
 
                 }else{
                      echo '<script>
-                            alert("Error al tratar de editar categoria");
+                            alert("Error al tratar de editar categoría");
                            </script>'; mysqli_error($conn);
                      }
 
@@ -89,7 +89,7 @@
         //  if (mysqli_query($conn, $sql9)) {} else { }
         //  // fin inserta en la tabla bitacora
          echo '<script>
-                 alert("No se puede eliminar la categoria, ya que esta en uso");
+                 alert("No se puede eliminar la categoria, esta se encuentra en uso");
                  window.location.href="../../vistas/inventario/vista_categorias_productos.php";                   
                </script>';
                mysqli_close($conn);

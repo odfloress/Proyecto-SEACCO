@@ -25,7 +25,7 @@
          if (mysqli_num_rows($result1) > 0) { 
                 
                 echo '<script>
-                        alert("Estado ya existe");
+                        alert("El nombre de estado ingresado ya existe, intente con otro");
                       </script>';
                       mysqli_close($conn);
          }else{ 
@@ -41,7 +41,7 @@
                              if (mysqli_query($conn, $sql7)) {} else { }
                         // fin inserta en la tabla bitacora
                         echo '<script>
-                                alert("Estado creado con exito");
+                                alert("Estado creado con éxito");
                                 window.location.href="../../vistas/mantenimiento/vista_estado_herramienta.php";                   
                             </script>';
                              mysqli_close($conn);
@@ -73,7 +73,7 @@
                       if (mysqli_query($conn, $sql8)) {} else { }
                     // fin inserta en la tabla bitacora
                     echo '<script>
-                            alert("Estado ya existe, intente con otro nombre");                  
+                            alert("El nombre de estado ingresado ya existe, intente con otro");                  
                           </script>';
                           mysqli_close($conn);
 
@@ -88,7 +88,7 @@
                             if (mysqli_query($conn, $sql9)) {} else { }
                             // fin inserta en la tabla bitacora
                             echo '<script>
-                                    alert("Estado editado con exito");
+                                    alert("Estado editado exitosamente");
                                     window.location.href="../../vistas/mantenimiento/vista_estado_herramienta.php";                     
                                 </script>';
                                 mysqli_close($conn);
@@ -112,7 +112,7 @@
          if (mysqli_query($conn, $sql9)) {} else { }
          // fin inserta en la tabla bitacora
          echo '<script>
-                 alert("No se puede eliminar el estado, ya que esta en uso");
+                 alert("No se puede eliminar el estado, este se encuentra en uso");
                  window.location.href="../../vistas/mantenimiento/vista_estado_herramienta.php";                   
                </script>';
                mysqli_close($conn);
