@@ -66,8 +66,9 @@ if (mysqli_num_rows($roles35) > 0)
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
     <!-- enlace del scritpt para evitar si preciona F12, si preciona Ctrl+Shift+I, si preciona Ctr+u  -->
     <script type="text/javascript" src="../../js/evita_ver_codigo_utilizando_teclas.js"></script>
-       <!-- /// para exportar en pdf /// -->
-   <script type="text/javascript" src="../../js/complemento_1_jspdf.min.js"></script>
+
+               <!-- /// Para exportar en pdf /// -->
+  <script type="text/javascript" src="../../js/complemento_1_jspdf.min.js"></script>
 	<script type="text/javascript" src="../../js/complemento_2_jspdf.plugin.autotable.min.js"></script>
 
 
@@ -113,7 +114,8 @@ if (mysqli_num_rows($roles35) > 0)
 
                 <form id="form" action="" method="post">
               <button type="submit"  name="accion" value="reporte_pdf" class="btn btn-secondary buttons-pdf buttons-html5"  onclick="return confirm('¿Desea generar reporte de detalle de asignaciones?')" onclick="textToPdf()"><span>Reporte PDF</span></button>
-	            </form>
+	            </div>
+            </form>
                 </div>              
 
               <!-- /.card-header -->
@@ -295,13 +297,15 @@ if (mysqli_num_rows($roles35) > 0)
 <?php
 
 	require '../../conexion/conexion.php';
-  $sql = "SELECT * FROM ((((tbl_detalle_asignacion da
+  $sql1 = "SELECT * FROM ((((((tbl_detalle_asignacion da
           INNER JOIN tbl_productos pr ON da.ID_PRODUCTO = pr.ID_PRODUCTO)
+          INNER JOIN tbl_asignaciones a ON da.ID_ASIGNADO = a.ID_ASIGNADO)
           INNER JOIN tbl_estado_herramienta eh ON da.ID_ESTADO_HERRAMIENTA = eh.ID_ESTADO_HERRAMIENTA)
           INNER JOIN tbl_estado_asignacion ea ON da.ID_ESTADO_ASIGNACION = ea.ID_ESTADO_ASIGNACION)
           INNER JOIN tbl_inventario i ON da.ID_PRODUCTO = i.ID_PRODUCTOS)
+          INNER JOIN tbl_proyectos p ON a.ID_PROYECTO = p.ID_PROYECTO)
   ORDER BY ID_DETALLE_ASIGNACION'";
-	$query = $conn->query($sql);
+	$query = $conn->query($sql1);
 	$data = array();
 	while($r=$query->fetch_object())
 	$data[] =$r;    
@@ -327,7 +331,7 @@ if (mysqli_num_rows($roles35) > 0)
 	event.preventDefault()
 
 			
-			const pdf = new jsPDF('p', 'mm', 'letter');
+			const pdf = new jsPDF('L', 'mm', 'letter');
 						
 			var columns = ["ID", "Producto", "Cantidad", "Descripción", "Empleado", "Proyecto", "Fecha de asignación", "Fecha de devolución"];
 			var data = [
