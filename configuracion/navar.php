@@ -436,7 +436,7 @@
                {
                   echo '<li class="nav-item">
                   <a href="../../vistas/proyectos/vista_estado_proyecto.php" class="nav-link">
-                    <p>Estado proyectos</p>
+                    <p>Estado Proyectos</p>
                   </a>
                 </li>';
                }
