@@ -17,12 +17,13 @@ include '../../controladores/crud_categoria_productos.php';
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Categorias</title>
+  <title>Categorias de productos</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
-       <!-- /// para exportar en pdf /// -->
-       <script type="text/javascript" src="../../js/complemento_1_jspdf.min.js"></script>
+
+           <!-- /// Para exportar en pdf /// -->
+  <script type="text/javascript" src="../../js/complemento_1_jspdf.min.js"></script>
 	<script type="text/javascript" src="../../js/complemento_2_jspdf.plugin.autotable.min.js"></script>
   
 
@@ -42,6 +43,9 @@ include '../../controladores/crud_categoria_productos.php';
          
         <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal">
             Nueva categoria
+            <form id="form" action="" method="post">
+            <button type="submit"  name="accion" value="reporte_pdf" class="btn btn-secondary buttons-pdf buttons-html5"  onclick="return confirm('¿Desea generar reporte de categorias de productos?')" onclick="textToPdf()"><span>Reporte PDF</span></button>
+	          </form>
         </button>
     </div>
 
@@ -60,7 +64,7 @@ include '../../controladores/crud_categoria_productos.php';
                 <!-- Cuerpo del modal Modal -->
                 <div class="modal-body">
                
-                    <label for="">Categoria</label>
+                    <label for="">Categoria:</label>
                     <input type="text" class="form-control" name="categoria" required value="" placeholder="" id="txtPrecio_Compra"   >
                     <br>
                 
@@ -101,9 +105,6 @@ include '../../controladores/crud_categoria_productos.php';
             
             <div class="card table-responsive">
               <div class="card-header">
-              <form id="form" action="" method="post">
-              <button type="submit"  name="accion" value="reporte_pdf" class="btn btn-secondary buttons-pdf buttons-html5"  onclick="return confirm('¿Quieres generar reporte de categorias de productos?')" onclick="textToPdf()"><span>Reporte PDF</span></button>
-	            </form>
                 <!-- <h3 class="card-title">Categorias</h3> -->
                 
               </div>
@@ -307,28 +308,53 @@ include '../../controladores/crud_categoria_productos.php';
 </body>
 
 <!-- // Inicio para exportar en pdf // -->
+<?php
+
+	require '../../conexion/conexion.php';
+	$sql = "SELECT * FROM tbl_categoria_producto 
+  ORDER BY ID_CATEGORIA desc";
+	$query = $conn->query($sql);
+	$data = array();
+	while($r=$query->fetch_object())
+	$data[] =$r;    
+
+?>
+
+<?php
+    $select_nombre = "SELECT * FROM tbl_parametros WHERE PARAMETRO='NOMBRE'";
+    $select_nombre1 = mysqli_query($conn, $select_nombre);
+    if (mysqli_num_rows($select_nombre1) > 0)
+    {
+    while($row = mysqli_fetch_assoc($select_nombre1))
+      {
+          $nombre_constructora = $row['VALOR'];
+      }
+    }
+?>
+
 <script>
-	//para descar al tocar el boton	
+	//para descar al tocar el boton
 	var form = document.getElementById("form")
 	form.addEventListener("submit",function(event) {
-   
 	event.preventDefault()
- 
-				const pdf = new jsPDF('p', 'mm', 'letter');			
-        	
 
-				var columns = ["", "", "", "", ""];
-				var data = [
-				[1, "Hola", "hola@gmail.com", "Mexico"],
-				 ];
-
+			
+			const pdf = new jsPDF('p', 'mm', 'letter');
+						
+			var columns = ["Id categoría", "Categoría"];
+			var data = [
+  <?php foreach($data as $d):?>
+	
+      ["<?php echo $d->ID_CATEGORIA; ?>", "<?php echo $d->NOMBRE_CATEGORIA; ?>"],
+      <?php endforeach; ?>
+  ];
 				pdf.autoTable(columns,data,
 				{ 
-					html:'#example1',
+					
 					margin:{ top: 30 }}
 				);
-						
-				//Inicio Encabezado y pie de pagina
+		
+			//Inicio Encabezado y pie de pagina
 			const pageCount = pdf.internal.getNumberOfPages();
 			for(var i = 1; i <= pageCount; i++) 
 			{
@@ -343,12 +369,12 @@ include '../../controladores/crud_categoria_productos.php';
 				//muestra el titulo principal
 				pdf.setFont('Arial');
 				pdf.setFontSize(17);
-				pdf.text("Constructora SEACCO", 70,15,);
+				pdf.text("<?php echo $nombre_constructora;?>", 70,15,);
 
 				//muestra el titulo secundario
 				pdf.setFont('times');
 				pdf.setFontSize(10);
-				pdf.text("Reporte de categorias de productos", 79,20,);
+				pdf.text("Reporte de categorías de productos", 84,20,);
 
 												//////// pie de Pagina ///////
 				//muestra la fecha
@@ -361,14 +387,15 @@ include '../../controladores/crud_categoria_productos.php';
 				pdf.text(183-20,297-284,newdat);
 
 				//muestra el numero de pagina
-				pdf.text('Pagina ' + String(i) + '/' + String(pageCount),220-20,297-25,null,null,"right");
+				pdf.text('Pagina ' + String(i) + '/' + String(pageCount),220-20,297-27,null,null,"right");
 			}
 				//Fin Encabezado y pie de pagina
 
-							pdf.save('Reporte de categorias de productos.pdf');
+							pdf.save('Reporte de categorías de productos.pdf');
 	})
-  
+
 </script>
 <!-- // Fin para exportar en pdf // -->
+
 <script type="text/javascript" src="../../js/evitar_reenvio.js"></script>
 </html>

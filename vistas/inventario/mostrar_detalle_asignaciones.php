@@ -60,7 +60,7 @@ if (mysqli_num_rows($roles35) > 0)
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Asignaciones</title>
+  <title> Detalle de asignaciones</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
@@ -74,7 +74,7 @@ if (mysqli_num_rows($roles35) > 0)
 
   <?php include '../../configuracion/navar.php' ?>
   <!-- Inicio evita el click derecho de la pagina -->
-<body oncontextmenu="return false">
+  <body oncontextmenu="return false">
 <!-- Fin evita el click derecho de la pagina --> 
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
@@ -83,12 +83,13 @@ if (mysqli_num_rows($roles35) > 0)
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-7">
+            
           <h3 class="card-title">Detalle de la asignación número <?php echo $asignacion; ?></h3>
      
           </div>
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
-              
+            
             </ol>
             
           </div>
@@ -107,22 +108,19 @@ if (mysqli_num_rows($roles35) > 0)
            
             <!-- /.card -->
             
-            
-            <div class="card table-responsive">              
-              <div class="card-header">              
+            <div class="card table-responsive">
+              <div class="card-header">
+
                 <form id="form" action="" method="post">
               <button type="submit"  name="accion" value="reporte_pdf" class="btn btn-secondary buttons-pdf buttons-html5"  onclick="return confirm('¿Desea generar reporte de detalle de asignaciones?')" onclick="textToPdf()"><span>Reporte PDF</span></button>
 	            </form>
-                
-              </div>
-              
+                </div>              
 
               <!-- /.card-header -->
               <div class="card-body ">
                 <table id="example1" class="table table-bordered table-striped">
                   <thead>
                   <tr>
-                  <th>Devolver asignación (Parcial/Total)</th>
                   <th>Id Detalle asignación</th>
                   <th>Producto</th>
                   <th>Cantidad</th>
@@ -135,127 +133,7 @@ if (mysqli_num_rows($roles35) > 0)
                            
                   </tr>
                   </thead>
-                  <tbody>
-
-
-                  <?php 
-                          include '../../conexion/conexion.php';
-                          $permiso_editar = "SELECT * FROM tbl_ms_roles_ojetos WHERE ID_ROL='$id_rol7' and ID_OBJETO=27 and PERMISO_ACTUALIZACION=1";
-                          $permiso_editar2 = mysqli_query($conn, $permiso_editar);
-                          if (mysqli_num_rows($permiso_editar2) > 0)
-                          {?>
-                                 <!-- inicio boton editar -->
-                      <button type="button"  class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#myModal2<?php echo $filas['ID_DEPARTAMENTO'] ?>" >
-                      <i class="fas fa-pencil-alt"></i>
-                      </button> <?php 
-                          }
-                        ?>
-                            <!-- El Modal -->
-                            <div class="modal" id="myModal2<?php echo $filas['ID_DETALLE_ASIGNACION'] ?>">
-                            <div class="modal-dialog">
-                            <div class="modal-content">
-
-                <!-- Encabezado del modal -->
-                <form action="" method="post">
-                <div class="modal-header">
-                    <h4 class="modal-title">Editar asignación</h4>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                </div>
-                <!-- Fin Encabezado del modal -->
-
-                <!-- Cuerpo del modal Modal -->
-                <form action="" method="post">
-                <div class="modal-body">
-                <label for="" class="form-label">Producto:</label>
-                <select placeholder="Seleccione" class="form-select" id="sel1" name="id_producto" required >
-                <option>Seleccione</option>
-                  <?php
-                      include '../../conexion/conexion.php';
-                      $getproducto = "SELECT * FROM tbl_productos  WHERE ID_PRODUCTO  ORDER BY ID_PRODUCTO";
-                      $getproducto1 = mysqli_query($conn, $getproducto);
-                      if (mysqli_num_rows($getproducto1) > 0) {
-                          while($row = mysqli_fetch_assoc($getproducto1))
-                            {
-                              $id_producto = $row['ID_PRODUCTO'];
-                              $producto =$row['NOMBRE'];
-                           ?>
-                              <option value="<?php  echo $id_producto ?>"><?php echo $id_producto .' - '.($producto)?></option>
-                          <?php
-                    }}// finaliza el if y el while
-
-                ?>
-                </select>
-
-                    <label for="">Cantidad</label>
-                    <input type="text" class="form-control" name="cantidad" onkeypress="return solonumero(event)" required value="<?php echo "$cantidad"; ?>" onkeyup="mayus(this);" placeholder="Ingrese la cantidad" id="cantidad"   > 
-                    <br>
-
-                <label for="" class="form-label">Empleado:</label>
-                <select placeholder="Seleccione" class="form-select" id="sel1" name="id_usuario" required >
-                <option>Seleccione</option>
-                  <?php
-                      include '../../conexion/conexion.php';
-                      $getusuario = "SELECT * FROM tbl_usuarios  WHERE ID_ROL = 1 OR ID_ROL = 2 AND ID_ESTADO_USUARIO= 1  ORDER BY ID_USUARIO";
-                      $getusuario1 = mysqli_query($conn, $getusuario);
-                      if (mysqli_num_rows($getusuario1) > 0) {
-                          while($row = mysqli_fetch_assoc($getusuario1))
-                            {
-                              $DNI = $row['DNI'];
-                              $usuario =$row['USUARIO'];
-                           ?>
-                              <option value="<?php  echo $usuario ?>"><?php echo $usuario .' - '.($DNI)?></option>
-                          <?php
-                    }}// finaliza el if y el while
-
-                ?>
-                </select>
-                    <br> 
-                          
-                    <label for="sel1" class="form-label">Estado de la herramienta:</label>
-                <select placeholder="Seleccione" class="form-select" id="sel1" name="id_estado_herramienta" required >
-                  <option>Seleccione</option>
-                  <?php
-                      include '../../conexion/conexion.php';
-                      $getestado_herr = "SELECT * FROM tbl_estado_herramienta  WHERE ID_ESTADO_HERRAMIENTA  ORDER BY ID_ESTADO_HERRAMIENTA";
-                      // $getpregunta1 = "SELECT * FROM tbl_preguntas  WHERE ID_PREGUNTA  NOT IN (SELECT ID_PREGUNTA  FROM  tbl_respuestas_usuario WHERE USUARIO = 'JO' ) ORDER BY ID_PREGUNTA";
-                      $getestado_herr = mysqli_query($conn, $getestado_herr);
-                      if (mysqli_num_rows($getestado_herr) > 0) {
-                          while($row = mysqli_fetch_assoc($getestado_herr))
-                            {
-                              $id_estado_herramienta = $row['ID_ESTADO_HERRAMIENTA'];
-                              $estado_herramienta =$row['ESTADO'];
-                           ?>
-                              <option value="<?php  echo $id_estado_herramienta ?>"><?php echo $id_estado_herramienta .' - '.($estado_herramienta)?></option>
-                          <?php
-                    }}// finaliza el if y el while
-
-                ?>
-                </select>
-
-                    <label for="">Descripción de la asignación</label>
-                    <input type="text" class="form-control" name="descripcion_asignacion" required value="<?php echo "$descripcion_asignacion"; ?>" onKeyUP="this.value=this.value.toUpperCase();" placeholder="Ingrese un breve comentario sobre la asignación" id="descripción_asignacion"   >
-                    <br>
-                    <div class="row">
-                <div class="col">
-                  <label type="date" class="form-label">Fecha de devolución:</label>
-                  <input class="form-control" type="Date" name="fecha_entrega" value="" autocomplete="off" id="" required>
-                </div>
-            </div>
-                
-                </div>
-                                    <!-- pie del modal -->
-                                    <div class="modal-footer">
-                                <button type="submit" name="accion" value="editar" class="btn btn-primary" onclick="return confirm('¿Desea editar la categoria?')">Guardar</button>
-                                  <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
-                                </div>
-                             
-                                  <!-- Fin pie del modal -->
-                                 
-                              </div>
-                            </div>
-                          </div>
-                          <!-- fin boton editar -->                 
-
+                </body>
                   <?php
                   include '../../conexion/conexion.php';
                   //para mostrar los datos de la tabla mysql y mostrar en el crud
@@ -271,13 +149,7 @@ if (mysqli_num_rows($roles35) > 0)
 
 
                   <tr>
-                     
-
-                        </td>           
-                    <td>
-                         <button type="button"  class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#myModal2<?php echo $filas['ID_DETALLE_ASIGNACION'] ?>" >
-                      <i class="fas fa-pencil-alt"></i>
-                      </button></td>          
+                                
                      <td><?php echo $filas['ID_DETALLE_ASIGNACION'] ?></td>
                      <td><?php echo $filas['NOMBRE'] ?></td>
                      <td><?php echo $filas['CANTIDAD'] ?></td>
@@ -418,29 +290,59 @@ if (mysqli_num_rows($roles35) > 0)
  <!-- Enlace Script para quitar espacios en blanco -->
  <script type="text/javascript" src="../../js/quitar_espacios.js"></script>
 </body>
+
 <!-- // Inicio para exportar en pdf // -->
+<?php
+
+	require '../../conexion/conexion.php';
+  $sql = "SELECT * FROM ((((tbl_detalle_asignacion da
+          INNER JOIN tbl_productos pr ON da.ID_PRODUCTO = pr.ID_PRODUCTO)
+          INNER JOIN tbl_estado_herramienta eh ON da.ID_ESTADO_HERRAMIENTA = eh.ID_ESTADO_HERRAMIENTA)
+          INNER JOIN tbl_estado_asignacion ea ON da.ID_ESTADO_ASIGNACION = ea.ID_ESTADO_ASIGNACION)
+          INNER JOIN tbl_inventario i ON da.ID_PRODUCTO = i.ID_PRODUCTOS)
+  ORDER BY ID_DETALLE_ASIGNACION'";
+	$query = $conn->query($sql);
+	$data = array();
+	while($r=$query->fetch_object())
+	$data[] =$r;    
+
+?>
+
+<?php
+    $select_nombre = "SELECT * FROM tbl_parametros WHERE PARAMETRO='NOMBRE'";
+    $select_nombre1 = mysqli_query($conn, $select_nombre);
+    if (mysqli_num_rows($select_nombre1) > 0)
+    {
+    while($row = mysqli_fetch_assoc($select_nombre1))
+      {
+          $nombre_constructora = $row['VALOR'];
+      }
+    }
+?>
+
 <script>
-	//para descar al tocar el boton	
+	//para descar al tocar el boton
 	var form = document.getElementById("form")
 	form.addEventListener("submit",function(event) {
-   
 	event.preventDefault()
- 
-				const pdf = new jsPDF('p', 'mm', 'letter');			
-        	
 
-				var columns = ["", "", "", "", "", "",""];
-				var data = [
-				[1, "Hola", "hola@gmail.com", "Mexico"],
-				 ];
-
+			
+			const pdf = new jsPDF('p', 'mm', 'letter');
+						
+			var columns = ["ID", "Producto", "Cantidad", "Descripción", "Empleado", "Proyecto", "Fecha de asignación", "Fecha de devolución"];
+			var data = [
+  <?php foreach($data as $d):?>
+	
+      ["<?php echo $d->ID_DETALLE_ASIGNACION; ?>", "<?php echo $d->NOMBRE; ?>", "<?php echo $d->CANTIDAD; ?>", "<?php echo $d->DESCRIPCION_ASIGNACION1; ?>", "<?php echo $d->USUARIO1; ?>", "<?php echo $d->NOMBRE_PROYECTO; ?>", "<?php echo $d->FECHA_ASIGNADO; ?>", "<?php echo $d->FECHA_ENTREGA; ?>"],
+      <?php endforeach; ?>
+  ];
 				pdf.autoTable(columns,data,
 				{ 
-					html:'#example1',
+					
 					margin:{ top: 30 }}
 				);
-						
-				//Inicio Encabezado y pie de pagina
+		
+			//Inicio Encabezado y pie de pagina
 			const pageCount = pdf.internal.getNumberOfPages();
 			for(var i = 1; i <= pageCount; i++) 
 			{
@@ -455,12 +357,12 @@ if (mysqli_num_rows($roles35) > 0)
 				//muestra el titulo principal
 				pdf.setFont('Arial');
 				pdf.setFontSize(17);
-				pdf.text("Constructora SEACCO", 70,15,);
+				pdf.text("<?php echo $nombre_constructora;?>", 70,15,);
 
 				//muestra el titulo secundario
 				pdf.setFont('times');
 				pdf.setFontSize(10);
-				pdf.text("Detalle de la asignación número <?php echo $asignacion ?>", 57,20,);
+				pdf.text("Reporte de detalle de asignaciones", 84,20,);
 
 												//////// pie de Pagina ///////
 				//muestra la fecha
@@ -473,14 +375,15 @@ if (mysqli_num_rows($roles35) > 0)
 				pdf.text(183-20,297-284,newdat);
 
 				//muestra el numero de pagina
-				pdf.text('Pagina ' + String(i) + '/' + String(pageCount),220-20,297-25,null,null,"right");
+				pdf.text('Pagina ' + String(i) + '/' + String(pageCount),220-20,297-27,null,null,"right");
 			}
 				//Fin Encabezado y pie de pagina
 
 							pdf.save('Reporte de detalle de asignaciones.pdf');
 	})
-  
+
 </script>
 <!-- // Fin para exportar en pdf // -->
+
 <script type="text/javascript" src="../../js/evitar_reenvio.js"></script>
 </html>

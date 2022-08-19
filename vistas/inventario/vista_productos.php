@@ -93,21 +93,31 @@ if (mysqli_num_rows($roles35) > 0)
         <div class="row mb-2">
           <div class="col-sm-6">
           <h3>Productos</h3>
+
             <!-- Inicio de modal de agregar -->
 <div class="container mt-3">
+<form id="form" action="" method="post">
+
+  <!-- /// Para exportar en pdf /// -->
+  <script type="text/javascript" src="../../js/complemento_1_jspdf.min.js"></script>
+	<script type="text/javascript" src="../../js/complemento_2_jspdf.plugin.autotable.min.js"></script>
 <?php 
+
       include '../../conexion/conexion.php';
       $tablero = "SELECT * FROM tbl_ms_roles_ojetos WHERE ID_ROL='$id_rol7' and ID_OBJETO=12 and PERMISO_INSERCION=1";
       $tablero2 = mysqli_query($conn, $tablero);
       if (mysqli_num_rows($tablero2) > 0)
        {
          echo '<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal">
-                 Nuevo
+                 Nuevo producto
                </button>';
        }
  ?>
-        
-    </div>
+               
+              <button type="submit"  name="accion" value="reporte_pdf" class="btn btn-secondary buttons-pdf buttons-html5"  onclick="return confirm('¿Desea generar reporte de productos?')" onclick="textToPdf()"><span>Reporte PDF</span></button>
+	            </div>  
+            </form>       
+  
     
 <!-- El Modal -->
     <div class="modal" id="myModal">
@@ -122,8 +132,9 @@ if (mysqli_num_rows($roles35) > 0)
                 <form action="" method="post" enctype="multipart/form-data">
                 <!-- Cuerpo del modal Modal -->
                 <div class="modal-body">
-                <label for="pwd" class="form-label">Id Categoria:</label>
+                <label for="pwd" class="form-label">Id Categoria:</label>              
                   <select  value="<?php echo "$id_categoria"; ?>" class="form-select" id="lista1" name="id_categoria" required >
+                  <option >Seleccione</option>
                         <?php
                            include '../../conexion/conexion.php';
                             $id_categoria = "SELECT * FROM tbl_categoria_producto ORDER BY ID_CATEGORIA";
@@ -199,9 +210,7 @@ if (mysqli_num_rows($roles35) > 0)
             
             <div class="card">
               <div class="card-header">
-              <form id="form" action="" method="post">
-              <button type="submit"  name="accion" value="reporte_pdf" class="btn btn-secondary buttons-pdf buttons-html5"  onclick="return confirm('¿Quieres generar reporte de Productos?')" onclick="textToPdf()"><span>Reporte PDF</span></button>
-	            </form>
+
                 <!-- <h3 class="card-title">PRODUCTOS</h3> -->
               </div>
               
@@ -211,16 +220,13 @@ if (mysqli_num_rows($roles35) > 0)
                   <thead>
                   <tr>
                   <th>ACCIONES</th>
-                  <th>ID PRODUCTO</th>
-                  <th>ID CATEGORIA</th>
+                  <th>ID</th>
+                  <th>CATEGORIA</th>
                   <th>CODIGO</th>
                   <th>NOMBRE</th>
                   <th>DESCRIPCION MODELO</th>
                   <th>CANTIDAD MINIMA</th>
                   <th>CANTIDAD MAXIMA</th>
-                  <th>FOTO</th>
-                  
-
                   </tr>
                   </thead>
                   <tbody>
@@ -229,7 +235,8 @@ if (mysqli_num_rows($roles35) > 0)
                   include '../../conexion/conexion.php';
                   //para mostrar los datos de la tabla mysql y mostrar en el crud                
                   $sql7 = "SELECT * FROM (tbl_productos p
-                  INNER JOIN tbl_categoria_producto c ON p.ID_CATEGORIA = c.ID_CATEGORIA)";
+                  INNER JOIN tbl_categoria_producto c ON p.ID_CATEGORIA = c.ID_CATEGORIA)
+                  ORDER BY ID_PRODUCTO";
                   $result = mysqli_query($conn, $sql7);
                   if (mysqli_num_rows($result) > 0) {
                   while ($filas= mysqli_fetch_assoc($result)){
@@ -356,8 +363,7 @@ if (mysqli_num_rows($roles35) > 0)
                      <td><?php echo $filas['NOMBRE'] ?></td>
                      <td><?php echo $filas['DESCRIPCION_MODELO'] ?></td> 
                      <td><?php echo $filas['CANTIDAD_MIN'] ?></td>
-                     <td><?php echo $filas['CANTIDAD_MAX'] ?></td>
-                     <td><img  width="100px" src="<?php echo $filas['FOTO'] ?>" /></td>                                                          
+                     <td><?php echo $filas['CANTIDAD_MAX'] ?></td>                                                         
                      </tr>
       <?php }} ?>  
                   </tfoot>
@@ -484,28 +490,54 @@ if (mysqli_num_rows($roles35) > 0)
 </body>
 
 <!-- // Inicio para exportar en pdf // -->
+<?php
+
+	require '../../conexion/conexion.php';
+	$sql = "SELECT * FROM (tbl_productos pr
+  INNER JOIN tbl_categoria_producto cp ON pr.ID_CATEGORIA = cp.ID_CATEGORIA)
+  ORDER BY ID_PRODUCTO desc";
+	$query = $conn->query($sql);
+	$data = array();
+	while($r=$query->fetch_object())
+	$data[] =$r;    
+
+?>
+
+<?php
+    $select_nombre = "SELECT * FROM tbl_parametros WHERE PARAMETRO='NOMBRE'";
+    $select_nombre1 = mysqli_query($conn, $select_nombre);
+    if (mysqli_num_rows($select_nombre1) > 0)
+    {
+    while($row = mysqli_fetch_assoc($select_nombre1))
+      {
+          $nombre_constructora = $row['VALOR'];
+      }
+    }
+?>
+
 <script>
-	//para descar al tocar el boton	
+	//para descar al tocar el boton
 	var form = document.getElementById("form")
 	form.addEventListener("submit",function(event) {
-   
 	event.preventDefault()
- 
-				const pdf = new jsPDF('p', 'mm', 'letter');			
-        	
 
-				var columns = ["", "", "", "", "", "", "",""];
-				var data = [
-				[1, "Hola", "hola@gmail.com", "Mexico"],
-				 ];
-
+			
+			const pdf = new jsPDF('p', 'mm', 'letter');
+						
+			var columns = ["Id producto", "Código", "Nombre", "Descripción de modelo", "Categoría",  "Cantidad mínima", "Cantidad máxima"];
+			var data = [
+  <?php foreach($data as $d):?>
+	
+      ["<?php echo $d->ID_PRODUCTO; ?>", "<?php echo $d->CODIGO; ?>", "<?php echo $d->NOMBRE; ?>", "<?php echo $d->DESCRIPCION_MODELO; ?>", "<?php echo $d->NOMBRE_CATEGORIA; ?>", "<?php echo $d->CANTIDAD_MIN; ?>", "<?php echo $d->CANTIDAD_MAX; ?>"],
+      <?php endforeach; ?>
+  ];
 				pdf.autoTable(columns,data,
 				{ 
-					html:'#example1',
+					
 					margin:{ top: 30 }}
 				);
-						
-				//Inicio Encabezado y pie de pagina
+		
+			//Inicio Encabezado y pie de pagina
 			const pageCount = pdf.internal.getNumberOfPages();
 			for(var i = 1; i <= pageCount; i++) 
 			{
@@ -520,12 +552,12 @@ if (mysqli_num_rows($roles35) > 0)
 				//muestra el titulo principal
 				pdf.setFont('Arial');
 				pdf.setFontSize(17);
-				pdf.text("Constructora SEACCO ", 70,15,);
+				pdf.text("<?php echo $nombre_constructora;?>", 70,15,);
 
 				//muestra el titulo secundario
 				pdf.setFont('times');
 				pdf.setFontSize(10);
-				pdf.text("Reporte de portafolio", 84,20,);
+				pdf.text("Reporte de productos", 84,20,);
 
 												//////// pie de Pagina ///////
 				//muestra la fecha
@@ -538,40 +570,15 @@ if (mysqli_num_rows($roles35) > 0)
 				pdf.text(183-20,297-284,newdat);
 
 				//muestra el numero de pagina
-				pdf.text('Pagina ' + String(i) + '/' + String(pageCount),220-20,297-25,null,null,"right");
+				pdf.text('Pagina ' + String(i) + '/' + String(pageCount),220-20,297-27,null,null,"right");
 			}
 				//Fin Encabezado y pie de pagina
 
 							pdf.save('Reporte de productos.pdf');
 	})
-  
+
 </script>
 <!-- // Fin para exportar en pdf // -->
+
 <script type="text/javascript" src="../../js/evitar_reenvio.js"></script>
 </html>
-
-
-<script>
- // Inicio Script para que solo permita letras
-
- function soloLetras(e){
-      key = e.keyCode || e.which;
-      tecla = String.fromCharCode(key).toLowerCase();
-      letras = " áéíóúabcdefghijklmnñopqrstuvwxyz¿?";
-      especiales = ["8-37-39-46"];
-
-      tecla_especial = false
-      for(var i in especiales){
-       if(key == especiales[i]){
-         tecla_especial = true;
-         break;
-       }
-     }
-
-     if(letras.indexOf(tecla)==-1 && !tecla_especial){
-       return false;
-     }
-   }
-
-//   Fin Script para que solo permita letras
-</script>
