@@ -281,6 +281,40 @@ if (mysqli_num_rows($roles35) > 0)
             
             <div class="card table-responsive">
               <div class="card-header">
+                <!-- /// filtrar reporte //// -->
+                <form action="" method="post">
+                <div class="row">
+                    <div class="col">
+                      <!-- ///////////////////// -->
+                      <?php $asignacion=(isset($_POST['reporte_catalogo']))?$_POST['reporte_catalogo']:"";   ?> 
+                    
+                      <br>
+                        <select style="background-color:rgb(240, 244, 245);" value="<?php echo $id_cliente; ?>" required  class="form-select" id="lista1" name="reporte_catalogo"  >
+                                          <option >Seleccione un filtro</option>
+                                              <?php
+                                                  include '../../conexion/conexion.php';
+                                                  $catalago777 = "SELECT * FROM  tbl_roles";
+                                                  $catalago7777 = mysqli_query($conn, $catalago777);
+                                                  if (mysqli_num_rows($catalago7777) > 0) {
+                                                      while($row = mysqli_fetch_assoc($catalago7777))
+                                                      {
+                                                        $catalago777777 =$row['ID_ROL'];
+                                                      $catalago77777 =$row['ROL'];
+                                              ?>
+                                                <option value="<?php  echo $catalago777777; ?>"><?php echo $catalago77777; ?></option>
+                                                <?php
+                                          }}// finaliza el if y el while
+                                          ?>
+                                        </select>
+                                                          </div>
+                    <div class="col"><br>
+                    <button class="btn btn-danger" type="submit">Filtrar reporte</button>
+                    </div>
+               </div>
+                                 
+                                        
+                        </form> <br><!-- ///////////////////// -->
+                <!-- /// fin filtrar reporte /// -->
                 <!-- <h3 class="card-title">Usuarios</h3> -->
                   <form id="form" action="" method="post">
                   <div class="btn-group">
@@ -807,28 +841,83 @@ if (mysqli_num_rows($roles35) > 0)
 	</script>
 
   <!-- // Inicio para exportar en pdf // -->
+<?php
+if(!isset($_POST['reporte_catalogo']))
+{
+	require '../../conexion/conexion.php';
+	$sql = "SELECT * FROM ((((( tbl_usuarios p
+      INNER JOIN tbl_roles g ON p.ID_ROL = g.ID_ROL)
+      INNER JOIN tbl_estado_usuario u ON p.ID_ESTADO_USUARIO = u.ID_ESTADO_USUARIO)
+      INNER JOIN tbl_generos e ON p.ID_GENERO = e.ID_GENERO)
+      INNER JOIN tbl_profesiones d ON p.ID_PROFESION = d.ID_PROFESION) 
+      INNER JOIN tbl_areas a ON p.ID_AREA = a.ID_AREA) 
+  ORDER BY p.ID_ROL desc";
+	$query = $conn->query($sql);
+	$data = array();
+	while($r=$query->fetch_object()){
+	$data[] =$r;
+	}
+
+}else{		
+			  
+			require '../../conexion/conexion.php';
+			$asignacion=(isset($_POST['reporte_catalogo']))?$_POST['reporte_catalogo']:"";
+			$sql = "SELECT * FROM ((((( tbl_usuarios p
+      INNER JOIN tbl_roles g ON p.ID_ROL = g.ID_ROL)
+      INNER JOIN tbl_estado_usuario u ON p.ID_ESTADO_USUARIO = u.ID_ESTADO_USUARIO)
+      INNER JOIN tbl_generos e ON p.ID_GENERO = e.ID_GENERO)
+      INNER JOIN tbl_profesiones d ON p.ID_PROFESION = d.ID_PROFESION) 
+      INNER JOIN tbl_areas a ON p.ID_AREA = a.ID_AREA)
+      WHERE p.ID_ROL='$asignacion'";
+			$query = $conn->query($sql);
+			$data = array();
+			while($r=$query->fetch_object()){
+			$data[] =$r;
+			}	
+
+			}
+     
+
+?>
+<?php 
+    $select_nombre = "SELECT * FROM tbl_parametros WHERE PARAMETRO='NOMBRE'";
+    $select_nombre1 = mysqli_query($conn, $select_nombre);
+    if (mysqli_num_rows($select_nombre1) > 0)
+    {
+    while($row = mysqli_fetch_assoc($select_nombre1))
+      { 
+          $nombre_constructora = $row['VALOR'];
+      } 
+    }
+?>
 <script>
-	//para descar al tocar el boton	
+	//para descar al tocar el boton
 	var form = document.getElementById("form")
 	form.addEventListener("submit",function(event) {
-   
 	event.preventDefault()
- 
-				const pdf = new jsPDF('L', 'mm', 'letter');			
-        	
 
-				var columns = ["", "", "", "", "","", "", "", "", "","", "", "", "", "","","",""];
-				var data = [
-				[1, "Hola", "hola@gmail.com", "Mexico", "Mexico", "Mexico", "Mexico", "Mexico", "Mexico", "Mexico", "Mexico", "Mexico", "Mexico", "Mexico", "Mexico", "Mexico", "Mexico"],
-				 ];
-
+			
+			const pdf = new jsPDF('L', 'mm', 'Job');
+						
+			var columns = ["Rol", "Estado", "Nombre", "Apellido", "Usuario", "Correo", "DNI","Profesión",
+      "Dirección", "Teléfono","Experiencia laboral "];
+			var data = [
+  <?php foreach($data as $d):?>
+	
+      ["<?php echo $d->ROL; ?>",           "<?php echo $d->NOMBRE_ESTADO; ?>",       "<?php echo $d->NOMBRE; ?>", 
+      "<?php echo $d->APELLIDO; ?>",       "<?php echo $d->USUARIO; ?>",             "<?php echo $d->CORREO; ?>", 
+      "<?php echo $d->DNI; ?>",                 "<?php echo $d->PROFESION; ?>",
+      "<?php echo $d->DIRECCION; ?>",      "<?php echo $d->CELULAR; ?>",             
+      "<?php echo $d->EXPERIENCIA_LABORAL; ?>"],
+      <?php endforeach; ?>
+  ];
 				pdf.autoTable(columns,data,
 				{ 
-					html:'#example1',
+					
 					margin:{ top: 30 }}
 				);
-						
-				//Inicio Encabezado y pie de pagina
+		
+			//Inicio Encabezado y pie de pagina
 			const pageCount = pdf.internal.getNumberOfPages();
 			for(var i = 1; i <= pageCount; i++) 
 			{
@@ -836,19 +925,19 @@ if (mysqli_num_rows($roles35) > 0)
 												//////// Encabezado ///////
 				//Inicio para imagen de logo 
 				var logo = new Image();
-				logo.src = '../../imagenes/LoogSEACCO.jpg';
+				logo.src = '../../imagenes/seacco.jpg';
 				pdf.addImage(logo, 'JPEG',14,7,24,15);
 				//Fin para imagen de logo 
 
 				//muestra el titulo principal
 				pdf.setFont('Arial');
 				pdf.setFontSize(17);
-				pdf.text("Constructora SEACCO", 70,15,);
+				pdf.text('<?php echo $nombre_constructora ?>', 115,15,);
 
 				//muestra el titulo secundario
 				pdf.setFont('times');
-				pdf.setFontSize(10);
-				pdf.text("Reporte de Usuarios", 84,20,);
+				pdf.setFontSize(12);
+				pdf.text("Reporte de Usuarios", 123,20,);
 
 												//////// pie de Pagina ///////
 				//muestra la fecha
@@ -858,15 +947,15 @@ if (mysqli_num_rows($roles35) > 0)
 				let horas = today.getHours()
 				let jornada = horas >=12 ? 'PM' : 'AM';
 				var newdat = "Fecha: " + today.getDate() + "/" + (today.getMonth()+1) + "/" + today.getFullYear() + " " + (horas % 12) + ":" + today.getMinutes() + ":" + today.getSeconds() + " " + jornada;
-				pdf.text(183-20,297-284,newdat);
+				pdf.text(245-20,297-284,newdat);
 
 				//muestra el numero de pagina
-				pdf.text('Pagina ' + String(i) + '/' + String(pageCount),220-20,297-25,null,null,"right");
+				pdf.text('Pagina ' + String(i) + '/' + String(pageCount),282-20,297-89,null,null,"right");
 			}
 				//Fin Encabezado y pie de pagina
 
 							pdf.save('Reporte de Usuarios.pdf');
 	})
-  
+
 </script>
 <!-- // Fin para exportar en pdf // -->

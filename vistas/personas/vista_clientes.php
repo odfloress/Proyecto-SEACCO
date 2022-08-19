@@ -204,7 +204,7 @@ if (mysqli_num_rows($roles35) > 0)
                      <?php echo $asignacion; ?> 
                       <br>
                         <select style="background-color:rgb(240, 244, 245);" value="<?php echo $id_cliente; ?>" required  class="form-select" id="lista1" name="reporte_catalogo"  >
-                                          <option >Seleccione un tipo</option>
+                                          <option >Seleccione un Filtro</option>
                                               <?php
                                                   include '../../conexion/conexion.php';
                                                   $catalago777 = "SELECT * FROM tbl_clientes";
@@ -563,7 +563,17 @@ if(!isset($_POST['reporte_catalogo']))
      
 
 ?>
-
+<?php 
+    $select_nombre = "SELECT * FROM tbl_parametros WHERE PARAMETRO='NOMBRE'";
+    $select_nombre1 = mysqli_query($conn, $select_nombre);
+    if (mysqli_num_rows($select_nombre1) > 0)
+    {
+    while($row = mysqli_fetch_assoc($select_nombre1))
+      { 
+          $nombre_constructora = $row['VALOR'];
+      } 
+    }
+?>
 <script>
 	//para descar al tocar el boton
 	var form = document.getElementById("form")
@@ -601,11 +611,11 @@ if(!isset($_POST['reporte_catalogo']))
 				//muestra el titulo principal
 				pdf.setFont('Arial');
 				pdf.setFontSize(17);
-				pdf.text("Constructora SEACCO", 117,15,);
+				pdf.text('<?php echo $nombre_constructora ?>', 117,15,);
 
 				//muestra el titulo secundario
 				pdf.setFont('times');
-				pdf.setFontSize(10);
+				pdf.setFontSize(12);
 				pdf.text("Reporte de clientes", 127,20,);
 
 												//////// pie de Pagina ///////

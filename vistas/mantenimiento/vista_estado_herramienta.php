@@ -57,8 +57,9 @@ if (mysqli_num_rows($roles35) > 0)
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
     <!-- enlace del scritpt para evitar si preciona F12, si preciona Ctrl+Shift+I, si preciona Ctr+u  -->
     <script type="text/javascript" src="../../js/evita_ver_codigo_utilizando_teclas.js"></script>
-    <!-- /// para exportar en pdf /// -->
-   <script type="text/javascript" src="../../js/complemento_1_jspdf.min.js"></script>
+
+                           <!-- /// Para exportar en pdf /// -->
+  <script type="text/javascript" src="../../js/complemento_1_jspdf.min.js"></script>
 	<script type="text/javascript" src="../../js/complemento_2_jspdf.plugin.autotable.min.js"></script>
     
   <?php include '../../configuracion/navar.php' ?>
@@ -151,7 +152,7 @@ if (mysqli_num_rows($roles35) > 0)
                 </button>';
                           }
                         ?> 
-              <button type="submit"  name="accion" value="reporte_pdf" class="btn btn-secondary buttons-pdf buttons-html5"  onclick="return confirm('¿Quieres generar reporte de estados de herramientas?')" onclick="textToPdf()"><span>Reporte PDF</span></button>
+              <button type="submit"  name="accion" value="reporte_pdf" class="btn btn-secondary buttons-pdf buttons-html5"  onclick="return confirm('¿Desea generar reporte de estados de herramientas?')" onclick="textToPdf()"><span>Reporte PDF</span></button>
 	               </div>
             </form>
                 <!-- <h3 class="card-title">Estados</h3> -->
@@ -382,69 +383,95 @@ if (mysqli_num_rows($roles35) > 0)
  <script type="text/javascript" src="../../js/quitar_espacios.js"></script>
 </body>
 
-<!-- // Inicio para exportar en pdf // -->
+ <!-- // Inicio para exportar en pdf // -->
+ <?php
+
+require '../../conexion/conexion.php';
+$sql = "SELECT * FROM tbl_estado_herramienta
+ORDER BY ID_ESTADO_HERRAMIENTA";
+$query = $conn->query($sql);
+$data = array();
+while($r=$query->fetch_object())
+$data[] =$r;    
+
+?>
+
+<?php
+    $select_nombre = "SELECT * FROM tbl_parametros WHERE PARAMETRO='NOMBRE'";
+    $select_nombre1 = mysqli_query($conn, $select_nombre);
+    if (mysqli_num_rows($select_nombre1) > 0)
+    {
+    while($row = mysqli_fetch_assoc($select_nombre1))
+      {
+          $nombre_constructora = $row['VALOR'];
+      }
+    }
+?>
+
 <script>
-	//para descar al tocar el boton	
-	var form = document.getElementById("form")
-	form.addEventListener("submit",function(event) {
-   
-	event.preventDefault()
- 
-				const pdf = new jsPDF('p', 'mm', 'letter');			
-        	
+//para descar al tocar el boton
+var form = document.getElementById("form")
+form.addEventListener("submit",function(event) {
+event.preventDefault()
 
-				var columns = ["", "", "", "", ""];
-				var data = [
-				[1, "Hola", "hola@gmail.com", "Mexico"],
-				 ];
+    
+    const pdf = new jsPDF('p', 'mm', 'letter');
+          
+    var columns = ["ID", "Estado"];
+    var data = [
+<?php foreach($data as $d):?>
 
-				pdf.autoTable(columns,data,
-				{ 
-					html:'#example1',
-					margin:{ top: 30 }}
-				);
-						
-				//Inicio Encabezado y pie de pagina
-			const pageCount = pdf.internal.getNumberOfPages();
-			for(var i = 1; i <= pageCount; i++) 
-			{
-				pdf.setPage(i);
-												//////// Encabezado ///////
-				//Inicio para imagen de logo 
-				var logo = new Image();
-				logo.src = '../../imagenes/LoogSEACCO.jpg';
-				pdf.addImage(logo, 'JPEG',14,7,24,15);
-				//Fin para imagen de logo 
-
-				//muestra el titulo principal
-				pdf.setFont('Arial');
-				pdf.setFontSize(17);
-				pdf.text("Constructora SEACCO", 70,15,);
-
-				//muestra el titulo secundario
-				pdf.setFont('times');
-				pdf.setFontSize(10);
-				pdf.text("Reporte de estados de herramientas", 75,20,);
-
-												//////// pie de Pagina ///////
-				//muestra la fecha
-				pdf.setFont('times');
-				pdf.setFontSize(9);
-				var today = new Date();
-				let horas = today.getHours()
-				let jornada = horas >=12 ? 'PM' : 'AM';
-				var newdat = "Fecha: " + today.getDate() + "/" + (today.getMonth()+1) + "/" + today.getFullYear() + " " + (horas % 12) + ":" + today.getMinutes() + ":" + today.getSeconds() + " " + jornada;
-				pdf.text(183-20,297-284,newdat);
-
-				//muestra el numero de pagina
-				pdf.text('Pagina ' + String(i) + '/' + String(pageCount),220-20,297-25,null,null,"right");
-			}
-				//Fin Encabezado y pie de pagina
-
-							pdf.save('Reporte de estados de herramientas.pdf');
-	})
+    ["<?php echo $d->ID_ESTADO_HERRAMIENTA; ?>", "<?php echo $d->ESTADO; ?>"],
+    <?php endforeach; ?>
+];
+      pdf.autoTable(columns,data,
+      { 
+        
+        margin:{ top: 30 }}
+      );
   
+    //Inicio Encabezado y pie de pagina
+    const pageCount = pdf.internal.getNumberOfPages();
+    for(var i = 1; i <= pageCount; i++) 
+    {
+      pdf.setPage(i);
+                      //////// Encabezado ///////
+      //Inicio para imagen de logo 
+      var logo = new Image();
+      logo.src = '../../imagenes/LoogSEACCO.jpg';
+      pdf.addImage(logo, 'JPEG',14,7,24,15);
+      //Fin para imagen de logo 
+
+      //muestra el titulo principal
+      pdf.setFont('Arial');
+      pdf.setFontSize(17);
+      pdf.text("<?php echo $nombre_constructora;?>", 70,15,);
+
+      //muestra el titulo secundario
+      pdf.setFont('times');
+      pdf.setFontSize(12);
+      pdf.text("Reporte de estados de herramientas", 65,20,);
+
+                      //////// pie de Pagina ///////
+      //muestra la fecha
+      pdf.setFont('times');
+      pdf.setFontSize(9);
+      var today = new Date();
+      let horas = today.getHours()
+      let jornada = horas >=12 ? 'PM' : 'AM';
+      var newdat = "Fecha: " + today.getDate() + "/" + (today.getMonth()+1) + "/" + today.getFullYear() + " " + (horas % 12) + ":" + today.getMinutes() + ":" + today.getSeconds() + " " + jornada;
+      pdf.text(183-20,297-284,newdat);
+
+      //muestra el numero de pagina
+      pdf.text('Pagina ' + String(i) + '/' + String(pageCount),220-20,297-27,null,null,"right");
+    }
+      //Fin Encabezado y pie de pagina
+
+            pdf.save('Reporte de estados de herramientas.pdf');
+})
+
 </script>
 <!-- // Fin para exportar en pdf // -->
+
 <script type="text/javascript" src="../../js/evitar_reenvio.js"></script>
 </html>

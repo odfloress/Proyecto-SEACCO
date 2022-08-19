@@ -38,6 +38,18 @@ if(in_array($extencion, $permitidos)){
     {
      move_uploaded_file($tmpFoto,$destino.$nombreimagen);
     } 
+
+            // valida si existe un producto con el mismo nombre
+            $validar_nombre_producto = "SELECT * FROM tbl_productos WHERE NOMBRE='$nombre'";
+            $result1 = mysqli_query($conn, $validar_nombre_producto); 
+             if (mysqli_num_rows($result1) > 0) { 
+                    
+                    echo '<script>
+                            alert("El nombre de producto ya existe, intente con otro");
+                          </script>';
+                          mysqli_close($conn);
+             }else{ 
+
 //    echo "$id_categoria" . "$cantidad_min" . "$cantidad_max ". "$destino$nombreimagen ". "$codigo" . "$nombre" . "$descripcion_modelo";
 //    die();
             // INICIO INSERTA EN LA TABLA PRODUCTOS
@@ -52,12 +64,12 @@ if(in_array($extencion, $permitidos)){
                     // fin inserta en la tabla bitacora
 
                     echo '<script type="text/javascript">
-                            alert("Creado con exito");
+                            alert("Producto creado con éxito");
                             window.location.href="../../vistas/inventario/vista_productos.php";
                         </script>';
                 }else{           
                         echo '<script type="text/javascript">
-                                alert("Error al insertar");
+                                alert("Error al crear el producto");
                             </script>';
                       }
                 // FIN INSERTA EN LA TABLA PRODUCTOS
@@ -78,6 +90,7 @@ if(in_array($extencion, $permitidos)){
     window.location.href="../../vistas/inventario/vista_productos";
  </script>';
 
+}
 }
 
 break;
@@ -121,14 +134,14 @@ if(in_array($extencion, $permitidos))
         if (mysqli_query($conn, $sql)) {} else {}
          // fin inserta en la tabla bitacora
         echo '<script>
-                 alert("Edición exitosa");
+                 alert("Producto actualizado exitosamente");
                  window.location.href="../../vistas/inventario/vista_productos.php";
               </script>';
               mysqli_close($conn);
 
     }else{
          echo '<script>
-                alert("Error en la edición ");
+                alert("Error en la actualización");
                </script>'; mysqli_error($conn);
          }
          mysqli_close($conn);
@@ -160,7 +173,7 @@ $validar_proveedor = "SELECT * FROM tbl_kardex WHERE ID_PRODUCTO='$id_productos'
          if (mysqli_query($conn, $sql9)) {} else { }
          // fin inserta en la tabla bitacora
          echo '<script>
-                 alert("No se puede eliminar el producto, ya que esta en uso");
+                 alert("No se puede eliminar el producto, este se encuentra en uso");
                  window.location.href="../../vistas/inventario/vista_productos.php";                   
                </script>';
      }else{
@@ -171,9 +184,13 @@ $validar_proveedor = "SELECT * FROM tbl_kardex WHERE ID_PRODUCTO='$id_productos'
         
             //  unlink($ruta);
     
-    echo '<script>
+
+        alert("Producto eliminado exitosamente");
+        window.location.href="../../vistas/inventario/vista_productos.php";                   
+
         alert("Elimino el productor");
         // window.location.href="../../vistas/inventario/vista_productos.php";                   
+
         </script>';
         mysqli_close($conn);
      
@@ -197,6 +214,6 @@ $validar_proveedor = "SELECT * FROM tbl_kardex WHERE ID_PRODUCTO='$id_productos'
           
           $conn->close();   
   }// Fin del switch, para validar el valor del boton accion
-
+}
 
 ?>

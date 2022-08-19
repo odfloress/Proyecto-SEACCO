@@ -18,9 +18,9 @@ include '../../controladores/crud_bitacora.php';
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Bitácora</title>
-  <!-- //para reporte pdf -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.3/jspdf.min.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.4/jspdf.plugin.autotable.min.js"></script>
+         <!-- /// Para exportar en pdf /// -->
+  <script type="text/javascript" src="../../js/complemento_1_jspdf.min.js"></script>
+	<script type="text/javascript" src="../../js/complemento_2_jspdf.plugin.autotable.min.js"></script>
 
   <?php include '../../configuracion/navar.php' ?>
   <!-- Content Wrapper. Contains page content -->
@@ -60,7 +60,7 @@ include '../../controladores/crud_bitacora.php';
             <div class="card">
               <div class="card-header">
               <form id="form">
-              <button onclick="textToPdf()" class="btn btn-secondary buttons-pdf buttons-html5"  type="submit"><span>Reporte PDF</span></button>
+              <button type="submit"  name="accion" value="reporte_pdf" class="btn btn-secondary buttons-pdf buttons-html5"  onclick="return confirm('¿Desea generar reporte de bitácora?')" onclick="textToPdf()"><span>Reporte PDF</span></button>
 	            </form>
                 <!-- <h3 class="card-title">Bitacora Universal</h3> -->
               
@@ -207,29 +207,54 @@ include '../../controladores/crud_bitacora.php';
   });
 </script>
 
-<!-- reporte pdf -->
+<!-- // Inicio para exportar en pdf // -->
+<?php
+
+	require '../../conexion/conexion.php';
+	$sql = "SELECT * FROM tbl_bitacora 
+  ORDER BY ID_BITACORA desc";
+	$query = $conn->query($sql);
+	$data = array();
+	while($r=$query->fetch_object())
+	$data[] =$r;    
+
+?>
+
+<?php
+    $select_nombre = "SELECT * FROM tbl_parametros WHERE PARAMETRO='NOMBRE'";
+    $select_nombre1 = mysqli_query($conn, $select_nombre);
+    if (mysqli_num_rows($select_nombre1) > 0)
+    {
+    while($row = mysqli_fetch_assoc($select_nombre1))
+      {
+          $nombre_constructora = $row['VALOR'];
+      }
+    }
+?>
+
 <script>
 	//para descar al tocar el boton
-	
 	var form = document.getElementById("form")
 	form.addEventListener("submit",function(event) {
 	event.preventDefault()
 
-				const pdf = new jsPDF('p', 'mm', 'letter');					
-
-				var columns = ["Id", "Nombre", "Email", "Pais"];
-				var data = [
-				[1, "Hola", "hola@gmail.com", "Mexico"],
-				[2, "Hello", "hello@gmail.com", "Estados Unidos"],
-				[3, "Otro", "otro@gmail.com", "Otro"] ];
-
+			
+			const pdf = new jsPDF('p', 'mm', 'letter');
+						
+			var columns = ["Usuario", "Acción", "Descripción", "Fecha"];
+			var data = [
+  <?php foreach($data as $d):?>
+	
+      ["<?php echo $d->USUARIO; ?>", "<?php echo $d->ACCION; ?>", "<?php echo $d->OBSERVACION; ?>","<?php echo $d->FECHA; ?>"],
+      <?php endforeach; ?>
+  ];
 				pdf.autoTable(columns,data,
 				{ 
-					html:'#example1',
+					
 					margin:{ top: 30 }}
 				);
-						
-				//Inicio Encabezado y pie de pagina
+		
+			//Inicio Encabezado y pie de pagina
 			const pageCount = pdf.internal.getNumberOfPages();
 			for(var i = 1; i <= pageCount; i++) 
 			{
@@ -244,28 +269,33 @@ include '../../controladores/crud_bitacora.php';
 				//muestra el titulo principal
 				pdf.setFont('Arial');
 				pdf.setFontSize(17);
-				pdf.text("Constructora SEACCO", 70,15,);
+				pdf.text("<?php echo $nombre_constructora;?>", 70,15,);
 
 				//muestra el titulo secundario
 				pdf.setFont('times');
 				pdf.setFontSize(10);
-				pdf.text("Reporte de bitacora", 87,20,);
+				pdf.text("Reporte de bitácora", 84,20,);
 
-												//////// Footer ///////
+												//////// pie de Pagina ///////
 				//muestra la fecha
 				pdf.setFont('times');
 				pdf.setFontSize(9);
 				var today = new Date();
-				var newdat = "Date Printed : "+ today;
-				pdf.text(150-20,297-277,newdat);
+				let horas = today.getHours()
+				let jornada = horas >=12 ? 'PM' : 'AM';
+				var newdat = "Fecha: " + today.getDate() + "/" + (today.getMonth()+1) + "/" + today.getFullYear() + " " + (horas % 12) + ":" + today.getMinutes() + ":" + today.getSeconds() + " " + jornada;
+				pdf.text(183-20,297-284,newdat);
 
-				//muestra el numero de pagina	
-				pdf.text('Pagina ' + String(i) + '/' + String(pageCount),220-20,297-30,null,null,"right");
+				//muestra el numero de pagina
+				pdf.text('Pagina ' + String(i) + '/' + String(pageCount),220-20,297-27,null,null,"right");
 			}
 				//Fin Encabezado y pie de pagina
 
-							pdf.save('Reporte de bitacora.pdf');
+							pdf.save('Reporte de bitácora.pdf');
 	})
+
+</script>
+<!-- // Fin para exportar en pdf // -->
 
 </script>
 </body>

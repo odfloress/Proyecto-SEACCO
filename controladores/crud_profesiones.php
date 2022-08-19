@@ -25,7 +25,7 @@
          if (mysqli_num_rows($result1) > 0) { 
                 
                 echo '<script>
-                        alert("Profesion ya existe");
+                        alert("El nombre de profesión ingresado ya existe, intente con otro");
                       </script>';
                       mysqli_close($conn);
          }else{ 
@@ -41,7 +41,7 @@
                              if (mysqli_query($conn, $sql7)) {} else { }
                         // fin inserta en la tabla bitacora
                         echo '<script>
-                                alert("Profesion creada con exito");
+                                alert("Profesión creada con éxito");
                                 window.location.href="../../vistas/mantenimiento/vista_profesiones.php";                   
                             </script>';
                              mysqli_close($conn);
@@ -73,7 +73,7 @@
                       if (mysqli_query($conn, $sql8)) {} else { }
                     // fin inserta en la tabla bitacora
                     echo '<script>
-                            alert("Profesion ya existe intente con otro nombre");                  
+                            alert("El nombre de profesión ingresada ya existe, intente con otro");                  
                           </script>';
                           mysqli_close($conn);
 
@@ -88,7 +88,7 @@
                             if (mysqli_query($conn, $sql9)) {} else { }
                             // fin inserta en la tabla bitacora
                             echo '<script>
-                                    alert("Profesión editada con exito");
+                                    alert("Profesión editada con éxito");
                                     window.location.href="../../vistas/mantenimiento/vista_profesiones.php";                     
                                 </script>';
                                 mysqli_close($conn);
@@ -112,7 +112,7 @@
          if (mysqli_query($conn, $sql9)) {} else { }
          // fin inserta en la tabla bitacora
          echo '<script>
-                 alert("No se puede eliminar la profesión, ya que esta en uso");
+                 alert("No se puede eliminar la profesión, esta se encuentra en uso");
                  window.location.href="../../vistas/mantenimiento/vista_profesiones.php";                  
                </script>';
                mysqli_close($conn);
