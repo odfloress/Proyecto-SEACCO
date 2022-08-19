@@ -428,9 +428,17 @@ if (mysqli_num_rows($roles35) > 0)
 	while($r=$query->fetch_object()){
 	$data[] =$r;
 	}
-
-     
-
+?>
+<?php 
+    $select_nombre = "SELECT * FROM tbl_parametros WHERE PARAMETRO='NOMBRE'";
+    $select_nombre1 = mysqli_query($conn, $select_nombre);
+    if (mysqli_num_rows($select_nombre1) > 0)
+    {
+    while($row = mysqli_fetch_assoc($select_nombre1))
+      { 
+          $nombre_constructora = $row['VALOR'];
+      } 
+    }
 ?>
 
 <script>
@@ -470,7 +478,7 @@ if (mysqli_num_rows($roles35) > 0)
 				//muestra el titulo principal
 				pdf.setFont('Arial');
 				pdf.setFontSize(17);
-				pdf.text("Constructora SEACCO", 75,15,);
+				pdf.text("<?php echo $nombre_constructora; ?>", 75,15,);
 
 				//muestra el titulo secundario
 				pdf.setFont('times');

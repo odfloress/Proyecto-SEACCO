@@ -380,10 +380,18 @@ $data = array();
 while($r=$query->fetch_object()){
 $data[] =$r;
 }
-     
-
 ?>
-
+<?php 
+    $select_nombre = "SELECT * FROM tbl_parametros WHERE PARAMETRO='NOMBRE'";
+    $select_nombre1 = mysqli_query($conn, $select_nombre);
+    if (mysqli_num_rows($select_nombre1) > 0)
+    {
+    while($row = mysqli_fetch_assoc($select_nombre1))
+      { 
+          $nombre_constructora = $row['VALOR'];
+      } 
+    }
+?>
 <script>
 	//para descar al tocar el boton
 	var form = document.getElementById("form")
@@ -414,14 +422,14 @@ $data[] =$r;
 												//////// Encabezado ///////
 				//Inicio para imagen de logo 
 				var logo = new Image();
-				logo.src = '../../imagenes/LoogSEACCO.jpg';
+				logo.src = '../../imagenes/seacco.jpg';
 				pdf.addImage(logo, 'JPEG',14,7,24,15);
 				//Fin para imagen de logo 
 
 				//muestra el titulo principal
 				pdf.setFont('Arial');
 				pdf.setFontSize(17);
-				pdf.text("Constructora SEACCO", 70,15,);
+				pdf.text("<?php echo $nombre_constructora; ?>", 80,15,);
 
 				//muestra el titulo secundario
 				pdf.setFont('times');

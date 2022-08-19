@@ -65,17 +65,15 @@ if (mysqli_num_rows($roles35) > 0)
 <body oncontextmenu="return false">
   <?php include '../../configuracion/navar.php' ?>
   <!-- Content Wrapper. Contains page content -->
-  <div class="content-wrapper"><center> <BR></BR><h3>BIENVENIDA</h3> </center>
+  <div class="content-wrapper"><center> <BR><h3>BIENVENIDA</h3> </center>
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1></h1>
             <!-- CMENTADO PARA NO MOSTRAR EL BOTON AGREGAR EN LA VISTA BIENVENIDA-->
             <!-- Inicio de modal de agregar -->
   <div class="container mt-3">
-
     </div>
     
   <!-- El Modal -->
@@ -121,7 +119,7 @@ if (mysqli_num_rows($roles35) > 0)
         </div>
     </div>
     </form>
-    <!-- Fin  de modal de agregar --> <br>
+    <!-- Fin  de modal de agregar --> 
 
  
           </div>
@@ -148,6 +146,40 @@ if (mysqli_num_rows($roles35) > 0)
             
             <div class="card">
               <div class="card-header">
+                <!-- /// filtrar reporte //// -->
+              <form action="" method="post">
+                <div class="row">
+                    <div class="col">
+                      <!-- ///////////////////// -->
+                      <?php $asignacion=(isset($_POST['reporte_catalogo']))?$_POST['reporte_catalogo']:"";   ?> 
+                    
+                      <br>
+                        <select style="background-color:rgb(240, 244, 245);" value="<?php echo $id_cliente; ?>" required  class="form-select" id="lista1" name="reporte_catalogo"  >
+                                          <option >Seleccione un filtro</option>
+                                              <?php
+                                                  include '../../conexion/conexion.php';
+                                                  $catalago777 = "SELECT * FROM  tbl_bienvenida_portafolio";
+                                                  $catalago7777 = mysqli_query($conn, $catalago777);
+                                                  if (mysqli_num_rows($catalago7777) > 0) {
+                                                      while($row = mysqli_fetch_assoc($catalago7777))
+                                                      {
+                                                      
+                                                      $catalago77777 =$row['TIPO'];
+                                              ?>
+                                                <option value="<?php  echo $catalago77777; ?>"><?php echo $catalago77777; ?></option>
+                                                <?php
+                                          }}// finaliza el if y el while
+                                          ?>
+                                        </select>
+                                                          </div>
+                    <div class="col"><br>
+                    <button class="btn btn-danger" type="submit">Filtrar reporte</button>
+                    </div>
+               </div>
+                                 
+                                        
+                        </form> <br><!-- ///////////////////// -->
+                <!-- /// fin filtrar reporte /// -->
                 <!--<h3 class="card-title">BIENVENIDA</h3>-->
                 <form id="form" action="" method="post">
                     <div class="btn-group">
@@ -401,18 +433,42 @@ if (mysqli_num_rows($roles35) > 0)
 </body>
 <!-- // Inicio para exportar en pdf // -->
 <?php
-
+if(!isset($_POST['reporte_catalogo']))
+{
 	require '../../conexion/conexion.php';
 	$sql = "SELECT * FROM tbl_bienvenida_portafolio
-  ORDER BY TIPO ASC";
+  ORDER BY TIPO desc";
 	$query = $conn->query($sql);
 	$data = array();
 	while($r=$query->fetch_object()){
 	$data[] =$r;
 	}
 
-?>
+}else{		
+			require '../../conexion/conexion.php';
+			$asignacion=(isset($_POST['reporte_catalogo']))?$_POST['reporte_catalogo']:"";
+			$sql = "SELECT * FROM tbl_bienvenida_portafolio
+      WHERE TIPO='$asignacion'";
+			$query = $conn->query($sql);
+			$data = array();
+			while($r=$query->fetch_object()){
+			$data[] =$r;
+			}	
 
+			}
+
+?>
+<?php 
+    $select_nombre = "SELECT * FROM tbl_parametros WHERE PARAMETRO='NOMBRE'";
+    $select_nombre1 = mysqli_query($conn, $select_nombre);
+    if (mysqli_num_rows($select_nombre1) > 0)
+    {
+    while($row = mysqli_fetch_assoc($select_nombre1))
+      { 
+          $nombre_constructora = $row['VALOR'];
+      } 
+    }
+?>
 <script>
 	//para descar al tocar el boton
 	var form = document.getElementById("form")
@@ -443,19 +499,19 @@ if (mysqli_num_rows($roles35) > 0)
 												//////// Encabezado ///////
 				//Inicio para imagen de logo 
 				var logo = new Image();
-				logo.src = '../../imagenes/LoogSEACCO.jpg';
+				logo.src = '../../imagenes/seacco.jpg';
 				pdf.addImage(logo, 'JPEG',14,7,24,15);
 				//Fin para imagen de logo 
 
 				//muestra el titulo principal
 				pdf.setFont('Arial');
 				pdf.setFontSize(17);
-				pdf.text("Constructora SEACCO", 75,15,);
+				pdf.text("<?php echo $nombre_constructora; ?>", 75,15,);
 
 				//muestra el titulo secundario
 				pdf.setFont('times');
 				pdf.setFontSize(12);
-				pdf.text("Reporte de Bienvenida", 84,20,);
+				pdf.text("Reporte de Bienvenida", 82,20,);
 
 												//////// pie de Pagina ///////
 				//muestra la fecha
