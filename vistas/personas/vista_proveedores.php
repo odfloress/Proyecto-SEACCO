@@ -111,7 +111,7 @@ if (mysqli_num_rows($roles35) > 0)
                     <input type="text" class="form-control" name="direccion" required value=""  value="<?php echo $direccion; ?>" placeholder="" id="txtdireccionproveedor" autocomplete = "off" onkeyup="mayus(this);" >
                     <br>
                     <label for="">Teléfono</label>
-                    <input type="number" class="form-control" name="telefono" required value="" value="<?php echo $telefono; ?>"  placeholder="" id="txttelefono" autocomplete = "off" minlength="8" maxlength="8" required value="" placeholder="" required pattern="[0-9]+[1-9]+[0-9]+" title="8 caracteres y no todos ceros" onkeypress="return solonumero(event)" >
+                    <input type="text" class="form-control" name="telefono" value="" value="<?php echo $telefono; ?>"  placeholder="" id="txttelefono" autocomplete = "off" required minlength="8" maxlength="8" placeholder="" pattern="[0-9]+[1-9]+[0-9]+" title="8 caracteres y no todos ceros" onkeypress="return solonumero(event)" >
                     <br>
                     <label for="">Correo</label>
                     <input type="email" class="form-control" name="correo" required value=""  value="<?php echo $correo; ?>" placeholder="" id="txtcorreo"  autocomplete = "off" >
