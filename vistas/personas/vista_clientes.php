@@ -207,7 +207,7 @@ if (mysqli_num_rows($roles35) > 0)
                                           <option >Seleccione un Filtro</option>
                                               <?php
                                                   include '../../conexion/conexion.php';
-                                                  $catalago777 = "SELECT * FROM tbl_clientes";
+                                                  $catalago777 = "SELECT distinct NOMBRE_CLIENTE from tbl_clientes order by NOMBRE_CLIENTE";
                                                   $catalago7777 = mysqli_query($conn, $catalago777);
                                                   if (mysqli_num_rows($catalago7777) > 0) {
                                                       while($row = mysqli_fetch_assoc($catalago7777))
