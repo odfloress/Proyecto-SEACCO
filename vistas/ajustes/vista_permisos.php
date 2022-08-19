@@ -99,7 +99,7 @@ if (mysqli_num_rows($roles35) > 0)
                     <select class="form-select" id="lista1" name="lista1" required >
                         <?php
                             include '../../conexion/conexion.php';
-                            $roles = "SELECT * FROM tbl_roles ORDER BY ID_ROL";
+                            $roles = "SELECT * FROM tbl_roles WHERE ID_ROL!=3 ORDER BY ID_ROL";
                             $roles2 = mysqli_query($conn, $roles);
                             if (mysqli_num_rows($roles2) > 0) {
                                 while($row = mysqli_fetch_assoc($roles2))
@@ -175,7 +175,7 @@ if (mysqli_num_rows($roles35) > 0)
                                           <option >Seleccione un filtro</option>
                                               <?php
                                                   include '../../conexion/conexion.php';
-                                                  $catalago777 = "SELECT * FROM  tbl_roles";
+                                                  $catalago777 = "SELECT * FROM  tbl_roles WHERE ID_ROL!=3";
                                                   $catalago7777 = mysqli_query($conn, $catalago777);
                                                   if (mysqli_num_rows($catalago7777) > 0) {
                                                       while($row = mysqli_fetch_assoc($catalago7777))
@@ -240,7 +240,7 @@ if (mysqli_num_rows($roles35) > 0)
 
                     $sql = "SELECT * FROM ((tbl_ms_roles_ojetos p 
                     INNER JOIN tbl_roles r ON p.ID_ROL = r.ID_ROL)
-                    INNER JOIN tbl_ms_objetos o ON p.ID_OBJETO = o.ID_OBJETO)";
+                    INNER JOIN tbl_ms_objetos o ON p.ID_OBJETO = o.ID_OBJETO)  WHERE r.ID_ROL!=3";
                     $result = mysqli_query($conn, $sql);
                     while ($filas= mysqli_fetch_assoc($result)){
  
@@ -474,7 +474,7 @@ if(!isset($_POST['reporte_catalogo']))
 	require '../../conexion/conexion.php';
 	$sql = "SELECT * FROM (( tbl_ms_roles_ojetos p
       INNER JOIN tbl_roles g ON p.ID_ROL = g.ID_ROL)
-      INNER JOIN  tbl_ms_objetos o ON p.ID_OBJETO = o.ID_OBJETO)
+      INNER JOIN  tbl_ms_objetos o ON p.ID_OBJETO = o.ID_OBJETO) WHERE g.ID_ROL!=3
   ORDER BY p.ID_ROL desc";
 	$query = $conn->query($sql);
 	$data = array();
