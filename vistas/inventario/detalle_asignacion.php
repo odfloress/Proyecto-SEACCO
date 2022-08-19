@@ -149,7 +149,7 @@ if (mysqli_num_rows($validar_empleado1) > 0)
                 </select>
 
                     <label for="">Cantidad:</label>
-                    <input type="text" class="form-control" name="cantidad" onkeypress="return solonumero(event)" required value="<?php echo "$cantidad"; ?>" onkeyup="mayus(this);" placeholder="Ingrese la cantidad" id="cantidad"   > 
+                    <input type="text" autocomplete = "off" class="form-control" name="cantidad" onkeypress="return solonumero(event)" required value="<?php echo "$cantidad"; ?>" onkeyup="mayus(this);" placeholder="Ingrese la cantidad" id="cantidad"   > 
                     <br>
 
                 <label for="" class="form-label">Empleado:</label>
@@ -157,7 +157,7 @@ if (mysqli_num_rows($validar_empleado1) > 0)
                 <option>Seleccione</option>
                   <?php
                       include '../../conexion/conexion.php';
-                      $getusuario = "SELECT * FROM tbl_usuarios  WHERE ID_ROL = 1 OR ID_ROL = 2 AND ID_ESTADO_USUARIO= 1  ORDER BY ID_USUARIO";
+                      $getusuario = "SELECT * FROM tbl_usuarios  WHERE ID_ESTADO_USUARIO= 1  ORDER BY ID_USUARIO";
                       $getusuario1 = mysqli_query($conn, $getusuario);
                       if (mysqli_num_rows($getusuario1) > 0) {
                           while($row = mysqli_fetch_assoc($getusuario1))
@@ -195,7 +195,7 @@ if (mysqli_num_rows($validar_empleado1) > 0)
                 </select>
 
                     <label for="">Descripción de la asignación:</label>
-                    <input type="text" class="form-control" name="descripcion_asignacion" required value="<?php echo "$descripcion_asignacion"; ?>" onKeyUP="this.value=this.value.toUpperCase();" placeholder="Ingrese un breve comentario sobre la asignación" id="descripción_asignacion"   >
+                    <input type="text" class="form-control"autocomplete = "off" name="descripcion_asignacion" required value="<?php echo "$descripcion_asignacion"; ?>" onKeyUP="this.value=this.value.toUpperCase();" placeholder="Ingrese un breve comentario sobre la asignación" id="descripción_asignacion"   >
                     <br>
                     <div class="row">
                 <div class="col">
@@ -275,13 +275,12 @@ if (mysqli_num_rows($validar_empleado1) > 0)
                   <thead>
                   <tr>
                   <th>Acciones</th>
-                  <th>Id detalle asignación</th>
+                  <th>ID asignación</th>
                   <th>Producto</th>
                   <th>Cantidad</th>
-                  <th>Descripción de asignacion</th>
+                  <th>Descripción</th>
                   <th>Empleado</th>
-                  <th>Estado herramienta</th>
-                  <th>Estado asignación</th>           
+                  <th>Estado herramienta</th>          
                   </tr>
                   </thead>
                   <tbody>
@@ -293,7 +292,7 @@ if (mysqli_num_rows($validar_empleado1) > 0)
                   <tr>
                   <td>
                   <form action="" method="post">
-                         
+                         <input type="hidden" name="id_producto" value="<?php echo $filas['ID_PRODUCTO'] ?>">
                           <!-- fin boton editar -->
                           <?php 
                           include '../../conexion/conexion.php';
@@ -318,7 +317,7 @@ if (mysqli_num_rows($validar_empleado1) > 0)
                      <td><?php echo $filas['DESCRIPCION_ASIGNACION1'] ?></td>
                      <td><?php echo $filas['USUARIO1'] ?></td>
                      <td><?php echo $filas['ESTADO'] ?></td>
-                     <td><?php echo $filas['ESTADO_ASIGNACION'] ?></td>
+                     <!-- <td><?php echo $filas['ESTADO_ASIGNACION'] ?></td> -->
 </tr>
                 <?php } ?>  
                 </tbody>

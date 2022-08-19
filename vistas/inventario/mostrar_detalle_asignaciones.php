@@ -41,11 +41,7 @@ if (mysqli_num_rows($roles35) > 0)
                       }
                }
 
-                // inicio inserta en la tabla bitacora
-                $sql = "INSERT INTO tbl_bitacora (USUARIO, ACCION, OBSERVACION)
-                VALUES ('$usuario1[usuario]', 'CONSULTO', 'CONSULTO LA PANTALLA  ADMINISTRATIVA DE ASIGNACIONES')";
-                if (mysqli_query($conn, $sql)) {} else {}
-                // fin inserta en la tabla bitacora
+               
 
                 if(!isset($_POST['asignacion'])){
                     header('Location: ../../vistas/inventario/vista_asignaciones.php');
@@ -108,13 +104,13 @@ if (mysqli_num_rows($roles35) > 0)
           <div class="col-12">
            
             <!-- /.card -->
-            
+            </div>
             <div class="card table-responsive">
               <div class="card-header">
 
                 <form id="form" action="" method="post">
               <button type="submit"  name="accion" value="reporte_pdf" class="btn btn-secondary buttons-pdf buttons-html5"  onclick="return confirm('¿Desea generar reporte de detalle de asignaciones?')" onclick="textToPdf()"><span>Reporte PDF</span></button>
-	            </div>
+	            
             </form>
                 </div>              
 
@@ -130,7 +126,8 @@ if (mysqli_num_rows($roles35) > 0)
                   <th>Empleado</th>                 
                   <th>Proyecto</th>
                   <th>Fecha de asignación</th>
-                  <th>Fecha de devolución de herramientas</th>
+                  <!-- <th>Fecha de devolución de herramientas</th> -->
+                  <th>Acciones</th>
 
                            
                   </tr>
@@ -159,7 +156,61 @@ if (mysqli_num_rows($roles35) > 0)
                      <td><?php echo $filas['USUARIO1'] ?></td>
                      <td><?php echo $filas['NOMBRE_PROYECTO'] ?></td>
                      <td><?php echo $filas['FECHA_ASIGNADO'] ?></td>
-                     <td><?php echo $filas['FECHA_ENTREGA'] ?></td>
+                     <!-- <td><?php echo $filas['FECHA_ENTREGA'] ?></td> -->
+                     <td>
+                         <!-- inicio boton editar -->
+                         <button type="button"  class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#myModal2<?php echo $filas['ID_DETALLE_ASIGNACION'] ?>" >
+                      <i class="fas fa-pencil-alt"></i>
+                      </button>
+
+                          <!-- El Modal -->
+                          <div class="modal" id="myModal2<?php echo $filas['ID_DETALLE_ASIGNACION'] ?>">
+                            <div class="modal-dialog">
+                              <div class="modal-content">
+
+                                <!-- Encabezado del modal -->
+                                <div class="modal-header">
+                                  <h4 class="modal-title">Entregar</h4>
+                                  <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                </div>
+                                <!-- Fin Encabezado del modal -->
+
+
+                                <!-- Cuerpo del modal Modal -->
+                                <form action="" method="post">
+                                          <div class="modal-body">
+                                          <input type="hidden" name="asignacion" value="<?php echo $asignacion; ?>">
+                                          <input type="hidden" name="id_productos_totales" value="<?php echo $filas['ID_PRODUCTO'] ?>">
+                                              <label for="">ID asignación</label>
+                                              <input type="text" readonly class="form-control" name="id_asignado" required value="<?php echo $filas['ID_DETALLE_ASIGNACION'] ?>" placeholder="" id="txtPrecio_Compra"   >
+                                              <br>
+                                              <label for="">Cantidad Asignada</label>
+                                              <input type="text" class="form-control" readonly name="cantidad_asignada" required value="<?php echo $filas['CANTIDAD'] ?>" placeholder="" id="txtPrecio_Compra"   >
+                                              <br>
+                                              <br>
+                                              <label for="">Cantidad a entregar</label>
+                                              <input type="text" class="form-control"  name="cantidad_entregar" required value="" placeholder="" id="txtPrecio_Compra"   >
+                                              <br>
+                                              <label for="">Descripción</label>
+                                              <input type="text" class="form-control" name="descripcion" required value="<?php echo $filas['DESCRIPCION_ASIGNACION1'] ?>" placeholder="" id="txtPrecio_Compra"   >
+                                              <br>
+                                          
+                                          </div>
+                                <!-- Fin Cuerpo del modal Modal -->
+
+                                <!-- pie del modal -->
+                                <div class="modal-footer">
+                                <button type="submit" name="accion" value="editar" class="btn btn-primary" onclick="return confirm('¿Desea entregar herramienta?')">Entregar</button>
+                                  <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
+                                </div>
+                             
+                                  <!-- Fin pie del modal -->
+                                 
+                              </div>
+                            </div>
+                          </div>
+                          <!-- fin boton editar -->
+                     </td>
 
                      
       </tr>
@@ -394,3 +445,57 @@ if (mysqli_num_rows($roles35) > 0)
 
 <script type="text/javascript" src="../../js/evitar_reenvio.js"></script>
 </html>
+
+
+
+
+<?php
+require '../../conexion/conexion.php';
+// //Variables para recuperar la información de los campos de la vista categorias de productos
+$id_asignaciones=(isset($_POST['id_asignado']))?$_POST['id_asignado']:"";
+$cantidad_asignada=(isset($_POST['cantidad_asignada']))?$_POST['cantidad_asignada']:"";
+$cantidad_entregar=(isset($_POST['cantidad_entregar']))?$_POST['cantidad_entregar']:"";
+$descripcion=(isset($_POST['descripcion']))?$_POST['descripcion']:"";
+$id_productos_totales=(isset($_POST['id_productos_totales']))?$_POST['id_productos_totales']:"";
+
+
+//variable para recuperar los botones de la vista categprias de productos  
+$accion=(isset($_POST['accion']))?$_POST['accion']:"";
+
+
+
+switch($accion){
+  case "editar";
+            if($cantidad_entregar<=$cantidad_asignada){
+
+          $sql2 = "UPDATE tbl_inventario SET CANTIDAD_DISPONIBLE=CANTIDAD_DISPONIBLE+'$cantidad_entregar' WHERE ID_PRODUCTOS='$id_productos_totales'";
+          if (mysqli_query($conn, $sql2)) {
+            //  header('Location: ../../vistas/inventario/vista_categorias_productos.php');
+            $sql5 = "UPDATE tbl_detalle_asignacion SET CANTIDAD=CANTIDAD-'$cantidad_entregar', DESCRIPCION_ASIGNACION1='$descripcion' WHERE ID_PRODUCTO='$id_productos_totales' and ID_DETALLE_ASIGNACION='$id_asignaciones'";
+            if (mysqli_query($conn, $sql5)) {}
+
+            echo '<script>
+            alert("se entrego la cantidad de ' . $cantidad_entregar . ' de' . $cantidad_asignada . ' de la asignación con ID ' . $asignacion. '");
+            window.location.href="../../vistas/inventario/mostrar_detalle_asignaciones.php";
+           </script>';
+          }else{
+               echo '<script>
+                      alert("Error al entregar herramienta");
+                     </script>'; mysqli_error($conn);
+               }
+
+              }else{
+                echo '<script>
+                      alert("Error, la cantidad a entregar debe ser menor o igual a la asignada");
+                     </script>';
+              }
+
+  
+       
+
+break;
+
+
+}
+
+?>
