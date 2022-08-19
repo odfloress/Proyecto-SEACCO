@@ -817,9 +817,9 @@ if (mysqli_num_rows($roles35) > 0)
 				const pdf = new jsPDF('L', 'mm', 'letter');			
         	
 
-				var columns = ["", "", "", "", ""];
+				var columns = ["", "", "", "", "","", "", "", "", "","", "", "", "", "","","",""];
 				var data = [
-				[1, "Hola", "hola@gmail.com", "Mexico"],
+				[1, "Hola", "hola@gmail.com", "Mexico", "Mexico", "Mexico", "Mexico", "Mexico", "Mexico", "Mexico", "Mexico", "Mexico", "Mexico", "Mexico", "Mexico", "Mexico", "Mexico"],
 				 ];
 
 				pdf.autoTable(columns,data,

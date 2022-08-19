@@ -152,7 +152,7 @@ if (mysqli_num_rows($roles35) > 0)
                    </select>
                 <br>
                 <label for="">Codigo</label>
-                <input type="text" class="form-control" autocomplete="off" onkeyup="mayus(this);" name="codigo" required value="<?php echo "$codigo"; ?>" placeholder="">
+                <input type="text" class="form-control" autocomplete="off" onkeyup="mayus(this);" name="codigo" minlength="2" maxlength="30" required value="<?php echo "$codigo"; ?>" placeholder="">
                 <br>
                 <label for="">Nombre</label>
                 <input type="text" autocomplete="off"  value="<?php echo "$nombre"; ?>" onkeyup="mayus(this);" maxlength="255" class="form-control"  placeholder="" name="nombre" required>
@@ -161,10 +161,10 @@ if (mysqli_num_rows($roles35) > 0)
                 <input type="text" autocomplete="off"  value="<?php echo "$descripcion_modelo"; ?>" onkeyup="mayus(this);" maxlength="255" class="form-control"  placeholder="" name="descripcion_modelo" required>
                 <br>     
                 <label for="">Cantidad Minima</label>
-                <input type="text" class="form-control" autocomplete="off" onkeyup="mayus(this);" name="cantidad_min" required value="<?php echo "$cantidad_min"; ?>" placeholder="">
+                <input type="number" class="form-control" autocomplete="off" onkeyup="mayus(this);" name="cantidad_min" required value="<?php echo "$cantidad_min"; ?>" placeholder="">
                 <br>  
                 <label for="">Cantidad Maxima</label>
-                <input type="text" class="form-control" autocomplete="off" onkeyup="mayus(this);" name="cantidad_max" required value="<?php echo "$cantidad_max"; ?>" placeholder="">
+                <input type="number" class="form-control" autocomplete="off" onkeyup="mayus(this);" name="cantidad_max" required value="<?php echo "$cantidad_max"; ?>" placeholder="">
                 <br>
                 <label for="">Imagen</label>
                 <input type="file" class="form-control" accept=".jpg, .png, .jpeg, .JPEG, .JPG, .PNG" name="imagenes" required value="<?php echo "$nombreimagen"; ?>" placeholder=""  >
@@ -301,7 +301,7 @@ if (mysqli_num_rows($roles35) > 0)
                   </select>
                   <br> 
                   <label for="">Codigo</label>
-                <input type="text" class="form-control" autocomplete="off" name="codigo" required value="<?php echo $filas['CODIGO'] ?>" placeholder="">
+                <input type="text" class="form-control" autocomplete="off" name="codigo" minlength="2" maxlength="30" required value="<?php echo $filas['CODIGO'] ?>" placeholder="">
                 <br>
                 <label for="">Nombre</label>
                 <input type="text" autocomplete="off"  value="<?php echo $filas['NOMBRE'] ?>" onkeyup="mayus(this);" maxlength="255" class="form-control"  placeholder="" name="nombre" required>
@@ -311,10 +311,10 @@ if (mysqli_num_rows($roles35) > 0)
                 <br> 
                     
                 <label for="">Cantidad Minima</label>
-                <input type="text" class="form-control" autocomplete="off" name="cantidad_min" required value="<?php echo $filas['CANTIDAD_MIN'] ?>" placeholder="">
+                <input type="number" class="form-control" autocomplete="off" name="cantidad_min" required value="<?php echo $filas['CANTIDAD_MIN'] ?>" placeholder="">
                 <br>
                 <label for="">Cantidad Maxima</label>
-                <input type="text" class="form-control" autocomplete="off" name="cantidad_max" required value="<?php echo $filas['CANTIDAD_MAX'] ?>" placeholder="">
+                <input type="number" class="form-control" autocomplete="off" name="cantidad_max" required value="<?php echo $filas['CANTIDAD_MAX'] ?>" placeholder="">
                 <br>
                 <input type="hidden" name="foto" value="<?php echo $filas['FOTO'] ?>">
                 <input type="hidden" name="ruta" value="<?php echo $filas['FOTO'] ?>">

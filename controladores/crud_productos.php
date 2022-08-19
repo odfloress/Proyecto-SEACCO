@@ -13,6 +13,7 @@ $nombre=(isset($_POST['nombre']))?$_POST['nombre']:"";
 $descripcion_modelo=(isset($_POST['descripcion_modelo']))?$_POST['descripcion_modelo']:"";
 $anterior=(isset($_POST['nombre_anterior']))?$_POST['nombre_anterior']:"";
 $foto=(isset($_POST['foto']))?$_POST['foto']:"";
+$foto = substr($foto, 15);
 $ruta=(isset($_POST['ruta']))?$_POST['ruta']:"";
 //variable para recuperar los botones de la vista del crud del portafolio 
 $accion=(isset($_POST['accion']))?$_POST['accion']:"";
@@ -48,10 +49,12 @@ if(in_array($extencion, $permitidos)){
                           </script>';
                           mysqli_close($conn);
              }else{ 
-   
+
+//    echo "$id_categoria" . "$cantidad_min" . "$cantidad_max ". "$destino$nombreimagen ". "$codigo" . "$nombre" . "$descripcion_modelo";
+//    die();
             // INICIO INSERTA EN LA TABLA PRODUCTOS
                 $sql = "INSERT INTO tbl_productos (ID_CATEGORIA, CANTIDAD_MIN, CANTIDAD_MAX, FOTO, CODIGO, NOMBRE, DESCRIPCION_MODELO)
-                VALUES ('$id_categoria', '$cantidad_min', '$cantidad_max', '$destino$nombreimagen', '$codigo', '$nombre', '$descripcion_modelo' )";
+                VALUES ('$id_categoria', '$cantidad_min', '$cantidad_max', '$destino$nombreimagen', '$codigo', '$nombre', '$descripcion_modelo')";
                  $res = mysqli_query($conn, $sql);
                 if($res){
                     // inicio inserta en la tabla bitacora
@@ -80,17 +83,20 @@ if(in_array($extencion, $permitidos)){
     VALUES ('$usuario1[usuario]', 'INTENTO', 'NO LOGRO INSERTAR YA QUE EL ARCHIVO NO ERA IMAGEN EN LA PATALLA CLIENTES')";
     if (mysqli_query($conn, $sql)) {} else {}
     // fin inserta en la tabla bitacora
+   
+}else{
     echo '<script type="text/javascript">
-             alert("Archivo no permitido");
-             window.location.href="../../vistas/inventario/vista_productos";
-          </script>';
+    alert("Archivo no permitido");
+    window.location.href="../../vistas/inventario/vista_productos";
+ </script>';
+
 }
 }
 
 break;
 //para editar en la tabla mysl   
 case "editar": 
-  
+
 
 $tmpFoto1= $_FILES["imagenes"]["tmp_name"];
 if($tmpFoto1!="") {
@@ -105,6 +111,7 @@ if($tmpFoto1!="") {
 }
 $direccion = "$ruta";
 
+
 if(in_array($extencion, $permitidos))
 {
     $Fecha= new DateTime();
@@ -118,8 +125,7 @@ if(in_array($extencion, $permitidos))
     } 
     $direccion = "$destino$nombreimagen";
 
-    
-    $sql2 = "UPDATE tbl_productos SET ID_CATEGORIA='$id_categoria', CANTIDAD_MIN='$cantidad_min', CANTIDAD_MAX='$cantidad_max', FOTO='$direccion$nombreimagen', CODIGO='$codigo', NOMBRE='$nombre', DESCRIPCION_MODELO='$descripcion_modelo' WHERE ID_PRODUCTO='$id_productos'";
+    $sql2 = "UPDATE tbl_productos SET ID_CATEGORIA='$id_categoria', CANTIDAD_MIN='$cantidad_min', CANTIDAD_MAX='$cantidad_max', FOTO='$direccion', CODIGO='$codigo', NOMBRE='$nombre', DESCRIPCION_MODELO='$descripcion_modelo' WHERE ID_PRODUCTO='$id_productos'";
     if (mysqli_query($conn, $sql2)) 
     {
         // inicio inserta en la tabla bitacora
@@ -157,6 +163,7 @@ break;
 
 //para eliminar en la tabla mysl  
 case "eliminar";
+
 $validar_proveedor = "SELECT * FROM tbl_kardex WHERE ID_PRODUCTO='$id_productos'";
     $result4 = mysqli_query($conn, $validar_proveedor); 
      if (mysqli_num_rows($result4) > 0) { 
@@ -169,19 +176,21 @@ $validar_proveedor = "SELECT * FROM tbl_kardex WHERE ID_PRODUCTO='$id_productos'
                  alert("No se puede eliminar el producto, este se encuentra en uso");
                  window.location.href="../../vistas/inventario/vista_productos.php";                   
                </script>';
-               mysqli_close($conn);
-
      }else{
-      $sql3 = "DELETE FROM tbl_productos WHERE ID_PRODUCTO='$id_productos'";
-      if (mysqli_query($conn, $sql3)) {
-        // inicio inserta en la tabla bitacora
-        $sql7 = "INSERT INTO tbl_bitacora (USUARIO, ACCION, OBSERVACION)
-        VALUES ('$usuario1[usuario]', 'ELIMINO', 'ELIMINO EL PRODUCTO ($anterior)')";
-         if (mysqli_query($conn, $sql7)) {} else { }
-    // fin inserta en la tabla bitacora
-    echo '<script>
+        $sql33 = "DELETE FROM tbl_inventario WHERE ID_PRODUCTOS='$id_productos'";
+        if (mysqli_query($conn, $sql33)) {
+      $sql34 = "DELETE FROM tbl_productos WHERE ID_PRODUCTO='$id_productos'";
+      if (mysqli_query($conn, $sql34)){
+        
+            //  unlink($ruta);
+    
+
         alert("Producto eliminado exitosamente");
         window.location.href="../../vistas/inventario/vista_productos.php";                   
+
+        alert("Elimino el productor");
+        // window.location.href="../../vistas/inventario/vista_productos.php";                   
+
         </script>';
         mysqli_close($conn);
      
@@ -190,14 +199,14 @@ $validar_proveedor = "SELECT * FROM tbl_kardex WHERE ID_PRODUCTO='$id_productos'
          // inicio inserta en la tabla bitacora
          $sql10 = "INSERT INTO tbl_bitacora (USUARIO, ACCION, OBSERVACION)
          VALUES ('$usuario1[usuario]', 'ERROR', 'ERROR AL ELIMINAR EL Producto ($anterior)')";
-          if (mysqli_query($conn, $sql7)) {} else { }
+          if (mysqli_query($conn, $sql10)) {} else { }
      // fin inserta en la tabla bitacora
               echo '<script>
                         alert("Error al tratar de eliminar el producto");
                     </script>'; mysqli_error($conn);
            }
-        mysqli_close($conn);
-      }
+      
+      }}
     
       break;
       
@@ -205,6 +214,6 @@ $validar_proveedor = "SELECT * FROM tbl_kardex WHERE ID_PRODUCTO='$id_productos'
           
           $conn->close();   
   }// Fin del switch, para validar el valor del boton accion
-
+}
 
 ?>
