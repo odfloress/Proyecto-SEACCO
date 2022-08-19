@@ -161,7 +161,7 @@
                if (mysqli_num_rows($tablero2) > 0)
                {
                   echo '<li class="nav-item menu-open">
-                  <a href="http://localhost/SEACCO/vistas/tablero/vista_tablero.php" class="nav-link active">
+                  <a href="../../vistas/tablero/vista_tablero.php" class="nav-link active">
                     <i class="fa fa-home"></i>
                     <p>
                       Dashboard
@@ -172,7 +172,7 @@
             ?>
 
                 <li class="nav-item">
-                  <a href="http://localhost/SEACCO/vistas/tablero/vista_perfil.php" class="nav-link">
+                  <a href="../../vistas/tablero/vista_perfil.php" class="nav-link">
                     <i class="fa fa-user"></i>
                     <p>
                       Perfil
@@ -250,7 +250,7 @@
                if (mysqli_num_rows($tablero2) > 0)
                {
                   echo '<li class="nav-item">
-                          <a href="http://localhost/SEACCO/vistas/personas/vista_administradores.php" class="nav-link">
+                          <a href="../../vistas/personas/vista_administradores.php" class="nav-link">
                             <p>Administradores</p>
                           </a>
                         </li>';
@@ -264,7 +264,7 @@
                if (mysqli_num_rows($tablero2) > 0)
                {
                   echo '<li class="nav-item">
-                          <a href="http://localhost/SEACCO/vistas/personas/vista_clientes.php" class="nav-link">
+                          <a href="../../vistas/personas/vista_clientes.php" class="nav-link">
                             <p>Clientes</p>
                           </a>
                         </li>';
@@ -278,7 +278,7 @@
                if (mysqli_num_rows($tablero2) > 0)
                {
                   echo '<li class="nav-item">
-                          <a href="http://localhost/SEACCO/vistas/personas/vista_proveedores.php" class="nav-link">
+                          <a href="../../vistas/personas/vista_proveedores.php" class="nav-link">
                             <p>Proveedores</p>
                           </a>
                         </li>';
@@ -307,7 +307,7 @@
                if (mysqli_num_rows($tablero2) > 0)
                {
                   echo '<li class="nav-item">
-                          <a href="http://localhost/SEACCO/vistas/catalogo/vista_bienvenida.php" class="nav-link">
+                          <a href="../../vistas/catalogo/vista_bienvenida.php" class="nav-link">
                             <p>Bienvenida</p>
                           </a>
                         </li>';
@@ -321,14 +321,14 @@
                if (mysqli_num_rows($tablero2) > 0)
                {
                   echo '<li class="nav-item">
-                          <a href="http://localhost/SEACCO/vistas/catalogo/vista_portafolio.php" class="nav-link">
+                          <a href="../../vistas/catalogo/vista_portafolio.php" class="nav-link">
                             <p>Portafolio</p>
                           </a>
                         </li>';
                }
             ?> 
               <li class="nav-item">
-                          <a href="http://localhost/SEACCO/vistas/catalogo/vista_catalagos.php" class="nav-link">
+                          <a href="../../vistas/catalogo/vista_catalagos.php" class="nav-link">
                             <p>Catalagos</p>
                           </a>
                         </li>
@@ -348,27 +348,27 @@
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="http://localhost/SEACCO/vistas/inventario/vista_compras.php" class="nav-link">
+                <a href="../../vistas/inventario/vista_compras.php" class="nav-link">
                   <p>Compras</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="http://localhost/SEACCO/vistas/inventario/vista_asignaciones.php" class="nav-link">
+                <a href="../../vistas/inventario/vista_asignaciones.php" class="nav-link">
                   <p>Asignaciones</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="http://localhost/SEACCO/vistas/inventario/vista_inventario.php" class="nav-link">
+                <a href="../../vistas/inventario/vista_inventario.php" class="nav-link">
                   <p>Inventario</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="http://localhost/SEACCO/vistas/inventario/vista_categorias_productos.php" class="nav-link">
+                <a href="../../vistas/inventario/vista_categorias_productos.php" class="nav-link">
                   <p>categorias de productos</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="http://localhost/SEACCO/vistas/inventario/vista_productos.php" class="nav-link">
+                <a href="../../vistas/inventario/vista_productos.php" class="nav-link">
                   <p>Productos</p>
                 </a>
               </li>
@@ -387,12 +387,12 @@
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="http://localhost/SEACCO/vistas/proyectos/vista_proyectos.php" class="nav-link">
+                <a href="../../vistas/proyectos/vista_proyectos.php" class="nav-link">
                   <p>Proyectos</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="http://localhost/SEACCO/vistas/proyectos/vista_estado_proyecto.php" class="nav-link">
+                <a href="../../vistas/proyectos/vista_estado_proyecto.php" class="nav-link">
                   <p>Estado proyectos</p>
                 </a>
               </li>
@@ -412,17 +412,17 @@
             <ul class="nav nav-treeview">
              
               <li class="nav-item">
-                <a href="http://localhost/SEACCO/vistas/reportes/vista_personas.php" class="nav-link">
+                <a href="../../vistas/reportes/vista_personas.php" class="nav-link">
                   <p>Personas</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="http://localhost/SEACCO/vistas/reportes/vista_inventario.php" class="nav-link">
+                <a href="../../vistas/reportes/vista_inventario.php" class="nav-link">
                   <p>Inventario</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="http://localhost/SEACCO/vistas/reportes/vista_proyectos.php" class="nav-link">
+                <a href="../../vistas/reportes/vista_proyectos.php" class="nav-link">
                   <p>Proyectos</p>
                 </a>
               </li>
@@ -442,17 +442,17 @@
             </a>
             <ul class="nav nav-treeview">
             <li class="nav-item">
-                <a href="http://localhost/SEACCO/vistas/ajustes/vista_parametro.php" class="nav-link">
+                <a href="../../vistas/ajustes/vista_parametro.php" class="nav-link">
                   <p>Parametros</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="http://localhost/SEACCO/vistas/ajustes/vista_roles.php" class="nav-link">
+                <a href="../../vistas/ajustes/vista_roles.php" class="nav-link">
                   <p>Roles</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="http://localhost/SEACCO/vistas/ajustes/vista_permisos.php" class="nav-link">
+                <a href="../../vistas/ajustes/vista_permisos.php" class="nav-link">
                   <p>Permisos de Roles</p>
                 </a>
               </li>
@@ -464,7 +464,7 @@
                if (mysqli_num_rows($tablero2) > 0)
                {
                   echo '<li class="nav-item">
-                  <a href="http://localhost/SEACCO/vistas/ajustes/vista_preguntas.php" class="nav-link">
+                  <a href="../../vistas/ajustes/vista_preguntas.php" class="nav-link">
                     <p>Preguntas de seguridad</p>
                   </a>
                 </li>';
@@ -472,15 +472,15 @@
             ?>
               
               <li class="nav-item">
-                <a href="http://localhost/SEACCO/vistas/ajustes/vista_bitacora.php" class="nav-link">
+                <a href="../../vistas/ajustes/vista_bitacora.php" class="nav-link">
                   <p>Bitacora</p>
                 </a>
               </li>
               <li class="nav-item">
-              <a href="http://localhost/SEACCO/Restauracion_BD/php/index.php" class="nav-link">
+              <a href="../../Restauracion_BD/php/index.php" class="nav-link">
               
               <!-- <a href="http://localhost/SEACCO/Respaldo_BD/php/index.php" class="nav-link"> -->
-                <!-- <a href="http://localhost/SEACCO/vistas/ajustes/vista_backup.php" class="nav-link"> -->
+                <!-- <a href="../../vistas/ajustes/vista_backup.php" class="nav-link"> -->
                   <p>Backup BD</p>
                 </a>
               </li>
@@ -500,38 +500,38 @@
             <ul class="nav nav-treeview">
              
             <li class="nav-item">
-                <a href="/SEACCO/vistas/mantenimiento/vista_nuestros_contactos.php" class="nav-link">
+                <a href="../../vistas/mantenimiento/vista_nuestros_contactos.php" class="nav-link">
                   <p>Nuestros contactos</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="/SEACCO/vistas/mantenimiento/vista_profesiones.php" class="nav-link">
+                <a href="../../vistas/mantenimiento/vista_profesiones.php" class="nav-link">
                   <p>Profesiones</p>
                 </a>
               </li>
               <!-- <li class="nav-item">
-                <a href="/SEACCO/vistas/mantenimiento/vista_departamentos.php" class="nav-link">
+                <a href="../../vistas/mantenimiento/vista_departamentos.php" class="nav-link">
                   <p>Departamentos</p>
                 </a>
               </li> -->
              
               <li class="nav-item">
-                <a href="http://localhost/SEACCO/vistas/mantenimiento/vista_genero.php" class="nav-link">
+                <a href="../../vistas/mantenimiento/vista_genero.php" class="nav-link">
                   <p>Generos</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="http://localhost/SEACCO/vistas/mantenimiento/vista_area.php" class="nav-link">
+                <a href="../../vistas/mantenimiento/vista_area.php" class="nav-link">
                   <p>Areas de Empleo</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="http://localhost/SEACCO/vistas/mantenimiento/vista_estados_asignacion.php" class="nav-link">
+                <a href="../../vistas/mantenimiento/vista_estados_asignacion.php" class="nav-link">
                   <p>Estados de asignación</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="/SEACCO/vistas/mantenimiento/vista_estado_herramienta.php" class="nav-link">
+                <a href="../../vistas/mantenimiento/vista_estado_herramienta.php" class="nav-link">
                   <p>Estados de herramientas</p>
                 </a>
               </li>
