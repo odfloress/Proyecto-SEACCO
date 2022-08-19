@@ -120,7 +120,7 @@ if (mysqli_num_rows($roles35) > 0)
                   <tr>
                     
                     
-                  <th>Id</th>
+                  <th>ID</th>
                   <th>Producto</th>
                   <th>Cantidad</th>
                   <th>Movimiento</th>
@@ -275,28 +275,64 @@ if (mysqli_num_rows($roles35) > 0)
  <script type="text/javascript" src="../../js/quitar_espacios.js"></script>
 </body>
 <!-- // Inicio para exportar en pdf // -->
+<?php
+
+	require '../../conexion/conexion.php';
+	$sql = "SELECT * FROM tbl_kardex WHERE ID_PRODUCTO=$producto";
+	$query = $conn->query($sql);
+	$data = array();
+	while($r=$query->fetch_object()){
+	$data[] =$r;
+	}
+
+     
+?>
+
+<?php 
+    $select_nombre = "SELECT * FROM tbl_parametros WHERE PARAMETRO='NOMBRE'";
+    $select_nombre1 = mysqli_query($conn, $select_nombre);
+    if (mysqli_num_rows($select_nombre1) > 0)
+    {
+    while($row = mysqli_fetch_assoc($select_nombre1))
+      { 
+          $nombre_constructora = $row['VALOR'];
+      } 
+    }
+?>
+
 <script>
-	//para descar al tocar el boton	
+	//para descar al tocar el boton
 	var form = document.getElementById("form")
 	form.addEventListener("submit",function(event) {
-   
 	event.preventDefault()
- 
-				const pdf = new jsPDF('p', 'mm', 'letter');			
-        	
 
-				var columns = ["", "", "", "", "", "",""];
-				var data = [
-				[1, "Hola", "hola@gmail.com", "Mexico"],
-				 ];
-
+			
+			const pdf = new jsPDF('p', 'mm', 'letter');
+						
+			var columns = ["Producto", "Cantidad", "Movimiento", "Fecha", "Usuario"];
+			var data = [
+  <?php foreach($data as $d):?>
+	
+      ["<?php echo $nombre; ?>", "<?php echo $d->CANTIDAD; ?>", "<?php echo $d->TIPO_MOVIMIENTO; ?>", "<?php echo $d->FECHA_HORA; ?>", "<?php echo $d->USUARIO; ?>"],
+      <?php endforeach; ?>
+  ];
 				pdf.autoTable(columns,data,
 				{ 
-					html:'#example1',
-					margin:{ top: 30 }}
+					
+					margin:{ top: 30 },
+          columnStyles: {
+            0: {cellWidth: 42},
+            1: {cellWidth: 27},
+            2: {cellWidth: 33},
+            3: {cellWidth: 41},
+            4: {cellWidth: 42}
+           
+
+           }
+        }
 				);
-						
-				//Inicio Encabezado y pie de pagina
+		
+			//Inicio Encabezado y pie de pagina
 			const pageCount = pdf.internal.getNumberOfPages();
 			for(var i = 1; i <= pageCount; i++) 
 			{
@@ -304,19 +340,19 @@ if (mysqli_num_rows($roles35) > 0)
 												//////// Encabezado ///////
 				//Inicio para imagen de logo 
 				var logo = new Image();
-				logo.src = '../../imagenes/LoogSEACCO.jpg';
+				logo.src = '../../imagenes/seacco.jpg';
 				pdf.addImage(logo, 'JPEG',14,7,24,15);
 				//Fin para imagen de logo 
 
 				//muestra el titulo principal
 				pdf.setFont('Arial');
 				pdf.setFontSize(17);
-				pdf.text("Constructora SEACCO", 70,15,);
+				pdf.text("<?php echo $nombre_constructora;?>", 74,15,);
 
 				//muestra el titulo secundario
 				pdf.setFont('times');
-				pdf.setFontSize(10);
-				pdf.text("Transacciones del producto: <?php echo $nombre ?>", 57,20,);
+				pdf.setFontSize(12);
+				pdf.text("Reporte de transacciones", 79,20,);
 
 												//////// pie de Pagina ///////
 				//muestra la fecha
@@ -329,13 +365,13 @@ if (mysqli_num_rows($roles35) > 0)
 				pdf.text(183-20,297-284,newdat);
 
 				//muestra el numero de pagina
-				pdf.text('Pagina ' + String(i) + '/' + String(pageCount),220-20,297-25,null,null,"right");
+				pdf.text('Pagina ' + String(i) + '/' + String(pageCount),220-20,297-27,null,null,"right");
 			}
 				//Fin Encabezado y pie de pagina
 
-							pdf.save('Reporte de transacciones de prodictos.pdf');
+							pdf.save('Reporte de transacciones.pdf');
 	})
-  
+
 </script>
 <!-- // Fin para exportar en pdf // -->
 <script type="text/javascript" src="../../js/evitar_reenvio.js"></script>

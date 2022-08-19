@@ -378,6 +378,34 @@ if (mysqli_num_rows($roles35) > 0)
 </body>
 
 <!-- // Inicio para exportar en pdf // -->
+<?php
+
+	require '../../conexion/conexion.php';
+	$sql = "SELECT * FROM tbl_preguntas 
+  ORDER BY PREGUNTA asc";
+	$query = $conn->query($sql);
+	$data = array();
+	while($r=$query->fetch_object()){
+	$data[] =$r;
+	}
+
+     
+
+?>
+
+<?php 
+    $select_nombre = "SELECT * FROM tbl_parametros WHERE PARAMETRO='NOMBRE'";
+    $select_nombre1 = mysqli_query($conn, $select_nombre);
+    if (mysqli_num_rows($select_nombre1) > 0)
+    {
+    while($row = mysqli_fetch_assoc($select_nombre1))
+      { 
+          $nombre_constructora = $row['VALOR'];
+      } 
+    }
+?>
+
+
 <script>
 	//para descar al tocar el boton	
 	var form = document.getElementById("form")
@@ -388,15 +416,17 @@ if (mysqli_num_rows($roles35) > 0)
 				const pdf = new jsPDF('p', 'mm', 'letter');			
         	
 
-				var columns = ["", "", "", "", ""];
+				var columns = ["Preguntas",];
 				var data = [
-				[1, "Hola", "hola@gmail.com", "Mexico"],
+          <?php foreach($data as $d):?>
+				["<?php echo $d->PREGUNTA; ?>"],
+        <?php endforeach; ?>
 				 ];
 
 				pdf.autoTable(columns,data,
 				{ 
-					html:'#example1',
-					margin:{ top: 30 }}
+					// html:'#example1',
+					margin:{ top: 30 } }
 				);
 						
 				//Inicio Encabezado y pie de pagina
@@ -407,19 +437,19 @@ if (mysqli_num_rows($roles35) > 0)
 												//////// Encabezado ///////
 				//Inicio para imagen de logo 
 				var logo = new Image();
-				logo.src = '../../imagenes/LoogSEACCO.jpg';
+				logo.src = '../../imagenes/seacco.jpg';
 				pdf.addImage(logo, 'JPEG',14,7,24,15);
 				//Fin para imagen de logo 
 
 				//muestra el titulo principal
 				pdf.setFont('Arial');
 				pdf.setFontSize(17);
-				pdf.text("Constructora SEACCO", 70,15,);
+				pdf.text("<?php echo $nombre_constructora;?>", 74,15,);
 
 				//muestra el titulo secundario
 				pdf.setFont('times');
-				pdf.setFontSize(10);
-				pdf.text("Reporte de preguntas", 84,20,);
+				pdf.setFontSize(12);
+				pdf.text("Reporte de preguntas", 82,20,);
 
 												//////// pie de Pagina ///////
 				//muestra la fecha

@@ -140,7 +140,7 @@ if (mysqli_num_rows($roles35) > 0)
                    </select><br>
 
                    <label for="">Garantía</label>
-                    <input type="text" class="form-control" name="garantia" required value="<?php echo $garantia14;?>" placeholder=""  autocomplete = "off"   minlength="3" maxlength="255" 
+                    <input type="text" class="form-control" name="garantia" required value="<?php echo $garantia14;?>" placeholder=""  autocomplete = "off"   minlength="3" maxlength="250" 
                     onkeyup="mayus(this);" required ><br>
 
                     <label for="">unidad de medida</label>

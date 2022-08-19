@@ -305,7 +305,7 @@ if (mysqli_num_rows($roles35) > 0)
                                                   </select> 
                                               <label for="">Título</label>
                                               <input type="text" class="form-control"  name="titulo" required value="<?php echo $filas['TITULO'] ?>" placeholder="" 
-                                              autocomplete = "off"  onkeypress="return soloLetras(event);" minlength="3" maxlength="255" onkeyup="mayus(this);"  >
+                                              autocomplete = "off"  onkeypress="return soloLetras(event);" minlength="3" maxlength="50" onkeyup="mayus(this);"  >
                                               <br>
                                               <label for="">Descripción</label>
                                               <TEXtarea  style="background-color: white;" name="descripcion" class="form-control"name="" id="" cols="40" rows="5"
@@ -503,7 +503,18 @@ if(!isset($_POST['reporte_catalogo']))
 				
 			}
      
+?>
 
+<?php 
+    $select_nombre = "SELECT * FROM tbl_parametros WHERE PARAMETRO='NOMBRE'";
+    $select_nombre1 = mysqli_query($conn, $select_nombre);
+    if (mysqli_num_rows($select_nombre1) > 0)
+    {
+    while($row = mysqli_fetch_assoc($select_nombre1))
+      { 
+          $nombre_constructora = $row['VALOR'];
+      } 
+    }
 ?>
 
 <script>
@@ -536,19 +547,19 @@ if(!isset($_POST['reporte_catalogo']))
 												//////// Encabezado ///////
 				//Inicio para imagen de logo 
 				var logo = new Image();
-				logo.src = '../../imagenes/LoogSEACCO.jpg';
+				logo.src = '../../imagenes/seacco.jpg';
 				pdf.addImage(logo, 'JPEG',14,7,24,15);
 				//Fin para imagen de logo 
 
 				//muestra el titulo principal
 				pdf.setFont('Arial');
 				pdf.setFontSize(17);
-				pdf.text("Constructora SEACCO", 70,15,);
+				pdf.text("<?php echo $nombre_constructora;?>", 74,15,);
 
 				//muestra el titulo secundario
 				pdf.setFont('times');
-				pdf.setFontSize(10);
-				pdf.text("Reporte de portafolio", 84,20,);
+				pdf.setFontSize(12);
+				pdf.text("Reporte de portafolio", 82,20,);
 
 												//////// pie de Pagina ///////
 				//muestra la fecha

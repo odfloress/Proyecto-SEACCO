@@ -49,6 +49,8 @@ if (mysqli_num_rows($roles35) > 0)
                 }
                 $compra=(isset($_POST['compra']))?$_POST['compra']:"";  
                 $fecha=(isset($_POST['fecha']))?$_POST['fecha']:""; 
+                $proveedores=(isset($_POST['proveedores']))?$_POST['proveedores']:""; 
+                
 
 
 ?>
@@ -81,12 +83,12 @@ if (mysqli_num_rows($roles35) > 0)
         <div class="row mb-2">
           <div class="col-sm-7">
             
-          <h3 class="card-title">Detalle de la compra realizada en la fecha <?php echo $fecha; ?></h3>
+          <!-- <center><h3 class="card-title">Detalle de la compra realizada al proveedor <?php echo $proveedores; ?></h3></center> -->
      
           </div>
-          <div class="col-sm-6">
+          <div class="col-sm-8">
             <ol class="breadcrumb float-sm-right">
-            
+            <center><h3 class="card-title">Detalle de la compra realizada al proveedor <?php echo $proveedores; ?></h3></center>
             </ol>
             
           </div>
@@ -120,13 +122,14 @@ if (mysqli_num_rows($roles35) > 0)
                   <thead>
                   <tr>
                     
-                  <th>ID</th>
+                  <!-- <th>ID</th> -->
                   <th>ID compra</th>
                   <th>Producto</th>
                   <th>Garantía</th>
                   <th>Unidad de medida</th>
                   <th>Cantidad</th>
                   <th>Precio</th>
+                  <th>Fecha</th>
                   
                   
                   </tr>
@@ -144,13 +147,14 @@ if (mysqli_num_rows($roles35) > 0)
                     ?>
                   <tr>
                      
-                    <td ><?php echo $filas['ID_DETALLE'] ?></td>
+                    <!-- <td ><?php echo $filas['ID_DETALLE'] ?></td> -->
                      <td><?php echo $filas['ID_COMPRA'] ?></td>
                      <td><?php echo $filas['NOMBRE'] ?></td>
                      <td><?php echo $filas['GARANTIA'] ?></td>
                      <td><?php echo $filas['UNIDAD_MEDIDA'] ?></td>
                      <td><?php echo $filas['CANTIDAD'] ?></td>
                      <td><?php echo $filas['PRECIO'] ?></td>
+                     <td><?php echo $fecha; ?></td>
                     
       </tr>
                 <?php } }?>  
@@ -279,6 +283,36 @@ if (mysqli_num_rows($roles35) > 0)
  <script type="text/javascript" src="../../js/quitar_espacios.js"></script>
 </body>
 <!-- // Inicio para exportar en pdf // -->
+<?php
+
+	require '../../conexion/conexion.php';
+	$sql = "SELECT * FROM ((tbl_detalle_compra d
+  INNER JOIN tbl_unidad_medida u ON d.ID_UNIDAD_MEDIDA = u.ID_UNIDAD_MEDIDA)
+  INNER JOIN tbl_productos p ON d.ID_PRODUCTO = p.ID_PRODUCTO) WHERE d.ID_COMPRA='$compra'
+  ORDER BY NOMBRE asc";
+	$query = $conn->query($sql);
+	$data = array();
+	while($r=$query->fetch_object()){
+	$data[] =$r;
+	}
+
+     
+
+?>
+
+<?php 
+    $select_nombre = "SELECT * FROM tbl_parametros WHERE PARAMETRO='NOMBRE'";
+    $select_nombre1 = mysqli_query($conn, $select_nombre);
+    if (mysqli_num_rows($select_nombre1) > 0)
+    {
+    while($row = mysqli_fetch_assoc($select_nombre1))
+      { 
+          $nombre_constructora = $row['VALOR'];
+      } 
+    }
+?>
+
+
 <script>
 	//para descar al tocar el boton	
 	var form = document.getElementById("form")
@@ -289,15 +323,27 @@ if (mysqli_num_rows($roles35) > 0)
 				const pdf = new jsPDF('p', 'mm', 'letter');			
         	
 
-				var columns = ["", "", "", "", "", "",""];
+				var columns = ["ID Compras", "Producto", "Garantía", "Unidad medida", "Cantidad", "Precio", "Fecha"];
 				var data = [
-				[1, "Hola", "hola@gmail.com", "Mexico"],
+          <?php foreach($data as $d):?>
+				["<?php echo $d->ID_COMPRA; ?>", "<?php echo $d->NOMBRE; ?>", "<?php echo $d->GARANTIA; ?>", "<?php echo $d->UNIDAD_MEDIDA; ?>", "<?php echo $d->CANTIDAD; ?>", "<?php echo $d->PRECIO; ?>", "<?php echo $fecha; ?>"],
+        <?php endforeach; ?>
 				 ];
 
 				pdf.autoTable(columns,data,
 				{ 
-					html:'#example1',
-					margin:{ top: 30 }}
+					// html:'#example1',
+					margin:{ top: 30 },
+          columnStyles: {
+            0: {cellWidth: 21},
+            1: {cellWidth: 27},
+            2: {cellWidth: 37},
+            3: {cellWidth: 30},
+            4: {cellWidth: 22},
+            5: {cellWidth: 22},
+            6: {cellWidth: 27}
+
+           } }
 				);
 						
 				//Inicio Encabezado y pie de pagina
@@ -308,19 +354,19 @@ if (mysqli_num_rows($roles35) > 0)
 												//////// Encabezado ///////
 				//Inicio para imagen de logo 
 				var logo = new Image();
-				logo.src = '../../imagenes/LoogSEACCO.jpg';
+				logo.src = '../../imagenes/seacco.jpg';
 				pdf.addImage(logo, 'JPEG',14,7,24,15);
 				//Fin para imagen de logo 
 
 				//muestra el titulo principal
 				pdf.setFont('Arial');
 				pdf.setFontSize(17);
-				pdf.text("Constructora SEACCO", 70,15,);
+				pdf.text("<?php echo $nombre_constructora;?>", 77,15,);
 
 				//muestra el titulo secundario
 				pdf.setFont('times');
-				pdf.setFontSize(10);
-				pdf.text("Detalle de la compra realizada en la fecha <?php echo $fecha ?>", 57,20,);
+				pdf.setFontSize(12);
+				pdf.text("Reporte de compra a <?php echo $proveedores;?> ", 78,20,);
 
 												//////// pie de Pagina ///////
 				//muestra la fecha

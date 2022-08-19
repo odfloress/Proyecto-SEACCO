@@ -317,28 +317,63 @@ if (mysqli_num_rows($roles35) > 0)
 </body>
 
 <!-- // Inicio para exportar en pdf // -->
+<?php
+	require '../../conexion/conexion.php';
+	$sql = "SELECT * FROM (tbl_inventario i
+  INNER JOIN tbl_productos p ON i.ID_PRODUCTOS = p.ID_PRODUCTO)
+  ORDER BY i.ID_PRODUCTOS asc";
+	$query = $conn->query($sql);
+	$data = array();
+	while($r=$query->fetch_object()){
+	$data[] =$r;
+	}
+
+     
+?>
+
+<?php 
+    $select_nombre = "SELECT * FROM tbl_parametros WHERE PARAMETRO='NOMBRE'";
+    $select_nombre1 = mysqli_query($conn, $select_nombre);
+    if (mysqli_num_rows($select_nombre1) > 0)
+    {
+    while($row = mysqli_fetch_assoc($select_nombre1))
+      { 
+          $nombre_constructora = $row['VALOR'];
+      } 
+    }
+?>
+
 <script>
-	//para descar al tocar el boton	
+	//para descar al tocar el boton
 	var form = document.getElementById("form")
 	form.addEventListener("submit",function(event) {
-   
 	event.preventDefault()
- 
-				const pdf = new jsPDF('p', 'mm', 'letter');			
-        	
 
-				var columns = ["", "", "", "", ""];
-				var data = [
-				[1, "Hola", "hola@gmail.com", "Mexico"],
-				 ];
-
+			
+			const pdf = new jsPDF('p', 'mm', 'letter');
+						
+			var columns = ["Productos", "Cantidad minima", "Cantidad maxima", "Cantidad disponible"];
+			var data = [
+  <?php foreach($data as $d):?>
+	
+      ["<?php echo $d->NOMBRE; ?>", "<?php echo $d->CANTIDAD_MIN; ?>", "<?php echo $d->CANTIDAD_MAX; ?>", "<?php echo $d->CANTIDAD_DISPONIBLE; ?>"],
+      <?php endforeach; ?>
+  ];
 				pdf.autoTable(columns,data,
 				{ 
-					html:'#example1',
-					margin:{ top: 30 }}
+					
+					margin:{ top: 30 },
+          columnStyles: {
+            0: {cellWidth: 77},
+            1: {cellWidth: 37},
+            2: {cellWidth: 37},
+            3: {cellWidth: 37}
+
+           } 
+        }
 				);
-						
-				//Inicio Encabezado y pie de pagina
+		
+			//Inicio Encabezado y pie de pagina
 			const pageCount = pdf.internal.getNumberOfPages();
 			for(var i = 1; i <= pageCount; i++) 
 			{
@@ -346,19 +381,19 @@ if (mysqli_num_rows($roles35) > 0)
 												//////// Encabezado ///////
 				//Inicio para imagen de logo 
 				var logo = new Image();
-				logo.src = '../../imagenes/LoogSEACCO.jpg';
+				logo.src = '../../imagenes/seacco.jpg';
 				pdf.addImage(logo, 'JPEG',14,7,24,15);
 				//Fin para imagen de logo 
 
 				//muestra el titulo principal
 				pdf.setFont('Arial');
 				pdf.setFontSize(17);
-				pdf.text("Constructora SEACCO", 70,15,);
+				pdf.text("<?php echo $nombre_constructora;?>", 74,15,);
 
 				//muestra el titulo secundario
 				pdf.setFont('times');
-				pdf.setFontSize(10);
-				pdf.text("Reporte de inventario", 84,20,);
+				pdf.setFontSize(12);
+				pdf.text("Reporte de inventario", 82,20,);
 
 												//////// pie de Pagina ///////
 				//muestra la fecha
@@ -371,13 +406,13 @@ if (mysqli_num_rows($roles35) > 0)
 				pdf.text(183-20,297-284,newdat);
 
 				//muestra el numero de pagina
-				pdf.text('Pagina ' + String(i) + '/' + String(pageCount),220-20,297-25,null,null,"right");
+				pdf.text('Pagina ' + String(i) + '/' + String(pageCount),220-20,297-27,null,null,"right");
 			}
 				//Fin Encabezado y pie de pagina
 
 							pdf.save('Reporte de inventario.pdf');
 	})
-  
+
 </script>
 <!-- // Fin para exportar en pdf // -->
 <script type="text/javascript" src="../../js/evitar_reenvio.js"></script>
