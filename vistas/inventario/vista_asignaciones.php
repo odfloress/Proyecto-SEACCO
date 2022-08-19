@@ -93,25 +93,7 @@ if (mysqli_num_rows($roles35) > 0)
 <div class="container mt-3">
   
         <h3>Asignaciones</h3> <br> 
-        <form id="form" action="" method="post">
-        <?php 
-      include '../../conexion/conexion.php'; 
-
-
-                $tablero = "SELECT * FROM tbl_ms_roles_ojetos WHERE ID_ROL='$id_rol7' and ID_OBJETO=8 and PERMISO_INSERCION=1";
-                $tablero2 = mysqli_query($conn, $tablero);
-                if (mysqli_num_rows($tablero2) > 0)
-                {
-                  echo '<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal">
-                              Nueva asignacion
-                          </button>';
-                }
-         
-                                  ?> 
-
-        <button type="submit"  name="accion" value="reporte_pdf" class="btn btn-secondary buttons-pdf buttons-html5"  onclick="return confirm('¿Quieres generar reporte de asignaciones?')" onclick="textToPdf()"><span>Reporte PDF</span></button>
         </div>
-      </form>
 
 <!-- El Modal -->
 <div class="modal" id="myModal">
@@ -132,7 +114,7 @@ if (mysqli_num_rows($roles35) > 0)
                     <option>Seleccione</option>
                         <?php
                             include '../../conexion/conexion.php';
-                            $proyecto = "SELECT * FROM tbl_proyectos ORDER BY ID_PROYECTO";
+                            $proyecto = " SELECT * FROM tbl_proyectos WHERE ID_ESTADOS!=6 and ID_ESTADOS!=5 and ID_ESTADOS!=3";
                             $proyecto1 = mysqli_query($conn, $proyecto);
                             if (mysqli_num_rows($proyecto1) > 0) {
                                 while($row = mysqli_fetch_assoc($proyecto1))
@@ -158,7 +140,7 @@ if (mysqli_num_rows($roles35) > 0)
             </div>
         </div>
     </div>
-    <!-- Fin  de modal de agregar --> <br>
+    <!-- Fin  de modal de agregar -->
           </div>
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
@@ -183,6 +165,25 @@ if (mysqli_num_rows($roles35) > 0)
             
             <div class="card table-responsive">
               <div class="card-header">
+              <form id="form" action="" method="post">
+        <?php 
+      include '../../conexion/conexion.php'; 
+
+
+                $tablero = "SELECT * FROM tbl_ms_roles_ojetos WHERE ID_ROL='$id_rol7' and ID_OBJETO=8 and PERMISO_INSERCION=1";
+                $tablero2 = mysqli_query($conn, $tablero);
+                if (mysqli_num_rows($tablero2) > 0)
+                {
+                  echo '<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal">
+                              Nueva asignación
+                          </button>';
+                }
+         
+                                  ?> 
+
+        <button type="submit"  name="accion" value="reporte_pdf" class="btn btn-secondary buttons-pdf buttons-html5"  onclick="return confirm('¿Quieres generar reporte de asignaciones?')" onclick="textToPdf()"><span>Reporte PDF</span></button>
+       
+      </form>
                 <!-- <h3 class="card-title">Compras</h3> -->
                 
               </div>
@@ -193,7 +194,7 @@ if (mysqli_num_rows($roles35) > 0)
                   <thead>
                   <tr>
                   <th>Accion</th>
-                  <th>Id Asignación</th>
+                  <th>ID Asignación</th>
                   <th>Proyecto</th>               
                   </tr>
                   </thead>

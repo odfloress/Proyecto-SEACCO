@@ -51,87 +51,87 @@
            }
      }
 
+      // seleccionar la cantidad de producto del inventario
+      $cantidad_inventario = "SELECT * FROM tbl_inventario WHERE ID_PRODUCTOS='$id_producto'";
+      $cantidad_inventario1 = mysqli_query($conn, $cantidad_inventario);
+      if (mysqli_num_rows($cantidad_inventario1) > 0)
+      {
+       while($row = mysqli_fetch_assoc($cantidad_inventario1))
+        { 
+            $inventario = $row['CANTIDAD_DISPONIBLE'];
+        } 
+      }
+
   switch($accion){
   
-      case "agregar": 
+      case "agregar":  
 
+if($cantidad <= $inventario){
                     ///////////// INSERTA EN LA TABLA TBL_DETALLE_ASIGACIONES /////////////
 
-                        $sql1 = "INSERT INTO tbl_detalle_asignacion (ID_ASIGNADO, DESCRIPCION_ASIGNACION1, ID_PRODUCTO, CANTIDAD, USUARIO1, FECHA_ENTREGA, ID_ESTADO_HERRAMIENTA, ID_ESTADO_ASIGNACION)
-                        VALUES ('$id_asignado', '$descripcion_asignacion', '$id_producto', '$cantidad', '$empleado', '$fecha_entrega', '$id_estado_herramienta','1')";
-                        if (mysqli_query($conn, $sql1)) {
+      $sql1 = "INSERT INTO tbl_detalle_asignacion (ID_ASIGNADO, DESCRIPCION_ASIGNACION1, ID_PRODUCTO, CANTIDAD, USUARIO1, FECHA_ENTREGA, ID_ESTADO_HERRAMIENTA, ID_ESTADO_ASIGNACION)
+      VALUES ('$id_asignado', '$descripcion_asignacion', '$id_producto', '$cantidad', '$empleado', '$fecha_entrega', '$id_estado_herramienta','1')";
+      if (mysqli_query($conn, $sql1)) {
  
-                              $restar_inventario = "UPDATE tbl_inventario SET CANTIDAD_DISPONIBLE = CANTIDAD_DISPONIBLE-'$cantidad' WHERE ID_PRODUCTOS = '$id_producto'";
-                              if (mysqli_query($conn, $restar_inventario)) {
-                                    if ($restar_inventario < $cantidad) {
-                                          echo '<script>
-                                          alert("No es posible procesar la asignación, inventario insuficiente");
-                                                           
-                                      </script>'; 
-                                      mysqli_close($conn);     
-                                    }else{
+              $restar_inventario = "UPDATE tbl_inventario SET CANTIDAD_DISPONIBLE = CANTIDAD_DISPONIBLE-'$cantidad' WHERE ID_PRODUCTOS = '$id_producto'";
+              if (mysqli_query($conn, $restar_inventario)) {  
     
                       ///////////// INSERTA EN LA TABLA TBL_KARDEX /////////////
                       $kardex = "INSERT INTO tbl_kardex (ID_PRODUCTO, ID_COMPRA, ID_ASIGNACION, USUARIO, CANTIDAD, TIPO_MOVIMIENTO)
-                      VALUES ('$id_producto', NULL, '$id_asignado', '$usuario1[usuario]', '$cantidad', 'SALIDA')";
-
-                        $bitacora = "INSERT INTO tbl_bitacora (USUARIO, ACCION, OBSERVACION)
-                        VALUES ('$usuario1[usuario]', 'INSERTO', 'CREÓ LA ASIGNACIÓN $id_asignado PARA EL EMPLEADO $empleado')";
-                         if (mysqli_query($conn, $bitacora)) {} else { }
-                      if (mysqli_query($conn, $kardex)) {
-                          
-    
-                              $validar_inventario = "SELECT CANTIDAD_DISPONIBLE FROM tbl_inventario WHERE ID_PRODUCTOS = '$id_producto'";
-                              $result = mysqli_query($conn, $validar_inventario); 
-                              if ($cantidad > $result)
-                              {
-
-                              } else {
-    
+                      VALUES ('$id_producto', NULL, '$id_asignado', '$usuario1[usuario]', '$cantidad', 'SALIDA')";                   
+                         if (mysqli_query($conn, $kardex)) {
+        
                           echo '<script>
                                     alert("Producto agregado con exito");
                                     window.location.href="../../vistas/inventario/detalle_asignacion.php";                   
                                 </script>';
-                              }           
+                                        
                         }
-
-                  }
-                        } else {
-                                echo '<script>
-                                        alert("Error al tratar de agregar el producto");
-                                      </script>'; 
-                                   
-                               
-                        
+                        $bitacora = "INSERT INTO tbl_bitacora (USUARIO, ACCION, OBSERVACION)
+                        VALUES ('$usuario1[usuario]', 'INSERTO', 'CREÓ LA ASIGNACIÓN PARA EL EMPLEADO $empleado')";
+                         if (mysqli_query($conn, $bitacora)) {} else { }
+                  
                   } 
-            }         
+         }else {
+                  echo '<script>
+                               alert("Error al tratar de asignar el producto");
+                        </script>'; 
+
+               }   
+            
+      }else{
+            echo '<script>
+                     alert("Error, la cantidad asignada es mayor al del inventario");
+                  </script>'; 
+      }
 
 
       break;
 
       case "cancelar";
 
-                      ///////////// ELIMINA DE LA TABLA KARDEX /////////////
-                      $kardex1 = "UPDATE tbl_kardex SET TIPO_MOVIMIENTO='ENTRADA' WHERE ID_ASIGNACION='$id_asignado'";
-                      if (mysqli_query($conn, $kardex1)) 
-                          { }
-
-
-                      if (mysqli_query($conn, $kardex1)) 
-                          { }
-      ///////////// ELIMINA DE LA TABLA DETALLE DE ASIGNACION /////////////
+        ///////////// ELIMINA DE LA TABLA DETALLE DE COMPRA /////////////
       $detalle5 = "DELETE FROM tbl_detalle_asignacion WHERE ID_ASIGNADO='$id_asignado'";
       if (mysqli_query($conn, $detalle5)) 
       {
-
-                ///////////// ELIMINA LA ASIGNACION DE LA TABLA DE ASIGNACIONES /////////////
+                ///////////// ELIMINA DE LA TABLA KARDEX /////////////
+                $kardex1 = "DELETE FROM tbl_kardex WHERE ID_ASIGNACION='$id_asignado'";
+                if (mysqli_query($conn, $kardex1)) {}
+                ///////////// ELIMINA LA COMPRA DE LA TABLA DE COMPRAS /////////////
                 $compra1 = "DELETE FROM tbl_asignaciones WHERE ID_ASIGNADO='$id_asignado'";
                 if (mysqli_query($conn, $compra1)) {}
+                ///////////// INSERTA EN BITACORA /////////////
+                // inicio inserta en la tabla bitacora
+                $sql = "INSERT INTO tbl_bitacora (USUARIO, ACCION, OBSERVACION)
+                VALUES ('$usuario1[usuario]', 'ELIMINO', 'CANCELO UNA ASIGNACION')";
+                if (mysqli_query($conn, $sql)) {} else {}
+                // fin inserta en la tabla bitacora
                 echo '<script>
                                 alert("Asignación eliminada con exito");
-                                window.location.href="../../vistas/inventario/detalle_asignacion.php";                   
+                                window.location.href="../../vistas/inventario/vista_compras.php";                   
                             </script>';
       }
+      break;
       case "confirmar";
       $confirmar = "UPDATE tbl_asignaciones SET ESTADO_ASIGNACION='FINALIZADO' WHERE ID_ASIGNADO='$id_asignado'";
       if (mysqli_query($conn, $confirmar)) 
@@ -149,40 +149,23 @@
       case "eliminar";
 
             ///////////// ELIMINA DE LA TABLA INVENTARIO /////////////
-            $devolver_inventario = "UPDATE tbl_inventario SET CANTIDAD_DISPONIBLE = CANTIDAD_DISPONIBLE+'$cantidad' WHERE ID_PRODUCTOS = '$id_producto'";
-            if (mysqli_query($conn, $devolver_inventario)) 
-            { }
-            
-      $eliminar_producto = "SELECT * FROM tbl_detalle_asignacion";
-      $eliminar_producto1 = mysqli_query($conn, $eliminar_producto);
-      if (mysqli_num_rows($eliminar_producto1) > 0)
-      {
-            while($row = mysqli_fetch_assoc($eliminar_producto1)) 
-            {
-                  $id_detalle_asignacion = $row["ID_DETALLE_ASIGNACION"];
-            }
-      }
 
-      $kardex2 = "UPDATE tbl_kardex SET TIPO_MOVIMIENTO='ENTRADA' WHERE ID_ASIGNACION='$id_asignado'";
-      if (mysqli_query($conn, $kardex2)) 
-          { 
+      ///////////// ELIMINA DE LA TABLA KARDEX /////////////
+     $sql3 = "DELETE FROM tbl_kardex WHERE ID_PRODUCTO='$id_producto' and ID_ASIGNACION='$id_asignado' ";
+      if (mysqli_query($conn, $sql3)) {}
+      ///////////// ELIMINA DE LA TABLA DETALLE DE COMPRA /////////////
+                      $sql3 = "DELETE FROM tbl_detalle_asignacion WHERE ID_PRODUCTO='$id_producto' and ID_ASIGNADO='$id_asignado'";
+                      if (mysqli_query($conn, $sql3)) {
 
-
-          }
-
-                        $sql3 = "DELETE FROM tbl_detalle_asignacion WHERE ID_DETALLE_ASIGNACION='$id_detalle_asignacion'";
-                        if (mysqli_query($conn, $sql3)) {
-
+                          header('Location: ../../vistas/inventario/detalle_asignacion.php');
+                      }else{
+                              echo '<script>
+                                      alert("Error al tratar de eliminar el producto");
+                                  </script>'; mysqli_error($conn);
+                          }
                       mysqli_close($conn);
-                               
-                            header('Location: ../../vistas/inventario/detalle_asignacion.php');
-                        }else{
-                                echo '<script>
-                                        alert("Error al tratar de eliminar el producto");
-                                    </script>'; mysqli_error($conn);
-                            }
-
-                   
+                 
+                      
       break;
       
       default:
