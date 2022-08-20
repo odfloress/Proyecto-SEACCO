@@ -1,7 +1,7 @@
 <?php
   require '../../conexion/conexion.php';
   //para mostrar los datos de la tabla mysql y mostrar en el crud
-  $sql = "SELECT * FROM tbl_estados_proyectos";
+  $sql = "SELECT * FROM tbl_estados_proyectos WHERE ID_ESTADOS!=1 and ID_ESTADOS!=4 and ID_ESTADOS!=5 and ID_ESTADOS!=6";
   $result = mysqli_query($conn, $sql);
 
 
