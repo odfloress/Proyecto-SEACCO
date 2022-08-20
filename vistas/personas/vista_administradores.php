@@ -96,7 +96,7 @@ if (mysqli_num_rows($roles35) > 0)
                     <option value="">Seleccione un Rol</option>
                         <?php
                         include '../../conexion/conexion.php';
-                        $roles = "SELECT * FROM tbl_roles ORDER BY ID_ROL";
+                        $roles = "SELECT * FROM tbl_roles WHERE ID_ROL!=3 ORDER BY ID_ROL";
                         $roles2 = mysqli_query($conn, $roles);
                         if (mysqli_num_rows($roles2) > 0) {
                             while($row = mysqli_fetch_assoc($roles2))
@@ -411,7 +411,7 @@ if (mysqli_num_rows($roles35) > 0)
                         <option value="<?php echo $filas['ID_ROL']; ?>"> <?php echo $filas['ROL']; ?></option>
                         <?php
                         include '../../conexion/conexion.php';
-                        $roles = "SELECT * FROM tbl_roles ORDER BY ID_ROL";
+                        $roles = "SELECT * FROM tbl_roles WHERE ID_ROL!=3 ORDER BY ID_ROL";
                         $roles2 = mysqli_query($conn, $roles);
                         if (mysqli_num_rows($roles2) > 0) {
                             while($row = mysqli_fetch_assoc($roles2))
