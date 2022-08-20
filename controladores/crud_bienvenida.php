@@ -133,8 +133,7 @@ break;
 
 //para eliminar en la tabla mysl  
 case "eliminar";
-echo $ruta;
-echo $id_imagen;
+if($id_imagen>13){
 
 
 $sql3 = "DELETE FROM tbl_bienvenida_portafolio WHERE ID_IMAGEN='$id_imagen'";
@@ -157,6 +156,13 @@ if (mysqli_query($conn, $sql3)) {
               </script>'; mysqli_error($conn);
      }
   mysqli_close($conn);
+
+    }else{
+        echo '<script type="text/javascript">
+        alert("Este registo no puede ser eliminado");
+        window.location.href="../../vistas/catalogo/vista_bienvenida";
+     </script>';
+    }
 
 break;
 

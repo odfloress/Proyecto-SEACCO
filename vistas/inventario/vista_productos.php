@@ -224,7 +224,7 @@ if (mysqli_num_rows($roles35) > 0)
                   <th>CATEGORIA</th>
                   <th>CODIGO</th>
                   <th>NOMBRE</th>
-                  <th>DESCRIPCION MODELO</th>
+                  <th>DESCRIPCIÓN MODELO</th>
                   <th>CANTIDAD MINIMA</th>
                   <th>CANTIDAD MAXIMA</th>
                   </tr>

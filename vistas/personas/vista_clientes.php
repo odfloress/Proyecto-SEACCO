@@ -152,7 +152,7 @@ if (mysqli_num_rows($roles35) > 0)
                    </select>
                   <br>
                   <label for="">Imagen:</label>
-                    <input type="file" class="form-control" accept=".jpg, .png, .jpeg, .JPEG, .JPG, .PNG" name="imagenes" required value="<?php echo "$nombreimagen"; ?>" placeholder=""  >
+                    <input type="file" class="form-control" accept=".jpg, .png, .jpeg, .JPEG, .JPG, .PNG" name="imagenes"  value="<?php echo "$nombreimagen"; ?>" placeholder=""  >
                     <br>                  
                 
                 </div>
