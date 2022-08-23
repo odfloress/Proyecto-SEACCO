@@ -90,10 +90,7 @@ if (mysqli_num_rows($roles35) > 0)
                 <!-- Cuerpo del modal Modal -->
                 <div class="modal-body">
                     <label for="">Tipo</label>
-                    <select  class="form-select" id="sel2" name="tipo">
-                      <option value="BIENVENIDA">BIENVENIDA</option>
-                      <option value="NUESTRO_EQUIPO">NUESTRO EQUIPO</option>
-                    </select>
+                    <input type="text" name="tipo" class="form-control" readonly id="" value="NUESTRO_EQUIPO">
                     <br>
                     <label for="">Imagen</label>
                     <input type="file" class="form-control" accept=".jpg, .png, .jpej, .JPEG, .JPG, .PNG" name="imagenes" required value="<?php echo "$nombreimagen"; ?>" placeholder=""  >

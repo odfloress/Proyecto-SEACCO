@@ -75,7 +75,7 @@ include '../../controladores/crud_bitacora.php';
                     <th>Fecha</th>
                     <th>Usuario</th>
                     <th>Acción</th>
-                    <th>Observacion</th>
+                    <th>Observación</th>
                   </tr>
                   </thead>
                   <tbody>

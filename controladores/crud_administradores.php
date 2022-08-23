@@ -6,7 +6,7 @@
                        INNER JOIN tbl_roles r ON u.ID_ROL = r.ID_ROL)
                        INNER JOIN tbl_areas a ON u.ID_AREA = a.ID_AREA)
                        INNER JOIN tbl_estado_usuario e ON u.ID_ESTADO_USUARIO = e.ID_ESTADO_USUARIO)
-                       INNER JOIN tbl_profesiones p ON u.ID_PROFESION = p.ID_PROFESION)";
+                       INNER JOIN tbl_profesiones p ON u.ID_PROFESION = p.ID_PROFESION) WHERE USUARIO!='ADMINISTRADOR'";
 
   $result = mysqli_query($conn, $sql);
 
