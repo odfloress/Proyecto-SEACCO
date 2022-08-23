@@ -29,7 +29,7 @@
               
          
            echo '<script>
-                    alert("Pregunta ya existe");
+                    alert("La pregunta ingresada ya existe, intente con otra");
                  </script>';
                  mysqli_close($conn);
          }else{ 
@@ -45,7 +45,7 @@
                   if (mysqli_query($conn, $sql7)) {} else { }
                   // fin inserta en la tabla bitacora
                   echo '<script>
-                  alert("Pregunta creada con exito");
+                  alert("Pregunta creada con éxito");
                   window.location.href="../../vistas/ajustes/vista_preguntas.php";                   
                 </script>';
                  
@@ -91,7 +91,7 @@
                   // fin inserta en la tabla bitacora
 
                   echo '<script>
-                  alert("Pregunta editada con exito");
+                  alert("Pregunta actualizada exitosamente");
                   window.location.href="../../vistas/ajustes/vista_preguntas.php";                   
                 </script>';
 
@@ -120,7 +120,7 @@
              if (mysqli_query($conn, $sql9)) {} else { }
              // fin inserta en la tabla bitacora
             echo '<script>
-                    alert("No se puede eliminar ya que la pregunta  esta en uso");
+                    alert("La pregunta seleccionada no se puede eliminar, esta se encuentra en uso");
                   </script>'; 
                   mysqli_error($conn);
           }else{  

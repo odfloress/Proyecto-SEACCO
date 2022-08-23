@@ -101,7 +101,7 @@ if($cantidad <= $inventario){
             
       }else{
             echo '<script>
-                     alert("Error, la cantidad asignada es mayor al del inventario");
+                     alert("Error, la cantidad asignada es mayor al inventario disponible");
                   </script>'; 
       }
 
@@ -127,7 +127,7 @@ if($cantidad <= $inventario){
                 if (mysqli_query($conn, $sql)) {} else {}
                 // fin inserta en la tabla bitacora
                 echo '<script>
-                                alert("Asignación eliminada con exito");
+                                alert("Asignación eliminada con éxito");
                                 window.location.href="../../vistas/inventario/vista_compras.php";                   
                             </script>';
       }
@@ -137,7 +137,7 @@ if($cantidad <= $inventario){
       if (mysqli_query($conn, $confirmar)) 
       {
         echo '<script>
-                alert("Asignación completada con exito");
+                alert("Asignación completada con éxito");
                 window.location.href="../../vistas/inventario/detalle_asignacion.php";                   
               </script>';
       }
@@ -145,9 +145,24 @@ if($cantidad <= $inventario){
       break;
 
       break;
-      //para eliminar en la tabla mysl  
+      //para eliminar en la tabla mysl
+            // seleccionar la cantidad de producto del inventario
+            $obtener_inventario = "SELECT * FROM (tbl_inventario i 
+                                   INNER JOIN tbl_detalle_asignaciones da ON i.ID_PRODUCTOS=da.ID_PRODUCTO)
+                                   WHERE i.ID_PRODUCTOS='$id_producto'";
+            $obtener_inventario1 = mysqli_query($conn, $obtener_inventario);
+            if (mysqli_num_rows($obtener_inventario1) > 0)
+            {
+             while($row = mysqli_fetch_assoc($obtener_inventario1))
+              { 
+                  $disponible = $row['CANTIDAD_DISPONIBLE'];
+                  $id_producto1 = $row['ID_PRODUCTO'];
+                  $cantidad1 = $row['CANTIDAD'];
+              } 
+            }  
       case "eliminar";
-
+      $sumar_inventario = "UPDATE tbl_inventario SET '$disponible' = '$disponible' +'$cantidad1' WHERE ID_PRODUCTOS = '$id_producto1'";
+      if (mysqli_query($conn, $sumar_inventario)) {}  
             ///////////// ELIMINA DE LA TABLA INVENTARIO /////////////
 
       ///////////// ELIMINA DE LA TABLA KARDEX /////////////

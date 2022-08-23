@@ -25,7 +25,7 @@
          if (mysqli_num_rows($result1) > 0) { 
                 
                 echo '<script>
-                        alert("El nombre de genero ya existe");
+                        alert("El nombre de género ingresado ya existe, intente con otro");
                       </script>';
                       mysqli_close($conn);
          }else{ 
@@ -41,13 +41,13 @@
                              if (mysqli_query($conn, $sql7)) {} else { }
                         // fin inserta en la tabla bitacora
                         echo '<script>
-                                alert("Genero creado con exito");
+                                alert("Género creado exitosamente");
                                 window.location.href="../../vistas/mantenimiento/vista_genero.php";                   
                             </script>';
                              mysqli_close($conn);
                     } else {
                             echo '<script>
-                                    alert("Error al tratar de crear genero");
+                                    alert("Error al tratar de crear género");
                                   </script>'; 
                                   mysqli_error($conn);
                            }
@@ -73,7 +73,7 @@
                       if (mysqli_query($conn, $sql8)) {} else { }
                     // fin inserta en la tabla bitacora
                     echo '<script>
-                            alert("El genero ya existe intente con otro nombre");                  
+                            alert("El nombre de género ingresado ya existe, intente con otro nombre");                  
                           </script>';
                           mysqli_close($conn);
 
@@ -88,7 +88,7 @@
                             if (mysqli_query($conn, $sql9)) {} else { }
                             // fin inserta en la tabla bitacora
                             echo '<script>
-                                    alert("Genero editado con exito");
+                                    alert("Género actualizado exitosamente");
                                     window.location.href="../../vistas/mantenimiento/vista_genero.php";                     
                                 </script>';
                                 mysqli_close($conn);
@@ -112,7 +112,7 @@
          if (mysqli_query($conn, $sql9)) {} else { }
          // fin inserta en la tabla bitacora
          echo '<script>
-                 alert("No se puede eliminar el genero, ya que esta en uso");
+                 alert("No se puede eliminar el género, este se encuentra en uso");
                  window.location.href="../../vistas/mantenimiento/vista_genero.php";                  
                </script>';
                mysqli_close($conn);
@@ -128,7 +128,7 @@
                             header('Location: ../../vistas/mantenimiento/vista_genero.php');
                         }else{
                                 echo '<script>
-                                        alert("Error al tratar de eliminar el genero");
+                                        alert("Error al tratar de eliminar el género");
                                     </script>'; mysqli_error($conn);
                             }
                         mysqli_close($conn);

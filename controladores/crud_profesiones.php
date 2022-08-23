@@ -88,7 +88,7 @@
                             if (mysqli_query($conn, $sql9)) {} else { }
                             // fin inserta en la tabla bitacora
                             echo '<script>
-                                    alert("Profesión editada con éxito");
+                                    alert("Profesión actualizada exitosamente");
                                     window.location.href="../../vistas/mantenimiento/vista_profesiones.php";                     
                                 </script>';
                                 mysqli_close($conn);

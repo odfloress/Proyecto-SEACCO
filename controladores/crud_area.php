@@ -41,13 +41,13 @@
                              if (mysqli_query($conn, $sql7)) {} else { }
                         // fin inserta en la tabla bitacora
                         echo '<script>
-                                alert("Área creada con éxito");
+                                alert("Área creada exitosamente");
                                 window.location.href="../../vistas/mantenimiento/vista_area";                   
                             </script>';
                              mysqli_close($conn);
                     } else {
                             echo '<script>
-                                    alert("Error al tratar de crear la area");
+                                    alert("Error al tratar de crear la área");
                                   </script>'; 
                                   mysqli_error($conn);
                            }
@@ -88,7 +88,7 @@
                             if (mysqli_query($conn, $sql9)) {} else { }
                             // fin inserta en la tabla bitacora
                             echo '<script>
-                                    alert("Área editada con éxito");
+                                    alert("Área actualizada exitosamente");
                                     window.location.href="../../vistas/mantenimiento/vista_area";                     
                                 </script>';
                                 mysqli_close($conn);
@@ -112,7 +112,7 @@
          if (mysqli_query($conn, $sql9)) {} else { }
          // fin inserta en la tabla bitacora
          echo '<script>
-                 alert("No se puede eliminar EL area, ya que esta en uso");
+                 alert("No se puede eliminar el área, esta se encuentra en uso");
                  window.location.href="../../vistas/mantenimiento/vista_area.php";                  
                </script>';
                mysqli_close($conn);
@@ -128,7 +128,7 @@
                             header('Location: ../../vistas/mantenimiento/vista_area.php');
                         }else{
                                 echo '<script>
-                                        alert("Error al tratar de eliminar el area");
+                                        alert("Error al tratar de eliminar el área");
                                     </script>'; mysqli_error($conn);
                             }
                         mysqli_close($conn);

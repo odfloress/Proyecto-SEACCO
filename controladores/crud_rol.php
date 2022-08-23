@@ -26,7 +26,7 @@
          if (mysqli_num_rows($result1) > 0) { 
                 
                 echo '<script>
-                        alert("Rol ya existe");
+                        alert("El nombre de rol ingresado ya existe, intente con otro");
                       </script>';
                       mysqli_close($conn);
          }else{ 
@@ -78,7 +78,7 @@
                       if (mysqli_query($conn, $sql8)) {} else { }
                     // fin inserta en la tabla bitacora
                     echo '<script>
-                            alert("Descripción del rol editado con exito");
+                            alert("Descripción del rol actualizada con éxito");
                             window.location.href="../../vistas/ajustes/vista_roles.php";                   
                           </script>';
                           mysqli_close($conn);
@@ -105,7 +105,7 @@
                             if (mysqli_query($conn, $sql9)) {} else { }
                             // fin inserta en la tabla bitacora
                             echo '<script>
-                                    alert("Rol editado con exito");
+                                    alert("Rol actualizado con éxito");
                                     window.location.href="../../vistas/ajustes/vista_roles.php";                   
                                 </script>';
                                 mysqli_close($conn);
@@ -129,7 +129,7 @@
          if (mysqli_query($conn, $sql9)) {} else { }
          // fin inserta en la tabla bitacora
          echo '<script>
-                 alert("No se puede eliminar el rol, ya que esta en uso");
+                 alert("No se puede eliminar el rol, este se encuentra en uso");
                  window.location.href="../../vistas/ajustes/vista_roles.php";                   
                </script>';
                mysqli_close($conn);
@@ -147,7 +147,7 @@
                         // fin inserta en la tabla bitacora
 
                     echo '<script>
-                            alert("No se puede eliminar el rol, ya que esta en uso.");
+                            alert("No se puede eliminar el rol, este se encuentra en uso.");
                             window.location.href="../../vistas/ajustes/vista_roles.php";                   
                           </script>';
                           mysqli_close($conn);

@@ -56,7 +56,7 @@
                         if (mysqli_query($conn, $sql7)) {} else {}
                         // fin inserta en la tabla bitacora
                               echo '<script>
-                                      alert("Pregunta y respuesta guardada con exito");
+                                      alert("Pregunta y respuesta guardadas con éxito");
                                       window.location.href="../../vistas/iniciar_sesion/preguntas_seguridad";
                                     </script>';                                  
                                   

@@ -32,14 +32,14 @@
                     if (mysqli_query($conn, $sql7)) {} else { }
                // fin inserta en la tabla bitacora
                echo '<script>
-               alert("Contacto creado con exito");
+               alert("Datos de contactos creados con éxito");
                window.location.href="../../vistas/mantenimiento/vista_nuestros_contactos.php";                   
              </script>';
              mysqli_close($conn); 
 
                 } else {
                         echo '<script>
-                                alert("Error al tratar de crear el contacto");
+                                alert("Error al tratar de crear los datos de contactos");
                               </script>'; mysqli_error($conn);
                        }
                 
@@ -60,7 +60,7 @@
                    if (mysqli_query($conn, $sql8)) {} else { }
                  // fin inserta en la tabla bitacora
                  echo '<script>
-                 alert("Contacto editado con exito");
+                 alert("Datos de contactos actualizados exitosamente");
                  window.location.href="../../vistas/mantenimiento/vista_nuestros_contactos.php";                   
                </script>';
                mysqli_close($conn);
@@ -68,7 +68,7 @@
 
                 }else{
                      echo '<script>
-                            alert("Error al tratar de editar el contacto");
+                            alert("Error al tratar de editar los contactos");
                            </script>'; mysqli_error($conn);
                      }
 

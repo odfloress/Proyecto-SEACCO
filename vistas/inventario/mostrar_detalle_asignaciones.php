@@ -200,7 +200,7 @@ if (mysqli_num_rows($roles35) > 0)
 
                                 <!-- pie del modal -->
                                 <div class="modal-footer">
-                                <button type="submit" name="accion" value="editar" class="btn btn-primary" onclick="return confirm('¿Desea entregar herramienta?')">Entregar</button>
+                                <button type="submit" name="accion" value="editar" class="btn btn-primary" onclick="return confirm('¿Desea entregar esta herramienta?')">Entregar</button>
                                   <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
                                 </div>
                              
@@ -385,13 +385,13 @@ if (mysqli_num_rows($roles35) > 0)
 			
 			const pdf = new jsPDF('L', 'mm', 'letter');
 						
-			var columns = ["ID", "Producto", "Cantidad", "Descripción", "Empleado", "Proyecto", "Fecha de asignación", "Fecha de devolución"];
+			var columns = ["ID", "Producto", "Cantidad", "Descripción", "Empleado", "Proyecto", "Fecha de asignación"];
 			var data = [
   <?php foreach($data as $d):?>
 	
       ["<?php echo $d->ID_DETALLE_ASIGNACION; ?>", "<?php echo $d->NOMBRE; ?>", "<?php echo $d->CANTIDAD; ?>",
        "<?php echo $d->DESCRIPCION_ASIGNACION1; ?>", "<?php echo $d->USUARIO1; ?>", "<?php echo $d->NOMBRE_PROYECTO; ?>", 
-       "<?php echo $d->FECHA_ASIGNADO; ?>", "<?php echo $d->FECHA_ENTREGA; ?>"],
+       "<?php echo $d->FECHA_ASIGNADO; ?>"],
       <?php endforeach; ?>
   ];
 				pdf.autoTable(columns,data,
@@ -475,7 +475,7 @@ switch($accion){
             if (mysqli_query($conn, $sql5)) {}
 
             echo '<script>
-            alert("se entrego la cantidad de ' . $cantidad_entregar . ' de' . $cantidad_asignada . ' de la asignación con ID ' . $asignacion. '");
+            alert("Se entregá la cantidad de ' . $cantidad_entregar . ', de ' . $cantidad_asignada . ', de la asignación con ID ' . $asignacion. '.");
             window.location.href="../../vistas/inventario/mostrar_detalle_asignaciones.php";
            </script>';
           }else{

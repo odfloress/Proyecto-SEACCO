@@ -146,7 +146,7 @@ if (mysqli_num_rows($roles35) > 0)
                            <br>';
                           }
                         ?>
-              <button type="submit"  name="accion" value="reporte_pdf" class="btn btn-secondary buttons-pdf buttons-html5"  onclick="return confirm('¿Quieres generar reporte de preguntas?')" onclick="textToPdf()"><span>Reporte PDF</span></button>
+              <button type="submit"  name="accion" value="reporte_pdf" class="btn btn-secondary buttons-pdf buttons-html5"  onclick="return confirm('¿Desea generar reporte de preguntas?')" onclick="textToPdf()"><span>Reporte PDF</span></button>
 	               </div>
             </form>
                     
