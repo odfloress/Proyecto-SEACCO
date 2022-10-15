@@ -144,13 +144,15 @@ if (mysqli_num_rows($roles35) > 0)
                   INNER JOIN tbl_productos p ON i.ID_PRODUCTOS = p.ID_PRODUCTO)";
                   $result = mysqli_query($conn, $sql7);
                   if (mysqli_num_rows($result) > 0) 
+                  $cont = 0;
                   while ($filas= mysqli_fetch_assoc($result)){
                     ?>
+                    <?php  $cont++; ?>
                   <tr>
                   <td>
                   
                   <form action="../../vistas/inventario/transacciones_productos.php" method="post">
-                          <input type="hidden" name="nombre"  value="<?php echo $filas['NOMBRE'] ?>">
+                          <input type="hidden" name="nombre"  value="<?php echo $cont; ?>">
                           <input type="hidden" name="producto"  value="<?php echo $filas['ID_PRODUCTOS'] ?>">
                           <button type="submit" name="accion" value="detalle" class="btn btn-primary" >Ver transacciones</button>
                           </form>     

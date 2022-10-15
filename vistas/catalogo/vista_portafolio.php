@@ -240,8 +240,10 @@ if (mysqli_num_rows($roles35) > 0)
                  INNER JOIN tbl_catalogo c ON p.ID_CATALOGO = c.ID_CATALOGO)";
                   $result = mysqli_query($conn, $sql77);
                   if (mysqli_num_rows($result) > 0) {
+                    $cont = 0;
                   while ($filas= mysqli_fetch_assoc($result)){
                     ?>
+                    <?php  $cont++; ?>
                   <tr>
                   <td>
                   <?php 
@@ -342,7 +344,7 @@ if (mysqli_num_rows($roles35) > 0)
                         ?>
                      </form>
 </td>
-                      <td><?php echo $filas['ID_IMAGEN'] ?></td>
+                      <td><?php echo $cont; ?></td>
                      <td><?php echo $filas['NOMBRE_CATALOGO'] ?></td>
                      <td><img class="img-thumbnail" width="100px" src="<?php echo $filas['RUTA_PORTAFOLIO'] ?>" /></td>
                      <td><?php echo $filas['TITULO'] ?></td>

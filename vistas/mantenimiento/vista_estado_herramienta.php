@@ -165,7 +165,7 @@ if (mysqli_num_rows($roles35) > 0)
                   <thead>
                   <tr>
                   <th>Acciones</th>
-                  <th>Id</th>
+                  <th>ID</th>
                   <th>Estado de herramientas</th>
                   
                   
@@ -174,9 +174,11 @@ if (mysqli_num_rows($roles35) > 0)
                   </thead>
                   <tbody>
                     <?php 
+                    $cont = 0;
                     while ($filas= mysqli_fetch_assoc($result)){
  
                      ?>
+                     <?php  $cont++; ?>
                   <tr>
                   <td>
                   <?php 
@@ -252,7 +254,7 @@ if (mysqli_num_rows($roles35) > 0)
                       </form>
                     
 </td>
-                     <td ><?php echo $filas['ID_ESTADO_HERRAMIENTA'] ?></td>
+                     <td ><?php echo $cont; ?></td>
                      <td><?php echo $filas['ESTADO'] ?></td>
                      
                     

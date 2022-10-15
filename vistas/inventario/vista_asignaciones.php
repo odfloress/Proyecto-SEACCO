@@ -200,10 +200,11 @@ if (mysqli_num_rows($roles35) > 0)
                   </thead>
                   <tbody>
                     <?php 
-                    
+                    $cont = 0;
                     while ($filas= mysqli_fetch_assoc($result)){
  
                      ?>
+                     <?php  $cont++; ?>
                   <tr>
                       <td><form action="../../vistas/inventario/mostrar_detalle_asignaciones.php" method="post">
                             <input type="hidden" name="asignacion" value="<?php echo $filas['ID_ASIGNADO'] ?>">
@@ -211,7 +212,7 @@ if (mysqli_num_rows($roles35) > 0)
                           <button type="submit" name="accion" value="detalle" class="btn btn-primary">Ver detalle</button>
                           </form>
                       </td>
-                     <td><?php echo $filas['ID_ASIGNADO'] ?></td>
+                     <td><?php echo $cont; ?></td>
                      <td><?php echo $filas['NOMBRE_PROYECTO'] ?></td>  
       </tr>
                 <?php } ?>  

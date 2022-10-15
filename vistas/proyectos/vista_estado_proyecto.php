@@ -110,7 +110,7 @@ if (mysqli_num_rows($roles35) > 0)
             </div>
         </div>
     </div>
-    <!-- Fin  de modal de agregar --> <br>
+    <!-- Fin  de modal de agregar --> 
           </div>
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
@@ -166,9 +166,14 @@ if (mysqli_num_rows($roles35) > 0)
                   </tr>
                   </thead>
                   <tbody>
-                  <?php while ($filas= mysqli_fetch_assoc($result)){
+                  <?php 
+                  $cont = 0;
+
+                  while ($filas= mysqli_fetch_assoc($result)){
  
  ?>
+ <?php  $cont++; ?>
+
                   <tr>
                   <td>
                   <?php 
@@ -242,7 +247,7 @@ if (mysqli_num_rows($roles35) > 0)
                         ?>
                   </form>
 </td>
-                    <td ><?php echo $filas['ID_ESTADOS'] ?></td>
+                    <td ><?php echo $cont; ?></td>
                      <td><?php echo $filas['ESTADO_PROYECTO'] ?></td>
                      <?php } ?>
                     

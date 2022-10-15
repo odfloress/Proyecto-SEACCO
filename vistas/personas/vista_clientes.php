@@ -277,8 +277,10 @@ if (mysqli_num_rows($roles35) > 0)
                   INNER JOIN tbl_generos g ON c.ID_GENERO = g.ID_GENERO)";
                   $result = mysqli_query($conn, $sql7);
                   if (mysqli_num_rows($result) > 0) {
+                    $cont = 0;
                   while ($filas= mysqli_fetch_assoc($result)){
                     ?>
+                     <?php  $cont++; ?>
                   <tr>
                   <td>
                   <?php 
@@ -396,7 +398,7 @@ if (mysqli_num_rows($roles35) > 0)
                         ?>
                      </form>
 </td>
-                      <td><?php echo $filas['ID_CLIENTE'] ?></td>
+                      <td><?php echo $cont; ?></td>
                      <td><?php echo $filas['CODIGO'] ?></td>
                      <td><?php echo $filas['NOMBRE_CLIENTE'] ?></td>
                      <td><?php echo $filas['APELLIDO'] ?></td>

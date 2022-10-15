@@ -137,11 +137,13 @@ if (mysqli_num_rows($roles35) > 0)
                   $sql7 = "SELECT * FROM tbl_kardex WHERE ID_PRODUCTO=$producto";
                   $result = mysqli_query($conn, $sql7);
                   if (mysqli_num_rows($result) > 0) {
+                    $cont = 0;
                   while ($filas= mysqli_fetch_assoc($result)){
                     ?>
+                    <?php  $cont++; ?>
                   <tr>
                      
-                  <td><?php echo $filas['ID_KARDEX'] ?></td>
+                  <td><?php echo $cont; ?></td>
                      <td><?php echo $nombre; ?></td>
                      <td><?php echo $filas['CANTIDAD'] ?></td>
                      <td><?php echo $filas['TIPO_MOVIMIENTO'] ?></td>

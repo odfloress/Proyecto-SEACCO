@@ -173,10 +173,11 @@ if (mysqli_num_rows($roles35) > 0)
                   </tr>
                   </thead>
                   <tbody>
-                    <?php 
+                    <?php $cont = 0;
                     while ($filas= mysqli_fetch_assoc($result)){
- 
+                      
                      ?>
+                     <?php  $cont++; ?>
                   <tr>
                   <td>
                   <?php 
@@ -252,7 +253,7 @@ if (mysqli_num_rows($roles35) > 0)
                       </form>
                     
 </td>
-                     <td ><?php echo $filas['ID_PROFESION'] ?></td>
+                     <td ><?php echo $cont; ?></td>
                      <td><?php echo $filas['PROFESION'] ?></td>
                      
                     
@@ -419,9 +420,11 @@ if (mysqli_num_rows($roles35) > 0)
 						
 			var columns = ["Id profesión", "Profesión"];
 			var data = [
-  <?php foreach($data as $d):?>
-	
-      ["<?php echo $d->ID_PROFESION; ?>", "<?php echo $d->PROFESION; ?>"],
+  <?php 
+    $cont = 0;
+    foreach($data as $d):?>
+	<?php  $cont++; ?>
+      ["<?php echo $cont; ?>", "<?php echo $d->PROFESION; ?>"],
       <?php endforeach; ?>
   ];
 				pdf.autoTable(columns,data,

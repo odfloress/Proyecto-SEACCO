@@ -99,10 +99,10 @@ if (mysqli_num_rows($roles35) > 0)
                 <div class="modal-body">
                 
                     <label for="">Nombre Proveedor:</label>
-                    <input type="text" class="form-control" name="nombre"  value="<?php echo $nombre; ?>" required value="" placeholder="" id="txtPrecio_Compra" autocomplete = "off" onkeypress="return soloLetras(event);" minlength="4" maxlength="50" onkeyup="mayus(this);" >
+                    <input type="text" class="form-control" name="nombre"  value="<?php echo $nombre; ?>" required value="" placeholder="" id="text" autocomplete = "off" onkeypress="return soloLetras(event);" minlength="4" maxlength="50" onkeyup="mayus(this);" >
                     <br>
                     <label for="">Nombre Referencia:</label>
-                    <input type="text" class="form-control" name="nombre_referencia" value="<?php echo $nombre_referencia; ?>"  required value="" placeholder="" id="txtnombrer" autocomplete = "off" onkeypress="return soloLetras(event);" minlength="4" maxlength="50" onkeyup="mayus(this);" >
+                    <input type="text" class="form-control" name="nombre_referencia" value="<?php echo $nombre_referencia; ?>"  required value="" placeholder="" id="text" autocomplete = "off" onkeypress="return soloLetras(event);" minlength="4" maxlength="50" onkeyup="mayus(this);" >
                     <br>
                     <label for="">Sector Comercial:</label>
                     <input type="text" class="form-control" name="sector_comercial"  value="<?php echo $sector_comercial; ?>" required value="" placeholder="" id="txtsectorcomercial" autocomplete = "off" onkeypress="return soloLetras(event);" minlength="4" maxlength="50" onkeyup="mayus(this);" >
@@ -157,7 +157,7 @@ if (mysqli_num_rows($roles35) > 0)
                     <div class="btn-group">
                     <?php 
       include '../../conexion/conexion.php';
-      $area1 = "SELECT * FROM tbl_ms_roles_ojetos WHERE ID_ROL='$id_rol7' and ID_OBJETO=30 and PERMISO_INSERCION=1";
+      $area1 = "SELECT * FROM tbl_ms_roles_ojetos WHERE ID_ROL='$id_rol7' and ID_OBJETO=5 and PERMISO_INSERCION=1";
       $area2 = mysqli_query($conn, $area1);
       if (mysqli_num_rows($area2) > 0)
        {
@@ -189,9 +189,12 @@ if (mysqli_num_rows($roles35) > 0)
                   </tr>
                   </thead>
                   <tbody>
-                  <?php while ($filas= mysqli_fetch_assoc($result)){
+                  <?php 
+                  $cont = 0;
+                  while ($filas= mysqli_fetch_assoc($result)){
 
                   ?>
+                   <?php  $cont++; ?>
                   <tr>
                   <td>
                   <?php 
@@ -281,7 +284,7 @@ if (mysqli_num_rows($roles35) > 0)
 </td>
                          
                     </td>
-                                         <td ><?php echo $filas['ID_PROVEEDOR'] ?></td>
+                                         <td ><?php echo $cont; ?></td>
                                          <td><?php echo $filas['NOMBRE'] ?></td>
                                          <td><?php echo $filas['NOMBRE_REFERENCIA'] ?></td>
                                          <td><?php echo $filas['SECTOR_COMERCIAL'] ?></td>
@@ -407,6 +410,8 @@ if (mysqli_num_rows($roles35) > 0)
   });
 </script>
 <!-- Fin muestra los botones y traduce y Agrupar -->
+<!-- un espacio entre palabras -->
+<script type="text/javascript" src="../../js/un_espacio.js"></script>
 <!-- Enlace Script para que solo permita letras -->
 <script type="text/javascript" src="../../js/solo_letras.js"></script>
 

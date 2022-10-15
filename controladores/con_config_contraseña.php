@@ -27,7 +27,7 @@
 
                $confirmar_contrasena= hash('sha512', $confirmar_contrasena);
                $conn = new mysqli($servername, $username, $password, $dbname);
-               $sql =  "UPDATE tbl_usuarios SET CONTRASENA='$confirmar_contrasena', ID_ESTADO_USUARIO=2 WHERE usuario='$usuario[nombre]'";
+               $sql =  "UPDATE tbl_usuarios SET CONTRASENA='$confirmar_contrasena' WHERE usuario='$usuario[nombre]'";
                if ($conn->query($sql) === TRUE) 
                {
                   // inicio inserta en la tabla bitacora

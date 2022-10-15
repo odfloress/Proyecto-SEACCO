@@ -129,10 +129,6 @@ break;
 
 //para eliminar en la tabla mysl  
 case "eliminar";
-echo $ruta;
-echo $id_imagen;
-
-
 $sql3 = "DELETE FROM tbl_portafolio WHERE ID_IMAGEN='$id_imagen'";
 if (mysqli_query($conn, $sql3)) {
     unlink($ruta);

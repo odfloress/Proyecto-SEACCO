@@ -72,6 +72,7 @@ include '../../controladores/crud_bitacora.php';
                 <table id="example1" class="table table-bordered table-striped">
                   <thead>
                   <tr>
+                    <th>ID</th>
                     <th>Fecha</th>
                     <th>Usuario</th>
                     <th>Acción</th>
@@ -81,10 +82,13 @@ include '../../controladores/crud_bitacora.php';
                   <tbody>
                   <?php 
                   
-                 
+                  $cont = 0;
                   while ($filas= mysqli_fetch_assoc($result)){
                     ?>
+                    <?php  $cont++; ?>
+
                   <tr>
+                    <td><?php echo $cont; ?></td>
                     <td><?php echo $filas['FECHA'] ?></td>
                     <td><?php echo $filas['USUARIO'] ?></td>
                     <td><?php echo $filas['ACCION'] ?></td> 

@@ -131,7 +131,7 @@ if (mysqli_num_rows($roles35) > 0)
                   <thead>
                   <tr>
                   <th>Acciones</th>
-                  <th>Id</th>
+                  <th>ID</th>
                   <th>Párametro</th>
                   <th>Valor</th>
                   <th>Fecha Creación</th>
@@ -140,9 +140,11 @@ if (mysqli_num_rows($roles35) > 0)
                   </thead>
                   <tbody>
                     <?php 
+                    $cont = 0;
                     while ($filas= mysqli_fetch_assoc($result)){
  
                      ?>
+                     <?php  $cont++; ?>
                   <tr>
                   <td>
                   <?php 
@@ -225,7 +227,7 @@ if (mysqli_num_rows($roles35) > 0)
                       </form>
                     
 </td>
-                     <td ><?php echo $filas['ID_PARAMETRO'] ?></td>
+                     <td ><?php echo $cont; ?></td>
                      <td><?php echo $filas['PARAMETRO'] ?></td>
                      <td ><?php echo $filas['VALOR'] ?></td>
                      <td><?php echo $filas['FECHA_CREACION'] ?></td>

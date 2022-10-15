@@ -366,9 +366,12 @@ if (mysqli_num_rows($roles35) > 0)
                   </tr>
                   </thead>
                   <tbody>
-                    <?php while ($filas= mysqli_fetch_assoc($result)){
+                    <?php 
+                    $cont = 0;
+                    while ($filas= mysqli_fetch_assoc($result)){
 
                      ?>
+                     <?php  $cont++; ?>
                   <tr>
                   <td>  
                   <?php 
@@ -585,7 +588,7 @@ if (mysqli_num_rows($roles35) > 0)
                         ?></form>
                     
 </td>
-                     <td ><?php echo $filas['ID_USUARIO'] ?></td>
+                     <td ><?php echo $cont; ?></td>
                      <td><?php echo $filas['ROL'] ?></td>
                      <td><?php echo $filas['NOMBRE_ESTADO'] ?></td>
                      <td><?php echo $filas['NOMBRE'] ?></td>

@@ -237,10 +237,11 @@ if (mysqli_num_rows($roles35) > 0)
                   </thead>
                   <tbody>
                     <?php 
-                    
+                    $cont = 0;
                     while ($filas= mysqli_fetch_assoc($result)){
  
                      ?>
+                     <?php  $cont++; ?>
                   <tr>
                       <td><form action="../../vistas/inventario/mostrar_detalle.php" method="post">
                       <input type="hidden" name="fecha" value="<?php echo $filas['FECHA_COMPRA'] ?>">
@@ -249,7 +250,7 @@ if (mysqli_num_rows($roles35) > 0)
                           <button type="submit" name="accion" value="detalle" class="btn btn-primary" >Ver detalle</button>
                           </form>
                       </td>
-                     <td ><?php echo $filas['ID_COMPRA'] ?></td>
+                     <td ><?php echo $cont; ?></td>
                      <td><?php echo $filas['NOMBRE'] ?></td>
                      <td><?php echo $filas['TOTAL_COMPRA'] ?></td>
                      <td><?php echo $filas['USUARIO'] ?></td>

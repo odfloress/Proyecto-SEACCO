@@ -239,8 +239,10 @@ if (mysqli_num_rows($roles35) > 0)
                   ORDER BY ID_PRODUCTO";
                   $result = mysqli_query($conn, $sql7);
                   if (mysqli_num_rows($result) > 0) {
+                    $cont = 0;
                   while ($filas= mysqli_fetch_assoc($result)){
                     ?>
+                    <?php  $cont++; ?>
                   <tr>
                   <td>
                   <?php 
@@ -357,7 +359,7 @@ if (mysqli_num_rows($roles35) > 0)
                         ?>
                      </form>
 </td>
-                     <td><?php echo $filas['ID_PRODUCTO'] ?></td>
+                     <td><?php echo $cont; ?></td>
                      <td><?php echo $filas['NOMBRE_CATEGORIA'] ?></td>                  
                      <td><?php echo $filas['CODIGO'] ?></td>
                      <td><?php echo $filas['NOMBRE'] ?></td>

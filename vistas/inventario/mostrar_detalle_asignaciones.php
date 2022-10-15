@@ -203,7 +203,7 @@ if (mysqli_num_rows($roles35) > 0)
                                 <button type="submit" name="accion" value="editar" class="btn btn-primary" onclick="return confirm('¿Desea entregar esta herramienta?')">Entregar</button>
                                   <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
                                 </div>
-                             
+                             </form>
                                   <!-- Fin pie del modal -->
                                  
                               </div>

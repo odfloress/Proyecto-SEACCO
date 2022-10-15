@@ -255,7 +255,7 @@ if (mysqli_num_rows($roles35) > 0)
                           $tablero2 = mysqli_query($conn, $tablero);
                           if (mysqli_num_rows($tablero2) > 0)
                           {?>
-                            <button type="button"  class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#myModal2<?php echo $filas['ID_ROL'] ?>" >
+                            <button type="button"  class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#myModal2<?php echo $filas['ID_OBJETO'] . $filas['ID_ROL']?>" >
                       <i class="fas fa-pencil-alt"></i>
                       </button> <?php 
                           }
@@ -263,7 +263,7 @@ if (mysqli_num_rows($roles35) > 0)
                       
 
                           <!-- El Modal -->
-                          <div class="modal" id="myModal2<?php echo $filas['ID_ROL'] ?>">
+                          <div class="modal" id="myModal2<?php echo $filas['ID_OBJETO']  . $filas['ID_ROL']?>">
                             <div class="modal-dialog">
                               <div class="modal-content">
 

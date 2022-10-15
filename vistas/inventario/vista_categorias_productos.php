@@ -115,15 +115,19 @@ include '../../controladores/crud_categoria_productos.php';
                   <thead>
                   <tr>
                   <th>Acciones</th>
-                  <th>Id</th>
+                  <th>ID</th>
                   <th>Categoria</th>
                   
                   </tr>
                   </thead>
                   <tbody>
-                    <?php while ($filas= mysqli_fetch_assoc($result)){
+                    <?php 
+                    $cont = 0;
+                    while ($filas= mysqli_fetch_assoc($result)){
  
                      ?>
+                     <?php  $cont++; ?>
+
                   <tr>
                   <td>
                         <!-- inicio boton editar -->
@@ -179,7 +183,7 @@ include '../../controladores/crud_categoria_productos.php';
                     </button></form>
                     
 </td>
-                     <td ><?php echo $filas['ID_CATEGORIA'] ?></td>
+                     <td ><?php echo $cont; ?></td>
                      <td><?php echo $filas['NOMBRE_CATEGORIA'] ?></td>
                     
       </tr>

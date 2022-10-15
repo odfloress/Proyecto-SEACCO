@@ -185,8 +185,10 @@ if (mysqli_num_rows($roles35) > 0)
                   $sql77 = "SELECT * FROM tbl_catalogo WHERE ID_CATALOGO != 3";
                   $result = mysqli_query($conn, $sql77);
                   if (mysqli_num_rows($result) > 0) {
+                    $cont = 0;
                   while ($filas= mysqli_fetch_assoc($result)){
                     ?>
+                    <?php  $cont++; ?>
                   <tr>
                   <td>
                   <?php 
@@ -265,7 +267,7 @@ if (mysqli_num_rows($roles35) > 0)
                         ?>
                      </form>
 </td>
-                      <td><?php echo $filas['ID_CATALOGO'] ?></td>
+                      <td><?php echo $cont; ?></td>
                      <td><img class="img-thumbnail" width="100px" src="<?php echo $filas['RUTA'] ?>" /></td>
                      <td><?php echo $filas['NOMBRE_CATALOGO'] ?></td>
                      <td><TEXtarea readonly style="background-color: white;" class="form-control"name="" id="" cols="40" rows="5"><?php echo $filas['DESCRIPCION'] ?></TEXtarea></td>
