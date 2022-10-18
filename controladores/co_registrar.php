@@ -24,7 +24,7 @@ session_start();
   $accion=(isset($_POST['accion']))?$_POST['accion']:"";
 
   // encripta la contraseña
-  $contrasena= hash('sha512', $contrasena);
+  $contrasena = hash('sha512', $contrasena);
 
   switch($accion){
       case "registrar": 
@@ -111,7 +111,7 @@ session_start();
 
                   // Inserta en la tabla tbl_usuarios
                   $sql = "INSERT INTO tbl_usuarios (ID_ROL, ID_ESTADO_USUARIO, NOMBRE, APELLIDO, USUARIO, ID_GENERO, CORREO, DNI, ID_PROFESION, DIRECCION, CELULAR, REFERENCIA, CEL_REFERENCIA, EXPERIENCIA_LABORAL, CURRICULUM, CONTRASENA, FOTO, ID_AREA)
-                          VALUES (2,4,'$nombre', '$apellido', '$usuario', '$genero', '$correo', '$dni', '$profesion',  '$direccion', '$celular', '$referencia', '$celular_referencia', '$experiencia_laboral', '../../$destino$nombrecurriculum','$contrasena','../../$destino1$nombrefoto', '$area' )";
+                          VALUES (4,2,'$nombre', '$apellido', '$usuario', '$genero', '$correo', '$dni', '$profesion',  '$direccion', '$celular', '$referencia', '$celular_referencia', '$experiencia_laboral', '../../$destino$nombrecurriculum','$contrasena','../../$destino1$nombrefoto', '$area' )";
                   
                   if (mysqli_query($conn, $sql)) {
                     $_SESSION['nombre'] = $usuario;
