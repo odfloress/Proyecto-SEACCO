@@ -8,6 +8,7 @@
   // //Variables para recuperar la información de los campos de la vista roles
   $id_rol=(isset($_POST['id_rol']))?$_POST['id_rol']:"";
   $rol=(isset($_POST['rol']))?$_POST['rol']:"";
+  $estado_rol=(isset($_POST['estado_rol']))?$_POST['estado_rol']:"";
   $descripcion=(isset($_POST['descripcion']))?$_POST['descripcion']:"";
   $anterior=(isset($_POST['nombre_anterior']))?$_POST['nombre_anterior']:"";
   
@@ -32,8 +33,8 @@
          }else{ 
 
                     //si no existe el rol permite insertar
-                    $sql1 = "INSERT INTO tbl_roles (ROL, DESCRIPCION)
-                    VALUES ('$rol', '$descripcion')";
+                    $sql1 = "INSERT INTO tbl_roles (ROL, DESCRIPCION, ESTADO_ROL)
+                    VALUES ('$rol', '$descripcion', '$estado_rol')";
                     if (mysqli_query($conn, $sql1)) {
 
                          // inicio inserta en la tabla bitacora
@@ -66,7 +67,7 @@
         $result2 = mysqli_query($conn, $validar_rol); 
          if (mysqli_num_rows($result2) > 0) { 
               
-            $sql2 = "UPDATE tbl_roles SET ROL='$anterior', DESCRIPCION='$descripcion'  WHERE ID_ROL='$id_rol'";
+            $sql2 = "UPDATE tbl_roles SET ROL='$anterior', DESCRIPCION='$descripcion', ESTADO_ROL='$estado_rol'  WHERE ID_ROL='$id_rol'";
                 if (mysqli_query($conn, $sql2)) {
 
                    

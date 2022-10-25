@@ -117,12 +117,19 @@
                                           </script>';
                                       }else{
                                               // Valida que exista el usuario y contraseña y que este activo
-                                              $validar_usuario3 = "SELECT USUARIO, CONTRASENA, ID_ESTADO_USUARIO FROM tbl_usuarios
+                                              $validar_usuario3 = "SELECT USUARIO, CONTRASENA, ID_ESTADO_USUARIO, ID_ROL FROM tbl_usuarios
                                               WHERE USUARIO='$usuario' and CONTRASENA='$contrasena' and ID_ESTADO_USUARIO=1";
                                               $result = mysqli_query($conn, $validar_usuario3); 
                                                 if (mysqli_num_rows($result) > 0) 
                                                 { 
-                                                  $_SESSION['usuario'] = $usuario;
+                                                  while($row = mysqli_fetch_assoc($result)) {
+                                                    $rol =  $row["ID_ROL"];}
+
+                                                   // Valida que el rol este activo
+                                              $seleccionar_rol = "SELECT * FROM tbl_roles WHERE ID_ROL='$rol' and ESTADO_ROL='ACTIVO'";                                             
+                                              $result_rol = mysqli_query($conn, $seleccionar_rol); 
+                                              if (mysqli_num_rows($result_rol) > 0){
+                                                $_SESSION['usuario'] = $usuario;
                                                   header('Location: vistas/tablero/vista_tablero.php');
 
                                                   // inicio inserta en la tabla bitacora
@@ -136,6 +143,17 @@
                                                   $sql =  "UPDATE tbl_usuarios SET intentos=0 WHERE usuario='$usuario'";
                                                   if ($conn->query($sql) === TRUE) {}
                                                   exit() ;
+
+                                              }else{
+                                                echo '<script>
+                                                            alert("Su rol esta inactivo, por favor contactarse con el administrador.");
+                                                            window.location.href="/SEACCO/_login";
+                                                        </script>';
+                                                        mysqli_close($conn);
+                                              }
+
+
+                                                  
                                                 }else{
                                                   echo '<script>
                                                             alert("Su cuenta aun no esta activa por favor contactarse con el administrador");

@@ -88,13 +88,13 @@ if (mysqli_num_rows($roles35) > 0)
       <div class="modal-body ">
             <div class="mb-3 mt-3">
 			<br>
-			<center><h4>EXPORTACIÓN Y RESTAURACIÓN</h4></center>
-			<center><h4>DE BASE DE DATOS</h4></center><br>
+			<center><h5>EXPORTACIÓN Y RESTAUTACIÓN DE LA BASE DE DATOS</h5></center>
+			<br>
                 <center><img src="../../imagenes/seacco.jpg" alt="Girl in a jacket" width="150" height="150"><br></center>
 				<br>				
 <body>
 <!-- <center><label>La restauración de su base de datos se guardará en la siguiente dirección de su equipo: C:\xampp\htdocs\SEACCO\Restauracion_BD\backup </label></center> -->
-<center><label>La restauración de su base de datos se guardará: dentro de su sistema de información web</label></center>
+<center><label>La copia de su base de datos se guardará: dentro de su sistema de información web</label></center>
 <br>
 
 	<br>
@@ -104,12 +104,14 @@ if (mysqli_num_rows($roles35) > 0)
                             $tablero2 = mysqli_query($conn, $tablero);
                             if (mysqli_num_rows($tablero2) > 0)
                             {
-                              echo '<center><a class="btn btn-primary" href="./Backup.php">Realizar copia de seguridad</a></center>';
+                              echo '<center><a class="btn btn-primary"  href="./Backup.php">Realizar copia de seguridad</a></center>';
                                                 }
                         ?> 
+<hr style="border:0px; border-top: 5px double #000;">
 
 	<form action="./Restore.php" method="POST">
-	<br>
+   
+		
 		<label><b>Selecciona un punto de restauración</b></label><br>
 		<select class="form-select" name="restorePoint">
 			<option value="" disabled="" selected="">Día_Mes_Año_(H:M:S)</option>
@@ -144,7 +146,7 @@ if (mysqli_num_rows($roles35) > 0)
                           if (mysqli_num_rows($tablero2) > 0)
                           {?>
                                  <!-- inicio boton editar -->
-								 <button type="submit" class="btn btn-primary">Restaurar</button> <?php 
+								 <button type="submit" onclick="return confirm('La restauración puede tardar unos minutos ¿Desea seguir con la restauracion?')" class="btn btn-primary">Restaurar</button> <?php 
                           }
                         ?>
 		

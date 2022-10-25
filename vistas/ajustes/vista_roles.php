@@ -106,6 +106,12 @@ if (mysqli_num_rows($roles35) > 0)
                     <label for="">Descripción</label>
                     <input type="text" class="form-control" name="descripcion" value="<?php echo $descripcion; ?>" placeholder="" autocomplete = "off"  onkeypress="return soloLetras(event);" minlength="3" maxlength="50" 
                 onkeyup="mayus(this);" required >
+               <br>
+               <label for="">Estado</label>
+               <select class="form-select"  name="estado_rol" required>
+                  <option value="ACTIVO">ACTIVO</option>
+                  <option value="INACTIVO">INACTIVO</option>
+               </select>
                 
                 </div>
                 <!-- Fin Cuerpo del modal Modal -->
@@ -173,6 +179,7 @@ if (mysqli_num_rows($roles35) > 0)
                   <th>ID</th>
                   <th>Rol</th>
                   <th>Descripción</th>
+                  <th>Estado</th>
                   
                   
                   </tr>
@@ -228,6 +235,32 @@ if (mysqli_num_rows($roles35) > 0)
                                               <label for="">Descripción</label>
                                               <input type="text" class="form-control" name="descripcion" required value="<?php echo $filas['DESCRIPCION'] ?>" placeholder=""  autocomplete = "off"  onkeypress="return soloLetras(event);" minlength="3" maxlength="50" 
                                                onkeyup="mayus(this);" required >
+                                                <br>
+                                               <label for="">Estado</label>
+                                               <select class="form-select"  name="estado_rol" required >
+                                                        <option> </option>
+                                                        <?php
+                                                        $estado = "SELECT * FROM tbl_roles WHERE ID_ROL=$filas[ID_ROL]";
+                                                        $estado2 = mysqli_query($conn, $estado);
+                                                        if (mysqli_num_rows($estado2) > 0) {
+                                                            while($row = mysqli_fetch_assoc($estado2))
+                                                            {
+                                                            $estado_roles = $row['ESTADO_ROL'];
+                                                            ?>
+                                                              <option value="<?php  echo $estado_roles; ?>" selected><?php echo $estado_roles; ?></option>
+                                                            
+                                                    <?php
+                                                  ?>
+                                                      <?php if ($estado_roles=="ACTIVO"){
+                                                        echo '<option value="INACTIVO">INACTIVO</option>';
+                                                      }else{
+                                                        echo '<option value="ACTIVO">ACTIVO</option>';
+                                                      }
+                                                      ?>
+                                                      <?php
+                                                            }}// finaliza el if y el while
+                                                      ?> 
+                                              </select>        
                                           
                                           </div>
                                 <!-- Fin Cuerpo del modal Modal -->
@@ -265,6 +298,7 @@ if (mysqli_num_rows($roles35) > 0)
                      <td ><?php echo $cont; ?></td>
                      <td><?php echo $filas['ROL'] ?></td>
                      <td><?php echo $filas['DESCRIPCION'] ?></td>
+                     <td><?php echo $filas['ESTADO_ROL'] ?></td>
                     
       </tr>
                 <?php } ?>  
@@ -432,10 +466,10 @@ if (mysqli_num_rows($roles35) > 0)
 				const pdf = new jsPDF('p', 'mm', 'letter');			
         	
 
-				var columns = ["Roles", "Descripción"];
+				var columns = ["Roles", "Descripción", "Estado"];
 				var data = [
           <?php foreach($data as $d):?>
-				["<?php echo $d->ROL; ?>", "<?php echo $d->DESCRIPCION; ?>"],
+				["<?php echo $d->ROL; ?>", "<?php echo $d->DESCRIPCION; ?>", "<?php echo $d->ESTADO_ROL; ?>"],
         <?php endforeach; ?>
 				 ];
 
