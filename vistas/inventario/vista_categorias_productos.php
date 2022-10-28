@@ -26,8 +26,8 @@ include '../../controladores/crud_categoria_productos.php';
   <script type="text/javascript" src="../../js/complemento_1_jspdf.min.js"></script>
 	<script type="text/javascript" src="../../js/complemento_2_jspdf.plugin.autotable.min.js"></script>
   
-
-
+  <script type="text/javascript" src="../../js/un_espacio.js"></script>
+  <script type="text/javascript" src="../../js/converir_a_mayusculas.js"></script>
 
   <?php include '../../configuracion/navar.php' ?>
   <!-- Content Wrapper. Contains page content -->
@@ -65,7 +65,8 @@ include '../../controladores/crud_categoria_productos.php';
                 <div class="modal-body">
                
                     <label for="">Categoria:</label>
-                    <input type="text" class="form-control" name="categoria" required value="" placeholder="" id="txtPrecio_Compra"   >
+                    <input type="text" class="form-control" onkeyup="mayus(this); un_espacio(this); " name="categoria" required value="" placeholder="" id="txtPrecio_Compra"   >
+                    
                     <br>
                 
                 </div>
@@ -400,6 +401,6 @@ include '../../controladores/crud_categoria_productos.php';
 
 </script>
 <!-- // Fin para exportar en pdf // -->
-
 <script type="text/javascript" src="../../js/evitar_reenvio.js"></script>
+
 </html>
