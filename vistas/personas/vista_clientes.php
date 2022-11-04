@@ -115,13 +115,13 @@ if (mysqli_num_rows($roles35) > 0)
                 <input type="text" class="form-control" autocomplete="off" onkeyup="mayus(this);" minlength="6" maxlength="8" name="codigo" required value="<?php echo "$codigo"; ?>" placeholder="">
                 <br>
                 <label for="">Nombre:</label>
-                <input type="text" autocomplete="off"  value="<?php echo "$nombre"; ?>" onkeyup="mayus(this);" maxlength="255" class="form-control"  placeholder="" name="nombre" required>
+                <input type="text" autocomplete="off"  value="<?php echo "$nombre"; ?>" onkeyup="mayus(this);" maxlength="255" class="form-control" onkeypress="return soloLetras(event);" placeholder=""  name="nombre" required onkeypress="return teclear(event);">
                 <br>
                 <label for="">Apellido:</label>
-                <input type="text" autocomplete="off"  value="<?php echo "$apellido"; ?>" onkeyup="mayus(this);" maxlength="255" class="form-control"  placeholder="" name="apellido" required>
+                <input type="text" autocomplete="off"  value="<?php echo "$apellido"; ?>" onkeyup="mayus(this);" maxlength="255" class="form-control" onkeypress="return soloLetras(event);" placeholder="" name="apellido" required>
                 <br>
                 <label for="" class="form-label">Correo:</label>
-                  <input  type="email" autocomplete="off" value="<?php echo "$correo"; ?>" class="form-control"  placeholder="" name="correo" required>   
+                  <input  type="email" autocomplete="off" value="<?php echo "$correo"; ?>" class="form-control"  placeholder="" name="correo" pattern="[a-zA-Z0-9!#$%&'*\/=?^_`{|}~+-]([\.]?[a-zA-Z0-9!#$%&'*\/=?^_`{|}~+-])+@[a-zA-Z0-9]([^@&%$/()=?¿!.,:;]|\d)+[a-zA-Z0-9][\.][a-zA-Z]{2,4}([\.][a-zA-Z]{2})?" required>   
                 <br>
                 <label for="" class="form-label">Teléfeno:</label>
                   <input type="text" autocomplete="off"  value="<?php echo "$telefono"; ?>" class="form-control"  placeholder="" name="telefono" required minlength="8" onkeypress="return solonumero(event)" maxlength="8" pattern="[0-9]+[1-9]+[0-9]+" title="8 caracteres y no todos ceros">
@@ -318,13 +318,13 @@ if (mysqli_num_rows($roles35) > 0)
                 <input type="text" class="form-control" autocomplete="off" name="codigo" required value="<?php echo $filas['CODIGO'] ?>" placeholder="" onkeyup="mayus(this);">
                 <br>
                 <label for="">Nombre</label>
-                <input type="text" autocomplete="off"  value="<?php echo $filas['NOMBRE_CLIENTE'] ?>" onkeyup="mayus(this);" maxlength="255" class="form-control"  placeholder="" name="nombre" required>
+                <input type="text" autocomplete="off" value="<?php echo $filas['NOMBRE_CLIENTE'] ?>" onkeyup="mayus(this);" maxlength="255" class="form-control" onkeypress="return soloLetras(event);" placeholder="" name="nombre" required>
                 <br>
                 <label for="">Apellido</label>
-                <input type="text" autocomplete="off"  value="<?php echo $filas['APELLIDO'] ?>" onkeyup="mayus(this);" maxlength="255" class="form-control"  placeholder="" name="apellido" required>
+                <input type="text" autocomplete="off"  value="<?php echo $filas['APELLIDO'] ?>" onkeyup="mayus(this);" maxlength="255" class="form-control" onkeypress="return soloLetras(event);" placeholder="" name="apellido" required>
                 <br>
                 <label for="" class="form-label">Correo:</label>
-                  <input  type="email" autocomplete="off" value="<?php echo $filas['CORREO'] ?>" onkeypress="return clave1(event);" class="form-control"  placeholder="" name="correo" required>   
+                  <input  type="email" autocomplete="off" value="<?php echo $filas['CORREO'] ?>"  onkeypress="return clave1(event);" class="form-control"  placeholder="" name="correo" required>   
                 <br>
                 <label for="" class="form-label">Teléfeno:</label>
                   <input type="text" autocomplete="off"  value="<?php echo $filas['TELEFONO'] ?>" class="form-control"  placeholder="" name="telefono" required minlength="8" onkeypress="return solonumero(event)" maxlength="8" pattern="[0-9]+[1-9]+[0-9]+" title="8 caracteres y no todos ceros">
@@ -643,6 +643,18 @@ if(!isset($_POST['reporte_catalogo']))
 <script type="text/javascript" src="../../js/evitar_reenvio.js"></script>
 </html>
 
+<!-- Fin muestra los botones y traduce y Agrupar -->
+<!-- un espacio entre palabras -->
+<script type="text/javascript" src="../../js/un_espacio.js"></script>
+<!-- Enlace Script para que solo permita letras -->
+<script type="text/javascript" src="../../js/solo_letras.js"></script>
+
+<!-- Enlace Script para que convierta a mayusculas las teclas que se van pulsando -->
+<script type="text/javascript" src="../../js/converir_a_mayusculas.js"></script>
+
+<!-- Enlace Script para quitar espacios en blanco -->
+<script type="text/javascript" src="../../js/quitar_espacios.js"></script>
+</body>
 
 <script>
  // Inicio Script para que solo permita letras
@@ -668,4 +680,17 @@ if(!isset($_POST['reporte_catalogo']))
 
 //   Fin Script para que solo permita letras
 </script>
+
+<script type="text/javascript">
+ function solonumero(e) {
+        tecla = (document.all) ? e.keyCode : e.which;
+        if (tecla==8) return true;
+        else if (tecla==0||tecla==9)  return true;
+       // patron =/[0-9\s]/;// -> solo letras
+        patron =/[0-9-\s]/;// -> solo numeros
+        te = String.fromCharCode(tecla);
+        return patron.test(te);
+    }
+	</script>
+
 

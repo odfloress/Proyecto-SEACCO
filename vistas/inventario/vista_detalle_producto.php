@@ -162,12 +162,12 @@ if (mysqli_num_rows($roles35) > 0)
                            ?>
                    </select><br>
                    <label for="">Cantidad</label>
-                   <input type="text" class="form-control" name="cantidad" required value="<?php echo $cantidad; ?>" placeholder=""  
-                    autocomplete = "off"  onkeypress="return solonumero1(event)"  minlength="1" maxlength="10"onblur="quitarespacios(this);" onkeydown="sinespacio(this);" >
+                   <input type="text" step="0.01" text-align= "left" class="form-control" name="cantidad" required value="<?php echo $cantidad; ?>" placeholder=""  
+                    autocomplete = "off" onkeypress="return solonumero(event)"  minlength="1" maxlength="10"     onblur="quitarespacios(this);" onkeydown="sinespacio(this);" >
 
                     <label for="">Precio de compra</label>
-                    <input type="text" class="form-control" name="precio" required value="<?php echo $precio; ?>" placeholder=""  
-                    autocomplete = "off" onkeypress="return solonumero(event)"  minlength="1" maxlength="10"  onblur="quitarespacios(this);" onkeydown="sinespacio(this);">
+                    <input type="text" step= "0.01" align= "right" class="form-control" name="precio" required value="<?php echo $precio; ?>" placeholder=""  
+                    autocomplete = "off" onkeypress="return solonumero(event)"  minlength="1" maxlength="10"  onblur="quitarespacios(this);" onkeydown="sinespacio(this);"></td>
                 
                 </div>
                 <!-- Fin Cuerpo del modal Modal -->
@@ -183,8 +183,8 @@ if (mysqli_num_rows($roles35) > 0)
     </div>
     <!-- Fin  de modal de agregar --> 
           </div>
-          <div class="col-sm-12">
-            <ol class="breadcrumb float-sm-right">
+          <div class="col-sm-12" text-align="right">
+            <ol class="breadcrumb float-sm-right" >
               <?php 
               //selecciona el id de la comra en proceso
                 $validar_compra7 = "SELECT * FROM tbl_compras WHERE USUARIO='$usuario1[usuario]' and ESTADO_COMPRA='EN PROCESO'";
@@ -199,7 +199,7 @@ if (mysqli_num_rows($roles35) > 0)
                 }
               ?>
               
-              <input  type="number" readonly class="form-control" value="<?php echo $precio_total;?>" id="">
+              <input   type="number"  readonly class="form-control"  value="<?php echo $precio_total;?>" id="">
             </ol>
             
           </div>

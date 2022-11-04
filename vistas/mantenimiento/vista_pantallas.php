@@ -57,7 +57,7 @@ include '../../controladores/crud_pantalla.php';
                 <form action="" method="post">
                 <div class="modal-header">
                     <h4 class="modal-title">Nueva Pantalla</h4>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" ></button>
                 </div>
                 <!-- Fin Encabezado del modal -->
 
@@ -65,22 +65,22 @@ include '../../controladores/crud_pantalla.php';
                 <div class="modal-body">
                
                     <label for="">Nombre de la pantalla:</label>
-                    <input type="text" class="form-control" name="objeto"  value="<?php echo $objeto; ?>" placeholder="" autocomplete = "off"  onkeypress="return soloLetras(event);" minlength="3" maxlength="100" 
+                    <input type="text" class="form-control" name="objeto" id="objeto" value="<?php echo $objeto; ?>" placeholder="" autocomplete = "off"  onkeypress="return soloLetras(event);" minlength="3" maxlength="100" onchange="habilitar()"
                      onkeyup="mayus(this);" required  >
                     <br>
                     <label for="">Descripcion de la Pantalla:</label>
-                    <input type="text" class="form-control" name="descripcion"  value="<?php echo $descripcion; ?>" placeholder="" autocomplete = "off"  onkeypress="return soloLetras(event);" minlength="3" maxlength="100" 
+                    <input type="text" class="form-control" name="descripcion" id="descripcion" value="<?php echo $descripcion; ?>" placeholder="" autocomplete = "off"  onkeypress="return soloLetras(event);" minlength="3" maxlength="100" onchange="habilitar()"
                      onkeyup="mayus(this);" required  >
                     <br>
                     <label for="">Tipo de Pantalla:</label>
-                    <input type="text" class="form-control" name="tipo_objeto"  value="<?php echo $tipo_objeto; ?>" placeholder="" autocomplete = "off"  onkeypress="return soloLetras(event);" minlength="3" maxlength="40" 
+                    <input type="text" class="form-control" name="tipo_objeto" id="tipo_objeto"  value="<?php echo $tipo_objeto; ?>" placeholder="" autocomplete = "off"  onkeypress="return soloLetras(event);" minlength="3" maxlength="40" onchange="habilitar()"
                      onkeyup="mayus(this);" required  >
                     <br>
                 </div>
                 <!-- Fin Cuerpo del modal Modal -->
                 <!-- pie del modal -->
                 <div class="modal-footer">
-      	            <button type="submit" name="accion" value="agregar" class="btn btn-primary" onclick="return confirm('¿Desea agregar la pantalla?')">Agregar</button>
+      	            <button type="submit" name="accion" id="agregar" value="agregar" class="btn btn-primary" onclick="return confirm('¿Desea agregar la pantalla?')">Agregar</button>
                     <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
                 </div>
                 <!-- Fin pie del modal -->
@@ -183,7 +183,7 @@ include '../../controladores/crud_pantalla.php';
 
                                 <!-- pie del modal -->
                                 <div class="modal-footer" >
-                                <button type="submit" name="accion" value="editar" class="btn btn-primary"  onclick="return confirm('¿Desea editar la pantalla?')">Guardar</button>
+                                <button type="submit" name="accion" value="editar" id="editar" class="btn btn-primary"  onclick="return confirm('¿Desea editar la pantalla?')">Guardar</button>
                                 <button type="button" class="btn btn-danger" data-bs-dismiss="modal" >Cancelar</button>
                                  </div>
                              
@@ -196,7 +196,7 @@ include '../../controladores/crud_pantalla.php';
                          
                           
                           
-                             <button  value="eliminar" name="accion" 
+                             <button  value="eliminar" id="eliminar" name="accion" 
                         onclick="return confirm('¿Quieres eliminar este dato?')"
                         type="submit" class="btn btn-danger " disabled>
                         <i class="fas fa-trash-alt"></i> 
@@ -338,4 +338,6 @@ include '../../controladores/crud_pantalla.php';
  <script type="text/javascript" src="../../js/quitar_espacios.js"></script>
 </body>
 <script type="text/javascript" src="../../js/evitar_reenvio.js"></script>
+
+  
 </html>
