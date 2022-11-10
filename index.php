@@ -17,6 +17,8 @@ require 'controladores/co_registrar.php';
 
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <style>
   body,h1,h2,h3,h4,h5,h6 {font-family: "Raleway", sans-serif}
   body, html {
@@ -31,30 +33,103 @@ require 'controladores/co_registrar.php';
   while($rowB1 = mysqli_fetch_assoc($resultB1)) {
   ?>
   .bgimg-1 {
+    
             background-position: center;
             background-size: cover;
             background-image: url("imagenes/<?php echo $rowB1['IMAGEN'] ?>");
             min-height: 100%;
+            min-width: 100%;
+            
            }
            <?php }?>
   .w3-bar .w3-button {
-            padding: 16px;
+            /* padding: 16px; */
                      }
 </style>
+<!-- inicio de estilos para redes sociales -->
+<style>
+/* body {margin:0;height:2000px;} */
+
+.icon-bar {
+  position: fixed;
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
+}
+
+.icon-bar a {
+  display: block;
+  text-align: center;
+  padding: 16px;
+  transition: all 0.3s ease;
+  color: white;
+  font-size: 20px;
+}
+
+.icon-bar a:hover {
+  background-color: #000;
+}
+
+.facebook {
+  background: #3B5998;
+  color: white;
+}
+
+.twitter {
+  background: #55ACEE;
+  color: white;
+}
+
+.google {
+  background: #dd4b39;
+  color: white;
+}
+
+.linkedin {
+  background: #007bb5;
+  color: white;
+}
+
+.youtube {
+  background: #bb0000;
+  color: white;
+}
+
+.content {
+  margin-left: 75px;
+  font-size: 30px;
+}
+</style>
+<!-- inicio de estilos para redes sociales -->
 </head>
 <body>
-<br><br>
+     <!-- inicio redes sociales -->
+  <?php 
+      include 'conexion/conexion.php';
+      $sqlB4 = "SELECT * FROM tbl_nuestros_contactos";
+      $resultB4 = mysqli_query($conn, $sqlB4);
+      while($rowB4 = mysqli_fetch_assoc($resultB4)) {
+      ?>
+<div class="icon-bar">
+  <a href="<?php echo $rowB4['FACEBOOK'] ?>" class="facebook"><i class="fa fa-facebook"></i></a> 
+  <a href="<?php echo $rowB4['INSTAGRAM'] ?>" class="youtube"><i class="fa fa-instagram"></i></a>
+</div>
+<?php }?>
+
+ <!-- Fin redes sociales -->
+<!-- <br><br>  -->
 
 <!-- Navbar (sit on top) -->
 <div class="w3-top">
     <div class="w3-bar w3-white w3-card" id="myNavbar">
       <a href="http://localhost/SEACCO/" class="w3-bar-item w3-button w3-wide"><i class="fa fa-home"></i> Inicio</a>
-    
+      <a href="http://localhost/SEACCO/vistas/bienvenidos/vista_portafolio.php" class="w3-bar-item w3-button w3-wide"><i class="fa fa-th"></i> Portafolio</a>
       <!-- Right-sided navbar links -->
       <div class="w3-right w3-hide-small">        
       <a href="http://localhost/SEACCO/vistas/bienvenidos/index_solicitud_empleo.php" class="w3-bar-item w3-button"><i class="fa fa-user"></i> Solicitud de Empleo</a>
       <a href="http://localhost/SEACCO/vistas/bienvenidos/vista_cotizar.php" class="w3-bar-item w3-button"><i class="fa fa-list-alt"></i> Cotizar Proyecto</a>
-      <a href="http://localhost/SEACCO/vistas/bienvenidos/vista_portafolio.php" class="w3-bar-item w3-button"><i class="fa fa-th"></i> Portafolio</a>
+      
       <a href="#contact" class="w3-bar-item w3-button"><i class="fa fa-envelope"></i> Contáctanos</a>      
     </div>
 
@@ -75,14 +150,20 @@ require 'controladores/co_registrar.php';
 </nav>
 
 <header class="bgimg-1 w3-display-container w3-grayscale-min" id="home">  
-  <div class="w3-display-left w3-text-white" style="padding:48px">    
-    <p><a href="#about" class="w3-button w3-blue w3-padding-large w3-large w3-margin-top w3-opacity w3-hover-opacity-off">Sobre Nosotros</a></p>
-  </div> 
-  <div class="w3-display-bottomleft w3-text-grey w3-large" style="padding:24px 48px">
-   <a href="https://www.facebook.com/pages/category/Construction-Company/Constructora-Seacco-658896417875063/"> <i class="fa fa-facebook-official w3-hover-opacity"></i></a>
-  </div>
+  <!-- inicio redes sociales -->
+  <?php 
+      include 'conexion/conexion.php';
+      $sqlB4 = "SELECT * FROM tbl_nuestros_contactos";
+      $resultB4 = mysqli_query($conn, $sqlB4);
+      while($rowB4 = mysqli_fetch_assoc($resultB4)) {
+      ?>
+<div class="icon-bar">
+  <a href="<?php echo $rowB4['FACEBOOK'] ?>" class="facebook"><i class="fa fa-facebook"></i></a> 
+  <a href="<?php echo $rowB4['INSTAGRAM'] ?>" class="youtube"><i class="fa fa-instagram"></i></a>
+</div>
+<?php }?>
 </header>
-
+ <!-- Fin redes sociales -->
 <!-- About Section -->
 <div class="w3-container" style="padding:128px 16px" id="about">
   <h3 class="w3-center" >SOBRE CONSTRUCTORA SEACCO </h3>  
@@ -404,7 +485,7 @@ actividades que se desarrollan en los proyectos ejecutados.</p>
 <footer class="w3-center w3-black w3-padding-64">
   <a href="#home" class="w3-button w3-light-grey"><i class="fa fa-arrow-up w3-margin-right"></i>Ir al Inicio</a>
   <div class="w3-xlarge w3-section">
-  <a href="<?php echo $rowB4['FACEBOOK'] ?>"> <i class="fa fa-facebook-official w3-hover-opacity"></i></a>
+  
   </div>
   <p>Constructora <a href="<?php echo $rowB4['FACEBOOK'] ?>" title="W3.CSS" target="_blank" class="w3-hover-text-green"><?php echo $nombre_contructora; ?></a></p>
 </footer>
