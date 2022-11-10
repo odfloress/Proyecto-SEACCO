@@ -80,168 +80,184 @@ if (mysqli_num_rows($roles35) > 0)
             <div class="modal-content">
                 <!-- Encabezado del modal -->
                 <!-- <form action="" method="post"> -->
-                <form action="" method="post" enctype="multipart/form-data">
-                <div class="modal-header">
-                    <h4 class="modal-title">Nuevo usuario</h4>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                </div>
-                <!-- Fin Encabezado del modal -->
+                <form action="" method="post"  class="needs-validation" novalidate enctype="multipart/form-data">
+                  <div class="modal-header">
+                      <h4 class="modal-title">Nuevo usuario</h4>
+                      <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                  </div>
+                  <!-- Fin Encabezado del modal -->
 
-                <!-- Cuerpo del modal Modal -->
-                <div class="modal-body">
-                    
-                    <!-- Inicio del select de rol -->
-                    <label for="sel1" class="form-label">Rol:</label>
-                    <select  class="form-select"  name="rol" required >
-                    <option value="">Seleccione un Rol</option>
-                        <?php
-                        include '../../conexion/conexion.php';
-                        $roles = "SELECT * FROM tbl_roles WHERE ID_ROL!=3 ORDER BY ID_ROL";
-                        $roles2 = mysqli_query($conn, $roles);
-                        if (mysqli_num_rows($roles2) > 0) {
-                            while($row = mysqli_fetch_assoc($roles2))
-                            {
-                              $id = $row['ID_ROL'];
-                              $rol =$row['ROL'];
-                        ?>
-                          <option value="<?php  echo $id; ?>"><?php echo $rol?></option>
+                 <!-- Cuerpo del modal Modal -->
+                  <div class="modal-body">
+                      
+                      <!-- Inicio del select de rol -->
+                      <label for="sel1" class="form-label">Rol:</label>
+                      <select  class="form-select"  name="rol" required >
+                      <option value="">Seleccione un Rol</option>
                           <?php
-                           }}// finaliza el if y el while
-                           ?>
-                   </select>
-                    <!-- Inicio del select de rol -->
-                    <!-- Inicio del select deL estado -->
-                    <label for="sel1" class="form-label">Estado:</label>
-                    <select class="form-select"  name="estado" required >
-                    <option value="">Seleccione una Estado</option>
-                        <?php
-                        include '../../conexion/conexion.php';
-                        $estados = "SELECT * FROM tbl_estado_usuario ORDER BY ID_ESTADO_USUARIO";
-                        $estados2 = mysqli_query($conn, $estados);
-                        if (mysqli_num_rows($estados2) > 0) {
-                            while($row = mysqli_fetch_assoc($estados2))
-                            {
-                              $id = $row['ID_ESTADO_USUARIO'];
-                              $estado =$row['NOMBRE_ESTADO'];
-                        ?>
-                          <option value="<?php  echo $id; ?>"><?php echo $estado?></option>
-                          <?php
-                           }}// finaliza el if y el while
-                           ?>
-                   </select>
-                    <!-- Inicio del select deL estado -->
-                    
-
-
-                    <label for="">Nombres:</label>
-                    <input type="text" class="form-control" name="nombre" required value="" placeholder="" autocomplete="on" onkeyup="mayus(this);" maxlength="30">
-
-                    <label for="">Apellidos:</label>
-                    <input type="text" class="form-control" name="apellido" required value="" placeholder="" autocomplete="off" onkeyup="mayus(this);" maxlength="30" >
-
-                    <label for="">Usuario:</label>
-                    <input type="text" class="form-control" name="usuario" required value="" autocomplete = "off"  onkeypress="return soloLetras(event);" minlength="3" maxlength="20" onkeyup="mayus(this);" required onblur="quitarespacios(this);" onkeydown="sinespacio(this);">
-
-                    <label for="">Contraseña:</label>
-                    <div class="col-sm-15">
-                      <input type="password" class="form-control" name="contrasena" id="myInput" title="una mayuscula, minuscula, 8 caracteres, un 1 numero  " value="" minlength="8" maxlength="30" onkeypress="return clave1(event);" required onblur="quitarespacios(this);" onkeyup="sinespacio(this);" pattern="(?=.*[\d])(?=.*[a-z])(?=.*[A-Z]).{8,}">
-                      <input type="checkbox" onclick="mostrarContrasena()" > Mostrar/Ocultar
-                    </div>
-
-                    <label for="">Correo:</label>
-                    <input type="email" class="form-control" name="correo" required value="" autocomplete="off" placeholder="" > 
-                     
-                    <label for="pwd" class="form-label">Genero:</label>
-                    <select style="background-color:rgb(240, 244, 245);" value="<?php echo "$genero"; ?>" class="form-select" id="lista1" name="genero" required >
-                    <option value="">Seleccione un Genero</option>
-                        <?php
-                            include 'conexion/conexion.php';
-                            $genero = "SELECT * FROM tbl_generos ORDER BY ID_GENERO";
-                            $genero2 = mysqli_query($conn, $genero);
-                            if (mysqli_num_rows($genero2) > 0) {
-                                while($row = mysqli_fetch_assoc($genero2))
-                                {
-                                $id_genero = $row['ID_GENERO'];
-                                $genero3 =$row['GENERO'];
-                         ?>
-                          <option value="<?php  echo $id_genero ?>"><?php echo $genero3 ?></option>
-                          <?php
-                           }}// finaliza el if y el while
-                           ?>
-                    </select>
-                    <!-- <label for="">Genero:</label>
-                    <select class="form-select"  name="genero" required >
-                      <option value=""></option>
-                      <option value="M">M</option>
-                      <option value="F">F</option>
-                    </select> -->
-
-                    <label for="">DNI:</label>
-                    <input type="text" class="form-control" name="dni" required value="" autocomplete="off" minlength="13" maxlength="13" onkeypress="return solonumero(event)" required pattern="[0-9]+[1-9]+" title="13 caracteres y no todos ceros">
-
-                    <label for="pwd" class="form-label">Profesión:</label>
-                      <select style="background-color:rgb(240, 244, 245);" value="<?php echo "$profesion"; ?>" class="form-select" id="lista1" name="profesion" required >
-                      <option value="">Seleccione una Profesión</option>
+                          include '../../conexion/conexion.php';
+                          $roles = "SELECT * FROM tbl_roles WHERE ID_ROL!=3 ORDER BY ID_ROL";
+                          $roles2 = mysqli_query($conn, $roles);
+                          if (mysqli_num_rows($roles2) > 0) {
+                              while($row = mysqli_fetch_assoc($roles2))
+                              {
+                                $id = $row['ID_ROL'];
+                                $rol =$row['ROL'];
+                          ?>
+                            <option value="<?php  echo $id; ?>"><?php echo $rol?></option>
                             <?php
-                                include 'conexion/conexion.php';
-                                $profesion = "SELECT * FROM tbl_profesiones ORDER BY ID_PROFESION";
-                                $profesion2 = mysqli_query($conn, $profesion);
-                                if (mysqli_num_rows($profesion2) > 0) {
-                                    while($row = mysqli_fetch_assoc($profesion2))
-                                    {
-                                    $id_profesion = $row['ID_PROFESION'];
-                                    $profesion3 =$row['PROFESION'];
+                            }}// finaliza el if y el while
                             ?>
-                              <option value="<?php  echo $id_profesion ?>"><?php echo $profesion3 ?></option>
+                    </select>
+                      <!-- Inicio del select de rol -->
+                      <!-- Inicio del select deL estado -->
+                      <label for="sel1" class="form-label">Estado:</label>
+                      <select class="form-select"  name="estado" required >
+                          <option value="">Seleccione una Estado</option>
                               <?php
-                              }}// finaliza el if y el while
+                              include '../../conexion/conexion.php';
+                              $estados = "SELECT * FROM tbl_estado_usuario ORDER BY ID_ESTADO_USUARIO";
+                              $estados2 = mysqli_query($conn, $estados);
+                              if (mysqli_num_rows($estados2) > 0) {
+                                  while($row = mysqli_fetch_assoc($estados2))
+                                  {
+                                    $id = $row['ID_ESTADO_USUARIO'];
+                                    $estado =$row['NOMBRE_ESTADO'];
                               ?>
+                                <option value="<?php  echo $id; ?>"><?php echo $estado?></option>
+                                <?php
+                                }}// finaliza el if y el while
+                                ?>
                       </select>
-                    <!-- <label for="">Profesion:</label>
-                    <input type="text" class="form-control" name="profesion" required value="" autocomplete="off" onkeyup="mayus(this);" maxlength="30" > -->
+                      <!-- Inicio del select deL estado -->
+                      
 
-                    <label for="">Dirección:</label>
-                    <input type="text" class="form-control" name="direccion" required value="" autocomplete="off" onkeyup="mayus(this);" maxlength="70" >
 
-                    <label for="">Teléfono:</label>
-                    <input type="text" autocomplete="off" class="form-control" name="celular" minlength="8" maxlength="8" required value="" placeholder="" required pattern="[0-9]+[1-9]+[0-9]+" title="8 caracteres y no todos ceros" onkeypress="return solonumero(event)" >
-                    
-                    <label for="">Referencia:</label>
-                    <input type="text" class="form-control" name="referencia" required value="" autocomplete="off" onkeyup="mayus(this);" maxlength="30" >
+                      <label for="">Nombres:</label>
+                      <input type="text" class="form-control" name="nombre"  required value="" placeholder="" autocomplete="on" onkeyup="mayus(this);" onkeypress="return soloLetras(event);" maxlength="30">
+                                <!-- Mensaje de la validacion -->
+                                <div class="invalid-feedback">
+                                    Favos ingrese un nombre
+                                </div >
 
-                    <label for="">Teléfono de referencia:</label>
-                    <input type="text" autocomplete="off"  class="form-control" name="celular_referencia" minlength="8" maxlength="8" required value="" placeholder="" required pattern="[0-9]+[1-9]+[0-9]+" title="8 caracteres y no todos ceros" onkeypress="return solonumero(event)">
+                      <label for="">Apellidos:</label>
+                      <input type="text" class="form-control" name="apellido"  required value="" placeholder="" autocomplete="off" onkeyup="mayus(this);"  onkeypress="return soloLetras(event);" maxlength="30" >
+                                <!-- Mensaje de la validacion -->
+                                <div class="invalid-feedback">
+                                    Favos ingrese un Apellido
+                                </div >
 
-                    <label for="">Experiencia laboral:</label>
-                    <input type="text" class="form-control" name="experiencia_laboral" required value="" autocomplete="off" onkeyup="mayus(this);" maxlength="30" >
+                      <label for="">Usuario:</label>
+                      <input type="text" class="form-control" name="usuario" required value="" autocomplete = "off"  onkeypress="return soloLetras(event);" minlength="3" maxlength="20" onkeyup="mayus(this);" required onblur="quitarespacios(this);" onkeydown="sinespacio(this);">
+                                <!-- Mensaje de la validacion -->
+                                <div class="invalid-feedback">
+                                    Favor ingrese un usuario valido
+                                </div >
 
-                    <label for="">Currículum:</label>
-                    <input type="file" class="form-control" name="curriculum"  accept=".pdf, .doxc" value="" placeholder="Opcional" >
+                      <label for="">Contraseña:</label>
+                      <div class="col-sm-15 " >
+                        <input type="password" class="form-control" name="contrasena" id="myInput" title="una mayuscula, minuscula, 8 caracteres, un 1 numero  " value="" minlength="8" maxlength="30" onkeypress="return clave1(event);" required onblur="quitarespacios(this);" onkeyup="sinespacio(this);" pattern="(?=.*[\d])(?=.*[a-z])(?=.*[A-Z]).{8,}">
+                        <input type="checkbox" onclick="mostrarContrasena()" > Mostrar/Ocultar
+                                <div class="invalid-feedback">
+                                  Ingrese una contraseña de 8 caracteres mínimo, mayusculas, numeros y/o 1 caracter especial
+                                </div>
+                          
+                      </div>
 
-                    <label for="">Foto:</label>
-                    <input type="file" class="form-control" name="foto" accept=".jpg, .png, .jpej, .JPEG, .JPG, .PNG" value="" placeholder="Opcional" >
+                      <label for="">Correo:</label>
+                      <input type="email" class="form-control" name="correo" required value="" autocomplete="off" placeholder="" > 
+                      
+                      <label for="pwd" class="form-label">Genero:</label>
+                      <select style="background-color:rgb(240, 244, 245);" value="<?php echo "$genero"; ?>" class="form-select" id="lista1" name="genero" required >
+                      <option value="">Seleccione un Genero</option>
+                          <?php
+                              include 'conexion/conexion.php';
+                              $genero = "SELECT * FROM tbl_generos ORDER BY ID_GENERO";
+                              $genero2 = mysqli_query($conn, $genero);
+                              if (mysqli_num_rows($genero2) > 0) {
+                                  while($row = mysqli_fetch_assoc($genero2))
+                                  {
+                                  $id_genero = $row['ID_GENERO'];
+                                  $genero3 =$row['GENERO'];
+                          ?>
+                            <option value="<?php  echo $id_genero ?>"><?php echo $genero3 ?></option>
+                            <?php
+                            }}// finaliza el if y el while
+                            ?>
+                      </select>
+                      <!-- <label for="">Genero:</label>
+                      <select class="form-select"  name="genero" required >
+                        <option value=""></option>
+                        <option value="M">M</option>
+                        <option value="F">F</option>
+                      </select> -->
 
-                    <label for="pwd" class="form-label">Área:</label>
-                      <select style="background-color:rgb(240, 244, 245);" value="<?php echo "$area"; ?>" class="form-select" id="lista1" name="area" required >
-                      <option value="">Seleccione un Área</option>
+                      <label for="">DNI:</label>
+                      <input type="text" class="form-control" name="dni" required value="" autocomplete="off" minlength="13" maxlength="13" onkeypress="return solonumero(event)" required pattern="[0-9]+[1-9]+" title="13 caracteres y no todos ceros">
+
+                      <label for="pwd" class="form-label">Profesión:</label>
+                        <select style="background-color:rgb(240, 244, 245);" value="<?php echo "$profesion"; ?>" class="form-select" id="lista1" name="profesion" required >
+                        <option value="">Seleccione una Profesión</option>
                               <?php
                                   include 'conexion/conexion.php';
-                                  $area = "SELECT * FROM tbl_areas ORDER BY ID_AREA";
-                                  $area2 = mysqli_query($conn, $area);
-                                  if (mysqli_num_rows($area2) > 0) {
-                                      while($row = mysqli_fetch_assoc($area2))
+                                  $profesion = "SELECT * FROM tbl_profesiones ORDER BY ID_PROFESION";
+                                  $profesion2 = mysqli_query($conn, $profesion);
+                                  if (mysqli_num_rows($profesion2) > 0) {
+                                      while($row = mysqli_fetch_assoc($profesion2))
                                       {
-                                      $id_area = $row['ID_AREA'];
-                                      $area3 =$row['AREA'];
+                                      $id_profesion = $row['ID_PROFESION'];
+                                      $profesion3 =$row['PROFESION'];
                               ?>
-                                <option value="<?php  echo $id_area ?>"><?php echo $area3 ?></option>
+                                <option value="<?php  echo $id_profesion ?>"><?php echo $profesion3 ?></option>
                                 <?php
                                 }}// finaliza el if y el while
                                 ?>
                         </select>
-                    
-                
-                </div>
+                      <!-- <label for="">Profesion:</label>
+                      <input type="text" class="form-control" name="profesion" required value="" autocomplete="off" onkeyup="mayus(this);" maxlength="30" > -->
+
+                      <label for="">Dirección:</label>
+                      <input type="text" class="form-control" name="direccion" required value="" autocomplete="off" onkeyup="mayus(this);" maxlength="70" >
+
+                      <label for="">Teléfono:</label>
+                      <input type="text" autocomplete="off" class="form-control" name="celular" minlength="8" maxlength="8" required value="" placeholder="" required pattern="[0-9]+[1-9]+[0-9]+" title="8 caracteres y no todos ceros" onkeypress="return solonumero(event)" >
+                      
+                      <label for="">Referencia:</label>
+                      <input type="text" class="form-control" name="referencia" required value="" autocomplete="off" onkeyup="mayus(this);" maxlength="30" >
+
+                      <label for="">Teléfono de referencia:</label>
+                      <input type="text" autocomplete="off"  class="form-control" name="celular_referencia" minlength="8" maxlength="8" required value="" placeholder="" required pattern="[0-9]+[1-9]+[0-9]+" title="8 caracteres y no todos ceros" onkeypress="return solonumero(event)">
+
+                      <label for="">Experiencia laboral:</label>
+                      <input type="text" class="form-control" name="experiencia_laboral" required value="" autocomplete="off" onkeyup="mayus(this);" maxlength="30" >
+
+                      <label for="">Currículum:</label>
+                      <input type="file" class="form-control" name="curriculum"  accept=".pdf, .doxc" value="" placeholder="Opcional" >
+
+                      <label for="">Foto:</label>
+                      <input type="file" class="form-control" name="foto" accept=".jpg, .png, .jpej, .JPEG, .JPG, .PNG" value="" placeholder="Opcional" >
+
+                      <label for="pwd" class="form-label">Área:</label>
+                        <select style="background-color:rgb(240, 244, 245);" value="<?php echo "$area"; ?>" class="form-select" id="lista1" name="area" required >
+                        <option value="">Seleccione un Área</option>
+                                <?php
+                                    include 'conexion/conexion.php';
+                                    $area = "SELECT * FROM tbl_areas ORDER BY ID_AREA";
+                                    $area2 = mysqli_query($conn, $area);
+                                    if (mysqli_num_rows($area2) > 0) {
+                                        while($row = mysqli_fetch_assoc($area2))
+                                        {
+                                        $id_area = $row['ID_AREA'];
+                                        $area3 =$row['AREA'];
+                                ?>
+                                  <option value="<?php  echo $id_area ?>"><?php echo $area3 ?></option>
+                                  <?php
+                                  }}// finaliza el if y el while
+                                  ?>
+                          </select>
+                      
+                  
+                  </div>
                 <!-- Fin Cuerpo del modal Modal -->               
                 <!-- pie del modal -->
                 <div class="modal-footer">
@@ -451,16 +467,16 @@ if (mysqli_num_rows($roles35) > 0)
                     <!-- Inicio del select deL estado -->
                     
                     <label for="">Nombres:</label>
-                    <input type="text" class="form-control" name="nombre" required value="<?php echo $filas['NOMBRE'] ?>"  autocomplete="off" onkeyup="mayus(this);" maxlength="30" >
+                    <input type="text" class="form-control" name="nombre" pattern="[A-Za-z]*" required value="<?php echo $filas['NOMBRE'] ?>"  autocomplete="off" onkeyup="mayus(this);" maxlength="30" >
 
                     <label for="">Apellidos:</label>
-                    <input type="text" class="form-control" name="apellido" required value="<?php echo $filas['APELLIDO'] ?>" autocomplete="off" onkeyup="mayus(this);" maxlength="30" >
+                    <input type="text" class="form-control" name="apellido" pattern="[A-Za-z]*" required value="<?php echo $filas['APELLIDO'] ?>" autocomplete="off" onkeyup="mayus(this);" maxlength="30" >
 
                     <label for="">Usuario:</label>
                     <input type="text" readonly class="form-control" name="usuario" required value="<?php echo $filas['USUARIO'] ?>" placeholder="" >
 
-                    
-                    
+                    <label for="">Contraseña:</label>
+                    <input type="password" class="form-control" name="contrasena" id="myInput" title="una mayuscula, minuscula, 8 caracteres, un 1 numero  " value="" minlength="8" maxlength="30" onkeypress="return clave1(event);" required onblur="quitarespacios(this);" onkeyup="sinespacio(this);" pattern="(?=.*[\d])(?=.*[a-z])(?=.*[A-Z]).{8,}" required value="<?php echo $filas[' CONTRASENA'] ?>">
 
                     <label for="">Correo:</label>
                     <input type="email" readonly class="form-control" name="correo" required value="<?php echo $filas['CORREO'] ?>" placeholder="" >
@@ -962,3 +978,25 @@ if(!isset($_POST['reporte_catalogo']))
 
 </script>
 <!-- // Fin para exportar en pdf // -->
+
+<script>
+      // Example starter JavaScript for disabling form submissions if there are invalid fields
+      (() => {
+      'use strict'
+
+      // Fetch all the forms we want to apply custom Bootstrap validation styles to
+      const forms = document.querySelectorAll('.needs-validation')
+
+      // Loop over them and prevent submission
+      Array.from(forms).forEach(form => {
+      form.addEventListener('submit', event => {
+        if (!form.checkValidity()) {
+          event.preventDefault()
+          event.stopPropagation()
+        }
+
+        form.classList.add('was-validated')
+      }, false)
+      })
+      })()
+</script>

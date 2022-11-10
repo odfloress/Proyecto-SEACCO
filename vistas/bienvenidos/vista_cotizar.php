@@ -89,7 +89,7 @@ body {
     <!-- Right-sided navbar links -->
     <div class="w3-right w3-hide-small">
       <a href="http://localhost/SEACCO/vistas/bienvenidos/index_solicitud_empleo.php" class="w3-bar-item w3-button"><i class="fa fa-user"></i> Solicitud de Empleo</a>
-      <a href="http://localhost/SEACCO/vistas/bienvenidos/vista_cotizar.php" class="w3-bar-item w3-button"><i class="fa fa-list-alt"></i> Cotizar Proyector</a>
+      <a href="http://localhost/SEACCO/vistas/bienvenidos/vista_cotizar.php" class="w3-bar-item w3-button"><i class="fa fa-list-alt"></i> Cotizar Proyecto</a>
       <a href="http://localhost/SEACCO/vistas/bienvenidos/vista_portafolio.php" class="w3-bar-item w3-button"><i class="fa fa-th"></i> Portafolio</a>
      
       
@@ -135,13 +135,15 @@ body {
                   <label for="email"  class="form-label">Nombre:</label>
                   <input style="background-color:rgb(240, 244, 245);" type="text" autocomplete="off"  
                   value="<?php echo "$nombre"; ?>" onkeyup="mayus(this);" maxlength="30" class="form-control"  
-                  placeholder="Ingrese el nombre" name="nombre" required>
-                      <div class="invalid-feedback">Campo requerido.</div>
+                  placeholder="Ingrese el nombre" name="nombre" onkeypress="return soloLetras(event);" id="campoNombre"  required>
+                      
+                      <!-- Notificacion campo vacio -->
+                      <div class="invalid-feedback">Es requerido un nombre.</div>
                 </div>
                 <div class="col">
                   <label for="pwd" class="form-label">Apellido:</label>
-                  <input style="background-color:rgb(240, 244, 245);" type="text" autocomplete="off" value="<?php echo "$apellido"; ?>" onkeyup="mayus(this);" maxlength="30" class="form-control"  placeholder="Ingrese su apellido" name="apellido" required>
-                  <div class="invalid-feedback">Campo requerido.</div>
+                  <input style="background-color:rgb(240, 244, 245);" type="text" autocomplete="off" value="<?php echo "$apellido"; ?>" onkeyup="mayus(this);" maxlength="30" class="form-control"  placeholder="Ingrese su apellido" name="apellido" onkeypress="return soloLetras(event);" id="campoApellido" required>
+                  <div class="invalid-feedback">Es requerido un apellido.</div>
                 </div>
             </div>       
           </div>
@@ -149,13 +151,15 @@ body {
                 <div class="col">
                   <label for="pwd" class="form-label">DNI:</label>
                   <input style="background-color:rgb(240, 244, 245);" type="text" autocomplete="off" 
-                  value="<?php echo "$dni"; ?>"  class="form-control"  placeholder="Ingrese su DNI" name="dni" minlength="13" 
-                  maxlength="13" onkeypress="return solonumero(event)" required pattern="[0-9]+[1-9]+" 
-                  title="13 caracteres y no todos ceros">
+                  value="<?php echo "$dni"; ?>"  class="form-control"  placeholder="Ingrese su DNI" name="dni" minlength="13"             
+                  maxlength="13" onkeypress="return solonumero(event)" required  pattern="[0-9]+[1-9]+[0-9]+"
+                  title="13 caracteres y no todos ceros">              
+                  <div class="invalid-feedback">Ingrese un DNI de trece digitos.</div>
                 </div>
                 <div class="col">
                   <label for="pwd" class="form-label">Dirección Personal:</label>
                   <input style="background-color:rgb(240, 244, 245);" type="text" autocomplete="off"  value="<?php echo "$direccionPersonal"; ?>" onkeypress="return SoloLetras(event);"  onKeyUP="this.value=this.value.toUpperCase();" class="form-control"  placeholder="Ingrese su dirección" name="direccionPersonal" required>
+                  <div class="invalid-feedback">Campo requerido.</div>
                 </div>
                 
             </div>
@@ -168,6 +172,7 @@ body {
                 <div class="col">
                   <label for="pwd" class="form-label">Teléfono:</label>
                   <input style="background-color:rgb(240, 244, 245);" type="text" autocomplete="off" value="<?php echo "$telefono"; ?>"  class="form-control"  placeholder="Ingrese su telefono" name="telefono" minlength="8" maxlength="8" onkeypress="return solonumero(event)" required pattern="[0-9]+[1-9]+[0-9]" title="Ingrese un numero telefónico valido">
+                  <div class="invalid-feedback">Campo requerido.</div>
                 </div>
             </div>
             <div class="row">
@@ -175,14 +180,14 @@ body {
                   <label for="pwd" class="form-label">Referencia:</label>
                   <input style="background-color:rgb(240, 244, 245);" type="text" autocomplete="off"  value="<?php echo "$referencia"; ?>" onkeypress="return SoloLetras(event);"  onKeyUP="this.value=this.value.toUpperCase();" class="form-control"  placeholder="Nombre de referencia" name="referencia" required>
                 </div>
-                <div class="col">
-                <label for="pwd" class="form-label">Genero:</label>
+                <div class="col ">
+                <label for="pwd" class="form-label">Genero:</label>                
                 <select style="background-color:rgb(240, 244, 245);" value="<?php echo "$genero"; ?>" class="form-select" id="lista1" name="genero" required >
-                <option  value="">Seleccione el genero</option>
+                <option  value="">Seleccione el genero</option>                        
                         <?php
                             include '../../conexion/conexion.php';
                             $genero = "SELECT * FROM tbl_generos ORDER BY ID_GENERO";
-                            $genero2 = mysqli_query($conn, $genero);
+                            $genero2 = mysqli_query($conn, $genero);                            
                             if (mysqli_num_rows($genero2) > 0) {
                                 while($row = mysqli_fetch_assoc($genero2))
                                 {
@@ -200,6 +205,8 @@ body {
                 <div class="col">
                   <label for="pwd" class="form-label">Foto:</label>
                   <input style="background-color:rgb(240, 244, 245);" type="file" accept=".jpg, .png, .jpej, .JPEG, .JPG, .PNG" autocomplete="off"  value="<?php echo "$foto"; ?>" class="form-control" required placeholder="Adjunte su foto" name="foto">
+                  <div class="invalid-feedback" >Seleccione una imagen con formato /jpg/png/jpeg/JPEG/JPG/PNG</div>    
+                  
                 </div>
             </div>
             <br><h4>Datos del Proyecto</h4>
@@ -287,37 +294,36 @@ body {
 </script>
 
 <script type="text/javascript">
+    function sinespacio(e) {
 
-function sinespacio(e) {
+      var cadena =  e.value;
+      var limpia = "";
+      var parts = cadena.split(" ");
+      var length = parts.length;
 
-  var cadena =  e.value;
-  var limpia = "";
-  var parts = cadena.split(" ");
-  var length = parts.length;
+      for (var i = 0; i < length; i++) {
+        nuevacadena = parts[i];
+        subcadena = nuevacadena.trim();
 
-  for (var i = 0; i < length; i++) {
-    nuevacadena = parts[i];
-    subcadena = nuevacadena.trim();
+        if(subcadena != "") {
+          limpia += subcadena + " ";
+        }
+      }
+      limpia = limpia.trim();
+      e.value = limpia;
 
-    if(subcadena != "") {
-      limpia += subcadena + " ";
-    }
-  }
-  limpia = limpia.trim();
-  e.value = limpia;
-
-};
+    };
 </script>
 
 <script type="text/javascript">
-function quitarespacios(e) {
+    function quitarespacios(e) {
 
-  var cadena =  e.value;
-  cadena = cadena.trim();
+      var cadena =  e.value;
+      cadena = cadena.trim();
 
-  e.value = cadena;
+      e.value = cadena;
 
-};
+    };
 </script>
 
 <script type="text/javascript"> function solonumero(e) {
@@ -331,8 +337,9 @@ function quitarespacios(e) {
     }
 	</script>
 
-              <!-- Script para ver contraseña de ver contraseña  -->
+              
   <script>
+    //  Script para ver contraseña de ver contraseña  
     const togglePassword = document.querySelector('#togglePassword');
     const password = document.querySelector('#id_password');
 
@@ -346,7 +353,7 @@ function quitarespacios(e) {
   </script>
 
   <script>
-
+            // Funcion para mensajes en validaciones
           // Example starter JavaScript for disabling form submissions if there are invalid fields
       (() => {
         'use strict'
@@ -368,5 +375,50 @@ function quitarespacios(e) {
       })()
   </script>
 
+<script>
+      // solo letras
+      function soloLetras(e){
+       key = e.keyCode || e.which;
+       tecla = String.fromCharCode(key).toLowerCase();
+       letras = " áéíóúabcdefghijklmnñopqrstuvwxyz";
+       especiales = ["8-37-39-46"];
+
+       tecla_especial = false
+       for(var i in especiales){
+        if(key == especiales[i]){
+          tecla_especial = true;
+          break;
+        }
+      }
+
+      if(letras.indexOf(tecla)==-1 && !tecla_especial){
+        return false;
+      }
+    }
+  </script>
+ 
+ <script>
+    function removeSpace(e){
+      let val = (e.target.value).trim();
+      console.log(val);
+      }
+ </script>
+<script>
+    // Quita espacios de los inputs
+    document.getElementById("campoNombre").addEventListener('keyup', (e) => {
+
+          let nombre = e.target.value;
+          e.target.value = nombre.toUpperCase().trim();
+
+      });
+    document.getElementById("campoApellido").addEventListener('keyup', (e) => {
+
+          let nombre = e.target.value;
+          e.target.value = nombre.toUpperCase().trim();
+
+      });
+</script>
+
+ 
 
 
