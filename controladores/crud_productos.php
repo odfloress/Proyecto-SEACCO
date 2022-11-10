@@ -46,8 +46,8 @@ if(in_array($extencion, $permitidos)){
                  $res = mysqli_query($conn, $sql);
                 if($res){
                     // inicio inserta en la tabla bitacora
-                    $sql = "INSERT INTO tbl_bitacora (USUARIO, ACCION, OBSERVACION)
-                    VALUES ('$usuario1[usuario]', 'INSERTO', 'REGISTRO EL PRODUCTO ($id_categoria) EN LA PANTALLA PRODUCTOS')";
+                    $sql = "INSERT INTO tbl_bitacora (USUARIO, OPERACION, PANTALLA, CAMPO, VALOR_ORIGINAL, VALOR_NUEVO)
+                    VALUES ('$usuario1[usuario]', 'INSERTO','PRODUCTOS', 'CATEGORIA', '$nombre','NUEVO')";
                     if (mysqli_query($conn, $sql)) {} else {}
                     // fin inserta en la tabla bitacora
 

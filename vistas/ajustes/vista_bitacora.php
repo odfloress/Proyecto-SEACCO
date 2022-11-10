@@ -61,6 +61,8 @@ include '../../controladores/crud_bitacora.php';
               <div class="card-header">
               <form id="form">
               <button type="submit"  name="accion" value="reporte_pdf" class="btn btn-secondary buttons-pdf buttons-html5"  onclick="return confirm('¿Desea generar reporte de bitácora?')" onclick="textToPdf()"><span>Reporte PDF</span></button>
+
+              <button type="submit"  name="vaciar" value="" class="btn btn-success"  onclick="return confirm('¿Desea vaciar la bitácora? Esta operacion generara un documento EXCEL con los datos a vaciar...')" onclick=""><span>Vaciar Bitacora</span></button>
 	            </form>
                 <!-- <h3 class="card-title">Bitacora Universal</h3> -->
               
@@ -73,10 +75,14 @@ include '../../controladores/crud_bitacora.php';
                   <thead>
                   <tr>
                     <th>ID</th>
-                    <th>Fecha</th>
+                    <th>Fecha/Hora</th>
                     <th>Usuario</th>
-                    <th>Acción</th>
-                    <th>Observación</th>
+                    <th>Operación</th>
+                    <th>Pantalla</th>
+                    <th>Campo</th>
+                    <th>ID Registro</th>
+                    <th>Valor Original</th>
+                    <th>Valor Nuevo</th>
                   </tr>
                   </thead>
                   <tbody>
@@ -91,8 +97,12 @@ include '../../controladores/crud_bitacora.php';
                     <td><?php echo $cont; ?></td>
                     <td><?php echo $filas['FECHA'] ?></td>
                     <td><?php echo $filas['USUARIO'] ?></td>
-                    <td><?php echo $filas['ACCION'] ?></td> 
-                    <td><?php echo $filas['OBSERVACION'] ?></td>                         
+                    <td><?php echo $filas['OPERACION'] ?></td> 
+                    <td><?php echo $filas['PANTALLA'] ?></td> 
+                    <td><?php echo $filas['CAMPO'] ?></td> 
+                    <td><?php echo $filas['ID_BITACORA'] ?></td> 
+                    <td><?php echo $filas['VALOR_ORIGINAL'] ?></td> 
+                    <td><?php echo $filas['VALOR_NUEVO'] ?></td>                         
                  </tr>  
                
                  <?php } ?>  
