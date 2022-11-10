@@ -47,7 +47,7 @@ if(in_array($extencion, $permitidos)){
                 if($res){
                     // inicio inserta en la tabla bitacora
                     $sql = "INSERT INTO tbl_bitacora (USUARIO, OPERACION, PANTALLA, CAMPO, VALOR_ORIGINAL, VALOR_NUEVO)
-                    VALUES ('$usuario1[usuario]', 'INSERTO','PRODUCTOS', 'CATEGORIA', '$nombre','NUEVO')";
+                    VALUES ('$usuario1[usuario]', 'INSERTO','PRODUCTOS', 'CATEGORIA', 'NUEVO','$nombre')";
                     if (mysqli_query($conn, $sql)) {} else {}
                     // fin inserta en la tabla bitacora
 
@@ -66,11 +66,7 @@ if(in_array($extencion, $permitidos)){
 
           
 
-    // inicio inserta en la tabla bitacora
-    $sql = "INSERT INTO tbl_bitacora (USUARIO, ACCION, OBSERVACION)
-    VALUES ('$usuario1[usuario]', 'INTENTO', 'NO LOGRO INSERTAR YA QUE EL ARCHIVO NO ERA IMAGEN EN LA PATALLA CLIENTES')";
-    if (mysqli_query($conn, $sql)) {} else {}
-    // fin inserta en la tabla bitacora
+    
    
 }else{
     echo '<script type="text/javascript">
@@ -116,8 +112,8 @@ if(in_array($extencion, $permitidos))
     if (mysqli_query($conn, $sql2)) 
     {
         // inicio inserta en la tabla bitacora
-        $sql = "INSERT INTO tbl_bitacora (USUARIO, ACCION, OBSERVACION)
-        VALUES ('$usuario1[usuario]', 'EDITO', 'EDITO UN REGISTRO DE PRODUCTOS ($nombre)')";
+        $sql = "INSERT INTO tbl_bitacora (USUARIO, OPERACION, PANTALLA, CAMPO, VALOR_ORIGINAL, VALOR_NUEVO)
+                    VALUES ('$usuario1[usuario]', 'EDITO','PRODUCTOS', 'CATEGORIA', '$nombre','NUEVO')";
         if (mysqli_query($conn, $sql)) {} else {}
          // fin inserta en la tabla bitacora
         echo '<script>
@@ -133,11 +129,7 @@ if(in_array($extencion, $permitidos))
          }
          mysqli_close($conn);
 }else{
-    // inicio inserta en la tabla bitacora
-    $sql = "INSERT INTO tbl_bitacora (USUARIO, ACCION, OBSERVACION)
-    VALUES ('$usuario1[usuario]', 'INTENTO', 'NO LOGRO EDITAR YA QUE EL ARCHIVO NO ERA IMAGEN')";
-    if (mysqli_query($conn, $sql)) {} else {}
-    // fin inserta en la tabla bitacora
+    
     echo '<script type="text/javascript">
             alert("Archivo no permitido");
             window.location.href="../../vistas/inventario/vista_productos";
@@ -154,11 +146,7 @@ case "eliminar";
 $validar_proveedor = "SELECT * FROM tbl_kardex WHERE ID_PRODUCTO='$id_productos'";
     $result4 = mysqli_query($conn, $validar_proveedor); 
      if (mysqli_num_rows($result4) > 0) { 
-         // inicio inserta en la tabla bitacora
-         $sql9 = "INSERT INTO tbl_bitacora (USUARIO, ACCION, OBSERVACION)
-         VALUES ('$usuario1[usuario]', 'INTENTO', 'NO LOGRO ELIMINAR YA QUE ESTABA EN USO EL PRODUCTOS ($nombre)')";
-         if (mysqli_query($conn, $sql9)) {} else { }
-         // fin inserta en la tabla bitacora
+         
          echo '<script>
                  alert("No se puede eliminar el producto, ya que esta en uso");
                  window.location.href="../../vistas/inventario/vista_productos.php";                   
@@ -168,22 +156,22 @@ $validar_proveedor = "SELECT * FROM tbl_kardex WHERE ID_PRODUCTO='$id_productos'
         if (mysqli_query($conn, $sql33)) {
       $sql34 = "DELETE FROM tbl_productos WHERE ID_PRODUCTO='$id_productos'";
       if (mysqli_query($conn, $sql34)){
-        
+        // inicio inserta en la tabla bitacora
+        $sql = "INSERT INTO tbl_bitacora (USUARIO, OPERACION, PANTALLA, CAMPO, VALOR_ORIGINAL, VALOR_NUEVO)
+                    VALUES ('$usuario1[usuario]', 'ELIMINO','PRODUCTOS', 'NOMBRE', '$nombre','ELIMINADO')";
+        if (mysqli_query($conn, $sql)) 
             //  unlink($ruta);
     
     echo '<script>
-        alert("Elimino el productor");
+    
+        alert("Elimino el producto");
         // window.location.href="../../vistas/inventario/vista_productos.php";                   
         </script>';
         mysqli_close($conn);
      
           
       }else{
-         // inicio inserta en la tabla bitacora
-         $sql10 = "INSERT INTO tbl_bitacora (USUARIO, ACCION, OBSERVACION)
-         VALUES ('$usuario1[usuario]', 'ERROR', 'ERROR AL ELIMINAR EL Producto ($anterior)')";
-          if (mysqli_query($conn, $sql10)) {} else { }
-     // fin inserta en la tabla bitacora
+         
               echo '<script>
                         alert("Error al tratar de eliminar el producto");
                     </script>'; mysqli_error($conn);

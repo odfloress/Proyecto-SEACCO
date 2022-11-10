@@ -45,11 +45,7 @@ session_start();
         $validar_correo = "SELECT * FROM tbl_usuarios WHERE  CORREO='$correo'";
         $result = mysqli_query($conn, $validar_correo);
         if (mysqli_num_rows($result) > 0) {
-            // // inicio inserta en la tabla bitacora
-            $sql = "INSERT INTO tbl_bitacora (USUARIO, ACCION, OBSERVACION)
-            VALUES ('INVITADO', 'INTENTO', 'INTENTO REGISTRAR SU CORREO PERO YA EXISTE ($correo)')";
-            if (mysqli_query($conn, $sql)) {} else {}
-          // // fin inserta en la tabla bitacora
+            
             echo '<script>
                     alert("El correo ya existe, intente con otro");
                     
@@ -62,11 +58,7 @@ session_start();
             $validar_dni = "SELECT * FROM tbl_usuarios WHERE  DNI='$dni'";
             $result = mysqli_query($conn, $validar_dni);
             if (mysqli_num_rows($result) > 0) {
-                // // inicio inserta en la tabla bitacora
-                $sql = "INSERT INTO tbl_bitacora (USUARIO, ACCION, OBSERVACION)
-                VALUES ('INVITADO', 'INTENTO', 'INTENTO REGISTRAR EL DNI PERO YA EXISTE ($dni)')";
-                if (mysqli_query($conn, $sql)) {} else {}
-              // // fin inserta en la tabla bitacora
+                
                 echo '<script>
                         alert("El DNI ya esta registrado, verifique que el ingresado sea el correcto");
                         
@@ -108,11 +100,7 @@ session_start();
                   
                   if (mysqli_query($conn, $sql)) {
                     $_SESSION['nombre'] = $usuario;
-                    // // inicio inserta en la tabla bitacora
-                      $sql = "INSERT INTO tbl_bitacora (USUARIO, ACCION, OBSERVACION)
-                      VALUES ('INVITADO', 'SOLICITUD', 'SOLICITUD DE EMPLEO NUEVA')";
-                      if (mysqli_query($conn, $sql)) {} else {}
-                    // // fin inserta en la tabla bitacora
+                    
                     echo '<script>
                                   alert("Solicitud de empleo enviada con exito");
                                   window.location.href="/SEACCO/";
@@ -127,11 +115,7 @@ session_start();
                   mysqli_close($conn);
 
                 }else{
-                    // // inicio inserta en la tabla bitacora
-                    $sql = "INSERT INTO tbl_bitacora (USUARIO, ACCION, OBSERVACION)
-                    VALUES ('$usuario', 'INTENTO', 'INTENTO AGREGAR SU FOTO DE PERFIL PERO FORMATO INCORRECTO')";
-                    if (mysqli_query($conn, $sql)) {} else {}
-                  // // fin inserta en la tabla bitacora
+                    
                   echo '<script type="text/javascript">
                            alert("En foto solo archivos de imagen JPEG, JPG, PNG ");
                         </script>';
@@ -139,11 +123,7 @@ session_start();
                 
 
                 }else{
-                      // // inicio inserta en la tabla bitacora
-                    $sql = "INSERT INTO tbl_bitacora (USUARIO, ACCION, OBSERVACION)
-                    VALUES ('$usuario', 'INTENTO', 'INTENTO AGREGAR SU CURRICULUM PERO FORMATO INCORRECTO')";
-                    if (mysqli_query($conn, $sql)) {} else {}
-                  // // fin inserta en la tabla bitacora
+                      
                   echo '<script type="text/javascript">
                            alert("El curriculum solo archivos de PDF o DOCX");
                            
