@@ -99,13 +99,13 @@ if (mysqli_num_rows($roles35) > 0)
                 <div class="modal-body">
                 
                     <label for="">Nombre Proveedor:</label>
-                    <input type="text" class="form-control" name="nombre"  value="<?php echo $nombre; ?>" required value="" placeholder="" id="text" autocomplete = "off" onkeypress="return soloLetras(event);" minlength="4" maxlength="50" onkeyup="mayus(this);" >
+                    <input type="text" onkeyup="un_espacio(this);" class="form-control" name="nombre"  value="<?php echo $nombre; ?>" required value="" placeholder="" id="text" autocomplete = "off" onkeypress="return soloLetras(event);" minlength="4" maxlength="50" onkeyup="mayus(this);" >
                     <br>
                     <label for="">Nombre Referencia:</label>
-                    <input type="text" class="form-control" name="nombre_referencia" value="<?php echo $nombre_referencia; ?>"  required value="" placeholder="" id="text" autocomplete = "off" onkeypress="return soloLetras(event);" minlength="4" maxlength="50" onkeyup="mayus(this);" >
+                    <input type="text" onkeyup="un_espacio(this);" class="form-control" name="nombre_referencia" value="<?php echo $nombre_referencia; ?>"  required value="" placeholder="" id="text" autocomplete = "off" onkeypress="return soloLetras(event);" minlength="4" maxlength="50" onkeyup="mayus(this);" >
                     <br>
                     <label for="">Sector Comercial:</label>
-                    <input type="text" class="form-control" name="sector_comercial"  value="<?php echo $sector_comercial; ?>" required value="" placeholder="" id="txtsectorcomercial" autocomplete = "off" onkeypress="return soloLetras(event);" minlength="4" maxlength="50" onkeyup="mayus(this);" >
+                    <input type="text" onkeyup="un_espacio(this);" class="form-control" name="sector_comercial"  value="<?php echo $sector_comercial; ?>" required value="" placeholder="" id="txtsectorcomercial" autocomplete = "off" onkeypress="return soloLetras(event);" minlength="4" maxlength="50" onkeyup="mayus(this);" >
                     <br>
                     <label for="">Dirección:</label>
                     <input type="text" class="form-control" name="direccion" required value=""  value="<?php echo $direccion; ?>" placeholder="" id="txtdireccionproveedor" autocomplete = "off" onkeyup="mayus(this);" >
@@ -509,6 +509,7 @@ if (mysqli_num_rows($roles35) > 0)
 	})
 
 </script>
+<script type="text/javascript" src="../../js/un_espacio.js"></script>
 <!-- // Fin para exportar en pdf // -->
 <script type="text/javascript" src="../../js/evitar_reenvio.js"></script>
 <script type="text/javascript"> function solonumero(e) {
