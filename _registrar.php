@@ -89,15 +89,15 @@ body {
             <div class="row">
                 <div class="col">
                   <label for="email"  class="form-label">Nombre:</label>
-                  <input style="background-color:rgb(240, 244, 245);" type="text" onkeyup="quitarespacios(this); sinespacio(this); "autocomplete="off"  value="<?php echo "$nombre"; ?>" onkeyup="mayus(this);" 
+                  <input style="background-color:rgb(240, 244, 245);" type="text" onkeyup="quitarespacios(this); sinespacio(this);"autocomplete="off"  value="<?php echo "$nombre"; ?>" onkeyup="mayus(this);" 
                   maxlength="30" class="form-control"  placeholder="Ingrese su primer nombre" name="nombre" required
-                   minlength="3" maxlength="30">
+                   minlength="3" maxlength="30" onkeypress="return soloLetras(event);">
                 </div>
                 <div class="col">
                   <label for="pwd" class="form-label">Apellido:</label>
-                  <input style="background-color:rgb(240, 244, 245);" type="text" onkeyup="quitarespacios(this); sinespacio(this); " autocomplete="off" value="<?php echo "$apellido"; ?>" onkeyup="mayus(this);" 
+                  <input style="background-color:rgb(240, 244, 245);" type="text" onkeyup="quitarespacios(this); sinespacio(this);" autocomplete="off" value="<?php echo "$apellido"; ?>" onkeyup="mayus(this);" 
                   maxlength="30" class="form-control"  placeholder="Ingrese su primer apellido" name="apellido" required
-                  minlength="3" maxlength="30">
+                  minlength="3" maxlength="30" onkeypress="return soloLetras(event);">
                 </div>
             </div>
             <div class="row">
@@ -313,12 +313,13 @@ body {
       }
     }
   </script>
-<script>
+
+<script type="text/javascript">
 function sinespacio(e) {
 
-var limpia = e.value;
-      limpia = limpia.toUpperCase().replace(' ', '');
-      e.value = limpia;
+  var limpia = e.value;
+        limpia = limpia.toUpperCase().replace(' ', '');
+        e.value = limpia;
 
 };
 </script>
@@ -326,24 +327,14 @@ var limpia = e.value;
 <script type="text/javascript">
 function quitarespacios(e) {
 
-var cadena =  e.value;
-cadena = cadena.trim();
+  var cadena =  e.value;
+  cadena = cadena.trim();
 
-e.value = cadena;
+  e.value = cadena;
 
 };
 </script>
 
-<script type="text/javascript">
-    function quitarespacios(e) {
-
-      var cadena =  e.value;
-      cadena = cadena.trim();
-
-      e.value = cadena;
-
-    };
-</script>
 
 <script type="text/javascript"> function solonumero(e) {
         tecla = (document.all) ? e.keyCode : e.which;
@@ -355,6 +346,8 @@ e.value = cadena;
         return patron.test(te);
     }
 </script>
+
+
 <script type="text/javascript">
     function sinespacios(e) {
 
