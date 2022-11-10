@@ -89,17 +89,15 @@ body {
             <div class="row">
                 <div class="col">
                   <label for="email"  class="form-label">Nombre:</label>
-                  <input style="background-color:rgb(240, 244, 245);" type="text" onblur="quitarespacios(this);"  
-                  onkeyup="sinespacio(this);" autocomplete="off"  value="<?php echo "$nombre"; ?>" onkeyup="mayus(this);" 
+                  <input style="background-color:rgb(240, 244, 245);" type="text" onkeyup="quitarespacios(this); sinespacio(this); "autocomplete="off"  value="<?php echo "$nombre"; ?>" onkeyup="mayus(this);" 
                   maxlength="30" class="form-control"  placeholder="Ingrese su primer nombre" name="nombre" required
-                  onkeypress="return soloLetras(event);" minlength="3" maxlength="30">
+                   minlength="3" maxlength="30">
                 </div>
                 <div class="col">
                   <label for="pwd" class="form-label">Apellido:</label>
-                  <input style="background-color:rgb(240, 244, 245);" type="text" onblur="quitarespacios(this);"  
-                  onkeyup="sinespacio(this);" autocomplete="off" value="<?php echo "$apellido"; ?>" onkeyup="mayus(this);" 
+                  <input style="background-color:rgb(240, 244, 245);" type="text" onkeyup="quitarespacios(this); sinespacio(this); " autocomplete="off" value="<?php echo "$apellido"; ?>" onkeyup="mayus(this);" 
                   maxlength="30" class="form-control"  placeholder="Ingrese su primer apellido" name="apellido" required
-                  onkeypress="return soloLetras(event);" minlength="3" maxlength="30">
+                  minlength="3" maxlength="30">
                 </div>
             </div>
             <div class="row">
@@ -116,8 +114,8 @@ body {
                     <div class="input-group mb-3">
                     <input style="background-color:rgb(240, 244, 245);" type="password" id="id_password"  autocomplete="off" 
                     onkeypress="return clave1(event);"  class="form-control"  placeholder="Ingrese la contraseña" name="contrasena"  
-                    required pattern="(?=.*[\d])(?=.*[a-z])(?=.*[A-Z]).{8,}" onblur="quitarespacios(this);"  
-                    onkeyup="sinespacio(this);" required="" minlength="8" maxlength="30" >
+                    required pattern="(?=.*[\d])(?=.*[a-z])(?=.*[A-Z]).{8,}" onblur="quitarespacio(this);"  
+                    onkeyup="sinespacios(this);" required="" minlength="8" maxlength="30" >
                       <div class="input-group-append ">
                             
                           <div class="input-group-text">
@@ -139,13 +137,13 @@ body {
             <div class="row">
                 <div class="col">
                   <label for="pwd" class="form-label">Correo:</label>
-                  <input style="background-color:rgb(240, 244, 245);" type="email" autocomplete="off" value="<?php echo "$correo"; ?>" 
+                  <input style="background-color:rgb(240, 244, 245);" type="email"  autocomplete="off" value="<?php echo "$correo"; ?>" 
                   onkeypress="return clave1(event);" class="form-control"  placeholder="Ingrese su correo" name="correo" required
                   minlength="3" maxlength="50">
                 </div>
                 <div class="col">
                   <label for="pwd" class="form-label">DNI:</label>
-                  <input style="background-color:rgb(240, 244, 245);" type="text" onblur="quitarespacios(this);"  onkeyup="sinespacio(this);" autocomplete="off" value="<?php echo "$dni"; ?>" 
+                  <input style="background-color:rgb(240, 244, 245);" type="text" onkeyup="quitarespacios(this); sinespacio(this); " autocomplete="off" value="<?php echo "$dni"; ?>" 
                   class="form-control"  placeholder="Ingrese su DNI" name="dni" minlength="13" maxlength="13" 
                   onkeypress="return solonumero(event)" required pattern="[0-9]+[1-9]+" title="13 caracteres y no todos ceros">
                   <div class="invalid-feedback">Ingrese du DNI sin espacion ni guiones.</div>
@@ -156,7 +154,7 @@ body {
                   <label for="pwd" class="form-label">Profesión:</label>
                   <select style="background-color:rgb(240, 244, 245);" value="<?php echo "$profesion"; ?>" class="form-select" 
                   id="lista1" name="profesion" required >
-                  <option value="">Seleccione una Profesión</option>
+                  <option value="">Seleccione una profesión</option>
                         <?php
                             include 'conexion/conexion.php';
                             $profesion = "SELECT * FROM tbl_profesiones ORDER BY ID_PROFESION";
@@ -184,7 +182,7 @@ body {
             <div class="row"> 
                 <div class="col">
                   <label for="pwd" class="form-label">Celular:</label>
-                  <input style="background-color:rgb(240, 244, 245);" type="text" onblur="quitarespacios(this);"  onkeyup="sinespacio(this);" autocomplete="off"  
+                  <input style="background-color:rgb(240, 244, 245);" type="text" onkeyup="quitarespacios(this); sinespacio(this); " autocomplete="off"  
                   value="<?php echo "$celular"; ?>" class="form-control"  placeholder="Numero de celular" 
                   name="celular" required minlength="8" onkeypress="return solonumero(event)" maxlength="8" 
                   pattern="[0-9]+[1-9]+[0-9]+" title="8 caracteres y no todos ceros">
@@ -200,7 +198,7 @@ body {
             <div class="row">
                 <div class="col">
                   <label for="pwd" class="form-label">Celular de Referencia:</label>
-                  <input style="background-color:rgb(240, 244, 245);" type="text" onblur="quitarespacios(this);"  onkeyup="sinespacio(this);" autocomplete="off"  
+                  <input style="background-color:rgb(240, 244, 245);" type="text" onkeyup="quitarespacios(this); sinespacio(this); " autocomplete="off"  
                   value="<?php echo "$celular_referencia"; ?>" class="form-control"  placeholder="Numero opcional" 
                   name="celular_referencia" onkeypress="return solonumero(event)" required minlength="8" maxlength="8" 
                   pattern="[0-9]+[1-9]+[0-9]+" title="8 caracteres y no todos ceros">
@@ -315,26 +313,23 @@ body {
       }
     }
   </script>
-
-<script type="text/javascript">
-
+<script>
 function sinespacio(e) {
 
-  var cadena =  e.value;
-  var limpia = "";
-  var parts = cadena.split(" ");
-  var length = parts.length;
+var limpia = e.value;
+      limpia = limpia.toUpperCase().replace(' ', '');
+      e.value = limpia;
 
-  for (var i = 0; i < length; i++) {
-    nuevacadena = parts[i];
-    subcadena = nuevacadena.trim();
+};
+</script>
 
-    if(subcadena != "") {
-      limpia += subcadena + " ";
-    }
-  }
-  limpia = limpia.trim();
-  e.value = limpia;
+<script type="text/javascript">
+function quitarespacios(e) {
+
+var cadena =  e.value;
+cadena = cadena.trim();
+
+e.value = cadena;
 
 };
 </script>
@@ -359,6 +354,38 @@ function sinespacio(e) {
         te = String.fromCharCode(tecla);
         return patron.test(te);
     }
+</script>
+<script type="text/javascript">
+    function sinespacios(e) {
+
+      var cadena =  e.value;
+      var limpia = "";
+      var parts = cadena.split(" ");
+      var length = parts.length;
+
+      for (var i = 0; i < length; i++) {
+        nuevacadena = parts[i];
+        subcadena = nuevacadena.trim();
+
+        if(subcadena != "") {
+          limpia += subcadena + " ";
+        }
+      }
+      limpia = limpia.trim();
+      e.value = limpia;
+
+    };
+</script>
+
+<script type="text/javascript">
+    function quitarespacio(e) {
+
+      var cadena =  e.value;
+      cadena = cadena.trim();
+
+      e.value = cadena;
+
+    };
 </script>
 
               <!-- Script para ver contraseña de ver contraseña  -->
