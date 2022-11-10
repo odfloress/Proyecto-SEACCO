@@ -3,8 +3,9 @@
   require '../../conexion/conexion.php';
 
   //Variables para recuperar la información de los campos del login
-  $usuario=(isset($_POST['usuario']))?$_POST['usuario']:"";
+  $usuario=mysqli_real_escape_string($conn, (isset($_POST['usuario']))?$_POST['usuario']:"");
   $accion=(isset($_POST['accion']))?$_POST['accion']:"";
+
  
 
    // Inicio del switch, para validar el valor del boton accion
