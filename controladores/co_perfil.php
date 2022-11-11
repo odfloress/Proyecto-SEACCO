@@ -9,6 +9,7 @@ $actual=(isset($_POST['actual']))?$_POST['actual']:"";
 $contrasenanueva=(isset($_POST['contrasena']))?$_POST['contrasena']:"";
 $contrasenaconfirmar=(isset($_POST['confirmar_contrasena']))?$_POST['confirmar_contrasena']:"";
 $nombre=(isset($_POST['nombre2']))?$_POST['nombre2']:"";
+$nombre_anterior=(isset($_POST['nombre3']))?$_POST['nombre3']:"";
 $apellido=(isset($_POST['apellido2']))?$_POST['apellido2']:"";
 $correo=(isset($_POST['correo2']))?$_POST['correo2']:"";
 $usuario1 = $_SESSION;
@@ -34,9 +35,9 @@ switch ($accion){
         if ($conn->query($sqlresultado) === TRUE) {
 
           // inicio inserta en la tabla bitacora
-          $sqlB1 = "INSERT INTO tbl_bitacora (USUARIO, ACCION, OBSERVACION)
-            VALUES ('$usuario1[usuario]', 'ACTUALIZO', 'CAMBIO LA CONTRASEÑA')";
-            if (mysqli_query($conn, $sqlB1)) {} else { }
+          $sql = "INSERT INTO tbl_bitacora (USUARIO, OPERACION, PANTALLA, CAMPO, VALOR_ORIGINAL, VALOR_NUEVO)
+                    VALUES ('$usuario1[usuario]', 'EDITO','PERFIL', 'CONTRASEÑA', '*********','*********')";
+            if (mysqli_query($conn, $sql)) {} else { }
           // fin inserta en la tabla bitacora
 
           echo '<script>
@@ -47,22 +48,14 @@ switch ($accion){
         } 
 
       }else {
-        // inicio inserta en la tabla bitacora
-        $sqlB2 = "INSERT INTO tbl_bitacora (USUARIO, ACCION, OBSERVACION)
-        VALUES ('$usuario1[usuario]', 'ACTUALIZAR', 'INTENTO CAMBIAR LA CONTRASEÑA, (LAS CONTRASEÑAS NO COINCIDEN)')";
-        if (mysqli_query($conn, $sqlB2)) {} else { }
-      // fin inserta en la tabla bitacora
+        
         echo '<script>
           alert("Las contraseñas ingresadas no coinciden");
           window.Location = "/_login.php";
         </script>';
       }
     }else{
-      // inicio inserta en la tabla bitacora
-      $sqlB3 = "INSERT INTO tbl_bitacora (USUARIO, ACCION, OBSERVACION)
-      VALUES ('$usuario1[usuario]', 'ACTUALIZAR', 'INTENTO CAMBIAR LA CONTRASEÑA, (CONTRASEÑA ACTUAL ES INCORECTA)')";
-      if (mysqli_query($conn, $sqlB3)) {} else { }
-    // fin inserta en la tabla bitacora
+      
       echo '<script>
         alert("Contraseña actual incorrecta");
         window.Location = "/_login.php";
@@ -79,9 +72,9 @@ switch ($accion){
       if (mysqli_query($conn, $sqlguardar)) {
 
         // inicio inserta en la tabla bitacora
-        $sqlB4 = "INSERT INTO tbl_bitacora (USUARIO, ACCION, OBSERVACION)
-        VALUES ('$usuario1[usuario]', 'ACTUALIZO', 'CAMBIO DATOS PERSONALES')";
-        if (mysqli_query($conn, $sqlB4)) {} else { }
+        $sql = "INSERT INTO tbl_bitacora (USUARIO, OPERACION, PANTALLA, CAMPO, VALOR_ORIGINAL, VALOR_NUEVO)
+                    VALUES ('$usuario1[usuario]', 'EDITO','PERFIL', 'NOMBRE', '$nombre_anterior','$nombre')";
+        if (mysqli_query($conn, $sql)) {} else { }
       // fin inserta en la tabla bitacora
 
         echo '<script>
@@ -89,11 +82,7 @@ switch ($accion){
           window.Location = "/_login.php";
         </script>';
       } else {
-        // inicio inserta en la tabla bitacora
-        $sqlB5 = "INSERT INTO tbl_bitacora (USUARIO, ACCION, OBSERVACION)
-        VALUES ('$usuario1[usuario]', 'ACTUALIZAR', 'ERROR AL ACTUALIZAR DATOS PERSONALES')";
-        if (mysqli_query($conn, $sqlB5)) {} else { }
-      // fin inserta en la tabla bitacora
+       
         echo '<script>
         alert("Error al actualizar la información");
         window.Location = "/_login.php";
@@ -138,20 +127,12 @@ switch ($accion){
           $sql = "UPDATE tbl_usuarios SET FOTO='$direccion' WHERE USUARIO='$usuario1[usuario]'";
 
           if (mysqli_query($conn, $sql)) {
-            // inicio inserta en la tabla bitacora
-              $sqlB6 = "INSERT INTO tbl_bitacora (USUARIO, ACCION, OBSERVACION)
-              VALUES ('$usuario1[usuario]', 'ACTUALIZO', 'CAMBIO SU FOTO DE PERFIL ($nombreimagen)')";
-              if (mysqli_query($conn, $sqlB6)) {} else { }
-            // fin inserta en la tabla bitacora
+            
               echo '<script type="text/javascript">
                  alert("Foto de perfil actualizada exitosamente");  
               </script>';
           }else{
-            // inicio inserta en la tabla bitacora
-              $sqlB7 = "INSERT INTO tbl_bitacora (USUARIO, ACCION, OBSERVACION)
-              VALUES ('$usuario1[usuario]', 'ACTUALIZO', 'ERROR AL CAMBIAR SU FOTO DE PERFIL ($nombreimagen)')";
-              if (mysqli_query($conn, $sqlB7)) {} else { }
-            // fin inserta en la tabla bitacora
+            
               echo '<script type="text/javascript">
               alert("Error al actualizar la foto de perfil");
               
