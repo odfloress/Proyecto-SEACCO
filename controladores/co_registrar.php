@@ -33,11 +33,7 @@ session_start();
            $validar_usuario = "SELECT * FROM tbl_usuarios WHERE USUARIO='$usuario'";
            $result = mysqli_query($conn, $validar_usuario);
            if (mysqli_num_rows($result) > 0) {
-                // // inicio inserta en la tabla bitacora
-                  $sql = "INSERT INTO tbl_bitacora (USUARIO, ACCION, OBSERVACION)
-                  VALUES ('$usuario', 'INTENTO', 'INTENTO REGISTRARSE PERO SU NOMBRE DE USUARIO YA EXISTE ($usuario)')";
-                  if (mysqli_query($conn, $sql)) {} else {}
-                // // fin inserta en la tabla bitacora
+                
                 echo '<script>
                         alert("El usuario ya existe, intente con otro");
                         // window.Location = "/registrar.php";
@@ -50,11 +46,7 @@ session_start();
             $validar_correo = "SELECT * FROM tbl_usuarios WHERE  CORREO='$correo'";
             $result = mysqli_query($conn, $validar_correo);
             if (mysqli_num_rows($result) > 0) {
-                // // inicio inserta en la tabla bitacora
-                $sql = "INSERT INTO tbl_bitacora (USUARIO, ACCION, OBSERVACION)
-                VALUES ('$usuario', 'INTENTO', 'INTENTO REGISTRARSE PERO EL CORREO YA EXISTE ($correo)')";
-                if (mysqli_query($conn, $sql)) {} else {}
-              // // fin inserta en la tabla bitacora
+                
                 echo '<script>
                         alert("El correo ya existe, intente con otro");
                         // window.Location = "/registrar.php";
@@ -67,11 +59,7 @@ session_start();
             $validar_dni = "SELECT * FROM tbl_usuarios WHERE  DNI='$dni'";
             $result = mysqli_query($conn, $validar_dni);
             if (mysqli_num_rows($result) > 0) {
-                // // inicio inserta en la tabla bitacora
-                $sql = "INSERT INTO tbl_bitacora (USUARIO, ACCION, OBSERVACION)
-                VALUES ('$usuario', 'INTENTO', 'INTENTO REGISTRARSE PERO EL DNI YA EXISTE ($dni)')";
-                if (mysqli_query($conn, $sql)) {} else {}
-              // // fin inserta en la tabla bitacora
+                
                 echo '<script>
                         alert("El DNI ya esta registrado, verifique que el ingresado sea el correcto");
                         // window.Location = "/registrar.php";
@@ -115,11 +103,7 @@ session_start();
                   
                   if (mysqli_query($conn, $sql)) {
                     $_SESSION['nombre'] = $usuario;
-                    // // inicio inserta en la tabla bitacora
-                      $sql = "INSERT INTO tbl_bitacora (USUARIO, ACCION, OBSERVACION)
-                      VALUES ('$usuario', 'SE REGISTRO', 'SE REGISTRO CORRECTAMENTE ($usuario)')";
-                      if (mysqli_query($conn, $sql)) {} else {}
-                    // // fin inserta en la tabla bitacora
+                    
                     echo '<script>
                                   alert("Usuario creado con exito");
                                   window.location.href="/SEACCO/vistas/iniciar_sesion/preguntas_seguridad";
@@ -134,11 +118,7 @@ session_start();
                   mysqli_close($conn);
 
                 }else{
-                    // // inicio inserta en la tabla bitacora
-                    $sql = "INSERT INTO tbl_bitacora (USUARIO, ACCION, OBSERVACION)
-                    VALUES ('$usuario', 'INTENTO', 'INTENTO AGREGAR SU FOTO DE PERFIL PERO FORMATO INCORRECTO')";
-                    if (mysqli_query($conn, $sql)) {} else {}
-                  // // fin inserta en la tabla bitacora
+                    
                   echo '<script type="text/javascript">
                            alert("En foto solo archivos de imagen JPEG, JPG, PNG ");
                         </script>';
@@ -146,11 +126,7 @@ session_start();
                 
 
                 }else{
-                      // // inicio inserta en la tabla bitacora
-                    $sql = "INSERT INTO tbl_bitacora (USUARIO, ACCION, OBSERVACION)
-                    VALUES ('$usuario', 'INTENTO', 'INTENTO AGREGAR SU CURRICULUM PERO FORMATO INCORRECTO')";
-                    if (mysqli_query($conn, $sql)) {} else {}
-                  // // fin inserta en la tabla bitacora
+                      
                   echo '<script type="text/javascript">
                            alert("El curriculum solo archivos de PDF o DOCX");
                            

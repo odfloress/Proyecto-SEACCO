@@ -13,6 +13,20 @@ require "../../controladores/co_perfil.php";
 require "../../conexion/conexion.php";
 
 ?>
+<?php 
+  include '../../conexion/conexion.php';
+  $minima_contraseña = "SELECT * FROM tbl_parametros WHERE PARAMETRO = 'MIN_CONTRASENA'";
+  $resultado_minimo = mysqli_query($conn, $minima_contraseña);
+    while ($mostrar_minima = mysqli_fetch_assoc($resultado_minimo)){
+      $parametro_min = $mostrar_minima["VALOR"];
+    }
+
+    $maxima_contraseña = "SELECT * FROM tbl_parametros WHERE PARAMETRO = 'MAX_CONTRASENA'";
+  $resultado_maximo = mysqli_query($conn, $maxima_contraseña);
+    while ($mostrar_maxima = mysqli_fetch_assoc($resultado_maximo)){
+      $parametro_max = $mostrar_maxima["VALOR"];
+    }
+?>
 <script>
   function mostrarContrasena(){
     var x = document.getElementById("myInput");
@@ -113,44 +127,45 @@ function quitarespacios(e) {
   <!-- Content Wrapper. Contains page content -->
   <!-- enlace del scritpt para evitar si preciona F12, si preciona Ctrl+Shift+I, si preciona Ctr+u  -->
   <script type="text/javascript" src="../../js/evita_ver_codigo_utilizando_teclas.js"></script>
+  
 </head>
 <!-- Inicio evita el click derecho de la pagina -->
   <body oncontextmenu="return false">
   <!-- Fin evita el click derecho de la pagina --> 
   
   <div class="content-wrapper">
-  <!-- Content Header (Page header) -->
-  <div class="content-header">
-    <div class="container-fluid">
-      <div class="row mb-2">
-        <div class="col-sm-6">
-          <h1 class="m-0">Perfil</h1>
-        </div><!-- /.col --> 
-      </div><!-- /.row -->
-    </div><!-- /.container-fluid -->
-  </div>
-  <!-- /.content-header -->
+    <!-- Content Header (Page header) -->
+    <div class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1 class="m-0">Perfil</h1>
+          </div><!-- /.col --> 
+        </div><!-- /.row -->
+      </div><!-- /.container-fluid -->
+    </div>
+    <!-- /.content-header -->
 
-  <!-- Main content -->
-  <div class="content">
-    <div class="container-fluid">
-      <div class="row">        
-        <!-- Contenido -->
-        <div class="col-md-4">
-          <!-- codigo inicio perfil -->
-          <?php $sql3 = "SELECT * FROM tbl_usuarios WHERE USUARIO='$_SESSION[usuario]'";
-            $resultado1 = mysqli_query($conn, $sql3);
-            while($row = mysqli_fetch_assoc($resultado1)){
+    <!-- Main content -->
+    <div class="content">
+      <div class="container-fluid">
+        <div class="row">        
+          <!-- Contenido -->
+          <div class="col-md-4">
+            <!-- codigo inicio perfil -->
+            <?php $sql3 = "SELECT * FROM tbl_usuarios WHERE USUARIO='$_SESSION[usuario]'";
+              $resultado1 = mysqli_query($conn, $sql3);
+              while($row = mysqli_fetch_assoc($resultado1)){
 
             
-          ?>
+           ?>
           <div class="card card-primary card-outline">
             <div class="card-body box-profile">
               <form acction="" method="post" enctype="multipart/form-data">
               <div class="text-center">
-                  <img class="profile-user-img img-fluid img-circle"
-                  src="<?php echo $row["FOTO"]; ?>"
-                  alt="User profile picture"><br>
+                    <img class="profile-user-img img-fluid img-circle"
+                    src="<?php echo $row["FOTO"]; ?>"
+                    alt="User profile picture"><br>
                   
                 </div><br>
                 <!-- Editar foto de perfil-->
@@ -199,15 +214,20 @@ function quitarespacios(e) {
                 <ul class="list-group list-group-unbordered mb-3">
                 <label for="inputusuario" class="col-sm-10 col-form-label">Usuario:</label>
                 <div class="col-sm-10">
-                  <input type="text" class="form-control" readonly name="usuario1" id="usuario" value="<?php echo $row["USUARIO"]; ?>" placeholder="">
+                  <input type="text" class="form-control" readonly name="usuario1" id="usuario" 
+                  value="<?php echo $row["USUARIO"]; ?>" placeholder="" >
                 </div>
                 <label for="inputNombre" class="col-sm-10 col-form-label">Nombre:</label>
                 <div class="col-sm-10">
-                  <input type="text" class="form-control" readonly name="nombre1" id="nombre" value="<?php echo $row["NOMBRE"]." ".$row["APELLIDO"]; ?>" placeholder="">
+                <input type="text" hidden class="form-control" readonly name="nombre3" id="nombre3" 
+                  value="<?php echo $row["NOMBRE"]; ?>" placeholder="" >
+                  <input type="text" class="form-control" readonly name="nombre1" id="nombre" 
+                  value="<?php echo $row["NOMBRE"]." ".$row["APELLIDO"]; ?>" placeholder="" >
                 </div>
                 <label for="inputcorreo" class="col-sm-10 col-form-label">Correo:</label>
                 <div class="col-sm-10">
-                  <input type="text" class="form-control" readonly name="correo1" id="correo" placeholder="" value="<?php echo $row["CORREO"]; ?>">
+                  <input type="text" class="form-control" readonly name="correo1" id="correo" 
+                  placeholder="" value="<?php echo $row["CORREO"]; ?>">
                 </div>
                 <br>
                 
@@ -237,15 +257,20 @@ function quitarespacios(e) {
                 </div>
                 <label for="inputNombre" class="col-sm-10 col-form-label">Nombre:</label>
                 <div class="col-sm-10">
-                  <input type="text" class="form-control" name="nombre2" id="nombre" placeholder="" value="<?php echo $row["NOMBRE"]; ?>" onkeyup="mayus(this);" required onblur="quitarespacios(this);" onkeydown="sinespacio(this);">
+                  <input type="text" class="form-control" name="nombre2" id="nombre" placeholder="" 
+                  value="<?php echo $row["NOMBRE"]; ?>" onkeyup="mayus(this);" required onblur="quitarespacios(this);" 
+                  onkeydown="sinespacio(this);" onkeypress="return soloLetras(event);">
                 </div>
                 <label for="inputNombre" class="col-sm-10 col-form-label">Apellido:</label>
                 <div class="col-sm-10">
-                  <input type="text" class="form-control" name="apellido2" id="nombre" placeholder="" value="<?php echo $row["APELLIDO"]; ?>" onkeyup="mayus(this);" required onblur="quitarespacios(this);" onkeydown="sinespacio(this);">
+                  <input type="text" class="form-control" name="apellido2" id="nombre" placeholder="" 
+                  value="<?php echo $row["APELLIDO"]; ?>" onkeyup="mayus(this);" required onblur="quitarespacios(this);" 
+                  onkeydown="sinespacio(this);" onkeypress="return soloLetras(event);">
                 </div>
                 <label for="inputcorreo" class="col-sm-10 col-form-label">Correo:</label>
                 <div class="col-sm-10">
-                  <input type="text" class="form-control" name="correo2" id="correo" value="<?php echo $row["CORREO"]; ?>" placeholder="">
+                  <input type="text" class="form-control" name="correo2" id="correo" 
+                  value="<?php echo $row["CORREO"]; ?>" placeholder="" onkeypress="return clave1(event);" minlength="3" maxlength="50">
                 </div>
                       </div>
 
@@ -294,21 +319,28 @@ function quitarespacios(e) {
                     <div class="form-group row">
                       <label for="inputName" class="col-sm-2 col-form-label">Contraseña actual:</label>
                       <div class="col-sm-10">
-                        <input type="password" class="form-control" name="actual" id="myInput" placeholder="Contraseña actual" onkeypress="return clave1(event);" required onblur="quitarespacios(this);" onkeyup="sinespacio(this);" pattern="(?=.*[\d])(?=.*[a-z])(?=.*[A-Z]).{8,}">
+                        <input type="password" class="form-control" name="actual" id="myInput" placeholder="Contraseña actual" 
+                        onkeypress="return clave1(event);" required onblur="quitarespacios(this);" onkeyup="sinespacio(this);" 
+                        pattern="(?=.*[\d])(?=.*[a-z])(?=.*[A-Z]).{<?php echo $parametro_min?>,}" minlength="<?php echo $parametro_min?>" maxlength="<?php echo $parametro_max?>">
                         <input type="checkbox" onclick="mostrarContrasena()" > Mostrar/Ocultar
                       </div>
                     </div>
                     <div class="form-group row">
                       <label for="inputEmail" class="col-sm-2 col-form-label">Nueva contraseña:</label>
                       <div class="col-sm-10">
-                        <input type="password" class="form-control" name="contrasena" id="contra" placeholder="Nueva contraseña" onkeypress="return clave1(event);" required onblur="quitarespacios(this);" onkeyup="sinespacio(this);" pattern="(?=.*[\d])(?=.*[a-z])(?=.*[A-Z]).{8,}">
+                        <input type="password" class="form-control" name="contrasena" id="contra" placeholder="Nueva contraseña" 
+                        onkeypress="return clave1(event);" required onblur="quitarespacios(this);" onkeyup="sinespacio(this);" 
+                        pattern="(?=.*[\d])(?=.*[a-z])(?=.*[A-Z]).{<?php echo $parametro_min?>,}" minlength="<?php echo $parametro_min?>" maxlength="<?php echo $parametro_max?>">
                         <input type="checkbox" onclick="mostrarContrasena2()" > Mostrar/Ocultar
                       </div>
                     </div>
                     <div class="form-group row">
                       <label for="inputName2" class="col-sm-2 col-form-label">Confirmar contraseña:</label>
                       <div class="col-sm-10">
-                        <input type="password" class="form-control" name="confirmar_contrasena" id="contrac" onkeypress="return clave1(event);" placeholder="Confirmar nueva contraseña" required onblur="quitarespacios(this);" onkeyup="sinespacio(this);" pattern="(?=.*[\d])(?=.*[a-z])(?=.*[A-Z]).{8,}">
+                        <input type="password" class="form-control" name="confirmar_contrasena" id="contrac" 
+                        onkeypress="return clave1(event);" placeholder="Confirmar nueva contraseña" 
+                        required onblur="quitarespacios(this);" onkeyup="sinespacio(this);" 
+                        pattern="(?=.*[\d])(?=.*[a-z])(?=.*[A-Z]).{<?php echo $parametro_min?>,}" minlength="<?php echo $parametro_min?>" maxlength="<?php echo $parametro_max?>">
                         <input type="checkbox" onclick="mostrarContrasena3()" > Mostrar/Ocultar
                       </div>
                     </div>
@@ -325,6 +357,7 @@ function quitarespacios(e) {
               <!-- /.tab-content -->
             </div><!-- /.card-body -->
         </div>
+        
 </body><script type="text/javascript" src="../../js/evitar_reenvio.js"></script>
 </html>
 <?php include '../../configuracion/footer.php' ?>
@@ -362,4 +395,24 @@ function quitarespacios(e) {
 
     };
 
+  </script>
+<script>
+      function soloLetras(e){
+       key = e.keyCode || e.which;
+       tecla = String.fromCharCode(key).toLowerCase();
+       letras = " áéíóúabcdefghijklmnñopqrstuvwxyz";
+       especiales = ["8-37-39-46"];
+
+       tecla_especial = false
+       for(var i in especiales){
+        if(key == especiales[i]){
+          tecla_especial = true;
+          break;
+        }
+      }
+
+      if(letras.indexOf(tecla)==-1 && !tecla_especial){
+        return false;
+      }
+    }
   </script>

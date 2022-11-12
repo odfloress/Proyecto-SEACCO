@@ -1,6 +1,20 @@
 <?php
 require 'controladores/co_registrar.php';
 ?>
+<?php 
+  include 'conexion/conexion.php';
+  $minima_contraseña = "SELECT * FROM tbl_parametros WHERE PARAMETRO = 'MIN_CONTRASENA'";
+  $resultado_minimo = mysqli_query($conn, $minima_contraseña);
+    while ($mostrar_minima = mysqli_fetch_assoc($resultado_minimo)){
+      $parametro_min = $mostrar_minima["VALOR"];
+    }
+
+    $maxima_contraseña = "SELECT * FROM tbl_parametros WHERE PARAMETRO = 'MAX_CONTRASENA'";
+  $resultado_maximo = mysqli_query($conn, $maxima_contraseña);
+    while ($mostrar_maxima = mysqli_fetch_assoc($resultado_maximo)){
+      $parametro_max = $mostrar_maxima["VALOR"];
+    }
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -112,10 +126,10 @@ body {
                   <label for="pwd" class="form-label">Contraseña:</label> 
                   <div class="invalid-feedback">Un caracter, Mayuscula, y numero</div>
                     <div class="input-group mb-3">
-                    <input style="background-color:rgb(240, 244, 245);" type="password" id="id_password"  autocomplete="off" 
-                    onkeypress="return clave1(event);"  class="form-control"  placeholder="Ingrese la contraseña" name="contrasena"  
-                    required pattern="(?=.*[\d])(?=.*[a-z])(?=.*[A-Z]).{8,}" onblur="quitarespacio(this);"  
-                    onkeyup="sinespacios(this);" required="" minlength="8" maxlength="30" >
+                      <input style="background-color:rgb(240, 244, 245);" type="password" id="id_password"  autocomplete="off" 
+                      onkeypress="return clave1(event);"  class="form-control"  placeholder="Ingrese la contraseña" name="contrasena"  
+                      required pattern="(?=.*[\d])(?=.*[a-z])(?=.*[A-Z]).{<?php echo $parametro_min?>,}" onblur="quitarespacio(this);"  
+                      onkeyup="sinespacios(this);" required="" minlength="<?php echo $parametro_min?>" maxlength="<?php echo $parametro_max?>" >
                       <div class="input-group-append ">
                             
                           <div class="input-group-text">
@@ -124,7 +138,7 @@ body {
                             </span>
                             
                           </div> 
-                    </div>  
+                      </div>  
                     </div>
                   </div>
                   
