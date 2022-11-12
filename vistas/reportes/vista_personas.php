@@ -458,7 +458,7 @@ if (mysqli_num_rows($roles35) > 0)
 				//muestra el titulo secundario
 				pdf.setFont('times');
 				pdf.setFontSize(12);
-				pdf.text("Reporte de catálogos", 82,20,);
+				pdf.text("Reporte de catálogos", pdf.internal.pageSize.getWidth() / 2, 20, null, 'center');
 
 												//////// pie de Pagina ///////
 				//muestra la fecha
