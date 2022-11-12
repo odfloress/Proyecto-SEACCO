@@ -1,7 +1,22 @@
 <?php
 require 'controladores/co_login.php';
 ?>
-
+<?php 
+       include 'conexion/conexion.php';
+       $minima_contraseña = "SELECT * FROM tbl_parametros WHERE PARAMETRO='MIN_CONTRASENA'";
+       $resultado_minima = mysqli_query($conn, $minima_contraseña);
+            while($mostrar_minima = mysqli_fetch_assoc($resultado_minima)) {
+                  $parametro_min = $mostrar_minima["VALOR"];
+            }
+?>
+<?php
+       $maxima_contraseña = "SELECT * FROM tbl_parametros WHERE PARAMETRO='MAX_CONTRASENA'";
+       $resultado_maxima = mysqli_query($conn, $maxima_contraseña);
+       while($mostrar_maxima = mysqli_fetch_assoc($resultado_maxima)) {
+                  $parametro_max = $mostrar_maxima["VALOR"];
+            }
+ ?>
+                      
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -54,8 +69,8 @@ require 'controladores/co_login.php';
                 <label for="Contraseña" class="form-label">Contraseña:</label>
                 <div class="input-group mb-3">
                 <input type="password"   style="background-color:rgb(240, 244, 245);" name="contrasena" id="id_password" class="form-control"
-                placeholder="Ingrese la contraseña"   minlength="8" maxlength="30" required onblur="quitarespacios(this);" onkeyup="sinespacio(this);" 
-                pattern="(?=.*[\d])(?=.*[a-z])(?=.*[A-Z]).{8,}">
+                placeholder="Ingrese la contraseña"   minlength="<?php echo $parametro_min;?>" maxlength="<?php echo $parametro_max;?>" required onblur="quitarespacios(this);" onkeyup="sinespacio(this);" 
+                pattern="(?=.*[\d])(?=.*[a-z])(?=.*[A-Z]).{<?php echo $parametro_min;?>,}">
                 <div class="input-group-append ">
                             
                           <div class="input-group-text">
