@@ -39,11 +39,7 @@ if (mysqli_num_rows($roles35) > 0)
                   die();
                 }
          }
-                // inicio inserta en la tabla bitacora
-                $sql = "INSERT INTO tbl_bitacora (USUARIO, ACCION, OBSERVACION)
-                VALUES ('$usuario[usuario]', 'CONSULTO', 'CONSULTO LA PANTALLA  ADMINISTRATIVA DE CLIENTES')";
-                if (mysqli_query($conn, $sql)) {} else {}
-                // fin inserta en la tabla bitacora
+                
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -111,26 +107,41 @@ if (mysqli_num_rows($roles35) > 0)
                 <form action="" method="post" enctype="multipart/form-data">
                 <!-- Cuerpo del modal Modal -->
                 <div class="modal-body">
-                <label for="">Codigo:</label>
-                <input type="text" class="form-control" autocomplete="off" onkeyup="mayus(this);" minlength="6" maxlength="8" name="codigo" required value="<?php echo "$codigo"; ?>" placeholder="">
+                <label for="">DNI:</label>
+                <input type="text" onkeyup="quitarespacios(this); sinespacio(this);" class="form-control" autocomplete="off" 
+                onkeyup="mayus(this);" minlength="13" maxlength="13" name="codigo" required 
+                value="<?php echo "$codigo"; ?>" placeholder="Ingrese DNI" onkeypress="return solonumero(event)"  pattern="[0-9]+[1-9]+" required>
                 <br>
                 <label for="">Nombre:</label>
-                <input type="text" autocomplete="off"  value="<?php echo "$nombre"; ?>" onkeyup="mayus(this);" maxlength="255" class="form-control"  placeholder="" name="nombre" required>
+                <input type="text" onkeyup="quitarespacios(this); sinespacio(this);" autocomplete="off"  
+                value="<?php echo "$nombre"; ?>" onkeyup="mayus(this);" minlength="3" maxlength="30" class="form-control"  
+                placeholder="Ingrese el nombre" name="nombre" onkeypress="return soloLetras(event);" required>
                 <br>
                 <label for="">Apellido:</label>
-                <input type="text" autocomplete="off"  value="<?php echo "$apellido"; ?>" onkeyup="mayus(this);" maxlength="255" class="form-control"  placeholder="" name="apellido" required>
+                <input type="text" onkeyup="quitarespacios(this); sinespacio(this);" autocomplete="off"  
+                value="<?php echo "$apellido"; ?>" onkeyup="mayus(this);" minlength="3" maxlength="30" class="form-control"  
+                placeholder="Ingrese el apellido" name="apellido" onkeypress="return soloLetras(event);" required>
                 <br>
                 <label for="" class="form-label">Correo:</label>
-                  <input  type="email" autocomplete="off" value="<?php echo "$correo"; ?>" class="form-control"  placeholder="" name="correo" required>   
+                  <input  type="email" onkeypress="return clave1(event);" autocomplete="off" 
+                  value="<?php echo "$correo"; ?>" class="form-control"  placeholder="Ingrese el correo" name="correo" 
+                  minlength="3" maxlength="50" required>   
                 <br>
                 <label for="" class="form-label">Teléfeno:</label>
-                  <input type="text" autocomplete="off"  value="<?php echo "$telefono"; ?>" class="form-control"  placeholder="" name="telefono" required minlength="8" onkeypress="return solonumero(event)" maxlength="8" pattern="[0-9]+[1-9]+[0-9]+" title="8 caracteres y no todos ceros">
+                  <input type="text" onkeyup="quitarespacios(this); sinespacio(this);" autocomplete="off"  
+                  value="<?php echo "$telefono"; ?>" class="form-control"  placeholder="Ingrese el numero de teléfeno" name="telefono" 
+                   minlength="8" onkeypress="return solonumero(event)" maxlength="8" 
+                  pattern="[0-9]+[1-9]+[0-9]+" title="8 caracteres y no todos ceros" required>
                 <br>
                 <label for="" class="form-label">Dirección:</label>
-                  <input type="text" autocomplete="off"  value="<?php echo "$direccionp"; ?>" onkeyup="mayus(this);"   class="form-control"  placeholder="" name="direccion" required>
+                  <textarea type="text" onkeyup="un_espacio(this);" autocomplete="off"  value="<?php echo "$direccionp"; ?>" onkeyup="mayus(this);"   
+                  class="form-control"  placeholder="Ingrese la dirección" name="direccion"
+                  minlength="4" maxlength="255" required></textarea>
                   <br>
                   <label for="pwd" class="form-label">Referencia:</label>
-                  <input type="text" autocomplete="off"  value="<?php echo "$referencia"; ?>"  onkeyup="mayus(this);"  class="form-control"  placeholder="" name="referencia" required>
+                  <input type="text" onkeyup="un_espacio(this);" autocomplete="off"  value="<?php echo "$referencia"; ?>"  onkeyup="mayus(this);"  
+                  class="form-control"  placeholder="Ingrese la referencia" name="referencia" 
+                  minlength="3" maxlength="255" required>
                   <br>
                   <label for="pwd" class="form-label">Genero:</label>
                   <select  value="<?php echo "$genero3"; ?>" class="form-select" id="lista1" name="genero" required >
@@ -195,39 +206,7 @@ if (mysqli_num_rows($roles35) > 0)
             
             <div class="card">
               <div class="card-header">
-                  <!-- /// filtrar reporte //// -->
-                  <form action="" method="post">
-                <div class="row">
-                    <div class="col">
-                      <!-- ///////////////////// -->
-                      <?php $asignacion=(isset($_POST['reporte_catalogo']))?$_POST['reporte_catalogo']:"";   ?> 
-                     <?php echo $asignacion; ?> 
-                      <br>
-                        <select style="background-color:rgb(240, 244, 245);" value="<?php echo $id_cliente; ?>" required  class="form-select" id="lista1" name="reporte_catalogo"  >
-                                          <option >Seleccione un Filtro</option>
-                                              <?php
-                                                  include '../../conexion/conexion.php';
-                                                  $catalago777 = "SELECT distinct NOMBRE_CLIENTE from tbl_clientes order by NOMBRE_CLIENTE";
-                                                  $catalago7777 = mysqli_query($conn, $catalago777);
-                                                  if (mysqli_num_rows($catalago7777) > 0) {
-                                                      while($row = mysqli_fetch_assoc($catalago7777))
-                                                      {
-                                                      $catalago77777 =$row['NOMBRE_CLIENTE'];
-                                              ?>
-                                                <option value="<?php  echo $catalago77777; ?>"><?php echo $catalago77777; ?></option>
-                                                <?php
-                                          }}// finaliza el if y el while
-                                          ?>
-                                        </select>
-                                                          </div>
-                    <div class="col"><br>
-                    <button class="btn btn-danger" type="submit">Filtrar reporte</button>
-                    </div>
-               </div>
-                                 
-                                        
-                        </form> <br><!-- ///////////////////// -->
-                <!-- /// fin filtrar reporte /// -->
+                  
               <form id="form" action="" method="post">
                     <div class="btn-group">
                     <?php 
@@ -251,17 +230,17 @@ if (mysqli_num_rows($roles35) > 0)
                 <table id="example1" class="table table-bordered table-striped">
                   <thead>
                   <tr>
-                  <th>Acciones</th>
-                  <th>Id</th>
-                  <th>Código</th>
-                  <th>Nombre</th>
-                  <th>Apellido</th>
-                  <th>Correo</th>
-                  <th>Teléfono</th>
-                  <th>Dirección</th>
-                  <th>Referencia</th>
-                  <th>Genero</th>
-                  <th>Foto</th>
+                  <th class="desaparecerTemporalmente">Acciones</th>
+                  <th class="desaparecerTemporalmente1">Id</th>
+                  <th class="desaparecerTemporalmente1">Código</th>
+                  <th class="desaparecerTemporalmente1">Nombre</th>
+                  <th class="desaparecerTemporalmente1">Apellido</th>
+                  <th class="desaparecerTemporalmente1">Correo</th>
+                  <th class="desaparecerTemporalmente1">Teléfono</th>
+                  <th class="desaparecerTemporalmente1">Dirección</th>
+                  <th class="desaparecerTemporalmente1">Referencia</th>
+                  <th class="desaparecerTemporalmente1">Genero</th>
+                  <th class="desaparecerTemporalmente">Foto</th>
                   
                   </tr>
                   </thead>
@@ -273,7 +252,7 @@ if (mysqli_num_rows($roles35) > 0)
 
 
 
-                  $sql7 = "SELECT * FROM (tbl_clientes c
+                  $sql7 = "SELECT * FROM (tbl_clientes c 
                   INNER JOIN tbl_generos g ON c.ID_GENERO = g.ID_GENERO)";
                   $result = mysqli_query($conn, $sql7);
                   if (mysqli_num_rows($result) > 0) {
@@ -282,7 +261,7 @@ if (mysqli_num_rows($roles35) > 0)
                     ?>
                      <?php  $cont++; ?>
                   <tr>
-                  <td>
+                  <td class="desaparecerTemporalmente">
                   <?php 
                           include '../../conexion/conexion.php';
                           $tablero = "SELECT * FROM tbl_ms_roles_ojetos WHERE ID_ROL='$id_rol7' and ID_OBJETO=4 and PERMISO_ACTUALIZACION=1";
@@ -314,26 +293,40 @@ if (mysqli_num_rows($roles35) > 0)
                                 <form action="" method="post" enctype="multipart/form-data">
                                 <div class="modal-body">
                                 <input type="hidden" name="id_cliente" value="<?php echo $filas['ID_CLIENTE'] ?>">
-                <label for="">Codigo</label>
-                <input type="text" class="form-control" autocomplete="off" name="codigo" required value="<?php echo $filas['CODIGO'] ?>" placeholder="" onkeyup="mayus(this);">
+                <label for="">DNI:</label>
+                <input type="text" onkeyup="quitarespacios(this); sinespacio(this);" class="form-control" autocomplete="off"
+                name="codigo" required value="<?php echo $filas['CODIGO'] ?>" placeholder="" onkeyup="mayus(this);"
+                onkeypress="return solonumero(event)" required pattern="[0-9]+[1-9]+" minlength="13" maxlength="13">
                 <br>
                 <label for="">Nombre</label>
-                <input type="text" autocomplete="off"  value="<?php echo $filas['NOMBRE_CLIENTE'] ?>" onkeyup="mayus(this);" maxlength="255" class="form-control"  placeholder="" name="nombre" required>
+                <input type="text" autocomplete="off" value="<?php echo $filas['NOMBRE_CLIENTE'] ?>" 
+                class="form-control"  placeholder="" name="nombre5" hidden>
+                <input type="text" onkeyup="quitarespacios(this); sinespacio(this);" autocomplete="off"  
+                value="<?php echo $filas['NOMBRE_CLIENTE'] ?>" onkeyup="mayus(this);" minlength="3" maxlength="30" 
+                class="form-control"  placeholder="" name="nombre" onkeypress="return soloLetras(event);" required>
                 <br>
                 <label for="">Apellido</label>
-                <input type="text" autocomplete="off"  value="<?php echo $filas['APELLIDO'] ?>" onkeyup="mayus(this);" maxlength="255" class="form-control"  placeholder="" name="apellido" required>
+                <input type="text" onkeyup="quitarespacios(this); sinespacio(this);" autocomplete="off"  
+                value="<?php echo $filas['APELLIDO'] ?>" onkeyup="mayus(this);" minlength="3" maxlength="30"
+                class="form-control"  placeholder="" name="apellido" onkeypress="return soloLetras(event);" required>
                 <br>
                 <label for="" class="form-label">Correo:</label>
-                  <input  type="email" autocomplete="off" value="<?php echo $filas['CORREO'] ?>" onkeypress="return clave1(event);" class="form-control"  placeholder="" name="correo" required>   
+                  <input  type="email" autocomplete="off" value="<?php echo $filas['CORREO'] ?>" 
+                  onkeypress="return clave1(event);" class="form-control"  placeholder="" name="correo" minlength="3" maxlength="50"required>   
                 <br>
                 <label for="" class="form-label">Teléfeno:</label>
-                  <input type="text" autocomplete="off"  value="<?php echo $filas['TELEFONO'] ?>" class="form-control"  placeholder="" name="telefono" required minlength="8" onkeypress="return solonumero(event)" maxlength="8" pattern="[0-9]+[1-9]+[0-9]+" title="8 caracteres y no todos ceros">
+                  <input type="text" onkeyup="quitarespacios(this); sinespacio(this);" autocomplete="off"  
+                  value="<?php echo $filas['TELEFONO'] ?>" class="form-control"  placeholder="" 
+                  name="telefono" minlength="8" onkeypress="return solonumero(event)" minlength="8" maxlength="8" 
+                  pattern="[0-9]+[1-9]+[0-9]+" title="8 caracteres y no todos ceros" required>
                 <br>
                 <label for="" class="form-label">Dirección:</label>
-                  <input type="text" autocomplete="off"  value="<?php echo $filas['DIRECCION'] ?>" onkeyup="mayus(this);"   class="form-control"  placeholder="" name="direccion" required>
+                  <textarea type="text" onkeyup="un_espacio(this);" autocomplete="off" onkeyup="mayus(this);"   
+                  class="form-control"  placeholder="" name="direccion" minlength="3" maxlength="255" required><?php echo $filas['DIRECCION'] ;?></textarea>
                   <br>
                   <label for="pwd" class="form-label">Referencia:</label>
-                  <input type="text" autocomplete="off"  value="<?php echo $filas['REFERENCIA'] ?>"  onkeyup="mayus(this);"  class="form-control"  placeholder="" name="referencia" required>
+                  <input type="text" onkeyup="un_espacio(this);" autocomplete="off"  value="<?php echo $filas['REFERENCIA'] ?>"  
+                  onkeyup="mayus(this);"  class="form-control"  placeholder="" name="referencia" minlength="3" maxlength="255" required>
                   <br>
                   <label for="pwd" class="form-label">Genero:</label>
                   <select style="background-color:rgb(240, 244, 245);" class="form-select" id="lista1" name="id_genero" required >
@@ -398,15 +391,15 @@ if (mysqli_num_rows($roles35) > 0)
                         ?>
                      </form>
 </td>
-                      <td><?php echo $cont; ?></td>
-                     <td><?php echo $filas['CODIGO'] ?></td>
-                     <td><?php echo $filas['NOMBRE_CLIENTE'] ?></td>
-                     <td><?php echo $filas['APELLIDO'] ?></td>
-                     <td><?php echo $filas['CORREO'] ?></td>
-                     <td><?php echo $filas['TELEFONO'] ?></td>
-                     <td><?php echo $filas['DIRECCION'] ?></td>
-                     <td><?php echo $filas['REFERENCIA'] ?></td>
-                     <td><?php echo $filas['GENERO'] ?></td>
+                      <td><?php echo $filas['ID_CLIENTE'] ?></td>
+                     <td class="desaparecerTemporalmente1"><?php echo $filas['CODIGO'] ?></td>
+                     <td class="desaparecerTemporalmente1"><?php echo $filas['NOMBRE_CLIENTE'] ?></td>
+                     <td class="desaparecerTemporalmente1"><?php echo $filas['APELLIDO'] ?></td>
+                     <td class="desaparecerTemporalmente1"><?php echo $filas['CORREO'] ?></td>
+                     <td class="desaparecerTemporalmente1"><?php echo $filas['TELEFONO'] ?></td>
+                     <td class="desaparecerTemporalmente1"><?php echo $filas['DIRECCION'] ?></td>
+                     <td class="desaparecerTemporalmente1"><?php echo $filas['REFERENCIA'] ?></td>
+                     <td class="desaparecerTemporalmente1"><?php echo $filas['GENERO'] ?></td>
                      <td><img  width="100px" src="<?php echo $filas['FOTO'] ?>" /></td>              
                     </tr>
                     <?php }} ?>  
@@ -474,6 +467,8 @@ if (mysqli_num_rows($roles35) > 0)
   $(function () {
     $("#example1").DataTable({
       
+      "order": [[ 1, "desc" ]],
+
       language: {
                           processing: "Tratamiento en curso...",
                           search: "Buscar&nbsp;:",
@@ -533,6 +528,7 @@ if (mysqli_num_rows($roles35) > 0)
 
 <!-- Enlace Script para quitar espacios en blanco -->
 <script type="text/javascript" src="../../js/quitar_espacios.js"></script>
+
 </body>
 
 <!-- // Inicio para exportar en pdf // -->
@@ -576,29 +572,47 @@ if(!isset($_POST['reporte_catalogo']))
       } 
     }
 ?>
-<script>
-	//para descar al tocar el boton
-	var form = document.getElementById("form")
-	form.addEventListener("submit",function(event) {
-	event.preventDefault()
+<!-- // Inicio para exportar en pdf // -->
 
-			
-			const pdf = new jsPDF('L', 'mm', 'letter');
-						
-			var columns = ["Código", "Nombre", "Apellido", "Correo", "Teléfono", "Dirección", "Referencia", "Genero"];
-			var data = [
-  <?php foreach($data as $d):?>
-	
-      ["<?php echo $d->CODIGO; ?>", "<?php echo $d->NOMBRE_CLIENTE; ?>", "<?php echo $d->APELLIDO; ?>", "<?php echo $d->CORREO; ?>", "<?php echo $d->TELEFONO; ?>", "<?php echo $d->DIRECCION; ?>", "<?php echo $d->REFERENCIA; ?>", "<?php echo $d->GENERO; ?>"],
-      <?php endforeach; ?>
-  ];
-				pdf.autoTable(columns,data,
+<script>
+  
+	//para descar al tocar el boton	
+	var form = document.getElementById("form")
+  
+	form.addEventListener("submit",function(event) {
+  
+	event.preventDefault()
+  $(".desaparecerTemporalmente1").css("display","");
+  $(".desaparecerTemporalmente").css("display","none");
+
+				const pdf = new jsPDF('L', 'mm', 'letter');			
+        	
+
+				
+				
+
+				pdf.autoTable(
 				{ 
+          html:'#example1',
 					
-					margin:{ top: 30 }}
+					margin:{ top: 30 },
+          
+          columnStyles: {
+      
+            0: {cellWidth: 10},
+            1: {cellWidth: 20},
+            2: {cellWidth: 30},
+            3: {cellWidth: 30},
+            4: {cellWidth: 40},
+            5: {cellWidth: 30},
+            6: {cellWidth: 30},
+            7: {cellWidth: 30},
+            8: {cellWidth: 30}
+           } 
+          }
 				);
-		
-			//Inicio Encabezado y pie de pagina
+						
+				//Inicio Encabezado y pie de pagina
 			const pageCount = pdf.internal.getNumberOfPages();
 			for(var i = 1; i <= pageCount; i++) 
 			{
@@ -613,12 +627,12 @@ if(!isset($_POST['reporte_catalogo']))
 				//muestra el titulo principal
 				pdf.setFont('Arial');
 				pdf.setFontSize(17);
-				pdf.text('<?php echo $nombre_constructora ?>', 117,15,);
-
+				pdf.text('<?php echo $nombre_constructora ?>', pdf.internal.pageSize.getWidth() / 2, 15, null, 'center'); // de esta manera se puede centrar el titulo
+       
 				//muestra el titulo secundario
 				pdf.setFont('times');
 				pdf.setFontSize(12);
-				pdf.text("Reporte de clientes", 127,20,);
+				pdf.text("Reporte de clientes", pdf.internal.pageSize.getWidth() / 2, 20, null, 'center');
 
 												//////// pie de Pagina ///////
 				//muestra la fecha
@@ -636,14 +650,67 @@ if(!isset($_POST['reporte_catalogo']))
 				//Fin Encabezado y pie de pagina
 
 							pdf.save('Reporte de clientes.pdf');
+              $(".desaparecerTemporalmente").css("display","");
 	})
-
+  
 </script>
+<script type="text/javascript" src="../../js/un_espacio.js"></script>
 <!-- // Fin para exportar en pdf // -->
 <script type="text/javascript" src="../../js/evitar_reenvio.js"></script>
 </html>
 
+<script>
+      function soloLetras(e){
+       key = e.keyCode || e.which;
+       tecla = String.fromCharCode(key).toLowerCase();
+       letras = " áéíóúabcdefghijklmnñopqrstuvwxyz";
+       especiales = ["8-37-39-46"];
 
+       tecla_especial = false
+       for(var i in especiales){
+        if(key == especiales[i]){
+          tecla_especial = true;
+          break;
+        }
+      }
+
+      if(letras.indexOf(tecla)==-1 && !tecla_especial){
+        return false;
+      }
+    }
+  </script>
+<script type="text/javascript">
+function sinespacio(e) {
+
+  var limpia = e.value;
+        limpia = limpia.toUpperCase().replace(' ', '');
+        e.value = limpia;
+
+};
+</script>
+
+<script type="text/javascript">
+function quitarespacios(e) {
+
+  var cadena =  e.value;
+  cadena = cadena.trim();
+
+  e.value = cadena;
+
+};
+</script>
+
+
+<script type="text/javascript"> function solonumero(e) {
+        tecla = (document.all) ? e.keyCode : e.which;
+        if (tecla==8) return true;
+        else if (tecla==0||tecla==9)  return true;
+       // patron =/[0-9\s]/;// -> solo letras
+        patron =/[0-9\s]/;// -> solo numeros
+        te = String.fromCharCode(tecla);
+        return patron.test(te);
+    }
+</script>
 <script>
  // Inicio Script para que solo permita letras
 
