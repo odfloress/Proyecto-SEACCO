@@ -122,13 +122,13 @@ if (mysqli_num_rows($roles35) > 0)
                                   while($row = mysqli_fetch_assoc($estados2))
                                   {
                                     $id = $row['ID_ESTADO_USUARIO'];
-                                    $estado =$row['NOMBRE_ESTADO'];
+                                    $estado =$row['NOMBRE_ESTADO'];                                    
                               ?>
                                 <option value="<?php  echo $id; ?>"><?php echo $estado?></option>
                                 <?php
-                                }}// finaliza el if y el while
-                                ?>
-                      </select>
+                                }}// finaliza el if y el while                                
+                                ?>                                
+                      </select>                                                      
                       <!-- Inicio del select deL estado -->
                       
 
@@ -193,7 +193,11 @@ if (mysqli_num_rows($roles35) > 0)
                       </select> -->
 
                       <label for="">DNI:</label>
-                      <input type="text" class="form-control" name="dni" required value="" autocomplete="off" minlength="13" maxlength="13" onkeypress="return solonumero(event)" required pattern="[0-9]+[1-9]+" title="13 caracteres y no todos ceros">
+                      <input type="text" class="form-control" name="dni" required value="" autocomplete="off" minlength="13" maxlength="13" onkeypress="return solonumero(event)" required pattern="[0-9]+[1-9]+[0-9]" title="13 caracteres y no todos ceros">
+                            <!-- Mensaje de la validacion -->
+                            <div class="invalid-feedback">
+                                    Favor ingrese un DNI sin guiones ni espacios
+                              </div >
 
                       <label for="pwd" class="form-label">Profesión:</label>
                         <select style="background-color:rgb(240, 244, 245);" value="<?php echo "$profesion"; ?>" class="form-select" id="lista1" name="profesion" required >
@@ -297,58 +301,25 @@ if (mysqli_num_rows($roles35) > 0)
             
             <div class="card table-responsive">
               <div class="card-header">
-                <!-- /// filtrar reporte //// -->
-                <form action="" method="post">
-                <div class="row">
-                    <div class="col">
-                      <!-- ///////////////////// -->
-                      <?php $asignacion=(isset($_POST['reporte_catalogo']))?$_POST['reporte_catalogo']:"";   ?> 
-                    
-                      <br>
-                        <select style="background-color:rgb(240, 244, 245);" value="<?php echo $id_cliente; ?>" required  class="form-select" id="lista1" name="reporte_catalogo"  >
-                                          <option >Seleccione un filtro</option>
-                                              <?php
-                                                  include '../../conexion/conexion.php';
-                                                  $catalago777 = "SELECT * FROM  tbl_roles";
-                                                  $catalago7777 = mysqli_query($conn, $catalago777);
-                                                  if (mysqli_num_rows($catalago7777) > 0) {
-                                                      while($row = mysqli_fetch_assoc($catalago7777))
-                                                      {
-                                                        $catalago777777 =$row['ID_ROL'];
-                                                      $catalago77777 =$row['ROL'];
-                                              ?>
-                                                <option value="<?php  echo $catalago777777; ?>"><?php echo $catalago77777; ?></option>
-                                                <?php
-                                          }}// finaliza el if y el while
-                                          ?>
-                                        </select>
-                                                          </div>
-                    <div class="col"><br>
-                    <button class="btn btn-danger" type="submit">Filtrar reporte</button>
-                    </div>
-               </div>
-                                 
-                                        
-                        </form> <br><!-- ///////////////////// -->
-                <!-- /// fin filtrar reporte /// -->
+                
                 <!-- <h3 class="card-title">Usuarios</h3> -->
                   <form id="form" action="" method="post">
-                  <div class="btn-group">
-                    <?php 
-      include '../../conexion/conexion.php';
-      $area1 = "SELECT * FROM tbl_ms_roles_ojetos WHERE ID_ROL='$id_rol7' and ID_OBJETO=1 and PERMISO_INSERCION=1";
-      $area2 = mysqli_query($conn, $area1);
-      if (mysqli_num_rows($area2) > 0)
-       {
-         echo '<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal">
-                    Nuevo Usuario
-                </button>';
-                          }
-                        ?> 
-              <button type="submit"  name="accion" value="reporte_pdf" class="btn btn-secondary buttons-pdf buttons-html5"  onclick="return confirm('¿Quieres generar reporte de Usuarios?')" onclick="textToPdf()"><span>Reporte PDF</span></button>
-	               </div>
-            </form>
-                <!-- <h3 class="card-title">Profesiones</h3> -->
+                    <div class="btn-group">
+                      <?php 
+                      include '../../conexion/conexion.php';
+                      $area1 = "SELECT * FROM tbl_ms_roles_ojetos WHERE ID_ROL='$id_rol7' and ID_OBJETO=1 and PERMISO_INSERCION=1";
+                      $area2 = mysqli_query($conn, $area1);
+                      if (mysqli_num_rows($area2) > 0)
+                      {
+                        echo '<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal">
+                                    Nuevo Usuario
+                                </button>';
+                                          }
+                                        ?> 
+                              <button type="submit"  name="accion" value="reporte_pdf" class="btn btn-secondary buttons-pdf buttons-html5"  onclick="return confirm('¿Quieres generar reporte de Usuarios?')" onclick="textToPdf()"><span>Reporte PDF</span></button>
+                      </div>
+                    </form>
+                              <!-- <h3 class="card-title">Profesiones</h3> -->
                 
               </div>
                 
@@ -604,7 +575,7 @@ if (mysqli_num_rows($roles35) > 0)
                         ?></form>
                     
 </td>
-                     <td ><?php echo $cont; ?></td>
+                    <td><?php echo $filas['ID_USUARIO'] ?></td>
                      <td><?php echo $filas['ROL'] ?></td>
                      <td><?php echo $filas['NOMBRE_ESTADO'] ?></td>
                      <td><?php echo $filas['NOMBRE'] ?></td>
@@ -684,7 +655,7 @@ if (mysqli_num_rows($roles35) > 0)
 <script>
   $(function () {
     $("#example1").DataTable({
-      
+      "order": [[ 1, "desc" ]],
       language: {
                           processing: "Tratamiento en curso...",
                           search: "Buscar&nbsp;:",

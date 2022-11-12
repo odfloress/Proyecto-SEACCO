@@ -134,7 +134,7 @@ body {
                 <div class="col">
                   <label for="email"  class="form-label">Nombre:</label>
                   <input style="background-color:rgb(240, 244, 245);" type="text" autocomplete="off"  
-                  value="<?php echo "$nombre"; ?>" onkeyup="mayus(this);" maxlength="30" class="form-control"  
+                  value="<?php echo "$nombre"; ?>" onkeyup="quitarespacios(this); sinespacio(this); " maxlength="30" class="form-control"  
                   placeholder="Ingrese el nombre" name="nombre" onkeypress="return soloLetras(event);" id="campoNombre"  required>
                       
                       <!-- Notificacion campo vacio -->
@@ -142,7 +142,7 @@ body {
                 </div>
                 <div class="col">
                   <label for="pwd" class="form-label">Apellido:</label>
-                  <input style="background-color:rgb(240, 244, 245);" type="text" autocomplete="off" value="<?php echo "$apellido"; ?>" onkeyup="mayus(this);" maxlength="30" class="form-control"  placeholder="Ingrese su apellido" name="apellido" onkeypress="return soloLetras(event);" id="campoApellido" required>
+                  <input style="background-color:rgb(240, 244, 245);" type="text" onkeyup="quitarespacios(this); sinespacio(this); " maxlength="30" autocomplete="off" value="<?php echo "$apellido"; ?>" onkeyup="mayus(this);" maxlength="30" class="form-control"  placeholder="Ingrese su apellido" name="apellido" onkeypress="return soloLetras(event);" id="campoApellido" required>
                   <div class="invalid-feedback">Es requerido un apellido.</div>
                 </div>
             </div>       
@@ -150,15 +150,16 @@ body {
           <div class="row">
                 <div class="col">
                   <label for="pwd" class="form-label">DNI:</label>
-                  <input style="background-color:rgb(240, 244, 245);" type="text" autocomplete="off" 
-                  value="<?php echo "$dni"; ?>"  class="form-control"  placeholder="Ingrese su DNI" name="dni" minlength="13"             
-                  maxlength="13" onkeypress="return solonumero(event)" required  pattern="[0-9]+[1-9]+[0-9]+"
+                  <input   style="background-color:rgb(240, 244, 245);" type="text" onkeyup="quitarespacios(this); sinespacio(this); " autocomplete="off" 
+                  value="<?php echo "$dni"; ?>"  class="form-control"  placeholder="Ingrese su DNI" name="dni" minlength="13"            
+                  required maxlength="13" onkeypress="return solonumero(event)" required  
+                 pattern=".{0}|.{13,13}"
                   title="13 caracteres y no todos ceros">              
-                  <div class="invalid-feedback">Ingrese un DNI de trece digitos.</div>
+                  <div class="invalid-feedback">Ingrese un DNI de trece digitos y no todos ceros.</div>
                 </div>
                 <div class="col">
                   <label for="pwd" class="form-label">Dirección Personal:</label>
-                  <input style="background-color:rgb(240, 244, 245);" type="text" autocomplete="off"  value="<?php echo "$direccionPersonal"; ?>" onkeypress="return SoloLetras(event);"  onKeyUP="this.value=this.value.toUpperCase();" class="form-control"  placeholder="Ingrese su dirección" name="direccionPersonal" required>
+                  <textarea style="background-color:rgb(240, 244, 245);" type="text" autocomplete="off"  value="<?php echo "$direccionPersonal"; ?>" onkeypress="return SoloLetras(event);" onkeyup="un_espacio(this);"  onKeyUP="this.value=this.value.toUpperCase();" class="form-control"  placeholder="Ingrese su dirección" name="direccionPersonal" required></textarea>
                   <div class="invalid-feedback">Campo requerido.</div>
                 </div>
                 
@@ -166,19 +167,19 @@ body {
             <div class="row">
                 <div class="col">
                   <label for="pwd" class="form-label">Correo:</label>
-                  <input style="background-color:rgb(240, 244, 245);" type="email" autocomplete="off" value="<?php echo "$correo"; ?>" onkeypress="return clave1(event);" class="form-control"  placeholder="Ingrese su correo" name="correo" required>
+                  <input style="background-color:rgb(240, 244, 245);" type="email" onkeyup="quitarespacios(this); sinespacio(this); " autocomplete="off" value="<?php echo "$correo"; ?>" onkeypress="return clave1(event);" class="form-control"  placeholder="Ingrese su correo" name="correo" required>
                   <div class="invalid-feedback">Campo requerido.</div>
                 </div>
                 <div class="col">
                   <label for="pwd" class="form-label">Teléfono:</label>
-                  <input style="background-color:rgb(240, 244, 245);" type="text" autocomplete="off" value="<?php echo "$telefono"; ?>"  class="form-control"  placeholder="Ingrese su telefono" name="telefono" minlength="8" maxlength="8" onkeypress="return solonumero(event)" required pattern="[0-9]+[1-9]+[0-9]" title="Ingrese un numero telefónico valido">
+                  <input style="background-color:rgb(240, 244, 245);" type="text" onkeyup="quitarespacios(this); sinespacio(this); " autocomplete="off" value="<?php echo "$telefono"; ?>"  class="form-control"  placeholder="Ingrese su telefono" name="telefono" minlength="8" maxlength="8" onkeypress="return solonumero(event)" required pattern=".{0}|.{8,8}" title="Ingrese un numero telefónico valido">
                   <div class="invalid-feedback">Campo requerido.</div>
                 </div>
             </div>
             <div class="row">
             <div class="col">
                   <label for="pwd" class="form-label">Referencia:</label>
-                  <input style="background-color:rgb(240, 244, 245);" type="text" autocomplete="off"  value="<?php echo "$referencia"; ?>" onkeypress="return SoloLetras(event);"  onKeyUP="this.value=this.value.toUpperCase();" class="form-control"  placeholder="Nombre de referencia" name="referencia" required>
+                  <input style="background-color:rgb(240, 244, 245);" type="text" autocomplete="off"  onkeyup="un_espacio(this);" onKeyUP="this.value=this.value.toUpperCase();" autocomplete="off"  value="<?php echo "$referencia"; ?>"   onKeyUP="this.value=this.value.toUpperCase();" class="form-control"  placeholder="Nombre de referencia"  name="referencia" onkeypress="return soloLetras(event);" id="CampoReferencia" required>
                 </div>
                 <div class="col ">
                 <label for="pwd" class="form-label">Genero:</label>                
@@ -234,7 +235,7 @@ body {
                 <br>  
                 <div class="col">
                   <label for="pwd" class="form-label">Ubicación del Proyecto:</label>
-                  <input style="background-color:rgb(240, 244, 245);" type="text" autocomplete="off" value="<?php echo "$ubicacion"; ?>"  onkeypress="return SoloLetras(event);"  onKeyUP="this.value=this.value.toUpperCase();" class="form-control"  placeholder="Ingrese dirección" name="ubicacion" required>
+                  <textarea style="background-color:rgb(240, 244, 245);" type="text"  onkeyup="un_espacio(this);" autocomplete="off" value="<?php echo "$ubicacion"; ?>"    onKeyUP="this.value=this.value.toUpperCase();"  class="form-control"   placeholder="Ingrese dirección" name="ubicacion" required></textarea>
                 </div>
             </div>
             
@@ -261,7 +262,7 @@ body {
                   <div class="w3-half w3-margin-bottom">
                   
                       <label for="">Describa su solicitud:</label>
-                      <textarea style="background-color:rgb(240, 244, 245);" name="descripcion" id="" value="<?php echo "$descripcion"; ?>"  onkeyup="mayus(this);" cols="50" rows="5"></textarea>
+                      <textarea style="background-color:rgb(240, 244, 245);" name="descripcion" id="" value="<?php echo "$descripcion"; ?>" onkeyup="un_espacio(this);"  onkeyup="mayus(this);"  cols="50" rows="5"></textarea>
                     </div>
                 </div>
 
@@ -284,7 +285,8 @@ body {
 
   
 </body>
-<script type="text/javascript" src="js/evitar_reenvio.js"></script>
+<script type="text/javascript" src="../../js/un_espacio.js"></script>
+<script type="text/javascript" src="../../js/evitar_reenvio.js"></script>
 
 </html>
 <script type="text/javascript">
@@ -417,6 +419,7 @@ body {
           e.target.value = nombre.toUpperCase().trim();
 
       });
+    
 </script>
 
  
