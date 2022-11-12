@@ -20,8 +20,8 @@
              $sql =  "UPDATE tbl_usuarios SET CONTRASENA='$confirmar_contrasena' WHERE usuario='$usuario[nombre]'";
               if ($conn->query($sql) === TRUE) {
                // inicio inserta en la tabla bitacora
-                $sql7 = "INSERT INTO tbl_bitacora (USUARIO, ACCION, OBSERVACION)
-                VALUES ('$usuario[nombre]', 'RECUPERACION', 'REALIZO UNA RECUPERACION DE CONTRASEÑA')";
+               $sql7 = "INSERT INTO tbl_bitacora (USUARIO, OPERACION, PANTALLA, CAMPO, ID_REGISTRO, VALOR_ORIGINAL, VALOR_NUEVO)
+                        VALUES ('$usuario[nombre]', 'EDITO', 'CAMBIO DE CLAVE', 'CLAVES', 0,  'ACTUAL', 'NUEVA')";
                if (mysqli_query($conn, $sql7)) {} else {}
                // fin inserta en la tabla bitacora
               
@@ -61,11 +61,7 @@ session_unset();
                } 
             
           } else {
-             // inicio inserta en la tabla bitacora
-             $sql7 = "INSERT INTO tbl_bitacora (USUARIO, ACCION, OBSERVACION)
-             VALUES ('$usuario[nombre]', 'INTENTO', 'CONTRASEÑAS NO COINCIDEN AL MOMENTO DE RECUPERAR LA CONTRASEÑA')";
-             if (mysqli_query($conn, $sql7)) {} else {}
-         // fin inserta en la tabla bitacora
+             
             echo '<script>
                         alert("Las contraseñas no coinciden");
                      </script>';

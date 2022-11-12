@@ -38,11 +38,7 @@ if (mysqli_num_rows($roles35) > 0)
                   die();
                 }
                }
-               // inicio inserta en la tabla bitacora
-               $sql = "INSERT INTO tbl_bitacora (USUARIO, ACCION, OBSERVACION)
-               VALUES ('$usuario1[usuario]', 'CONSULTO', 'CONSULTO LA PANTALLA ADMINISTRATIVA DE PROVEEDORES')";
-               if (mysqli_query($conn, $sql)) {} else {}
-               // fin inserta en la tabla bitacora
+              
            
 
 ?>
@@ -62,7 +58,14 @@ if (mysqli_num_rows($roles35) > 0)
    <script type="text/javascript" src="../../js/complemento_1_jspdf.min.js"></script>
 	<script type="text/javascript" src="../../js/complemento_2_jspdf.plugin.autotable.min.js"></script>
 
-
+<script>function quitarespacios1(e) {
+  
+  var cadena =  e.value;
+  var limpia = e.value;
+        limpia = limpia.replace(" ", '');
+        e.value = limpia;
+  
+  };</script>
   <?php include '../../configuracion/navar.php' ?>
    <!-- Inicio evita el click derecho de la pagina -->
 <body oncontextmenu="return false">
@@ -77,7 +80,7 @@ if (mysqli_num_rows($roles35) > 0)
             <h1></h1>
             <!-- Inicio de modal de agregar -->
 <div class="container mt-3">
-        <h3>Proveedores</h3> <br>  
+        <h3>Proveedores</h3>  
     
         
     </div>
@@ -108,13 +111,14 @@ if (mysqli_num_rows($roles35) > 0)
                     <input type="text" onkeyup="un_espacio(this);" class="form-control" name="sector_comercial"  value="<?php echo $sector_comercial; ?>" required value="" placeholder="" id="txtsectorcomercial" autocomplete = "off" onkeypress="return soloLetras(event);" minlength="4" maxlength="50" onkeyup="mayus(this);" >
                     <br>
                     <label for="">Dirección:</label>
-                    <input type="text" class="form-control" name="direccion" required value=""  value="<?php echo $direccion; ?>" placeholder="" id="txtdireccionproveedor" autocomplete = "off" onkeyup="mayus(this);" >
+                    <TEXtarea  style="background-color: white;" onkeyup="un_espacio(this);" name="direccion" class="form-control" id="" cols="40" rows="5"
+                    autocomplete = "off"  onkeypress="return soloLetras(event);" minlength="3" maxlength="245"  ><?php echo $direccion; ?></TEXtarea>
                     <br>
                     <label for="">Teléfono</label>
-                    <input type="text" class="form-control" name="telefono" value="" value="<?php echo $telefono; ?>"  placeholder="" id="txttelefono" autocomplete = "off" required minlength="8" maxlength="8" placeholder="" pattern="[0-9]+[1-9]+[0-9]+" title="8 caracteres y no todos ceros" onkeypress="return solonumero(event)" >
+                    <input onblur="quitarespacios(this);" onkeydown="sinespacio(this);"  onkeyup="quitarespacios1(this);" type="text" class="form-control" name="telefono" value="" value="<?php echo $telefono; ?>"  placeholder="" id="txttelefono" autocomplete = "off" required minlength="8" maxlength="8" placeholder="" pattern="[0-9]+[1-9]+[0-9]+" title="8 caracteres y no todos ceros" onkeypress="return solonumero(event)" >
                     <br>
                     <label for="">Correo</label>
-                    <input type="email" class="form-control" name="correo" required value=""  value="<?php echo $correo; ?>" placeholder="" id="txtcorreo"  autocomplete = "off" >
+                    <input onblur="quitarespacios(this);" onkeyup="quitarespacios1(this);"  onkeydown="sinespacio(this);"   type="email" class="form-control" minlength="3" maxlength="50" name="correo" required value=""  value="<?php echo $correo; ?>" placeholder="" id="txtcorreo"  autocomplete = "off" >
                     <br>
                 </div>
                 <!-- Fin Cuerpo del modal Modal -->
@@ -177,14 +181,14 @@ if (mysqli_num_rows($roles35) > 0)
                 <table id="example1" class="table table-bordered table-striped">
                   <thead>
                   <tr>
-                  <th>Acciones</th>
-                  <th>Id</th>
-                  <th>Nombre Proveedor</th>
-                  <th>Nombre Referencia</th>
-                  <th>Sector Comercial</th>
-                  <th>Dirección</th>
-                  <th>Teléfono</th>
-                  <th>Correo</th>
+                  <th class="desaparecerTemporalmente">Acciones</th>
+                  <th class="desaparecerTemporalmente1" >Id</th>
+                  <th class="desaparecerTemporalmente1">Nombre Proveedor</th>
+                  <th class="desaparecerTemporalmente1">Nombre Referencia</th>
+                  <th class="desaparecerTemporalmente1">Sector Comercial</th>
+                  <th class="desaparecerTemporalmente1">Dirección</th>
+                  <th class="desaparecerTemporalmente1">Teléfono</th>
+                  <th class="desaparecerTemporalmente1">Correo</th>
                   
                   </tr>
                   </thead>
@@ -194,9 +198,9 @@ if (mysqli_num_rows($roles35) > 0)
                   while ($filas= mysqli_fetch_assoc($result)){
 
                   ?>
-                   <?php  $cont++; ?>
+                   
                   <tr>
-                  <td>
+                  <td class="desaparecerTemporalmente">
                   <?php 
                           include '../../conexion/conexion.php';
                           $proveedor = "SELECT * FROM tbl_ms_roles_ojetos WHERE ID_ROL='$id_rol7' and ID_OBJETO=5 and PERMISO_ACTUALIZACION=1";
@@ -231,22 +235,22 @@ if (mysqli_num_rows($roles35) > 0)
                                               <input type="hidden" class="form-control" name="id_proveedor" readonly required value="<?php echo $filas['ID_PROVEEDOR'] ?>" placeholder="" id="txtPrecio_Compra"   >
                                               <br>
                                               <label for="">Nombre Proveedor:</label>
-                                              <input type="text" class="form-control" name="nombre" autocomplete = "off" required value="<?php echo $filas['NOMBRE'] ?>" placeholder="" id="txtPrecio_Compra" onkeypress="return soloLetras(event);" onkeyup="mayus(this);" >
+                                              <input onkeyup="un_espacio(this);" onkeypress="return soloLetras(event);" type="text" class="form-control" name="nombre" autocomplete = "off" required value="<?php echo $filas['NOMBRE'] ?>" placeholder="" id="txtPrecio_Compra" onkeypress="return soloLetras(event);" onkeyup="mayus(this);" >
                                               <br>
                                               <label for="">Nombre Referencia:</label>
-                                             <input type="text" class="form-control" name="nombre_referencia" autocomplete = "off" required value="<?php echo $filas['NOMBRE_REFERENCIA'] ?>" placeholder="" id="txtnombrer" onkeypress="return soloLetras(event);" onkeyup="mayus(this);" >
+                                             <input onkeyup="un_espacio(this);" onkeypress="return soloLetras(event);"  type="text" class="form-control" name="nombre_referencia" autocomplete = "off" required value="<?php echo $filas['NOMBRE_REFERENCIA'] ?>" placeholder="" id="txtnombrer" onkeypress="return soloLetras(event);" onkeyup="mayus(this);" >
                                              <br>
                                              <label for="">Sector Comercial:</label>
-                                             <input type="text" class="form-control" name="sector_comercial" autocomplete = "off" required value="<?php echo $filas['SECTOR_COMERCIAL'] ?>" placeholder="" id="txtsectorcomercial" onkeypress="return soloLetras(event);" onkeyup="mayus(this);" >
+                                             <input onkeyup="un_espacio(this);" onkeypress="return soloLetras(event);"  type="text" class="form-control" name="sector_comercial" autocomplete = "off" required value="<?php echo $filas['SECTOR_COMERCIAL'] ?>" placeholder="" id="txtsectorcomercial" onkeypress="return soloLetras(event);" onkeyup="mayus(this);" >
                                              <br>
                                              <label for="">Dirección:</label>
-                                             <input type="text" class="form-control" name="direccion" autocomplete = "off" required value="<?php echo $filas['DIRECCION'] ?>" placeholder="" id="txtdireccionproveedor"  onkeyup="mayus(this);" >
+                                             <input onkeyup="un_espacio(this);"   type="text" class="form-control" name="direccion" autocomplete = "off" required value="<?php echo $filas['DIRECCION'] ?>" placeholder="" id="txtdireccionproveedor"  onkeyup="mayus(this);" >
                                              <br>
                                              <label for="">Teléfono:</label>
-                                             <input type="text" class="form-control" name="telefono" autocomplete = "off" required value="<?php echo $filas['TELEFONO'] ?>" placeholder="" id="txttelefono" minlength="8" maxlength="8" required value="" placeholder="" required pattern="[0-9]+[1-9]+[0-9]+" title="8 caracteres y no todos ceros" onkeypress="return solonumero(event)"  >
+                                             <input onblur="quitarespacios(this);" onkeydown="sinespacio(this);"  onkeyup="quitarespacios1(this);" type="text" class="form-control" name="telefono" autocomplete = "off" required value="<?php echo $filas['TELEFONO'] ?>" placeholder="" id="txttelefono" minlength="8" maxlength="8" required value="" placeholder="" required pattern="[0-9]+[1-9]+[0-9]+" title="8 caracteres y no todos ceros" onkeypress="return solonumero(event)"  >
                                              <br>
                                              <label for="">Correo:</label>
-                                             <input type="email" class="form-control" name="correo" autocomplete = "off" required value="<?php echo $filas['CORREO'] ?>" placeholder="" id="txtcorreo"  >
+                                             <input onblur="quitarespacios(this);" onkeydown="sinespacio(this);"  onkeyup="quitarespacios1(this);"  type="email" class="form-control" name="correo" autocomplete = "off" required value="<?php echo $filas['CORREO'] ?>" placeholder="" id="txtcorreo"  >
                                              <br>   
                                            </div>
                                 <!-- Fin Cuerpo del modal Modal -->
@@ -284,13 +288,13 @@ if (mysqli_num_rows($roles35) > 0)
 </td>
                          
                     </td>
-                                         <td ><?php echo $cont; ?></td>
-                                         <td><?php echo $filas['NOMBRE'] ?></td>
-                                         <td><?php echo $filas['NOMBRE_REFERENCIA'] ?></td>
-                                         <td><?php echo $filas['SECTOR_COMERCIAL'] ?></td>
-                                         <td><?php echo $filas['DIRECCION'] ?></td>
-                                         <td><?php echo $filas['TELEFONO'] ?></td>
-                                         <td><?php echo $filas['CORREO'] ?></td>
+                                         <td class="desaparecerTemporalmente1"><?php echo $filas['ID_PROVEEDOR'] ?></td>
+                                         <td class="desaparecerTemporalmente1"><?php echo $filas['NOMBRE'] ?></td>
+                                         <td class="desaparecerTemporalmente1"><?php echo $filas['NOMBRE_REFERENCIA'] ?></td>
+                                         <td class="desaparecerTemporalmente1"><?php echo $filas['SECTOR_COMERCIAL'] ?></td>
+                                         <td class="desaparecerTemporalmente1"><?php echo $filas['DIRECCION'] ?></td>
+                                         <td class="desaparecerTemporalmente1"><?php echo $filas['TELEFONO'] ?></td>
+                                         <td class="desaparecerTemporalmente1"><?php echo $filas['CORREO'] ?></td>
                                         </tr>
                                     <?php } ?>
                     
@@ -355,7 +359,7 @@ if (mysqli_num_rows($roles35) > 0)
 <script>
   $(function () {
     $("#example1").DataTable({
-      
+      "order": [[ 1, "desc" ]],
       language: {
                           processing: "Tratamiento en curso...",
                           search: "Buscar&nbsp;:",
@@ -447,27 +451,39 @@ if (mysqli_num_rows($roles35) > 0)
 ?>
 
 <script>
-	//para descar al tocar el boton
-	var form = document.getElementById("form")
+		//para descar al tocar el boton	
+    var form = document.getElementById("form")
+  
 	form.addEventListener("submit",function(event) {
+  
 	event.preventDefault()
+  $(".desaparecerTemporalmente1").css("display","");
+  $(".desaparecerTemporalmente").css("display","none");
 
-			
-			const pdf = new jsPDF('p', 'mm', 'letter');
-						
-			var columns = ["Nombre", "Referencia", "Sector comercial", "Dirección", "Teléfono", "Correo"];
-			var data = [
-  <?php foreach($data as $d):?>
-	
-      ["<?php echo $d->NOMBRE; ?>", "<?php echo $d->NOMBRE_REFERENCIA; ?>", "<?php echo $d->SECTOR_COMERCIAL; ?>", "<?php echo $d->DIRECCION; ?>", "<?php echo $d->TELEFONO; ?>", "<?php echo $d->CORREO; ?>"],
-      <?php endforeach; ?>
-  ];
-				pdf.autoTable(columns,data,
+				const pdf = new jsPDF('L', 'mm', 'letter');			
+        	
+
+				
+				
+
+				pdf.autoTable(
 				{ 
+          html:'#example1',
 					
-					margin:{ top: 30 }}
+					margin:{ top: 30 },
+          
+          columnStyles: {
+      
+            0: {cellWidth: 11},
+            1: {cellWidth: 41}, 
+            2: {cellWidth: 40},  
+            3: {cellWidth: 35},  
+            4: {cellWidth: 55},  
+            5: {cellWidth: 20},            
+            6: {cellWidth: 50}
+           } 
+          }
 				);
-		
 			//Inicio Encabezado y pie de pagina
 			const pageCount = pdf.internal.getNumberOfPages();
 			for(var i = 1; i <= pageCount; i++) 
@@ -483,12 +499,12 @@ if (mysqli_num_rows($roles35) > 0)
 				//muestra el titulo principal
 				pdf.setFont('Arial');
 				pdf.setFontSize(17);
-				pdf.text("<?php echo $nombre_constructora; ?>", 75,15,);
+				pdf.text('<?php echo $nombre_constructora ?>', pdf.internal.pageSize.getWidth() / 2, 15, null, 'center');
 
 				//muestra el titulo secundario
 				pdf.setFont('times');
 				pdf.setFontSize(12);
-				pdf.text("Reporte de proveedores", 82,20,);
+				pdf.text("Reporte de proveedores", pdf.internal.pageSize.getWidth() / 2, 20, null, 'center');
 
 												//////// pie de Pagina ///////
 				//muestra la fecha
@@ -498,14 +514,15 @@ if (mysqli_num_rows($roles35) > 0)
 				let horas = today.getHours()
 				let jornada = horas >=12 ? 'PM' : 'AM';
 				var newdat = "Fecha: " + today.getDate() + "/" + (today.getMonth()+1) + "/" + today.getFullYear() + " " + (horas % 12) + ":" + today.getMinutes() + ":" + today.getSeconds() + " " + jornada;
-				pdf.text(183-20,297-284,newdat);
+				pdf.text(245-20,297-284,newdat);
 
 				//muestra el numero de pagina
-				pdf.text('Pagina ' + String(i) + '/' + String(pageCount),220-20,297-27,null,null,"right");
+				pdf.text('Pagina ' + String(i) + '/' + String(pageCount),282-20,297-89,null,null,"right");
 			}
 				//Fin Encabezado y pie de pagina
 
 							pdf.save('Reporte de proveedores.pdf');
+              $(".desaparecerTemporalmente").css("display","");
 	})
 
 </script>
