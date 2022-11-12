@@ -32,9 +32,18 @@ if(isset($_POST['submit'])){
     $correo=(isset($_POST['correo']))?$_POST['correo']:"";
     $token=(isset($_POST['token']))?$_POST['token']:"";
   
-      
+   
     
     $mail = new PHPMailer(true);
+    ///////////Inicio traer el correo//////////
+    
+    $correo_para_empleados = "SELECT * FROM tbl_nuestros_contactos WHERE ID_CONTACTO=2";
+    $Resultado_correo_para_empleados = mysqli_query($conn, $correo_para_empleados);
+         while($mostrar_correo_para_empleados = mysqli_fetch_assoc($Resultado_correo_para_empleados)) {
+               $CORREO_EMPLEADOS = $mostrar_correo_para_empleados["CORREO"];
+         }
+ ///////////Fin traer el correo//////////
+
   // Valida que exista el correo
   $validar_correo = "SELECT * FROM tbl_usuarios WHERE CORREO='$correo' and USUARIO='$_SESSION[correo]'";
   $resultado = mysqli_query($conn, $validar_correo); 
@@ -56,19 +65,19 @@ if(isset($_POST['submit'])){
               'allow_self_signed' => true
               )
           );
-
+ 
           //Server settings
           $mail->SMTPDebug = 0;                      //Enable verbose debug output
           $mail->isSMTP();                                            //Send using SMTP
           $mail->Host       = 'smtp.gmail.com';                     //Set the SMTP server to send through
           $mail->SMTPAuth   = true;                                   //Enable SMTP authentication
-          $mail->Username   = 'seaccoc@gmail.com';                     //SMTP username
+          $mail->Username   = $CORREO_EMPLEADOS;                     //SMTP username
           $mail->Password   = 'plhmloymsptqqhpc';                               //SMTP password
           $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;            //Enable implicit TLS encryption
           $mail->Port       = 465;                                    //TCP port to connect to; use 587 if you have set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`
 
           //Recipients
-          $mail->setFrom('seaccoc@gmail.com', 'Constructora SEACCO');
+          $mail->setFrom($CORREO_EMPLEADOS, 'Constructora SEACCO');
           $mail->addAddress($_POST['correo'],'Usuario');     //Add a recipient
           //$mail->addAddress('ellen@example.com');               //Name is optional
           //$mail->addReplyTo('info@example.com', 'Information');

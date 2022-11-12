@@ -5,8 +5,8 @@
     require "../../conexion/conexion.php";
     
 
-    $usuario=(isset($_POST['usuario']))?$_POST['usuario']:"";
-    $token=(isset($_POST['token']))?$_POST['token']:"";
+    $usuario=mysqli_real_escape_string($conn, (isset($_POST['usuario']))?$_POST['usuario']:"");
+    $token=mysqli_real_escape_string($conn, (isset($_POST['token']))?$_POST['token']:"");
     $token= hash('sha512', $token);
 
     date_default_timezone_set('America/Guatemala');
@@ -48,11 +48,11 @@
 ?>
 
    <!-- inicio script para validar que solo sean mayusculas las letras del usuario -->
-<script>
-function SoloLetras(e) {
+   <script>
+  function clave1(e) {
   key = e.keyCode || e.which;
   tecla = String.fromCharCode(key).toString();
-  letras = "ABCDEFGHIJKLMNÑOPQRSTUVWXZabcdefghijklmnñopqrstuvwxyz";
+  letras = "ABCDEFGHIJKLMNÑOPQRSTUVWXYZabcdefghijklmnñopqrstuvwxyz0123456789";
   
   especiales = [8,13];
   tecla_especial = false;
@@ -64,7 +64,7 @@ function SoloLetras(e) {
   }
   
   if(letras.indexOf(tecla) == -1 && !tecla_especial){
-    alert("Ingresar solo mayusculas");
+    alert("Solo letras y números");
     return false;
   }
 }
@@ -73,7 +73,7 @@ function SoloLetras(e) {
       function soloLetras(e){
        key = e.keyCode || e.which;
        tecla = String.fromCharCode(key).toLowerCase();
-       letras = " áéíóúabcdefghijklmnñopqrstuvwxyz";
+       letras = "áéíóúabcdefghijklmnñopqrstuvwxyz";
        especiales = ["8-37-39-46"];
 
        tecla_especial = false
@@ -181,11 +181,11 @@ body {
             <input type="text" style="background-color:rgb(240, 244, 245);" name="usuario" id="ingUsuario" class="form-control" placeholder="Ingrese el usuario" autocomplete = "off"  onkeypress="return soloLetras(event);" minlength="3" maxlength="20" onkeyup="mayus(this);" required onblur="quitarespacios(this);" onkeydown="sinespacio(this);">
             <br>
             <label for="">Token:</label>
-            <input type="text" style="background-color:rgb(240, 244, 245);" autocomplete = "off" class="form-control" minlength="7" maxlength="7" title="Colocar 7 caracteres" placeholder="Ingrese el token" name="token" required onblur="quitarespacios(this);" onkeydown="sinespacio(this);">
+            <input type="text" style="background-color:rgb(240, 244, 245);" onkeypress="return clave1(event);"  autocomplete = "off" class="form-control" minlength="7" maxlength="7" title="Colocar 7 caracteres" placeholder="Ingrese el token" name="token" required onblur="quitarespacios(this);" onkeydown="sinespacio(this);">
            
             </div>
             
-        
+         
             
             <div class="d-grid">
               <button type="submit" name="accion" value="ingresar" class="btn btn-primary btn-block">Ingresar</button>
@@ -199,5 +199,5 @@ body {
   </div>
 
 </body>
-<script type="text/javascript" src="js/evitar_reenvio.js"></script>
+<script type="text/javascript" src="../../js/evitar_reenvio.js"></script>
 </html>

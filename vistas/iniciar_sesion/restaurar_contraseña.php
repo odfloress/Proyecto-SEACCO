@@ -9,9 +9,23 @@ if(!isset($_SESSION['recuperacion'])){
         
 }
 include '../../controladores/co_restablecer_contraseña.php';
-
-
 ?>
+
+<?php 
+       include '../../conexion/conexion.php';
+       $minima_contraseña = "SELECT * FROM tbl_parametros WHERE PARAMETRO='MIN_CONTRASENA'";
+       $resultado_minima = mysqli_query($conn, $minima_contraseña);
+            while($mostrar_minima = mysqli_fetch_assoc($resultado_minima)) {
+                  $parametro_min = $mostrar_minima["VALOR"];
+            }
+?>
+<?php
+       $maxima_contraseña = "SELECT * FROM tbl_parametros WHERE PARAMETRO='MAX_CONTRASENA'";
+       $resultado_maxima = mysqli_query($conn, $maxima_contraseña);
+       while($mostrar_maxima = mysqli_fetch_assoc($resultado_maxima)) {
+                  $parametro_max = $mostrar_maxima["VALOR"];
+            }
+ ?>
 <script>
   function clave1(e) {
   key = e.keyCode || e.which;
@@ -55,7 +69,7 @@ body {
 
 </style>
 
-
+<script type="text/javascript" src="../../js/evita_ver_codigo_utilizando_teclas.js"></script>
 </head>
 <!-- oncopy="return false" onpaste="return false"  esto no permite copiar ni pegar -->
 <body style="background-color:rgb(241, 243, 243);" oncopy="return false" onpaste="return false">
@@ -80,13 +94,13 @@ body {
            
             <div class="container mt-3">
 
-            
-                <label for="sel1" class="form-label">Usuario:</label>
-                <input type="text" name="" value="<?php $usuario = $_SESSION; echo $usuario['nombre']; ?>" class="form-control" readonly>
+          
+          
+                <input type="hidden" name="" value="<?php $usuario = $_SESSION; echo $usuario['nombre']; ?>" class="form-control" readonly>
                 <div class="mb-3">
                 <label for="sel1" class="form-label">Nueva contraseña</label>
                 <div class="input-group mb-3">
-                <input type="password" name="nueva_contrasena" id="id_password" value="" class="form-control"  minlength="8" maxlength="30" onkeypress="return clave1(event);" required onblur="quitarespacios(this);" onkeyup="sinespacio(this);" pattern="(?=.*[\d])(?=.*[a-z])(?=.*[A-Z]).{8,}">
+                <input type="password" name="nueva_contrasena" id="id_password" value="" class="form-control"  minlength="<?php echo $parametro_min;?>" maxlength="<?php echo $parametro_max;?>" onkeypress="return clave1(event);" required onblur="quitarespacios(this);" onkeyup="sinespacio(this);" pattern="(?=.*[\d])(?=.*[a-z])(?=.*[A-Z]).{<?php echo $parametro_min;?>,}">
                 <div class="input-group-append ">
                 <div class="input-group-text">
                             <span>
@@ -96,7 +110,7 @@ body {
                 <div class="mb-3">
                 <label for="sel1" class="form-label">Confirmar contraseña</label>
                 <div class="input-group mb-3">
-                <input type="password" name="confirmar_contrasena" id="id_password2" value="" class="form-control" minlength="8" maxlength="30" onkeypress="return clave1(event);" required onblur="quitarespacios(this);" onkeyup="sinespacio(this);" pattern="(?=.*[\d])(?=.*[a-z])(?=.*[A-Z]).{8,}">
+                <input type="password" name="confirmar_contrasena" id="id_password2" value="" class="form-control" minlength="<?php echo $parametro_min;?>" maxlength="<?php echo $parametro_max;?>" onkeypress="return clave1(event);" required onblur="quitarespacios(this);" onkeyup="sinespacio(this);" pattern="(?=.*[\d])(?=.*[a-z])(?=.*[A-Z]).{<?php echo $parametro_min;?>,}">
                 <div class="input-group-append ">
                 <div class="input-group-text">
                             <span>

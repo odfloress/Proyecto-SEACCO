@@ -89,32 +89,56 @@ if (mysqli_num_rows($roles35) > 0)
 
       <!-- Modal body -->
       <div class="modal-body">
-      <?php while ($filas= mysqli_fetch_assoc($result)){
+      <?php
+          include '../../conexion/conexion.php';
+          $contactos = "SELECT * FROM tbl_nuestros_contactos WHERE ID_CONTACTO=1";
+          $Resultado_contactos= mysqli_query($conn, $contactos);
+            while($mostrar_contactos = mysqli_fetch_assoc($Resultado_contactos)) {
+                      $ID_CONTACTO = $mostrar_contactos["ID_CONTACTO"];
+                     $TELEFONO = $mostrar_contactos["TELEFONO"];
+                     $CORREO_PARA_CLIENTES = $mostrar_contactos["CORREO"];
+                     $DIRECCION = $mostrar_contactos["DIRECCION"];
+                     $FACEBOOK = $mostrar_contactos["FACEBOOK"];
+                     $INSTAGRAM = $mostrar_contactos["INSTAGRAM"];
 
-?>
+                   }
+        ?>
+        <?php
+          $correo_para_empleados = "SELECT * FROM tbl_nuestros_contactos WHERE ID_CONTACTO=2";
+          $Resultado_correo_para_empleados = mysqli_query($conn, $correo_para_empleados);
+            while($mostrar_correo_para_empleados = mysqli_fetch_assoc($Resultado_correo_para_empleados)) {
+                     $CORREO_EMPLEADOS = $mostrar_correo_para_empleados["CORREO"];
+                   }
+        ?>
+     
           <form action="" method="post">
+       
           <!-- <label for="">ID Contactos</label> -->
-          <input type="hidden" name="id_contacto" class="form-control " readonly value="<?php echo $filas['ID_CONTACTO'] ?>" placeholder="Ingrese su id">
+          <input type="hidden" name="id_contacto" class="form-control " readonly value="<?php echo $ID_CONTACTO; ?>" placeholder="Ingrese su id">
            <br>
 
-          <label for="">Número teléfono</label>
-          <input  type="text" autocomplete="off" name="telefono" value="<?php echo $filas['TELEFONO'] ?>" class="form-control"  placeholder="Numero de celular"  required minlength="8" onkeypress="return solonumero(event)" maxlength="8" pattern="[0-9]+[1-9]+[0-9]+" title="8 caracteres y no todos ceros">
+          <label for="">Número teléfono:</label>
+          <input  type="text" autocomplete="off" name="telefono" value="<?php echo $TELEFONO; ?>" class="form-control"  placeholder="Numero de celular"  required minlength="8" onkeypress="return solonumero(event)" maxlength="8" pattern="[0-9]+[1-9]+[0-9]+" title="8 caracteres y no todos ceros">
         
            <br>
 
-           <label for="">Correo</label>
-           <input type="email" name="correo" class="form-control" value="<?php echo $filas['CORREO'] ?>" placeholder="Opcional Ingrese su correo" maxlength="255">
+           <label for="">Correo para clientes:</label>
+           <input type="email" name="correo" class="form-control" value="<?php echo $CORREO_PARA_CLIENTES; ?>" placeholder="Opcional Ingrese su correo" maxlength="255">
            <br>
 
-           <label for="">Dirección</label>
-           <input type="text" name="direccion" class="form-control " maxlength="255" value="<?php echo $filas['DIRECCION'] ?>" placeholder="Ingrese su direccion" onkeyup="mayus(this);"  >
+           <label for="">Correo para Empleados:</label>
+           <input type="email" name="correo_empleados" class="form-control" value="<?php echo $CORREO_EMPLEADOS; ?>" placeholder="Opcional Ingrese su correo" maxlength="255">
            <br>
 
-            <label for="">Facebook</label>
-            <input type="text" name="facebook" class="form-control " value="<?php echo $filas['FACEBOOK'] ?>"placeholder="Ingrese su facebook"  maxlength="255">
+           <label for="">Dirección:</label>
+           <input type="text" name="direccion" class="form-control " maxlength="255" value="<?php echo $DIRECCION; ?>" placeholder="Ingrese su direccion" onkeyup="mayus(this);"  >
+           <br>
+
+            <label for="">Facebook:</label>
+            <input type="text" name="facebook" class="form-control " value="<?php echo $FACEBOOK; ?>"placeholder="Ingrese su facebook"  maxlength="255">
             <br>
-            <label for="">Instagram</label>
-            <input type="text" name="instagram" class="form-control " value="<?php echo $filas['INSTAGRAM'] ?>" placeholder="Ingrese su instagram" maxlength="255" >
+            <label for="">Instagram:</label>
+            <input type="text" name="instagram" class="form-control " value="<?php echo $INSTAGRAM ?>" placeholder="Ingrese su instagram" maxlength="255" >
             <br>       
   
       </div>
@@ -133,9 +157,7 @@ if (mysqli_num_rows($roles35) > 0)
                 </div><?php 
                           }
                         ?>
-                     <?php 
-                          }
-                        ?>
+                     
                 </form> 
             
                
@@ -144,6 +166,7 @@ if (mysqli_num_rows($roles35) > 0)
      </div>
             <!-- /.card -->
           </div>
+
           <!-- /.col -->
         </div>
         <!-- /.row -->
