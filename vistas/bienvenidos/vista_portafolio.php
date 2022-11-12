@@ -44,6 +44,7 @@
 .icon-bar a {
   display: block;
   text-align: center;
+ 
   padding: 16px;
   transition: all 0.3s ease;
   color: white;
@@ -82,7 +83,14 @@
 .content {
   margin-left: 75px;
   font-size: 30px;
+
+  
 }
+.w3-row-padding {
+  
+  margin-left: 40px;
+  
+  }
 </style>
 <!-- inicio de estilos para redes sociales -->
 </head>
@@ -94,7 +102,7 @@
       $resultB4 = mysqli_query($conn, $sqlB4);
       while($rowB4 = mysqli_fetch_assoc($resultB4)) {
       ?>
-<div class="icon-bar">
+<div class="icon-bar" >
   <a href="<?php echo $rowB4['FACEBOOK'] ?>" class="facebook"><i class="fa fa-facebook"></i></a> 
   <a href="<?php echo $rowB4['INSTAGRAM'] ?>" class="youtube"><i class="fa fa-instagram"></i></a>
 </div>
@@ -109,7 +117,7 @@
       <a href="http://localhost/SEACCO/vistas/bienvenidos/vista_portafolio.php" class="w3-bar-item w3-button w3-wide"><i class="fa fa-th"></i> Portafolio</a>
       <!-- Right-sided navbar links -->
       <div class="w3-right w3-hide-small">        
-      <a href="http://localhost/SEACCO/vistas/bienvenidos/index_solicitud_empleo.php" class="w3-bar-item w3-button"><i class="fa fa-user"></i> Solicitud de Empleo</a>
+      <a href="http://localhost/SEACCO/vistas/bienvenidos/index_solicitud_empleo.php" class="w3-bar-item w3-button"><i class="fa fa-user"></i> Solicitar Empleo</a>
       <a href="http://localhost/SEACCO/vistas/bienvenidos/vista_cotizar.php" class="w3-bar-item w3-button"><i class="fa fa-list-alt"></i> Cotizar Proyecto</a>
 
       <a href="#contact" class="w3-bar-item w3-button"><i class="fa fa-envelope"></i> Contáctanos</a>       
@@ -267,7 +275,7 @@
                                          <!-- inicio card -->  
                                         <h3 class="w3-center"><b>Catálogos de <?php echo $nombre_contructora; ?></b></h3> 
                                          
-                                        <div class="w3-row-padding " style="margin-top:64px">
+                                        <div  class="w3-row-padding " style="margin-top:64px">
 
                                         <?php 
                                         include '../../conexion/conexion.php';
@@ -277,12 +285,14 @@
                                         
                                         ?>
                                           <!-- inicio card 1 -->
-                                        <div class="w3-col w3-third w3-margin-bottom">
+                                        <div   class="w3-col w3-third w3-margin-bottom">
                                             <div class="w3-card">
                                             <img src="<?php echo $row["RUTA"]; ?>" alt="Jane" style="width:100%" width="500" height="300">
-                                              <div class="w3-container">
-                                                <h3><?php echo $row["NOMBRE_CATALOGO"]; ?></h3>
-                                                <textarea readonly  style="background-color: white; border: white;" class="form-control" name="" id="" cols="40" rows="5"><?php echo $row["DESCRIPCION"]; ?></textarea>
+                                              <div class="w3-container" >
+                                              <br>
+                                              <h3><b><?php echo $row["NOMBRE_CATALOGO"]; ?> </b></h3>
+                                                <!-- <textarea readonly  style="background-color: white; border: white; font-weight: bold; text-align:center;" class="form-control" cols="1" rows="1"> <?php echo $row["NOMBRE_CATALOGO"]; ?> </textarea> -->
+                                                <textarea readonly  style="background-color: white; border: white;" class="form-control" name="" id="" cols="40" rows="4"><?php echo $row["DESCRIPCION"]; ?></textarea>
                                                
                                               
                                               <!-- inicio boton informacion -->

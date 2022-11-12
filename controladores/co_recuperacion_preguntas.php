@@ -3,8 +3,8 @@
   
 
   // //Variables para recuperar la información de los campos de la vista preguntas_seguridad
-  $id_pregunta=(isset($_POST['preguntas']))?$_POST['preguntas']:"";
-  $respuesta=(isset($_POST['respuesta']))?$_POST['respuesta']:"";
+  $id_pregunta=mysqli_real_escape_string($conn, (isset($_POST['preguntas']))?$_POST['preguntas']:"");
+  $respuesta=mysqli_real_escape_string($conn, (isset($_POST['respuesta']))?$_POST['respuesta']:"");
   $usuario = $_SESSION; 
 
   $accion=(isset($_POST['accion']))?$_POST['accion']:"";

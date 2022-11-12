@@ -1,16 +1,17 @@
 <?php
   require '../../conexion/conexion.php';
-  $sql = "SELECT * FROM tbl_nuestros_contactos";
-  $result = mysqli_query($conn, $sql);
+  
 
 
   // //Variables para recuperar la información de los campos de la vista categorias de productos
   $id_contacto=(isset($_POST['id_contacto']))?$_POST['id_contacto']:"";
   $telefono=(isset($_POST['telefono']))?$_POST['telefono']:"";
   $correo=(isset($_POST['correo']))?$_POST['correo']:"";
+  $correo_empleados=(isset($_POST['correo_empleados']))?$_POST['correo_empleados']:"";
   $direccion=(isset($_POST['direccion']))?$_POST['direccion']:"";
   $facebook=(isset($_POST['facebook']))?$_POST['facebook']:"";
   $instagram=(isset($_POST['instagram']))?$_POST['instagram']:"";
+  
   
   $usuario1 = $_SESSION;
   
@@ -52,6 +53,8 @@
       //para editar en la tabla mysl      
       case "editar";
       $sql2 = "UPDATE tbl_nuestros_contactos SET TELEFONO='$telefono', CORREO='$correo', DIRECCION='$direccion', FACEBOOK='$facebook',  INSTAGRAM='$instagram' WHERE ID_CONTACTO='$id_contacto'";
+      $sql77= "UPDATE tbl_nuestros_contactos SET CORREO='$correo_empleados' WHERE ID_CONTACTO=2 ";
+      $resultado77 = mysqli_query($conn, $sql77);
                 if (mysqli_query($conn, $sql2)) {
                   // inicio inserta en la tabla bitacora
                   $sql8 = "INSERT INTO tbl_bitacora (USUARIO, ACCION, OBSERVACION)
