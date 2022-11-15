@@ -135,13 +135,13 @@ body {
             <div class="row">
                 <div class="col">
                   <label for="email"  class="form-label">Nombre:</label>
-                  <input style="background-color:rgb(240, 244, 245);" type="text"     onkeyup="quitarespacios(this); sinespacio(this); "  autocomplete="off"  value="<?php echo "$nombre"; ?>" 
+                  <input style="background-color:rgb(240, 244, 245);" type="text"     onkeyup="un_espacio(this);"  autocomplete="off"  value="<?php echo "$nombre"; ?>" 
                    minlength="3" maxlength="30" class="form-control"  placeholder="Ingrese su primer nombre" name="nombre" required
                   onkeypress="return soloLetras(event);">
                 </div>
                 <div class="col">
                   <label for="pwd" class="form-label">Apellido:</label>
-                  <input style="background-color:rgb(240, 244, 245);" type="text" onkeyup="quitarespacios(this); sinespacio(this); "  autocomplete="off" value="<?php echo "$apellido"; ?>"
+                  <input style="background-color:rgb(240, 244, 245);" type="text" onkeyup="un_espacio(this);"  autocomplete="off" value="<?php echo "$apellido"; ?>"
                    onkeyup="mayus(this);" minlength="3" maxlength="30" class="form-control"  placeholder="Ingrese su primer apellido" name="apellido" 
                    required onkeypress="return soloLetras(event);"  >
                 </div>
