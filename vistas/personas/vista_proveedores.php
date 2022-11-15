@@ -111,11 +111,11 @@ if (mysqli_num_rows($roles35) > 0)
                     <input type="text" onkeyup="un_espacio(this);" class="form-control" name="sector_comercial"  value="<?php echo $sector_comercial; ?>" required value="" placeholder="" id="txtsectorcomercial" autocomplete = "off" onkeypress="return soloLetras(event);" minlength="4" maxlength="50" onkeyup="mayus(this);" >
                     <br>
                     <label for="">Dirección:</label>
-                    <TEXtarea  style="background-color: white;" onkeyup="un_espacio(this);" name="direccion" class="form-control" id="" cols="40" rows="5"
+                    <TEXtarea  style="background-color: white;" onkeyup="un_espacio(this);" name="direccion" class="form-control" id="" required cols="40" rows="5"
                     autocomplete = "off"  onkeypress="return soloLetras(event);" minlength="3" maxlength="245"  ><?php echo $direccion; ?></TEXtarea>
                     <br>
                     <label for="">Teléfono</label>
-                    <input onblur="quitarespacios(this);" onkeydown="sinespacio(this);"  onkeyup="quitarespacios1(this);" type="text" class="form-control" name="telefono" value="" value="<?php echo $telefono; ?>"  placeholder="" id="txttelefono" autocomplete = "off" required minlength="8" maxlength="8" placeholder="" pattern="[0-9]+[1-9]+[0-9]+" title="8 caracteres y no todos ceros" onkeypress="return solonumero(event)" >
+                    <input onblur="quitarespacios(this);" onkeydown="sinespacio(this);"  onkeyup="quitarespacios1(this);" type="text" min="8" class="form-control" name="telefono" value="" value="<?php echo $telefono; ?>"  placeholder="" id="txttelefono" autocomplete = "off" required minlength="8" maxlength="8" placeholder="" pattern="[0-9]+[1-9]+[0-9]+" title="8 caracteres y no todos ceros" onkeypress="return solonumero(event)" >
                     <br>
                     <label for="">Correo</label>
                     <input onblur="quitarespacios(this);" onkeyup="quitarespacios1(this);"  onkeydown="sinespacio(this);"   type="email" class="form-control" minlength="3" maxlength="50" name="correo" required value=""  value="<?php echo $correo; ?>" placeholder="" id="txtcorreo"  autocomplete = "off" >
@@ -235,22 +235,26 @@ if (mysqli_num_rows($roles35) > 0)
                                               <input type="hidden" class="form-control" name="id_proveedor" readonly required value="<?php echo $filas['ID_PROVEEDOR'] ?>" placeholder="" id="txtPrecio_Compra"   >
                                               <br>
                                               <label for="">Nombre Proveedor:</label>
-                                              <input onkeyup="un_espacio(this);" onkeypress="return soloLetras(event);" type="text" class="form-control" name="nombre" autocomplete = "off" required value="<?php echo $filas['NOMBRE'] ?>" placeholder="" id="txtPrecio_Compra" onkeypress="return soloLetras(event);" onkeyup="mayus(this);" >
+                                              <input onkeyup="un_espacio(this);" onkeypress="return soloLetras(event);" type="text" class="form-control" name="nombre" autocomplete = "off" required value="<?php echo $filas['NOMBRE'] ?>" placeholder="" id="txtPrecio_Compra" onkeypress="return soloLetras(event);" onkeyup="mayus(this);" minlength="4" maxlength="50">
                                               <br>
                                               <label for="">Nombre Referencia:</label>
-                                             <input onkeyup="un_espacio(this);" onkeypress="return soloLetras(event);"  type="text" class="form-control" name="nombre_referencia" autocomplete = "off" required value="<?php echo $filas['NOMBRE_REFERENCIA'] ?>" placeholder="" id="txtnombrer" onkeypress="return soloLetras(event);" onkeyup="mayus(this);" >
+                                             <input onkeyup="un_espacio(this);" onkeypress="return soloLetras(event);"  type="text" class="form-control" name="nombre_referencia" autocomplete = "off" required value="<?php echo $filas['NOMBRE_REFERENCIA'] ?>" placeholder="" id="txtnombrer" onkeypress="return soloLetras(event);" onkeyup="mayus(this);" minlength="4" maxlength="50">
                                              <br>
                                              <label for="">Sector Comercial:</label>
-                                             <input onkeyup="un_espacio(this);" onkeypress="return soloLetras(event);"  type="text" class="form-control" name="sector_comercial" autocomplete = "off" required value="<?php echo $filas['SECTOR_COMERCIAL'] ?>" placeholder="" id="txtsectorcomercial" onkeypress="return soloLetras(event);" onkeyup="mayus(this);" >
+                                             <input onkeyup="un_espacio(this);" onkeypress="return soloLetras(event);"  type="text" class="form-control" name="sector_comercial" autocomplete = "off" required value="<?php echo $filas['SECTOR_COMERCIAL'] ?>" placeholder="" id="txtsectorcomercial" onkeypress="return soloLetras(event);" onkeyup="mayus(this);" minlength="4" maxlength="50">
                                              <br>
                                              <label for="">Dirección:</label>
-                                             <input onkeyup="un_espacio(this);"   type="text" class="form-control" name="direccion" autocomplete = "off" required value="<?php echo $filas['DIRECCION'] ?>" placeholder="" id="txtdireccionproveedor"  onkeyup="mayus(this);" >
+                                             
+                                             
+                                             <TEXtarea  style="background-color: white;" onkeyup="un_espacio(this);" name="direccion" class="form-control" id="" cols="40" rows="5"
+                                             autocomplete = "off"  onkeypress="return soloLetras(event);" minlength="3" maxlength="245"  required><?php echo $filas['DIRECCION'] ?></TEXtarea>
+                                             
                                              <br>
                                              <label for="">Teléfono:</label>
                                              <input onblur="quitarespacios(this);" onkeydown="sinespacio(this);"  onkeyup="quitarespacios1(this);" type="text" class="form-control" name="telefono" autocomplete = "off" required value="<?php echo $filas['TELEFONO'] ?>" placeholder="" id="txttelefono" minlength="8" maxlength="8" required value="" placeholder="" required pattern="[0-9]+[1-9]+[0-9]+" title="8 caracteres y no todos ceros" onkeypress="return solonumero(event)"  >
                                              <br>
                                              <label for="">Correo:</label>
-                                             <input onblur="quitarespacios(this);" onkeydown="sinespacio(this);"  onkeyup="quitarespacios1(this);"  type="email" class="form-control" name="correo" autocomplete = "off" required value="<?php echo $filas['CORREO'] ?>" placeholder="" id="txtcorreo"  >
+                                             <input onblur="quitarespacios(this);" onkeydown="sinespacio(this);"  onkeyup="quitarespacios1(this);"  type="email" class="form-control" name="correo" autocomplete = "off" required value="<?php echo $filas['CORREO'] ?>" placeholder="" id="txtcorreo" minlength="3" maxlength="50" >
                                              <br>   
                                            </div>
                                 <!-- Fin Cuerpo del modal Modal -->
@@ -345,6 +349,8 @@ if (mysqli_num_rows($roles35) > 0)
 <script src="../../plantilla/AdminLTE-3.2.0/plugins/datatables-buttons/js/dataTables.buttons.min.js"></script>
 <script src="../../plantilla/AdminLTE-3.2.0/plugins/datatables-buttons/js/buttons.bootstrap4.min.js"></script>
 <script src="../../plantilla/AdminLTE-3.2.0/plugins/jszip/jszip.min.js"></script>
+<script src="../../plantilla/AdminLTE-3.2.0/plugins/datatables-buttons/js/buttons.html5.min.js"></script> 
+ <script src="../../plantilla/AdminLTE-3.2.0/plugins/datatables-buttons/js/buttons.print.min.js"></script>
 
 
 <script src="../../plantilla/AdminLTE-3.2.0/plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
@@ -396,7 +402,26 @@ if (mysqli_num_rows($roles35) > 0)
                          },
                          
                          "responsive": true, "lengthChange": true, "autoWidth": false,
-                          "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"],                   
+                          "buttons": ["excel",  "colvis"],  
+                          buttons:[ 
+    {
+            extend:    'excelHtml5',
+            text:      'Exportar a Excel',
+            titleAttr: 'Exportar a Excel',
+            title:     'REPORTE DE PROVEEDORES',
+            exportOptions: {
+                columns: [1,2,3,4,5,6,7]
+            }
+    },
+    {
+            extend:    'colvis',
+            text:      'Visualizar',
+            
+           
+           
+    }
+   
+]                 
         
     })
 
@@ -472,7 +497,7 @@ if (mysqli_num_rows($roles35) > 0)
 					
 					margin:{ top: 30 },
           
-          columnStyles: {
+          columnStyles: {    
       
             0: {cellWidth: 11},
             1: {cellWidth: 41}, 
