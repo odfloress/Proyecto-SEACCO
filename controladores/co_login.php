@@ -48,12 +48,12 @@
             if (mysqli_num_rows($result) > 0) 
             {
               // inicio inserta en la tabla bitacora
-              $sql = "INSERT INTO tbl_bitacora (USUARIO, ACCION, OBSERVACION)
-              VALUES ('$usuario', 'INTENTO', 'NO LOGRO INGRESAR YA QUE SU CUENTA ESTA INACTIVA')";
+              $sql = "INSERT INTO tbl_bitacora (USUARIO, OPERACION, PANTALLA, CAMPO, ID_REGISTRO, VALOR_ORIGINAL, VALOR_NUEVO)
+              VALUES ('$usuario', 'INTENTO', 'LOGIN', 'NINGUNO', 2,  'ESTADO INTACTIVO', 'ESTADO INTACTIVO')";
               if (mysqli_query($conn, $sql)) {} else {}
               // fin inserta en la tabla bitacora
               echo '<script>
-                       alert("Su cuenta esta inactiva por favor contactarse con el administrador");
+                       alert("Su cuenta esta inactiva, por favor contactarse con el administrador");
                        window.location.href="/SEACCO/_login";
                     </script>';
                       mysqli_close($conn);
@@ -68,8 +68,8 @@
                         $sql8 = "UPDATE tbl_usuarios SET ID_ESTADO_USUARIO=3 WHERE usuario='$usuario'";
                         if ($conn->query($sql8) === TRUE) {
                           // inicio inserta en la tabla bitacora
-                            $sql = "INSERT INTO tbl_bitacora (USUARIO, ACCION, OBSERVACION)
-                            VALUES ('$usuario', 'INTENTO', 'NO LOGRO INGRESAR YA QUE SU CUENTA ESTA BLOQUEADA')";
+                            $sql = "INSERT INTO tbl_bitacora (USUARIO, OPERACION, PANTALLA, CAMPO, ID_REGISTRO, VALOR_ORIGINAL, VALOR_NUEVO)
+                            VALUES ('$usuario', 'INTENTO', 'LOGIN', 'NINGUNO', 3,  'ESTADO BLOQUEADO', 'ESTADO BLOQUEADO')";
                             if (mysqli_query($conn, $sql)) {} else {}
                             // fin inserta en la tabla bitacora
                              echo '<script>
@@ -88,8 +88,8 @@
                               {
                                 $_SESSION['nombre'] = $usuario;
                                 // inicio inserta en la tabla bitacora
-                                $sql = "INSERT INTO tbl_bitacora (USUARIO, ACCION, OBSERVACION)
-                                VALUES ('$usuario', 'INTENTO', 'NO LOGRO INGRESAR YA QUE NO HABIA CONFIGURADO LAS PREGUNTAS DE SEGURIDAD')";
+                                $sql = "INSERT INTO tbl_bitacora (USUARIO, OPERACION, PANTALLA, CAMPO, ID_REGISTRO, VALOR_ORIGINAL, VALOR_NUEVO)
+                            VALUES ('$usuario', 'INTENTO', 'LOGIN', 'NINGUNO', 4,  'ESTADO NUEVO', 'DEBE CONFIGURAR SUS PREGUNTAS')";
                                 if (mysqli_query($conn, $sql)) {} else {}
                                 // fin inserta en la tabla bitacora
                                 echo '<script>
@@ -107,8 +107,8 @@
                                       {
                                         $_SESSION['nombre'] = $usuario;
                                         // inicio inserta en la tabla bitacora
-                                        $sql = "INSERT INTO tbl_bitacora (USUARIO, ACCION, OBSERVACION)
-                                        VALUES ('$usuario', 'INTENTO', 'NO LOGRO INGRESAR YA QUE NO HABIA CONFIGURADO LAS PREGUNTAS DE SEGURIDAD')";
+                                        $sql = "INSERT INTO tbl_bitacora (USUARIO, OPERACION, PANTALLA, CAMPO, ID_REGISTRO, VALOR_ORIGINAL, VALOR_NUEVO)
+                            VALUES ('$usuario', 'INTENTO', 'LOGIN', 'NINGUNO', 1,  'ESTADO ACTIVO', 'DEBE CONFIGURAR SUS PREGUNTAS')";
                                         if (mysqli_query($conn, $sql)) {} else {}
                                         // fin inserta en la tabla bitacora
                                         echo '<script>
@@ -133,8 +133,8 @@
                                                   header('Location: vistas/tablero/vista_tablero.php');
 
                                                   // inicio inserta en la tabla bitacora
-                                                  $sql = "INSERT INTO tbl_bitacora (USUARIO, ACCION, OBSERVACION)
-                                                  VALUES ('$usuario', 'INGRESO', 'EL USUARIO $usuario (SUPERADMIN) SE LOGUIO')";
+                                                  $sql = "INSERT INTO tbl_bitacora (USUARIO, OPERACION, PANTALLA, CAMPO, ID_REGISTRO, VALOR_ORIGINAL, VALOR_NUEVO)
+                                                  VALUES ('$usuario', 'INGRESO', 'LOGIN', 'NINGUNO', 1,  'ESTADO ACTIVO', 'SE LOGUEO')";
                                                   if (mysqli_query($conn, $sql)) {} else {}
                                                   // fin inserta en la tabla bitacora
 
@@ -176,8 +176,8 @@
               $sql7 = "UPDATE tbl_usuarios SET ID_ESTADO_USUARIO=3, intentos=intentos+1 WHERE usuario='$usuario'";
               if ($conn->query($sql7) === TRUE) {
                 // inicio inserta en la tabla bitacora
-                $sql = "INSERT INTO tbl_bitacora (USUARIO, ACCION, OBSERVACION)
-                VALUES ('$usuario', 'BLOQUEO', 'SELE BLOQUEO LA CUENTA POR INTENTOS FALLIDOS')";
+                $sql = "INSERT INTO tbl_bitacora (USUARIO, OPERACION, PANTALLA, CAMPO, ID_REGISTRO, VALOR_ORIGINAL, VALOR_NUEVO)
+                VALUES ('$usuario', 'INTENTO', 'LOGIN', 'NINGUNO', 3,  'NINGUNA', 'ALCANZO INTENTOS MAXIMOS')";
                 if (mysqli_query($conn, $sql)) {} else {}
                 // fin inserta en la tabla bitacora
                 echo '<script>
@@ -193,8 +193,8 @@
                     $sql =  "UPDATE tbl_usuarios SET intentos=intentos+1 WHERE usuario='$usuario'";
                       if ($conn->query($sql) === TRUE) {
                         // inicio inserta en la tabla bitacora
-                        $sql = "INSERT INTO tbl_bitacora (USUARIO, ACCION, OBSERVACION)
-                        VALUES ('$usuario', 'INTENTO', 'INTENTO FALLIDO POR CONTRASEÑA INCORRECTA')";
+                        $sql = "INSERT INTO tbl_bitacora (USUARIO, OPERACION, PANTALLA, CAMPO, ID_REGISTRO, VALOR_ORIGINAL, VALOR_NUEVO)
+                        VALUES ('$usuario', 'INTENTO', 'LOGIN', 'NINGUNO', 1,  'NINGUNA', 'FALLO DE CLAVE')";
                         if (mysqli_query($conn, $sql)) {} else {}
                         // fin inserta en la tabla bitacora
                           echo '<script>

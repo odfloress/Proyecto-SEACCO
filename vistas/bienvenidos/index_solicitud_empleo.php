@@ -163,9 +163,9 @@ body {
                 </div>
                 <div class="col">
                   <label for="pwd" class="form-label">DNI:</label>
-                  <input style="background-color:rgb(240, 244, 245);" type="text" onkeyup="quitarespacios(this); sinespacio(this); "  autocomplete="off" value="<?php echo "$dni"; ?>"  
-                  class="form-control"  placeholder="DNI" name="dni" minlength="13" required maxlength="13" onkeypress="return solonumero(event)" 
-                  required pattern="[0-9]+[1-9]+" title="13 caracteres y no todos ceros" >
+                  <input minlength="13" style="background-color:rgb(240, 244, 245);" type="text" onkeyup="quitarespacios(this); sinespacio(this); "  autocomplete="off" value="<?php echo "$dni"; ?>"  
+                  class="form-control"  placeholder="DNI" name="dni"  required maxlength="13" onkeypress="return solonumero(event)" 
+                  required pattern="[0-9]+[1-9].{13,}" title="13 caracteres y no todos ceros" >
                 </div>
             </div>
             <div class="row">
