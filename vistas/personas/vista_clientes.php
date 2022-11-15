@@ -112,6 +112,7 @@ if (mysqli_num_rows($roles35) > 0)
                 onkeyup="mayus(this);" minlength="13" maxlength="13" name="codigo" required 
                 value="<?php echo "$codigo"; ?>" placeholder="Ingrese DNI" onkeypress="return solonumero(event)"  pattern="[0-9]+[1-9]+" required>
                 <br>
+                
                 <label for="">Nombre:</label>
                 <input type="text" onkeyup="un_espacio(this);" autocomplete="off"  
                 value="<?php echo "$nombre"; ?>" onkeyup="mayus(this);" minlength="3" maxlength="30" class="form-control"  

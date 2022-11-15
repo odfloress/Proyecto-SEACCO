@@ -141,7 +141,5 @@ if (mysqli_query($conn, $sql3)) {
     }
 
 break;
-
-
 }
 ?>

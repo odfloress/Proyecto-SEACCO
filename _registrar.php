@@ -121,6 +121,7 @@ body {
                   value="<?php echo "$usuario"; ?>" onkeypress="return clave(event);"  onKeyUP="this.value=this.value.toUpperCase();"  
                   class="form-control" placeholder="Asignar usuario" name="usuario" required minlength="3" maxlength="20">
                 </div>
+                
                 <div class="col">
                   <div class="form-group">
                   <label for="pwd" class="form-label">Contraseña:</label> 

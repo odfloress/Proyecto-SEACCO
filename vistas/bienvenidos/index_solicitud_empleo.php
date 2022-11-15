@@ -139,6 +139,8 @@ body {
                    minlength="3" maxlength="30" class="form-control"  placeholder="Ingrese su primer nombre" name="nombre" required
                   onkeypress="return soloLetras(event);">
                 </div>
+                
+                
                 <div class="col">
                   <label for="pwd" class="form-label">Apellido:</label>
                   <input style="background-color:rgb(240, 244, 245);" type="text" onkeyup="un_espacio(this);"  autocomplete="off" value="<?php echo "$apellido"; ?>"

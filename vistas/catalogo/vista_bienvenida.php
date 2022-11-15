@@ -103,6 +103,7 @@ if (mysqli_num_rows($roles35) > 0)
                 </div>
                 <!-- Fin Cuerpo del modal Modal -->
                 <!-- pie del modal -->
+                
                 <div class="modal-footer">
       	            <button type="submit" name="accion" value="agregar" class="btn btn-primary" >Agregar</button>
                     <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
