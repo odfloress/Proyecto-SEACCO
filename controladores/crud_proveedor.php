@@ -40,12 +40,7 @@
                 $sql1 = "INSERT INTO tbl_proveedores (ID_PROVEEDOR, NOMBRE, NOMBRE_REFERENCIA, SECTOR_COMERCIAL, DIRECCION, TELEFONO, CORREO)
                 VALUES ('$id_proveedor','$nombre','$nombre_referencia','$sector_comercial','$direccion','$telefono','$correo')";
                 if (mysqli_query($conn, $sql1)) {
-                   // inicio inserta en la tabla bitacora
-                   $sql7 = "INSERT INTO tbl_bitacora (USUARIO, ACCION, OBSERVACION)
-                   VALUES ('$usuario1[usuario]', 'INSERTO', 'CREO EL PROVEEDOR ($nombre) EN LA PANTALLA ADMINISTRATIVA DE PROVEEDORES')";
-                    if (mysqli_query($conn, $sql7)) {} else { }
-               // fin inserta en la tabla bitacora
-                    
+                                     
                     echo '<script>
                                 alert("Proveedor creado con exito");
                                 window.location.href="../../vistas/personas/vista_proveedores.php";                   
@@ -75,13 +70,7 @@
               if (mysqli_query($conn, $sql2)) {
 
                  
-                         
-                   // inicio inserta en la tabla bitacora
-                   $sql8 = "INSERT INTO tbl_bitacora (USUARIO, ACCION, OBSERVACION)
-                   VALUES ('$usuario1[usuario]', 'EDITO', 'EDITO LOS CAMPOS DEL PROVEEDOR ($nombre) EN LA PANTALLA ADMINISTRATIVA DE PROVEEDORES')";
-                   
-                    if (mysqli_query($conn, $sql8)) {} else { }
-                  // fin inserta en la tabla bitacora
+
                   echo '<script>
                           alert("Campos del Proveedor editado con exito");
                           window.location.href="../../vistas/personas/vista_proveedores.php";                   
@@ -101,12 +90,7 @@
           }else{
           $sql2 = "UPDATE tbl_proveedores SET NOMBRE='$nombre', NOMBRE_REFERENCIA='$nombre_referencia', SECTOR_COMERCIAL='$sector_comercial',DIRECCION='$direccion', TELEFONO='$telefono', CORREO='$correo' WHERE ID_PROVEEDOR='$id_proveedor'";
                 if (mysqli_query($conn, $sql2)) {
-                  // inicio inserta en la tabla bitacora
-                  $sql8 = "INSERT INTO tbl_bitacora (USUARIO, ACCION, OBSERVACION)
-                  VALUES ('$usuario1[usuario]', 'EDITO', 'RENOMBRO EL PROVEEDOR ($anterior) A ($nombre) EN LA PANTALLA ADMINISTRATIVA DE PROVEEDORES')";
                   
-                   if (mysqli_query($conn, $sql8)) {} else { }
-                 // fin inserta en la tabla bitacora
                  echo '<script>
                  alert("Proveedor editado con exito");
                  window.location.href="../../vistas/personas/vista_proveedores.php";                   
@@ -131,11 +115,7 @@
       $validar_proveedor = "SELECT * FROM tbl_compras WHERE ID_PROVEEDOR='$id_proveedor'";
     $result4 = mysqli_query($conn, $validar_proveedor); 
      if (mysqli_num_rows($result4) > 0) { 
-         // inicio inserta en la tabla bitacora
-         $sql9 = "INSERT INTO tbl_bitacora (USUARIO, ACCION, OBSERVACION)
-         VALUES ('$usuario1[usuario]', 'INTENTO', 'NO LOGRO ELIMINAR YA QUE ESTABA EN USO EL PROVEEDOR ($nombre) EN LA PANTALLA ADMINISTRATIVA DE PROVEEDORES')";
-         if (mysqli_query($conn, $sql9)) {} else { }
-         // fin inserta en la tabla bitacora
+        
          echo '<script>
                  alert("No se puede eliminar el proveedor, ya que esta en uso");
                  window.location.href="../../vistas/personas/vista_proveedores.php";                   
@@ -145,11 +125,7 @@
      }else{
       $sql3 = "DELETE FROM tbl_proveedores WHERE ID_PROVEEDOR='$id_proveedor'";
       if (mysqli_query($conn, $sql3)) {
-        // inicio inserta en la tabla bitacora
-        $sql7 = "INSERT INTO tbl_bitacora (USUARIO, ACCION, OBSERVACION)
-        VALUES ('$usuario1[usuario]', 'ELIMINO', 'ELIMINO EL PROVEEDOR ($nombre) EN LA PANTALLA ADMINISTRATIVA DE PROVEEDORES')";
-         if (mysqli_query($conn, $sql7)) {} else { }
-    // fin inserta en la tabla bitacora
+     
     echo '<script>
         alert("Elimino el proveedor");
         window.location.href="../../vistas/personas/vista_proveedores.php";                   
@@ -158,11 +134,6 @@
      
           
       }else{
-         // inicio inserta en la tabla bitacora
-         $sql10 = "INSERT INTO tbl_bitacora (USUARIO, ACCION, OBSERVACION)
-         VALUES ('$usuario1[usuario]', 'ERROR', 'ERROR AL ELIMINAR EL PROVEEDOR ($anterior) EN LA PANTALLA ADMINISTRATIVA DE PROVEEDORES')";
-          if (mysqli_query($conn, $sql7)) {} else { }
-     // fin inserta en la tabla bitacora
               echo '<script>
                         alert("Error al tratar de eliminar el proveedor");
                     </script>'; mysqli_error($conn);
