@@ -1,7 +1,7 @@
 <?php
 include '../../conexion/conexion.php';
 //para mostrar los datos de la tabla mysql y mostrar en el crud
-$sql = "SELECT * FROM tbl_clientes";
+$sql = "SELECT * FROM tbl_clientes ";
 $result = mysqli_query($conn, $sql);
 
 
@@ -12,6 +12,7 @@ $result = mysqli_query($conn, $sql);
 $id_cliente=(isset($_POST['id_cliente']))?$_POST['id_cliente']:"";
 $codigo=(isset($_POST['codigo']))?$_POST['codigo']:"";
 $nombre=(isset($_POST['nombre']))?$_POST['nombre']:"";
+$nombre_anterior=(isset($_POST['nombre5']))?$_POST['nombre5']:"";
 $apellido=(isset($_POST['apellido']))?$_POST['apellido']:"";
 $correo=(isset($_POST['correo']))?$_POST['correo']:"";
 $telefono=(isset($_POST['telefono']))?$_POST['telefono']:"";
@@ -60,10 +61,12 @@ if(in_array($extencion, $permitidos)){
                 VALUES ('$codigo', '$nombre', '$apellido', '$correo', '$telefono', '$direccionp', '$referencia', '$genero', '$destino$nombreimagen')";
                  $res = mysqli_query($conn, $sql);
                 if($res){
+                    $last_id = $conn->insert_id;
+                        
                     // inicio inserta en la tabla bitacora
-                    $sql = "INSERT INTO tbl_bitacora (USUARIO, ACCION, OBSERVACION)
-                    VALUES ('$usuario1[usuario]', 'INSERTO', 'REGISTRO EL CLIENTE ($nombre) EN LA PANTALLA ADMINISTRATIVA CLIENTES')";
-                    if (mysqli_query($conn, $sql)) {} else {}
+                    $sql9 = "INSERT INTO tbl_bitacora (USUARIO, OPERACION, PANTALLA, CAMPO,ID_REGISTRO, VALOR_ORIGINAL, VALOR_NUEVO)
+                    VALUES ('$usuario1[usuario]', 'INSERTO','CLIENTES', 'NOMBRE','$last_id', '$nombre','NUEVO')";
+                    if (mysqli_query($conn, $sql9)) {} else {}
                     // fin inserta en la tabla bitacora
 
                     echo '<script type="text/javascript">
@@ -81,11 +84,7 @@ if(in_array($extencion, $permitidos)){
 
           
 }else{
-    // inicio inserta en la tabla bitacora
-    $sql = "INSERT INTO tbl_bitacora (USUARIO, ACCION, OBSERVACION)
-    VALUES ('$usuario1[usuario]', 'INTENTO', 'NO LOGRO INSERTAR YA QUE EL ARCHIVO NO ERA IMAGEN EN LA PANTALLA ADMINISTRATIVA CLIENTES')";
-    if (mysqli_query($conn, $sql)) {} else {}
-    // fin inserta en la tabla bitacora
+    
     echo '<script type="text/javascript">
              alert("Archivo no permitido");
              window.location.href="../../vistas/personas/vista_clientes.php";
@@ -130,9 +129,9 @@ if(in_array($extencion, $permitidos))
     if (mysqli_query($conn, $sql2)) 
     {
         // inicio inserta en la tabla bitacora
-        $sql = "INSERT INTO tbl_bitacora (USUARIO, ACCION, OBSERVACION)
-        VALUES ('$usuario1[usuario]', 'EDITO', 'EDITO EL CLIENTE ($nombre) EN LA PANTALLA ADMINISTRATIVA CLIENTES')";
-        if (mysqli_query($conn, $sql)) {} else {}
+        $sql10 = "INSERT INTO tbl_bitacora (USUARIO, OPERACION, PANTALLA, CAMPO,ID_REGISTRO, VALOR_ORIGINAL, VALOR_NUEVO)
+                    VALUES ('$usuario1[usuario]', 'EDITO','CLIENTES', 'NOMBRE','$id_cliente', '$nombre_anterior','$nombre')";
+        if (mysqli_query($conn, $sql10)) {} else {}
          // fin inserta en la tabla bitacora
         echo '<script>
                  alert("Edición exitosa");
@@ -146,11 +145,7 @@ if(in_array($extencion, $permitidos))
          }
          mysqli_close($conn);
 }else{
-    // inicio inserta en la tabla bitacora
-    $sql = "INSERT INTO tbl_bitacora (USUARIO, ACCION, OBSERVACION)
-    VALUES ('$usuario1[usuario]', 'INTENTO', 'NO LOGRO EDITAR YA QUE EL ARCHIVO NO ERA IMAGEN EN LA PANTALLA ADMINISTRATIVA CLIENTES')";
-    if (mysqli_query($conn, $sql)) {} else {}
-    // fin inserta en la tabla bitacora
+    
     echo '<script type="text/javascript">
             alert("Archivo no permitido");
             window.location.href="../../vistas/personas/vista_clientes.php";
@@ -166,11 +161,7 @@ case "eliminar";
 $validar_proveedor = "SELECT * FROM  tbl_proyectos WHERE ID_CLIENTE='$id_cliente'";
     $result4 = mysqli_query($conn, $validar_proveedor); 
      if (mysqli_num_rows($result4) > 0) { 
-         // inicio inserta en la tabla bitacora
-         $sql9 = "INSERT INTO tbl_bitacora (USUARIO, ACCION, OBSERVACION)
-         VALUES ('$usuario1[usuario]', 'INTENTO', 'NO LOGRO ELIMINAR YA QUE ESTABA EN USO EL CLIENTE ($nombre) EN LA PANTALLA ADMINISTRATIVA CLIENTES')";
-         if (mysqli_query($conn, $sql9)) {} else { }
-         // fin inserta en la tabla bitacora
+         
          echo '<script>
                  alert("No se puede eliminar el cliente, ya que esta en uso");
                  window.location.href="../../vistas/personas/vista_clientes.php";                   
@@ -181,9 +172,9 @@ $validar_proveedor = "SELECT * FROM  tbl_proyectos WHERE ID_CLIENTE='$id_cliente
       $sql3 = "DELETE FROM tbl_clientes WHERE ID_CLIENTE='$id_cliente'";
       if (mysqli_query($conn, $sql3)) {
         // inicio inserta en la tabla bitacora
-        $sql7 = "INSERT INTO tbl_bitacora (USUARIO, ACCION, OBSERVACION)
-        VALUES ('$usuario1[usuario]', 'ELIMINO', 'ELIMINO EL CLIENTE ($nombre)')";
-         if (mysqli_query($conn, $sql7)) {} else { }
+        $sql11 = "INSERT INTO tbl_bitacora (USUARIO, OPERACION, PANTALLA, CAMPO, ID_REGISTRO, VALOR_ORIGINAL, VALOR_NUEVO)
+                    VALUES ('$usuario1[usuario]', 'ELIMINO','CLIENTES', 'NOMBRE','$id_cliente', 'ELIMINADO','ELIMINADO')";
+         if (mysqli_query($conn, $sql11)) {} else { }
     // fin inserta en la tabla bitacora
     echo '<script>
         alert("Cliente eliminado con exito");
@@ -193,11 +184,7 @@ $validar_proveedor = "SELECT * FROM  tbl_proyectos WHERE ID_CLIENTE='$id_cliente
      
           
       }else{
-         // inicio inserta en la tabla bitacora
-         $sql10 = "INSERT INTO tbl_bitacora (USUARIO, ACCION, OBSERVACION)
-         VALUES ('$usuario1[usuario]', 'ERROR', 'ERROR AL ELIMINAR EL CLIENTE ($id_cliente) EN LA PANTALLA ADMINISTRATIVA CLIENTES')";
-          if (mysqli_query($conn, $sql7)) {} else { }
-     // fin inserta en la tabla bitacora
+        
               echo '<script>
                         alert("Error al tratar de eliminar el cliente");
                     </script>'; mysqli_error($conn);

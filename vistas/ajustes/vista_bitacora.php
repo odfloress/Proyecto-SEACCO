@@ -100,7 +100,7 @@ include '../../controladores/crud_bitacora.php';
                     <td><?php echo $filas['OPERACION'] ?></td> 
                     <td><?php echo $filas['PANTALLA'] ?></td> 
                     <td><?php echo $filas['CAMPO'] ?></td> 
-                    <td><?php echo $filas['ID_BITACORA'] ?></td> 
+                    <td><?php echo $filas['ID_REGISTRO'] ?></td> 
                     <td><?php echo $filas['VALOR_ORIGINAL'] ?></td> 
                     <td><?php echo $filas['VALOR_NUEVO'] ?></td>                         
                  </tr>  

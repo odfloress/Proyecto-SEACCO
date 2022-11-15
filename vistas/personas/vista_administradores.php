@@ -72,17 +72,17 @@ if (mysqli_num_rows($roles35) > 0)
           <div class="col-sm-2">
             <h1></h1>
             <!-- Inicio de modal de agregar -->
-<div class="container mt-3">
+  <div class="container mt-3">
         <h3>Usuarios</h3> <br>  
         <!-- El Modal -->
     <div class="modal" id="myModal">
         <div class="modal-dialog">
             <div class="modal-content">
-                <!-- Encabezado del modal -->
+                <!----------------------- Encabezado del modal Registro nuevo usuario-->
                 <!-- <form action="" method="post"> -->
                 <form action="" method="post"  class="needs-validation" novalidate enctype="multipart/form-data">
                   <div class="modal-header">
-                      <h4 class="modal-title">Nuevo usuario</h4>
+                      <h4 class="modal-title">Registro nuevo usuario</h4>
                       <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                   </div>
                   <!-- Fin Encabezado del modal -->
@@ -109,7 +109,7 @@ if (mysqli_num_rows($roles35) > 0)
                             }}// finaliza el if y el while
                             ?>
                     </select>
-                      <!-- Inicio del select de rol -->
+
                       <!-- Inicio del select deL estado -->
                       <label for="sel1" class="form-label">Estado:</label>
                       <select class="form-select"  name="estado" required >
@@ -133,18 +133,18 @@ if (mysqli_num_rows($roles35) > 0)
                       
 
 
-                      <label for="">Nombres:</label>
-                      <input type="text" class="form-control" name="nombre"  required value="" placeholder="" autocomplete="on" onkeyup="mayus(this);" onkeypress="return soloLetras(event);" maxlength="30">
+                      <label for="">Nombre:</label>
+                      <input type="text" class="form-control" name="nombre"  required value="" placeholder="" autocomplete="on" onkeyup="mayus(this);" onkeypress="return soloLetras(event);" onkeyup="quitarespacios(this); sinespacio(this);"  maxlength="30" id="campoNombre">
                                 <!-- Mensaje de la validacion -->
                                 <div class="invalid-feedback">
-                                    Favos ingrese un nombre
+                                    Favor ingrese un nombre
                                 </div >
 
                       <label for="">Apellidos:</label>
-                      <input type="text" class="form-control" name="apellido"  required value="" placeholder="" autocomplete="off" onkeyup="mayus(this);"  onkeypress="return soloLetras(event);" maxlength="30" >
+                      <input type="text" class="form-control" name="apellido"  onkeyup="un_espacio(this);" required value="" placeholder="" autocomplete="off" onkeyup="mayus(this);"  onkeypress="return soloLetras(event);"  maxlength="30"  >
                                 <!-- Mensaje de la validacion -->
                                 <div class="invalid-feedback">
-                                    Favos ingrese un Apellido
+                                    Favor ingrese un Apellido
                                 </div >
 
                       <label for="">Usuario:</label>
@@ -166,6 +166,9 @@ if (mysqli_num_rows($roles35) > 0)
 
                       <label for="">Correo:</label>
                       <input type="email" class="form-control" name="correo" required value="" autocomplete="off" placeholder="" > 
+                                <div class="invalid-feedback">
+                                  Favor ingrese un correo electrónico
+                                </div>
                       
                       <label for="pwd" class="form-label">Genero:</label>
                       <select style="background-color:rgb(240, 244, 245);" value="<?php echo "$genero"; ?>" class="form-select" id="lista1" name="genero" required >
@@ -193,10 +196,10 @@ if (mysqli_num_rows($roles35) > 0)
                       </select> -->
 
                       <label for="">DNI:</label>
-                      <input type="text" class="form-control" name="dni" required value="" autocomplete="off" minlength="13" maxlength="13" onkeypress="return solonumero(event)" required pattern="[0-9]+[1-9]+[0-9]" title="13 caracteres y no todos ceros">
+                      <input type="text" class="form-control" name="dni" required value="" autocomplete="off" minlength="13" maxlength="13" onkeypress="return solonumero(event)" required pattern="(?!0{13})^[0-9][0-9]{12}$" title="13 caracteres y no todos ceros">
                             <!-- Mensaje de la validacion -->
                             <div class="invalid-feedback">
-                                    Favor ingrese un DNI sin guiones ni espacios
+                                    Favor ingrese un DNI sin guiones ni espacios y que contenga trece digitos
                               </div >
 
                       <label for="pwd" class="form-label">Profesión:</label>
@@ -221,19 +224,22 @@ if (mysqli_num_rows($roles35) > 0)
                       <input type="text" class="form-control" name="profesion" required value="" autocomplete="off" onkeyup="mayus(this);" maxlength="30" > -->
 
                       <label for="">Dirección:</label>
-                      <input type="text" class="form-control" name="direccion" required value="" autocomplete="off" onkeyup="mayus(this);" maxlength="70" >
+                      <textarea type="text" class="form-control" name="direccion" onkeyup="un_espacio(this);" required value="" autocomplete="off" onkeyup="mayus(this);" maxlength="70" ></textarea>
+                      <div class="invalid-feedback">
+                                    Ingrese la dirección de residencia actual del usuario
+                              </div >
 
                       <label for="">Teléfono:</label>
                       <input type="text" autocomplete="off" class="form-control" name="celular" minlength="8" maxlength="8" required value="" placeholder="" required pattern="[0-9]+[1-9]+[0-9]+" title="8 caracteres y no todos ceros" onkeypress="return solonumero(event)" >
                       
                       <label for="">Referencia:</label>
-                      <input type="text" class="form-control" name="referencia" required value="" autocomplete="off" onkeyup="mayus(this);" maxlength="30" >
+                      <input type="text" class="form-control" name="referencia"  autocomplete="off" onkeyup="mayus(this);" maxlength="30" >
 
                       <label for="">Teléfono de referencia:</label>
-                      <input type="text" autocomplete="off"  class="form-control" name="celular_referencia" minlength="8" maxlength="8" required value="" placeholder="" required pattern="[0-9]+[1-9]+[0-9]+" title="8 caracteres y no todos ceros" onkeypress="return solonumero(event)">
+                      <input type="text" autocomplete="off"  class="form-control" name="celular_referencia" minlength="8" maxlength="8"  value="" placeholder=""  pattern="[0-9]+[1-9]+[0-9]+" title="8 caracteres y no todos ceros" onkeypress="return solonumero(event)">
 
                       <label for="">Experiencia laboral:</label>
-                      <input type="text" class="form-control" name="experiencia_laboral" required value="" autocomplete="off" onkeyup="mayus(this);" maxlength="30" >
+                      <textarea type="text" class="form-control" name="experiencia_laboral" onkeyup="un_espacio(this);" value="" autocomplete="off" onkeyup="mayus(this);" maxlength="30" ></textarea>
 
                       <label for="">Currículum:</label>
                       <input type="file" class="form-control" name="curriculum"  accept=".pdf, .doxc" value="" placeholder="Opcional" >
@@ -414,7 +420,7 @@ if (mysqli_num_rows($roles35) > 0)
                            }}// finaliza el if y el while
                            ?>
                    </select>
-                    <!-- Inicio del select de rol -->
+                    
                     <!-- Inicio del select deL estado -->
                     <label for="sel1" class="form-label">Estado:</label>
                     <select class="form-select"  name="estado" required >
@@ -715,6 +721,7 @@ if (mysqli_num_rows($roles35) > 0)
 </script>
 
 </body>
+<script type="text/javascript" src="../../js/un_espacio.js"></script>
 <script type="text/javascript" src="../../js/evitar_reenvio.js"></script>
 </html>
 
@@ -738,7 +745,7 @@ if (mysqli_num_rows($roles35) > 0)
         return false;
       }
     }
-  </script>
+</script>
 
 
     <script type="text/javascript">
@@ -785,34 +792,34 @@ if (mysqli_num_rows($roles35) > 0)
 
   </script>
 <script>
-  function clave1(e) {
-  key = e.keyCode || e.which;
-  tecla = String.fromCharCode(key).toString();
-  letras = "ABCDEFGHIJKLMNÑOPQRSTUVWXZabcdefghijklmnñopqrstuvwxyz0123456789,#$%&/=!¡?¿()*{}[]-_'.@<>";
-  
-  especiales = [8,13];
-  tecla_especial = false;
-  for(var i in especiales) {
-    if(key == especiales[i]){
-      tecla_especial = true;
-      break;
-    }
-  }
-  
-  if(letras.indexOf(tecla) == -1 && !tecla_especial){
-    alert("Sin espacios");
-    return false;
-  }
-}
+        function clave1(e) {
+        key = e.keyCode || e.which;
+        tecla = String.fromCharCode(key).toString();
+        letras = "ABCDEFGHIJKLMNÑOPQRSTUVWXZabcdefghijklmnñopqrstuvwxyz0123456789,#$%&/=!¡?¿()*{}[]-_'.@<>";
+        
+        especiales = [8,13];
+        tecla_especial = false;
+        for(var i in especiales) {
+          if(key == especiales[i]){
+            tecla_especial = true;
+            break;
+          }
+        }
+        
+        if(letras.indexOf(tecla) == -1 && !tecla_especial){
+          alert("Sin espacios");
+          return false;
+        }
+      }
 
-  function mostrarContrasena(){
-    var x = document.getElementById("myInput");
-    if (x.type === "password"){
-      x.type = "text";
-    }else{
-      x.type = "password";
-    }
-  }
+        function mostrarContrasena(){
+          var x = document.getElementById("myInput");
+          if (x.type === "password"){
+            x.type = "text";
+          }else{
+            x.type = "password";
+          }
+        }
 </script>
 
 
@@ -970,4 +977,20 @@ if(!isset($_POST['reporte_catalogo']))
       }, false)
       })
       })()
+</script>
+<script>
+    // Quita espacios de los inputs
+    document.getElementById("campoNombre").addEventListener('keyup', (e) => {
+
+          let nombre = e.target.value;
+          e.target.value = nombre.toUpperCase().trim();
+
+      });
+    document.getElementById("campoApellido").addEventListener('keyup', (e) => {
+
+          let nombre = e.target.value;
+          e.target.value = nombre.toUpperCase().trim();
+
+      });
+    
 </script>

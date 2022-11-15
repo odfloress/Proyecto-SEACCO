@@ -153,7 +153,7 @@ body {
                   <input   style="background-color:rgb(240, 244, 245);" type="text" onkeyup="quitarespacios(this); sinespacio(this); " autocomplete="off" 
                   value="<?php echo "$dni"; ?>"  class="form-control"  placeholder="Ingrese su DNI" name="dni" minlength="13"            
                   required maxlength="13" onkeypress="return solonumero(event)" required  
-                 pattern=".{0}|.{13,13}"
+                 pattern="(?!0{13})^[0-9][0-9]{12}$"
                   title="13 caracteres y no todos ceros">              
                   <div class="invalid-feedback">Ingrese un DNI de trece digitos y no todos ceros.</div>
                 </div>
@@ -172,7 +172,7 @@ body {
                 </div>
                 <div class="col">
                   <label for="pwd" class="form-label">Teléfono:</label>
-                  <input style="background-color:rgb(240, 244, 245);" type="text" onkeyup="quitarespacios(this); sinespacio(this); " autocomplete="off" value="<?php echo "$telefono"; ?>"  class="form-control"  placeholder="Ingrese su telefono" name="telefono" minlength="8" maxlength="8" onkeypress="return solonumero(event)" required pattern=".{0}|.{8,8}" title="Ingrese un numero telefónico valido">
+                  <input style="background-color:rgb(240, 244, 245);" type="text" onkeyup="quitarespacios(this); sinespacio(this); " autocomplete="off" value="<?php echo "$telefono"; ?>"  class="form-control"  placeholder="Ingrese su telefono" name="telefono" minlength="8" maxlength="8" onkeypress="return solonumero(event)" required pattern="(?!0{8})^[0-9][0-9]{7}$" title="Ingrese un numero telefónico valido">
                   <div class="invalid-feedback">Campo requerido.</div>
                 </div>
             </div>
