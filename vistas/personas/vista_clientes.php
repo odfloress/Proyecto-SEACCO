@@ -112,13 +112,14 @@ if (mysqli_num_rows($roles35) > 0)
                 onkeyup="mayus(this);" minlength="13" maxlength="13" name="codigo" required 
                 value="<?php echo "$codigo"; ?>" placeholder="Ingrese DNI" onkeypress="return solonumero(event)"  pattern="[0-9]+[1-9]+" required>
                 <br>
+                
                 <label for="">Nombre:</label>
-                <input type="text" onkeyup="quitarespacios(this); sinespacio(this);" autocomplete="off"  
+                <input type="text" onkeyup="un_espacio(this);" autocomplete="off"  
                 value="<?php echo "$nombre"; ?>" onkeyup="mayus(this);" minlength="3" maxlength="30" class="form-control"  
                 placeholder="Ingrese el nombre" name="nombre" onkeypress="return soloLetras(event);" required>
                 <br>
                 <label for="">Apellido:</label>
-                <input type="text" onkeyup="quitarespacios(this); sinespacio(this);" autocomplete="off"  
+                <input type="text" onkeyup="un_espacio(this);" autocomplete="off"  
                 value="<?php echo "$apellido"; ?>" onkeyup="mayus(this);" minlength="3" maxlength="30" class="form-control"  
                 placeholder="Ingrese el apellido" name="apellido" onkeypress="return soloLetras(event);" required>
                 <br>
@@ -232,7 +233,7 @@ if (mysqli_num_rows($roles35) > 0)
                   <tr>
                   <th class="desaparecerTemporalmente">Acciones</th>
                   <th class="desaparecerTemporalmente1">Id</th>
-                  <th class="desaparecerTemporalmente1">Código</th>
+                  <th class="desaparecerTemporalmente1">DNI</th>
                   <th class="desaparecerTemporalmente1">Nombre</th>
                   <th class="desaparecerTemporalmente1">Apellido</th>
                   <th class="desaparecerTemporalmente1">Correo</th>
@@ -450,8 +451,10 @@ if (mysqli_num_rows($roles35) > 0)
 <script src="../../plantilla/AdminLTE-3.2.0/plugins/jszip/jszip.min.js"></script>
 <script src="../../plantilla/AdminLTE-3.2.0/plugins/pdfmake/pdfmake.min.js"></script>
 <script src="../../plantilla/AdminLTE-3.2.0/plugins/pdfmake/vfs_fonts.js"></script>
-<!-- <script src="../../plantilla/AdminLTE-3.2.0/plugins/datatables-buttons/js/buttons.html5.min.js"></script> 
- <script src="../../plantilla/AdminLTE-3.2.0/plugins/datatables-buttons/js/buttons.print.min.js"></script> -->
+
+<!-- Plugins para reporte en excel -->
+<script src="../../plantilla/AdminLTE-3.2.0/plugins/datatables-buttons/js/buttons.html5.min.js"></script> 
+ <script src="../../plantilla/AdminLTE-3.2.0/plugins/datatables-buttons/js/buttons.print.min.js"></script>
 
 
 
@@ -505,8 +508,24 @@ if (mysqli_num_rows($roles35) > 0)
                          },
                          
                          "responsive": true, "lengthChange": true, "autoWidth": false,
-                          "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"],                   
-        
+                          "buttons": ["excel", "colvis"], 
+                          buttons:[
+                            {
+                            extend:     'excelHtml5',
+                            text:       'Exportar a Excel',
+                            titleAttr:  'Exportar a Excel',
+                            title:     'REPORTE DE CLIENTES',
+                            exportOptions:{
+                              columns: [1,2,3,4,5,6,7,8,9]
+                            }
+                          },
+                          {
+                            extend: 'colvis',
+                            text:   'Visualizar',
+                            title:  'REPORTE DE CLIENTES',
+                          } 
+                          ]   
+ 
     })
 
       
@@ -599,7 +618,7 @@ if(!isset($_POST['reporte_catalogo']))
           
           columnStyles: {
       
-            0: {cellWidth: 10},
+            0: {cellWidth: 15},
             1: {cellWidth: 20},
             2: {cellWidth: 30},
             3: {cellWidth: 30},
@@ -654,8 +673,9 @@ if(!isset($_POST['reporte_catalogo']))
 	})
   
 </script>
-<script type="text/javascript" src="../../js/un_espacio.js"></script>
 <!-- // Fin para exportar en pdf // -->
+<script type="text/javascript" src="../../js/un_espacio.js"></script>
+
 <script type="text/javascript" src="../../js/evitar_reenvio.js"></script>
 </html>
 

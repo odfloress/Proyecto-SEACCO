@@ -103,13 +103,13 @@ body {
             <div class="row">
                 <div class="col">
                   <label for="email"  class="form-label">Nombre:</label>
-                  <input style="background-color:rgb(240, 244, 245);" type="text" onkeyup="quitarespacios(this); sinespacio(this);"autocomplete="off"  value="<?php echo "$nombre"; ?>" onkeyup="mayus(this);" 
+                  <input style="background-color:rgb(240, 244, 245);" type="text" onkeyup="un_espacio(this);" autocomplete="off"  value="<?php echo "$nombre"; ?>" onkeyup="mayus(this);" 
                   maxlength="30" class="form-control"  placeholder="Ingrese su primer nombre" name="nombre" required
                    minlength="3" maxlength="30" onkeypress="return soloLetras(event);">
                 </div>
                 <div class="col">
                   <label for="pwd" class="form-label">Apellido:</label>
-                  <input style="background-color:rgb(240, 244, 245);" type="text" onkeyup="quitarespacios(this); sinespacio(this);" autocomplete="off" value="<?php echo "$apellido"; ?>" onkeyup="mayus(this);" 
+                  <input style="background-color:rgb(240, 244, 245);" type="text" onkeyup="un_espacio(this);" autocomplete="off" value="<?php echo "$apellido"; ?>" onkeyup="mayus(this);" 
                   maxlength="30" class="form-control"  placeholder="Ingrese su primer apellido" name="apellido" required
                   minlength="3" maxlength="30" onkeypress="return soloLetras(event);">
                 </div>
@@ -121,6 +121,7 @@ body {
                   value="<?php echo "$usuario"; ?>" onkeypress="return clave(event);"  onKeyUP="this.value=this.value.toUpperCase();"  
                   class="form-control" placeholder="Asignar usuario" name="usuario" required minlength="3" maxlength="20">
                 </div>
+                
                 <div class="col">
                   <div class="form-group">
                   <label for="pwd" class="form-label">Contraseña:</label> 

@@ -39,11 +39,7 @@ if (mysqli_num_rows($roles35) > 0)
                   die();
                 }
          }
-                // inicio inserta en la tabla bitacora
-                $sql = "INSERT INTO tbl_bitacora (USUARIO, ACCION, OBSERVACION)
-                VALUES ('$usuario1[usuario]', 'CONSULTO', 'CONSULTO LA PANTALLA  ADMINISTRATIVA DEL BIENVENIDA')";
-                if (mysqli_query($conn, $sql)) {} else {}
-                // fin inserta en la tabla bitacora
+                
 ?>
 
 <!DOCTYPE html>
@@ -96,17 +92,18 @@ if (mysqli_num_rows($roles35) > 0)
                     <input type="file" class="form-control" accept=".jpg, .png, .jpej, .JPEG, .JPG, .PNG" name="imagenes" required value="<?php echo "$nombreimagen"; ?>" placeholder=""  >
                     <br>
                     <label for="">Titulo</label>
-                    <input type="text" class="form-control"  name="titulo" required value="<?php echo "$titulo"; ?>" placeholder="" 
+                    <input type="text" onkeyup="un_espacio(this);" class="form-control"  name="titulo" required value="<?php echo "$titulo"; ?>" placeholder="" 
                     autocomplete = "off"  onkeypress="return soloLetras(event);" minlength="3" maxlength="50" onkeyup="mayus(this);"  >
                     <br>
                     <label for="">Descripción</label>
-                    <TEXtarea  style="background-color: white;" name="descripcion" class="form-control"name="" id="" cols="40" rows="5"
+                    <TEXtarea  style="background-color: white;" onkeyup="un_espacio(this);" name="descripcion" class="form-control"name="" id="" cols="40" rows="5"
                     autocomplete = "off"  onkeypress="return soloLetras(event);" minlength="3" maxlength="200" 
                     onkeyup="mayus(this);" ><?php echo "$descripcion"; ?></TEXtarea>
                 
                 </div>
                 <!-- Fin Cuerpo del modal Modal -->
                 <!-- pie del modal -->
+                
                 <div class="modal-footer">
       	            <button type="submit" name="accion" value="agregar" class="btn btn-primary" >Agregar</button>
                     <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
@@ -144,38 +141,7 @@ if (mysqli_num_rows($roles35) > 0)
             <div class="card">
               <div class="card-header">
                 <!-- /// filtrar reporte //// -->
-              <form action="" method="post">
-                <div class="row">
-                    <div class="col">
-                      <!-- ///////////////////// -->
-                      <?php $asignacion=(isset($_POST['reporte_catalogo']))?$_POST['reporte_catalogo']:"";   ?> 
-                    
-                      <br>
-                        <select style="background-color:rgb(240, 244, 245);" value="<?php echo $id_cliente; ?>" required  class="form-select" id="lista1" name="reporte_catalogo"  >
-                                          <option >Seleccione un filtro</option>
-                                              <?php
-                                                  include '../../conexion/conexion.php';
-                                                  $catalago777 = "SELECT * FROM  tbl_bienvenida_portafolio";
-                                                  $catalago7777 = mysqli_query($conn, $catalago777);
-                                                  if (mysqli_num_rows($catalago7777) > 0) {
-                                                      while($row = mysqli_fetch_assoc($catalago7777))
-                                                      {
-                                                      
-                                                      $catalago77777 =$row['TIPO'];
-                                              ?>
-                                                <option value="<?php  echo $catalago77777; ?>"><?php echo $catalago77777; ?></option>
-                                                <?php
-                                          }}// finaliza el if y el while
-                                          ?>
-                                        </select>
-                                                          </div>
-                    <div class="col"><br>
-                    <button class="btn btn-danger" type="submit">Filtrar reporte</button>
-                    </div>
-               </div>
-                                 
-                                        
-                        </form> <br><!-- ///////////////////// -->
+              
                 <!-- /// fin filtrar reporte /// -->
                 <!--<h3 class="card-title">BIENVENIDA</h3>-->
                 <form id="form" action="" method="post">
@@ -202,12 +168,13 @@ if (mysqli_num_rows($roles35) > 0)
                 <table id="example1" class="table table-bordered table-striped">
                   <thead>
                   <tr>
-                  <th>Acciones</th>
-                  <!-- <th>Id</th> -->
-                  <th>Tipo</th>
-                  <th>Imagen</th>
-                  <th>Titulo</th>
-                  <th>Descripción</th>
+                  <th class="desaparecerTemporalmente">Acciones</th>
+                  <th class="desaparecerTemporalmente1">Id</th> 
+                  <th class="desaparecerTemporalmente1">Tipo</th>
+                  
+                  <th class="desaparecerTemporalmente1">Titulo</th>
+                  <th class="desaparecerTemporalmente1">Descripción</th>
+                  <th class="desaparecerTemporalmente">Imagen</th>
                   
                   </tr>
                   </thead>
@@ -221,7 +188,7 @@ if (mysqli_num_rows($roles35) > 0)
                   while ($filas= mysqli_fetch_assoc($result)){
                     ?>
                   <tr>
-                  <td>
+                  <td class="desaparecerTemporalmente">
                   <?php 
                           include '../../conexion/conexion.php';
                           $tablero = "SELECT * FROM tbl_ms_roles_ojetos WHERE ID_ROL='$id_rol7' and ID_OBJETO=6 and PERMISO_ACTUALIZACION=1";
@@ -263,11 +230,11 @@ if (mysqli_num_rows($roles35) > 0)
                                                 
                                               </select>
                                               <label for="">Titulo</label>
-                                              <input type="text" class="form-control"  name="titulo" required value="<?php echo $filas['TITULO'] ?>" placeholder="" 
+                                              <input type="text" onkeyup="un_espacio(this);" class="form-control"  name="titulo" required value="<?php echo $filas['TITULO'] ?>" placeholder="" 
                                               autocomplete = "off"  onkeypress="return soloLetras(event);" minlength="3" maxlength="50" onkeyup="mayus(this);"  >
                                               <br>
                                               <label for="">Descripción</label>
-                                              <TEXtarea  style="background-color: white;" name="descripcion" class="form-control"name="" id="" cols="40" rows="5"
+                                              <TEXtarea  style="background-color: white;" onkeyup="un_espacio(this);" name="descripcion" class="form-control"name="" id="" cols="40" rows="5"
                                               autocomplete = "off"  onkeypress="return soloLetras(event);" minlength="3" maxlength="200" onkeyup="mayus(this);" ><?php echo $filas['DESCRIPCION'] ?></TEXtarea>
                                           
                                           
@@ -303,11 +270,12 @@ if (mysqli_num_rows($roles35) > 0)
                         ?>
                           </form>
 </td>
-                      <!-- <td><?php echo $filas['ID_IMAGEN'] ?></td> -->
-                     <td><?php echo $filas['TIPO'] ?></td>
+                    <td><?php echo $filas['ID_IMAGEN'] ?></td>
+                     <td class="desaparecerTemporalmente1"><?php echo $filas['TIPO'] ?></td>
+                     
+                     <td class="desaparecerTemporalmente1"><?php echo $filas['TITULO'] ?></td>
+                     <td class="desaparecerTemporalmente1"><?php echo $filas['DESCRIPCION'] ?></td>
                      <td><img class="img-thumbnail" width="100px" src="<?php echo $filas['RUTA'] ?>" /></td>
-                     <td><?php echo $filas['TITULO'] ?></td>
-                     <td><?php echo $filas['DESCRIPCION'] ?></td>
 
       </tr>
       <?php };} ?>  
@@ -357,7 +325,9 @@ if (mysqli_num_rows($roles35) > 0)
 <script src="../../plantilla/AdminLTE-3.2.0/plugins/datatables-buttons/js/dataTables.buttons.min.js"></script>
 <script src="../../plantilla/AdminLTE-3.2.0/plugins/datatables-buttons/js/buttons.bootstrap4.min.js"></script>
 <script src="../../plantilla/AdminLTE-3.2.0/plugins/jszip/jszip.min.js"></script>
-
+<!-- Plugins para reporte en excel -->
+<script src="../../plantilla/AdminLTE-3.2.0/plugins/datatables-buttons/js/buttons.html5.min.js"></script> 
+ <script src="../../plantilla/AdminLTE-3.2.0/plugins/datatables-buttons/js/buttons.print.min.js"></script>
 
 <script src="../../plantilla/AdminLTE-3.2.0/plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
 <!-- AdminLTE App -->
@@ -368,7 +338,7 @@ if (mysqli_num_rows($roles35) > 0)
 <script>
  $(function () {
     $("#example1").DataTable({
-      
+      "order": [[ 1, "desc" ]],
       language: {
                           processing: "Tratamiento en curso...",
                           search: "Buscar&nbsp;:",
@@ -405,7 +375,23 @@ if (mysqli_num_rows($roles35) > 0)
                          },
                          
                          "responsive": true, "lengthChange": true, "autoWidth": false,
-                          "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"],                   
+                          "buttons": ["excel", "colvis"], 
+                          buttons:[
+                            {
+                            extend:     'excelHtml5',
+                            text:       'Exportar a Excel',
+                            titleAttr:  'Exportar a Excel',
+                            title:     'REPORTE DE BIENVENIDA',
+                            exportOptions:{
+                              columns: [1,2,3,4]
+                            }
+                          },
+                          {
+                            extend: 'colvis',
+                            text:   'Visualizar',
+                            title:  'REPORTE DE BIENVENIDA',
+                          } 
+                          ]                  
         
     })
 
@@ -429,32 +415,7 @@ if (mysqli_num_rows($roles35) > 0)
 </script>
 </body>
 <!-- // Inicio para exportar en pdf // -->
-<?php
-if(!isset($_POST['reporte_catalogo']))
-{
-	require '../../conexion/conexion.php';
-	$sql = "SELECT * FROM tbl_bienvenida_portafolio
-  ORDER BY TIPO desc";
-	$query = $conn->query($sql);
-	$data = array();
-	while($r=$query->fetch_object()){
-	$data[] =$r;
-	}
 
-}else{		
-			require '../../conexion/conexion.php';
-			$asignacion=(isset($_POST['reporte_catalogo']))?$_POST['reporte_catalogo']:"";
-			$sql = "SELECT * FROM tbl_bienvenida_portafolio
-      WHERE TIPO='$asignacion'";
-			$query = $conn->query($sql);
-			$data = array();
-			while($r=$query->fetch_object()){
-			$data[] =$r;
-			}	
-
-			}
-
-?>
 <?php 
     $select_nombre = "SELECT * FROM tbl_parametros WHERE PARAMETRO='NOMBRE'";
     $select_nombre1 = mysqli_query($conn, $select_nombre);
@@ -467,28 +428,39 @@ if(!isset($_POST['reporte_catalogo']))
     }
 ?>
 <script>
-	//para descar al tocar el boton
+  
+	//para descar al tocar el boton	
 	var form = document.getElementById("form")
+  
 	form.addEventListener("submit",function(event) {
+  
 	event.preventDefault()
+  $(".desaparecerTemporalmente1").css("display","");
+  $(".desaparecerTemporalmente").css("display","none");
 
-			
-			const pdf = new jsPDF('p', 'mm', 'letter');
-						
-			var columns = ["Tipo", "Título", "Descripción"];
-			var data = [
-  <?php foreach($data as $d):?>
-	
-      ["<?php echo $d->TIPO; ?>", "<?php echo $d->TITULO; ?>", "<?php echo $d->DESCRIPCION; ?>"],
-      <?php endforeach; ?>
-  ];
-				pdf.autoTable(columns,data,
+				const pdf = new jsPDF('p', 'mm', 'letter');			
+        	
+
+				
+				
+
+				pdf.autoTable(
 				{ 
+          html:'#example1',
 					
-					margin:{ top: 30 }}
+					margin:{ top: 30 },
+          
+          columnStyles: {
+      
+            0: {cellWidth: 15},
+            1: {cellWidth: 30},
+            2: {cellWidth: 30},
+            3: {cellWidth: 115}
+           } 
+          }
 				);
-		
-			//Inicio Encabezado y pie de pagina
+						
+				//Inicio Encabezado y pie de pagina
 			const pageCount = pdf.internal.getNumberOfPages();
 			for(var i = 1; i <= pageCount; i++) 
 			{
@@ -503,12 +475,12 @@ if(!isset($_POST['reporte_catalogo']))
 				//muestra el titulo principal
 				pdf.setFont('Arial');
 				pdf.setFontSize(17);
-				pdf.text("<?php echo $nombre_constructora; ?>", 75,15,);
-
+				pdf.text('<?php echo $nombre_constructora ?>', pdf.internal.pageSize.getWidth() / 2, 15, null, 'center'); // de esta manera se puede centrar el titulo
+       
 				//muestra el titulo secundario
 				pdf.setFont('times');
 				pdf.setFontSize(12);
-				pdf.text("Reporte de Bienvenida", 82,20,);
+				pdf.text("Reporte de bienvenida", pdf.internal.pageSize.getWidth() / 2, 20, null, 'center');
 
 												//////// pie de Pagina ///////
 				//muestra la fecha
@@ -518,18 +490,20 @@ if(!isset($_POST['reporte_catalogo']))
 				let horas = today.getHours()
 				let jornada = horas >=12 ? 'PM' : 'AM';
 				var newdat = "Fecha: " + today.getDate() + "/" + (today.getMonth()+1) + "/" + today.getFullYear() + " " + (horas % 12) + ":" + today.getMinutes() + ":" + today.getSeconds() + " " + jornada;
-				pdf.text(183-20,297-284,newdat);
+				pdf.text(245-20,297-284,newdat);
 
 				//muestra el numero de pagina
-				pdf.text('Pagina ' + String(i) + '/' + String(pageCount),220-20,297-27,null,null,"right");
+				pdf.text('Pagina ' + String(i) + '/' + String(pageCount),282-20,297-89,null,null,"right");
 			}
 				//Fin Encabezado y pie de pagina
 
-							pdf.save('Reporte de Bienvenida.pdf');
+							pdf.save('Reporte de bienvenida.pdf');
+              $(".desaparecerTemporalmente").css("display","");
 	})
-
+  
 </script>
 <!-- // Fin para exportar en pdf // -->
+<script type="text/javascript" src="../../js/un_espacio.js"></script>
 <script type="text/javascript" src="../../js/evitar_reenvio.js"></script>
 
 </html>

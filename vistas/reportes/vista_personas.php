@@ -321,8 +321,8 @@ if (mysqli_num_rows($roles35) > 0)
 <script src="../../plantilla/AdminLTE-3.2.0/plugins/jszip/jszip.min.js"></script>
 <script src="../../plantilla/AdminLTE-3.2.0/plugins/pdfmake/pdfmake.min.js"></script>
 <script src="../../plantilla/AdminLTE-3.2.0/plugins/pdfmake/vfs_fonts.js"></script>
-<!-- <script src="../../plantilla/AdminLTE-3.2.0/plugins/datatables-buttons/js/buttons.html5.min.js"></script> 
- <script src="../../plantilla/AdminLTE-3.2.0/plugins/datatables-buttons/js/buttons.print.min.js"></script> -->
+<script src="../../plantilla/AdminLTE-3.2.0/plugins/datatables-buttons/js/buttons.html5.min.js"></script> 
+ <script src="../../plantilla/AdminLTE-3.2.0/plugins/datatables-buttons/js/buttons.print.min.js"></script>
 
 
 
@@ -376,7 +376,18 @@ if (mysqli_num_rows($roles35) > 0)
                          "responsive": true, "lengthChange": true, "autoWidth": false,
                           "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"],                   
         
-    })
+                          buttons:[ 
+    {
+            extend:    'excelHtml5',
+            text:      'Exportar a Excel',
+            titleAttr: 'Exportar a Excel',
+            title:     'Catalago',
+            exportOptions: {
+                columns: [1,3,4]
+            }
+    }
+   
+]  })
 
       
     .buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
@@ -388,6 +399,7 @@ if (mysqli_num_rows($roles35) > 0)
       "info": true,
       "autoWidth": false,
       "responsive": true,
+      
     });
   });
 </script>
