@@ -41,11 +41,7 @@ if(in_array($extencion, $permitidos)){
                 VALUES ('$tipo', '$nombreimagen', '$destino$nombreimagen', '$titulo', '$descripcion')";
         $res = mysqli_query($conn, $sql);
          if($res){
-             // inicio inserta en la tabla bitacora
-             $sql = "INSERT INTO tbl_bitacora (USUARIO, ACCION, OBSERVACION)
-             VALUES ('$usuario1[usuario]', 'INSERTO', 'INSERTO UN REGISTRO DE TIPO ($tipo) Y TITULO ($titulo) ')";
-             if (mysqli_query($conn, $sql)) {} else {}
-             // fin inserta en la tabla bitacora
+             
             echo '<script type="text/javascript">
                      alert("Agregado correctamente");
                      window.location.href="../../vistas/catalogo/vista_bienvenida";
@@ -54,11 +50,7 @@ if(in_array($extencion, $permitidos)){
                 die("Error". mysqli_error($conn));
               }
 }else{
-    // inicio inserta en la tabla bitacora
-    $sql = "INSERT INTO tbl_bitacora (USUARIO, ACCION, OBSERVACION)
-    VALUES ('$usuario1[usuario]', 'INTENTO', 'NO LOGRO INSERTAR YA QUE EL ARCHIVO NO ERA IMAGEN')";
-    if (mysqli_query($conn, $sql)) {} else {}
-    // fin inserta en la tabla bitacora
+    
     echo '<script type="text/javascript">
              alert("Archivo no permitido");
              window.location.href="../../vistas/catalogo/vista_bienvenida";
@@ -100,11 +92,7 @@ if(in_array($extencion, $permitidos))
     $sql2 = "UPDATE tbl_bienvenida_portafolio SET TIPO='$tipo', IMAGEN='$nombreimagen', RUTA='$direccion', TITULO='$titulo', DESCRIPCION='$descripcion' WHERE ID_IMAGEN='$id_imagen'";
     if (mysqli_query($conn, $sql2)) 
     {
-        // inicio inserta en la tabla bitacora
-        $sql = "INSERT INTO tbl_bitacora (USUARIO, ACCION, OBSERVACION)
-        VALUES ('$usuario1[usuario]', 'EDITO', 'EDITO UN REGISTRO DE TIPO ($tipo) Y TITULO ($titulo)')";
-        if (mysqli_query($conn, $sql)) {} else {}
-         // fin inserta en la tabla bitacora
+        
         echo '<script>
                  alert("Edición exitosa");
                  window.location.href="../../vistas/catalogo/vista_bienvenida";
@@ -117,11 +105,7 @@ if(in_array($extencion, $permitidos))
          }
          mysqli_close($conn);
 }else{
-    // inicio inserta en la tabla bitacora
-    $sql = "INSERT INTO tbl_bitacora (USUARIO, ACCION, OBSERVACION)
-    VALUES ('$usuario1[usuario]', 'INTENTO', 'NO LOGRO EDITAR YA QUE EL ARCHIVO NO ERA IMAGEN')";
-    if (mysqli_query($conn, $sql)) {} else {}
-    // fin inserta en la tabla bitacora
+    
     echo '<script type="text/javascript">
             alert("Archivo no permitido");
             window.location.href="../../vistas/catalogo/vista_bienvenida";
@@ -138,19 +122,11 @@ if($id_imagen>13){
 
 $sql3 = "DELETE FROM tbl_bienvenida_portafolio WHERE ID_IMAGEN='$id_imagen'";
 if (mysqli_query($conn, $sql3)) {
-  // inicio inserta en la tabla bitacora
-  $sqlB1 = "INSERT INTO tbl_bitacora (USUARIO, ACCION, OBSERVACION)
-  VALUES ('$usuario1[usuario]', 'ELIMINO', 'ELIMIO UNA IMAGEN DE BIENVENIDA')";
-  if (mysqli_query($conn, $sqlB1)) {} else { }
-// fin inserta en la tabla bitacora
+
     unlink($ruta);
     header('Location: ../../vistas/catalogo/vista_bienvenida');
 }else{
-  // inicio inserta en la tabla bitacora
-  $sqlB1 = "INSERT INTO tbl_bitacora (USUARIO, ACCION, OBSERVACION)
-  VALUES ('$usuario1[usuario]', 'INTENTO', 'ERROR AL ELIMINAR UNA IMAGEN DE BIENVENIDA')";
-  if (mysqli_query($conn, $sqlB1)) {} else { }
-// fin inserta en la tabla bitacora
+
         echo '<script>
                   alert("Error al tratar de eliminar categoria");
               </script>'; mysqli_error($conn);
@@ -165,7 +141,5 @@ if (mysqli_query($conn, $sql3)) {
     }
 
 break;
-
-
 }
 ?>
