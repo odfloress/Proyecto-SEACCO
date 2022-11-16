@@ -502,6 +502,30 @@ if (mysqli_num_rows($roles35) > 0)
 	})
   
 </script>
+<script>
+// Inicio Script para que solo permita letras
+
+ function soloLetras(e){
+      key = e.keyCode || e.which;
+      tecla = String.fromCharCode(key).toLowerCase();
+      letras = " áéíóúabcdefghijklmnñopqrstuvwxyz¿?";
+      especiales = ["8-37-39-46"];
+
+      tecla_especial = false
+      for(var i in especiales){
+       if(key == especiales[i]){
+         tecla_especial = true;
+         break;
+       }
+     }
+
+     if(letras.indexOf(tecla)==-1 && !tecla_especial){
+       return false;
+     }
+   }
+   //   Fin Script para que solo permita letras
+</script>
+
 <!-- // Fin para exportar en pdf // -->
 <script type="text/javascript" src="../../js/un_espacio.js"></script>
 <script type="text/javascript" src="../../js/evitar_reenvio.js"></script>
