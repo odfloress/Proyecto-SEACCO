@@ -239,13 +239,13 @@ if (mysqli_num_rows($roles35) > 0)
                       <input type="text" autocomplete="off"  class="form-control" name="celular_referencia" minlength="8" maxlength="8"  value="" placeholder=""  pattern="[0-9]+[1-9]+[0-9]+" title="8 caracteres y no todos ceros" onkeypress="return solonumero(event)">
 
                       <label for="">Experiencia laboral:</label>
-                      <textarea type="text" class="form-control" name="experiencia_laboral" onkeyup="un_espacio(this);" value="" autocomplete="off" onkeyup="mayus(this);" maxlength="30" ></textarea>
+                      <textarea type="text" class="form-control" name="experiencia_laboral" onkeyup="un_espacio(this);" value="" autocomplete="off" onkeyup="mayus(this);" maxlength="30" required ></textarea>
 
                       <label for="">Currículum:</label>
-                      <input type="file" class="form-control" name="curriculum"  accept=".pdf, .doxc" value="" placeholder="Opcional" >
+                      <input type="file" class="form-control" name="curriculum"  accept=".pdf, .doxc" value="" placeholder="Opcional" required>
 
                       <label for="">Foto:</label>
-                      <input type="file" class="form-control" name="foto" accept=".jpg, .png, .jpej, .JPEG, .JPG, .PNG" value="" placeholder="Opcional" >
+                      <input type="file" class="form-control" name="foto" accept=".jpg, .png, .jpej, .JPEG, .JPG, .PNG" value="" placeholder="Opcional"  required>
 
                       <label for="pwd" class="form-label">Área:</label>
                         <select style="background-color:rgb(240, 244, 245);" value="<?php echo "$area"; ?>" class="form-select" id="lista1" name="area" required >
