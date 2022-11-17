@@ -336,25 +336,25 @@ if (mysqli_num_rows($roles35) > 0)
                 <table id="example1" class="table table-bordered table-striped">
                   <thead>
                   <tr>
-                  <th>Acciones</th>
-                  <th>Id</th>
-                  <th>Rol</th>
-                  <th>Estado</th>
-                  <th>Nombre</th>
-                  <th>Apellido</th>
-                  <th>Usuario</th>
-                  <th>Correo</th>
-                  <th>Genero</th>                  
-                  <th>DNI</th>
-                  <th>Profesión</th>
-                  <th>Dirección</th>
-                  <th>Teléfono</th>
-                  <th>Referencia</th>
-                  <th>Teléfono Referencia</th>
-                  <th>Experiencia laboral</th>
-                  <th>Currículum</th>                                                    
-                  <th>Foto</th>
-                  <th>Área</th>
+                  <th class="desaparecerTemporalmente">Acciones</th>
+                  <th class="desaparecerTemporalmente1">Id</th>
+                  <th class="desaparecerTemporalmente1">Rol</th>
+                  <th class="desaparecerTemporalmente1">Estado</th>
+                  <th class="desaparecerTemporalmente1">Nombre</th>
+                  <th class="desaparecerTemporalmente1">Apellido</th>
+                  <th class="desaparecerTemporalmente1">Usuario</th>
+                  <th class="desaparecerTemporalmente1">Correo</th>
+                  <th class="desaparecerTemporalmente1">Genero</th>                  
+                  <th class="desaparecerTemporalmente1">DNI</th>
+                  <th class="desaparecerTemporalmente1">Profesión</th>
+                  <th class="desaparecerTemporalmente1">Dirección</th>
+                  <th class="desaparecerTemporalmente1">Teléfono</th>
+                  <th class="desaparecerTemporalmente">Referencia</th>
+                  <th class="desaparecerTemporalmente">Teléfono Referencia</th>
+                  <th class="desaparecerTemporalmente1">Experiencia laboral</th>
+                  <th class="desaparecerTemporalmente">Currículum</th>                                                    
+                  <th class="desaparecerTemporalmente">Foto</th>
+                  <th class="desaparecerTemporalmente1">Área</th>
                   
                   </tr>
                   </thead>
@@ -366,7 +366,7 @@ if (mysqli_num_rows($roles35) > 0)
                      ?>
                      <?php  $cont++; ?>
                   <tr>
-                  <td>  
+                  <td class="desaparecerTemporalmente">  
                   <?php 
                           include '../../conexion/conexion.php';
                           $area1 = "SELECT * FROM tbl_ms_roles_ojetos WHERE ID_ROL='$id_rol7' and ID_OBJETO=1 and PERMISO_ACTUALIZACION=1";
@@ -444,7 +444,8 @@ if (mysqli_num_rows($roles35) > 0)
                     <!-- Inicio del select deL estado -->
                     
                     <label for="">Nombres:</label>
-                    <input type="text" class="form-control" name="nombre" pattern="[A-Za-z]*" required value="<?php echo $filas['NOMBRE'] ?>"  autocomplete="off" onkeyup="mayus(this);" maxlength="30" >
+                    <input type="text" hidden class="form-control" name="nombre" pattern="[A-Za-z]*" required value="<?php echo $filas['NOMBRE'] ?>"  autocomplete="off" onkeyup="mayus(this);" maxlength="30" >
+                    <input type="text"  class="form-control" name="nombre_anterior" pattern="[A-Za-z]*" required value="<?php echo $filas['NOMBRE'] ?>"  autocomplete="off" onkeyup="mayus(this);" maxlength="30" >
 
                     <label for="">Apellidos:</label>
                     <input type="text" class="form-control" name="apellido" pattern="[A-Za-z]*" required value="<?php echo $filas['APELLIDO'] ?>" autocomplete="off" onkeyup="mayus(this);" maxlength="30" >
@@ -581,24 +582,24 @@ if (mysqli_num_rows($roles35) > 0)
                         ?></form>
                     
 </td>
-                    <td><?php echo $filas['ID_USUARIO'] ?></td>
-                     <td><?php echo $filas['ROL'] ?></td>
-                     <td><?php echo $filas['NOMBRE_ESTADO'] ?></td>
-                     <td><?php echo $filas['NOMBRE'] ?></td>
-                     <td><?php echo $filas['APELLIDO'] ?></td>
-                     <td><?php echo $filas['USUARIO'] ?></td>
-                     <td><?php echo $filas['CORREO'] ?></td>
-                     <td><?php echo $filas['GENERO'] ?></td>
-                     <td><?php echo $filas['DNI'] ?></td>
-                     <td><?php echo $filas['PROFESION'] ?></td>
-                     <td><?php echo $filas['DIRECCION'] ?></td>
-                     <td><?php echo $filas['CELULAR'] ?></td>
-                     <td><?php echo $filas['REFERENCIA'] ?></td>
-                     <td><?php echo $filas['CEL_REFERENCIA'] ?></td>
-                     <td><?php echo $filas['EXPERIENCIA_LABORAL'] ?></td>
-                     <td><a href="<?php echo $filas['CURRICULUM'] ?>" download>Descargar</a></td>                     
-                     <td><img class="img-thumbnail" width="100px" src="<?php echo $filas['FOTO'] ?>" /></td>
-                     <td><?php echo $filas['AREA'] ?></td>
+                     <td class="desaparecerTemporalmente1"><?php echo $filas['ID_USUARIO'] ?></td>
+                     <td class="desaparecerTemporalmente1"><?php echo $filas['ROL'] ?></td>
+                     <td class="desaparecerTemporalmente1"><?php echo $filas['NOMBRE_ESTADO'] ?></td>
+                     <td class="desaparecerTemporalmente1"><?php echo $filas['NOMBRE'] ?></td>
+                     <td class="desaparecerTemporalmente1"><?php echo $filas['APELLIDO'] ?></td>
+                     <td class="desaparecerTemporalmente1"><?php echo $filas['USUARIO'] ?></td>
+                     <td class="desaparecerTemporalmente1"><?php echo $filas['CORREO'] ?></td>
+                     <td class="desaparecerTemporalmente1"><?php echo $filas['GENERO'] ?></td>
+                     <td class="desaparecerTemporalmente1"><?php echo $filas['DNI'] ?></td>
+                     <td class="desaparecerTemporalmente1"><?php echo $filas['PROFESION'] ?></td>
+                     <td class="desaparecerTemporalmente1"><?php echo $filas['DIRECCION'] ?></td>
+                     <td class="desaparecerTemporalmente1"><?php echo $filas['CELULAR'] ?></td>
+                     <td class="desaparecerTemporalmente"><?php echo $filas['REFERENCIA'] ?></td>
+                     <td class="desaparecerTemporalmente"><?php echo $filas['CEL_REFERENCIA'] ?></td>
+                     <td class="desaparecerTemporalmente1"><?php echo $filas['EXPERIENCIA_LABORAL'] ?></td>
+                     <td class="desaparecerTemporalmente"><a href="<?php echo $filas['CURRICULUM'] ?>" download>Descargar</a></td>                     
+                     <td class="desaparecerTemporalmente"><img class="img-thumbnail" width="100px" src="<?php echo $filas['FOTO'] ?>" /></td>
+                     <td class="desaparecerTemporalmente1"><?php echo $filas['AREA'] ?></td>
 
                      
                      
@@ -650,6 +651,8 @@ if (mysqli_num_rows($roles35) > 0)
 <script src="../../plantilla/AdminLTE-3.2.0/plugins/datatables-buttons/js/dataTables.buttons.min.js"></script>
 <script src="../../plantilla/AdminLTE-3.2.0/plugins/datatables-buttons/js/buttons.bootstrap4.min.js"></script>
 <script src="../../plantilla/AdminLTE-3.2.0/plugins/jszip/jszip.min.js"></script>
+<script src="../../plantilla/AdminLTE-3.2.0/plugins/datatables-buttons/js/buttons.html5.min.js"></script> 
+ <script src="../../plantilla/AdminLTE-3.2.0/plugins/datatables-buttons/js/buttons.print.min.js"></script>
 
 
 <script src="../../plantilla/AdminLTE-3.2.0/plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
@@ -698,7 +701,27 @@ if (mysqli_num_rows($roles35) > 0)
                          },
                          
                          "responsive": true, "lengthChange": true, "autoWidth": false,
-                          "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"],
+                          "buttons": [ "excel", "colvis"],
+                          buttons:[ 
+                                    {
+                                            extend:    'excelHtml5',
+                                            text:      'Exportar a Excel',
+                                            titleAttr: 'Exportar a Excel',
+                                            title:     'REPORTE DE ADMINISTRADORES', //T´tulo del reporte
+                                            exportOptions: {
+                                              // Columnas que se verán en el reporte
+                                                columns: [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,18]
+                                            } 
+                                    },
+                                    {
+                                            extend:    'colvis',
+                                            text:      'Visualizar',
+                                            
+                                          
+                                          
+                                    }
+                                  
+                                ]                 
 
                         
 
@@ -890,30 +913,48 @@ if(!isset($_POST['reporte_catalogo']))
 <script>
 	//para descar al tocar el boton
 	var form = document.getElementById("form")
+
 	form.addEventListener("submit",function(event) {
-	event.preventDefault()
+	
+    event.preventDefault()
+    //deshabilitar campo de acciones
+    $(".desaparecerTemporalmente1").css("display","");
+    $(".desaparecerTemporalmente").css("display","none");
 
 			
 			const pdf = new jsPDF('L', 'mm', 'Job');
-						
-			var columns = ["Rol", "Estado", "Nombre", "Apellido", "Usuario", "Correo", "DNI","Profesión",
-      "Dirección", "Teléfono","Experiencia laboral "];
-			var data = [
-  <?php foreach($data as $d):?>
-	
-      ["<?php echo $d->ROL; ?>",           "<?php echo $d->NOMBRE_ESTADO; ?>",       "<?php echo $d->NOMBRE; ?>", 
-      "<?php echo $d->APELLIDO; ?>",       "<?php echo $d->USUARIO; ?>",             "<?php echo $d->CORREO; ?>", 
-      "<?php echo $d->DNI; ?>",                 "<?php echo $d->PROFESION; ?>",
-      "<?php echo $d->DIRECCION; ?>",      "<?php echo $d->CELULAR; ?>",             
-      "<?php echo $d->EXPERIENCIA_LABORAL; ?>"],
-      <?php endforeach; ?>
-  ];
-				pdf.autoTable(columns,data,
+
+      pdf.autoTable(
 				{ 
+          html:'#example1',
 					
-					margin:{ top: 30 }}
+					margin:{ top: 30 },
+          
+          columnStyles: {    
+      
+            0: {cellWidth: 8},
+            1: {cellWidth: 20}, 
+            2: {cellWidth: 20},  
+            3: {cellWidth: 20},  
+            4: {cellWidth: 20},  
+            5: {cellWidth: 20},            
+            6: {cellWidth: 20},
+            7: {cellWidth: 20},
+            8: {cellWidth: 20},
+            9: {cellWidth: 20},
+            10: {cellWidth: 20},
+            11: {cellWidth: 20},
+            12: {cellWidth: 20},
+            // 13: {cellWidth: 20},
+            // 14: {cellWidth: 20},
+            // 15: {cellWidth: 30},
+            // 16: {cellWidth: 30},
+            15: {cellWidth: 20},
+           } 
+          }
 				);
-		
+						
+			
 			//Inicio Encabezado y pie de pagina
 			const pageCount = pdf.internal.getNumberOfPages();
 			for(var i = 1; i <= pageCount; i++) 
@@ -929,12 +970,12 @@ if(!isset($_POST['reporte_catalogo']))
 				//muestra el titulo principal
 				pdf.setFont('Arial');
 				pdf.setFontSize(17);
-				pdf.text('<?php echo $nombre_constructora ?>', 115,15,);
+				pdf.text('<?php echo $nombre_constructora ?>', pdf.internal.pageSize.getWidth() / 2, 15, null, 'center');
 
 				//muestra el titulo secundario
 				pdf.setFont('times');
 				pdf.setFontSize(12);
-				pdf.text("Reporte de Usuarios", 123,20,);
+				pdf.text("Reporte de usuarios", pdf.internal.pageSize.getWidth() / 2, 20, null, 'center');
 
 												//////// pie de Pagina ///////
 				//muestra la fecha
@@ -944,7 +985,10 @@ if(!isset($_POST['reporte_catalogo']))
 				let horas = today.getHours()
 				let jornada = horas >=12 ? 'PM' : 'AM';
 				var newdat = "Fecha: " + today.getDate() + "/" + (today.getMonth()+1) + "/" + today.getFullYear() + " " + (horas % 12) + ":" + today.getMinutes() + ":" + today.getSeconds() + " " + jornada;
-				pdf.text(245-20,297-284,newdat);
+				pdf.text(260-20,297-284,newdat);
+        pdf.text('<?php echo 'Creado por: '. $_SESSION['usuario']; ?>', 281, 20, {
+            align: 'right',
+            });
 
 				//muestra el numero de pagina
 				pdf.text('Pagina ' + String(i) + '/' + String(pageCount),282-20,297-89,null,null,"right");
@@ -952,13 +996,16 @@ if(!isset($_POST['reporte_catalogo']))
 				//Fin Encabezado y pie de pagina
 
 							pdf.save('Reporte de Usuarios.pdf');
+              $(".desaparecerTemporalmente").css("display","");
 	})
 
 </script>
 <!-- // Fin para exportar en pdf // -->
 
 <script>
+      // Valida con textos y colores los imputs de los form
       // Example starter JavaScript for disabling form submissions if there are invalid fields
+
       (() => {
       'use strict'
 

@@ -16,6 +16,7 @@
   $rol=(isset($_POST['rol']))?$_POST['rol']:"";
   $estado=(isset($_POST['estado']))?$_POST['estado']:"";
   $nombre=(isset($_POST['nombre']))?$_POST['nombre']:"";
+  $nombre_anterior=(isset($_POST['nombre_anterio']))?$_POST['nombre_anterio']:"";
   $apellido=(isset($_POST['apellido']))?$_POST['apellido']:"";
   $usuario=(isset($_POST['usuario']))?$_POST['usuario']:"";
   $contrasena=(isset($_POST['contrasena']))?$_POST['contrasena']:"";
@@ -119,19 +120,18 @@
                             VALUES ($rol,$estado,'$nombre', '$apellido', '$usuario', '$genero', '$correo', '$dni', '$profesion',  '$direccionp', '$celular', '$referencia', '$celular_referencia', '$experiencia_laboral', '$destino$nombrecurriculum','$contrasena','$destino1$nombrefoto', '$area')";
               
               if (mysqli_query($conn, $sql)) {
+                $last_id = $conn->insert_id;
                 echo '<script>
                               alert("Usuario creado con exito");
                               window.location.href="../../vistas/personas/vista_administradores.php";
                   </script>';
 
                   // inicio inserta en la tabla bitacora
-                  $sql = "INSERT INTO tbl_bitacora (ID_USUARIO, ID_OBJETO, USUARIO, ACCION, OBSERVACION)
-                  VALUES (2, 1, '$usuario1[usuario]', 'INSERTO', 'CREO AL USUARIO $usuario' EN LA PANTALLA ADMINISTRATIVA DE USUARIOS)";
                   
-                  if (mysqli_query($conn, $sql)) {
-                    
-                  } else {                 
-                  }
+                  $sql = "INSERT INTO tbl_bitacora (USUARIO, OPERACION, PANTALLA, CAMPO, ID_REGISTRO,VALOR_ORIGINAL, VALOR_NUEVO)
+                  VALUES ('$usuario1[usuario]', 'INSERTO','USUARIOS', 'USUARIO','$last_id' ,'NUEVO','$usuario')";
+                  if (mysqli_query($conn, $sql)) {} else {}
+                  // fin inserta en la tabla bitacora
                  // fin inserta en la tabla bitacora
                 
               } else {
@@ -215,9 +215,9 @@ if(in_array($extencion, $permitidos))
                                         if (mysqli_query($conn, $sql2)) 
                                         {
                                             // inicio inserta en la tabla bitacora
-                                            $sql = "INSERT INTO tbl_bitacora (USUARIO, ACCION, OBSERVACION)
-                                             VALUES ('$usuario1[usuario]', 'EDITO', 'EDITO UN USUARIO ($usuario) EN LA PANTALLA ADMINISTRATIVA DE USUARIOS')";
-                                             if (mysqli_query($conn, $sql)) {} else {}
+                                            $sql = "INSERT INTO tbl_bitacora (USUARIO, OPERACION, PANTALLA, CAMPO, ID_REGISTRO,VALOR_ORIGINAL, VALOR_NUEVO)
+                                              VALUES ('$usuario1[usuario]', 'EDITO','USUARIOS', 'NOMBRE','$id_usuario' ,'NUEVO','$usuario')";
+                                              if (mysqli_query($conn, $sql)) {} else {}
                                             // fin inserta en la tabla bitacora
                                             echo '<script>
                                                     alert("Edición exitosa");
