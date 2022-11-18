@@ -112,7 +112,7 @@ if (mysqli_num_rows($roles35) > 0)
                 onkeyup="mayus(this);" minlength="13" maxlength="13" name="codigo" required 
                 value="<?php echo "$codigo"; ?>" placeholder="Ingrese DNI" onkeypress="return solonumero(event)"  pattern="[0-9]+[1-9]+" required>
                 <br>
-                
+
                 <label for="">Nombre:</label>
                 <input type="text" onkeyup="un_espacio(this);" autocomplete="off"  
                 value="<?php echo "$nombre"; ?>" onkeyup="mayus(this);" minlength="3" maxlength="30" class="form-control"  
@@ -207,7 +207,40 @@ if (mysqli_num_rows($roles35) > 0)
             
             <div class="card">
               <div class="card-header">
-                  
+                          <!-- /// filtrar reporte //// -->
+                  <form action="" method="post">
+                <div class="row">
+                    <div class="col">
+                      <!-- ///////////////////// 
+                      <?php $asignacion=(isset($_POST['reporte_catalogo']))?$_POST['reporte_catalogo']:"";   ?> 
+                     <?php echo $asignacion; ?> 
+                      <br>
+                        <select style="background-color:rgb(240, 244, 245);" value="<?php echo $id_cliente; ?>" required  class="form-select" id="lista1" name="reporte_catalogo"  >
+                                          <option >Seleccione un Filtro</option>
+                                              <?php
+                                                  include '../../conexion/conexion.php';
+                                                  $catalago777 = "SELECT distinct NOMBRE_CLIENTE from tbl_clientes order by NOMBRE_CLIENTE";
+                                                  $catalago7777 = mysqli_query($conn, $catalago777);
+                                                  if (mysqli_num_rows($catalago7777) > 0) {
+                                                      while($row = mysqli_fetch_assoc($catalago7777))
+                                                      {
+                                                      $catalago77777 =$row['NOMBRE_CLIENTE'];
+                                              ?>
+                                                <option value="<?php  echo $catalago77777; ?>"><?php echo $catalago77777; ?></option>
+                                                <?php
+                                          }}// finaliza el if y el while
+                                          ?>
+                                        </select>-->
+                                                          </div>
+                    <div class="col"><br>
+                   <!--  <button class="btn btn-danger" type="submit">Filtrar reporte</button> -->
+                    </div>
+               </div>
+                                 
+                                        
+                        </form> <br><!-- ///////////////////// -->
+                <!-- /// fin filtrar reporte /// -->
+                          
               <form id="form" action="" method="post">
                     <div class="btn-group">
                     <?php 
@@ -662,6 +695,9 @@ if(!isset($_POST['reporte_catalogo']))
 				let jornada = horas >=12 ? 'PM' : 'AM';
 				var newdat = "Fecha: " + today.getDate() + "/" + (today.getMonth()+1) + "/" + today.getFullYear() + " " + (horas % 12) + ":" + today.getMinutes() + ":" + today.getSeconds() + " " + jornada;
 				pdf.text(245-20,297-284,newdat);
+        pdf.text('<?php echo 'Creado por: '. $_SESSION['usuario']; ?>', 264, 20, {
+            align: 'right',
+            });
 
 				//muestra el numero de pagina
 				pdf.text('Pagina ' + String(i) + '/' + String(pageCount),282-20,297-89,null,null,"right");

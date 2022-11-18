@@ -171,10 +171,10 @@ if (mysqli_num_rows($roles35) > 0)
                   <th class="desaparecerTemporalmente">Acciones</th>
                   <th class="desaparecerTemporalmente1">Id</th> 
                   <th class="desaparecerTemporalmente1">Tipo</th>
-                  
+                  <th class="desaparecerTemporalmente">Imagen</th>
                   <th class="desaparecerTemporalmente1">Titulo</th>
                   <th class="desaparecerTemporalmente1">Descripción</th>
-                  <th class="desaparecerTemporalmente">Imagen</th>
+                  
                   
                   </tr>
                   </thead>
@@ -272,10 +272,10 @@ if (mysqli_num_rows($roles35) > 0)
 </td>
                     <td><?php echo $filas['ID_IMAGEN'] ?></td>
                      <td class="desaparecerTemporalmente1"><?php echo $filas['TIPO'] ?></td>
-                     
+                     <td class="desaparecerTemporalmente"><img class="img-thumbnail" width="100px" src="<?php echo $filas['RUTA'] ?>" /></td>
                      <td class="desaparecerTemporalmente1"><?php echo $filas['TITULO'] ?></td>
                      <td class="desaparecerTemporalmente1"><?php echo $filas['DESCRIPCION'] ?></td>
-                     <td><img class="img-thumbnail" width="100px" src="<?php echo $filas['RUTA'] ?>" /></td>
+                     
 
       </tr>
       <?php };} ?>  
@@ -383,7 +383,7 @@ if (mysqli_num_rows($roles35) > 0)
                             titleAttr:  'Exportar a Excel',
                             title:     'REPORTE DE BIENVENIDA',
                             exportOptions:{
-                              columns: [1,2,3,4]
+                              columns: [1,2,4,5]
                             }
                           },
                           {
@@ -490,10 +490,14 @@ if (mysqli_num_rows($roles35) > 0)
 				let horas = today.getHours()
 				let jornada = horas >=12 ? 'PM' : 'AM';
 				var newdat = "Fecha: " + today.getDate() + "/" + (today.getMonth()+1) + "/" + today.getFullYear() + " " + (horas % 12) + ":" + today.getMinutes() + ":" + today.getSeconds() + " " + jornada;
-				pdf.text(245-20,297-284,newdat);
+				pdf.text(183-20,297-284,newdat);
+        pdf.text('<?php echo 'Creado por: '. $_SESSION['usuario']; ?>', 202, 20, {
+            align: 'right',
+            });
+        
 
 				//muestra el numero de pagina
-				pdf.text('Pagina ' + String(i) + '/' + String(pageCount),282-20,297-89,null,null,"right");
+				pdf.text('Pagina ' + String(i) + '/' + String(pageCount),220-20,297-27,null,null,"right");
 			}
 				//Fin Encabezado y pie de pagina
 
