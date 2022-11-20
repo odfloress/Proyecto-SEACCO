@@ -39,18 +39,25 @@ if (mysqli_num_rows($roles35) > 0)
                   die();
                 }
          }
-                // inicio inserta en la tabla bitacora
-                $sql = "INSERT INTO tbl_bitacora (USUARIO, ACCION, OBSERVACION)
-                VALUES ('$usuario1[usuario]', 'CONSULTO', 'CONSULTO LA PANTALLA  ADMINISTRATIVA DEL PORTAFOLIO')";
-                if (mysqli_query($conn, $sql)) {} else {}
-                // fin inserta en la tabla bitacora
+                
 ?>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Portafolio</title>
+
+  <!-- ////////////// Inicio para select ////////// -->
+<!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"> -->
+<link rel='stylesheet prefetch' href='https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.11.2/css/bootstrap-select.min.css'>
+<link rel="stylesheet" href="../../css/est.css">
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.6.3/js/bootstrap-select.min.js"></script>
+<!-- ////////////// Fin para select ////////// -->
+
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
@@ -59,6 +66,8 @@ if (mysqli_num_rows($roles35) > 0)
          <!-- /// para exportar en pdf /// -->
    <script type="text/javascript" src="../../js/complemento_1_jspdf.min.js"></script>
 	<script type="text/javascript" src="../../js/complemento_2_jspdf.plugin.autotable.min.js"></script>
+
+
 
 
   <?php include '../../configuracion/navar.php' ?>
@@ -93,7 +102,7 @@ if (mysqli_num_rows($roles35) > 0)
                 <!-- Cuerpo del modal Modal -->
                 <div class="modal-body">
                 <label for="">Catálago</label>
-                <select style="background-color:rgb(240, 244, 245);" value="<?php echo "$id_departamento"; ?>" class="form-select" id="lista1" name="tipo" required >
+                <select style="background-color:rgb(240, 244, 245);" value="<?php echo "$id_departamento"; ?>"  id="lista1" name="tipo" required  class="form-control selectpicker"  data-live-search="true">
                     <option value="">Selecciona un catálago</option>
                         <?php
                             include 'conexion/conexion.php';
@@ -116,11 +125,11 @@ if (mysqli_num_rows($roles35) > 0)
                     <br>
                     <label for="">Título</label>
                     <input type="text" class="form-control"  name="titulo" required value="<?php echo "$titulo"; ?>" placeholder="" 
-                    autocomplete = "off"  onkeypress="return soloLetras(event);" minlength="3" maxlength="50" onkeyup="mayus(this);"  >
+                    autocomplete = "off"  onkeyup="un_espacio(this);" onkeypress="return soloLetras(event);" minlength="3" maxlength="50" onkeyup="mayus(this);"  >
                     <br>
                     <label for="">Descripción</label>
                     <TEXtarea  style="background-color: white;" name="descripcion" class="form-control"name="" id="" cols="40" rows="5"
-                    autocomplete = "off"  onkeypress="return soloLetras(event);" minlength="3" maxlength="300" onkeyup="mayus(this);" ><?php echo "$descripcion"; ?></TEXtarea>
+                    autocomplete = "off"  onkeyup="un_espacio(this);" minlength="3" maxlength="290" ><?php echo "$descripcion"; ?></TEXtarea>
                 
                     <br>
                     
@@ -165,40 +174,7 @@ if (mysqli_num_rows($roles35) > 0)
             
             <div class="card">
               <div class="card-header">
-                <!-- /// filtrar reporte //// -->
-                <form action="" method="post">
-                <div class="row">
-                    <div class="col">
-                      <!-- ///////////////////// -->
-                      <?php $asignacion=(isset($_POST['reporte_catalogo']))?$_POST['reporte_catalogo']:"";   ?> 
-                      <!-- <?php echo $asignacion; ?> -->
-                      <br>
-                        <select style="background-color:rgb(240, 244, 245);" value="<?php echo $id_cliente; ?>" required  class="form-select" id="lista1" name="reporte_catalogo"  >
-                                          <option >Seleccione un tipo</option>
-                                              <?php
-                                                  include '../../conexion/conexion.php';
-                                                  $catalago777 = "SELECT * FROM tbl_catalogo";
-                                                  $catalago7777 = mysqli_query($conn, $catalago777);
-                                                  if (mysqli_num_rows($catalago7777) > 0) {
-                                                      while($row = mysqli_fetch_assoc($catalago7777))
-                                                      {
-                                                        $id_catalogoo = $row['ID_CATALOGO'];
-                                                      $catalago77777 =$row['NOMBRE_CATALOGO'];
-                                              ?>
-                                                <option value="<?php  echo $id_catalogoo; ?>"><?php echo $catalago77777; ?></option>
-                                                <?php
-                                          }}// finaliza el if y el while
-                                          ?>
-                                        </select>
-                                                          </div>
-                    <div class="col"><br>
-                    <button class="btn btn-danger" type="submit">Filtrar reporte</button>
-                    </div>
-               </div>
-                                 
-                                        
-                        </form> <br><!-- ///////////////////// -->
-                <!-- /// fin filtrar reporte /// -->
+                
               <form id="form">
                     <div class="btn-group">
                     <?php 
@@ -223,12 +199,12 @@ if (mysqli_num_rows($roles35) > 0)
                 <table id="example1" class="table table-bordered table-striped">
                   <thead>
                   <tr>
-                  <th>Acciones</th>
-                  <th>Id</th>
-                  <th>Tipo</th>
-                  <th>Imagen</th>
-                  <th>Título</th>
-                  <th>Descripción</th>
+                  <th class="desaparecerTemporalmente">Acciones</th>
+                  <th class="desaparecerTemporalmente1">Id</th>
+                  <th class="desaparecerTemporalmente1">Tipo</th>
+                  <th class="desaparecerTemporalmente">Imagen</th>
+                  <th class="desaparecerTemporalmente1">Título</th>
+                  <th class="desaparecerTemporalmente1">Descripción</th>
                   
                   </tr>
                   </thead>
@@ -245,7 +221,7 @@ if (mysqli_num_rows($roles35) > 0)
                     ?>
                     <?php  $cont++; ?>
                   <tr>
-                  <td>
+                  <td class="desaparecerTemporalmente">
                   <?php 
                           include '../../conexion/conexion.php';
                           $tablero = "SELECT * FROM tbl_ms_roles_ojetos WHERE ID_ROL='$id_rol7' and ID_OBJETO=7 and PERMISO_ACTUALIZACION=1";
@@ -284,11 +260,11 @@ if (mysqli_num_rows($roles35) > 0)
                                               <input type="file" class="form-control" accept=".jpg, .png, .jpeg, .JPEG, .JPG, .PNG" name="imagenes"  value="" placeholder=""  >
                                               <br>
                                               <label for="">Catálago:</label><br>
-                                              <select class="form-select"  name="tipo" required >
+                                              <select   name="tipo" required class="form-control selectpicker"  data-live-search="true">
                                                     <option value="<?php echo $filas['ID_CATALOGO'] ?>"><?php echo $filas['NOMBRE_CATALOGO'] ?> </option>
                                                     <?php
                                                             include 'conexion/conexion.php';
-                                                            $estado = "SELECT * FROM tbl_catalogo ORDER BY ID_CATALOGO";
+                                                            $estado = "SELECT * FROM tbl_catalogo WHERE ID_CATALOGO!='$filas[ID_CATALOGO]' ORDER BY ID_CATALOGO desc";
                                                             $estado2 = mysqli_query($conn, $estado);
                                                             if (mysqli_num_rows($estado2) > 0) {
                                                                 while($row = mysqli_fetch_assoc($estado2))
@@ -307,11 +283,11 @@ if (mysqli_num_rows($roles35) > 0)
                                                   </select> 
                                               <label for="">Título</label>
                                               <input type="text" class="form-control"  name="titulo" required value="<?php echo $filas['TITULO'] ?>" placeholder="" 
-                                              autocomplete = "off"  onkeypress="return soloLetras(event);" minlength="3" maxlength="50" onkeyup="mayus(this);"  >
+                                              autocomplete = "off" onkeyup="un_espacio(this);" onkeypress="return soloLetras(event);" minlength="3" maxlength="50" onkeyup="mayus(this);"  >
                                               <br>
                                               <label for="">Descripción</label>
                                               <TEXtarea  style="background-color: white;" name="descripcion" class="form-control"name="" id="" cols="40" rows="5"
-                                              autocomplete = "off"  onkeypress="return soloLetras(event);" minlength="3" maxlength="300" onkeyup="mayus(this);" ><?php echo $filas['DESCRIPCION_PORTAFOLIO'] ?></TEXtarea>
+                                              autocomplete = "off"  onkeyup="un_espacio(this);" minlength="3" maxlength="290" ><?php echo $filas['DESCRIPCION_PORTAFOLIO'] ?></TEXtarea>
                                           
                                               <br>
                                           
@@ -344,11 +320,11 @@ if (mysqli_num_rows($roles35) > 0)
                         ?>
                      </form>
 </td>
-                      <td><?php echo $cont; ?></td>
-                     <td><?php echo $filas['NOMBRE_CATALOGO'] ?></td>
-                     <td><img class="img-thumbnail" width="100px" src="<?php echo $filas['RUTA_PORTAFOLIO'] ?>" /></td>
-                     <td><?php echo $filas['TITULO'] ?></td>
-                     <td><TEXtarea readonly style="background-color: white;" class="form-control"name="" id="" cols="40" rows="5"><?php echo $filas['DESCRIPCION_PORTAFOLIO'] ?></TEXtarea></td>
+                      <td class="desaparecerTemporalmente1"><?php echo $filas['ID_IMAGEN'] ?></td>
+                     <td class="desaparecerTemporalmente1"><?php echo $filas['NOMBRE_CATALOGO'] ?></td>
+                     <td class="desaparecerTemporalmente"><img class="img-thumbnail" width="100px" src="<?php echo $filas['RUTA_PORTAFOLIO'] ?>" /></td>
+                     <td class="desaparecerTemporalmente1"><?php echo $filas['TITULO'] ?></td>
+                     <td class="desaparecerTemporalmente1"><TEXtarea readonly style="background-color: white;" class="form-control"name="" id="" cols="40" rows="5"><?php echo $filas['DESCRIPCION_PORTAFOLIO'] ?></TEXtarea></td>
                     
       </tr>
       <?php }} ?>  
@@ -399,8 +375,8 @@ if (mysqli_num_rows($roles35) > 0)
 <script src="../../plantilla/AdminLTE-3.2.0/plugins/jszip/jszip.min.js"></script>
 <script src="../../plantilla/AdminLTE-3.2.0/plugins/pdfmake/pdfmake.min.js"></script>
 <script src="../../plantilla/AdminLTE-3.2.0/plugins/pdfmake/vfs_fonts.js"></script>
-<!-- <script src="../../plantilla/AdminLTE-3.2.0/plugins/datatables-buttons/js/buttons.html5.min.js"></script> 
- <script src="../../plantilla/AdminLTE-3.2.0/plugins/datatables-buttons/js/buttons.print.min.js"></script> -->
+<script src="../../plantilla/AdminLTE-3.2.0/plugins/datatables-buttons/js/buttons.html5.min.js"></script> 
+ <script src="../../plantilla/AdminLTE-3.2.0/plugins/datatables-buttons/js/buttons.print.min.js"></script>
 
 
 
@@ -415,6 +391,7 @@ if (mysqli_num_rows($roles35) > 0)
 <script>
   $(function () {
     $("#example1").DataTable({
+      "order": [[ 1, "desc" ]],
       
       language: {
                           processing: "Tratamiento en curso...",
@@ -452,7 +429,29 @@ if (mysqli_num_rows($roles35) > 0)
                          },
                          
                          "responsive": true, "lengthChange": true, "autoWidth": false,
-                          "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"],                   
+                         "buttons": ["excel",  "colvis"],  
+                          
+                           //  Inicio   exportar en excel 
+                           buttons:[ 
+    {
+            extend:    'excelHtml5',
+            text:      'Exportar a Excel',
+            titleAttr: 'Exportar a Excel',
+            title:     'REPORTE DE PORTAFOLIO',
+            exportOptions: {
+                columns: [1,2,4,5]
+            }
+    },
+    {
+            extend:    'colvis',
+            text:      'Visualizar',
+            
+           
+           
+    }
+   
+] 
+  //  Fin   exportar en excel    
         
     })
 
@@ -478,36 +477,10 @@ if (mysqli_num_rows($roles35) > 0)
 </body>
 
 <!-- // Inicio para exportar en pdf // -->
-<?php
-if(!isset($_POST['reporte_catalogo']))
-{
-	require '../../conexion/conexion.php';
-	$sql = "SELECT * FROM (tbl_portafolio p
-  INNER JOIN tbl_catalogo c ON p.ID_CATALOGO = c.ID_CATALOGO) 
-  ORDER BY p.ID_CATALOGO desc";
-	$query = $conn->query($sql);
-	$data = array();
-	while($r=$query->fetch_object()){
-	$data[] =$r;
-	}
-}else{		
-			  
-			require '../../conexion/conexion.php';
-			$asignacion=(isset($_POST['reporte_catalogo']))?$_POST['reporte_catalogo']:"";
-			$sql = "SELECT * FROM (tbl_portafolio p
-      INNER JOIN tbl_catalogo c ON p.ID_CATALOGO = c.ID_CATALOGO) 
-      WHERE p.ID_CATALOGO='$asignacion'";
-			$query = $conn->query($sql);
-			$data = array();
-			while($r=$query->fetch_object()){
-			$data[] =$r;
-			}
-				
-			}
-     
-?>
+
 
 <?php 
+    include '../../conexion/conexion.php';
     $select_nombre = "SELECT * FROM tbl_parametros WHERE PARAMETRO='NOMBRE'";
     $select_nombre1 = mysqli_query($conn, $select_nombre);
     if (mysqli_num_rows($select_nombre1) > 0)
@@ -525,22 +498,35 @@ if(!isset($_POST['reporte_catalogo']))
 	form.addEventListener("submit",function(event) {
 	event.preventDefault()
 
-			
+   ////////// Inicio Ocultar y mostrar columnas y tablas///////
+   ///////Mostrar columnas y filas /////////////
+  $(".desaparecerTemporalmente1").css("display","");
+
+  ///////Ocultar columnas y filas /////////////
+  $(".desaparecerTemporalmente").css("display","none");
+   ////////// Fin Ocultar y mostrar columnas y tablas///////
+
+			/////// tamaño de pagina ///////////////
 			const pdf = new jsPDF('p', 'mm', 'letter');
-						
-			var columns = ["Tipo", "Título", "Descripción"];
-			var data = [
-  <?php foreach($data as $d):?>
-	
-      ["<?php echo $d->NOMBRE_CATALOGO; ?>", "<?php echo $d->TITULO; ?>", "<?php echo $d->DESCRIPCION_PORTAFOLIO; ?>"],
-      <?php endforeach; ?>
-  ];
-				pdf.autoTable(columns,data,
+				
+      ////////////// Inicio estructura de la Tabla ////////////////
+      pdf.autoTable(
 				{ 
+          html:'#example1',
 					
-					margin:{ top: 30 }}
+					margin:{ top: 30 },
+          
+          columnStyles: {    
+      
+            0: {cellWidth: 11},
+            1: {cellWidth: 51}, 
+            2: {cellWidth: 50},  
+            3: {cellWidth: 77} 
+           } 
+          }
 				);
-		
+      ////////////// Fin estructura de la Tabla ////////////////
+
 			//Inicio Encabezado y pie de pagina
 			const pageCount = pdf.internal.getNumberOfPages();
 			for(var i = 1; i <= pageCount; i++) 
@@ -556,12 +542,12 @@ if(!isset($_POST['reporte_catalogo']))
 				//muestra el titulo principal
 				pdf.setFont('Arial');
 				pdf.setFontSize(17);
-				pdf.text("<?php echo $nombre_constructora;?>", 74,15,);
+				pdf.text('<?php echo $nombre_constructora ?>', pdf.internal.pageSize.getWidth() / 2, 15, null, 'center');
 
 				//muestra el titulo secundario
 				pdf.setFont('times');
 				pdf.setFontSize(12);
-				pdf.text("Reporte de portafolio", 82,20,);
+				pdf.text("Reporte de portafolio",  pdf.internal.pageSize.getWidth() / 2, 20, null, 'center');
 
 												//////// pie de Pagina ///////
 				//muestra la fecha
@@ -572,6 +558,9 @@ if(!isset($_POST['reporte_catalogo']))
 				let jornada = horas >=12 ? 'PM' : 'AM';
 				var newdat = "Fecha: " + today.getDate() + "/" + (today.getMonth()+1) + "/" + today.getFullYear() + " " + (horas % 12) + ":" + today.getMinutes() + ":" + today.getSeconds() + " " + jornada;
 				pdf.text(183-20,297-284,newdat);
+        pdf.text('<?php echo 'Creado por: '. $_SESSION['usuario']; ?>', 202, 20, {
+            align: 'right',
+            });
 
 				//muestra el numero de pagina
 				pdf.text('Pagina ' + String(i) + '/' + String(pageCount),220-20,297-27,null,null,"right");
@@ -579,13 +568,14 @@ if(!isset($_POST['reporte_catalogo']))
 				//Fin Encabezado y pie de pagina
 
 							pdf.save('Reporte de portafolio.pdf');
+              $(".desaparecerTemporalmente").css("display","");
 	})
 
 </script>
 <!-- // Fin para exportar en pdf // -->
 <script type="text/javascript" src="../../js/evitar_reenvio.js"></script>
 </html>
-
+<script type="text/javascript" src="../../js/un_espacio.js"></script>
 
 <script>
  // Inicio Script para que solo permita letras

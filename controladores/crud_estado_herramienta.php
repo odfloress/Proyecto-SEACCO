@@ -9,6 +9,7 @@
   $id_estado=(isset($_POST['id_estado']))?$_POST['id_estado']:"";
   $estado=(isset($_POST['estado']))?$_POST['estado']:"";
   $anterior=(isset($_POST['nombre_anterior']))?$_POST['nombre_anterior']:"";
+  $ESTADOS=(isset($_POST['estado_herramienta']))?$_POST['estado_herramienta']:"";
   
   $usuario1 = $_SESSION;
 
@@ -31,15 +32,11 @@
          }else{ 
 
                     //si no existe el estado permite insertar
-                    $sql1 = "INSERT INTO tbl_estado_herramienta (ESTADO)
-                    VALUES ('$estado')";
+                    $sql1 = "INSERT INTO tbl_estado_herramienta (ESTADO, ESTADOS)
+                    VALUES ('$estado', '$ESTADOS')";
                     if (mysqli_query($conn, $sql1)) {
 
-                         // inicio inserta en la tabla bitacora
-                            $sql7 = "INSERT INTO tbl_bitacora (USUARIO, ACCION, OBSERVACION)
-                            VALUES ('$usuario1[usuario]', 'INSERTO', 'CREO EL ESTADO DE HERRAMIENTA ($estado)')";
-                             if (mysqli_query($conn, $sql7)) {} else { }
-                        // fin inserta en la tabla bitacora
+                        
                         echo '<script>
                                 alert("Estado creado con éxito");
                                 window.location.href="../../vistas/mantenimiento/vista_estado_herramienta.php";                   
@@ -64,31 +61,26 @@
         $validar_estado= "SELECT * FROM tbl_estado_herramienta WHERE ESTADO='$estado'";
         $result2 = mysqli_query($conn, $validar_estado); 
          if (mysqli_num_rows($result2) > 0) { 
-              
-   
-                     // inicio inserta en la tabla bitacora
-                     $sql8 = "INSERT INTO tbl_bitacora (USUARIO, ACCION, OBSERVACION)
-                     VALUES ('$usuario1[usuario]', 'INTENTO', 'NO LOGRO EDITAR EL ESTADO ($estado) YA QUE EXISTE UNO IGUAL')";
-                     
-                      if (mysqli_query($conn, $sql8)) {} else { }
-                    // fin inserta en la tabla bitacora
+
+                $sql2 = "UPDATE tbl_estado_herramienta SET  ESTADOS='$ESTADOS'  WHERE ID_ESTADO_HERRAMIENTA='$id_estado'";
+                if (mysqli_query($conn, $sql2)) {
+
                     echo '<script>
-                            alert("El nombre de estado ingresado ya existe, intente con otro");                  
+                            alert("Edición del estado exitasa");   
+                            window.location.href="../../vistas/mantenimiento/vista_estado_herramienta.php";                                    
                           </script>';
                           mysqli_close($conn);
 
+                                 
+                        }
                // si no existe el estado con el mismo nombre
               }else{
-                        $sql2 = "UPDATE tbl_estado_herramienta SET ESTADO='$estado'  WHERE ID_ESTADO_HERRAMIENTA='$id_estado'";
+                        $sql2 = "UPDATE tbl_estado_herramienta SET ESTADO='$estado', ESTADOS='$ESTADOS'  WHERE ID_ESTADO_HERRAMIENTA='$id_estado'";
                         if (mysqli_query($conn, $sql2)) {
 
-                            // inicio inserta en la tabla bitacora
-                            $sql9 = "INSERT INTO tbl_bitacora (USUARIO, ACCION, OBSERVACION)
-                            VALUES ('$usuario1[usuario]', 'EDITO', 'RENOMBRO EL ESTADO ($anterior) A $estado')";
-                            if (mysqli_query($conn, $sql9)) {} else { }
-                            // fin inserta en la tabla bitacora
+                          
                             echo '<script>
-                                    alert("Estado editado exitosamente");
+                                    alert("Edición exitosa");
                                     window.location.href="../../vistas/mantenimiento/vista_estado_herramienta.php";                     
                                 </script>';
                                 mysqli_close($conn);
@@ -106,11 +98,7 @@
     $validar_estado = "SELECT * FROM tbl_asignaciones WHERE ID_ESTADO_HERRAMIENTA='$id_estado'";
     $result7 = mysqli_query($conn, $validar_estado); 
      if (mysqli_num_rows($result7) > 0) { 
-         // inicio inserta en la tabla bitacora
-         $sql9 = "INSERT INTO tbl_bitacora (USUARIO, ACCION, OBSERVACION)
-         VALUES ('$usuario1[usuario]', 'INTENTO', 'NO LOGRO ELIMINAR, YA QUE ESTA EN USO EL ESTADO ($estado)')";
-         if (mysqli_query($conn, $sql9)) {} else { }
-         // fin inserta en la tabla bitacora
+         
          echo '<script>
                  alert("No se puede eliminar el estado, este se encuentra en uso");
                  window.location.href="../../vistas/mantenimiento/vista_estado_herramienta.php";                   
@@ -120,11 +108,7 @@
      }else{
                         $sql3 = "DELETE FROM tbl_estado_herramienta WHERE ID_ESTADO_HERRAMIENTA='$id_estado'";
                         if (mysqli_query($conn, $sql3)) {
-                            // inicio inserta en la tabla bitacora
-                            $sql7 = "INSERT INTO tbl_bitacora (USUARIO, ACCION, OBSERVACION)
-                            VALUES ('$usuario1[usuario]', 'ELIMINO', 'ELIMINO EL ESTADO ($anterior)')";
-                             if (mysqli_query($conn, $sql7)) {} else { }
-                        // fin inserta en la tabla bitacora
+                          
                             header('Location: ../../vistas/mantenimiento/vista_estado_herramienta.php');
                         }else{
                                 echo '<script>

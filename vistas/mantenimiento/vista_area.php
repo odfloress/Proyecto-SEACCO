@@ -38,11 +38,7 @@ if (mysqli_num_rows($roles35) > 0)
                         die();
                       }
                }
-                // inicio inserta en la tabla bitacora
-                $sql = "INSERT INTO tbl_bitacora (USUARIO, ACCION, OBSERVACION)
-                VALUES ('$usuario1[usuario]', 'CONSULTO', 'CONSULTO LA PANTALLA  ADMINISTRATIVA DE AREAS')";
-                if (mysqli_query($conn, $sql)) {} else {}
-                // fin inserta en la tabla bitacora
+              
 
 
 ?>
@@ -77,7 +73,7 @@ if (mysqli_num_rows($roles35) > 0)
             <!-- Inicio de modal de agregar -->
 <div class="container mt-3">
   
-        <h3>Areas</h3> 
+        <h3>Áreas</h3> 
     
         
     </div>
@@ -89,7 +85,7 @@ if (mysqli_num_rows($roles35) > 0)
                 <!-- Encabezado del modal -->
                 <form action="" method="post">
                 <div class="modal-header">
-                    <h4 class="modal-title">Nueva Area</h4>
+                    <h4 class="modal-title">Nueva Área</h4>
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
                 <!-- Fin Encabezado del modal -->
@@ -97,16 +93,21 @@ if (mysqli_num_rows($roles35) > 0)
                 <!-- Cuerpo del modal Modal -->
                 <div class="modal-body">
                
-                    <label for="">Nombre de la Area:</label>
-                    <input type="text" class="form-control" name="area"  value="<?php echo $area7; ?>" placeholder="" autocomplete = "off"  onkeypress="return soloLetras(event);" minlength="3" maxlength="100" 
-                     onkeyup="mayus(this);"  >
+                    <label for="">Nombre del área:</label>
+                    <input type="text" class="form-control" name="area"  value="<?php echo $area7; ?>" placeholder="" autocomplete = "off"  onkeypress="return soloLetras(event);" minlength="3" maxlength="50" 
+                    onkeyup="un_espacio(this);">
                     <br>
+                    <label for="">Estado</label>
+               <select class="form-select"  name="estado_area" required>
+                  <option value="ACTIVO">ACTIVO</option>
+                  <option value="INACTIVO">INACTIVO</option>
+               </select>
                 
                 </div>
                 <!-- Fin Cuerpo del modal Modal -->
                 <!-- pie del modal -->
                 <div class="modal-footer">
-      	            <button type="submit" name="accion" value="agregar" class="btn btn-primary" onclick="return confirm('¿Desea agregar esta nueva área?')">Agregar</button>
+      	            <button type="submit" name="accion" value="agregar" class="btn btn-primary" >Agregar</button>
                     <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
                 </div>
                 <!-- Fin pie del modal -->
@@ -164,9 +165,10 @@ if (mysqli_num_rows($roles35) > 0)
                 <table id="example1" class="table table-bordered table-striped">
                   <thead>
                   <tr>
-                  <th>Acciones</th>
-                  <th>Id</th>
-                  <th>Area</th>
+                  <th class="desaparecerTemporalmente">Acciones</th>
+                  <th class="desaparecerTemporalmente1">ID</th>
+                  <th class="desaparecerTemporalmente1">Area</th>
+                  <th class="desaparecerTemporalmente1">Estado</th>
                   
                   
                   
@@ -180,7 +182,7 @@ if (mysqli_num_rows($roles35) > 0)
                      <?php  $cont++; ?>
 
                   <tr>
-                  <td>
+                  <td class="desaparecerTemporalmente">
                   <?php 
                           include '../../conexion/conexion.php';
                           $area1 = "SELECT * FROM tbl_ms_roles_ojetos WHERE ID_ROL='$id_rol7' and ID_OBJETO=30 and PERMISO_ACTUALIZACION=1";
@@ -203,7 +205,7 @@ if (mysqli_num_rows($roles35) > 0)
 
                                 <!-- Encabezado del modal -->
                                 <div class="modal-header">
-                                  <h4 class="modal-title">Editar Area</h4>
+                                  <h4 class="modal-title">Editar Área</h4>
                                   <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                                 </div>
                                 <!-- Fin Encabezado del modal -->
@@ -213,12 +215,39 @@ if (mysqli_num_rows($roles35) > 0)
                                 <form action="" method="post">
                                           <div class="modal-body">
                                             <input type="hidden" name="nombre_anterior" value="<?php echo $filas['AREA'] ?>">
-                                              <label for="">Id profesion</label>
+                                              <label for="">ID área:</label>
                                               <input type="text" readonly class="form-control" name="id_area" required value="<?php echo $filas['ID_AREA'] ?>" placeholder=""  >
                                               <br>
-                                              <label for="">Profesión</label>
-                                              <input type="text" class="form-control" name="area" required value="<?php echo $filas['AREA'] ?>" placeholder=""  autocomplete = "off"  onkeypress="return soloLetras(event);" minlength="3" maxlength="100" 
-                                                onkeyup="mayus(this);"  >
+                                              <label for="">Nombre del área:</label>
+                                              <input type="text" class="form-control" name="area" required value="<?php echo $filas['AREA'] ?>" placeholder=""  autocomplete = "off"  onkeypress="return soloLetras(event);" minlength="3" maxlength="50" 
+                                              onkeyup="un_espacio(this);">
+                                                <br>
+                                                <label for="">Estado</label>
+                                               <select class="form-select"  name="estado_area" required >
+                                                        <option> </option>
+                                                        <?php
+                                                        include '../../conexion/conexion.php';
+                                                        $estado = "SELECT * FROM tbl_areas WHERE ID_AREA=$filas[ID_AREA]";
+                                                        $estado2 = mysqli_query($conn, $estado);
+                                                        if (mysqli_num_rows($estado2) > 0) {
+                                                            while($row = mysqli_fetch_assoc($estado2))
+                                                            {
+                                                            $ESTADO_AREAS = $row['ESTADO'];
+                                                            ?>
+                                                              <option value="<?php  echo $ESTADO_AREAS; ?>" selected><?php echo $ESTADO_AREAS; ?></option>
+                                                            
+                                                    <?php
+                                                  ?>
+                                                      <?php if ($ESTADO_AREAS=="ACTIVO"){
+                                                        echo '<option value="INACTIVO">INACTIVO</option>';
+                                                      }else{
+                                                        echo '<option value="ACTIVO">ACTIVO</option>';
+                                                      }
+                                                      ?>
+                                                      <?php
+                                                            }}// finaliza el if y el while
+                                                      ?> 
+                                              </select> 
                                              
                                           
                                           </div>
@@ -254,8 +283,9 @@ if (mysqli_num_rows($roles35) > 0)
                       </form>
                     
 </td>
-                     <td ><?php echo $cont; ?></td>
-                     <td><?php echo $filas['AREA'] ?></td>
+                     <td class="desaparecerTemporalmente1"><?php echo $filas['ID_AREA'] ?></td>
+                     <td class="desaparecerTemporalmente1"><?php echo $filas['AREA'] ?></td>
+                     <td class="desaparecerTemporalmente1"><?php echo $filas['ESTADO'] ?></td>
                      
                     
       </tr>
@@ -305,7 +335,8 @@ if (mysqli_num_rows($roles35) > 0)
 <script src="../../plantilla/AdminLTE-3.2.0/plugins/datatables-buttons/js/dataTables.buttons.min.js"></script>
 <script src="../../plantilla/AdminLTE-3.2.0/plugins/datatables-buttons/js/buttons.bootstrap4.min.js"></script>
 <script src="../../plantilla/AdminLTE-3.2.0/plugins/jszip/jszip.min.js"></script>
-
+<script src="../../plantilla/AdminLTE-3.2.0/plugins/datatables-buttons/js/buttons.html5.min.js"></script> 
+ <script src="../../plantilla/AdminLTE-3.2.0/plugins/datatables-buttons/js/buttons.print.min.js"></script>
 
 <script src="../../plantilla/AdminLTE-3.2.0/plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
 <!-- AdminLTE App -->
@@ -319,6 +350,7 @@ if (mysqli_num_rows($roles35) > 0)
 <script>
   $(function () {
     $("#example1").DataTable({
+      "order": [[ 1, "desc" ]],
       
       language: {
                           processing: "Tratamiento en curso...",
@@ -356,7 +388,29 @@ if (mysqli_num_rows($roles35) > 0)
                          },
                          
                          "responsive": true, "lengthChange": true, "autoWidth": false,
-                          "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"],                   
+                         "buttons": ["excel",  "colvis"],  
+                          
+                          //  Inicio   exportar en excel 
+                          buttons:[ 
+   {
+           extend:    'excelHtml5',
+           text:      'Exportar a Excel',
+           titleAttr: 'Exportar a Excel',
+           title:     'REPORTE DE AREAS',
+           exportOptions: {
+               columns: [1,2,3]
+           }
+   },
+   {
+           extend:    'colvis',
+           text:      'Visualizar',
+           
+          
+          
+   }
+  
+] 
+ //  Fin   exportar en excel                                  
         
     })
 
@@ -386,17 +440,7 @@ if (mysqli_num_rows($roles35) > 0)
 </body>
 
 <!-- // Inicio para exportar en pdf // -->
-<?php
 
-	require '../../conexion/conexion.php';
-	$sql = "SELECT * FROM tbl_areas
-  ORDER BY ID_AREA desc";
-	$query = $conn->query($sql);
-	$data = array();
-	while($r=$query->fetch_object())
-	$data[] =$r;    
-
-?>
 
 <?php
     $select_nombre = "SELECT * FROM tbl_parametros WHERE PARAMETRO='NOMBRE'";
@@ -412,68 +456,86 @@ if (mysqli_num_rows($roles35) > 0)
 
 <script>
 	//para descar al tocar el boton
-	var form = document.getElementById("form")
+var form = document.getElementById("form")
 	form.addEventListener("submit",function(event) {
 	event.preventDefault()
 
-			
+   ////////// Inicio Ocultar y mostrar columnas y tablas///////
+   ///////Mostrar columnas y filas /////////////
+  $(".desaparecerTemporalmente1").css("display","");
+
+  ///////Ocultar columnas y filas /////////////
+  $(".desaparecerTemporalmente").css("display","none");
+   ////////// Fin Ocultar y mostrar columnas y tablas///////
+
+			/////// tamaño de pagina ///////////////
 			const pdf = new jsPDF('p', 'mm', 'letter');
-						
-			var columns = ["Id área", "Área"];
-			var data = [
-  <?php foreach($data as $d):?>
-	
-      ["<?php echo $d->ID_AREA; ?>", "<?php echo $d->AREA; ?>"],
-      <?php endforeach; ?>
-  ];
-				pdf.autoTable(columns,data,
+				
+      ////////////// Inicio estructura de la Tabla ////////////////
+      pdf.autoTable(
 				{ 
+          html:'#example1',
 					
-					margin:{ top: 30 }}
+					margin:{ top: 30 },
+          
+          columnStyles: {    
+      
+            0: {cellWidth: 15},
+            1: {cellWidth: 123}, 
+            2: {cellWidth: 50} 
+            
+           } 
+          }
 				);
-		
-			//Inicio Encabezado y pie de pagina
-			const pageCount = pdf.internal.getNumberOfPages();
-			for(var i = 1; i <= pageCount; i++) 
-			{
-				pdf.setPage(i);
-												//////// Encabezado ///////
-				//Inicio para imagen de logo 
-				var logo = new Image();
-				logo.src = '../../imagenes/LoogSEACCO.jpg';
-				pdf.addImage(logo, 'JPEG',14,7,24,15);
-				//Fin para imagen de logo 
+      ////////////// Fin estructura de la Tabla ////////////////
+  
+    //Inicio Encabezado y pie de pagina
+    const pageCount = pdf.internal.getNumberOfPages();
+    for(var i = 1; i <= pageCount; i++) 
+    {
+      pdf.setPage(i);
+                      //////// Encabezado ///////
+      //Inicio para imagen de logo 
+      var logo = new Image();
+      logo.src = '../../imagenes/seacco.jpg';
+      pdf.addImage(logo, 'JPEG',14,7,24,15);
+      //Fin para imagen de logo 
 
-				//muestra el titulo principal
-				pdf.setFont('Arial');
-				pdf.setFontSize(17);
-				pdf.text("<?php echo $nombre_constructora;?>", 70,15,);
+      //muestra el titulo principal
+      pdf.setFont('Arial');
+      pdf.setFontSize(17);
+      pdf.text('<?php echo $nombre_constructora ?>', pdf.internal.pageSize.getWidth() / 2, 15, null, 'center');
 
-				//muestra el titulo secundario
-				pdf.setFont('times');
-				pdf.setFontSize(12);
-				pdf.text("Reporte de áreas", 81,20,);
+      //muestra el titulo secundario
+      pdf.setFont('times');
+      pdf.setFontSize(12);
+      pdf.text("Reporte de Áreas", pdf.internal.pageSize.getWidth() / 2, 20, null, 'center');
 
-												//////// pie de Pagina ///////
-				//muestra la fecha
-				pdf.setFont('times');
-				pdf.setFontSize(9);
-				var today = new Date();
-				let horas = today.getHours()
-				let jornada = horas >=12 ? 'PM' : 'AM';
-				var newdat = "Fecha: " + today.getDate() + "/" + (today.getMonth()+1) + "/" + today.getFullYear() + " " + (horas % 12) + ":" + today.getMinutes() + ":" + today.getSeconds() + " " + jornada;
-				pdf.text(183-20,297-284,newdat);
+                      //////// pie de Pagina ///////
+      //muestra la fecha
+      pdf.setFont('times');
+      pdf.setFontSize(9);
+      var today = new Date();
+      let horas = today.getHours()
+      let jornada = horas >=12 ? 'PM' : 'AM';
+      var newdat = "Fecha: " + today.getDate() + "/" + (today.getMonth()+1) + "/" + today.getFullYear() + " " + (horas % 12) + ":" + today.getMinutes() + ":" + today.getSeconds() + " " + jornada;
+      pdf.text(183-20,297-284,newdat);
+      pdf.text('<?php echo 'Creado por: '. $_SESSION['usuario']; ?>', 202, 20, {
+            align: 'right',
+            });
 
-				//muestra el numero de pagina
-				pdf.text('Pagina ' + String(i) + '/' + String(pageCount),220-20,297-27,null,null,"right");
-			}
-				//Fin Encabezado y pie de pagina
+      //muestra el numero de pagina
+      pdf.text('Pagina ' + String(i) + '/' + String(pageCount),220-20,297-27,null,null,"right");
+    }
+      //Fin Encabezado y pie de pagina
 
-							pdf.save('Reporte de áreas.pdf');
-	})
+            pdf.save('Reporte de areas.pdf');
+            $(".desaparecerTemporalmente").css("display","");
+})
 
 </script>
 <!-- // Fin para exportar en pdf // -->
 
 <script type="text/javascript" src="../../js/evitar_reenvio.js"></script>
 </html>
+<script type="text/javascript" src="../../js/un_espacio.js"></script>
