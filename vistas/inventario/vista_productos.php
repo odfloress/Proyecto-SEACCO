@@ -128,8 +128,8 @@ if (mysqli_num_rows($roles35) > 0)
                 <form action="" method="post" enctype="multipart/form-data">
                 <!-- Cuerpo del modal Modal -->
                 <div class="modal-body">
-                <label for="pwd" class="form-label">Id Categoria:</label>              
-                  <select  value="<?php echo "$id_categoria"; ?>" class="form-select" id="lista1" name="id_categoria" required >
+                <label for="pwd" class="form-label">Categoría:</label>              
+                  <select  value="<?php echo "$id_categoria"; ?>" required class="form-select" id="lista1" name="id_categoria" required >
                   <option >Seleccione</option>
                         <?php
                            include '../../conexion/conexion.php';
@@ -147,22 +147,30 @@ if (mysqli_num_rows($roles35) > 0)
                            ?>
                    </select>
                 <br>
-                <label for="">Codigo</label>
-                <input type="text" class="form-control" autocomplete="off" onkeyup="mayus(this);" name="codigo" minlength="2" maxlength="30" required value="<?php echo "$codigo"; ?>" placeholder="">
+                <label for="">Codigo Prodcuto:</label>
+                <input type="text" onkeyup="quitarespacios(this); sinespacio(this);" class="form-control" autocomplete="off" 
+                onkeyup="mayus(this);" name="codigo" minlength="2" maxlength="30" required value="<?php echo "$codigo"; ?>" 
+                placeholder="Ingrese el codigo del producto" minlength="4" maxlength="14">
                 <br>
-                <label for="">Nombre</label>
-                <input type="text" autocomplete="off"  value="<?php echo "$nombre"; ?>" onkeyup="mayus(this);" maxlength="255" class="form-control"  placeholder="" name="nombre" required>
+                <label for="">Nombre:</label>
+                <input type="text" onkeyup="un_espacio(this);" autocomplete="off"  value="<?php echo "$nombre"; ?>" 
+                onkeyup="mayus(this);" maxlength="255" class="form-control"  placeholder="Ingrese el nombre del producto" name="nombre" required
+                minlength="3" maxlength="50">
                 <br>
-                <label for="">Descripcion Modelo</label>
-                <input type="text" autocomplete="off"  value="<?php echo "$descripcion_modelo"; ?>" onkeyup="mayus(this);" maxlength="255" class="form-control"  placeholder="" name="descripcion_modelo" required>
+                <label for="">Descripción Modelo:</label>
+                <input type="text" onkeyup="un_espacio(this);" autocomplete="off"  value="<?php echo "$descripcion_modelo"; ?>" 
+                onkeyup="mayus(this);" maxlength="255" class="form-control"  placeholder="Ingrese la descripción del modelo" name="descripcion_modelo" required
+                minlength="3" maxlength="255">
                 <br>     
-                <label for="">Cantidad Minima</label>
-                <input type="number" class="form-control" autocomplete="off" onkeyup="mayus(this);" name="cantidad_min" required value="<?php echo "$cantidad_min"; ?>" placeholder="">
+                <label for="">Cantidad Minima:</label>
+                <input type="number" class="form-control" autocomplete="off" onkeyup="mayus(this);" name="cantidad_min" 
+                required value="<?php echo "$cantidad_min"; ?>" placeholder="Ingrese la cantidad minima" minlength="1" maxlength="12">
                 <br>  
-                <label for="">Cantidad Maxima</label>
-                <input type="number" class="form-control" autocomplete="off" onkeyup="mayus(this);" name="cantidad_max" required value="<?php echo "$cantidad_max"; ?>" placeholder="">
+                <label for="">Cantidad Maxima:</label>
+                <input type="number" class="form-control" autocomplete="off" onkeyup="mayus(this);" name="cantidad_max" 
+                required value="<?php echo "$cantidad_max"; ?>" placeholder="Ingrese la cantidad maxima" minlength="1" maxlength="12">
                 <br>
-                <label for="">Imagen</label>
+                <label for="">Imagen:</label>
                 <input type="file" class="form-control" accept=".jpg, .png, .jpeg, .JPEG, .JPG, .PNG" name="imagenes" required value="<?php echo "$nombreimagen"; ?>" placeholder=""  >
                 <br>  
                                                   
@@ -215,14 +223,15 @@ if (mysqli_num_rows($roles35) > 0)
                 <table id="example1" class="table table-bordered table-striped">
                   <thead>
                   <tr>
-                  <th>ACCIONES</th>
-                  <th>ID</th>
-                  <th>CATEGORIA</th>
-                  <th>CODIGO</th>
-                  <th>NOMBRE</th>
-                  <th>DESCRIPCIÓN MODELO</th>
-                  <th>CANTIDAD MINIMA</th>
-                  <th>CANTIDAD MAXIMA</th>
+                  <th class="desaparecerTemporalmente">ACCIONES</th>
+                  <th class="desaparecerTemporalmente1">ID</th>
+                  <th class="desaparecerTemporalmente1">CATEGORIA</th>
+                  <th class="desaparecerTemporalmente1">CODIGO</th>
+                  <th class="desaparecerTemporalmente">IMAGEN</th>
+                  <th class="desaparecerTemporalmente1">NOMBRE</th>
+                  <th class="desaparecerTemporalmente1">DESCRIPCIÓN MODELO</th>
+                  <th class="desaparecerTemporalmente1">CANTIDAD MINIMA</th>
+                  <th class="desaparecerTemporalmente1">CANTIDAD MAXIMA</th>
                   </tr>
                   </thead>
                   <tbody>
@@ -240,7 +249,7 @@ if (mysqli_num_rows($roles35) > 0)
                     ?>
                     <?php  $cont++; ?>
                   <tr>
-                  <td>
+                  <td class="desaparecerTemporalmente">
                   <?php 
                           include '../../conexion/conexion.php';
                           $tablero = "SELECT * FROM tbl_ms_roles_ojetos WHERE ID_ROL='$id_rol7' and ID_OBJETO=12 and PERMISO_ACTUALIZACION=1";
@@ -272,10 +281,10 @@ if (mysqli_num_rows($roles35) > 0)
                                 <form action="" method="post" enctype="multipart/form-data">
                                 <div class="modal-body">
                                 <input type="hidden" name="nombre_anterior" value="<?php echo $filas['NOMBRE'] ?>"> 
-                                <label for="">Id Productos</label>
+                                <label for="">Id Producto:</label>
                                 <input type="text" class="form-control" name="id_productos" readonly required value="<?php echo $filas['ID_PRODUCTO'] ?>" placeholder="" id="txtPrecio_Compra"   >
                                 <br>
-                  <label for="pwd" class="form-label">Id Categoria:</label>
+                  <label for="pwd" class="form-label">Categoría:</label>
                   <select style="background-color:rgb(240, 244, 245);" class="form-select" id="lista1" name="id_categoria" required >
                   <?php
                         include '../../conexion/conexion.php';
@@ -298,25 +307,33 @@ if (mysqli_num_rows($roles35) > 0)
                        ?>
                   </select>
                   <br> 
-                  <label for="">Codigo</label>
-                <input type="text" class="form-control" autocomplete="off" name="codigo" minlength="2" maxlength="30" required value="<?php echo $filas['CODIGO'] ?>" placeholder="">
+                  <label for="">Codigo Producto:</label>
+                <input type="text" onkeyup="quitarespacios(this); sinespacio(this);" class="form-control" autocomplete="off" 
+                name="codigo" minlength="2" maxlength="30" required value="<?php echo $filas['CODIGO'] ?>" placeholder="" 
+                minlength="4" maxlength="14">
                 <br>
-                <label for="">Nombre</label>
-                <input type="text" autocomplete="off"  value="<?php echo $filas['NOMBRE'] ?>" onkeyup="mayus(this);" maxlength="255" class="form-control"  placeholder="" name="nombre" required>
+                <label for="">Nombre:</label>
+                <input type="text" onkeyup="un_espacio(this);" autocomplete="off"  value="<?php echo $filas['NOMBRE'] ?>" 
+                onkeyup="mayus(this);" maxlength="255" class="form-control"  placeholder="" name="nombre" required 
+                minlength="3" maxlength="50">
                 <br>
-                <label for="">Descripcion Modelo</label>
-                <input type="text" autocomplete="off"  value="<?php echo $filas['DESCRIPCION_MODELO'] ?>" onkeyup="mayus(this);" maxlength="255" class="form-control"  placeholder="" name="descripcion_modelo" required>
+                <label for="">Descripción Modelo:</label>
+                <input type="text" onkeyup="un_espacio(this);" autocomplete="off"  value="<?php echo $filas['DESCRIPCION_MODELO'] ?>" 
+                onkeyup="mayus(this);" maxlength="255" class="form-control"  placeholder="" name="descripcion_modelo" required 
+                minlength="3" maxlength="255">
                 <br> 
                     
-                <label for="">Cantidad Minima</label>
-                <input type="number" class="form-control" autocomplete="off" name="cantidad_min" required value="<?php echo $filas['CANTIDAD_MIN'] ?>" placeholder="">
+                <label for="">Cantidad Minima:</label>
+                <input type="number" class="form-control" autocomplete="off" name="cantidad_min" required 
+                value="<?php echo $filas['CANTIDAD_MIN'] ?>" placeholder="" minlength="1" maxlength="12">
                 <br>
-                <label for="">Cantidad Maxima</label>
-                <input type="number" class="form-control" autocomplete="off" name="cantidad_max" required value="<?php echo $filas['CANTIDAD_MAX'] ?>" placeholder="">
+                <label for="">Cantidad Maxima:</label>
+                <input type="number" class="form-control" autocomplete="off" name="cantidad_max" required 
+                value="<?php echo $filas['CANTIDAD_MAX'] ?>" placeholder="" minlength="1" maxlength="12">
                 <br>
                 <input type="hidden" name="foto" value="<?php echo $filas['FOTO'] ?>">
                 <input type="hidden" name="ruta" value="<?php echo $filas['FOTO'] ?>">
-                <label for="">Imagen</label><br>
+                <label for="">Imagen:</label><br>
                 <img class="img-thumbnail" width="100px" src="<?php echo $filas['FOTO'] ?>"  /><br>
                 <input type="file" class="form-control" accept=".jpg, .png, .jpeg, .JPEG, .JPG, .PNG" name="imagenes"  value="" placeholder=""  >
                 <br> 
@@ -332,7 +349,7 @@ if (mysqli_num_rows($roles35) > 0)
                                 </div>
                               </form>
                                   <!-- Fin pie del modal -->
-                                  <form action="" method="post">
+                                  <form action="" method="post" >
                               </div>
                             </div>
                           </div>
@@ -355,13 +372,14 @@ if (mysqli_num_rows($roles35) > 0)
                         ?>
                      </form>
 </td>
-                     <td><?php echo $cont; ?></td>
-                     <td><?php echo $filas['NOMBRE_CATEGORIA'] ?></td>                  
-                     <td><?php echo $filas['CODIGO'] ?></td>
-                     <td><?php echo $filas['NOMBRE'] ?></td>
-                     <td><?php echo $filas['DESCRIPCION_MODELO'] ?></td> 
-                     <td><?php echo $filas['CANTIDAD_MIN'] ?></td>
-                     <td><?php echo $filas['CANTIDAD_MAX'] ?></td>                                                         
+                     <td class="desaparecerTemporalmente1"><?php echo $filas['ID_PRODUCTO'] ?></td>
+                     <td class="desaparecerTemporalmente1"><?php echo $filas['NOMBRE_CATEGORIA'] ?></td>                  
+                     <td class="desaparecerTemporalmente1"><?php echo $filas['CODIGO'] ?></td>
+                     <td class="desaparecerTemporalmente"><img class="img-thumbnail" width="100px" src="<?php echo $filas['FOTO'] ?>" /></td>
+                     <td class="desaparecerTemporalmente1"><?php echo $filas['NOMBRE'] ?></td>
+                     <td class="desaparecerTemporalmente1"><?php echo $filas['DESCRIPCION_MODELO'] ?></td> 
+                     <td class="desaparecerTemporalmente1" style="text-align: right;"><?php echo $filas['CANTIDAD_MIN'] ?></td>
+                     <td class="desaparecerTemporalmente1" style="text-align: right;"><?php echo $filas['CANTIDAD_MAX'] ?></td>                                                         
                      </tr>
       <?php }} ?>  
                   </tfoot>
@@ -409,8 +427,8 @@ if (mysqli_num_rows($roles35) > 0)
 <script src="../../plantilla/AdminLTE-3.2.0/plugins/jszip/jszip.min.js"></script>
 <script src="../../plantilla/AdminLTE-3.2.0/plugins/pdfmake/pdfmake.min.js"></script>
 <script src="../../plantilla/AdminLTE-3.2.0/plugins/pdfmake/vfs_fonts.js"></script>
-<!-- <script src="../../plantilla/AdminLTE-3.2.0/plugins/datatables-buttons/js/buttons.html5.min.js"></script> 
- <script src="../../plantilla/AdminLTE-3.2.0/plugins/datatables-buttons/js/buttons.print.min.js"></script> -->
+<script src="../../plantilla/AdminLTE-3.2.0/plugins/datatables-buttons/js/buttons.html5.min.js"></script> 
+ <script src="../../plantilla/AdminLTE-3.2.0/plugins/datatables-buttons/js/buttons.print.min.js"></script> 
 
 
 
@@ -425,7 +443,7 @@ if (mysqli_num_rows($roles35) > 0)
 <script>
   $(function () {
     $("#example1").DataTable({
-      
+      "order": [[ 1, "desc" ]],
       language: {
                           processing: "Tratamiento en curso...",
                           search: "Buscar&nbsp;:",
@@ -462,7 +480,23 @@ if (mysqli_num_rows($roles35) > 0)
                          },
                          
                          "responsive": true, "lengthChange": true, "autoWidth": false,
-                          "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"],                   
+                          "buttons": ["excel", "colvis"], 
+                          buttons:[
+                            {
+                            extend:     'excelHtml5',
+                            text:       'Exportar a Excel',
+                            titleAttr:  'Exportar a Excel',
+                            title:     'REPORTE DE PRODCUTOS',
+                            exportOptions:{
+                              columns: [1,2,3,4,5,6,7]
+                            }
+                          },
+                          {
+                            extend: 'colvis',
+                            text:   'Visualizar',
+                            title:  'REPORTE DE PRODCUTOS',
+                          } 
+                          ]                 
         
     })
 
@@ -512,30 +546,45 @@ if (mysqli_num_rows($roles35) > 0)
       }
     }
 ?>
+<!-- // Inicio para exportar en pdf // -->
 
 <script>
-	//para descar al tocar el boton
+  
+	//para descar al tocar el boton	
 	var form = document.getElementById("form")
+  
 	form.addEventListener("submit",function(event) {
+  
 	event.preventDefault()
+  $(".desaparecerTemporalmente1").css("display","");
+  $(".desaparecerTemporalmente").css("display","none");
 
-			
-			const pdf = new jsPDF('p', 'mm', 'letter');
-						
-			var columns = ["Id producto", "Código", "Nombre", "Descripción de modelo", "Categoría",  "Cantidad mínima", "Cantidad máxima"];
-			var data = [
-  <?php foreach($data as $d):?>
-	
-      ["<?php echo $d->ID_PRODUCTO; ?>", "<?php echo $d->CODIGO; ?>", "<?php echo $d->NOMBRE; ?>", "<?php echo $d->DESCRIPCION_MODELO; ?>", "<?php echo $d->NOMBRE_CATEGORIA; ?>", "<?php echo $d->CANTIDAD_MIN; ?>", "<?php echo $d->CANTIDAD_MAX; ?>"],
-      <?php endforeach; ?>
-  ];
-				pdf.autoTable(columns,data,
+				const pdf = new jsPDF('L', 'mm', 'letter');			
+        	
+
+				
+				
+
+				pdf.autoTable(
 				{ 
+          html:'#example1',
 					
-					margin:{ top: 30 }}
+					margin:{ top: 30 },
+          
+          columnStyles: {
+      
+            0: {cellWidth: 15},
+            1: {cellWidth: 30},
+            2: {cellWidth: 30},
+            3: {cellWidth: 50},
+            4: {cellWidth: 66},
+            5: {cellWidth: 30},
+            6: {cellWidth: 30}
+           } 
+          }
 				);
-		
-			//Inicio Encabezado y pie de pagina
+						
+				//Inicio Encabezado y pie de pagina
 			const pageCount = pdf.internal.getNumberOfPages();
 			for(var i = 1; i <= pageCount; i++) 
 			{
@@ -543,19 +592,19 @@ if (mysqli_num_rows($roles35) > 0)
 												//////// Encabezado ///////
 				//Inicio para imagen de logo 
 				var logo = new Image();
-				logo.src = '../../imagenes/LoogSEACCO.jpg';
+				logo.src = '../../imagenes/seacco.jpg';
 				pdf.addImage(logo, 'JPEG',14,7,24,15);
 				//Fin para imagen de logo 
 
 				//muestra el titulo principal
 				pdf.setFont('Arial');
 				pdf.setFontSize(17);
-				pdf.text("<?php echo $nombre_constructora;?>", 70,15,);
-
+				pdf.text('<?php echo $nombre_constructora ?>', pdf.internal.pageSize.getWidth() / 2, 15, null, 'center'); // de esta manera se puede centrar el titulo
+       
 				//muestra el titulo secundario
 				pdf.setFont('times');
-				pdf.setFontSize(10);
-				pdf.text("Reporte de productos", 84,20,);
+				pdf.setFontSize(12);
+				pdf.text("Reporte de productos", pdf.internal.pageSize.getWidth() / 2, 20, null, 'center');
 
 												//////// pie de Pagina ///////
 				//muestra la fecha
@@ -565,18 +614,43 @@ if (mysqli_num_rows($roles35) > 0)
 				let horas = today.getHours()
 				let jornada = horas >=12 ? 'PM' : 'AM';
 				var newdat = "Fecha: " + today.getDate() + "/" + (today.getMonth()+1) + "/" + today.getFullYear() + " " + (horas % 12) + ":" + today.getMinutes() + ":" + today.getSeconds() + " " + jornada;
-				pdf.text(183-20,297-284,newdat);
+				pdf.text(245-20,297-284,newdat);
+        pdf.text('<?php echo 'Creado por: '. $_SESSION['usuario']; ?>', 264, 20, {
+            align: 'right',
+            });
 
 				//muestra el numero de pagina
-				pdf.text('Pagina ' + String(i) + '/' + String(pageCount),220-20,297-27,null,null,"right");
+				pdf.text('Pagina ' + String(i) + '/' + String(pageCount),282-20,297-89,null,null,"right");
 			}
 				//Fin Encabezado y pie de pagina
 
 							pdf.save('Reporte de productos.pdf');
+              $(".desaparecerTemporalmente").css("display","");
 	})
-
+  
 </script>
 <!-- // Fin para exportar en pdf // -->
-
+<script type="text/javascript" src="../../js/un_espacio.js"></script>
 <script type="text/javascript" src="../../js/evitar_reenvio.js"></script>
+<script type="text/javascript">
+function sinespacio(e) {
+
+  var limpia = e.value;
+        limpia = limpia.toUpperCase().replace(' ', '');
+        e.value = limpia;
+
+};
+</script>
+
+<script type="text/javascript">
+function quitarespacios(e) {
+
+  var cadena =  e.value;
+  cadena = cadena.trim();
+
+  e.value = cadena;
+
+};
+</script>
+
 </html>
