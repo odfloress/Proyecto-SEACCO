@@ -39,15 +39,7 @@ include '../../controladores/crud_categoria_productos.php';
           <div class="col-sm-7">
           <h3>Categorias de productos</h3>
             <!-- Inicio de modal de agregar -->
-<div class="container mt-3">
-         
-        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal">
-            Nueva categoria
-            <form id="form" action="" method="post">
-            <button type="submit"  name="accion" value="reporte_pdf" class="btn btn-secondary buttons-pdf buttons-html5"  onclick="return confirm('¿Desea generar reporte de categorias de productos?')" onclick="textToPdf()"><span>Reporte PDF</span></button>
-	          </form>
-        </button>
-    </div>
+
 
 <!-- El Modal -->
     <div class="modal" id="myModal">
@@ -66,8 +58,12 @@ include '../../controladores/crud_categoria_productos.php';
                
                     <label for="">Categoria:</label>
                     <input type="text" class="form-control" onkeyup="mayus(this); un_espacio(this); " name="categoria" required value="" placeholder="" id="txtPrecio_Compra"   >
-                    
-                    <br>
+                    <label for="">Estado</label>
+                    <select class="form-select"  name="estado" required>
+                    <option value="">Selecciona un estado</option>
+                    <option value="ACTIVO">ACTIVO</option>
+                    <option value="INACTIVO">INACTIVO</option>
+                    </select>
                 
                 </div>
                 <!-- Fin Cuerpo del modal Modal -->
@@ -107,7 +103,17 @@ include '../../controladores/crud_categoria_productos.php';
             <div class="card table-responsive">
               <div class="card-header">
                 <!-- <h3 class="card-title">Categorias</h3> -->
-                
+                <form id="form" action="" method="post">
+                <div class="container mt-3">
+         
+         <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal">
+             Nueva categoria
+             <form id="form" action="" method="post">
+             <button type="submit"  name="accion" value="reporte_pdf" class="btn btn-secondary buttons-pdf buttons-html5"  onclick="return confirm('¿Desea generar reporte de categorias de productos?')" onclick="textToPdf()"><span>Reporte PDF</span></button>
+             </form>
+         </button>
+     </div>
+                </form>
               </div>
               
               <!-- /.card-header -->
@@ -115,9 +121,10 @@ include '../../controladores/crud_categoria_productos.php';
                 <table id="example1" class="table table-bordered table-striped">
                   <thead>
                   <tr>
-                  <th>Acciones</th>
-                  <th>ID</th>
-                  <th>Categoria</th>
+                  <th class="desaparecerTemporalmente">Acciones</th>
+                  <th class="desaparecerTemporalmente1">ID</th>
+                  <th class="desaparecerTemporalmente1">Categoría</th>
+                  <th class="desaparecerTemporalmente1">Estado</th>
                   
                   </tr>
                   </thead>
@@ -130,7 +137,7 @@ include '../../controladores/crud_categoria_productos.php';
                      <?php  $cont++; ?>
 
                   <tr>
-                  <td>
+                  <td class="desaparecerTemporalmente">
                         <!-- inicio boton editar -->
                       <button type="button"  class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#myModal2<?php echo $filas['ID_CATEGORIA'] ?>" >
                       <i class="fas fa-pencil-alt"></i>
@@ -152,12 +159,40 @@ include '../../controladores/crud_categoria_productos.php';
                                 <!-- Cuerpo del modal Modal -->
                                 <form action="" method="post">
                                           <div class="modal-body">
-                                              <label for="">Id categoria</label>
-                                              <input type="text" readonly class="form-control" name="id_categoria" required value="<?php echo $filas['ID_CATEGORIA'] ?>" placeholder="" id="txtPrecio_Compra"   >
+                                          <input type="hidden" name="nombre_anterior" value="<?php echo $filas['NOMBRE_CATEGORIA'] ?>">
+                                              <label for="">ID rol</label>
+                                              <input type="text" readonly class="form-control" name="id_categoria" required value="<?php echo $filas['ID_CATEGORIA'] ?>" placeholder=""  >
                                               <br>
-                                              <label for="">Categoria</label>
-                                              <input type="text" class="form-control" name="categoria" required value="<?php echo $filas['NOMBRE_CATEGORIA'] ?>" placeholder="" id="txtPrecio_Compra"   >
-                                              <br>
+                                              <label for="">Categoría</label>
+                                              <input type="text" class="form-control" name="categoria" required value="<?php echo $filas['NOMBRE_CATEGORIA'] ?>" placeholder=""  autocomplete = "off"  onkeypress="return soloLetras(event);" minlength="3" maxlength="20" 
+                                                onkeyup="mayus(this);" required onblur="quitarespacios(this);" onkeydown="sinespacio(this);"  >
+                                                <br>
+                                               <label for="">Estado</label>
+                                               <select class="form-select"  name="estado" required >
+                                                        <option> </option>
+                                                        <?php
+                                                        $estado = "SELECT * FROM tbl_categoria_producto WHERE ID_CATEGORIA=$filas[ID_CATEGORIA]";
+                                                        $estado2 = mysqli_query($conn, $estado);
+                                                        if (mysqli_num_rows($estado2) > 0) {
+                                                            while($row = mysqli_fetch_assoc($estado2))
+                                                            {
+                                                            $estado = $row['ESTADO'];
+                                                            ?>
+                                                              <option value="<?php  echo $estado; ?>" selected><?php echo $estado; ?></option>
+                                                            
+                                                    <?php
+                                                  ?>
+                                                      <?php if ($estado=="ACTIVO"){
+                                                        echo '<option value="INACTIVO">INACTIVO</option>';
+                                                      }else{
+                                                        echo '<option value="ACTIVO">ACTIVO</option>';
+                                                      }
+                                                      ?>
+                                                      <?php
+                                                            }}// finaliza el if y el while
+                                                      ?> 
+                                              </select> 
+                                              
                                           
                                           </div>
                                 <!-- Fin Cuerpo del modal Modal -->
@@ -184,8 +219,9 @@ include '../../controladores/crud_categoria_productos.php';
                     </button></form>
                     
 </td>
-                     <td ><?php echo $cont; ?></td>
-                     <td><?php echo $filas['NOMBRE_CATEGORIA'] ?></td>
+                     <td ><?php echo $filas['ID_CATEGORIA'] ?></td>
+                     <td class="desaparecerTemporalmente1"><?php echo $filas['NOMBRE_CATEGORIA'] ?></td>
+                     <td class="desaparecerTemporalmente1"><?php echo $filas['ESTADO'] ?></td>
                     
       </tr>
                 <?php } ?>  
@@ -234,7 +270,9 @@ include '../../controladores/crud_categoria_productos.php';
 <script src="../../plantilla/AdminLTE-3.2.0/plugins/datatables-buttons/js/dataTables.buttons.min.js"></script>
 <script src="../../plantilla/AdminLTE-3.2.0/plugins/datatables-buttons/js/buttons.bootstrap4.min.js"></script>
 <script src="../../plantilla/AdminLTE-3.2.0/plugins/jszip/jszip.min.js"></script>
-
+<!-- Plugins para reporte en excel -->
+<script src="../../plantilla/AdminLTE-3.2.0/plugins/datatables-buttons/js/buttons.html5.min.js"></script> 
+ <script src="../../plantilla/AdminLTE-3.2.0/plugins/datatables-buttons/js/buttons.print.min.js"></script>
 
 <script src="../../plantilla/AdminLTE-3.2.0/plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
 <!-- AdminLTE App -->
@@ -246,7 +284,7 @@ include '../../controladores/crud_categoria_productos.php';
 <script>
   $(function () {
     $("#example1").DataTable({
-      
+      "order": [[ 1, "desc" ]],
       language: {
                           processing: "Tratamiento en curso...",
                           search: "Buscar&nbsp;:",
@@ -283,7 +321,23 @@ include '../../controladores/crud_categoria_productos.php';
                          },
                          
                          "responsive": true, "lengthChange": true, "autoWidth": false,
-                          "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"],                   
+                          "buttons": ["excel", "colvis"], 
+                          buttons:[
+                            {
+                            extend:     'excelHtml5',
+                            text:       'Exportar a Excel',
+                            titleAttr:  'Exportar a Excel',
+                            title:     'REPORTE DE CATEGORIA DE PRODUCTOS',
+                            exportOptions:{
+                              columns: [1,2,3]
+                            }
+                          },
+                          {
+                            extend: 'colvis',
+                            text:   'Visualizar',
+                            title:  'REPORTE DE CATEGORIA DE PRODUCTOS',
+                          } 
+                          ]                  
         
     })
 
@@ -338,28 +392,38 @@ include '../../controladores/crud_categoria_productos.php';
 ?>
 
 <script>
-	//para descar al tocar el boton
+  
+	//para descar al tocar el boton	
 	var form = document.getElementById("form")
+  
 	form.addEventListener("submit",function(event) {
+  
 	event.preventDefault()
+  $(".desaparecerTemporalmente1").css("display","");
+  $(".desaparecerTemporalmente").css("display","none");
 
-			
-			const pdf = new jsPDF('p', 'mm', 'letter');
-						
-			var columns = ["Id categoría", "Categoría"];
-			var data = [
-  <?php foreach($data as $d):?>
-	
-      ["<?php echo $d->ID_CATEGORIA; ?>", "<?php echo $d->NOMBRE_CATEGORIA; ?>"],
-      <?php endforeach; ?>
-  ];
-				pdf.autoTable(columns,data,
+				const pdf = new jsPDF('p', 'mm', 'letter');			
+        	
+
+				
+				
+
+				pdf.autoTable(
 				{ 
+          html:'#example1',
 					
-					margin:{ top: 30 }}
+					margin:{ top: 30 },
+          
+          columnStyles: {
+      
+            0: {cellWidth: 15},
+            1: {cellWidth: 90},
+            2: {cellWidth: 84}
+           } 
+          }
 				);
-		
-			//Inicio Encabezado y pie de pagina
+						
+				//Inicio Encabezado y pie de pagina
 			const pageCount = pdf.internal.getNumberOfPages();
 			for(var i = 1; i <= pageCount; i++) 
 			{
@@ -367,19 +431,19 @@ include '../../controladores/crud_categoria_productos.php';
 												//////// Encabezado ///////
 				//Inicio para imagen de logo 
 				var logo = new Image();
-				logo.src = '../../imagenes/LoogSEACCO.jpg';
+				logo.src = '../../imagenes/seacco.jpg';
 				pdf.addImage(logo, 'JPEG',14,7,24,15);
 				//Fin para imagen de logo 
 
 				//muestra el titulo principal
 				pdf.setFont('Arial');
 				pdf.setFontSize(17);
-				pdf.text("<?php echo $nombre_constructora;?>", 70,15,);
-
+				pdf.text('<?php echo $nombre_constructora ?>', pdf.internal.pageSize.getWidth() / 2, 15, null, 'center'); // de esta manera se puede centrar el titulo
+       
 				//muestra el titulo secundario
 				pdf.setFont('times');
-				pdf.setFontSize(10);
-				pdf.text("Reporte de categorías de productos", 84,20,);
+				pdf.setFontSize(12);
+				pdf.text("Reporte de categorías de productos", pdf.internal.pageSize.getWidth() / 2, 20, null, 'center');
 
 												//////// pie de Pagina ///////
 				//muestra la fecha
@@ -390,6 +454,10 @@ include '../../controladores/crud_categoria_productos.php';
 				let jornada = horas >=12 ? 'PM' : 'AM';
 				var newdat = "Fecha: " + today.getDate() + "/" + (today.getMonth()+1) + "/" + today.getFullYear() + " " + (horas % 12) + ":" + today.getMinutes() + ":" + today.getSeconds() + " " + jornada;
 				pdf.text(183-20,297-284,newdat);
+        pdf.text('<?php echo 'Creado por: '. $_SESSION['usuario']; ?>', 202, 20, {
+            align: 'right',
+            });
+        
 
 				//muestra el numero de pagina
 				pdf.text('Pagina ' + String(i) + '/' + String(pageCount),220-20,297-27,null,null,"right");
@@ -397,9 +465,11 @@ include '../../controladores/crud_categoria_productos.php';
 				//Fin Encabezado y pie de pagina
 
 							pdf.save('Reporte de categorías de productos.pdf');
+              $(".desaparecerTemporalmente").css("display","");
 	})
-
+  
 </script>
+categorías de productos
 <!-- // Fin para exportar en pdf // -->
 <script type="text/javascript" src="../../js/evitar_reenvio.js"></script>
 

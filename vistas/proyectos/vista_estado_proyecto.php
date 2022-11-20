@@ -95,7 +95,7 @@ if (mysqli_num_rows($roles35) > 0)
                 <div class="modal-body">
                   
                     <label for="">Estado</label>
-                    <input type="text" class="form-control" name="nombre" value="<?php echo $nombre; ?>" required value="" placeholder="" id="txtPrecio_Compra" autocomplete="off" onkeypress="return soloLetras(event);" minlength="3" maxlength="20" onkeyup="mayus(this);"   >
+                    <input type="text" onkeyup="quitarespacios(this); sinespacio(this);" class="form-control" name="nombre" value="<?php echo $nombre; ?>" required value="" placeholder="" id="txtPrecio_Compra" autocomplete="off" onkeypress="return soloLetras(event);" minlength="3" maxlength="20" onkeyup="mayus(this);"   >
                     <br>
                 
                 </div>
@@ -211,7 +211,7 @@ if (mysqli_num_rows($roles35) > 0)
                                               <input type="number" class="form-control" name="id_estados" readonly required value="<?php echo $filas['ID_ESTADOS'] ?>" placeholder="" id="txtPrecio_Compra"   >
                                               <br>
                                               <label for="">Estado:</label>
-                                              <input type="text" class="form-control" name="nombre" autocomplete="off" required value="<?php echo $filas['ESTADO_PROYECTO'] ?>" placeholder="" id="txtPrecio_Compra" onkeypress="return soloLetras(event);" minlength="3" maxlength="20"  onkeyup="mayus(this);" >
+                                              <input type="text" onkeyup="quitarespacios(this); sinespacio(this);" class="form-control" name="nombre" autocomplete="off" required value="<?php echo $filas['ESTADO_PROYECTO'] ?>" placeholder="" id="txtPrecio_Compra" onkeypress="return soloLetras(event);" minlength="3" maxlength="20"  onkeyup="mayus(this);" >
                                               <br>
                                           
                                           </div>
@@ -462,4 +462,25 @@ $data[] =$r;
 </script>
 <!-- // Fin para exportar en pdf // -->
 <script type="text/javascript" src="../../js/evitar_reenvio.js"></script>
+
+<script type="text/javascript">
+function sinespacio(e) {
+
+var limpia = e.value;
+      limpia = limpia.toUpperCase().replace(' ', '');
+      e.value = limpia;
+
+};
+</script>
+
+<script type="text/javascript">
+function quitarespacios(e) {
+
+var cadena =  e.value;
+cadena = cadena.trim();
+
+e.value = cadena;
+
+};
+</script>
 </html>

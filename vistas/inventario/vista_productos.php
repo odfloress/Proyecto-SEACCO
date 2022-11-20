@@ -633,6 +633,7 @@ if (mysqli_num_rows($roles35) > 0)
 <script type="text/javascript" src="../../js/un_espacio.js"></script>
 <script type="text/javascript" src="../../js/evitar_reenvio.js"></script>
 <script type="text/javascript">
+
   
 function sinespacio(e) {
 

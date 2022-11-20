@@ -8,7 +8,9 @@
   // //Variables para recuperar la información de los campos de la vista categorias de productos
   $id_categoria=(isset($_POST['id_categoria']))?$_POST['id_categoria']:"";
   $categoria=(isset($_POST['categoria']))?$_POST['categoria']:"";
-
+  $estado=(isset($_POST['estado']))?$_POST['estado']:"";
+  $anterior=(isset($_POST['nombre_anterior']))?$_POST['nombre_anterior']:"";
+  
   //variable para recuperar los botones de la vista categprias de productos  
   $accion=(isset($_POST['accion']))?$_POST['accion']:"";
   
@@ -29,8 +31,8 @@
          }else{ 
 
                 //si no existe una categoria permite insertar
-                $sql1 = "INSERT INTO tbl_categoria_producto (NOMBRE_CATEGORIA)
-                VALUES ('$categoria')";
+                $sql1 = "INSERT INTO tbl_categoria_producto (NOMBRE_CATEGORIA,ESTADO)
+                VALUES ('$categoria','$estado')";
                 if (mysqli_query($conn, $sql1)) {
                   header('Location: ../../vistas/inventario/vista_categorias_productos.php');
 
@@ -51,28 +53,41 @@
       case "editar";
 
         // valida si existe una categoria con el mismo nombre
-        $validar_categoria = "SELECT * FROM tbl_categoria_producto WHERE NOMBRE_CATEGORIA='$categoria'";
-        $result2 = mysqli_query($conn, $validar_categoria); 
+        $validar_rol= "SELECT * FROM tbl_categoria_producto WHERE NOMBRE_CATEGORIA='$categoria'";
+        $result2 = mysqli_query($conn, $validar_rol); 
          if (mysqli_num_rows($result2) > 0) { 
               
-         
-           echo '<script>
-                    alert("No se puede editar, ya existe una categoría con ese nombre");
-                 </script>';
-                 mysqli_close($conn);
-         }else{ 
-
-                $sql2 = "UPDATE tbl_categoria_producto SET NOMBRE_CATEGORIA='$categoria' WHERE ID_CATEGORIA='$id_categoria'";
+            $sql2 = "UPDATE tbl_categoria_producto SET NOMBRE_CATEGORIA='$anterior', ESTADO='$estado'  WHERE ID_CATEGORIA='$id_categoria'";
                 if (mysqli_query($conn, $sql2)) {
-                   header('Location: ../../vistas/inventario/vista_categorias_productos.php');
+
+                    echo '<script>
+                            alert("Categotria de producto actualizada con éxito");
+                            window.location.href="../../vistas/inventario/vista_categorias_productos.php";                   
+                          </script>';
+                          mysqli_close($conn);
+                        
 
                 }else{
-                     echo '<script>
-                            alert("Error al tratar de editar categoría");
-                           </script>'; mysqli_error($conn);
+                         echo '<script>
+                                  alert("Error al tratar de editar categoria");
+                               </script>'; mysqli_error($conn);
                      }
 
-                mysqli_close($conn);
+                     mysqli_close($conn);
+
+               // si no existe el rol con el mismo nombre
+              }else{
+                        $sql2 = "UPDATE tbl_categoria_producto SET NOMBRE_CATEGORIA='$categoria', ESTADO='$estado' WHERE ID_CATEGORIA='$id_categoria'";
+                        if (mysqli_query($conn, $sql2)) {
+
+                            echo '<script>
+                                    alert("Categoria actualizada con éxito");
+                                    window.location.href="../../vistas/inventario/vista_categorias_productos.php";                   
+                                </script>';
+                                mysqli_close($conn);
+                                
+                        }
+
               }
       
       break;
@@ -83,11 +98,7 @@
     $validar_rol = "SELECT * FROM tbl_productos WHERE ID_CATEGORIA='$id_categoria'";
     $result4 = mysqli_query($conn, $validar_rol); 
      if (mysqli_num_rows($result4) > 0) { 
-        //  // inicio inserta en la tabla bitacora
-        //  $sql9 = "INSERT INTO tbl_bitacora (USUARIO, ACCION, OBSERVACION)
-        //  VALUES ('$usuario1[usuario]', 'INTENTO', 'NO LOGRO ELIMINAR YA QUE ESTABA EN USO EL ROL ($rol)')";
-        //  if (mysqli_query($conn, $sql9)) {} else { }
-        //  // fin inserta en la tabla bitacora
+
          echo '<script>
                  alert("No se puede eliminar la categoria, esta se encuentra en uso");
                  window.location.href="../../vistas/inventario/vista_categorias_productos.php";                   

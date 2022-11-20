@@ -167,7 +167,7 @@ include '../../conexion/conexion.php'; ?>
                      
                   <td class="desaparecerTemporalmente1"><?php echo $filas['ID_PRODUCTO'] ?></td>
                      <td class="desaparecerTemporalmente1"><?php echo $nombreproducto; ?></td>
-                     <td class="desaparecerTemporalmente1"><?php echo $filas['CANTIDAD'] ?></td>
+                     <td class="desaparecerTemporalmente1" style="text-align: right;"><?php echo $filas['CANTIDAD'] ?></td>
                      <td class="desaparecerTemporalmente1"><?php echo $filas['TIPO_MOVIMIENTO'] ?></td>
                      <td class="desaparecerTemporalmente1"><?php echo $filas['FECHA_HORA'] ?></td>
                      <td class="desaparecerTemporalmente1"><?php echo $filas['USUARIO'] ?></td>
@@ -281,15 +281,15 @@ include '../../conexion/conexion.php'; ?>
                             extend:     'excelHtml5',
                             text:       'Exportar a Excel',
                             titleAttr:  'Exportar a Excel',
-                            title:     'REPORTE DE TRANSACCIONES',
+                            title:     'REPORTE DE TRANSACCIONES DEL PRODUCTO <?php echo $nombreproducto; ?>',
                             exportOptions:{
-                              columns: [1,2,3,4,5,6]
+                              columns: [0,1,2,3,4,5]
                             }
                           },
                           {
                             extend: 'colvis',
                             text:   'Visualizar',
-                            title:  'REPORTE DE TRANSACCIONES',
+                            title:  'REPORTE DE TRANSACCIONES DEL PRODUCTO <?php echo $nombreproducto; ?>',
                           } 
                           ]                  
         
