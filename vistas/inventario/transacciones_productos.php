@@ -72,8 +72,20 @@ if (mysqli_num_rows($roles35) > 0)
   <!-- Inicio evita el click derecho de la pagina -->
 <body oncontextmenu="return false">
 <!-- Fin evita el click derecho de la pagina --> 
+<?php
+$sqlt = "SELECT * FROM tbl_productos WHERE ID_PRODUCTO=$producto";
+$sqlts = mysqli_query($conn, $sqlt);
+if (mysqli_num_rows($sqlts) > 0)
+{
+ while($row = mysqli_fetch_assoc($sqlts))
+  { 
+      $nombreproducto = $row['NOMBRE'];
+  } 
+
+
+include '../../conexion/conexion.php'; ?>
   <!-- Content Wrapper. Contains page content -->
-  <div class="content-wrapper"><br><center><h3 ><b>Transacciones del producto <?php echo $nombre; ?></b></h3></center>
+  <div class="content-wrapper"><br><center><h3 ><b>Transacciones del producto <?php echo $nombreproducto; ?></b></h3></center>
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <div class="container-fluid">
@@ -120,18 +132,28 @@ if (mysqli_num_rows($roles35) > 0)
                   <tr>
                     
                     
-                  <th>ID</th>
-                  <th>Producto</th>
-                  <th>Cantidad</th>
-                  <th>Movimiento</th>
-                  <th>Fecha</th>
-                  <th>Usuario</th>
+                  <th class="desaparecerTemporalmente1">ID</th>
+                  <th class="desaparecerTemporalmente1">Producto</th>
+                  <th class="desaparecerTemporalmente1">Cantidad</th>
+                  <th class="desaparecerTemporalmente1">Movimiento</th>
+                  <th class="desaparecerTemporalmente1">Fecha</th>
+                  <th class="desaparecerTemporalmente1">Usuario</th>
                   
                   
                   </tr>
                   </thead>
                   <tbody>
                   <?php
+                  $sqlt = "SELECT * FROM tbl_productos WHERE ID_PRODUCTO=$producto";
+                  $sqlts = mysqli_query($conn, $sqlt);
+                  if (mysqli_num_rows($sqlts) > 0)
+                  {
+                   while($row = mysqli_fetch_assoc($sqlts))
+                    { 
+                        $nombreproducto = $row['NOMBRE'];
+                    } 
+                  }
+
                   include '../../conexion/conexion.php';
                   //para mostrar los datos de la tabla mysql y mostrar en el crud
                   $sql7 = "SELECT * FROM tbl_kardex WHERE ID_PRODUCTO=$producto";
@@ -143,12 +165,12 @@ if (mysqli_num_rows($roles35) > 0)
                     <?php  $cont++; ?>
                   <tr>
                      
-                  <td><?php echo $cont; ?></td>
-                     <td><?php echo $nombre; ?></td>
-                     <td><?php echo $filas['CANTIDAD'] ?></td>
-                     <td><?php echo $filas['TIPO_MOVIMIENTO'] ?></td>
-                     <td><?php echo $filas['FECHA_HORA'] ?></td>
-                     <td><?php echo $filas['USUARIO'] ?></td>
+                  <td class="desaparecerTemporalmente1"><?php echo $filas['ID_PRODUCTO'] ?></td>
+                     <td class="desaparecerTemporalmente1"><?php echo $nombreproducto; ?></td>
+                     <td class="desaparecerTemporalmente1"><?php echo $filas['CANTIDAD'] ?></td>
+                     <td class="desaparecerTemporalmente1"><?php echo $filas['TIPO_MOVIMIENTO'] ?></td>
+                     <td class="desaparecerTemporalmente1"><?php echo $filas['FECHA_HORA'] ?></td>
+                     <td class="desaparecerTemporalmente1"><?php echo $filas['USUARIO'] ?></td>
                     
       </tr>
                 <?php } }?>  
@@ -197,6 +219,11 @@ if (mysqli_num_rows($roles35) > 0)
 <script src="../../plantilla/AdminLTE-3.2.0/plugins/datatables-buttons/js/dataTables.buttons.min.js"></script>
 <script src="../../plantilla/AdminLTE-3.2.0/plugins/datatables-buttons/js/buttons.bootstrap4.min.js"></script>
 <script src="../../plantilla/AdminLTE-3.2.0/plugins/jszip/jszip.min.js"></script>
+<script src="../../plantilla/AdminLTE-3.2.0/plugins/pdfmake/pdfmake.min.js"></script>
+<script src="../../plantilla/AdminLTE-3.2.0/plugins/pdfmake/vfs_fonts.js"></script>
+<script src="../../plantilla/AdminLTE-3.2.0/plugins/datatables-buttons/js/buttons.html5.min.js"></script> 
+ <script src="../../plantilla/AdminLTE-3.2.0/plugins/datatables-buttons/js/buttons.print.min.js"></script> 
+
 
 
 <script src="../../plantilla/AdminLTE-3.2.0/plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
@@ -211,7 +238,7 @@ if (mysqli_num_rows($roles35) > 0)
 <script>
   $(function () {
     $("#example1").DataTable({
-      
+      "order": [[ 1, "desc" ]],
       language: {
                           processing: "Tratamiento en curso...",
                           search: "Buscar&nbsp;:",
@@ -248,7 +275,23 @@ if (mysqli_num_rows($roles35) > 0)
                          },
                          
                          "responsive": true, "lengthChange": true, "autoWidth": false,
-                          "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"],                   
+                          "buttons": ["excel", "colvis"], 
+                          buttons:[
+                            {
+                            extend:     'excelHtml5',
+                            text:       'Exportar a Excel',
+                            titleAttr:  'Exportar a Excel',
+                            title:     'REPORTE DE TRANSACCIONES',
+                            exportOptions:{
+                              columns: [1,2,3,4,5,6]
+                            }
+                          },
+                          {
+                            extend: 'colvis',
+                            text:   'Visualizar',
+                            title:  'REPORTE DE TRANSACCIONES',
+                          } 
+                          ]                  
         
     })
 
@@ -303,38 +346,41 @@ if (mysqli_num_rows($roles35) > 0)
 ?>
 
 <script>
-	//para descar al tocar el boton
+  
+	//para descar al tocar el boton	
 	var form = document.getElementById("form")
+  
 	form.addEventListener("submit",function(event) {
+  
 	event.preventDefault()
+  $(".desaparecerTemporalmente1").css("display","");
+  $(".desaparecerTemporalmente").css("display","none");
 
-			
-			const pdf = new jsPDF('p', 'mm', 'letter');
-						
-			var columns = ["Producto", "Cantidad", "Movimiento", "Fecha", "Usuario"];
-			var data = [
-  <?php foreach($data as $d):?>
-	
-      ["<?php echo $nombre; ?>", "<?php echo $d->CANTIDAD; ?>", "<?php echo $d->TIPO_MOVIMIENTO; ?>", "<?php echo $d->FECHA_HORA; ?>", "<?php echo $d->USUARIO; ?>"],
-      <?php endforeach; ?>
-  ];
-				pdf.autoTable(columns,data,
+				const pdf = new jsPDF('p', 'mm', 'letter');			
+        	
+
+				
+				
+
+				pdf.autoTable(
 				{ 
+          html:'#example1',
 					
 					margin:{ top: 30 },
+          
           columnStyles: {
-            0: {cellWidth: 42},
-            1: {cellWidth: 27},
-            2: {cellWidth: 33},
-            3: {cellWidth: 41},
-            4: {cellWidth: 42}
-           
-
-           }
-        }
+      
+            0: {cellWidth: 15},
+            1: {cellWidth: 30},
+            2: {cellWidth: 30},
+            3: {cellWidth: 30},
+            4: {cellWidth: 45},
+            5: {cellWidth: 40}
+           } 
+          }
 				);
-		
-			//Inicio Encabezado y pie de pagina
+						
+				//Inicio Encabezado y pie de pagina
 			const pageCount = pdf.internal.getNumberOfPages();
 			for(var i = 1; i <= pageCount; i++) 
 			{
@@ -349,12 +395,12 @@ if (mysqli_num_rows($roles35) > 0)
 				//muestra el titulo principal
 				pdf.setFont('Arial');
 				pdf.setFontSize(17);
-				pdf.text("<?php echo $nombre_constructora;?>", 74,15,);
-
+				pdf.text('<?php echo $nombre_constructora ?>', pdf.internal.pageSize.getWidth() / 2, 15, null, 'center'); // de esta manera se puede centrar el titulo
+       
 				//muestra el titulo secundario
 				pdf.setFont('times');
 				pdf.setFontSize(12);
-				pdf.text("Reporte de transacciones", 79,20,);
+				pdf.text('Reporte de transacciones del producto <?php echo $nombreproducto; ?>', pdf.internal.pageSize.getWidth() / 2, 20, null, 'center');
 
 												//////// pie de Pagina ///////
 				//muestra la fecha
@@ -365,6 +411,10 @@ if (mysqli_num_rows($roles35) > 0)
 				let jornada = horas >=12 ? 'PM' : 'AM';
 				var newdat = "Fecha: " + today.getDate() + "/" + (today.getMonth()+1) + "/" + today.getFullYear() + " " + (horas % 12) + ":" + today.getMinutes() + ":" + today.getSeconds() + " " + jornada;
 				pdf.text(183-20,297-284,newdat);
+        pdf.text('<?php echo 'Creado por: '. $_SESSION['usuario']; ?>', 202, 20, {
+            align: 'right',
+            });
+        
 
 				//muestra el numero de pagina
 				pdf.text('Pagina ' + String(i) + '/' + String(pageCount),220-20,297-27,null,null,"right");
@@ -372,9 +422,12 @@ if (mysqli_num_rows($roles35) > 0)
 				//Fin Encabezado y pie de pagina
 
 							pdf.save('Reporte de transacciones.pdf');
+              $(".desaparecerTemporalmente").css("display","");
 	})
-
+  
 </script>
+<?php } ?>  
+
 <!-- // Fin para exportar en pdf // -->
 <script type="text/javascript" src="../../js/evitar_reenvio.js"></script>
 </html>

@@ -36,11 +36,7 @@ if (mysqli_num_rows($roles35) > 0)
                   die();
                 }
                }
-               // inicio inserta en la tabla bitacora
-               $sql = "INSERT INTO tbl_bitacora (USUARIO, ACCION, OBSERVACION)
-               VALUES ('$usuario[usuario]', 'CONSULTO', 'CONSULTO LA PANTALLA ADMINISTRATIVA DE INVENTARIO')";
-               if (mysqli_query($conn, $sql)) {} else {}
-               // fin inserta en la tabla bitacora
+               
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -127,13 +123,13 @@ if (mysqli_num_rows($roles35) > 0)
                 <table id="example1" class="table table-bordered table-striped">
                   <thead>
                   <tr>
-                    <th>Acciones</th>
-                  <th>ID</th>
-                  <th>Imagen</th>
-                  <th>Productos</th>
-                  <!-- <th>Cantidad minima</th>
-                  <th>Cantidad maxima</th> -->
-                  <th>Cantidad disponible</th>
+                    <th class="desaparecerTemporalmente">Acciones</th>
+                  <th class="desaparecerTemporalmente1">ID</th>
+                  <th class="desaparecerTemporalmente">Imagen</th>
+                  <th class="desaparecerTemporalmente1">Productos</th>
+                  <!-- <th class="desaparecerTemporalmente1">Cantidad minima</th>
+                  <th class="desaparecerTemporalmente1">Cantidad maxima</th> -->
+                  <th class="desaparecerTemporalmente1">Cantidad disponible</th>
                   </tr>
                   </thead>
                   <tbody>
@@ -149,7 +145,7 @@ if (mysqli_num_rows($roles35) > 0)
                     ?>
                     <?php  $cont++; ?>
                   <tr>
-                  <td>
+                  <td class="desaparecerTemporalmente">
                   
                   <form action="../../vistas/inventario/transacciones_productos.php" method="post">
                           <input type="hidden" name="nombre"  value="<?php echo $cont; ?>">
@@ -161,11 +157,11 @@ if (mysqli_num_rows($roles35) > 0)
                       </td>
                       
                                          <td ><?php echo $filas['ID_INVENTARIO'] ?></td>
-                                         <td><img  width="100px" src="<?php echo $filas['FOTO'] ?>" /></td>
-                                         <td><?php echo $filas['NOMBRE'] ?></td>
-                                         <!-- <td><?php echo $filas['CANTIDAD_MINIMA'] ?></td>
-                                         <td><?php echo $filas['CANTIDAD_MAXIMA'] ?></td> -->
-                                         <td><center>
+                                         <td class="desaparecerTemporalmente"><img  width="100px" src="<?php echo $filas['FOTO'] ?>" /></td>
+                                         <td class="desaparecerTemporalmente1"><?php echo $filas['NOMBRE'] ?></td>
+                                         <!-- <td class="desaparecerTemporalmente1"><?php echo $filas['CANTIDAD_MINIMA'] ?></td>
+                                         <td class="desaparecerTemporalmente1"><?php echo $filas['CANTIDAD_MAXIMA'] ?></td> -->
+                                         <td class="desaparecerTemporalmente1"><center>
                                           <?php if ($filas['CANTIDAD_DISPONIBLE']>$filas['CANTIDAD_MINIMA'] && $filas['CANTIDAD_DISPONIBLE']<$filas['CANTIDAD_MAXIMA'])
                                           {?>
                                           <h3 style="background-color:rgb(138, 198, 255);"><?php echo $filas['CANTIDAD_DISPONIBLE'] ?></h3>
@@ -240,8 +236,8 @@ if (mysqli_num_rows($roles35) > 0)
 <script src="../../plantilla/AdminLTE-3.2.0/plugins/jszip/jszip.min.js"></script>
 <script src="../../plantilla/AdminLTE-3.2.0/plugins/pdfmake/pdfmake.min.js"></script>
 <script src="../../plantilla/AdminLTE-3.2.0/plugins/pdfmake/vfs_fonts.js"></script>
-<!-- <script src="../../plantilla/AdminLTE-3.2.0/plugins/datatables-buttons/js/buttons.html5.min.js"></script> 
- <script src="../../plantilla/AdminLTE-3.2.0/plugins/datatables-buttons/js/buttons.print.min.js"></script> -->
+<script src="../../plantilla/AdminLTE-3.2.0/plugins/datatables-buttons/js/buttons.html5.min.js"></script> 
+ <script src="../../plantilla/AdminLTE-3.2.0/plugins/datatables-buttons/js/buttons.print.min.js"></script> 
 
 
 
@@ -256,7 +252,7 @@ if (mysqli_num_rows($roles35) > 0)
 <script>
   $(function () {
     $("#example1").DataTable({
-      
+      "order": [[ 1, "desc" ]],
       language: {
                           processing: "Tratamiento en curso...",
                           search: "Buscar&nbsp;:",
@@ -293,7 +289,23 @@ if (mysqli_num_rows($roles35) > 0)
                          },
                          
                          "responsive": true, "lengthChange": true, "autoWidth": false,
-                          "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"],                   
+                          "buttons": ["excel", "colvis"], 
+                          buttons:[
+                            {
+                            extend:     'excelHtml5',
+                            text:       'Exportar a Excel',
+                            titleAttr:  'Exportar a Excel',
+                            title:     'REPORTE DE INVENTARIO',
+                            exportOptions:{
+                              columns: [1,3,4]
+                            }
+                          },
+                          {
+                            extend: 'colvis',
+                            text:   'Visualizar',
+                            title:  'REPORTE DE INVENTARIO',
+                          } 
+                          ]                  
         
     })
 
@@ -346,36 +358,34 @@ if (mysqli_num_rows($roles35) > 0)
 ?>
 
 <script>
-	//para descar al tocar el boton
+  
+	//para descar al tocar el boton	
 	var form = document.getElementById("form")
+  
 	form.addEventListener("submit",function(event) {
+  
 	event.preventDefault()
+  $(".desaparecerTemporalmente1").css("display","");
+  $(".desaparecerTemporalmente").css("display","none");
 
-			
-			const pdf = new jsPDF('p', 'mm', 'letter');
-						
-			var columns = ["Productos", "Cantidad minima", "Cantidad maxima", "Cantidad disponible"];
-			var data = [
-  <?php foreach($data as $d):?>
-	
-      ["<?php echo $d->NOMBRE; ?>", "<?php echo $d->CANTIDAD_MIN; ?>", "<?php echo $d->CANTIDAD_MAX; ?>", "<?php echo $d->CANTIDAD_DISPONIBLE; ?>"],
-      <?php endforeach; ?>
-  ];
-				pdf.autoTable(columns,data,
+				const pdf = new jsPDF('p', 'mm', 'letter');			
+
+				pdf.autoTable(
 				{ 
+          html:'#example1',
 					
 					margin:{ top: 30 },
+          
           columnStyles: {
-            0: {cellWidth: 77},
-            1: {cellWidth: 37},
-            2: {cellWidth: 37},
-            3: {cellWidth: 37}
-
+      
+            0: {cellWidth: 15},
+            1: {cellWidth: 134},
+            2: {cellWidth: 40}
            } 
-        }
+          }
 				);
-		
-			//Inicio Encabezado y pie de pagina
+						
+				//Inicio Encabezado y pie de pagina
 			const pageCount = pdf.internal.getNumberOfPages();
 			for(var i = 1; i <= pageCount; i++) 
 			{
@@ -390,12 +400,12 @@ if (mysqli_num_rows($roles35) > 0)
 				//muestra el titulo principal
 				pdf.setFont('Arial');
 				pdf.setFontSize(17);
-				pdf.text("<?php echo $nombre_constructora;?>", 74,15,);
-
+				pdf.text('<?php echo $nombre_constructora ?>', pdf.internal.pageSize.getWidth() / 2, 15, null, 'center'); // de esta manera se puede centrar el titulo
+       
 				//muestra el titulo secundario
 				pdf.setFont('times');
 				pdf.setFontSize(12);
-				pdf.text("Reporte de inventario", 82,20,);
+				pdf.text("Reporte de inventario", pdf.internal.pageSize.getWidth() / 2, 20, null, 'center');
 
 												//////// pie de Pagina ///////
 				//muestra la fecha
@@ -406,6 +416,9 @@ if (mysqli_num_rows($roles35) > 0)
 				let jornada = horas >=12 ? 'PM' : 'AM';
 				var newdat = "Fecha: " + today.getDate() + "/" + (today.getMonth()+1) + "/" + today.getFullYear() + " " + (horas % 12) + ":" + today.getMinutes() + ":" + today.getSeconds() + " " + jornada;
 				pdf.text(183-20,297-284,newdat);
+        pdf.text('<?php echo 'Creado por: '. $_SESSION['usuario']; ?>', 202, 20, {
+            align: 'right',
+            });
 
 				//muestra el numero de pagina
 				pdf.text('Pagina ' + String(i) + '/' + String(pageCount),220-20,297-27,null,null,"right");
@@ -413,8 +426,9 @@ if (mysqli_num_rows($roles35) > 0)
 				//Fin Encabezado y pie de pagina
 
 							pdf.save('Reporte de inventario.pdf');
+              $(".desaparecerTemporalmente").css("display","");
 	})
-
+  
 </script>
 <!-- // Fin para exportar en pdf // -->
 <script type="text/javascript" src="../../js/evitar_reenvio.js"></script>
