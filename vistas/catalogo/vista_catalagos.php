@@ -39,11 +39,7 @@ if (mysqli_num_rows($roles35) > 0)
                   die();
                 }
          }
-                // inicio inserta en la tabla bitacora
-                $sql = "INSERT INTO tbl_bitacora (USUARIO, ACCION, OBSERVACION)
-                VALUES ('$usuario1[usuario]', 'CONSULTO', 'CONSULTO LA PANTALLA  ADMINISTRATIVA DE CATALOGOS')";
-                if (mysqli_query($conn, $sql)) {} else {}
-                // fin inserta en la tabla bitacora
+                
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -97,11 +93,11 @@ if (mysqli_num_rows($roles35) > 0)
                     <br>
                     <label for="">Título</label>
                     <input type="text" class="form-control"  name="titulo" required value="<?php echo "$titulo"; ?>" placeholder="" 
-                    autocomplete = "off"  onkeypress="return soloLetras(event);" minlength="3" maxlength="50" onkeyup="mayus(this);"  >
+                    autocomplete = "off" onkeyup="un_espacio(this);"  onkeypress="return soloLetras(event);" minlength="3" maxlength="50"   >
                     <br>
                     <label for="">Descripción</label>
                     <TEXtarea  style="background-color: white;" name="descripcion" class="form-control"name="" id="" cols="40" rows="5"
-                    autocomplete = "off"  onkeypress="return soloLetras(event);" minlength="3" maxlength="300" onkeyup="mayus(this);" ><?php echo "$descripcion"; ?></TEXtarea>
+                    autocomplete = "off" onkeyup="un_espacio(this);" minlength="3" maxlength="290"  ><?php echo "$descripcion"; ?></TEXtarea>
                 
                     <br>
                     
@@ -170,11 +166,11 @@ if (mysqli_num_rows($roles35) > 0)
                 <table id="example1" class="table table-bordered table-striped">
                   <thead>
                   <tr>
-                  <th>Acciones</th>
-                  <th>Id</th>
-                  <th>Imagen</th>
-                  <th>Título</th>
-                  <th>Descripción</th>
+                  <th class="desaparecerTemporalmente">Acciones</th>
+                  <th class="desaparecerTemporalmente1">ID</th>
+                  <th  class="desaparecerTemporalmente">Imagen</th>
+                  <th class="desaparecerTemporalmente1">Título</th>
+                  <th  class="desaparecerTemporalmente1">Descripción</th>
                   
                   </tr>
                   </thead>
@@ -190,7 +186,7 @@ if (mysqli_num_rows($roles35) > 0)
                     ?>
                     <?php  $cont++; ?>
                   <tr>
-                  <td>
+                  <td  class="desaparecerTemporalmente">
                   <?php 
                           include '../../conexion/conexion.php';
                           $tablero = "SELECT * FROM tbl_ms_roles_ojetos WHERE ID_ROL='$id_rol7' and ID_OBJETO=31 and PERMISO_ACTUALIZACION=1";
@@ -230,11 +226,11 @@ if (mysqli_num_rows($roles35) > 0)
                                               
                                               <label for="">Título</label>
                                               <input type="text" class="form-control"  name="titulo" required value="<?php echo $filas['NOMBRE_CATALOGO'] ?>" placeholder="" 
-                                              autocomplete = "off"  onkeypress="return soloLetras(event);" minlength="3" maxlength="255" onkeyup="mayus(this);"  >
+                                              autocomplete = "off" onkeyup="un_espacio(this);"  onkeypress="return soloLetras(event);" minlength="3" maxlength="50" onkeyup="mayus(this);"  >
                                               <br>
                                               <label for="">Descripción</label>
                                               <TEXtarea  style="background-color: white;" name="descripcion" class="form-control"name="" id="" cols="40" rows="5"
-                                              autocomplete = "off"  onkeypress="return soloLetras(event);" minlength="3" maxlength="300" onkeyup="mayus(this);" ><?php echo $filas['DESCRIPCION'] ?></TEXtarea>
+                                              autocomplete = "off"  onkeyup="un_espacio(this);" minlength="3" maxlength="290" ><?php echo $filas['DESCRIPCION'] ?></TEXtarea>
                                           
                                               <br>
                                           
@@ -267,10 +263,10 @@ if (mysqli_num_rows($roles35) > 0)
                         ?>
                      </form>
 </td>
-                      <td><?php echo $cont; ?></td>
-                     <td><img class="img-thumbnail" width="100px" src="<?php echo $filas['RUTA'] ?>" /></td>
-                     <td><?php echo $filas['NOMBRE_CATALOGO'] ?></td>
-                     <td><TEXtarea readonly style="background-color: white;" class="form-control"name="" id="" cols="40" rows="5"><?php echo $filas['DESCRIPCION'] ?></TEXtarea></td>
+                      <td  class="desaparecerTemporalmente1"><?php echo $filas['ID_CATALOGO'] ?></td>
+                     <td  class="desaparecerTemporalmente"><img class="img-thumbnail" width="100px" src="<?php echo $filas['RUTA'] ?>" /></td>
+                     <td  class="desaparecerTemporalmente1"><?php echo $filas['NOMBRE_CATALOGO'] ?></td>
+                     <td  class="desaparecerTemporalmente1"><TEXtarea readonly style="background-color: white;" class="form-control"name="" id="" cols="40" rows="5"><?php echo $filas['DESCRIPCION'] ?></TEXtarea></td>
                     
       </tr>
       <?php }} ?>  
@@ -321,8 +317,8 @@ if (mysqli_num_rows($roles35) > 0)
 <script src="../../plantilla/AdminLTE-3.2.0/plugins/jszip/jszip.min.js"></script>
 <script src="../../plantilla/AdminLTE-3.2.0/plugins/pdfmake/pdfmake.min.js"></script>
 <script src="../../plantilla/AdminLTE-3.2.0/plugins/pdfmake/vfs_fonts.js"></script>
-<!-- <script src="../../plantilla/AdminLTE-3.2.0/plugins/datatables-buttons/js/buttons.html5.min.js"></script> 
- <script src="../../plantilla/AdminLTE-3.2.0/plugins/datatables-buttons/js/buttons.print.min.js"></script> -->
+<script src="../../plantilla/AdminLTE-3.2.0/plugins/datatables-buttons/js/buttons.html5.min.js"></script> 
+ <script src="../../plantilla/AdminLTE-3.2.0/plugins/datatables-buttons/js/buttons.print.min.js"></script>
 
 
 
@@ -337,7 +333,7 @@ if (mysqli_num_rows($roles35) > 0)
 <script>
   $(function () {
     $("#example1").DataTable({
-      
+      "order": [[ 1, "desc" ]],
       language: {
                           processing: "Tratamiento en curso...",
                           search: "Buscar&nbsp;:",
@@ -374,7 +370,26 @@ if (mysqli_num_rows($roles35) > 0)
                          },
                          
                          "responsive": true, "lengthChange": true, "autoWidth": false,
-                          "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"],                   
+                         "buttons": ["excel",  "colvis"],   
+                          //  Inicio   exportar en excel 
+                          buttons:[ 
+    {
+            extend:    'excelHtml5',
+            text:      'Exportar a Excel',
+            titleAttr: 'Exportar a Excel',
+            title:     'REPORTE DE CATALAGOS',
+            exportOptions: {
+                columns: [1,3,4]
+            }
+    },
+    {
+            extend:    'colvis',
+            text:      'Visualizar',
+    
+    }
+   
+] 
+  //  Fin   exportar en excel                    
         
     })
 
@@ -400,20 +415,7 @@ if (mysqli_num_rows($roles35) > 0)
 </body>
 
 <!-- // Inicio para exportar en pdf // -->
-<?php
 
-	require '../../conexion/conexion.php';
-	$sql = "SELECT * FROM tbl_catalogo 
-  ORDER BY NOMBRE_CATALOGO asc";
-	$query = $conn->query($sql);
-	$data = array();
-	while($r=$query->fetch_object()){
-	$data[] =$r;
-	}
-
-     
-
-?>
 
 <?php 
     $select_nombre = "SELECT * FROM tbl_parametros WHERE PARAMETRO='NOMBRE'";
@@ -430,30 +432,39 @@ if (mysqli_num_rows($roles35) > 0)
 
 <script>
 	//para descar al tocar el boton	
+  //para descar al tocar el boton
 	var form = document.getElementById("form")
 	form.addEventListener("submit",function(event) {
-   
 	event.preventDefault()
- 
-				const pdf = new jsPDF('p', 'mm', 'letter');			
-        	
 
-				var columns = ["Nombre", "Descripción"];
-				var data = [
-          <?php foreach($data as $d):?>
-				["<?php echo $d->NOMBRE_CATALOGO; ?>", "<?php echo $d->DESCRIPCION; ?>"],
-        <?php endforeach; ?>
-				 ];
+   ////////// Inicio Ocultar y mostrar columnas y tablas///////
+   ///////Mostrar columnas y filas /////////////
+  $(".desaparecerTemporalmente1").css("display","");
 
-				pdf.autoTable(columns,data,
+  ///////Ocultar columnas y filas /////////////
+  $(".desaparecerTemporalmente").css("display","none");
+   ////////// Fin Ocultar y mostrar columnas y tablas///////
+
+			/////// tamaño de pagina ///////////////
+			const pdf = new jsPDF('p', 'mm', 'letter');
+				
+      ////////////// Inicio estructura de la Tabla ////////////////
+      pdf.autoTable(
 				{ 
-					// html:'#example1',
+          html:'#example1',
+					
 					margin:{ top: 30 },
-          columnStyles: {
-            0: {cellWidth: 50},
-            1: {cellWidth: 140}
-           } }
+          
+          columnStyles: {    
+      
+            0: {cellWidth: 15},
+            1: {cellWidth: 71}, 
+            2: {cellWidth: 102},  
+           
+           } 
+          }
 				);
+      ////////////// Fin estructura de la Tabla ////////////////
 						
 				//Inicio Encabezado y pie de pagina
 			const pageCount = pdf.internal.getNumberOfPages();
@@ -470,12 +481,12 @@ if (mysqli_num_rows($roles35) > 0)
 				//muestra el titulo principal
 				pdf.setFont('Arial');
 				pdf.setFontSize(17);
-				pdf.text("<?php echo $nombre_constructora;?>", 74,15,);
+				pdf.text('<?php echo $nombre_constructora ?>', pdf.internal.pageSize.getWidth() / 2, 15, null, 'center');
 
 				//muestra el titulo secundario
 				pdf.setFont('times');
 				pdf.setFontSize(12);
-				pdf.text("Reporte de catálogos", 82,20,);
+				pdf.text("Reporte de cátalagos",  pdf.internal.pageSize.getWidth() / 2, 20, null, 'center');
 
 												//////// pie de Pagina ///////
 				//muestra la fecha
@@ -486,6 +497,9 @@ if (mysqli_num_rows($roles35) > 0)
 				let jornada = horas >=12 ? 'PM' : 'AM';
 				var newdat = "Fecha: " + today.getDate() + "/" + (today.getMonth()+1) + "/" + today.getFullYear() + " " + (horas % 12) + ":" + today.getMinutes() + ":" + today.getSeconds() + " " + jornada;
 				pdf.text(183-20,297-284,newdat);
+        pdf.text('<?php echo 'Creado por: '. $_SESSION['usuario']; ?>', 202, 20, {
+            align: 'right',
+            });
 
 				//muestra el numero de pagina
 				pdf.text('Pagina ' + String(i) + '/' + String(pageCount),220-20,297-25,null,null,"right");
@@ -493,13 +507,14 @@ if (mysqli_num_rows($roles35) > 0)
 				//Fin Encabezado y pie de pagina
 
 							pdf.save('Reporte de catalogos.pdf');
+              $(".desaparecerTemporalmente").css("display","");
 	})
   
 </script>
 <!-- // Fin para exportar en pdf // -->
 <script type="text/javascript" src="../../js/evitar_reenvio.js"></script>
 </html>
-
+<script type="text/javascript" src="../../js/un_espacio.js"></script>
 
 <script>
  // Inicio Script para que solo permita letras

@@ -35,11 +35,7 @@ if(in_array($extencion, $permitidos)){
                 VALUES ('$destino$nombreimagen', '$titulo', '$descripcion')";
         $res = mysqli_query($conn, $sql);
          if($res){
-             // inicio inserta en la tabla bitacora
-             $sql = "INSERT INTO tbl_bitacora (USUARIO, ACCION, OBSERVACION)
-             VALUES ('$usuario1[usuario]', 'INSERTO', 'UN REGISTRO CON TITULO ($titulo) EN LA PANTALLA CATALOGOS')";
-             if (mysqli_query($conn, $sql)) {} else {}
-             // fin inserta en la tabla bitacora
+            
             echo '<script type="text/javascript">
                      alert("Agregado correctamente");
                      window.location.href="../../vistas/catalogo/vista_catalagos";
@@ -48,11 +44,7 @@ if(in_array($extencion, $permitidos)){
                 die("Error". mysqli_error($conn));
               }
 }else{
-    // inicio inserta en la tabla bitacora
-    $sql = "INSERT INTO tbl_bitacora (USUARIO, ACCION, OBSERVACION)
-    VALUES ('$usuario1[usuario]', 'INTENTO', 'NO LOGRO INSERTAR, YA QUE EL ARCHIVO NO ERA IMAGEN EN LA PANTALLA CATALOGOS')";
-    if (mysqli_query($conn, $sql)) {} else {}
-    // fin inserta en la tabla bitacora
+    
     echo '<script type="text/javascript">
              alert("Archivo no permitido");
              window.location.href="../../vistas/catalogo/vista_catalagos.php";
@@ -94,11 +86,7 @@ if(in_array($extencion, $permitidos))
     $sql2 = "UPDATE tbl_catalogo SET   RUTA='$direccion', NOMBRE_CATALOGO='$titulo', DESCRIPCION='$descripcion' WHERE ID_CATALOGO='$id_imagen'";
     if (mysqli_query($conn, $sql2)) 
     {
-        // inicio inserta en la tabla bitacora
-        $sql = "INSERT INTO tbl_bitacora (USUARIO, ACCION, OBSERVACION)
-        VALUES ('$usuario1[usuario]', 'EDITO', 'EL CATALAGO ($titulo) EN LA PANTALLA CATALOGOS')";
-        if (mysqli_query($conn, $sql)) {} else {}
-         // fin inserta en la tabla bitacora
+        
         echo '<script>
                  alert("Edición exitosa");
                  window.location.href="../../vistas/catalogo/vista_catalagos";
@@ -112,11 +100,7 @@ if(in_array($extencion, $permitidos))
          }
          mysqli_close($conn);
 }else{
-    // inicio inserta en la tabla bitacora
-    $sql = "INSERT INTO tbl_bitacora (USUARIO, ACCION, OBSERVACION)
-    VALUES ('$usuario1[usuario]', 'INTENTO', 'NO LOGRO EDITAR YA QUE EL ARCHIVO NO ERA IMAGEN EN LA PANTALLA CATALOGOS')";
-    if (mysqli_query($conn, $sql)) {} else {}
-    // fin inserta en la tabla bitacora
+   
     echo '<script type="text/javascript">
             alert("Archivo no permitido");
             window.location.href="../../vistas/catalogo/vista_catalagos";
@@ -143,11 +127,7 @@ $result4 = mysqli_query($conn, $validar_rol);
         $sql3 = "DELETE FROM tbl_catalogo WHERE ID_CATALOGO='$id_imagen'";
         if (mysqli_query($conn, $sql3)) {
             unlink($ruta);
-            // inicio inserta en la tabla bitacora
-            $sql = "INSERT INTO tbl_bitacora (USUARIO, ACCION, OBSERVACION)
-            VALUES ('$usuario1[usuario]', 'ELIMINO', 'CATALOGO ($titulo) EN LA PANTALLA CATALOGOS')";
-            if (mysqli_query($conn, $sql)) {} else {}
-            // fin inserta en la tabla bitacora
+            
             header('Location: ../../vistas/catalogo/vista_catalagos');
         }else{
                 echo '<script>

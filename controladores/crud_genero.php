@@ -25,7 +25,7 @@
          if (mysqli_num_rows($result1) > 0) { 
                 
                 echo '<script>
-                        alert("El nombre de género ingresado ya existe, intente con otro");
+                        alert("El nombre de género ya existe, intente con otro");
                       </script>';
                       mysqli_close($conn);
          }else{ 
@@ -35,11 +35,7 @@
                     VALUES ('$genero7')";
                     if (mysqli_query($conn, $sql1)) {
 
-                         // inicio inserta en la tabla bitacora
-                            $sql7 = "INSERT INTO tbl_bitacora (USUARIO, ACCION, OBSERVACION)
-                            VALUES ('$usuario1[usuario]', 'INSERTO', 'CREO EL GENERO ($genero7)')";
-                             if (mysqli_query($conn, $sql7)) {} else { }
-                        // fin inserta en la tabla bitacora
+                       
                         echo '<script>
                                 alert("Género creado exitosamente");
                                 window.location.href="../../vistas/mantenimiento/vista_genero.php";                   
@@ -65,15 +61,9 @@
         $result2 = mysqli_query($conn, $validar_genero); 
          if (mysqli_num_rows($result2) > 0) { 
               
-   
-                     // inicio inserta en la tabla bitacora
-                     $sql8 = "INSERT INTO tbl_bitacora (USUARIO, ACCION, OBSERVACION)
-                     VALUES ('$usuario1[usuario]', 'INTENTO', 'NO LOGRO EDITAR El GENERO ($genero7) YA QUE EXISTE UNO IGUAL')";
-                     
-                      if (mysqli_query($conn, $sql8)) {} else { }
-                    // fin inserta en la tabla bitacora
+
                     echo '<script>
-                            alert("El nombre de género ingresado ya existe, intente con otro nombre");                  
+                            alert("El nombre de género ya existe, intente con otro nombre");                  
                           </script>';
                           mysqli_close($conn);
 
@@ -82,11 +72,7 @@
                         $sql2 = "UPDATE tbl_generos SET GENERO='$genero7'  WHERE ID_GENERO='$id_genero'";
                         if (mysqli_query($conn, $sql2)) {
 
-                            // inicio inserta en la tabla bitacora
-                            $sql9 = "INSERT INTO tbl_bitacora (USUARIO, ACCION, OBSERVACION)
-                            VALUES ('$usuario1[usuario]', 'EDITO', 'RENOMBRO EL GENERO ($anterior) A $genero7')";
-                            if (mysqli_query($conn, $sql9)) {} else { }
-                            // fin inserta en la tabla bitacora
+                           
                             echo '<script>
                                     alert("Género actualizado exitosamente");
                                     window.location.href="../../vistas/mantenimiento/vista_genero.php";                     
@@ -106,11 +92,7 @@
     $validar_genero = "SELECT * FROM tbl_usuarios WHERE GENERO='$genero7'";
     $result4 = mysqli_query($conn, $validar_genero); 
      if (mysqli_num_rows($result4) > 0) { 
-         // inicio inserta en la tabla bitacora
-         $sql9 = "INSERT INTO tbl_bitacora (USUARIO, ACCION, OBSERVACION)
-         VALUES ('$usuario1[usuario]', 'INTENTO', 'NO LOGRO ELIMINAR YA QUE ESTA EN USO EL GENERO ($genero7)')";
-         if (mysqli_query($conn, $sql9)) {} else { }
-         // fin inserta en la tabla bitacora
+        
          echo '<script>
                  alert("No se puede eliminar el género, este se encuentra en uso");
                  window.location.href="../../vistas/mantenimiento/vista_genero.php";                  
@@ -120,11 +102,7 @@
      }else{
                         $sql3 = "DELETE FROM tbl_generos WHERE ID_GENERO='$id_genero'";
                         if (mysqli_query($conn, $sql3)) {
-                            // inicio inserta en la tabla bitacora
-                            $sql7 = "INSERT INTO tbl_bitacora (USUARIO, ACCION, OBSERVACION)
-                            VALUES ('$usuario1[usuario]', 'ELIMINO', 'ELIMINO EL GENERO ($anterior)')";
-                             if (mysqli_query($conn, $sql7)) {} else { }
-                        // fin inserta en la tabla bitacora
+                        
                             header('Location: ../../vistas/mantenimiento/vista_genero.php');
                         }else{
                                 echo '<script>

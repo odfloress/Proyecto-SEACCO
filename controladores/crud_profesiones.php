@@ -9,7 +9,8 @@
   $id_profesion=(isset($_POST['id_profesion']))?$_POST['id_profesion']:"";
   $profesion7=(isset($_POST['profesion']))?$_POST['profesion']:"";
   $anterior=(isset($_POST['nombre_anterior']))?$_POST['nombre_anterior']:"";
-  
+  $ESTADOS=(isset($_POST['estado_profesion']))?$_POST['estado_profesion']:"";
+
   $usuario1 = $_SESSION;
 
   //variable para recuperar los botones de la vista roles  
@@ -25,21 +26,16 @@
          if (mysqli_num_rows($result1) > 0) { 
                 
                 echo '<script>
-                        alert("El nombre de profesión ingresado ya existe, intente con otro");
+                        alert("El nombre de la profesión ya existe, intente con otro");
                       </script>';
                       mysqli_close($conn);
          }else{ 
 
                     //si no existe la profesion permite insertar
-                    $sql1 = "INSERT INTO tbl_profesiones (PROFESION)
-                    VALUES ('$profesion7')";
+                    $sql1 = "INSERT INTO tbl_profesiones (PROFESION, ESTADO)
+                    VALUES ('$profesion7', '$ESTADOS')";
                     if (mysqli_query($conn, $sql1)) {
 
-                         // inicio inserta en la tabla bitacora
-                            $sql7 = "INSERT INTO tbl_bitacora (USUARIO, ACCION, OBSERVACION)
-                            VALUES ('$usuario1[usuario]', 'INSERTO', 'CREO LA PROFESION ($profesion7)')";
-                             if (mysqli_query($conn, $sql7)) {} else { }
-                        // fin inserta en la tabla bitacora
                         echo '<script>
                                 alert("Profesión creada con éxito");
                                 window.location.href="../../vistas/mantenimiento/vista_profesiones.php";                   
@@ -65,30 +61,22 @@
         $result2 = mysqli_query($conn, $validar_profesion); 
          if (mysqli_num_rows($result2) > 0) { 
               
-   
-                     // inicio inserta en la tabla bitacora
-                     $sql8 = "INSERT INTO tbl_bitacora (USUARIO, ACCION, OBSERVACION)
-                     VALUES ('$usuario1[usuario]', 'INTENTO', 'NO LOGRO EDITAR LA PROFESION ($profesion7) YA QUE EXISTE UNO IGUAL')";
-                     
-                      if (mysqli_query($conn, $sql8)) {} else { }
-                    // fin inserta en la tabla bitacora
+                $sql2 = "UPDATE tbl_profesiones SET ESTADO='$ESTADOS'  WHERE ID_PROFESION='$id_profesion'";
+                if (mysqli_query($conn, $sql2)) {
+
                     echo '<script>
-                            alert("El nombre de profesión ingresada ya existe, intente con otro");                  
+                                alert("Edición del estado exitasa"); 
+                                window.location.href="../../vistas/mantenimiento/vista_profesiones.php";                
                           </script>';
                           mysqli_close($conn);
-
+                }
                // si no existe la profesion con el mismo nombre
               }else{
-                        $sql2 = "UPDATE tbl_profesiones SET PROFESION='$profesion7'  WHERE ID_PROFESION='$id_profesion'";
+                        $sql2 = "UPDATE tbl_profesiones SET PROFESION='$profesion7', ESTADO='$ESTADOS'  WHERE ID_PROFESION='$id_profesion'";
                         if (mysqli_query($conn, $sql2)) {
 
-                            // inicio inserta en la tabla bitacora
-                            $sql9 = "INSERT INTO tbl_bitacora (USUARIO, ACCION, OBSERVACION)
-                            VALUES ('$usuario1[usuario]', 'EDITO', 'RENOMBRO LA PROFESION ($anterior) A $profesion7')";
-                            if (mysqli_query($conn, $sql9)) {} else { }
-                            // fin inserta en la tabla bitacora
                             echo '<script>
-                                    alert("Profesión actualizada exitosamente");
+                                    alert("Edición exitosa");
                                     window.location.href="../../vistas/mantenimiento/vista_profesiones.php";                     
                                 </script>';
                                 mysqli_close($conn);
@@ -106,11 +94,7 @@
     $validar_profesion = "SELECT * FROM tbl_usuarios WHERE ID_PROFESION='$id_profesion'";
     $result4 = mysqli_query($conn, $validar_profesion); 
      if (mysqli_num_rows($result4) > 0) { 
-         // inicio inserta en la tabla bitacora
-         $sql9 = "INSERT INTO tbl_bitacora (USUARIO, ACCION, OBSERVACION)
-         VALUES ('$usuario1[usuario]', 'INTENTO', 'NO LOGRO ELIMINAR YA QUE ESTA EN USO LA PROFESION ($profesion7)')";
-         if (mysqli_query($conn, $sql9)) {} else { }
-         // fin inserta en la tabla bitacora
+        
          echo '<script>
                  alert("No se puede eliminar la profesión, esta se encuentra en uso");
                  window.location.href="../../vistas/mantenimiento/vista_profesiones.php";                  
@@ -120,11 +104,7 @@
      }else{
                         $sql3 = "DELETE FROM tbl_profesiones WHERE ID_PROFESION='$id_profesion'";
                         if (mysqli_query($conn, $sql3)) {
-                            // inicio inserta en la tabla bitacora
-                            $sql7 = "INSERT INTO tbl_bitacora (USUARIO, ACCION, OBSERVACION)
-                            VALUES ('$usuario1[usuario]', 'ELIMINO', 'ELIMINO LA PROFESION ($anterior)')";
-                             if (mysqli_query($conn, $sql7)) {} else { }
-                        // fin inserta en la tabla bitacora
+                            
                             header('Location: ../../vistas/mantenimiento/vista_profesiones.php');
                         }else{
                                 echo '<script>

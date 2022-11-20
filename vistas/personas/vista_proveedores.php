@@ -112,7 +112,7 @@ if (mysqli_num_rows($roles35) > 0)
                     <br>
                     <label for="">Dirección:</label>
                     <TEXtarea  style="background-color: white;" onkeyup="un_espacio(this);" name="direccion" class="form-control" id="" required cols="40" rows="5"
-                    autocomplete = "off"  onkeypress="return soloLetras(event);" minlength="3" maxlength="245"  ><?php echo $direccion; ?></TEXtarea>
+                    autocomplete = "off"   minlength="3" maxlength="245"  ><?php echo $direccion; ?></TEXtarea>
                     <br>
                     <label for="">Teléfono</label>
                     <input onblur="quitarespacios(this);" onkeydown="sinespacio(this);"  onkeyup="quitarespacios1(this);" type="text" min="8" class="form-control" name="telefono" value="" value="<?php echo $telefono; ?>"  placeholder="" id="txttelefono" autocomplete = "off" required minlength="8" maxlength="8" placeholder="" pattern="[0-9]+[1-9]+[0-9]+" title="8 caracteres y no todos ceros" onkeypress="return solonumero(event)" >
@@ -247,7 +247,7 @@ if (mysqli_num_rows($roles35) > 0)
                                              
                                              
                                              <TEXtarea  style="background-color: white;" onkeyup="un_espacio(this);" name="direccion" class="form-control" id="" cols="40" rows="5"
-                                             autocomplete = "off"  onkeypress="return soloLetras(event);" minlength="3" maxlength="245"  required><?php echo $filas['DIRECCION'] ?></TEXtarea>
+                                             autocomplete = "off"   minlength="3" maxlength="245"  required><?php echo $filas['DIRECCION'] ?></TEXtarea>
                                              
                                              <br>
                                              <label for="">Teléfono:</label>
@@ -403,6 +403,8 @@ if (mysqli_num_rows($roles35) > 0)
                          
                          "responsive": true, "lengthChange": true, "autoWidth": false,
                           "buttons": ["excel",  "colvis"],  
+
+                      //  Inicio   exportar en excel 
                           buttons:[ 
     {
             extend:    'excelHtml5',
@@ -421,7 +423,8 @@ if (mysqli_num_rows($roles35) > 0)
            
     }
    
-]                 
+] 
+  //  Fin   exportar en excel                 
         
     })
 
@@ -452,17 +455,7 @@ if (mysqli_num_rows($roles35) > 0)
 </body>
 
 <!-- // Inicio para exportar en pdf // -->
-<?php
 
-	require '../../conexion/conexion.php';
-	$sql = "SELECT * FROM tbl_proveedores 
-  ORDER BY NOMBRE asc";
-	$query = $conn->query($sql);
-	$data = array();
-	while($r=$query->fetch_object()){
-	$data[] =$r;
-	}
-?>
 <?php 
     $select_nombre = "SELECT * FROM tbl_parametros WHERE PARAMETRO='NOMBRE'";
     $select_nombre1 = mysqli_query($conn, $select_nombre);
