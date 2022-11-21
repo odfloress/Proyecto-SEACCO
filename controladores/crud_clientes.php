@@ -63,11 +63,7 @@ if(in_array($extencion, $permitidos)){
                 if($res){
                     $last_id = $conn->insert_id;
                         
-                    // inicio inserta en la tabla bitacora
-                    $sql9 = "INSERT INTO tbl_bitacora (USUARIO, OPERACION, PANTALLA, CAMPO,ID_REGISTRO, VALOR_ORIGINAL, VALOR_NUEVO)
-                    VALUES ('$usuario1[usuario]', 'INSERTO','CLIENTES', 'NOMBRE','$last_id', '$nombre','NUEVO')";
-                    if (mysqli_query($conn, $sql9)) {} else {}
-                    // fin inserta en la tabla bitacora
+                    
 
                     echo '<script type="text/javascript">
                             alert("Cliente creado con exito");
@@ -128,11 +124,7 @@ if(in_array($extencion, $permitidos))
         WHERE ID_CLIENTE='$id_cliente'";
     if (mysqli_query($conn, $sql2)) 
     {
-        // inicio inserta en la tabla bitacora
-        $sql10 = "INSERT INTO tbl_bitacora (USUARIO, OPERACION, PANTALLA, CAMPO,ID_REGISTRO, VALOR_ORIGINAL, VALOR_NUEVO)
-                    VALUES ('$usuario1[usuario]', 'EDITO','CLIENTES', 'NOMBRE','$id_cliente', '$nombre_anterior','$nombre')";
-        if (mysqli_query($conn, $sql10)) {} else {}
-         // fin inserta en la tabla bitacora
+       
         echo '<script>
                  alert("Edición exitosa");
                  window.location.href="../../vistas/personas/vista_clientes.php";
@@ -171,11 +163,7 @@ $validar_proveedor = "SELECT * FROM  tbl_proyectos WHERE ID_CLIENTE='$id_cliente
      }else{
       $sql3 = "DELETE FROM tbl_clientes WHERE ID_CLIENTE='$id_cliente'";
       if (mysqli_query($conn, $sql3)) {
-        // inicio inserta en la tabla bitacora
-        $sql11 = "INSERT INTO tbl_bitacora (USUARIO, OPERACION, PANTALLA, CAMPO, ID_REGISTRO, VALOR_ORIGINAL, VALOR_NUEVO)
-                    VALUES ('$usuario1[usuario]', 'ELIMINO','CLIENTES', 'NOMBRE','$id_cliente', 'ELIMINADO','ELIMINADO')";
-         if (mysqli_query($conn, $sql11)) {} else { }
-    // fin inserta en la tabla bitacora
+        
     echo '<script>
         alert("Cliente eliminado con exito");
         window.location.href="../../vistas/personas/vista_clientes.php";                   

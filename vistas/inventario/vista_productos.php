@@ -133,7 +133,7 @@ if (mysqli_num_rows($roles35) > 0)
                   <option >Seleccione</option>
                         <?php
                            include '../../conexion/conexion.php';
-                            $id_categoria = "SELECT * FROM tbl_categoria_producto ORDER BY ID_CATEGORIA";
+                            $id_categoria = "SELECT * FROM tbl_categoria_producto WHERE ESTADO='ACTIVO' ORDER BY ID_CATEGORIA";
                             $genero2 = mysqli_query($conn, $id_categoria);
                             if (mysqli_num_rows($genero2) > 0) {
                                 while($row = mysqli_fetch_assoc($genero2))
@@ -634,7 +634,7 @@ if (mysqli_num_rows($roles35) > 0)
 <script type="text/javascript" src="../../js/evitar_reenvio.js"></script>
 <script type="text/javascript">
 
-  
+
 function sinespacio(e) {
 
   var limpia = e.value;

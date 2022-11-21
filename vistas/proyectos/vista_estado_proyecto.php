@@ -94,9 +94,14 @@ if (mysqli_num_rows($roles35) > 0)
                 <!-- Cuerpo del modal Modal -->
                 <div class="modal-body">
                   
-                    <label for="">Estado</label>
+                    <label for="">Estado Proyecto:</label>
                     <input type="text" onkeyup="quitarespacios(this); sinespacio(this);" class="form-control" name="nombre" value="<?php echo $nombre; ?>" required value="" placeholder="" id="txtPrecio_Compra" autocomplete="off" onkeypress="return soloLetras(event);" minlength="3" maxlength="20" onkeyup="mayus(this);"   >
                     <br>
+                    <label for="">Estado:</label>
+                    <select class="form-select"  name="estado" required>
+                        <option value="ACTIVO">ACTIVO</option>
+                        <option value="INACTIVO">INACTIVO</option>
+                    </select>
                 
                 </div>
                 <!-- Fin Cuerpo del modal Modal -->
@@ -159,9 +164,10 @@ if (mysqli_num_rows($roles35) > 0)
                 <table id="example1" class="table table-bordered table-striped">
                   <thead>
                   <tr>
-                  <th>Acciones</th>
-                  <th>Id</th>
-                  <th>Estado</th>
+                  <th class="desaparecerTemporalmente">Acciones</th>
+                  <th class="desaparecerTemporalmente1">Id</th>
+                  <th class="desaparecerTemporalmente1">Estado Proyectos</th>
+                  <th class="desaparecerTemporalmente1">Estado</th>
                   
                   </tr>
                   </thead>
@@ -175,7 +181,7 @@ if (mysqli_num_rows($roles35) > 0)
  <?php  $cont++; ?>
 
                   <tr>
-                  <td>
+                  <td class="desaparecerTemporalmente">
                   <?php 
                           include '../../conexion/conexion.php';
                           $estado = "SELECT * FROM tbl_ms_roles_ojetos WHERE ID_ROL='$id_rol7' and ID_OBJETO=14 and PERMISO_ACTUALIZACION=1";
@@ -210,9 +216,33 @@ if (mysqli_num_rows($roles35) > 0)
                                               <label for="">Id:</label>
                                               <input type="number" class="form-control" name="id_estados" readonly required value="<?php echo $filas['ID_ESTADOS'] ?>" placeholder="" id="txtPrecio_Compra"   >
                                               <br>
-                                              <label for="">Estado:</label>
+                                              <label for="">Estado Proyecto:</label>
                                               <input type="text" onkeyup="quitarespacios(this); sinespacio(this);" class="form-control" name="nombre" autocomplete="off" required value="<?php echo $filas['ESTADO_PROYECTO'] ?>" placeholder="" id="txtPrecio_Compra" onkeypress="return soloLetras(event);" minlength="3" maxlength="20"  onkeyup="mayus(this);" >
-                                              <br>
+                                              <label for="">Estado</label>
+                                               <select class="form-select"  name="estado" required >
+                                                        <option> </option>
+                                                        <?php
+                                                        $estado = "SELECT * FROM tbl_estados_proyectos WHERE ID_ESTADOS=$filas[ID_ESTADOS]";
+                                                        $estado2 = mysqli_query($conn, $estado);
+                                                        if (mysqli_num_rows($estado2) > 0) {
+                                                            while($row = mysqli_fetch_assoc($estado2))
+                                                            {
+                                                            $estado = $row['ESTADO'];
+                                                            ?>
+                                                              <option value="<?php  echo $estado; ?>" selected><?php echo $estado; ?></option>
+                                                            
+                                                    <?php
+                                                  ?>
+                                                      <?php if ($estado=="ACTIVO"){
+                                                        echo '<option value="INACTIVO">INACTIVO</option>';
+                                                      }else{
+                                                        echo '<option value="ACTIVO">ACTIVO</option>';
+                                                      }
+                                                      ?>
+                                                      <?php
+                                                            }}// finaliza el if y el while
+                                                      ?> 
+                                              </select>    
                                           
                                           </div>
                                 <!-- Fin Cuerpo del modal Modal -->
@@ -247,8 +277,9 @@ if (mysqli_num_rows($roles35) > 0)
                         ?>
                   </form>
 </td>
-                    <td ><?php echo $cont; ?></td>
-                     <td><?php echo $filas['ESTADO_PROYECTO'] ?></td>
+                    <td class="desaparecerTemporalmente1"><?php echo $filas['ID_ESTADOS'] ?></td>
+                     <td class="desaparecerTemporalmente1"><?php echo $filas['ESTADO_PROYECTO'] ?></td>
+                     <td class="desaparecerTemporalmente1"><?php echo $filas['ESTADO'] ?></td>
                      <?php } ?>
                     
       </tr>
@@ -298,6 +329,9 @@ if (mysqli_num_rows($roles35) > 0)
 <script src="../../plantilla/AdminLTE-3.2.0/plugins/datatables-buttons/js/dataTables.buttons.min.js"></script>
 <script src="../../plantilla/AdminLTE-3.2.0/plugins/datatables-buttons/js/buttons.bootstrap4.min.js"></script>
 <script src="../../plantilla/AdminLTE-3.2.0/plugins/jszip/jszip.min.js"></script>
+<!-- Plugins para reporte en excel -->
+<script src="../../plantilla/AdminLTE-3.2.0/plugins/datatables-buttons/js/buttons.html5.min.js"></script> 
+ <script src="../../plantilla/AdminLTE-3.2.0/plugins/datatables-buttons/js/buttons.print.min.js"></script>
 
 
 <script src="../../plantilla/AdminLTE-3.2.0/plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
@@ -309,7 +343,7 @@ if (mysqli_num_rows($roles35) > 0)
 <script>
   $(function () {
     $("#example1").DataTable({
-      
+      "order": [[ 1, "desc" ]],
       language: {
                           processing: "Tratamiento en curso...",
                           search: "Buscar&nbsp;:",
@@ -346,7 +380,23 @@ if (mysqli_num_rows($roles35) > 0)
                          },
                          
                          "responsive": true, "lengthChange": true, "autoWidth": false,
-                          "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"],                   
+                          "buttons": ["excel", "colvis"], 
+                          buttons:[
+                            {
+                            extend:     'excelHtml5',
+                            text:       'Exportar a Excel',
+                            titleAttr:  'Exportar a Excel',
+                            title:     'REPORTE DE ESTADO DE PROYECTOS',
+                            exportOptions:{
+                              columns: [1,2,3]
+                            }
+                          },
+                          {
+                            extend: 'colvis',
+                            text:   'Visualizar',
+                            title:  'REPORTE DE ESTADO DE PROYECTOS',
+                          } 
+                          ]                    
         
     })
 
@@ -397,29 +447,41 @@ $data[] =$r;
       } 
     }
 ?>
-<script>
-	//para descar al tocar el boton
-	var form = document.getElementById("form")
-	form.addEventListener("submit",function(event) {
-	event.preventDefault()
+<!-- // Inicio para exportar en pdf // -->
 
-			
-			const pdf = new jsPDF('p', 'mm', 'letter');
-						
-			var columns = ["Tipo", "Título"];
-			var data = [
-  <?php foreach($data as $d):?>
-	
-      ["<?php echo $d->ID_ESTADOS; ?>", "<?php echo $d->ESTADO_PROYECTO; ?>"],
-      <?php endforeach; ?>
-  ];
-				pdf.autoTable(columns,data,
+<script>
+  
+	//para descar al tocar el boton	
+	var form = document.getElementById("form")
+  
+	form.addEventListener("submit",function(event) {
+  
+	event.preventDefault()
+  $(".desaparecerTemporalmente1").css("display","");
+  $(".desaparecerTemporalmente").css("display","none");
+
+				const pdf = new jsPDF('L', 'mm', 'letter');			
+        	
+
+				
+				
+
+				pdf.autoTable(
 				{ 
+          html:'#example1',
 					
-					margin:{ top: 30 }}
+					margin:{ top: 30 },
+          
+          columnStyles: {
+      
+            0: {cellWidth: 15},
+            1: {cellWidth: 70},
+            2: {cellWidth: 70}
+           } 
+          }
 				);
-		
-			//Inicio Encabezado y pie de pagina
+						
+				//Inicio Encabezado y pie de pagina
 			const pageCount = pdf.internal.getNumberOfPages();
 			for(var i = 1; i <= pageCount; i++) 
 			{
@@ -434,12 +496,12 @@ $data[] =$r;
 				//muestra el titulo principal
 				pdf.setFont('Arial');
 				pdf.setFontSize(17);
-				pdf.text("<?php echo $nombre_constructora; ?>", 80,15,);
-
+				pdf.text('<?php echo $nombre_constructora ?>', pdf.internal.pageSize.getWidth() / 2, 15, null, 'center'); // de esta manera se puede centrar el titulo
+       
 				//muestra el titulo secundario
 				pdf.setFont('times');
-				pdf.setFontSize(10);
-				pdf.text("Reporte de Estado de Proyectos", 84,20,);
+				pdf.setFontSize(12);
+				pdf.text("Reporte de estado de proyectos", pdf.internal.pageSize.getWidth() / 2, 20, null, 'center');
 
 												//////// pie de Pagina ///////
 				//muestra la fecha
@@ -449,16 +511,20 @@ $data[] =$r;
 				let horas = today.getHours()
 				let jornada = horas >=12 ? 'PM' : 'AM';
 				var newdat = "Fecha: " + today.getDate() + "/" + (today.getMonth()+1) + "/" + today.getFullYear() + " " + (horas % 12) + ":" + today.getMinutes() + ":" + today.getSeconds() + " " + jornada;
-				pdf.text(183-20,297-284,newdat);
+				pdf.text(245-20,297-284,newdat);
+        pdf.text('<?php echo 'Creado por: '. $_SESSION['usuario']; ?>', 264, 20, {
+            align: 'right',
+            });
 
 				//muestra el numero de pagina
-				pdf.text('Pagina ' + String(i) + '/' + String(pageCount),220-20,297-27,null,null,"right");
+				pdf.text('Pagina ' + String(i) + '/' + String(pageCount),282-20,297-89,null,null,"right");
 			}
 				//Fin Encabezado y pie de pagina
 
-							pdf.save('Reporte de Estado de Proyectos.pdf');
+							pdf.save('Reporte de estado de proyectos.pdf');
+              $(".desaparecerTemporalmente").css("display","");
 	})
-
+  
 </script>
 <!-- // Fin para exportar en pdf // -->
 <script type="text/javascript" src="../../js/evitar_reenvio.js"></script>

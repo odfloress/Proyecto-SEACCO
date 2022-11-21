@@ -58,11 +58,15 @@
                 $sql1 = "INSERT INTO tbl_proyectos ( ID_PROYECTO,ID_CLIENTE, ID_USUARIO,ID_ESTADOS, NOMBRE_PROYECTO, DESCRIPCION, ID_DEPARTAMENTO,UBICACION, FECHA_INICIO, FECHA_FINAL)
                 VALUES ('$id_proyecto','$id_cliente','$id_usuario','$id_estado','$nombre','$descripcion','$id_departamento','$ubicacion','$fecha_inicio','$fecha_final')";
                 if (mysqli_query($conn, $sql1)) {
+
+                  $last_id = $conn->insert_id;
+
                   // inicio inserta en la tabla bitacora
-                  $sql7 = "INSERT INTO tbl_bitacora (USUARIO, ACCION, OBSERVACION)
-                  VALUES ('$usuario1[usuario]', 'INSERTO', 'CREO EL PROYECTO ($nombre) EN LA PANTALLA ADMINISTRATIVA DE PROYECTOS')";
-                   if (mysqli_query($conn, $sql7)) {} else { }
-              // fin inserta en la tabla bitacora
+                  $sql = "INSERT INTO tbl_bitacora (USUARIO, OPERACION, PANTALLA, CAMPO, ID_REGISTRO, VALOR_ORIGINAL, VALOR_NUEVO)
+                      VALUES ('$usuario1[usuario]', 'INSERTO','PROYECTOS', 'PROYECTO','$last_id', 'NUEVO','$nombre')";
+                    if (mysqli_query($conn, $sql)) {} else { }
+                  // fin inserta en la tabla bitacora
+                  
               echo '<script>
               alert("Proyecto creado con exito");
               window.location.href="../../vistas/proyectos/vista_proyectos.php";                   
@@ -94,11 +98,10 @@
                  
                          
                    // inicio inserta en la tabla bitacora
-                   $sql8 = "INSERT INTO tbl_bitacora (USUARIO, ACCION, OBSERVACION)
-                   VALUES ('$usuario1[usuario]', 'EDITO', 'EDITO LOS CAMPOS DEL PROYECTO ($nombre) EN LA PANTALLA ADMINISTRATIVA DE PROYECTOS')";
-                   
-                    if (mysqli_query($conn, $sql8)) {} else { }
-                  // fin inserta en la tabla bitacora
+                  $sql = "INSERT INTO tbl_bitacora (USUARIO, OPERACION, PANTALLA, CAMPO, ID_REGISTRO, VALOR_ORIGINAL, VALOR_NUEVO)
+                  VALUES ('$usuario1[usuario]', 'EDITO','PROYECTOS', 'PROYECTO','$id_proyecto', '$anterior','$nombre')";
+                if (mysqli_query($conn, $sql)) {} else { }
+              // fin inserta en la tabla bitacora
                   echo '<script>
                           alert("Campos del Proyecto editado con exito");
                           window.location.href="../../vistas/proyectos/vista_proyectos.php";                   
@@ -107,12 +110,7 @@
                       
 
               }else{
-                 // inicio inserta en la tabla bitacora
-                 $sql9 = "INSERT INTO tbl_bitacora (USUARIO, ACCION, OBSERVACION)
-                 VALUES ('$usuario1[usuario]', 'ERROR', 'ERROR AL EDITAR DEL PROYECTO ($nombre) EN LA PANTALLA ADMINISTRATIVA DE PROYECTOS')";
                  
-                  if (mysqli_query($conn, $sql9)) {} else { }
-                // fin inserta en la tabla bitacora
                        echo '<script>
                                 alert("Error al tratar de editar proyecto");
                              </script>'; mysqli_error($conn);
@@ -124,12 +122,11 @@
           }else{
           $sql4 = "UPDATE tbl_proyectos SET ID_CLIENTE='$id_cliente', ID_USUARIO='$id_usuario', ID_ESTADOS='$id_estado', NOMBRE_PROYECTO='$nombre', DESCRIPCION='$descripcion',  ID_DEPARTAMENTO='$id_departamento', UBICACION='$ubicacion', FECHA_INICIO='$fecha_inicio', FECHA_FINAL='$fecha_final' WHERE ID_PROYECTO='$id_proyecto'"; 
                 if (mysqli_query($conn, $sql4)) {
-                  // inicio inserta en la tabla bitacora
-                  $sql8 = "INSERT INTO tbl_bitacora (USUARIO, ACCION, OBSERVACION)
-                  VALUES ('$usuario1[usuario]', 'EDITO', 'RENOMBRO EL PROYECTO ($anterior) A ($nombre) EN LA PANTALLA ADMINISTRATIVA DE PROYECTOS')";
-                  
-                   if (mysqli_query($conn, $sql8)) {} else { }
-                 // fin inserta en la tabla bitacora
+                 // inicio inserta en la tabla bitacora
+                 $sql = "INSERT INTO tbl_bitacora (USUARIO, OPERACION, PANTALLA, CAMPO, ID_REGISTRO, VALOR_ORIGINAL, VALOR_NUEVO)
+                 VALUES ('$usuario1[usuario]', 'EDITO','PROYECTOS', 'PROYECTO','$id_proyecto', '$anterior','$nombre')";
+               if (mysqli_query($conn, $sql)) {} else { }
+             // fin inserta en la tabla bitacora
                  echo '<script>
                  alert("Proyecto editado con exito");
                  window.location.href="../../vistas/proyectos/vista_proyectos.php";                   
@@ -138,12 +135,7 @@
                    
 
                 }else{
-                  // inicio inserta en la tabla bitacora
-                 $sql9 = "INSERT INTO tbl_bitacora (USUARIO, ACCION, OBSERVACION)
-                 VALUES ('$usuario1[usuario]', 'ERROR', 'ERROR AL EDITAR DEL PROYECTO ($nombre) EN LA PANTALLA ADMINISTRATIVA DE PROYECTOS')";
-                 
-                  if (mysqli_query($conn, $sql9)) {} else { }
-                // fin inserta en la tabla bitacora
+                  
                      echo '<script>
                             alert("Error al tratar de editar el proyecto");
                            </script>'; mysqli_error($conn);
@@ -166,10 +158,11 @@
       $sql3 = "DELETE FROM tbl_proyectos WHERE ID_PROYECTO='$id_proyecto'";
       if (mysqli_query($conn, $sql3)) {
         // inicio inserta en la tabla bitacora
-        $sql7 = "INSERT INTO tbl_bitacora (USUARIO, ACCION, OBSERVACION)
-        VALUES ('$usuario1[usuario]', 'ELIMINO', 'ELIMINO EL PROYECTO ($anterior) EN LA PANTALLA ADMINISTRATIVA DE PROYECTOS')";
-         if (mysqli_query($conn, $sql7)) {} else { }
+        $sql = "INSERT INTO tbl_bitacora (USUARIO, OPERACION, PANTALLA, CAMPO, ID_REGISTRO, VALOR_ORIGINAL, VALOR_NUEVO)
+        VALUES ('$usuario1[usuario]', 'EDITO','PROYECTOS', 'PROYECTO','$id_proyecto', 'ELIMINADO','ELIMINADO')";
+      if (mysqli_query($conn, $sql)) {} else { }
     // fin inserta en la tabla bitacora
+
     echo '<script>
     alert("Elimino el proyecto");
     window.location.href="../../vistas/proyectos/vista_proyectos.php";                   
