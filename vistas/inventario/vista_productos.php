@@ -150,7 +150,7 @@ if (mysqli_num_rows($roles35) > 0)
                 <label for="">Codigo Prodcuto:</label>
                 <input type="text" onkeyup="quitarespacios(this); sinespacio(this);" class="form-control" autocomplete="off" 
                 onkeyup="mayus(this);" name="codigo" minlength="2" maxlength="30" required value="<?php echo "$codigo"; ?>" 
-                placeholder="Ingrese el codigo del producto" minlength="4" maxlength="14">
+                placeholder="Ingrese el codigo del producto" minlength="4" maxlength="9">
                 <br>
                 <label for="">Nombre:</label>
                 <input type="text" onkeyup="un_espacio(this);" autocomplete="off"  value="<?php echo "$nombre"; ?>" 
