@@ -1,7 +1,7 @@
 <?php
   require '../../conexion/conexion.php';
   //para mostrar los datos de la tabla mysql y mostrar en el crud
-  $sql = "SELECT * FROM tbl_estados_proyectos WHERE ID_ESTADOS!=1 and ID_ESTADOS!=4 and ID_ESTADOS!=5 and ID_ESTADOS!=6";
+  $sql = "SELECT * FROM tbl_estados_proyectos WHERE ID_ESTADOS!=1 and ID_ESTADOS!=4 and ID_ESTADOS!=5 and ID_ESTADOS!=6" ;
   $result = mysqli_query($conn, $sql);
 
 
@@ -9,6 +9,7 @@
   $id_estados=(isset($_POST['id_estados']))?$_POST['id_estados']:"";
   $nombre=(isset($_POST['nombre']))?$_POST['nombre']:"";
   $anterior=(isset($_POST['nombre_anterior']))?$_POST['nombre_anterior']:"";
+  $estado=(isset($_POST['estado']))?$_POST['estado']:"";
 
   $usuario1 = $_SESSION;
 
@@ -32,14 +33,12 @@
          }else{ 
 
                 //si no existe un estado permite insertar
-                $sql1 = "INSERT INTO tbl_estados_proyectos (ESTADO_PROYECTO)
-                VALUES ('$nombre')";
+                $sql1 = "INSERT INTO tbl_estados_proyectos (ESTADO_PROYECTO, ESTADO)
+                VALUES ('$nombre','$estado')";
                 if (mysqli_query($conn, $sql1)) {
                   
-                  // inicio inserta en la tabla bitacora
-                  $sql7 = "INSERT INTO tbl_bitacora (USUARIO, ACCION, OBSERVACION)
-                  VALUES ('$usuario1[usuario]', 'INSERTO', 'CREO EL ESTADO DE PROYECTO ($nombre) EN LA PANTALLA ADMINISTRATIVA DE ESTADOS DE PROYECTOS')";
-                   if (mysqli_query($conn, $sql7)) {} else { }
+                  $last_id = $conn->insert_id;
+
                    echo '<script>
                    alert("Estado creado con exito");
                    window.location.href="../../vistas/proyectos/vista_estado_proyecto.php";                   
@@ -49,9 +48,7 @@
                   
                   
                 } else {
-                  $sql10 = "INSERT INTO tbl_bitacora (USUARIO, ACCION, OBSERVACION)
-                  VALUES ('$usuario1[usuario]', 'ERROR', 'ERROR AL CREAR ESTADO EN LA PANTALLA ADMINISTRATIVA DE ESTADOS DE PROYECTOS')";
-                  if (mysqli_query($conn, $sql8)) {} else { }
+                  
                         echo '<script>
                                 alert("Error al tratar de crear el estado");
                               </script>'; mysqli_error($conn);
@@ -71,16 +68,9 @@
       $result2 = mysqli_query($conn, $validar_estados); 
        if (mysqli_num_rows($result2) > 0) { 
             
-          $sql2 = "UPDATE tbl_estados_proyectos SET ESTADO_PROYECTO='$anterior' WHERE ID_ESTADOS='$id_estados'";
+          $sql2 = "UPDATE tbl_estados_proyectos SET ESTADO_PROYECTO='$anterior', ESTADO='$estado' WHERE ID_ESTADOS='$id_estados'";
               if (mysqli_query($conn, $sql2)) {
 
-                 
-                         
-                   // inicio inserta en la tabla bitacora
-                   $sql8 = "INSERT INTO tbl_bitacora (USUARIO, ACCION, OBSERVACION)
-                   VALUES ('$usuario1[usuario]', 'EDITO', 'EDITO LOS CAMPOS DEL ESTADO ($nombre) EN LA PANTALLA ADMINISTRATIVA DE ESTADOS DE PROYECTOS')";
-                   if (mysqli_query($conn, $sql8)) {} else { }
-                   // fin inserta en la tabla bitacora
                    echo '<script>
                            alert("Campos del estado editado con exito");
                            window.location.href="../../vistas/proyectos/vista_estado_proyecto.php";                   
@@ -102,12 +92,7 @@
           }else{
                 $sql2 = "UPDATE tbl_estados_proyectos SET ESTADO_PROYECTO='$nombre' WHERE ID_ESTADOS='$id_estados'";
                 if (mysqli_query($conn, $sql2)) {
-                  // inicio inserta en la tabla bitacora
-                  $sql9 = "INSERT INTO tbl_bitacora (USUARIO, ACCION, OBSERVACION)
-                  VALUES ('$usuario1[usuario]', 'EDITO', 'EDITO EL ESTADO ($anterior) A ($nombre) EN LA PANTALLA ADMINISTRATIVA DE ESTADOS DE PROYECTOS')";
-                  
-                  if (mysqli_query($conn, $sql9)) {} else { }
-                 // fin inserta en la tabla bitacora
+
                  echo '<script>
                  alert("Estado editado con exito");
                  window.location.href="../../vistas/proyectos/vista_estado_proyecto.php";                   
@@ -137,11 +122,7 @@
     $validar_estados = "SELECT * FROM tbl_proyectos WHERE ID_ESTADOS='$id_estados'";
     $result4 = mysqli_query($conn, $validar_estados); 
      if (mysqli_num_rows($result4) > 0) { 
-         // inicio inserta en la tabla bitacora
-         $sql9 = "INSERT INTO tbl_bitacora (USUARIO, ACCION, OBSERVACION)
-         VALUES ('$usuario1[usuario]', 'INTENTO', 'NO LOGRO ELIMINAR YA QUE ESTABA EN USO EL ESTADO ($nombre) EN LA PANTALLA ADMINISTRATIVA DE ESTADOS DE PROYECTOS')";
-         if (mysqli_query($conn, $sql9)) {} else { }
-         // fin inserta en la tabla bitacora
+
          echo '<script>
                  alert("No se puede eliminar el Estado, ya que esta en uso");
                  window.location.href="../../vistas/proyectos/vista_estado_proyecto.php";                   
@@ -151,11 +132,7 @@
      }else{
       $sql3 = "DELETE FROM tbl_estados_proyectos WHERE ID_ESTADOS='$id_estados'";
       if (mysqli_query($conn, $sql3)) {
-            // inicio inserta en la tabla bitacora
-        $sql7 = "INSERT INTO tbl_bitacora (USUARIO, ACCION, OBSERVACION)
-        VALUES ('$usuario1[usuario]', 'ELIMINO', 'ELIMINO EL ESTADO DE PROYECTO ($anterior) EN LA PANTALLA ADMINISTRATIVA DE ESTADOS DE PROYECTOS')";
-         if (mysqli_query($conn, $sql7)) {} else { }
-    // fin inserta en la tabla bitacora
+
     echo '<script>
     alert("Elimino el Estado de proyecto");
     window.location.href="../../vistas/proyectos/vista_estado_proyecto.php";                   

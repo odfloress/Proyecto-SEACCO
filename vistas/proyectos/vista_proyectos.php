@@ -154,10 +154,10 @@ if (mysqli_num_rows($roles35) > 0)
                     </select>
                 
                     <label for="">Nombre Proyecto:</label>
-                    <input class="form-control" type="text" name="nombre" value="<?php echo $nombre; ?>"  autocomplete="off" id="" required onkeypress="return soloLetras(event);" minlength="3" maxlength="255" onkeyup="mayus(this);">
+                    <input class="form-control" type="text" onkeyup="un_espacio(this);" name="nombre" value="<?php echo $nombre; ?>"  autocomplete="off" id="" required onkeypress="return soloLetras(event);" minlength="3" maxlength="255" onkeyup="mayus(this);">
 
                     <label for="">Descripción Proyecto:</label>
-                    <input class="form-control" type="text" name="descripcion" id="" required value="<?php echo $descripcion; ?>" autocomplete="off" onkeypress="return soloLetras(event);" minlength="3" maxlength="300" onkeyup="mayus(this);" >
+                    <input class="form-control" type="text" onkeyup="un_espacio(this);" name="descripcion" id="" required value="<?php echo $descripcion; ?>" autocomplete="off"  minlength="3" maxlength="255" onkeyup="mayus(this);" >
                     
                     <label for="">Departamento:</label>
                     <select style="background-color:rgb(240, 244, 245);" value="<?php echo "$id_departamento"; ?>" class="form-select" id="lista1" name="id_departamento" required >
@@ -179,7 +179,7 @@ if (mysqli_num_rows($roles35) > 0)
                    </select>
                 
                     <label for="">Ubicación:</label>
-                    <input class="form-control" type="text" name="ubicacion" value="<?php echo $ubicacion; ?>" autocomplete="off"  id="" required onkeypress="return soloLetras(event);" minlength="3" maxlength="255" onkeyup="mayus(this);">
+                    <input class="form-control" type="text" onkeyup="un_espacio(this);" name="ubicacion" value="<?php echo $ubicacion; ?>" autocomplete="off"  id="" required  minlength="3" maxlength="255" onkeyup="mayus(this);">
                     
                     <label for="">Fecha Inicio:</label>
                     <input class="form-control" type="Date" name="fecha_inicio" min="2022-08-08" value="<?php echo $fecha_inicio; ?>" autocomplete="off" id="" required> 
@@ -227,36 +227,10 @@ if (mysqli_num_rows($roles35) > 0)
               <div class="card-header">
                 <!-- /// filtrar reporte //// -->
                 <form action="" method="post">
-                <div class="row">
-                    <div class="col">
-                      <!-- ///////////////////// -->
-                      <?php $asignacion=(isset($_POST['reporte_catalogo']))?$_POST['reporte_catalogo']:"";   ?> 
-                    
-                      <br>
-                        <select style="background-color:rgb(240, 244, 245);" value="<?php echo $id_cliente; ?>" required  class="form-select" id="lista1" name="reporte_catalogo"  >
-                                          <option >Seleccione un filtro</option>
-                                              <?php
-                                                  include '../../conexion/conexion.php';
-                                                  $catalago777 = "SELECT * FROM tbl_proyectos";
-                                                  $catalago7777 = mysqli_query($conn, $catalago777);
-                                                  if (mysqli_num_rows($catalago7777) > 0) {
-                                                      while($row = mysqli_fetch_assoc($catalago7777))
-                                                      {
-                                                      $catalago77777 =$row['NOMBRE_PROYECTO'];
-                                              ?>
-                                                <option value="<?php  echo $catalago77777; ?>"><?php echo $catalago77777; ?></option>
-                                                <?php
-                                          }}// finaliza el if y el while
-                                          ?>
-                                        </select>
-                                                          </div>
-                    <div class="col"><br>
-                    <button class="btn btn-danger" type="submit">Filtrar reporte</button>
-                    </div>
-               </div>
+                
                                  
                                         
-                        </form> <br><!-- ///////////////////// -->
+                        </form><!-- ///////////////////// -->
                 <!-- /// fin filtrar reporte /// -->
               <form id="form" action="" method="post">
                     <div class="btn-group">
@@ -282,17 +256,17 @@ if (mysqli_num_rows($roles35) > 0)
                 <table id="example1" class="table table-bordered table-striped">
                   <thead>
                   <tr>
-                  <th>Acciones</th>
-                    <th>Id</th>
-                    <th>Cliente</th>
-                    <th>Encargado</th>
-                    <th>Estado</th>
-                    <th>Proyecto</th>
-                    <th>Descripción</th>
-                    <th>Departamento</th>
-                    <th>Ubicación</th>
-                    <th>Fecha Inicio</th>
-                    <th>Fecha Final</th>
+                  <th class="desaparecerTemporalmente">Acciones</th>
+                    <th class="desaparecerTemporalmente1">Id</th>
+                    <th class="desaparecerTemporalmente1">Cliente</th>
+                    <th class="desaparecerTemporalmente1">Encargado</th>
+                    <th class="desaparecerTemporalmente1">Estado</th>
+                    <th class="desaparecerTemporalmente1">Proyecto</th>
+                    <th class="desaparecerTemporalmente1">Descripción</th>
+                    <th class="desaparecerTemporalmente1">Departamento</th>
+                    <th class="desaparecerTemporalmente1">Ubicación</th>
+                    <th class="desaparecerTemporalmente1">Fecha Inicio</th>
+                    <th class="desaparecerTemporalmente1">Fecha Final</th>
                     
                   </tr>
                   </thead>
@@ -304,7 +278,7 @@ if (mysqli_num_rows($roles35) > 0)
                   ?>
                   <?php  $cont++; ?>
                   <tr>
-                  <td>
+                  <td class="desaparecerTemporalmente">
                   <?php 
                           include '../../conexion/conexion.php';
                           $proyecto = "SELECT * FROM tbl_ms_roles_ojetos WHERE ID_ROL='$id_rol7' and ID_OBJETO=13 and PERMISO_ACTUALIZACION=1";
@@ -407,10 +381,10 @@ if (mysqli_num_rows($roles35) > 0)
                    </select>         
                 
                     <label for="">Nombre Proyecto:</label>
-                    <input class="form-control" type="text" name="nombre" id="" required value="<?php echo $filas['NOMBRE_PROYECTO'] ?>" autocomplete="off" onkeypress="return soloLetras(event);" minlength="3" maxlength="255" onkeyup="mayus(this);" >
+                    <input class="form-control" type="text" onkeyup="un_espacio(this);" name="nombre" id="" required value="<?php echo $filas['NOMBRE_PROYECTO'] ?>" autocomplete="off" onkeypress="return soloLetras(event);" minlength="4" maxlength="255" onkeyup="mayus(this);" >
                     
                     <label for="">Descripción Proyecto:</label>
-                    <input class="form-control" type="text" name="descripcion" id="" required value="<?php echo $filas['DESCRIPCION'] ?>" autocomplete="off" onkeypress="return soloLetras(event);" minlength="3" maxlength="300" onkeyup="mayus(this);" >
+                    <input class="form-control" type="text" onkeyup="un_espacio(this);" name="descripcion" id="" required value="<?php echo $filas['DESCRIPCION'] ?>" autocomplete="off"  minlength="4" maxlength="255" onkeyup="mayus(this);" >
                     
                     <label for="">Departamento:</label>
                     <select style="background-color:rgb(240, 244, 245);" class="form-select" id="lista1" name="id_departamento" required >
@@ -437,7 +411,7 @@ if (mysqli_num_rows($roles35) > 0)
                    </select>
                 
                     <label for="">Ubicación:</label>
-                    <input class="form-control" type="text" name="ubicacion" id="" required value="<?php echo $filas['UBICACION'] ?>" autocomplete="off" onkeypress="return soloLetras(event);" minlength="3" maxlength="255" onkeyup="mayus(this);"  >
+                    <input class="form-control" type="text" onkeyup="un_espacio(this);" name="ubicacion" id="" required value="<?php echo $filas['UBICACION'] ?>" autocomplete="off"  minlength="3" maxlength="255" onkeyup="mayus(this);"  >
                     
                     <label for="">Fecha Inicio:</label>
                     <input class="form-control" type="Date" name="fecha_inicio" id="" required value="<?php echo $filas['FECHA_INICIO'] ?>">
@@ -479,16 +453,16 @@ if (mysqli_num_rows($roles35) > 0)
                         ?>
                   </form>
 </td>
-                            <td ><?php echo $cont; ?></td>
-                            <td><?php echo $filas['NOMBRE_CLIENTE'] ?></td>
-                            <td><?php echo $filas['NOMBRE'] ?></td>
-                            <td><?php echo $filas['ESTADO_PROYECTO'] ?></td>
-                            <td><?php echo $filas['NOMBRE_PROYECTO'] ?></td>
-                            <td><?php echo $filas['DESCRIPCION'] ?></td>
-                            <td><?php echo $filas['DEPARTAMENTO'] ?></td>
-                            <td><?php echo $filas['UBICACION'] ?></td>
-                            <td><?php echo $filas['FECHA_INICIO'] ?></td>
-                            <td><?php echo $filas['FECHA_FINAL'] ?></td>
+                            <td class="desaparecerTemporalmente1"><?php echo $filas['ID_PROYECTO'] ?></td>
+                            <td class="desaparecerTemporalmente1"><?php echo $filas['NOMBRE_CLIENTE'] ?></td>
+                            <td class="desaparecerTemporalmente1"><?php echo $filas['NOMBRE'] ?></td>
+                            <td class="desaparecerTemporalmente1"><?php echo $filas['ESTADO_PROYECTO'] ?></td>
+                            <td class="desaparecerTemporalmente1"><?php echo $filas['NOMBRE_PROYECTO'] ?></td>
+                            <td class="desaparecerTemporalmente1"><?php echo $filas['DESCRIPCION'] ?></td>
+                            <td class="desaparecerTemporalmente1"><?php echo $filas['DEPARTAMENTO'] ?></td>
+                            <td class="desaparecerTemporalmente1"><?php echo $filas['UBICACION'] ?></td>
+                            <td class="desaparecerTemporalmente1"><?php echo $filas['FECHA_INICIO'] ?></td>
+                            <td class="desaparecerTemporalmente1"><?php echo $filas['FECHA_FINAL'] ?></td>
                             </tr>
                             <?php } ?> 
                    
@@ -539,6 +513,9 @@ if (mysqli_num_rows($roles35) > 0)
 <script src="../../plantilla/AdminLTE-3.2.0/plugins/datatables-buttons/js/dataTables.buttons.min.js"></script>
 <script src="../../plantilla/AdminLTE-3.2.0/plugins/datatables-buttons/js/buttons.bootstrap4.min.js"></script>
 <script src="../../plantilla/AdminLTE-3.2.0/plugins/jszip/jszip.min.js"></script>
+<!-- Plugins para reporte en excel -->
+<script src="../../plantilla/AdminLTE-3.2.0/plugins/datatables-buttons/js/buttons.html5.min.js"></script> 
+ <script src="../../plantilla/AdminLTE-3.2.0/plugins/datatables-buttons/js/buttons.print.min.js"></script>
 
 
 <script src="../../plantilla/AdminLTE-3.2.0/plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
@@ -552,7 +529,7 @@ if (mysqli_num_rows($roles35) > 0)
 <script>
   $(function () {
     $("#example1").DataTable({
-      
+      "order": [[ 1, "desc" ]],
       language: {
                           processing: "Tratamiento en curso...",
                           search: "Buscar&nbsp;:",
@@ -589,7 +566,23 @@ if (mysqli_num_rows($roles35) > 0)
                          },
                          
                          "responsive": true, "lengthChange": true, "autoWidth": false,
-                          "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"],                   
+                          "buttons": ["excel", "colvis"], 
+                          buttons:[
+                            {
+                            extend:     'excelHtml5',
+                            text:       'Exportar a Excel',
+                            titleAttr:  'Exportar a Excel',
+                            title:     'REPORTE DE PROYECTOS',
+                            exportOptions:{
+                              columns: [1,2,3,4,5,6,7,8,9,10]
+                            }
+                          },
+                          {
+                            extend: 'colvis',
+                            text:   'Visualizar',
+                            title:  'REPORTE DE PROYECTOS',
+                          } 
+                          ]                  
         
     })
 
@@ -667,32 +660,48 @@ if(!isset($_POST['reporte_catalogo']))
       } 
     }
 ?>
-<script>
-	//para descar al tocar el boton
-	var form = document.getElementById("form")
-	form.addEventListener("submit",function(event) {
-	event.preventDefault()
+<!-- // Inicio para exportar en pdf // -->
 
-			
-			const pdf = new jsPDF('L', 'mm', 'letter');
-						
-			var columns = ["Cliente", "Encargado", "Estado", "Proyecto", "Descripción", "Departamento", 
-      "Ubicación", "Fecha de Inicio","Fecha Final"];
-			var data = [
-  <?php foreach($data as $d):?>
-	
-      ["<?php echo $d->NOMBRE_CLIENTE; ?>", "<?php echo $d->USUARIO; ?>", "<?php echo $d->ESTADO_PROYECTO; ?>", 
-      "<?php echo $d->NOMBRE_PROYECTO; ?>", "<?php echo $d->DESCRIPCION; ?>", "<?php echo $d->DEPARTAMENTO; ?>", 
-      "<?php echo $d->UBICACION; ?>", "<?php echo $d->FECHA_INICIO; ?>", "<?php echo $d->FECHA_FINAL; ?>"],
-      <?php endforeach; ?>
-  ];
-				pdf.autoTable(columns,data,
+<script>
+  
+	//para descar al tocar el boton	
+	var form = document.getElementById("form")
+  
+	form.addEventListener("submit",function(event) {
+  
+	event.preventDefault()
+  $(".desaparecerTemporalmente1").css("display","");
+  $(".desaparecerTemporalmente").css("display","none");
+
+				const pdf = new jsPDF('L', 'mm', 'letter');			
+        	
+
+				
+				
+
+				pdf.autoTable(
 				{ 
+          html:'#example1',
 					
-					margin:{ top: 30 }}
+					margin:{ top: 30 },
+          
+          columnStyles: {
+      
+            0: {cellWidth: 15},
+            1: {cellWidth: 27},
+            2: {cellWidth: 27},
+            3: {cellWidth: 27},
+            4: {cellWidth: 27},
+            5: {cellWidth: 27},
+            6: {cellWidth: 27},
+            7: {cellWidth: 27},
+            8: {cellWidth: 24},
+            9: {cellWidth: 23}
+           } 
+          }
 				);
-		
-			//Inicio Encabezado y pie de pagina
+						
+				//Inicio Encabezado y pie de pagina
 			const pageCount = pdf.internal.getNumberOfPages();
 			for(var i = 1; i <= pageCount; i++) 
 			{
@@ -707,12 +716,12 @@ if(!isset($_POST['reporte_catalogo']))
 				//muestra el titulo principal
 				pdf.setFont('Arial');
 				pdf.setFontSize(17);
-				pdf.text('<?php echo $nombre_constructora ?>', 115,15,);
-
+				pdf.text('<?php echo $nombre_constructora ?>', pdf.internal.pageSize.getWidth() / 2, 15, null, 'center'); // de esta manera se puede centrar el titulo
+       
 				//muestra el titulo secundario
 				pdf.setFont('times');
 				pdf.setFontSize(12);
-				pdf.text("Reporte de Proyectos", 123,20,);
+				pdf.text("Reporte de proyectos", pdf.internal.pageSize.getWidth() / 2, 20, null, 'center');
 
 												//////// pie de Pagina ///////
 				//muestra la fecha
@@ -723,16 +732,21 @@ if(!isset($_POST['reporte_catalogo']))
 				let jornada = horas >=12 ? 'PM' : 'AM';
 				var newdat = "Fecha: " + today.getDate() + "/" + (today.getMonth()+1) + "/" + today.getFullYear() + " " + (horas % 12) + ":" + today.getMinutes() + ":" + today.getSeconds() + " " + jornada;
 				pdf.text(245-20,297-284,newdat);
+        pdf.text('<?php echo 'Creado por: '. $_SESSION['usuario']; ?>', 264, 20, {
+            align: 'right',
+            });
 
 				//muestra el numero de pagina
 				pdf.text('Pagina ' + String(i) + '/' + String(pageCount),282-20,297-89,null,null,"right");
 			}
 				//Fin Encabezado y pie de pagina
 
-							pdf.save('Reporte de Proyectos.pdf');
+							pdf.save('Reporte de proyectos.pdf');
+              $(".desaparecerTemporalmente").css("display","");
 	})
-
+  
 </script>
 <!-- // Fin para exportar en pdf // -->
+<script type="text/javascript" src="../../js/un_espacio.js"></script>
 <script type="text/javascript" src="../../js/evitar_reenvio.js"></script>
 </html>

@@ -45,11 +45,7 @@ if(in_array($extencion, $permitidos)){
                 VALUES ('$id_categoria', '$cantidad_min', '$cantidad_max', '$destino$nombreimagen', '$codigo', '$nombre', '$descripcion_modelo')";
                  $res = mysqli_query($conn, $sql);
                 if($res){
-                    // inicio inserta en la tabla bitacora
-                    $sql = "INSERT INTO tbl_bitacora (USUARIO, OPERACION, PANTALLA, CAMPO, VALOR_ORIGINAL, VALOR_NUEVO)
-                    VALUES ('$usuario1[usuario]', 'INSERTO','PRODUCTOS', 'CATEGORIA', 'NUEVO','$nombre')";
-                    if (mysqli_query($conn, $sql)) {} else {}
-                    // fin inserta en la tabla bitacora
+                    
 
                     echo '<script type="text/javascript">
                             alert("Creado con exito");
@@ -111,11 +107,7 @@ if(in_array($extencion, $permitidos))
     $sql2 = "UPDATE tbl_productos SET ID_CATEGORIA='$id_categoria', CANTIDAD_MIN='$cantidad_min', CANTIDAD_MAX='$cantidad_max', FOTO='$direccion', CODIGO='$codigo', NOMBRE='$nombre', DESCRIPCION_MODELO='$descripcion_modelo' WHERE ID_PRODUCTO='$id_productos'";
     if (mysqli_query($conn, $sql2)) 
     {
-        // inicio inserta en la tabla bitacora
-        $sql = "INSERT INTO tbl_bitacora (USUARIO, OPERACION, PANTALLA, CAMPO, VALOR_ORIGINAL, VALOR_NUEVO)
-                    VALUES ('$usuario1[usuario]', 'EDITO','PRODUCTOS', 'CATEGORIA', '$nombre','NUEVO')";
-        if (mysqli_query($conn, $sql)) {} else {}
-         // fin inserta en la tabla bitacora
+        
         echo '<script>
                  alert("Edición exitosa");
                  window.location.href="../../vistas/inventario/vista_productos.php";
@@ -156,11 +148,7 @@ $validar_proveedor = "SELECT * FROM tbl_kardex WHERE ID_PRODUCTO='$id_productos'
         if (mysqli_query($conn, $sql33)) {
       $sql34 = "DELETE FROM tbl_productos WHERE ID_PRODUCTO='$id_productos'";
       if (mysqli_query($conn, $sql34)){
-        // inicio inserta en la tabla bitacora
-        $sql = "INSERT INTO tbl_bitacora (USUARIO, OPERACION, PANTALLA, CAMPO, VALOR_ORIGINAL, VALOR_NUEVO)
-                    VALUES ('$usuario1[usuario]', 'ELIMINO','PRODUCTOS', 'NOMBRE', '$nombre','ELIMINADO')";
-        if (mysqli_query($conn, $sql)) 
-            //  unlink($ruta);
+    
     
     echo '<script>
     

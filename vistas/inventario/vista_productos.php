@@ -133,7 +133,7 @@ if (mysqli_num_rows($roles35) > 0)
                   <option >Seleccione</option>
                         <?php
                            include '../../conexion/conexion.php';
-                            $id_categoria = "SELECT * FROM tbl_categoria_producto ORDER BY ID_CATEGORIA";
+                            $id_categoria = "SELECT * FROM tbl_categoria_producto WHERE ESTADO='ACTIVO' ORDER BY ID_CATEGORIA";
                             $genero2 = mysqli_query($conn, $id_categoria);
                             if (mysqli_num_rows($genero2) > 0) {
                                 while($row = mysqli_fetch_assoc($genero2))
@@ -150,7 +150,7 @@ if (mysqli_num_rows($roles35) > 0)
                 <label for="">Codigo Prodcuto:</label>
                 <input type="text" onkeyup="quitarespacios(this); sinespacio(this);" class="form-control" autocomplete="off" 
                 onkeyup="mayus(this);" name="codigo" minlength="2" maxlength="30" required value="<?php echo "$codigo"; ?>" 
-                placeholder="Ingrese el codigo del producto" minlength="4" maxlength="14">
+                placeholder="Ingrese el codigo del producto" minlength="4" maxlength="9">
                 <br>
                 <label for="">Nombre:</label>
                 <input type="text" onkeyup="un_espacio(this);" autocomplete="off"  value="<?php echo "$nombre"; ?>" 
@@ -634,7 +634,7 @@ if (mysqli_num_rows($roles35) > 0)
 <script type="text/javascript" src="../../js/evitar_reenvio.js"></script>
 <script type="text/javascript">
 
-  
+
 function sinespacio(e) {
 
   var limpia = e.value;
