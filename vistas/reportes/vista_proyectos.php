@@ -2,12 +2,14 @@
 session_start();
 if(!isset($_SESSION['usuario'])){
  
-        header('Location: ../iniciar_sesion/index_login.php');
+        header('Location: ../../_login.php');
         session_unset();
         session_destroy();
         die();
         
 }
+include '../../controladores/crud_bitacora.php';
+
 
 ?>
 <!DOCTYPE html>
@@ -52,10 +54,10 @@ if(!isset($_SESSION['usuario'])){
             <form>
             <div class="row">
                 <div class="col">
-                Fecha Inicial <input type="Date" class="form-control" >
+                Fecha Inicial <input type="date" class="form-control" id="creationDateFromCampaign" value="2021-01-01" />
                 </div>
                 <div class="col">
-                Fecha Final <input type="Date" class="form-control">
+                Fecha Final <input type="date" class="form-control" id="creationDateToCampaign" value="2021-02-01" />
                 </div>
                 <div class="col"><br>
                 <button type="button" class="btn btn-danger">Filatrar</button>
@@ -66,44 +68,46 @@ if(!isset($_SESSION['usuario'])){
         <!-- fin rango de fechas -->
             <div class="card">
               <div class="card-header">
-                <h3 class="card-title">Reportes de los proyectos</h3>
+              
               </div>
+              
               <!-- /.card-header -->
               <div class="card-body">
-                <table id="example1" class="table table-bordered table-striped">
+              <table id="example1"  class="table table-bordered table-striped responsive" >
                   <thead>
                   <tr>
-                    <th>Id</th>
-                    <th>Nombre</th>
-                    <th>Ubicacion</th>
-                    <th>Fecha inicio</th>
-                    <th>Fecha final</th>
-                    <th>Estado</th>
-                    <th>asignado</th>
+                    <th >ID</th>
+                    <th>Fecha/Hora</th>
+                    <th>Usuario</th>
+                    <th>Operación</th>
+                    <th>Pantalla</th>
+                    <th>Campo</th>
+                    <th>ID Registro</th>
+                    <th>Valor Original</th>
+                    <th>Valor Nuevo</th>
                   </tr>
                   </thead>
                   <tbody>
-                    <?php
-                    require '../../conexion/conexion.php';
-                    $consulta = "SELECT tbl_proyectos.ID_PROYECTO AS ID_PROYECTO ,tbl_proyectos.NOMBRE as NOMBRE,tbl_proyectos.UBICACION as UBICACION, tbl_proyectos.FECHA_INICIO as FECHA_INICIO,tbl_proyectos.FECHA_FINAL AS FECHA_FINAL, tbl_estados_proyectos.NOMBRE AS ID_ESTADOS, tbl_usuarios.NOMBRE AS ID_USUARIO 
-                                  FROM tbl_proyectos INNER JOIN tbl_estados_proyectos ON tbl_proyectos.ID_ESTADOS = tbl_estados_proyectos.ID_ESTADOS INNER JOIN tbl_usuarios ON tbl_proyectos.ID_USUARIO=tbl_usuarios.ID_USUARIO";
-                    // $consulta = "SELECT  * from tbl_proyectos";
-                    $proyectos = mysqli_query($conn, $consulta);
-                    foreach($proyectos as $proyecto){
+                  <?php 
+                  
+                  $cont = 0;
+                  while ($filas= mysqli_fetch_assoc($result)){
                     ?>
+                    <?php  $cont++; ?>
+
                   <tr>
-                    <td><?php echo $proyecto ['ID_PROYECTO']?></td>
-                    <td><?php echo $proyecto ['NOMBRE']?></td>
-                    <td><?php echo $proyecto ['UBICACION']?></td>
-                    <td><?php echo $proyecto ['FECHA_INICIO']?></td>
-                    <td><?php echo $proyecto ['FECHA_FINAL']?></td>
-                    <td><?php echo $proyecto ['ID_ESTADOS']?></td>
-                    <td><?php echo $proyecto ['ID_USUARIO']?></td>
-                    
-                  </tr>
-                      <?php
-                    }
-                      ?>
+                    <td><?php echo $cont; ?></td>
+                    <td><?php echo $filas['FECHA'] ?></td>
+                    <td><?php echo $filas['USUARIO'] ?></td>
+                    <td><?php echo $filas['OPERACION'] ?></td> 
+                    <td><?php echo $filas['PANTALLA'] ?></td> 
+                    <td><?php echo $filas['CAMPO'] ?></td> 
+                    <td><?php echo $filas['ID_REGISTRO'] ?></td> 
+                    <td><?php echo $filas['VALOR_ORIGINAL'] ?></td> 
+                    <td><?php echo $filas['VALOR_NUEVO'] ?></td>                         
+                 </tr>  
+               
+                 <?php } ?>  
                   
                   </tfoot>
                 </table>
@@ -163,6 +167,7 @@ if(!isset($_SESSION['usuario'])){
 <script>
   $(function () {
     $("#example1").DataTable({
+      
       language: {
                           processing: "Tratamiento en curso...",
                           search: "Buscar&nbsp;:",
@@ -199,7 +204,7 @@ if(!isset($_SESSION['usuario'])){
                                 },    
                          },
 
-      "responsive": true, "lengthChange": false, "autoWidth": false,
+      "responsive": true, "lengthChange": true, "autoWidth": false,
       "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
     })
     .buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
@@ -213,6 +218,40 @@ if(!isset($_SESSION['usuario'])){
       "responsive": true,
     });
   });
+</script>
+
+
+
+
+<script>
+/* Función de filtrado */
+$.fn.dataTable.ext.search.push(
+  (conf, fila, indice) => {
+    /* Creamos las fechas máximo y mínimo desde el campo */
+    const min = new Date(creationDateFromCampaign.value);
+    const max = new Date(creationDateToCampaign.value);
+    /* Aquí creamos la fecha de la fila en curso */
+    const fecha = new Date(fila[1]);
+    /* Comparamos la fecha con el rango */
+    if (fecha >= min && fecha <= max) {
+      /* Si está entre las fechas mostramos la fila */
+      return true;
+    }
+    /* En caso contario no mostramos la fila */
+    return false;
+  }
+);
+ 
+$(document).ready(() => {
+    var tabla = $('#example1').DataTable();
+ 
+    $('#creationDateFromCampaign, #creationDateToCampaign').on('change', () => {
+        tabla.draw();
+    });
+});
+
+
+
 </script>
 </body>
 </html>

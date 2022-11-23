@@ -107,7 +107,7 @@ require 'controladores/co_registrar.php';
      <!-- inicio redes sociales -->
   <?php 
       include 'conexion/conexion.php';
-      $sqlB4 = "SELECT * FROM tbl_nuestros_contactos";
+      $sqlB4 = "SELECT * FROM tbl_nuestros_contactos WHERE ID_CONTACTO=1";
       $resultB4 = mysqli_query($conn, $sqlB4);
       while($rowB4 = mysqli_fetch_assoc($resultB4)) {
       ?>
@@ -153,7 +153,7 @@ require 'controladores/co_registrar.php';
   <!-- inicio redes sociales -->
   <?php 
       include 'conexion/conexion.php';
-      $sqlB4 = "SELECT * FROM tbl_nuestros_contactos";
+      $sqlB4 = "SELECT * FROM tbl_nuestros_contactos WHERE ID_CONTACTO=1";
       $resultB4 = mysqli_query($conn, $sqlB4);
       while($rowB4 = mysqli_fetch_assoc($resultB4)) {
       ?>
@@ -437,7 +437,7 @@ actividades que se desarrollan en los proyectos ejecutados.</p>
 
 <?php 
   include 'conexion/conexion.php';
-  $sql = "SELECT * FROM tbl_nuestros_contactos ";
+  $sql = "SELECT * FROM tbl_nuestros_contactos WHERE ID_CONTACTO=1";
   $result = mysqli_query($conn, $sql);
   while($row = mysqli_fetch_assoc($result)) {
   ?>
@@ -477,7 +477,7 @@ actividades que se desarrollan en los proyectos ejecutados.</p>
                             ?>
 <?php 
       include 'conexion/conexion.php';
-      $sqlB4 = "SELECT * FROM tbl_nuestros_contactos";
+      $sqlB4 = "SELECT * FROM tbl_nuestros_contactos WHERE ID_CONTACTO=1";
       $resultB4 = mysqli_query($conn, $sqlB4);
       while($rowB4 = mysqli_fetch_assoc($resultB4)) {
       ?>

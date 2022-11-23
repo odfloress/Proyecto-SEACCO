@@ -37,13 +37,7 @@ if (mysqli_num_rows($roles35) > 0)
                   header('Location: ../../vistas/tablero/vista_perfil.php');
                   die();
                 }
-               }
-               // inicio inserta en la tabla bitacora
-               $sql = "INSERT INTO tbl_bitacora (USUARIO, ACCION, OBSERVACION)
-               VALUES ('$usuario1[usuario]', 'CONSULTO', 'CONSULTO LA PANTALLA ADMINISTRATIVA DE CONTACTOS')";
-               if (mysqli_query($conn, $sql)) {} else {}
-               // fin inserta en la tabla bitacora
-           
+               }          
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -118,27 +112,27 @@ if (mysqli_num_rows($roles35) > 0)
            <br>
 
           <label for="">Número teléfono:</label>
-          <input  type="text" autocomplete="off" name="telefono" value="<?php echo $TELEFONO; ?>" class="form-control"  placeholder="Numero de celular"  required minlength="8" onkeypress="return solonumero(event)" maxlength="8" pattern="[0-9]+[1-9]+[0-9]+" title="8 caracteres y no todos ceros">
+          <input onblur="quitarespacios(this);" onkeydown="sinespacio(this);"  type="text" autocomplete="off" name="telefono" value="<?php echo $TELEFONO; ?>" class="form-control"  placeholder="Numero de celular"  required minlength="8" onkeypress="return solonumero(event)" maxlength="8" pattern="[0-9]+[1-9]+[0-9]+" title="8 caracteres y no todos ceros">
         
            <br>
 
            <label for="">Correo para clientes:</label>
-           <input type="email" name="correo" class="form-control" value="<?php echo $CORREO_PARA_CLIENTES; ?>" placeholder="Opcional Ingrese su correo" maxlength="255">
+           <input type="email" autocomplete="off" name="correo" class="form-control" value="<?php echo $CORREO_PARA_CLIENTES; ?>" placeholder="Opcional Ingrese su correo" maxlength="50">
            <br>
 
            <label for="">Correo para Empleados:</label>
-           <input type="email" name="correo_empleados" class="form-control" value="<?php echo $CORREO_EMPLEADOS; ?>" placeholder="Opcional Ingrese su correo" maxlength="255">
+           <input type="email" autocomplete="off" name="correo_empleados" class="form-control" value="<?php echo $CORREO_EMPLEADOS; ?>" placeholder="Opcional Ingrese su correo" maxlength="50">
            <br>
 
            <label for="">Dirección:</label>
-           <input type="text" name="direccion" class="form-control " maxlength="255" value="<?php echo $DIRECCION; ?>" placeholder="Ingrese su direccion" onkeyup="mayus(this);"  >
+           <input onkeyup="un_espacio(this);" type="text" autocomplete="off" name="direccion" class="form-control " maxlength="245" value="<?php echo $DIRECCION; ?>" placeholder="Ingrese su direccion" >
            <br>
 
             <label for="">Facebook:</label>
-            <input type="text" name="facebook" class="form-control " value="<?php echo $FACEBOOK; ?>"placeholder="Ingrese su facebook"  maxlength="255">
+            <input type="text" name="facebook" autocomplete="off" class="form-control " value="<?php echo $FACEBOOK; ?>"placeholder="Ingrese su facebook"  maxlength="240">
             <br>
             <label for="">Instagram:</label>
-            <input type="text" name="instagram" class="form-control " value="<?php echo $INSTAGRAM ?>" placeholder="Ingrese su instagram" maxlength="255" >
+            <input type="text" name="instagram" autocomplete="off" class="form-control " value="<?php echo $INSTAGRAM ?>" placeholder="Ingrese su instagram" maxlength="240" >
             <br>       
   
       </div>
@@ -305,8 +299,9 @@ if (mysqli_num_rows($roles35) > 0)
         if (tecla==8) return true;
         else if (tecla==0||tecla==9)  return true;
        // patron =/[0-9\s]/;// -> solo letras
-        patron =/[0-9-\s]/;// -> solo numeros
+        patron =/[0-9]/;// -> solo numeros
         te = String.fromCharCode(tecla);
         return patron.test(te);
     }
 	</script>
+<script type="text/javascript" src="../../js/un_espacio.js"></script>

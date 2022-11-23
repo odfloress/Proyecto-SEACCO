@@ -20,14 +20,13 @@
   
   
   switch($accion){
-      //para insertar en la tabla mysl
+      /////////////////////////////////// PARA INSERTAR ////////////////////////////////////
       case "agregar": 
         // valida si existe una pregunta con el mismo nombre
         $validar_pregunta = "SELECT * FROM tbl_preguntas WHERE PREGUNTA='$pregunta'";
         $result1 = mysqli_query($conn, $validar_pregunta); 
-         if (mysqli_num_rows($result1) > 0) { 
-              
-         
+         if (mysqli_num_rows($result1) > 0) 
+         { 
            echo '<script>
                     alert("La pregunta ingresada ya existe, intente con otra");
                  </script>';
@@ -37,108 +36,91 @@
                 //si no existe una pregunta permite insertar
                 $sql1 = "INSERT INTO tbl_preguntas (PREGUNTA)
                 VALUES ('$pregunta')";
-                if (mysqli_query($conn, $sql1)) {
+                if (mysqli_query($conn, $sql1)) 
+                {
+                  $ultimo_id = mysqli_insert_id($conn);  
+                  // ////////////// INICIO FUNCION BITACORA /////////////////////
+                        include_once 'funcion_bitacora.php';
+                        bitacora('INSERTO', 'PREGUNTAS DE SEGURIDAD', 'PREGUNTA', $ultimo_id, 'NUEVO', 'NUEVO');       
+                  // ////////////// FIN FUNCION BITACORA ///////////////////////
 
-                  // inicio inserta en la tabla bitacora
-                  $sql7 = "INSERT INTO tbl_bitacora (USUARIO, ACCION, OBSERVACION)
-                  VALUES ('$usuario1[usuario]', 'INSERTO', 'CREO LA PREGUNTA ($pregunta)')";
-                  if (mysqli_query($conn, $sql7)) {} else { }
-                  // fin inserta en la tabla bitacora
                   echo '<script>
-                  alert("Pregunta creada con éxito");
-                  window.location.href="../../vistas/ajustes/vista_preguntas.php";                   
-                </script>';
-                 
-
-                } else {
-                        echo '<script>
-                                alert("Error al tratar de crear pregunta");
-                              </script>'; mysqli_error($conn);
+                          alert("Pregunta creada con éxito");
+                          window.location.href="../../vistas/ajustes/vista_preguntas.php";                   
+                        </script>';
+                        mysqli_close($conn);
+                }else{
+                      echo '<script>
+                              alert("Error al tratar de crear pregunta");
+                            </script>'; mysqli_error($conn);
                        }
-                
-                mysqli_close($conn);
-
-              }                    
+            }                    
 
              
       break;
 
-       //para editar en la tabla mysl      
-      case "editar";
+  /////////////////////////////////// PARA EDITAR //////////////////////////////////// 
+   case "editar";
 
-        // valida si existe una pregunta con el mismo nombre
-        $validar_pregunta = "SELECT * FROM tbl_preguntas WHERE PREGUNTA='$pregunta'";
-        $result2 = mysqli_query($conn, $validar_pregunta); 
-         if (mysqli_num_rows($result2) > 0) { 
-          // inicio inserta en la tabla bitacora
-          $sql9 = "INSERT INTO tbl_bitacora (USUARIO, ACCION, OBSERVACION)
-          VALUES ('$usuario1[usuario]', 'INTENTO', 'NO LOGRO INSERTAR LA PREGUNTA POR QUE YA EXISTE')";
-          if (mysqli_query($conn, $sql9)) {} else { }
-          // fin inserta en la tabla bitacora         
-           echo '<script>
-                    alert("No se puede editar, ya existe una pregunta con ese nombre");
-                 </script>';
-                 mysqli_close($conn);
-         }else{ 
-
-                $sql2 = "UPDATE tbl_preguntas SET PREGUNTA='$pregunta' WHERE ID_PREGUNTA='$id_pregunta'";
-                if (mysqli_query($conn, $sql2)) {
-
-                  // inicio inserta en la tabla bitacora
-                  $sql9 = "INSERT INTO tbl_bitacora (USUARIO, ACCION, OBSERVACION)
-                  VALUES ('$usuario1[usuario]', 'EDITO', 'RENOMBRO LA PREGUNTA ($anterior) A ($pregunta)')";
-                  if (mysqli_query($conn, $sql9)) {} else { }
-                  // fin inserta en la tabla bitacora
-
-                  echo '<script>
-                  alert("Pregunta actualizada exitosamente");
-                  window.location.href="../../vistas/ajustes/vista_preguntas.php";                   
-                </script>';
-
-                }else{
-                     echo '<script>
-                            alert("Error al tratar de editar pregunta");
-                           </script>'; mysqli_error($conn);
+   // valida si existe una pregunta con el mismo nombre
+    $validar_pregunta = "SELECT * FROM tbl_preguntas WHERE PREGUNTA='$pregunta'";
+    $result2 = mysqli_query($conn, $validar_pregunta); 
+    if (mysqli_num_rows($result2) > 0) 
+    { 
+      echo '<script>
+              alert("No se puede editar, ya existe una pregunta con ese nombre");
+            </script>';
+            mysqli_close($conn);
+    }else{ 
+          $sql2 = "UPDATE tbl_preguntas SET PREGUNTA='$pregunta' WHERE ID_PREGUNTA='$id_pregunta'";
+          if (mysqli_query($conn, $sql2)) 
+          {
+            echo '<script>
+                    alert("Pregunta actualizada exitosamente");
+                    window.location.href="../../vistas/ajustes/vista_preguntas.php";                   
+                  </script>';
+                  mysqli_close($conn);
+          }else{
+                echo '<script>
+                        alert("Error al tratar de editar pregunta");
+                      </script>'; 
+                      mysqli_error($conn);
                      }
-
-                mysqli_close($conn);
-              }
+         }
+         // ////////////// INICIO FUNCION BITACORA /////////////////////
+         if($anterior !== $pregunta) ///////////// PREGUNTA
+         {
+         include_once 'funcion_bitacora.php';
+         bitacora('EDITO', 'PREGUNTAS DE SEGURIDAD', 'PREGUNTA', $id_pregunta, $anterior, $pregunta);
+         }
+         // ////////////// FIN FUNCION BITACORA ///////////////////////
+   break;
       
-      break;
-      
-      //para eliminar en la tabla mysl  --
-      case "eliminar";
+    /////////////////////////////////// PARA ELIMINAR ////////////////////////////////////
+    case "eliminar";
 
-              // valida si esta en uso la pregunta en la tabla tbl_respuestas_usuario
+    // valida si esta en uso la pregunta en la tabla tbl_respuestas_usuario
         $validar_pregunta = "SELECT * FROM tbl_respuestas_usuario WHERE ID_PREGUNTA='$id_pregunta'";
         $result2 = mysqli_query($conn, $validar_pregunta); 
          if (mysqli_num_rows($result2) > 0)
           { 
-             // inicio inserta en la tabla bitacora
-             $sql9 = "INSERT INTO tbl_bitacora (USUARIO, ACCION, OBSERVACION)
-             VALUES ('$usuario1[usuario]', 'INTENTO', 'NO LOGRO ELIMINAR LA PREGUNTA POR QUE ESTABA EN USO')";
-             if (mysqli_query($conn, $sql9)) {} else { }
-             // fin inserta en la tabla bitacora
             echo '<script>
                     alert("La pregunta seleccionada no se puede eliminar, esta se encuentra en uso");
                   </script>'; 
                   mysqli_error($conn);
           }else{  
-
                 $sql3 = "DELETE FROM tbl_preguntas WHERE ID_PREGUNTA='$id_pregunta'";
-                if (mysqli_query($conn, $sql3)) {
-                  // inicio inserta en la tabla bitacora
-                  $sql9 = "INSERT INTO tbl_bitacora (USUARIO, ACCION, OBSERVACION)
-                  VALUES ('$usuario1[usuario]', 'ELIMINO', 'ELIMINO LA PREGUNTA ($anterior)')";
-                  
-                  if (mysqli_query($conn, $sql9)) {} else { }
-                  // fin inserta en la tabla bitacora
-
-                    header('Location: ../../vistas/ajustes/vista_preguntas.php');
+                if (mysqli_query($conn, $sql3)) 
+                {
+                  // ////////////// INICIO FUNCION BITACORA /////////////////////
+                  include_once 'funcion_bitacora.php';
+                  bitacora('ELIMINO', 'PREGUNTAS DE SEGURIDAD', 'PREGUNTA', $id_pregunta, $anterior, $anterior);       
+            // ////////////// FIN FUNCION BITACORA ///////////////////////
+                  header('Location: ../../vistas/ajustes/vista_preguntas.php');
                 }else{
-                        echo '<script>
-                                  alert("Error al tratar de eliminar categoria");
-                              </script>'; mysqli_error($conn);
+                      echo '<script>
+                              alert("Error al tratar de eliminar categoria");
+                            </script>'; mysqli_error($conn);
                     }
                   mysqli_close($conn);
                 }
@@ -148,7 +130,7 @@
       default:
           
           $conn->close();   
-  }// Fin del switch, para validar el valor del boton accion
+  }
 
 
 ?>

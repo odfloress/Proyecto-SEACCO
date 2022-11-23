@@ -98,7 +98,7 @@
     <!-- inicio redes sociales -->
     <?php 
         include '../../conexion/conexion.php';
-      $sqlB4 = "SELECT * FROM tbl_nuestros_contactos";
+      $sqlB4 = "SELECT * FROM tbl_nuestros_contactos WHERE ID_CONTACTO=1";
       $resultB4 = mysqli_query($conn, $sqlB4);
       while($rowB4 = mysqli_fetch_assoc($resultB4)) {
       ?>
@@ -329,7 +329,7 @@
   <div style="margin-top:48px">
                           <?php 
                               include '../../conexion/conexion.php';
-                              $validar_contactos = "SELECT * FROM tbl_nuestros_contactos";
+                              $validar_contactos = "SELECT * FROM tbl_nuestros_contactos WHERE ID_CONTACTO=1";
                               $resultado_contactos = mysqli_query($conn, $validar_contactos);
                             while($mostrar74 = mysqli_fetch_assoc($resultado_contactos)) {
                               $direccion = $mostrar74["DIRECCION"];

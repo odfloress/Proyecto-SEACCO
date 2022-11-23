@@ -8,63 +8,53 @@ if(!isset($_SESSION['usuario'])){
         die();
         
 }
+include '../../controladores/crud_bitacora.php';
 
-include '../../controladores/crud_catalagos.php';
-// Selecciona el id del rol del usuario logueado
-include '../../conexion/conexion.php';
-$usuario = $_SESSION;
-$roles34 = "SELECT * FROM tbl_usuarios WHERE USUARIO='$usuario[usuario]'";
-$roles35 = mysqli_query($conn, $roles34);
-if (mysqli_num_rows($roles35) > 0)
-{
- while($row = mysqli_fetch_assoc($roles35))
-  { 
-      $id_rol7 = $row['ID_ROL'];
-  } 
-}
 
-               //valida si tiene permisos de consultar la pantalla 
-               $tablero = "SELECT * FROM tbl_ms_roles_ojetos WHERE ID_ROL='$id_rol7' and ID_OBJETO=31 and PERMISO_CONSULTAR=0";
-               $tablero2 = mysqli_query($conn, $tablero);
-               if (mysqli_num_rows($tablero2) > 0)
-               {
-                header('Location: ../../vistas/tablero/vista_perfil.php');
-                die();
-               }else{
-                $role = "SELECT * FROM tbl_ms_roles_ojetos WHERE ID_ROL='$id_rol7' and ID_OBJETO=31 and PERMISO_CONSULTAR=1";
-                $roless = mysqli_query($conn, $role);
-                if (mysqli_num_rows($roless) > 0){}
-                else{
-                  header('Location: ../../vistas/tablero/vista_perfil.php');
-                  die();
-                }
-         }
-                // inicio inserta en la tabla bitacora
-                $sql = "INSERT INTO tbl_bitacora (USUARIO, ACCION, OBSERVACION)
-                VALUES ('$usuario1[usuario]', 'CONSULTO', 'CONSULTO LA PANTALLA  ADMINISTRATIVA DE CATALOGOS')";
-                if (mysqli_query($conn, $sql)) {} else {}
-                // fin inserta en la tabla bitacora
 ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Catalagos</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
-   <!-- enlace del scritpt para evitar si preciona F12, si preciona Ctrl+Shift+I, si preciona Ctr+u  -->
-   <script type="text/javascript" src="../../js/evita_ver_codigo_utilizando_teclas.js"></script>
-         <!-- /// para exportar en pdf /// -->
-   <script type="text/javascript" src="../../js/complemento_1_jspdf.min.js"></script>
+  <title>Bitácora</title>
+   
+         <!-- /// Para exportar en pdf /// -->
+  <script type="text/javascript" src="../../js/complemento_1_jspdf.min.js"></script>
 	<script type="text/javascript" src="../../js/complemento_2_jspdf.plugin.autotable.min.js"></script>
+<!-- INICIO PARA FILTRAR UNA TABLA EN TIEMPO REAL -->
+  <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+<script src="https://cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js"></script>
+<script>
+      /* Custom filtering function which will search data in column four between two values */
+$.fn.dataTable.ext.search.push(function (settings, data, dataIndex) {
+    var min = parseInt($('#min').val(), 10);
+    var max = parseInt($('#max').val(), 10);
+    var age = parseFloat(data[0]) || 0; // use data for the age column
+ 
+    if (
+        (isNaN(min) && isNaN(max)) ||
+        (isNaN(min) && age <= max) ||
+        (min <= age && isNaN(max)) ||
+        (min <= age && age <= max)
+    ) {
+        return true;
+    }
+    return false;
+});
+ 
+// $(document).ready(function () {
+//     var table = $(".desaparecerTemporalmente2").DataTable();
+ 
+//     // Event listener to the two range filtering inputs to redraw on input
+//     $('#min, #max').keyup(function () {
+//         table.draw();
+//     });
+// });
+    </script>
 
-
+  <!-- FIN PARA FILTRAR UNA TABLA EN TIEMPO REAL -->
   <?php include '../../configuracion/navar.php' ?>
-  <!-- Inicio evita el click derecho de la pagina -->
-<body oncontextmenu="return false">
-<!-- Fin evita el click derecho de la pagina --> 
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
     <!-- Content Header (Page header) -->
@@ -72,208 +62,97 @@ if (mysqli_num_rows($roles35) > 0)
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-          <h3>Catálagos</h3> 
-            <!-- Inicio de modal de agregar -->
-<div class="container mt-3">
-        
-    </div>
-    
-<!-- El Modal -->
-    <div class="modal" id="myModal">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <!-- Encabezado del modal -->
-                <div class="modal-header">
-                    <h4 class="modal-title">Nuevo </h4>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                </div>
-                <!-- Fin Encabezado del modal -->
-                <form action="" method="post" enctype="multipart/form-data">
-                <!-- Cuerpo del modal Modal -->
-                <div class="modal-body">                
-                    <br>
-                    <label for="">Imagen</label>
-                    <input type="file" class="form-control" accept=".jpg, .png, .jpej, .JPEG, .JPG, .PNG" name="imagenes" required value="<?php echo "$nombreimagen"; ?>" placeholder=""  >
-                    <br>
-                    <label for="">Título</label>
-                    <input type="text" class="form-control"  name="titulo" required value="<?php echo "$titulo"; ?>" placeholder="" 
-                    autocomplete = "off"  onkeypress="return soloLetras(event);" minlength="3" maxlength="50" onkeyup="mayus(this);"  >
-                    <br>
-                    <label for="">Descripción</label>
-                    <TEXtarea  style="background-color: white;" name="descripcion" class="form-control"name="" id="" cols="40" rows="5"
-                    autocomplete = "off"  onkeypress="return soloLetras(event);" minlength="3" maxlength="300" onkeyup="mayus(this);" ><?php echo "$descripcion"; ?></TEXtarea>
-                
-                    <br>
-                    
-                
-                </div>
-                <!-- Fin Cuerpo del modal Modal -->
-                <!-- pie del modal -->
-                <div class="modal-footer">
-                
-      	            <button type="submit" name="accion" value="agregar" class="btn btn-primary" >Agregar</button>
-                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
-                </div>
-                <!-- Fin pie del modal -->
-            </div>
-        </div>
-    </div>
-    </form>
-    <!-- Fin  de modal de agregar -->
-
- 
+            <h1>Bitácora</h1>
           </div>
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
               
             </ol>
-            
           </div>
-          
         </div>
-        
       </div><!-- /.container-fluid -->
-      
     </section>
-
+    
     <!-- Main content -->
     <section class="content">
       <div class="container-fluid">
         <div class="row">
           <div class="col-12">
-           
-            <!-- /.card -->
-            
             <div class="card">
-              <div class="card-header">
-              <form id="form" action="" method="post">
-                    <div class="btn-group">
-                    <?php 
-                                include '../../conexion/conexion.php';
-                                $tablero = "SELECT * FROM tbl_ms_roles_ojetos WHERE ID_ROL='$id_rol7' and ID_OBJETO=31 and PERMISO_INSERCION=1";
-                                $tablero2 = mysqli_query($conn, $tablero);
-                                if (mysqli_num_rows($tablero2) > 0)
-                                {
-                                  echo '<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal">
-                                          Nuevo
-                                        </button>';
-                                                    }
-                        ?>
-              <button type="submit"  name="accion" value="reporte_pdf" class="btn btn-secondary buttons-pdf buttons-html5"  onclick="return confirm('¿Quieres generar reporte de catálogos?')" onclick="textToPdf()"><span>Reporte PDF</span></button>
-	               </div>
-            </form>
-                <!-- <h3 class="card-title">PORTAFOLIO</h3> -->
-              </div>
               
               <!-- /.card-header -->
+              
+              <!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+             <!-- inicio rango de fechas -->
+         
+        <br>
+        <!-- fin rango de fechas -->
+            <div class="card">
+              <div class="card-header">
+                      <!-- Inicio formulario de rango de fechas--------------------------------------------->
+              
+                <form class="form-inline" role="form" >
+                      <div class="form-group col-md-4" class="form-group">
+                      <p class="text-body">Fecha Inicial: </p> &nbsp; 
+                      <input type="text" class="form-control" id="min" name="min">
+                      </div>
+                      <div class="form-group col-md-4">
+                      <p class="text-body">Fecha Final: </p> &nbsp; 
+                      <input type="datetime-local" class="form-control" id="max" name="max">
+                      </div>
+
+                </form><br>
+ <!-- Fin formulario de rango de fechas--------------------------------------------------------------->
+              <form id="form">
+              <button type="submit"  name="accion" value="reporte_pdf" class="btn btn-secondary buttons-pdf buttons-html5"  onclick="return confirm('¿Desea generar reporte de bitácora?')" onclick="textToPdf()"><span>Reporte PDF</span></button>
+
+
+	            </form>
+                <!-- <h3 class="card-title">Bitacora Universal</h3> -->
+              
+              </div>
+              <!-- /.card-header -->
+              
               <div class="card-body">
-                <table id="example1" class="table table-bordered table-striped">
+             
+                <table id="example1"  class="table table-bordered table-striped " >
                   <thead>
                   <tr>
-                  <th class="desaparecerTemporalmente" >Acciones</th>
-                  <th class="desaparecerTemporalmente1">Id</th>
-                  <th class="desaparecerTemporalmente" >Imagen</th>
-                  <th class="desaparecerTemporalmente1">Título</th>
-                  <th class="desaparecerTemporalmente1">Descripción</th>
-                  
+                    <th >ID</th>
+                    <th>Fecha/Hora</th>
+                    <th>Usuario</th>
+                    <th>Operación</th>
+                    <th>Pantalla</th>
+                    <th>Campo</th>
+                    <th>ID Registro</th>
+                    <th>Valor Original</th>
+                    <th>Valor Nuevo</th>
                   </tr>
                   </thead>
                   <tbody>
-                  <?php
-                  include '../../conexion/conexion.php';
-                  //para mostrar los datos de la tabla mysql y mostrar en el crud
-                  $sql77 = "SELECT * FROM tbl_catalogo WHERE ID_CATALOGO != 3";
-                  $result = mysqli_query($conn, $sql77);
-                  if (mysqli_num_rows($result) > 0) {
-                    $cont = 0;
+                  <?php 
+                  
+                  $cont = 0;
                   while ($filas= mysqli_fetch_assoc($result)){
                     ?>
                     <?php  $cont++; ?>
+
                   <tr>
-                  <td class="desaparecerTemporalmente" >
-                  <?php 
-                          include '../../conexion/conexion.php';
-                          $tablero = "SELECT * FROM tbl_ms_roles_ojetos WHERE ID_ROL='$id_rol7' and ID_OBJETO=31 and PERMISO_ACTUALIZACION=1";
-                          $tablero2 = mysqli_query($conn, $tablero);
-                          if (mysqli_num_rows($tablero2) > 0)
-                          {?>
-                              <!-- inicio boton editar -->
-                              <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#myModal2<?php echo $filas['ID_CATALOGO'] ?>">
-                              <i class="fas fa-pencil-alt"></i>
-                              </button>  <?php 
-                          }
-                        ?>
-                      
-
-                          <!-- El Modal -->
-                          <div class="modal" id="myModal2<?php echo $filas['ID_CATALOGO'] ?>">
-                            <div class="modal-dialog">
-                              <div class="modal-content">
-
-                                <!-- Encabezado del modal -->
-                                <div class="modal-header">
-                                  <h4 class="modal-title">Editar </h4>
-                                  <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                                </div>
-                                <!-- Fin Encabezado del modal -->
-
-
-                                <!-- Cuerpo del modal Modal -->
-                                          <div class="modal-body">
-                                              <form action="" method="post" enctype="multipart/form-data">
-                                                <input type="hidden" name="foto" value="<?php echo $filas['IMAGEN'] ?>">
-                                              <input type="hidden" name="id_imagen"  value="<?php echo $filas['ID_CATALOGO'] ?>">
-                                              <label for="">Imagen</label><br>
-                                              <img class="img-thumbnail" width="100px" src="<?php echo $filas['RUTA'] ?>" /><br><br>
-                                              <input type="file" class="form-control" accept=".jpg, .png, .jpeg, .JPEG, .JPG, .PNG" name="imagenes"  value="" placeholder=""  >
-                                              <br>
-                                              
-                                              <label for="">Título</label>
-                                              <input type="text" class="form-control"  name="titulo" required value="<?php echo $filas['NOMBRE_CATALOGO'] ?>" placeholder="" 
-                                              autocomplete = "off"  onkeypress="return soloLetras(event);" minlength="3" maxlength="255" onkeyup="mayus(this);"  >
-                                              <br>
-                                              <label for="">Descripción</label>
-                                              <TEXtarea  style="background-color: white;" name="descripcion" class="form-control"name="" id="" cols="40" rows="5"
-                                              autocomplete = "off"  onkeypress="return soloLetras(event);" minlength="3" maxlength="300" onkeyup="mayus(this);" ><?php echo $filas['DESCRIPCION'] ?></TEXtarea>
-                                          
-                                              <br>
-                                          
-                                          </div>
-                                <!-- Fin Cuerpo del modal Modal -->
-
-                                <!-- pie del modal -->
-                                <div class="modal-footer">
-                                <button type="submit" class="btn btn-primary" name="accion" value="editar" onclick="return confirm('¿Quieres editar este dato?')">Guardar</button>
-                                  <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
-                                </div>
-                                  <!-- Fin pie del modal -->
-                              </div>
-                            </div>
-                          </div>
-                          <!-- fin boton editar -->
-                          <input type="hidden" name="ruta"  value="<?php echo $filas['RUTA'] ?>">
-                          <?php 
-                          include '../../conexion/conexion.php';
-                          $tablero = "SELECT * FROM tbl_ms_roles_ojetos WHERE ID_ROL='$id_rol7' and ID_OBJETO=31 and PERMISO_ELIMINACION=1";
-                          $tablero2 = mysqli_query($conn, $tablero);
-                          if (mysqli_num_rows($tablero2) > 0)
-                          {?>
-                             <button  value="eliminar" name="accion" 
-                        onclick="return confirm('¿Quieres eliminar este dato?')"
-                        type="submit" class="btn btn-danger " data-id="19">
-                        <i class="fas fa-trash-alt"></i>
-                    </button> <?php 
-                          }
-                        ?>
-                     </form>
-</td>
-                      <td  ><?php echo $cont; ?></td>
-                     <td class="desaparecerTemporalmente"><img class="img-thumbnail" width="100px" src="<?php echo $filas['RUTA'] ?>" /></td>
-                     <td class="desaparecerTemporalmente1"><?php echo $filas['NOMBRE_CATALOGO'] ?></td>
-                     <td class="desaparecerTemporalmente1"><TEXtarea readonly style="background-color: white;" class="form-control"name="" id="" cols="40" rows="5"><?php echo $filas['DESCRIPCION'] ?></TEXtarea></td>
-                    
-      </tr>
-      <?php }} ?>  
+                    <td><?php echo $cont; ?></td>
+                    <td><?php echo $filas['FECHA'] ?></td>
+                    <td><?php echo $filas['USUARIO'] ?></td>
+                    <td><?php echo $filas['OPERACION'] ?></td> 
+                    <td><?php echo $filas['PANTALLA'] ?></td> 
+                    <td><?php echo $filas['CAMPO'] ?></td> 
+                    <td><?php echo $filas['ID_REGISTRO'] ?></td> 
+                    <td><?php echo $filas['VALOR_ORIGINAL'] ?></td> 
+                    <td><?php echo $filas['VALOR_NUEVO'] ?></td>                         
+                 </tr>  
+               
+                 <?php } ?>  
+                  
                   </tfoot>
                 </table>
               </div>
@@ -308,11 +187,11 @@ if (mysqli_num_rows($roles35) > 0)
 <!-- ./wrapper -->
 
 <!-- jQuery -->
-<script src="../../plantilla/AdminLTE-3.2.0/plugins/jquery/jquery.min.js"></script>
+<!-- <script src="../../plantilla/AdminLTE-3.2.0/plugins/jquery/jquery.min.js"></script> -->
 <!-- Bootstrap 4 -->
 <script src="../../plantilla/AdminLTE-3.2.0/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
 <!-- DataTables  & Plugins -->
-<script src="../../plantilla/AdminLTE-3.2.0/plugins/datatables/jquery.dataTables.min.js"></script>
+<!-- <script src="../../plantilla/AdminLTE-3.2.0/plugins/datatables/jquery.dataTables.min.js"></script> -->
 <script src="../../plantilla/AdminLTE-3.2.0/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
 <script src="../../plantilla/AdminLTE-3.2.0/plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
 <script src="../../plantilla/AdminLTE-3.2.0/plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
@@ -321,9 +200,6 @@ if (mysqli_num_rows($roles35) > 0)
 <script src="../../plantilla/AdminLTE-3.2.0/plugins/jszip/jszip.min.js"></script>
 <script src="../../plantilla/AdminLTE-3.2.0/plugins/pdfmake/pdfmake.min.js"></script>
 <script src="../../plantilla/AdminLTE-3.2.0/plugins/pdfmake/vfs_fonts.js"></script>
-<script src="../../plantilla/AdminLTE-3.2.0/plugins/datatables-buttons/js/buttons.html5.min.js"></script> 
- <script src="../../plantilla/AdminLTE-3.2.0/plugins/datatables-buttons/js/buttons.print.min.js"></script>
-
 
 
 <script src="../../plantilla/AdminLTE-3.2.0/plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
@@ -332,12 +208,18 @@ if (mysqli_num_rows($roles35) > 0)
 <!-- AdminLTE for demo purposes -->
 <script src="../../plantilla/AdminLTE-3.2.0/dist/js/demo.js"></script>
 <!-- Page specific script -->
-<!-- INICIO muestra los botones, traduce y Agrupar -->
 
 <script>
+ 
+
+
   $(function () {
-    $("#example1").DataTable({
-      
+    var table = $("#example1").DataTable();
+    $('#min, #max').keyup(function () {
+        table.draw();
+    });
+     table .DataTable({
+    
       language: {
                           processing: "Tratamiento en curso...",
                           search: "Buscar&nbsp;:",
@@ -374,21 +256,12 @@ if (mysqli_num_rows($roles35) > 0)
                          },
                          
                          "responsive": true, "lengthChange": true, "autoWidth": false,
-                          "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"],                   
+                          "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"],
+                          
+                       
         
-                          buttons:[ 
-    {
-            extend:    'excelHtml5',
-            text:      'Exportar a Excel',
-            titleAttr: 'Exportar a Excel',
-            title:     'Catalago',
-            exportOptions: {
-                columns: [1,3,4]
-            }
-    }
+    })
    
-]  })
-
       
     .buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
     $('#example2').DataTable({
@@ -399,58 +272,61 @@ if (mysqli_num_rows($roles35) > 0)
       "info": true,
       "autoWidth": false,
       "responsive": true,
-      
     });
-  });
-</script>
-<!-- Fin muestra los botones y traduce y Agrupar -->
-<!-- Enlace Script para que convierta a mayusculas las teclas que se van pulsando -->
-<script type="text/javascript" src="../../js/converir_a_mayusculas.js"></script>
+   
+   } );
 
-<!-- Enlace Script para quitar espacios en blanco -->
-<script type="text/javascript" src="../../js/quitar_espacios.js"></script>
-</body>
+ 
+</script>
 
 <!-- // Inicio para exportar en pdf // -->
+<?php
 
+	require '../../conexion/conexion.php';
+	$sql = "SELECT * FROM tbl_bitacora 
+  ORDER BY ID_BITACORA desc";
+	$query = $conn->query($sql);
+	$data = array();
+	while($r=$query->fetch_object())
+	$data[] =$r;    
 
+?>
 
-
+<?php
+    $select_nombre = "SELECT * FROM tbl_parametros WHERE PARAMETRO='NOMBRE'";
+    $select_nombre1 = mysqli_query($conn, $select_nombre);
+    if (mysqli_num_rows($select_nombre1) > 0)
+    {
+    while($row = mysqli_fetch_assoc($select_nombre1))
+      {
+          $nombre_constructora = $row['VALOR'];
+      }
+    }
+?>
 
 <script>
-  
-	//para descar al tocar el boton	
+	//para descar al tocar el boton
 	var form = document.getElementById("form")
-  
 	form.addEventListener("submit",function(event) {
-  
 	event.preventDefault()
-  $(".desaparecerTemporalmente1").css("display","");
-  $(".desaparecerTemporalmente").css("display","none");
 
-				const pdf = new jsPDF('p', 'mm', 'letter');			
-        	
-
-				
-				
-
-				pdf.autoTable(
-				{ 
-          html:'#example1',
-					
-					margin:{ top: 30 },
-          
-          columnStyles: {
-      
-            0: {cellWidth: 15},
-            1: {cellWidth: 50},
-           
-            2: {cellWidth: 127}
-           } 
-          }
-				);
+			
+			const pdf = new jsPDF('p', 'mm', 'letter');
 						
-				//Inicio Encabezado y pie de pagina
+			var columns = ["Usuario", "Acción", "Descripción", "Fecha"];
+			var data = [
+  <?php foreach($data as $d):?>
+	
+      ["<?php echo $d->USUARIO; ?>", "<?php echo $d->ACCION; ?>", "<?php echo $d->OBSERVACION; ?>","<?php echo $d->FECHA; ?>"],
+      <?php endforeach; ?>
+  ];
+				pdf.autoTable(columns,data,
+				{ 
+					
+					margin:{ top: 30 }}
+				);
+		
+			//Inicio Encabezado y pie de pagina
 			const pageCount = pdf.internal.getNumberOfPages();
 			for(var i = 1; i <= pageCount; i++) 
 			{
@@ -458,19 +334,19 @@ if (mysqli_num_rows($roles35) > 0)
 												//////// Encabezado ///////
 				//Inicio para imagen de logo 
 				var logo = new Image();
-				logo.src = '../../imagenes/seacco.jpg';
+				logo.src = '../../imagenes/LoogSEACCO.jpg';
 				pdf.addImage(logo, 'JPEG',14,7,24,15);
 				//Fin para imagen de logo 
 
 				//muestra el titulo principal
 				pdf.setFont('Arial');
 				pdf.setFontSize(17);
-				pdf.text("SEACCO S. DE. R.L.", pdf.internal.pageSize.getWidth() / 2, 15, null, 'center'); // de esta manera se puede centrar el titulo
-       
+				pdf.text("<?php echo $nombre_constructora;?>", 70,15,);
+
 				//muestra el titulo secundario
 				pdf.setFont('times');
-				pdf.setFontSize(12);
-				pdf.text("Reporte de catálogos", pdf.internal.pageSize.getWidth() / 2, 20, null, 'center');
+				pdf.setFontSize(10);
+				pdf.text("Reporte de bitácora", 84,20,);
 
 												//////// pie de Pagina ///////
 				//muestra la fecha
@@ -483,42 +359,16 @@ if (mysqli_num_rows($roles35) > 0)
 				pdf.text(183-20,297-284,newdat);
 
 				//muestra el numero de pagina
-				pdf.text('Pagina ' + String(i) + '/' + String(pageCount),220-20,297-25,null,null,"right");
+				pdf.text('Pagina ' + String(i) + '/' + String(pageCount),220-20,297-27,null,null,"right");
 			}
 				//Fin Encabezado y pie de pagina
 
-							pdf.save('Reporte de catalogos.pdf');
-              $(".desaparecerTemporalmente").css("display","");
+							pdf.save('Reporte de bitácora.pdf');
 	})
-  
+
 </script>
 <!-- // Fin para exportar en pdf // -->
-<script type="text/javascript" src="../../js/evitar_reenvio.js"></script>
-</html>
 
-
-<script>
- // Inicio Script para que solo permita letras
-
- function soloLetras(e){
-      key = e.keyCode || e.which;
-      tecla = String.fromCharCode(key).toLowerCase();
-      letras = " áéíóúabcdefghijklmnñopqrstuvwxyz¿?";
-      especiales = ["8-37-39-46"];
-
-      tecla_especial = false
-      for(var i in especiales){
-       if(key == especiales[i]){
-         tecla_especial = true;
-         break;
-       }
-     }
-
-     if(letras.indexOf(tecla)==-1 && !tecla_especial){
-       return false;
-     }
-   }
-
-//   Fin Script para que solo permita letras
 </script>
-
+</body>
+</html>
