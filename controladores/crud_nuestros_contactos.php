@@ -1,9 +1,7 @@
 <?php
   require '../../conexion/conexion.php';
-  
 
-
-  // //Variables para recuperar la información de los campos de la vista categorias de productos
+  ////////////////// recuperar la información de los formularios de la vista de nuestros contactos /////////////
   $id_contacto=(isset($_POST['id_contacto']))?$_POST['id_contacto']:"";
   $telefono=(isset($_POST['telefono']))?$_POST['telefono']:"";
   $correo=(isset($_POST['correo']))?$_POST['correo']:"";
@@ -11,84 +9,86 @@
   $direccion=(isset($_POST['direccion']))?$_POST['direccion']:"";
   $facebook=(isset($_POST['facebook']))?$_POST['facebook']:"";
   $instagram=(isset($_POST['instagram']))?$_POST['instagram']:"";
+
+   ////////// variable para recuperar los botones de la vista de nuestros contactos //////////////
+   $accion=(isset($_POST['accion']))?$_POST['accion']:"";
   
-  
+  ///////////////// INICIO SELECCIONAR LOS DATOS ACTUALES ////////////////////
+   $mostrar_actuales= "SELECT * FROM tbl_nuestros_contactos WHERE ID_CONTACTO='$id_contacto'";
+   $sultados_actuales = $conn->query($mostrar_actuales);
+   if ($sultados_actuales->num_rows > 0) 
+   {
+    while($datos_actuales = $sultados_actuales->fetch_assoc()) 
+    {
+      $TELEFONOSS = $datos_actuales["TELEFONO"];
+      $CORREOSS = $datos_actuales["CORREO"];
+      $DIRECCIONN = $datos_actuales["DIRECCION"];
+      $FACEBOOKK = $datos_actuales["FACEBOOK"];
+      $INSTAGRAMM = $datos_actuales["INSTAGRAM"];
+    }
+  }
+  ///////////////// FIN SELECCIONAR LOS DATOS ACTUALES ////////////////////
+   
+  ////////////////////////// información del usuario logueado /////////////////
   $usuario1 = $_SESSION;
-  
-  //variable para recuperar los botones de la vista categprias de productos  
-  $accion=(isset($_POST['accion']))?$_POST['accion']:"";
-  
-  
-  switch($accion){
-      //para insertar en la tabla mysl
-      case "agregar":
 
-            //si no existe un proveedor permite insertar
-                $sql1 = "INSERT INTO tbl_nuestros_contactos ( 	TELEFONO,	CORREO,	DIRECCION,	FACEBOOK,	INSTAGRAM)
-                VALUES ('$telefono','$correo','$direccion','$facebook','$instagram')";
-                if (mysqli_query($conn, $sql1)) {
-                   // inicio inserta en la tabla bitacora
-                   $sql7 = "INSERT INTO tbl_bitacora (USUARIO, ACCION, OBSERVACION)
-                   VALUES ('$usuario1[usuario]', 'INSERTO', 'CREO EL CONTACTO')";
-                    if (mysqli_query($conn, $sql7)) {} else { }
-               // fin inserta en la tabla bitacora
-               echo '<script>
-               alert("Datos de contactos creados con éxito");
-               window.location.href="../../vistas/mantenimiento/vista_nuestros_contactos.php";                   
-             </script>';
-             mysqli_close($conn); 
-
-                } else {
-                        echo '<script>
-                                alert("Error al tratar de crear los datos de contactos");
-                              </script>'; mysqli_error($conn);
-                       }
-                
-                mysqli_close($conn);
-
-             
-
-             
-      break;
-      //para editar en la tabla mysl      
-      case "editar";
-      $sql2 = "UPDATE tbl_nuestros_contactos SET TELEFONO='$telefono', CORREO='$correo', DIRECCION='$direccion', FACEBOOK='$facebook',  INSTAGRAM='$instagram' WHERE ID_CONTACTO='$id_contacto'";
+  switch($accion)
+  {
+    case "editar";
+      $sql2 = "UPDATE tbl_nuestros_contactos SET TELEFONO='$telefono', CORREO='$correo', DIRECCION='$direccion', 
+                                                  FACEBOOK='$facebook',  INSTAGRAM='$instagram' 
+                                                  WHERE ID_CONTACTO='$id_contacto'";
       $sql77= "UPDATE tbl_nuestros_contactos SET CORREO='$correo_empleados' WHERE ID_CONTACTO=2 ";
       $resultado77 = mysqli_query($conn, $sql77);
-                if (mysqli_query($conn, $sql2)) {
-                  // inicio inserta en la tabla bitacora
-                  $sql8 = "INSERT INTO tbl_bitacora (USUARIO, ACCION, OBSERVACION)
-                  VALUES ('$usuario1[usuario]', 'EDITO', 'EDITO CONTACTOS DE PANTALLA NUESTROS CONTACTOS')";
-                  
-                   if (mysqli_query($conn, $sql8)) {} else { }
-                 // fin inserta en la tabla bitacora
-                 echo '<script>
-                 alert("Datos de contactos actualizados exitosamente");
-                 window.location.href="../../vistas/mantenimiento/vista_nuestros_contactos.php";                   
-               </script>';
-               mysqli_close($conn);
-                   
 
-                }else{
-                     echo '<script>
-                            alert("Error al tratar de editar los contactos");
-                           </script>'; mysqli_error($conn);
-                     }
+      if (mysqli_query($conn, $sql2)) 
+      {
+        // ////////////// INICIO FUNCION BITACORA /////////////////////
+        
+        if($TELEFONOSS !== $telefono) ///////////// TELEFONO
+        {
+          include_once 'funcion_bitacora.php';
+          bitacora('EDITO', 'CONTACTOS', 'TELEFONO', $id_contacto, $TELEFONOSS, $telefono);
+        }
 
-                mysqli_close($conn);
-              
-                  
-      break;
+        if($DIRECCIONN !== $direccion) ///////////// DIRECCION
+        {
+          include_once 'funcion_bitacora.php';
+          bitacora('EDITO', 'CONTACTOS', 'DIRECCION', $id_contacto, $DIRECCIONN, $direccion);
+        }
+
+        if($FACEBOOKK !== $facebook) ///////////// FACEBOOK
+        {
+          include_once 'funcion_bitacora.php';
+          bitacora('EDITO', 'CONTACTOS', 'FACEBOOK', $id_contacto, $FACEBOOKK, $facebook);
+        }
+
+        if($INSTAGRAMM !== $instagram) ///////////// INSTAGRAM
+        {
+          include_once 'funcion_bitacora.php';
+          bitacora('EDITO', 'CONTACTOS', 'INSTAGRAM', $id_contacto, $INSTAGRAMM, $instagram);
+        }
       
+         // ////////////// FIN FUNCION BITACORA ///////////////////////
 
-       
+        echo '<script>
+                alert("Datos actualizados exitosamente");
+                window.location.href="../../vistas/mantenimiento/vista_nuestros_contactos.php";                   
+              </script>';
+              mysqli_close($conn); 
+       }else{
+              echo '<script>
+                      alert("Error al tratar de editar los contactos");
+                    </script>'; mysqli_error($conn);
+            }
+                    
+   break;
+    default:    
+    $conn->close(); 
 
-    
-      
-    default:
-          
-    $conn->close();   
-  }// Fin del switch, para validar el valor del boton accion
+  }
+
+
 
 
 ?>

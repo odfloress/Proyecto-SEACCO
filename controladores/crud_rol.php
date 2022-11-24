@@ -4,178 +4,162 @@
   $sql = "SELECT * FROM tbl_roles WHERE ROL NOT IN (SELECT ROL FROM  tbl_roles WHERE ID_ROL=3 ) ORDER BY ID_ROL";
   $result = mysqli_query($conn, $sql);
 
-
-  // //Variables para recuperar la información de los campos de la vista roles
+  /////// RECUPERAR LA INFORMACION DE LOS FORMULARIOS DE LA PANTALLA ROLES /////////////
   $id_rol=(isset($_POST['id_rol']))?$_POST['id_rol']:"";
   $rol=(isset($_POST['rol']))?$_POST['rol']:"";
   $estado_rol=(isset($_POST['estado_rol']))?$_POST['estado_rol']:"";
   $descripcion=(isset($_POST['descripcion']))?$_POST['descripcion']:"";
   $anterior=(isset($_POST['nombre_anterior']))?$_POST['nombre_anterior']:"";
-  
+
+  ////////////////////////// información del usuario logueado /////////////////
   $usuario1 = $_SESSION;
 
-  //variable para recuperar los botones de la vista roles  
+  ////////// variable para recuperar los botones de la vista de Roles //////////////
   $accion=(isset($_POST['accion']))?$_POST['accion']:"";
-  
-  
-  switch($accion){
-      //para insertar en la tabla mysl
-      case "agregar": 
-        // valida si existe un rol con el mismo nombre
-        $validar_rol = "SELECT * FROM tbl_roles WHERE ROL='$rol'";
-        $result1 = mysqli_query($conn, $validar_rol); 
-         if (mysqli_num_rows($result1) > 0) { 
-                
-                echo '<script>
-                        alert("El nombre de rol ingresado ya existe, intente con otro");
-                      </script>';
-                      mysqli_close($conn);
-         }else{ 
 
-                    //si no existe el rol permite insertar
-                    $sql1 = "INSERT INTO tbl_roles (ROL, DESCRIPCION, ESTADO_ROL)
-                    VALUES ('$rol', '$descripcion', '$estado_rol')";
-                    if (mysqli_query($conn, $sql1)) {
-
-                         // inicio inserta en la tabla bitacora
-                            $sql7 = "INSERT INTO tbl_bitacora (USUARIO, ACCION, OBSERVACION)
-                            VALUES ('$usuario1[usuario]', 'INSERTO', 'CREO EL ROL ($rol)')";
-                             if (mysqli_query($conn, $sql7)) {} else { }
-                        // fin inserta en la tabla bitacora
+  ///////////////// INICIO SELECCIONAR LOS DATOS ACTUALES ////////////////////
+  $mostrar_actuales= "SELECT * FROM tbl_roles WHERE ID_ROL='$id_rol'";
+  $sultados_actuales = $conn->query($mostrar_actuales);
+  if ($sultados_actuales->num_rows > 0) 
+  {
+   while($datos_actuales = $sultados_actuales->fetch_assoc()) 
+   {
+     $ROLL = $datos_actuales["ROL"];
+     $DESCRIPCIONN = $datos_actuales["DESCRIPCION"];
+     $ESTADO_ROLL = $datos_actuales["ESTADO_ROL"];
+   }
+ }
+ ///////////////// FIN SELECCIONAR LOS DATOS ACTUALES ////////////////////
+  
+  switch($accion)
+  {
+   /////////////////////////////////// PARA INSERTAR ////////////////////////////////////
+    case "agregar": 
+      $validar_rol = "SELECT * FROM tbl_roles WHERE ROL='$rol'"; //////// VALIDA SI EXISTE UN ROL CON EL MISMO NOMBRE
+      $result1 = mysqli_query($conn, $validar_rol); 
+      if (mysqli_num_rows($result1) > 0) 
+      { 
+        echo '<script>
+                alert("El nombre de rol ingresado ya existe, intente con otro");
+              </script>';
+              mysqli_close($conn);
+      }else{ 
+             $sql1 = "INSERT INTO tbl_roles (ROL, DESCRIPCION, ESTADO_ROL)  
+                      VALUES ('$rol', '$descripcion', '$estado_rol')"; ////// si no existe el rol permite insertar
+                      if (mysqli_query($conn, $sql1)) 
+                      {     
+                        $ultimo_id = mysqli_insert_id($conn);  
+                        include_once 'funcion_bitacora.php';
+                        bitacora('INSERTO', 'ROLES', 'NUEVO', $ultimo_id, 'NUEVO', 'NUEVO');               
                         echo '<script>
                                 alert("Rol creado con exito");
                                 window.location.href="../../vistas/ajustes/vista_roles.php";                   
-                            </script>';
+                              </script>';
                              mysqli_close($conn);
-                    } else {
+                      }else{
                             echo '<script>
                                     alert("Error al tratar de crear rol");
                                   </script>'; 
                                   mysqli_error($conn);
+                                  mysqli_close($conn);
                            }
-                    
-                    mysqli_close($conn);
-
-              }                      
-      break;
-
-       //para editar en la tabla mysl      
-      case "editar";
-
-        // valida si existe el rol con el mismo nombre
-        $validar_rol= "SELECT * FROM tbl_roles WHERE Rol='$rol'";
-        $result2 = mysqli_query($conn, $validar_rol); 
-         if (mysqli_num_rows($result2) > 0) { 
-              
-            $sql2 = "UPDATE tbl_roles SET ROL='$anterior', DESCRIPCION='$descripcion', ESTADO_ROL='$estado_rol'  WHERE ID_ROL='$id_rol'";
-                if (mysqli_query($conn, $sql2)) {
-
-                   
-                           
-                     // inicio inserta en la tabla bitacora
-                     $sql8 = "INSERT INTO tbl_bitacora (USUARIO, ACCION, OBSERVACION)
-                     VALUES ('$usuario1[usuario]', 'EDITO', 'EDITO DESCRIPCION DEL ROL ($rol)')";
-                     
-                      if (mysqli_query($conn, $sql8)) {} else { }
-                    // fin inserta en la tabla bitacora
-                    echo '<script>
-                            alert("Descripción del rol actualizada con éxito");
-                            window.location.href="../../vistas/ajustes/vista_roles.php";                   
-                          </script>';
-                          mysqli_close($conn);
-                        
-
+           }                      
+  break;
+  /////////////////////////////////// PARA EDITAR ////////////////////////////////////
+  case "editar";
+      $validar_rol= "SELECT * FROM tbl_roles WHERE Rol='$rol'"; //////// VALIDA SI EXISTE UN ROL CON EL MISMO NOMBRE
+      $result2 = mysqli_query($conn, $validar_rol); 
+         if (mysqli_num_rows($result2) > 0) 
+         {  
+          $sql2 = "UPDATE tbl_roles SET  DESCRIPCION='$descripcion', ESTADO_ROL='$estado_rol'  WHERE ID_ROL='$id_rol'";
+                if (mysqli_query($conn, $sql2)) 
+                {
+                  echo '<script>
+                           alert("Descripción del rol actualizado con éxito");
+                           window.location.href="../../vistas/ajustes/vista_roles.php";                   
+                         </script>';
+                         mysqli_close($conn);
                 }else{
-                         echo '<script>
-                                  alert("Error al tratar de editar rol");
-                               </script>'; mysqli_error($conn);
+                      echo '<script>
+                              alert("Error al tratar de editar rol");
+                            </script>'; mysqli_error($conn);
+                            mysqli_close($conn);
                      }
 
-                     mysqli_close($conn);
-
-               // si no existe el rol con el mismo nombre
-              }else{
-                        $sql2 = "UPDATE tbl_roles SET ROL='$rol', DESCRIPCION='$descripcion'  WHERE ID_ROL='$id_rol'";
-                        if (mysqli_query($conn, $sql2)) {
-
-                            
-                                
-                            // inicio inserta en la tabla bitacora
-                            $sql9 = "INSERT INTO tbl_bitacora (USUARIO, ACCION, OBSERVACION)
-                            VALUES ('$usuario1[usuario]', 'EDITO', 'RENOMBRO EL ROL ($anterior) A $rol')";
-                            if (mysqli_query($conn, $sql9)) {} else { }
-                            // fin inserta en la tabla bitacora
-                            echo '<script>
-                                    alert("Rol actualizado con éxito");
-                                    window.location.href="../../vistas/ajustes/vista_roles.php";                   
-                                </script>';
-                                mysqli_close($conn);
-                                
-                        }
-
+                // si no existe el rol con el mismo nombre
+          }else{
+                $sql2 = "UPDATE tbl_roles SET ROL='$rol', DESCRIPCION='$descripcion', ESTADO_ROL='$estado_rol'  WHERE ID_ROL='$id_rol'";
+                if (mysqli_query($conn, $sql2)) 
+                {
+                 echo '<script>
+                         alert("Rol actualizado con éxito");
+                         window.location.href="../../vistas/ajustes/vista_roles.php";                   
+                       </script>';
+                       mysqli_close($conn);      
+                }
               }
-      
+
+                // ////////////// INICIO FUNCION BITACORA /////////////////////
+                if($ROLL !== $rol) ///////////// ROL
+                {
+                include_once 'funcion_bitacora.php';
+                bitacora('EDITO', 'ROLES', 'ROL', $id_rol, $ROLL, $rol);
+                }
+                if($DESCRIPCIONN !== $descripcion) ///////////// DESCRIPCION
+                {
+                include_once 'funcion_bitacora.php';
+                bitacora('EDITO', 'ROLES', 'DESCRIPCION', $id_rol, $DESCRIPCIONN, $descripcion);
+                }
+                if($ESTADO_ROLL !== $estado_rol) ///////////// ESTADO_ROL
+                {
+                include_once 'funcion_bitacora.php';
+                bitacora('EDITO', 'ROLES', 'ESTADO', $id_rol, $ESTADO_ROLL, $estado_rol);
+                }
+                // ////////////// FIN FUNCION BITACORA ///////////////////////
       break;
-      
-      //para eliminar en la tabla mysl  
-      case "eliminar";
+    /////////////////////////////////// PARA ELIMINAR ////////////////////////////////////
+    case "eliminar";
 
     //validar que no este asignado a un usuario
     $validar_rol = "SELECT * FROM tbl_usuarios WHERE ID_ROL='$id_rol'";
     $result4 = mysqli_query($conn, $validar_rol); 
-     if (mysqli_num_rows($result4) > 0) { 
-         // inicio inserta en la tabla bitacora
-         $sql9 = "INSERT INTO tbl_bitacora (USUARIO, ACCION, OBSERVACION)
-         VALUES ('$usuario1[usuario]', 'INTENTO', 'NO LOGRO ELIMINAR YA QUE ESTABA EN USO EL ROL ($rol)')";
-         if (mysqli_query($conn, $sql9)) {} else { }
-         // fin inserta en la tabla bitacora
-         echo '<script>
-                 alert("No se puede eliminar el rol, este se encuentra en uso");
-                 window.location.href="../../vistas/ajustes/vista_roles.php";                   
-               </script>';
-               mysqli_close($conn);
-
+     if (mysqli_num_rows($result4) > 0) 
+     { 
+       echo '<script>
+                alert("No se puede eliminar el rol, este se encuentra en uso");
+                window.location.href="../../vistas/ajustes/vista_roles.php";                   
+             </script>';
+             mysqli_close($conn);
      }else{
-
-                //validar que no este asignado en la tabla tbl_ms_roles_objetos
-                $validar_rol = "SELECT * FROM tbl_ms_roles_ojetos WHERE ID_ROL='$id_rol'";
-                $result5 = mysqli_query($conn, $validar_rol); 
-                if (mysqli_num_rows($result5) > 0) { 
-                        // inicio inserta en la tabla bitacora
-                        $sql9 = "INSERT INTO tbl_bitacora (USUARIO, ACCION, OBSERVACION)
-                        VALUES ('$usuario1[usuario]', 'INTENTO', 'NO LOGRO YA QUE ESTA EN USO EL ROL ($rol)')";
-                        if (mysqli_query($conn, $sql9)) {} else { }
-                        // fin inserta en la tabla bitacora
-
-                    echo '<script>
-                            alert("No se puede eliminar el rol, este se encuentra en uso.");
-                            window.location.href="../../vistas/ajustes/vista_roles.php";                   
-                          </script>';
-                          mysqli_close($conn);
-                }else{
-                        $sql3 = "DELETE FROM tbl_roles WHERE ID_ROL='$id_rol'";
-                        if (mysqli_query($conn, $sql3)) {
-                            // inicio inserta en la tabla bitacora
-                            $sql7 = "INSERT INTO tbl_bitacora (USUARIO, ACCION, OBSERVACION)
-                            VALUES ('$usuario1[usuario]', 'ELIMINO', 'ELIMINO EL ROL ($anterior)')";
-                             if (mysqli_query($conn, $sql7)) {} else { }
-                        // fin inserta en la tabla bitacora
-                            header('Location: ../../vistas/ajustes/vista_roles.php');
+           //validar que no este asignado en la tabla tbl_ms_roles_objetos
+           $validar_rol = "SELECT * FROM tbl_ms_roles_ojetos WHERE ID_ROL='$id_rol'";
+           $result5 = mysqli_query($conn, $validar_rol); 
+           if (mysqli_num_rows($result5) > 0) 
+           { 
+             echo '<script>
+                       alert("No se puede eliminar el rol, este se encuentra en uso.");
+                        window.location.href="../../vistas/ajustes/vista_roles.php";                   
+                   </script>';
+                   mysqli_close($conn);
+           }else{
+                 $sql3 = "DELETE FROM tbl_roles WHERE ID_ROL='$id_rol'";
+                 if (mysqli_query($conn, $sql3)) 
+                 {
+                   include_once 'funcion_bitacora.php';
+                   bitacora('ELIMINO', 'ROLES', 'ROL', $id_rol, $ROLL, $ROLL);  
+                   header('Location: ../../vistas/ajustes/vista_roles.php');
                         }else{
-                                echo '<script>
-                                        alert("Error al tratar de eliminar el rol");
-                                    </script>'; mysqli_error($conn);
-                            }
-                        mysqli_close($conn);
-                     }
-          }
-
+                              echo '<script>
+                                      alert("Error al tratar de eliminar el rol");
+                                     </script>'; mysqli_error($conn);
+                                     mysqli_close($conn);
+                             }
+                 }
+        }
       break;
-      
       default:
-          
           $conn->close();   
-  }// Fin del switch, para validar el valor del boton accion
+}
 
 
 ?>
