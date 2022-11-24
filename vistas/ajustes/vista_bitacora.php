@@ -74,22 +74,37 @@ if (mysqli_num_rows($roles35) > 0)
           </div>
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
-             
+            <?php
+                date_default_timezone_set("America/Guatemala");
+                $dia = date("d")+1;
+                $mes = date("m");
+                $mes_anterior = date("m")-1;
+                $año = date("Y");
+               
+             ?>
             </ol>
-            
+       
           </div>
              <!-- inicio rango de fechas -->
-             <form>
+             <form action="" method="post">
             <div class="row">
                 <div class="col">
-                Fecha Inicial <input type="date" class="form-control" id="creationDateFromCampaign" value="2020-01-01" />
+                Fecha Inicial <input type="date" name="inicial" class="form-control" id="creationDateFromCampaign" value="<?php echo $año.'-'.$mes_anterior.'-'.$dia; ?>" />
                 </div>
                 <div class="col">
-                Fecha Final <input type="date" class="form-control" id="creationDateToCampaign" value="2027-01-01" />
+                Fecha Final <input type="date"  name="final" class="form-control" id="creationDateToCampaign" value="<?php echo $año.'-'.$mes.'-'.$dia; ?>" />
                 </div>
+                <div class="col">
+                Código<input type="number"  name="codigo"  class="form-control" id="numero"  min="7"  required>  
+                </div>
+                
                 <div class="col"><br>
-                <button type="button" class="btn btn-danger" onclick="return confirm('¿Quieres eliminar estos registros?')">Eliminar</button>
-                </div>
+                <button type="submit" name="accion" value="eliminar" class="btn btn-danger"  onclick="return confirm('¿Quieres eliminar estos registros?'); ">Eliminar</button>
+               
+              </div>
+              
+               
+                
             </div>
         </form>
         <br>
@@ -139,13 +154,13 @@ if (mysqli_num_rows($roles35) > 0)
                   <tbody>
                   <?php 
                   
-                  $cont = 0;
+                  // $cont = 0;
                   while ($filas= mysqli_fetch_assoc($result)){
                     ?>
-                    <?php  $cont++; ?>
+                    <!-- <?php  $cont++; ?> -->
 
                   <tr>
-                    <td class="desaparecerTemporalmente1"><?php echo $cont; ?></td>
+                    <td class="desaparecerTemporalmente1"><?php echo $filas['ID_BITACORA'] ?></td>
                     <td class="desaparecerTemporalmente1"><?php echo $filas['FECHA'] ?></td>
                     <td class="desaparecerTemporalmente1"><?php echo $filas['USUARIO'] ?></td>
                     <td class="desaparecerTemporalmente1"><?php echo $filas['OPERACION'] ?></td> 
@@ -218,11 +233,12 @@ if (mysqli_num_rows($roles35) > 0)
 
 <script>
   $(function () {
+
     $("#example1").DataTable({
-      "order": [[ 1, "desc" ]],
+      "order": [[ 0, "desc" ]],
       "lengthMenu": [[10, 25, 50,   100, -1], [10, 25, 50, 100, "Todos"]],
 
-
+    
 
       language: {
                           processing: "Tratamiento en curso...",
@@ -465,8 +481,26 @@ $(document).ready(() => {
     $('#creationDateFromCampaign, #creationDateToCampaign').on('change', () => {
         tabla.draw();
     });
+
 });
 
+//  // para enumerar en las filas o tambien llamado indexacion
+//  tabla.on('order.dt search.dt', function () {
+//         let i = 1;
+ 
+//         tabla.cells(null, 0, { search: 'applied', order: 'applied' }).every(function (cell) {
+//             this.data(i++);
+//             "order": [[ 0, "desc" ]],
+//         });
+//     }).draw();
 
+</script>
 
+<!-- limitar numeros en un input -->
+<script>
+  var input=  document.getElementById('numero');
+input.addEventListener('input',function(){
+  if (this.value.length > 7) 
+     this.value = this.value.slice(0,7); 
+})
 </script>
