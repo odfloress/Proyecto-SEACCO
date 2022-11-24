@@ -38,11 +38,7 @@ if (mysqli_num_rows($roles35) > 0)
                   die();
                 }
                }
-               // inicio inserta en la tabla bitacora
-               $sql = "INSERT INTO tbl_bitacora (USUARIO, ACCION, OBSERVACION)
-               VALUES ('$usuario1[usuario]', 'CONSULTO', 'CONSULTO LA PANTALLA ADMINISTRATIVA DE PROYECTOS')";
-               if (mysqli_query($conn, $sql)) {} else {}
-               // fin inserta en la tabla bitacora
+               
            
 
 ?>
@@ -139,7 +135,7 @@ if (mysqli_num_rows($roles35) > 0)
                       <option >Seleccione un Estado</option>
                         <?php
                             include 'conexion/conexion.php';
-                            $estado = "SELECT * FROM tbl_estados_proyectos ORDER BY ID_ESTADOS";
+                            $estado = "SELECT * FROM tbl_estados_proyectos WHERE ESTADO ='ACTIVO' ORDER BY ID_ESTADOS";
                             $estado2 = mysqli_query($conn, $estado);
                             if (mysqli_num_rows($estado2) > 0) {
                                 while($row = mysqli_fetch_assoc($estado2))
@@ -362,7 +358,7 @@ if (mysqli_num_rows($roles35) > 0)
                             <option> </option>
                             <?php
                             include 'conexion/conexion.php';
-                            $estado = "SELECT * FROM tbl_estados_proyectos ORDER BY ID_ESTADOS";
+                            $estado = "SELECT * FROM tbl_estados_proyectos WHERE ESTADOs ='ACTIVO' ORDER BY ID_ESTADOS";
                             $estado2 = mysqli_query($conn, $estado);
                             if (mysqli_num_rows($estado2) > 0) {
                                 while($row = mysqli_fetch_assoc($estado2))

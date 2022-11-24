@@ -38,11 +38,7 @@ if (mysqli_num_rows($roles35) > 0)
                   die();
                 }
                }
-               // inicio inserta en la tabla bitacora
-               $sql = "INSERT INTO tbl_bitacora (USUARIO, ACCION, OBSERVACION)
-               VALUES ('$usuario1[usuario]', 'CONSULTO', 'CONSULTO LA PANTALLA ADMINISTRATIVA DE ESTADOS DE PROYECTOS')";
-               if (mysqli_query($conn, $sql)) {} else {}
-               // fin inserta en la tabla bitacora
+               
                
 ?>
 <!DOCTYPE html>
