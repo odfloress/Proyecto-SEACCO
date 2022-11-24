@@ -544,7 +544,23 @@
                 </li>';
                }
             ?>
+              
+              <!-- Valida si tiene permiso para consultar la pantalla respuetas de usuario -->
+            <?php 
+               include '../../conexion/conexion.php';
+               $tablero = "SELECT * FROM tbl_ms_roles_ojetos WHERE ID_ROL='$id_rol7' and ID_OBJETO=32 and PERMISO_CONSULTAR=1";
+               $tablero2 = mysqli_query($conn, $tablero);
+               if (mysqli_num_rows($tablero2) > 0)
+               {
+                  echo '<li class="nav-item">
+                  <a href="../../vistas/ajustes/vista_respuestas_usuarios.php" class="nav-link">
+                    <p>Respuestas de Usuario</p>
+                  </a>
+                </li>';
+               }
+            ?>
               <!-- Valida si tiene permiso para consultar la pantalla BITACORA -->
+              
             <?php 
                include '../../conexion/conexion.php';
                $tablero = "SELECT * FROM tbl_ms_roles_ojetos WHERE ID_ROL='$id_rol7' and ID_OBJETO=22 and PERMISO_CONSULTAR=1";
