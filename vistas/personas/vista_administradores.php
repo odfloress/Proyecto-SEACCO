@@ -46,6 +46,20 @@ if (mysqli_num_rows($roles35) > 0)
 
 
 ?>
+<?php 
+  include '../../conexion/conexion.php';
+  $minima_contraseña = "SELECT * FROM tbl_parametros WHERE PARAMETRO = 'MIN_CONTRASENA'";
+  $resultado_minimo = mysqli_query($conn, $minima_contraseña);
+    while ($mostrar_minima = mysqli_fetch_assoc($resultado_minimo)){
+      $parametro_min = $mostrar_minima["VALOR"];
+    }
+
+    $maxima_contraseña = "SELECT * FROM tbl_parametros WHERE PARAMETRO = 'MAX_CONTRASENA'";
+  $resultado_maximo = mysqli_query($conn, $maxima_contraseña);
+    while ($mostrar_maxima = mysqli_fetch_assoc($resultado_maximo)){
+      $parametro_max = $mostrar_maxima["VALOR"];
+    }
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -156,7 +170,8 @@ if (mysqli_num_rows($roles35) > 0)
 
                       <label for="">Contraseña:</label>
                       <div class="col-sm-15 " >
-                        <input type="password" class="form-control" name="contrasena" id="myInput" title="una mayuscula, minuscula, 8 caracteres, un 1 numero  " value="" minlength="8" maxlength="30" onkeypress="return clave1(event);" required onblur="quitarespacios(this);" onkeyup="sinespacio(this);" pattern="(?=.*[\d])(?=.*[a-z])(?=.*[A-Z]).{8,}">
+                        <input type="password" class="form-control" name="contrasena" id="myInput" title="una mayuscula, minuscula, 8 caracteres, un 1 numero  " value="" minlength="<?php echo $parametro_min?>" maxlength="<?php echo $parametro_max?>" 
+                        onkeypress="return clave1(event);" required onblur="quitarespacios(this);" onkeyup="sinespacio(this);" pattern="(?=.*[\d])(?=.*[a-z])(?=.*[A-Z]).{<?php echo $parametro_min?>,}">
                         <input type="checkbox" onclick="mostrarContrasena()" > Mostrar/Ocultar
                                 <div class="invalid-feedback">
                                   Ingrese una contraseña de 8 caracteres mínimo, mayusculas, numeros y/o 1 caracter especial
@@ -165,7 +180,7 @@ if (mysqli_num_rows($roles35) > 0)
                       </div>
 
                       <label for="">Correo:</label>
-                      <input type="email" class="form-control" name="correo" required value="" autocomplete="off" placeholder="" > 
+                      <input type="email" class="form-control" name="correo" required value="" autocomplete="off" placeholder="" onkeypress="return clave1(event);"> 
                                 <div class="invalid-feedback">
                                   Favor ingrese un correo electrónico
                                 </div>
@@ -445,16 +460,26 @@ if (mysqli_num_rows($roles35) > 0)
                     
                     <label for="">Nombres:</label>
                     <input type="text" hidden class="form-control" name="nombre" pattern="[A-Za-z]*" required value="<?php echo $filas['NOMBRE'] ?>"  autocomplete="off" onkeyup="mayus(this);" maxlength="30" >
-                    <input type="text"  class="form-control" name="nombre_anterior" pattern="[A-Za-z]*" required value="<?php echo $filas['NOMBRE'] ?>"  autocomplete="off" onkeyup="mayus(this);" maxlength="30" >
+                    <input type="text"  onkeyup="un_espacio(this);" onkeypress="return soloLetras(event);" class="form-control" name="nombre_anterior" pattern="[A-Za-z]*" required value="<?php echo $filas['NOMBRE'] ?>"  autocomplete="off" onkeyup="mayus(this);" maxlength="30" >
 
                     <label for="">Apellidos:</label>
-                    <input type="text" class="form-control" name="apellido" pattern="[A-Za-z]*" required value="<?php echo $filas['APELLIDO'] ?>" autocomplete="off" onkeyup="mayus(this);" maxlength="30" >
+                    <input type="text"  onkeyup="un_espacio(this);" onkeypress="return soloLetras(event);" class="form-control" name="apellido" pattern="[A-Za-z]*" required value="<?php echo $filas['APELLIDO'] ?>" autocomplete="off" onkeyup="mayus(this);" maxlength="30" >
 
                     <label for="">Usuario:</label>
                     <input type="text" readonly class="form-control" name="usuario" required value="<?php echo $filas['USUARIO'] ?>" placeholder="" >
 
-                    <label for="">Contraseña:</label>
-                    <input type="password" class="form-control" name="contrasena" id="myInput" title="una mayuscula, minuscula, 8 caracteres, un 1 numero  " value="" minlength="8" maxlength="30" onkeypress="return clave1(event);" required onblur="quitarespacios(this);" onkeyup="sinespacio(this);" pattern="(?=.*[\d])(?=.*[a-z])(?=.*[A-Z]).{8,}" required value="<?php echo $filas[' CONTRASENA'] ?>">
+                   <!-- <label for="">Contraseña:</label>
+                    <div class="col-sm-15 " >
+                    <input type="password" class="form-control" name="contrasena" id="myInpu" title="una mayuscula, minuscula, 8 caracteres, un 1 numero  " 
+                     minlength="<?php echo $parametro_min?>" maxlength="<?php echo $parametro_max?>" onkeypress="return clave1(event);" required onblur="quitarespacios(this);" 
+                    onkeyup="sinespacio(this);" pattern="(?=.*[\d])(?=.*[a-z])(?=.*[A-Z]).{<?php echo $parametro_min?>,}" required 
+                    value="<?php echo $filas['CONTRASENA'] ?>">
+                    <input type="checkbox" onclick="mostrarContrasena2()" > Mostrar/Ocultar
+                                <div class="invalid-feedback">
+                                  Ingrese una contraseña de 8 caracteres mínimo, mayusculas, numeros y/o 1 caracter especial
+                                </div>
+                          
+                      </div>-->
 
                     <label for="">Correo:</label>
                     <input type="email" readonly class="form-control" name="correo" required value="<?php echo $filas['CORREO'] ?>" placeholder="" >
@@ -504,19 +529,19 @@ if (mysqli_num_rows($roles35) > 0)
                    </select>
 
                     <label for="">Dirección:</label>
-                    <input type="text" class="form-control" name="direccion" required value="<?php echo $filas['DIRECCION'] ?>" autocomplete="off" onkeyup="mayus(this);" maxlength="70" >
+                    <input type="text"  onkeyup="un_espacio(this);" class="form-control" name="direccion" required value="<?php echo $filas['DIRECCION'] ?>" autocomplete="off" onkeyup="mayus(this);" maxlength="70" >
 
                     <label for="">Teléfono:</label>
                     <input type="number" class="form-control" name="celular" required value="<?php echo $filas['CELULAR'] ?>" placeholder="" >
                     
                     <label for="">Referencia:</label>
-                    <input type="text" class="form-control" name="referencia" required value="<?php echo $filas['REFERENCIA'] ?>" autocomplete="off" onkeyup="mayus(this);" maxlength="70" >
+                    <input type="text"  onkeyup="un_espacio(this);" class="form-control" name="referencia" required value="<?php echo $filas['REFERENCIA'] ?>" autocomplete="off" onkeyup="mayus(this);" maxlength="70" >
 
                     <label for="">Teléfono de referencia:</label>
                     <input type="number" class="form-control" name="celular_referencia" required value="<?php echo $filas['CEL_REFERENCIA'] ?>" placeholder="" >
 
                     <label for="">Experiencia laboral:</label>
-                    <input type="text" class="form-control" name="experiencia_laboral" required value="<?php echo $filas['EXPERIENCIA_LABORAL'] ?>" autocomplete="off" onkeyup="mayus(this);" maxlength="30" >
+                    <input type="text"  onkeyup="un_espacio(this);" class="form-control" name="experiencia_laboral" required value="<?php echo $filas['EXPERIENCIA_LABORAL'] ?>" autocomplete="off" onkeyup="mayus(this);" maxlength="30" >
 
                     <label for="">Currículum:</label>
                     <input type="file" class="form-control" name="curriculum" accept=".pdf, .doxc" value="<?php echo $filas['CURRICULUM'] ?>" placeholder="" >
@@ -837,6 +862,14 @@ if (mysqli_num_rows($roles35) > 0)
 
         function mostrarContrasena(){
           var x = document.getElementById("myInput");
+          if (x.type === "password"){
+            x.type = "text";
+          }else{
+            x.type = "password";
+          }
+        }
+        function mostrarContrasena2(){
+          var x = document.getElementById("myInpu");
           if (x.type === "password"){
             x.type = "text";
           }else{

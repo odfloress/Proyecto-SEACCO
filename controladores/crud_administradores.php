@@ -207,7 +207,7 @@ if(in_array($extencion, $permitidos))
                           APELLIDO='$apellido', USUARIO='$usuario', ID_GENERO='$genero', CORREO='$correo', DNI='$dni', 
                           ID_PROFESION='$profesion', DIRECCION='$direccionp', CELULAR='$celular', REFERENCIA='$referencia', 
                           CEL_REFERENCIA='$celular_referencia', EXPERIENCIA_LABORAL='$experiencia_laboral' , 
-                          CURRICULUM='$direccion2',CONTRASENA='$contrasena', FOTO='$direccion' ,  
+                          CURRICULUM='$direccion2', FOTO='$direccion' ,  
                           ID_AREA='$area' WHERE ID_USUARIO='$id_usuario'";
          
                                         
