@@ -182,7 +182,8 @@ if (mysqli_num_rows($roles35) > 0)
                                               <input type="text" class="form-control" readonly name="parametro" required value="<?php echo $filas['PARAMETRO'] ?>" placeholder=""  autocomplete = "off"  onkeypress="return soloLetras(event);" minlength="3" maxlength="20" 
                                                 onkeyup="mayus(this);" required >
                                                 <label for="">Valor:</label>
-                                              <input type="text" class="form-control" name="valor" required value="<?php echo $filas['VALOR'] ?>" placeholder=""  autocomplete = "off"  required minlength="1" maxlength="100" onkeyup="mayus(this);" >
+                                                <input type="text" class="form-control" name="valor" required value="<?php echo $filas['VALOR'] ?>" placeholder=""  autocomplete = "off"  required minlength="1" maxlength="100" onkeyup="mayus(this);" >
+                                              <input type="text" class="form-control" name="anterior_valor" hidden value="<?php echo $filas['VALOR'] ?>" placeholder=""  autocomplete = "off"  required minlength="1" maxlength="100" onkeyup="mayus(this);" >
                                                 <label for="">Fecha de Creación:</label>
                                               <input type="text" class="form-control" readonly name="creado" required value="<?php echo $filas['FECHA_CREACION'] ?>" placeholder=""  autocomplete = "off"  onkeypress="return soloLetras(event);" minlength="3" maxlength="20" 
                                                 onkeyup="mayus(this);" required >
