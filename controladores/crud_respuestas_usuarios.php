@@ -10,7 +10,7 @@
 // //Variables para recuperar la información de los campos de la vista respuestas de usuario
 $id_repuesta=(isset($_POST['id_repuesta']))?$_POST['id_repuesta']:"";
 $repuesta=(isset($_POST['repuesta']))?$_POST['repuesta']:"";
-$repuesta_anterior=(isset($_POST['repuestaanterior']))?$_POST['repuesta_anterior']:"";
+$repuesta_anterior=(isset($_POST['repuesta_anterior']))?$_POST['repuesta_anterior']:"";
 $id_pregunta=(isset($_POST['id_pregunta']))?$_POST['id_pregunta']:"";
 $usuario=(isset($_POST['usuario']))?$_POST['usuario']:"";
 
@@ -31,7 +31,13 @@ switch($accion){
           
             $sql2 = "UPDATE tbl_respuestas_usuario SET RESPUESTA='$repuesta'  WHERE ID_RESPUESTA='$id_repuesta'";
             if (mysqli_query($conn, $sql2)) {
-
+                // ////////////// INICIO FUNCION BITACORA /////////////////////
+                if($repuesta_anterior !== $repuesta) ///////////// 
+                {
+                include_once 'funcion_bitacora.php';
+                bitacora('EDITO', 'PREGUNTAS DE SEGURIDAD', 'PREGUNTA', $id_repuesta, $repuesta_anterior, $repuesta);
+                }
+                // ////////////// FIN FUNCION BITACORA ///////////////////////
                 echo '<script>
                             alert("Edición de respuesta exitasa"); 
                             window.location.href="../../vistas/ajustes/vista_respuestas_usuarios.php";                
@@ -42,7 +48,13 @@ switch($accion){
           }else{
                     $sql2 = "UPDATE tbl_respuestas_usuario SET RESPUESTA='$repuesta' WHERE ID_RESPUESTA='$id_repuesta'";
                     if (mysqli_query($conn, $sql2)) {
-
+                    // ////////////// INICIO FUNCION BITACORA /////////////////////
+                    if($repuesta_anterior !== $repuesta) ///////////// PREGUNTA
+                    {
+                    include_once 'funcion_bitacora.php';
+                    bitacora('EDITO', 'PREGUNTAS DE SEGURIDAD', 'PREGUNTA', $id_repuesta, $repuesta_anterior, $repuesta);
+                    }
+                    // ////////////// FIN FUNCION BITACORA ///////////////////////
                         echo '<script>
                                 alert("Edición exitosa");
                                 window.location.href="../../vistas/ajustes/vista_respuestas_usuarios.php";                     

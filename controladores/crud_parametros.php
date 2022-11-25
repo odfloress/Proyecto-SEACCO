@@ -8,6 +8,7 @@
   // //Variables para recuperar la información de los campos de la vista roles
   $id_parametro=(isset($_POST['id_parametro']))?$_POST['id_parametro']:"";
   $valor=(isset($_POST['valor']))?$_POST['valor']:"";
+  $anterior_valor=(isset($_POST['anterior_valor']))?$_POST['anterior_valor']:"";
   $parametro=(isset($_POST['parametro']))?$_POST['parametro']:"";
   
   $usuario1 = $_SESSION;
@@ -26,11 +27,13 @@
 
         $sql2 = "UPDATE tbl_parametros SET VALOR='$valor', FECHA_MODIFICACION	='$result'  WHERE ID_PARAMETRO='$id_parametro'";
             if (mysqli_query($conn, $sql2)) {
-                // inicio inserta en la tabla bitacora
-                    $sql9 = "INSERT INTO tbl_bitacora (USUARIO, ACCION, OBSERVACION)
-                    VALUES ('$usuario1[usuario]', 'ACTUALIZO', 'ACTUALIZO EL VALOR DEL PARAMETRO ($parametro) VALOR A ($valor)')";
-                    if (mysqli_query($conn, $sql9)) {} else { }
-                // fin inserta en la tabla bitacora
+                // ////////////// INICIO FUNCION BITACORA /////////////////////
+                if($anterior_valor !== $valor) ///////////// 
+                {
+                include_once 'funcion_bitacora.php';
+                bitacora('EDITO', 'PREGUNTAS DE SEGURIDAD', 'PREGUNTA', $id_parametro, $anterior_valor, $valor);
+                }
+                // ////////////// FIN FUNCION BITACORA ///////////////////////
                     echo '<script>
                             alert("Parametro editado con exito");
                             window.location.href="../../vistas/ajustes/vista_parametro.php";                     

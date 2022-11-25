@@ -79,9 +79,7 @@
                        
  
                }else{
-                $sql10 = "INSERT INTO tbl_bitacora (USUARIO, ACCION, OBSERVACION)
-                VALUES ('$usuario1[usuario]', 'ERROR', 'ERROR AL EDITAR ESTADO')";
-                if (mysqli_query($conn, $sql8)) {} else { }
+                
                         echo '<script>
                                  alert("Error al tratar de editar estado");
                               </script>'; mysqli_error($conn);
@@ -101,9 +99,7 @@
                    
 
                 }else{
-                  $sql10 = "INSERT INTO tbl_bitacora (USUARIO, ACCION, OBSERVACION)
-                VALUES ('$usuario1[usuario]', 'ERROR', 'ERROR AL EDITAR ESTADO')";
-                if (mysqli_query($conn, $sql8)) {} else { }
+                  
                      echo '<script>
                             alert("Error al tratar de editar el estado");
                            </script>'; mysqli_error($conn);
@@ -139,9 +135,7 @@
   </script>';
   mysqli_close($conn);
       }else{
-        $sql10 = "INSERT INTO tbl_bitacora (USUARIO, ACCION, OBSERVACION)
-        VALUES ('$usuario1[usuario]', 'ERROR', 'ERROR AL ELIMINAR EL ESTADO')";
-        if (mysqli_query($conn, $sql8)) {} else { }
+        
               echo '<script>
                         alert("Error al tratar de eliminar estado");
                     </script>'; mysqli_error($conn);

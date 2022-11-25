@@ -71,11 +71,7 @@ switch ($accion){
 
       if (mysqli_query($conn, $sqlguardar)) {
 
-        // inicio inserta en la tabla bitacora
-        $sql = "INSERT INTO tbl_bitacora (USUARIO, OPERACION, PANTALLA, CAMPO, VALOR_ORIGINAL, VALOR_NUEVO)
-                    VALUES ('$usuario1[usuario]', 'EDITO','PERFIL', 'NOMBRE', '$nombre_anterior','$nombre')";
-        if (mysqli_query($conn, $sql)) {} else { }
-      // fin inserta en la tabla bitacora
+        
 
         echo '<script>
           alert("Información actualizada exitosamente");
