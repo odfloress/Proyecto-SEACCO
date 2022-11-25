@@ -43,19 +43,7 @@ if (mysqli_num_rows($roles35) > 0)
                }
 
 
-                //valida si hay una compra en proceso
-                $validar_compra7 = "SELECT * FROM tbl_asignaciones WHERE USUARIO='$usuario[usuario]' and ESTADO_ASIGNACION='EN PROCESO'";
-                $validar_compra77 = mysqli_query($conn, $validar_compra7);
-                if (mysqli_num_rows($validar_compra77) > 0)
-                {
-                 header('Location: ../../vistas/inventario/detalle_asignacion.php');
-                 die();
-                }else{}
-                // inicio inserta en la tabla bitacora
-                $sql = "INSERT INTO tbl_bitacora (USUARIO, ACCION, OBSERVACION)
-                VALUES ('$usuario1[usuario]', 'CONSULTO', 'CONSULTO LA PANTALLA  ADMINISTRATIVA DE ASIGNACIONES')";
-                if (mysqli_query($conn, $sql)) {} else {}
-                // fin inserta en la tabla bitacora
+               
 
 
 ?>
@@ -75,7 +63,15 @@ if (mysqli_num_rows($roles35) > 0)
   <script type="text/javascript" src="../../js/complemento_1_jspdf.min.js"></script>
 	<script type="text/javascript" src="../../js/complemento_2_jspdf.plugin.autotable.min.js"></script>
 
+   <!-- ////////////// Inicio para select ////////// -->
+<!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"> -->
+<link rel='stylesheet prefetch' href='https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.11.2/css/bootstrap-select.min.css'>
+<link rel="stylesheet" href="../../css/est.css">
 
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.6.3/js/bootstrap-select.min.js"></script>
+<!-- ////////////// Fin para select ////////// -->
 
   <?php include '../../configuracion/navar.php' ?>
   <!-- Inicio evita el click derecho de la pagina -->
@@ -92,7 +88,7 @@ if (mysqli_num_rows($roles35) > 0)
             <!-- Inicio de modal de agregar -->
 <div class="container mt-3">
   
-        <h3>Asignaciones</h3> <br> 
+        <h3>Asignaciones</h3>  
         </div>
 
 <!-- El Modal -->
@@ -110,7 +106,7 @@ if (mysqli_num_rows($roles35) > 0)
                 <!-- Cuerpo del modal Modal -->
                 <div class="modal-body">               
                 <label for="">Seleccione el proyecto</label>
-                    <select class="form-select" id="lista1" name="id_proyecto" required >
+                    <select name="id_proyecto" required class="form-control selectpicker"  data-live-search="true">
                     <option>Seleccione</option>
                         <?php
                             include '../../conexion/conexion.php';
@@ -126,8 +122,78 @@ if (mysqli_num_rows($roles35) > 0)
                           <?php
                            }}// finaliza el if y el while
                            ?>
-                   </select>
-                   </select>
+                   </select><br><br>
+                   <label for="">Seleccione el usuario</label>
+                    <select  name="id_usuario" required class="form-control selectpicker"  data-live-search="true">
+                    <option>Seleccione</option>
+                        <?php
+                            include '../../conexion/conexion.php';
+                            $usuariooo = " SELECT * FROM tbl_usuarios WHERE ID_ESTADO_USUARIO=1 AND USUARIO!='ADMINISTRADOR'";
+                            $usario77 = mysqli_query($conn, $usuariooo);
+                            if (mysqli_num_rows($usario77) > 0) {
+                                while($row = mysqli_fetch_assoc($usario77))
+                                {
+                                $id_usuario = $row['ID_USUARIO'];
+                                $usuarioo =$row['USUARIO'];
+                         ?>
+                          <option value="<?php  echo $id_usuario ?>"><?php echo $id_usuario .' - '.  $usuarioo ?></option>
+                          <?php
+                           }}// finaliza el if y el while
+                           ?>
+                   </select><br><br>
+
+                   <label for="">Producto</label>
+                    <select  name="id_producto" required class="form-control selectpicker"  data-live-search="true" >
+                    <option value="">Selecciona el producto</option>
+                        <?php
+                            include '../../conexion/conexion.php';
+                            $productos = "SELECT * FROM tbl_productos  ";
+                            $productos2 = mysqli_query($conn, $productos);
+                            if (mysqli_num_rows($productos2) > 0) {
+                                while($row = mysqli_fetch_assoc($productos2))
+                                {
+                                $id_productoss = $row['ID_PRODUCTO'];
+                                $producto =$row['NOMBRE'];
+                         ?>
+                          <option value="<?php  echo $id_productoss ?>"><?php echo $producto ?></option>
+                          <?php
+                           }}// finaliza el if y el while
+                           ?>
+                   </select><br><br>
+                   <label for="">Cantidad asignada</label>
+                   <input type="text" class="form-control" name="cantidad_asignada" required value="<?php echo $CANT_ASIGNADA; ?>" placeholder=""  
+                    autocomplete = "off" minlength="1" maxlength="12"  onkeypress="return filterFloat(event,this);" >
+                   
+                    <label for="sel1" class="form-label">Estado de la asignación:</label>
+                <select  name="id_estado_asignacion" required class="form-control selectpicker"  data-live-search="true">
+                  <option>Seleccione</option>
+                  <?php
+                      include '../../conexion/conexion.php';
+                      $getestado_herr = "SELECT * FROM  tbl_estado_asignacion";
+                      // $getpregunta1 = "SELECT * FROM tbl_preguntas  WHERE ID_PREGUNTA  NOT IN (SELECT ID_PREGUNTA  FROM  tbl_respuestas_usuario WHERE USUARIO = 'JO' ) ORDER BY ID_PREGUNTA";
+                      $getestado_herr = mysqli_query($conn, $getestado_herr);
+                      if (mysqli_num_rows($getestado_herr) > 0) {
+                          while($row = mysqli_fetch_assoc($getestado_herr))
+                            {
+                              $id_estado_herramienta = $row['ID_ESTADO_ASIGNACION'];
+                              $estado_herramienta =$row['ESTADO_ASIGNACION'];
+                           ?>
+                              <option value="<?php  echo $id_estado_herramienta ?>"><?php echo $id_estado_herramienta .' - '.($estado_herramienta)?></option>
+                          <?php
+                    }}// finaliza el if y el while
+
+                ?>
+                </select><br><br>
+
+                <label for="">Descripción de asignación:</label>
+                    <TEXtarea  style="background-color: white;" onkeyup="un_espacio(this);" name="descripcion_asignacion" class="form-control" id="" required cols="40" rows="5"
+                    autocomplete = "off"   minlength="3" maxlength="245"  ><?php echo $DESCRIPCION_ASIGNACION; ?></TEXtarea>
+                    
+
+                    <label for="">Fecha asignación:</label>
+                    <input type="datetime-local" name="fecha_asignacion" class="form-control" id="">
+                    <label for="">Fecha entrega:</label>
+                    <input type="datetime-local" name="fecha_entrega" class="form-control" id="">
                 </div>
                 <!-- Fin Cuerpo del modal Modal -->
                 <!-- pie del modal -->
@@ -193,9 +259,18 @@ if (mysqli_num_rows($roles35) > 0)
                 <table id="example1" class="table table-bordered table-striped">
                   <thead>
                   <tr>
-                  <th>Accion</th>
-                  <th>ID Asignación</th>
-                  <th>Proyecto</th>               
+                    <th>Accion</th>
+                    <th>ID</th>
+                    <th>Proyecto</th>
+                    <th>Usuario</th> 
+                    <th>Producto</th>
+                    <th>Cant. Asignada</th> 
+                    <th>Cant. Entregada</th>
+                    <th>Estado asignación</th> 
+                    <th>Descripción asignación</th> 
+                    <th>Descripción entrega</th>
+                    <th>Fecha asignado</th>          
+                    <th>Fecha entrega</th> 
                   </tr>
                   </thead>
                   <tbody>
@@ -212,8 +287,18 @@ if (mysqli_num_rows($roles35) > 0)
                           <button type="submit" name="accion" value="detalle" class="btn btn-primary">Ver detalle</button>
                           </form>
                       </td>
-                     <td><?php echo $cont; ?></td>
+                     <td><?php echo $filas['ID_ASIGNADO'] ?></td>
                      <td><?php echo $filas['NOMBRE_PROYECTO'] ?></td>  
+                     <td><?php echo $filas['USUARIO'] ?></td>
+                     <td><?php echo $filas['PRODUCTOSS'] ?></td>
+                     <td><?php echo $filas['CANT_ASIGNADA'] ?></td>
+                     <td><?php echo $filas['CANT_ENTREGADA']; ?></td>
+                     <td><?php echo $filas['ESTADO_ASIGNACION'] ?></td>
+                     <td><?php echo $filas['DESCRIPCION_ASIGNACION']; ?></td>
+                     <td><?php echo $filas['DESCRIPCION_ENTREGA']; ?></td>
+                     <td><?php echo $filas['FECHA_ASIGNADO']; ?></td>
+                     <td><?php echo $filas['FECHA_ENTREGA']; ?></td>
+
       </tr>
                 <?php } ?>  
                 </tbody>
