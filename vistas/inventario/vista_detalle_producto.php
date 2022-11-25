@@ -55,7 +55,17 @@ if (mysqli_num_rows($roles35) > 0)
                 die();
                }
               
-
+ //selecciona el id de la comra en proceso
+ $validar_compra77 = "SELECT * FROM tbl_compras WHERE USUARIO='$usuario1[usuario]' and ESTADO_COMPRA='EN PROCESO'";
+ $validar_compra777 = mysqli_query($conn, $validar_compra77);
+ if (mysqli_num_rows($validar_compra777) > 0)
+ {
+       while($row = mysqli_fetch_assoc($validar_compra777)) 
+       {
+             $id_comprass = $row["ID_COMPRA"];
+            
+       }
+ }
 
 ?>
 <!DOCTYPE html>
@@ -69,7 +79,15 @@ if (mysqli_num_rows($roles35) > 0)
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
     <!-- enlace del scritpt para evitar si preciona F12, si preciona Ctrl+Shift+I, si preciona Ctr+u  -->
     <script type="text/javascript" src="../../js/evita_ver_codigo_utilizando_teclas.js"></script>
+ <!-- ////////////// Inicio para select ////////// -->
+<!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"> -->
+<link rel='stylesheet prefetch' href='https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.11.2/css/bootstrap-select.min.css'>
+<link rel="stylesheet" href="../../css/est.css">
 
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.6.3/js/bootstrap-select.min.js"></script>
+<!-- ////////////// Fin para select ////////// -->
 
 
   <?php include '../../configuracion/navar.php' ?>
@@ -82,11 +100,11 @@ if (mysqli_num_rows($roles35) > 0)
     <section class="content-header">
       <div class="container-fluid">
       <h1>Detalle de compra</h1>
-        <div class="row mb-2">
-          <div class="col-sm-2">
+        <div class="row mb-12">
+          <div class="col-sm-4">
             <h1></h1>
             <!-- Inicio de modal de agregar -->
-<div class="container mt-3">
+<div class="container mt-12">
   
         <h3></h3> <br> 
         <?php 
@@ -121,11 +139,11 @@ if (mysqli_num_rows($roles35) > 0)
                 <div class="modal-body">
                
                 <label for="">Producto</label>
-                    <select class="form-select" id="lista1" name="producto" required >
+                    <select  name="producto" required class="form-control selectpicker"  data-live-search="true" >
                     <option value="">Selecciona el producto</option>
                         <?php
                             include '../../conexion/conexion.php';
-                            $productos = "SELECT * FROM tbl_productos ORDER BY ID_PRODUCTO";
+                            $productos = "SELECT * FROM tbl_productos WHERE ID_PRODUCTO NOT IN (SELECT ID_PRODUCTO from tbl_detalle_compra WHERE ID_COMPRA=$id_comprass)";
                             $productos2 = mysqli_query($conn, $productos);
                             if (mysqli_num_rows($productos2) > 0) {
                                 while($row = mysqli_fetch_assoc($productos2))
@@ -137,15 +155,15 @@ if (mysqli_num_rows($roles35) > 0)
                           <?php
                            }}// finaliza el if y el while
                            ?>
-                   </select><br>
+                   </select><br><br>
 
                    <label for="">Garantía</label>
-                    <input type="text" class="form-control" name="garantia" required value="<?php echo $garantia14;?>" placeholder=""  autocomplete = "off"   minlength="3" maxlength="250" 
-                    onkeyup="mayus(this);" required ><br>
+                    <input type="text" class="form-control" name="garantia" required value="<?php echo $garantia14;?>" placeholder=""  autocomplete = "off"   minlength="3" maxlength="100" 
+                    onkeyup="un_espacio(this);" required ><br>
 
-                    <label for="">unidad de medida</label>
-                    <select class="form-select" id="lista1" name="unidad_medida" required >
-                    <option value="">Selecciona la unidad de medida</option>
+                    <label for="">Unidad de medida</label>
+                    <select  name="unidad_medida" required class="form-control selectpicker"  data-live-search="true">
+                    <option value=""> </option>
                         <?php
                             include '../../conexion/conexion.php';
                             $unidades = "SELECT * FROM tbl_unidad_medida ORDER BY ID_UNIDAD_MEDIDA";
@@ -160,20 +178,20 @@ if (mysqli_num_rows($roles35) > 0)
                           <?php
                            }}// finaliza el if y el while
                            ?>
-                   </select><br>
+                   </select><br><br>
                    <label for="">Cantidad</label>
                    <input type="text" class="form-control" name="cantidad" required value="<?php echo $cantidad; ?>" placeholder=""  
-                    autocomplete = "off"  onkeypress="return solonumero1(event)"  minlength="1" maxlength="10"onblur="quitarespacios(this);" onkeydown="sinespacio(this);" >
+                    autocomplete = "off" minlength="1" maxlength="12"  onkeypress="return filterFloat(event,this);" >
 
                     <label for="">Precio de compra</label>
                     <input type="text" class="form-control" name="precio" required value="<?php echo $precio; ?>" placeholder=""  
-                    autocomplete = "off" onkeypress="return solonumero(event)"  minlength="1" maxlength="10"  onblur="quitarespacios(this);" onkeydown="sinespacio(this);">
+                    autocomplete = "off"   minlength="1" maxlength="12"  onkeypress="return filterFloat(event,this);">
                 
                 </div>
                 <!-- Fin Cuerpo del modal Modal -->
                 <!-- pie del modal -->
                 <div class="modal-footer">
-      	            <button type="submit" name="accion" value="agregar" class="btn btn-primary" onclick="return confirm('¿Desea añadir el producto?')">Agregar</button>
+      	            <button type="submit" name="accion" value="agregar" class="btn btn-primary" >Agregar</button>
                     <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
                 </div>
                 <!-- Fin pie del modal -->
@@ -198,8 +216,8 @@ if (mysqli_num_rows($roles35) > 0)
                       }
                 }
               ?>
+              <br>
               
-              <input  type="number" readonly class="form-control" value="<?php echo $precio_total;?>" id="">
             </ol>
             
           </div>
@@ -222,9 +240,17 @@ if (mysqli_num_rows($roles35) > 0)
               <div class="card-header">
                 <!-- <h3 class="card-title">Compras</h3> -->
                 <form action="" method="post">
-                <button type="submit" name="accion" value="cancelar" class="btn btn-danger" onclick="return confirm('¿Desea cancelar la compra?')">Cancelar compra</button>
-                <button type="submit" name="accion" value="confirmar" class="btn btn-primary" onclick="return confirm('¿Desea terminar la compra?')">Confirmar compra</button>
-
+                <div class="row">
+                   <div class="col">
+                     <button type="submit" name="accion" value="cancelar" class="btn btn-danger" onclick="return confirm('¿Desea cancelar la compra?')">Cancelar compra</button>
+                   </div>
+                   <div class="col">
+                    <button type="submit" name="accion" value="confirmar" class="btn btn-primary" onclick="return confirm('¿Desea terminar la compra?')">Confirmar compra</button>
+                   </div>
+                   <div class="col">
+                   <input  type="number" readonly class="form-control" value="<?php echo $precio_total;?>" id="">
+                   </div>
+                </div>
 
                 </form>
                 
@@ -238,15 +264,12 @@ if (mysqli_num_rows($roles35) > 0)
                  <th>Acciones</th>
                   <th>ID</th>
                   <th>ID compra</th>
-                  <th>Proveedor</th>
                   <th>Producto</th>
-                  <th>Garantía</th>
-                  <th>Unidad de medida</th>
                   <th>Cantidad</th>
                   <th>Precio</th>
-
-                  
-                  
+                  <th>Unidad de medida</th>
+                  <th>Garantía</th>
+                  <th>Proveedor</th>                  
                   </tr>
                   </thead>
                   <tbody>
@@ -282,12 +305,16 @@ if (mysqli_num_rows($roles35) > 0)
 </td>
                      <td ><?php echo $filas['ID_DETALLE'] ?></td>
                      <td><?php echo $filas['ID_COMPRA'] ?></td>
-                     <td><?php echo $proveedor; ?></td>
                      <td><?php echo $filas['NOMBRE'] ?></td>
-                     <td><?php echo $filas['GARANTIA'] ?></td>
+                     <td style="text-align: right;"><?php echo $filas['CANTIDAD'] ?></td>
+                     <td style="text-align: right;"><?php echo $filas['PRECIO'] ?></td>
                      <td><?php echo $filas['UNIDAD_MEDIDA'] ?></td>
-                     <td><?php echo $filas['CANTIDAD'] ?></td>
-                     <td><?php echo $filas['PRECIO'] ?></td>
+                     <td><?php echo $filas['GARANTIA'] ?></td>
+                     <td><?php echo $proveedor; ?></td>
+                     
+                    
+                     
+                    
                      
                     
       </tr>
@@ -346,28 +373,7 @@ if (mysqli_num_rows($roles35) > 0)
 <script src="../../plantilla/AdminLTE-3.2.0/dist/js/demo.js"></script>
 <!-- Page specific script -->
 
-<!-- INICIO muestra los botones, traduce y Agrupar -->
-<script type="text/javascript"> function solonumero(e) {
-        tecla = (document.all) ? e.keyCode : e.which;
-        if (tecla==8) return true;
-        else if (tecla==0||tecla==9)  return true;
-       // patron =/[0-9\s]/;// -> solo letras
-        patron =/[0-9.\s]/;// -> solo numeros
-        te = String.fromCharCode(tecla);
-        return patron.test(te);
-    }
-	</script>
 
-  <script type="text/javascript"> function solonumero1(e) {
-        tecla = (document.all) ? e.keyCode : e.which;
-        if (tecla==8) return true;
-        else if (tecla==0||tecla==9)  return true;
-       // patron =/[0-9\s]/;// -> solo letras
-        patron =/[0-9\s]/;// -> solo numeros
-        te = String.fromCharCode(tecla);
-        return patron.test(te);
-    }
-	</script>
 
 <script>
   $(function () {
@@ -439,3 +445,28 @@ if (mysqli_num_rows($roles35) > 0)
 </body>
 <script type="text/javascript" src="../../js/evitar_reenvio.js"></script>
 </html>
+<script type="text/javascript" src="../../js/un_espacio.js"></script>
+
+<!-- permitir un punto y 2 decimales -->
+<script type="text/javascript">
+
+function filterFloat(evt,input){
+    // Backspace = 8, Enter = 13, ‘0′ = 48, ‘9′ = 57, ‘.’ = 46, ‘-’ = 43
+    var key = window.Event ? evt.which : evt.keyCode;   
+    var chark = String.fromCharCode(key);
+    var tempValue = input.value+chark;
+    var isNumber = (key >= 48 && key <= 57);
+    var isSpecial = (key == 8 || key == 13 || key == 0 ||  key == 46);
+    if(isNumber || isSpecial){
+        return filter(tempValue);
+    }        
+    
+    return false;    
+    
+}
+function filter(__val__){
+    var preg = /^([0-9]+\.?[0-9]{0,2})$/; 
+    return (preg.test(__val__) === true);
+}
+
+</script>
