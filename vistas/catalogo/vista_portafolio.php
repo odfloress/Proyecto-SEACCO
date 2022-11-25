@@ -119,7 +119,7 @@ if (mysqli_num_rows($roles35) > 0)
                            }}// finaliza el if y el while
                            ?>
                    </select>
-                    <br>
+                    <br><br>
                     <label for="">Imagen</label>
                     <input type="file" class="form-control" accept=".jpg, .png, .jpej, .JPEG, .JPG, .PNG" name="imagenes" required value="<?php echo "$nombreimagen"; ?>" placeholder=""  >
                     <br>
@@ -280,7 +280,7 @@ if (mysqli_num_rows($roles35) > 0)
                                                           <?php
                                                                 }}}// finaliza el if y el while
                                                           ?> 
-                                                  </select> 
+                                                  </select> <br><br>
                                               <label for="">Título</label>
                                               <input type="text" class="form-control"  name="titulo" required value="<?php echo $filas['TITULO'] ?>" placeholder="" 
                                               autocomplete = "off" onkeyup="un_espacio(this);" onkeypress="return soloLetras(event);" minlength="3" maxlength="50" onkeyup="mayus(this);"  >

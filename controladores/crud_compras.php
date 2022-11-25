@@ -16,19 +16,15 @@
   
   
   switch($accion){
-      //para insertar en la tabla mysl
+     /////////////////////////////////// PARA CREAR COMPRA ////////////////////////////////////
       case "agregar": 
-        
-                    //si no existe el rol permite insertar
-                    $sql1 = "INSERT INTO tbl_compras (ID_PROVEEDOR, TOTAL_COMPRA, USUARIO, ESTADO_COMPRA)
-                    VALUES ('$proveedor4', '0', '$usuario1[usuario]', 'EN PROCESO')";
+        date_default_timezone_set("America/Guatemala");
+        $fecha = date("Y-m-d H:i:s");
+                    
+                    $sql1 = "INSERT INTO tbl_compras (ID_PROVEEDOR, TOTAL_COMPRA, FECHA_COMPRA, USUARIO, ESTADO_COMPRA)
+                    VALUES ('$proveedor4', '0', '$fecha', '$usuario1[usuario]', 'EN PROCESO')";
                     if (mysqli_query($conn, $sql1)) {
 
-                         // inicio inserta en la tabla bitacora
-                            $sql7 = "INSERT INTO tbl_bitacora (USUARIO, ACCION, OBSERVACION)
-                            VALUES ('$usuario1[usuario]', 'INSERTO', 'CREO UNA COMPRA')";
-                             if (mysqli_query($conn, $sql7)) {} else { }
-                        // fin inserta en la tabla bitacora
                         echo '<script>
                                 alert("Seleccione los productos de la compra");
                                 window.location.href="../../vistas/inventario/vista_detalle_producto.php";                   
@@ -45,10 +41,7 @@
 
                                 
       break;
-//       case "detalle": 
-//         echo $compra;
 
-//         break;
        
       
       

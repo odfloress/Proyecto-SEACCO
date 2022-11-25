@@ -50,11 +50,7 @@ if (mysqli_num_rows($roles35) > 0)
                  header('Location: ../../vistas/inventario/vista_detalle_producto.php');
                  die();
                 }else{}
-                // inicio inserta en la tabla bitacora
-                $sql = "INSERT INTO tbl_bitacora (USUARIO, ACCION, OBSERVACION)
-                VALUES ('$usuario1[usuario]', 'CONSULTO', 'CONSULTO LA PANTALLA  ADMINISTRATIVA DE COMPRAS')";
-                if (mysqli_query($conn, $sql)) {} else {}
-                // fin inserta en la tabla bitacora
+               
 
 
 ?>
@@ -63,8 +59,19 @@ if (mysqli_num_rows($roles35) > 0)
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>compras</title>
+  <title>Compras</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
+ <!-- ////////////// Inicio para select ////////// -->
+<!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"> -->
+<link rel='stylesheet prefetch' href='https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.11.2/css/bootstrap-select.min.css'>
+<link rel="stylesheet" href="../../css/est.css">
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.6.3/js/bootstrap-select.min.js"></script>
+<!-- ////////////// Fin para select ////////// -->
+
+
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
     <!-- enlace del scritpt para evitar si preciona F12, si preciona Ctrl+Shift+I, si preciona Ctr+u  -->
@@ -72,8 +79,6 @@ if (mysqli_num_rows($roles35) > 0)
             <!-- /// para exportar en pdf /// -->
    <script type="text/javascript" src="../../js/complemento_1_jspdf.min.js"></script>
 	<script type="text/javascript" src="../../js/complemento_2_jspdf.plugin.autotable.min.js"></script>
-
-
 
   <?php include '../../configuracion/navar.php' ?>
   <!-- Inicio evita el click derecho de la pagina -->
@@ -90,7 +95,7 @@ if (mysqli_num_rows($roles35) > 0)
             <!-- Inicio de modal de agregar -->
 <div class="container mt-3">
   
-        <h3>Compras</h3> <br> 
+        <h3>Compras</h3> 
       
         
     </div>
@@ -111,8 +116,9 @@ if (mysqli_num_rows($roles35) > 0)
                 <div class="modal-body">
                
                 <label for="">Seleccione el proveedor</label>
-                    <select class="form-select" id="lista1" name="proveedor" required >
-                        <?php
+                    <select  name="proveedor" required class="form-control selectpicker"  data-live-search="true" >
+                       <option value=""> </option>
+                       <?php
                             include '../../conexion/conexion.php';
                             $preveedor = "SELECT * FROM tbl_proveedores ORDER BY ID_PROVEEDOR";
                             $preveedor2 = mysqli_query($conn, $preveedor);
@@ -165,40 +171,7 @@ if (mysqli_num_rows($roles35) > 0)
             
             <div class="card table-responsive">
               <div class="card-header">
-                     <!-- /// filtrar reporte //// -->
-                     <form action="" method="post">
-                <div class="row">
-                    <div class="col">
-                      <!-- ///////////////////// -->
-                      <?php $asignacion=(isset($_POST['reporte_catalogo']))?$_POST['reporte_catalogo']:"";   ?> 
-                      <!-- <?php echo $asignacion; ?> -->
-                      <br>
-                        <select style="background-color:rgb(240, 244, 245);" value="<?php echo $id_cliente; ?>" required  class="form-select" id="lista1" name="reporte_catalogo"  >
-                                          <option >Seleccione un proveedor</option>
-                                              <?php
-                                                  include '../../conexion/conexion.php';
-                                                  $catalago777 = "SELECT * FROM tbl_proveedores";
-                                                  $catalago7777 = mysqli_query($conn, $catalago777);
-                                                  if (mysqli_num_rows($catalago7777) > 0) {
-                                                      while($row = mysqli_fetch_assoc($catalago7777))
-                                                      {
-                                                        $id_catalogoo = $row['ID_PROVEEDOR'];
-                                                      $catalago77777 =$row['NOMBRE'];
-                                              ?>
-                                                <option value="<?php  echo $id_catalogoo; ?>"><?php echo $catalago77777; ?></option>
-                                                <?php
-                                          }}// finaliza el if y el while
-                                          ?>
-                                        </select>
-                                                          </div>
-                    <div class="col"><br>
-                    <button class="btn btn-danger" type="submit">Filtrar reporte</button>
-                    </div>
-               </div>
-                                 
-                                        
-                        </form> <br><!-- ///////////////////// -->
-                <!-- /// fin filtrar reporte /// -->
+                  
               <form id="form" action="" method="post">
                     <div class="btn-group">
                     <?php 
@@ -229,6 +202,7 @@ if (mysqli_num_rows($roles35) > 0)
                   <th>ID</th>
                   <th>Proveedores</th>
                   <th>Total compra</th>
+                  <th>Estado</th>
                   <th>Usuario</th>
                   <th>Fecha</th>
                   
@@ -248,11 +222,13 @@ if (mysqli_num_rows($roles35) > 0)
                       <input type="hidden" name="proveedores" value="<?php echo $filas['NOMBRE'] ?>">
                             <input type="hidden" name="compra" value="<?php echo $filas['ID_COMPRA'] ?>">
                           <button type="submit" name="accion" value="detalle" class="btn btn-primary" >Ver detalle</button>
+                         
                           </form>
                       </td>
-                     <td ><?php echo $cont; ?></td>
+                     <td ><?php echo $filas['ID_COMPRA'] ?></td>
                      <td><?php echo $filas['NOMBRE'] ?></td>
-                     <td><?php echo $filas['TOTAL_COMPRA'] ?></td>
+                     <td style="text-align: right;"><?php echo $filas['TOTAL_COMPRA'] ?></td>
+                     <td><?php echo $filas['ESTADO_COMPRA'] ?></td>
                      <td><?php echo $filas['USUARIO'] ?></td>
                      <td><?php echo $filas['FECHA_COMPRA'] ?></td>
                     
@@ -383,33 +359,7 @@ if (mysqli_num_rows($roles35) > 0)
  <script type="text/javascript" src="../../js/quitar_espacios.js"></script>
 </body>
 <!-- // Inicio para exportar en pdf // -->
-<?php
-if(!isset($_POST['reporte_catalogo']))
-{
-	$sql = "SELECT * FROM (tbl_compras c
-  INNER JOIN tbl_proveedores p ON c.ID_PROVEEDOR = p.ID_PROVEEDOR)
-  ORDER BY c.ID_PROVEEDOR asc";
-	$query = $conn->query($sql);
-	$data = array();
-	while($r=$query->fetch_object()){
-	$data[] =$r;
-	}
-}else{		
-			  
-			require '../../conexion/conexion.php';
-			$asignacion=(isset($_POST['reporte_catalogo']))?$_POST['reporte_catalogo']:"";
-			$sql = "SELECT * FROM (tbl_compras c
-      INNER JOIN tbl_proveedores p ON c.ID_PROVEEDOR = p.ID_PROVEEDOR) 
-      WHERE c.ID_PROVEEDOR='$asignacion'";
-			$query = $conn->query($sql);
-			$data = array();
-			while($r=$query->fetch_object()){
-			$data[] =$r;
-			}
-				
-			}
-     
-?>
+
 
 <?php 
     $select_nombre = "SELECT * FROM tbl_parametros WHERE PARAMETRO='NOMBRE'";
