@@ -21,7 +21,7 @@ require '../../controladores/crud_cotizacion.php';
     
     <style> 
 body {
-  background-image: url('../../imagenes/1659393257_fondo1.jpg');
+  background-image: url('../../imagenes/fondo.jpg');
   background-repeat: no-repeat;
   background-attachment: fixed; 
   background-size: 100% 100%;
@@ -157,11 +157,11 @@ body {
                   title="13 caracteres y no todos ceros">              
                   <div class="invalid-feedback">Ingrese un DNI de trece digitos y no todos ceros.</div>
                 </div>
-                <div class="col">
+              <!--  <div class="col">
                   <label for="pwd" class="form-label">Dirección Personal:</label>
                   <textarea style="background-color:rgb(240, 244, 245);" type="text" autocomplete="off"  value="<?php echo "$direccionPersonal"; ?>" onkeypress="return SoloLetras(event);" onkeyup="un_espacio(this);"  onKeyUP="this.value=this.value.toUpperCase();" class="form-control"  placeholder="Ingrese su dirección" name="direccionPersonal" required></textarea>
                   <div class="invalid-feedback">Campo requerido.</div>
-                </div>
+                </div> -->
                 
             </div>
             <div class="row">
@@ -177,7 +177,7 @@ body {
                 </div>
             </div>
             <div class="row">
-            <div class="col">
+          <!--  <div class="col">
                   <label for="pwd" class="form-label">Referencia:</label>
                   <input style="background-color:rgb(240, 244, 245);" type="text" autocomplete="off"  onkeyup="un_espacio(this);" onKeyUP="this.value=this.value.toUpperCase();" autocomplete="off"  value="<?php echo "$referencia"; ?>"   onKeyUP="this.value=this.value.toUpperCase();" class="form-control"  placeholder="Nombre de referencia"  name="referencia" onkeypress="return soloLetras(event);" id="CampoReferencia" required>
                 </div>
@@ -200,15 +200,15 @@ body {
                            }}// finaliza el if y el while
                            ?>
                    </select>
-                </div> 
+                </div> -->
               </div>
               <div class="row">
-                <div class="col">
+              <!--  <div class="col">
                   <label for="pwd" class="form-label">Foto:</label>
                   <input style="background-color:rgb(240, 244, 245);" type="file" accept=".jpg, .png, .jpej, .JPEG, .JPG, .PNG" autocomplete="off"  value="<?php echo "$foto"; ?>" class="form-control" required placeholder="Adjunte su foto" name="foto">
                   <div class="invalid-feedback" >Seleccione una imagen con formato /jpg/png/jpeg/JPEG/JPG/PNG</div>    
                   
-                </div>
+                </div> -->
             </div>
             <br><h4>Datos del Proyecto</h4>
             <div class="row">
