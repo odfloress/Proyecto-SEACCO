@@ -371,6 +371,20 @@
                 </li>';
                }
               ?> 
+               <!-- Valida si tiene permiso para consultar la pantalla del CRUD DECOLUCIONES -->
+            <?php 
+               include '../../conexion/conexion.php';
+               $tablero = "SELECT * FROM tbl_ms_roles_ojetos WHERE ID_ROL='$id_rol7' and ID_OBJETO=33 and PERMISO_CONSULTAR=1";
+               $tablero2 = mysqli_query($conn, $tablero);
+               if (mysqli_num_rows($tablero2) > 0)
+               {
+                  echo '<li class="nav-item">
+                  <a href="../../vistas/inventario/devoluciones.php" class="nav-link">
+                    <p>Devoluciones</p>
+                  </a>
+                </li>';
+               }
+              ?> 
               <!-- Valida si tiene permiso para consultar la pantalla del CRUD CATEGORIA DE PRODUCTOS -->
             <?php 
                include '../../conexion/conexion.php';
