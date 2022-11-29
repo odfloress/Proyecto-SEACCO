@@ -73,6 +73,7 @@ if (mysqli_num_rows($roles35) > 0)
 <script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.6.3/js/bootstrap-select.min.js"></script>
 <!-- ////////////// Fin para select ////////// -->
 
+
   <?php include '../../configuracion/navar.php' ?>
   <!-- Inicio evita el click derecho de la pagina -->
 <body oncontextmenu="return false">
@@ -107,7 +108,7 @@ if (mysqli_num_rows($roles35) > 0)
                 <div class="modal-body">               
                 <label for="">Seleccione el proyecto</label>
                     <select name="id_proyecto" required class="form-control selectpicker"  data-live-search="true">
-                    <option>Seleccione</option>
+                    <option value="">Seleccione</option>
                         <?php
                             include '../../conexion/conexion.php';
                             $proyecto = " SELECT * FROM tbl_proyectos WHERE ID_ESTADOS!=6 and ID_ESTADOS!=5 and ID_ESTADOS!=3";
@@ -125,7 +126,7 @@ if (mysqli_num_rows($roles35) > 0)
                    </select><br><br>
                    <label for="">Seleccione el usuario</label>
                     <select  name="id_usuario" required class="form-control selectpicker"  data-live-search="true">
-                    <option>Seleccione</option>
+                    <option value="">Seleccione</option>
                         <?php
                             include '../../conexion/conexion.php';
                             $usuariooo = " SELECT * FROM tbl_usuarios WHERE ID_ESTADO_USUARIO=1 AND USUARIO!='ADMINISTRADOR'";
@@ -143,6 +144,7 @@ if (mysqli_num_rows($roles35) > 0)
                    </select><br><br>
 
                    <label for="">Producto</label>
+
                     <select  name="id_producto" required class="form-control selectpicker"  data-live-search="true" >
                     <option value="">Selecciona el producto</option>
                         <?php
@@ -166,7 +168,7 @@ if (mysqli_num_rows($roles35) > 0)
                    
                     <label for="sel1" class="form-label">Estado de la asignación:</label>
                 <select  name="id_estado_asignacion" required class="form-control selectpicker"  data-live-search="true">
-                  <option>Seleccione</option>
+                  <option value="">Seleccione</option>
                   <?php
                       include '../../conexion/conexion.php';
                       $getestado_herr = "SELECT * FROM  tbl_estado_asignacion";
@@ -191,14 +193,14 @@ if (mysqli_num_rows($roles35) > 0)
                     
 
                     <label for="">Fecha asignación:</label>
-                    <input type="datetime-local" name="fecha_asignacion" class="form-control" id="">
+                    <input type="datetime-local" name="fecha_asignacion" value="<?php echo $fecha_asignacion; ?>" class="form-control" id="">
                     <label for="">Fecha entrega:</label>
-                    <input type="datetime-local" name="fecha_entrega" class="form-control" id="">
+                    <input type="datetime-local" name="fecha_entrega" value="<?php echo $fecha_entrega; ?>" class="form-control" id="">
                 </div>
                 <!-- Fin Cuerpo del modal Modal -->
                 <!-- pie del modal -->
                 <div class="modal-footer">
-      	            <button type="submit" name="accion" value="agregar" class="btn btn-primary" onclick="return confirm('¿Desea crear esta asignación?')">Agregar</button>
+      	            <button type="submit" name="accion" value="agregar" class="btn btn-primary" >Agregar</button>
                     <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
                 </div>
                 <!-- Fin pie del modal -->
@@ -259,13 +261,13 @@ if (mysqli_num_rows($roles35) > 0)
                 <table id="example1" class="table table-bordered table-striped">
                   <thead>
                   <tr>
-                    <th>Accion</th>
+                    <th>Acciones</th>
                     <th>ID</th>
                     <th>Proyecto</th>
                     <th>Usuario</th> 
                     <th>Producto</th>
-                    <th>Cant. Asignada</th> 
-                    <th>Cant. Entregada</th>
+                    <th>Cantidad Asignada</th> 
+                    <th>Cantidad Entregada</th>
                     <th>Estado asignación</th> 
                     <th>Descripción asignación</th> 
                     <th>Descripción entrega</th>
@@ -275,18 +277,204 @@ if (mysqli_num_rows($roles35) > 0)
                   </thead>
                   <tbody>
                     <?php 
+                    
+
                     $cont = 0;
                     while ($filas= mysqli_fetch_assoc($result)){
  
                      ?>
                      <?php  $cont++; ?>
                   <tr>
-                      <td><form action="../../vistas/inventario/mostrar_detalle_asignaciones.php" method="post">
-                            <input type="hidden" name="asignacion" value="<?php echo $filas['ID_ASIGNADO'] ?>">
+                  <td> <?php
+                  date_default_timezone_set("America/Guatemala");
+                  $fechaSSS = date("Y-m-d H:i:s");
+                  $catidades_entregadas=$filas['CANT_ENTREGADA'];
+                  $catidades_asignadas=$filas['CANT_ASIGNADA'];
+                  $fecha_de_entrega_herramienta=$filas['FECHA_ENTREGA'];
+                 
+if( $catidades_entregadas<$catidades_asignadas and $fechaSSS>$fecha_de_entrega_herramienta){
+  echo ' <button type="button"  class="btn btn-primary"  >
+  <i class="fas fa-bell"></i>
+  </button>';
+  
+}
+                          ?>
+                         <!-- inicio boton editar -->
+                         <button type="button"  class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#myModal2<?php echo $filas['ID_ASIGNADO'] ?>" >
+                      <i class="fas fa-pencil-alt"></i>
+                      </button>
 
-                          <button type="submit" name="accion" value="detalle" class="btn btn-primary">Ver detalle</button>
-                          </form>
-                      </td>
+                          <!-- El Modal -->
+                          <div class="modal" id="myModal2<?php echo $filas['ID_ASIGNADO'] ?>">
+                          <div class="modal-dialog modal-xl">
+                              <div class="modal-content">
+                              <form action="" method="post" id="formulario">
+                                <!-- Encabezado del modal -->
+                                <div class="modal-header">
+                                  <h4 class="modal-title">Entregar</h4>
+                                  <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                </div>
+                                <!-- Fin Encabezado del modal -->
+
+
+                                <div class="modal-body"> 
+                                  <input type="hidden" name="id_asignado" value="<?php echo $filas['ID_ASIGNADO'] ?>">              
+                <label for="">Proyecto:</label>
+                <input type="text" name="" id="" readonly value="<?php echo $filas['NOMBRE_PROYECTO'] ?>" class="form-control">
+                <br>  
+                <label for="">Usuario:</label>
+                <input type="text" name="" id="" readonly value="<?php echo $filas['USUARIO'] ?>" class="form-control">
+                <br>
+             
+                <label for="">Producto:</label>
+                <input type="hidden" name="id_producto" value="<?php echo $filas['ID_PRODUCTO'] ?>">
+                <input type="text" name="" id=""readonly value="<?php echo $filas['PRODUCTOSS'] ?>" class="form-control">
+                <br>
+                   <label for="">Cantidad asignada:</label>
+                   <input type="text" name="cantidad_asignada" id=""readonly value="<?php echo $filas['CANT_ASIGNADA'] ?>" class="form-control">
+                  <br>
+                  <label for="">Cantidad Entregada:</label>
+                 
+                   <input type="text"  class="form-control lectura" id="lectura"  readonly name="cantidad_entregada" required value="<?php echo $filas['CANT_ENTREGADA'] ?>" placeholder=""  
+                    autocomplete = "off" minlength="1" maxlength="12"  onkeypress="return filterFloat(event,this);" >
+                    <small>
+                      <input type="checkbox"  class="ver" id="ver" onclick="desaparecer()" />
+                      <label class="text">Cambiar entrega</label>
+                    </small>
+                    <input type="hidden"  name="anterior_entraga" id="anterior_entraga" value="<?php echo $filas['CANT_ENTREGADA'] ?>">
+                    <br>
+                  <label class=" desaparecerTemporalmente" for="">Cantidad a Entregar:</label>
+                 
+                   <input type="text" class="form-control desaparecerTemporalmente"  name="cantidad_entregada1" required value="" placeholder="Ingrese la cantidad a entregar"  
+                    autocomplete = "off" minlength="1" maxlength="12"  onkeypress="return filterFloat(event,this);" >
+                  <br>
+                    <label  for="sel1" class="form-label">Estado de la asignación:</label>
+                <select  name="id_estado_asignacion" required class="form-select "  >
+               
+                <option value="">seleccione</option>
+                  <?php
+                      include '../../conexion/conexion.php';
+                      $getestado_herr = "SELECT * FROM  tbl_estado_asignacion";
+                      // $getpregunta1 = "SELECT * FROM tbl_preguntas  WHERE ID_PREGUNTA  NOT IN (SELECT ID_PREGUNTA  FROM  tbl_respuestas_usuario WHERE USUARIO = 'JO' ) ORDER BY ID_PREGUNTA";
+                      $getestado_herr = mysqli_query($conn, $getestado_herr);
+                      if (mysqli_num_rows($getestado_herr) > 0) {
+                          while($row = mysqli_fetch_assoc($getestado_herr))
+                            {
+                              $id_estado_herramienta = $row['ID_ESTADO_ASIGNACION'];
+                              $estado_herramienta =$row['ESTADO_ASIGNACION'];
+                           ?>
+                              <option value="<?php  echo $id_estado_herramienta ?>"><?php echo $id_estado_herramienta .' - '.($estado_herramienta)?></option>
+                          <?php
+                    }}// finaliza el if y el while
+
+                ?>
+                </select><br class=" desaparecerTemporalmente"><br class=" desaparecerTemporalmente">
+
+                <label class=" desaparecerTemporalmente" for="">Descripción de asignación:</label>
+                    <TEXtarea  readonly style="background-color:rgb(240, 244, 245);" onkeyup="un_espacio(this);" name="descripcion_asignacion" class="form-control desaparecerTemporalmente" id="" required cols="40" rows="5"
+                    autocomplete = "off"   minlength="3" maxlength="245"  ><?php echo $filas['DESCRIPCION_ASIGNACION']; ?></TEXtarea>
+
+                    <br class=" desaparecerTemporalmente">
+                    
+
+                    <label class=" desaparecerTemporalmente" for="">Fecha asignación:</label>
+                    <input type="datetime" name="fecha_asignacion" class="form-control desaparecerTemporalmente" id="" readonly value="<?php echo $filas['FECHA_ASIGNADO'] ?>">
+                    <br>
+                    <label class=" desaparecerTemporalmente" for="">Fecha entrega:</label>
+                    <input type="datetime" name="fecha_entrega" class="form-control desaparecerTemporalmente" id="" readonly value="<?php echo $filas['FECHA_ENTREGA'] ?>">
+                <br class=" desaparecerTemporalmente">
+                    <label class=" desaparecerTemporalmente" for="">Descripción de entrega:</label>
+                    <TEXtarea    onkeyup="un_espacio(this);" name="descripcion_entrega" class="form-control desaparecerTemporalmente" id="" required cols="40" rows="5"
+                    autocomplete = "off"   minlength="3" maxlength="245"  ><?php echo $filas['DESCRIPCION_ENTREGA']; ?></TEXtarea>
+                   
+                   
+                    <!-- /////// Inicio tabla de entrega ///////// -->
+                   
+                    <table class="table table-striped desaparecerTemporalmente1" style="display:none">
+                        <thead>
+                          <tr>
+                            <th>Acción</th>
+                            <th>Cantidad</th>
+                            <th>Fecha</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                        <?php
+                  include '../../conexion/conexion.php';
+                  //para mostrar los datos de la tabla mysql y mostrar en el crud                
+                  $mostrar_KARDEX = "SELECT * FROM tbl_kardex   WHERE ID_ASIGNACION=$filas[ID_ASIGNADO] and TIPO_MOVIMIENTO='ENTRADA ASIGNACION'";
+                  $resultado_kardex = mysqli_query($conn, $mostrar_KARDEX);
+                  if (mysqli_num_rows($resultado_kardex) > 0) 
+                 
+                  while ($fila_kardex= mysqli_fetch_assoc($resultado_kardex)){
+                    ?>
+                          <tr>
+                            <td> 
+                             <form action="" method="post">
+                             <input type="hidden" name="id_producto" value="<?php echo $filas['ID_PRODUCTO'] ?>">
+                             <input type="hidden" name="id_asignado"  value="<?php echo $filas['ID_ASIGNADO'] ?>">
+                              <input type="hidden" name="cantidad_entregada" value="<?php echo $fila_kardex['CANTIDAD']; ?>">
+                              <input type="hidden" name="fecha_entrega" value="<?php echo $fila_kardex['FECHA_HORA']; ?>">
+                            <button  value="eliminar_entrega" name="accion" 
+                                onclick="return confirm('¿Quieres eliminar este dato?')"
+                                type="submit" class="btn btn-danger " data-id="19">
+                                <i class="fas fa-trash-alt"></i>
+                             </button>
+                             </form>
+                            </td>
+                            <td><?php echo $fila_kardex['CANTIDAD']; ?></td>
+                            <td><?php echo $fila_kardex['FECHA_HORA']; ?></td>
+                          </tr>
+                          <?php } ?>
+                      </tbody>
+                      </table>
+                    <!-- /////// Fin tabla de entrega ///////// -->
+                  </div>
+
+
+                    
+
+                                <!-- Cuerpo del modal Modal -->
+                                <div class="container mt-3">          
+ 
+                                <!-- Fin Cuerpo del modal Modal -->
+
+                                <!-- pie del modal -->
+                                <div class="modal-footer">
+                                <button onclick="mostrar(); enviar_datos();" class="btn btn-success desaparecerTemporalmente1"  style="display:none" >Refrescar</button>
+                                <button type="submit" name="accion" value="editar" class="btn btn-primary" >Entregar</button>
+                                  <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
+                                </div>
+                             </form>
+                                  <!-- Fin pie del modal -->
+                                  <form action="" method="post" >
+                              </div>
+                            </div>
+                          </div></div>
+
+                          <!-- fin boton editar -->
+                          
+                          
+                          <?php 
+                          include '../../conexion/conexion.php';
+                          $tablero = "SELECT * FROM tbl_ms_roles_ojetos WHERE ID_ROL='$id_rol7' and ID_OBJETO=9 and PERMISO_ELIMINACION=1";
+                          $tablero2 = mysqli_query($conn, $tablero);
+                          if (mysqli_num_rows($tablero2) > 0)
+                          {?>
+                            <input type="hidden"  class="form-control lectura" id="lectura"  readonly name="cantidad_entregada" required value="<?php echo $filas['CANT_ENTREGADA'] ?>" placeholder=""  
+                    autocomplete = "off" minlength="1" maxlength="12"  onkeypress="return filterFloat(event,this);" >
+                           <input type="hidden" name="cantidad_asignada" id=""readonly value="<?php echo $filas['CANT_ASIGNADA'] ?>" class="form-control">
+                          <input type="hidden" name="id_asignado"  value="<?php echo $filas['ID_ASIGNADO'] ?>">
+                          <input type="hidden" name="id_producto" value="<?php echo $filas['ID_PRODUCTO'] ?>">
+                             <button  value="eliminar" name="accion" 
+                                onclick="return confirm('¿Quieres eliminar este dato?')"
+                                type="submit" class="btn btn-danger " data-id="19">
+                                <i class="fas fa-trash-alt"></i>
+                             </button> <?php 
+                          }
+                        ?>
+                     </form>
+                     </td>
                      <td><?php echo $filas['ID_ASIGNADO'] ?></td>
                      <td><?php echo $filas['NOMBRE_PROYECTO'] ?></td>  
                      <td><?php echo $filas['USUARIO'] ?></td>
@@ -294,8 +482,12 @@ if (mysqli_num_rows($roles35) > 0)
                      <td><?php echo $filas['CANT_ASIGNADA'] ?></td>
                      <td><?php echo $filas['CANT_ENTREGADA']; ?></td>
                      <td><?php echo $filas['ESTADO_ASIGNACION'] ?></td>
-                     <td><?php echo $filas['DESCRIPCION_ASIGNACION']; ?></td>
-                     <td><?php echo $filas['DESCRIPCION_ENTREGA']; ?></td>
+                     <td><TEXtarea  readonly style="background-color:rgb(240, 244, 245);" onkeyup="un_espacio(this);" name="descripcion_asignacion" class="form-control" id="" required cols="40" rows="5"
+                    autocomplete = "off"   minlength="3" maxlength="245"  ><?php echo $filas['DESCRIPCION_ASIGNACION']; ?></TEXtarea></td>
+                     <td>
+                     <TEXtarea  readonly style="background-color:rgb(240, 244, 245);" onkeyup="un_espacio(this);" name="descripcion_asignacion" class="form-control" id="" required cols="40" rows="5"
+                    autocomplete = "off"   minlength="3" maxlength="245"  ><?php echo $filas['DESCRIPCION_ENTREGA']; ?></TEXtarea>
+                     </td>
                      <td><?php echo $filas['FECHA_ASIGNADO']; ?></td>
                      <td><?php echo $filas['FECHA_ENTREGA']; ?></td>
 
@@ -360,7 +552,11 @@ if (mysqli_num_rows($roles35) > 0)
 <script>
   $(function () {
     $("#example1").DataTable({
-      
+      "order": [[ 1, "desc" ]],
+      columnDefs: [
+        { targets: [0, 1,2,3,4,5,6,7,10,11], visible: true},
+        { targets: '_all', visible: false }
+    ],
       language: {
                           processing: "Tratamiento en curso...",
                           search: "Buscar&nbsp;:",
@@ -519,3 +715,68 @@ if (mysqli_num_rows($roles35) > 0)
 
 <script type="text/javascript" src="../../js/evitar_reenvio.js"></script>
 </html>
+<script type="text/javascript" src="../../js/un_espacio.js"></script>
+
+
+<!-- permitir un punto y 2 decimales -->
+<script type="text/javascript">
+
+function filterFloat(evt,input){
+    // Backspace = 8, Enter = 13, ‘0′ = 48, ‘9′ = 57, ‘.’ = 46, ‘-’ = 43
+    var key = window.Event ? evt.which : evt.keyCode;   
+    var chark = String.fromCharCode(key);
+    var tempValue = input.value+chark;
+    var isNumber = (key >= 48 && key <= 57);
+    var isSpecial = (key == 8 || key == 13 || key == 0 ||  key == 46);
+    if(isNumber || isSpecial){
+        return filter(tempValue);
+    }        
+    
+    return false;    
+    
+}
+function filter(__val__){
+    var preg = /^([0-9]+\.?[0-9]{0,2})$/; 
+    return (preg.test(__val__) === true);
+}
+
+</script>
+
+<script>
+  function desaparecer(){
+  
+  // $(".lectura").attr("readonly", false); 
+    ////cambia elementos y le quita el required
+    $(".desaparecerTemporalmente").css("display","none");
+    $(".desaparecerTemporalmente").attr("required", false);
+    /// muestra el boton actualizar
+    $(".desaparecerTemporalmente1").css("display","");
+
+    $(".valor_nuevo").attr("value", false);  
+}
+</script>
+
+<script>
+  function mostrar(){
+
+    // Muestra los elemento que oculte ocultas
+    $(".desaparecerTemporalmente").css("display","");
+    // desaparece algunos elementos y coloca el required a lo que necesita
+    $(".desaparecerTemporalmente1").css("display","none");
+    $(".desaparecerTemporalmente").attr("required", true);
+    $(".lectura").attr("readonly", true); 
+
+
+}
+</script>
+
+
+<!-- asignar un valor desde otro input -->
+<!-- <script>
+  function enviar_datos(){
+    location.reload();
+    var total = document.getElementById('anterior_entraga').value;
+    document.getElementById('lectura').value=total;
+  }
+</script> -->
+
