@@ -35,8 +35,16 @@
   $ruta2=(isset($_POST['ruta_imagen']))?$_POST['ruta_imagen']:"";
   $curriculum_persona = substr($ruta, 16); 
   $foto = substr($ruta2, 15); 
-  
+  $fecha_inicio=(isset($_POST['fecha_inicio']))?$_POST['fecha_inicio']:"";
+  $fecha_final=(isset($_POST['fecha_final']))?$_POST['fecha_final']:"";
+  $motivo_salida=(isset($_POST['motivo_salida']))?$_POST['motivo_salida']:"";
+  $contrasenanueva=(isset($_POST['contrasena']))?$_POST['contrasena']:"";
+  $contrasenaconfirmar=(isset($_POST['confirmar_contrasena']))?$_POST['confirmar_contrasena']:"";
   $usuario1 = $_SESSION; 
+
+  date_default_timezone_set("America/Guatemala");
+  
+  $fechaactual = date("Y-m-d h:i:s");
 
   //variable para recuperar los botones de la vista administradores  
   $accion=(isset($_POST['accion']))?$_POST['accion']:"";
@@ -116,8 +124,8 @@
           
 
               // Inserta en la tabla tbl_usuarios
-              $sql = "INSERT INTO tbl_usuarios (ID_ROL, ID_ESTADO_USUARIO, NOMBRE, APELLIDO, USUARIO, ID_GENERO, CORREO, DNI, ID_PROFESION, DIRECCION, CELULAR, REFERENCIA, CEL_REFERENCIA, EXPERIENCIA_LABORAL, CURRICULUM, CONTRASENA, FOTO, ID_AREA)
-                            VALUES ($rol,$estado,'$nombre', '$apellido', '$usuario', '$genero', '$correo', '$dni', '$profesion',  '$direccionp', '$celular', '$referencia', '$celular_referencia', '$experiencia_laboral', '$destino$nombrecurriculum','$contrasena','$destino1$nombrefoto', '$area')";
+              $sql = "INSERT INTO tbl_usuarios (ID_ROL, ID_ESTADO_USUARIO, NOMBRE, APELLIDO, USUARIO, ID_GENERO, CORREO, DNI, ID_PROFESION, DIRECCION, CELULAR, REFERENCIA, CEL_REFERENCIA, EXPERIENCIA_LABORAL, CURRICULUM, CONTRASENA, FOTO, ID_AREA,	FECHA_ENTRADA)
+                            VALUES ($rol,$estado,'$nombre', '$apellido', '$usuario', '$genero', '$correo', '$dni', '$profesion',  '$direccionp', '$celular', '$referencia', '$celular_referencia', '$experiencia_laboral', '$destino$nombrecurriculum','$contrasena','$destino1$nombrefoto', '$area', '$fecha_inicio')";
               
               if (mysqli_query($conn, $sql)) {
                 $last_id = $conn->insert_id;
@@ -208,7 +216,7 @@ if(in_array($extencion, $permitidos))
                           ID_PROFESION='$profesion', DIRECCION='$direccionp', CELULAR='$celular', REFERENCIA='$referencia', 
                           CEL_REFERENCIA='$celular_referencia', EXPERIENCIA_LABORAL='$experiencia_laboral' , 
                           CURRICULUM='$direccion2', FOTO='$direccion' ,  
-                          ID_AREA='$area' WHERE ID_USUARIO='$id_usuario'";
+                          ID_AREA='$area',FECHA_ENTRADA='$fecha_inicio', FECHA_SALIDA='$fecha_final', MOTIVO_SALIDA='$motivo_salida' WHERE ID_USUARIO='$id_usuario'";
          
                                         
   
@@ -267,21 +275,21 @@ if(in_array($extencion, $permitidos))
       
       //para eliminar en la tabla mysl  
       case "eliminar";
-        // inicio inserta en la tabla bitacora
-        $sql = "INSERT INTO tbl_bitacora (USUARIO, ACCION, OBSERVACION)
-        VALUES ('$usuario1[usuario]', 'ELIMINO', 'ELIMINO AL USUARIO CON ID: $id_usuario EN LA PANTALLA ADMINISTRATIVA DE USUARIOS')";
-        
-        if (mysqli_query($conn, $sql)) {
-          
-        } else {
-        
-        }
-        // fin inserta en la tabla bitacora
+
+      date_default_timezone_set("America/Guatemala");
+
+    $fechaE = date("Y-m-d h:i:s");
 
         $sql3 = "DELETE FROM tbl_usuarios WHERE ID_USUARIO='$id_usuario'";
         if (mysqli_query($conn, $sql3)) {
-        
-
+        // inicio inserta en la tabla bitacora
+        $sqlC = "INSERT INTO tbl_bitacora (FECHA,USUARIO, OPERACION, PANTALLA, CAMPO,ID_REGISTRO, VALOR_ORIGINAL, VALOR_NUEVO)
+                  VALUES ('$fechaE','$usuario1[usuario]', 'ELIMINO','USUARIOS', 'USUARIO','$id_usuario', 'ELIMINADO','ELIMINADO')";
+          if (mysqli_query($conn, $sqlC)) {} else { }
+        // fin inserta en la tabla bitacora
+        echo '<script>
+        alert("Usuario eliminado");
+    </script>';
           header('Location: ../../vistas/personas/vista_administradores');
       }else{
               echo '<script>
@@ -292,9 +300,64 @@ if(in_array($extencion, $permitidos))
 
       break;
       
-      default:
+////////////////////////////////// RESTABLECER CONTRASEÑA DE USUARIO ///////////////////////////////
+    case "restablecer"; 
+    date_default_timezone_set("America/Guatemala");
+
+    $fechaAC = date("Y-m-d h:i:s");
+
+    if($contrasenanueva == $contrasenaconfirmar){
+      // encripta la contraseña
+      $contrasenanueva= hash('sha512', $contrasenanueva);
+      $contrasenaconfirmar= hash('sha512', $contrasenaconfirmar);
+
+      $sqlresultadoC =  "UPDATE tbl_usuarios SET CONTRASENA='$contrasenanueva' WHERE USUARIO='$usuario'";
+      if ($conn->query($sqlresultadoC) === TRUE) {
+
+        // inicio inserta en la tabla bitacora
+        $sqlC = "INSERT INTO tbl_bitacora (FECHA,USUARIO, OPERACION, PANTALLA, CAMPO,ID_REGISTRO, VALOR_ORIGINAL, VALOR_NUEVO)
+                  VALUES ('$fechaAC','$usuario1[usuario]', 'EDITO','USUARIOS', 'CONTRASEÑA','$id_usuario', '*********','*********')";
+          if (mysqli_query($conn, $sqlC)) {} else { }
+        // fin inserta en la tabla bitacora
+ 
+      } 
+      //Deja en cero los intentos fallidos
+      $conn = new mysqli($servername, $username, $password, $dbname);
+      $sql =  "UPDATE tbl_usuarios SET intentos=0 WHERE USUARIO='$usuario'";
+      if ($conn->query($sql) === TRUE) {
+
+         
+              $conn = new mysqli($servername, $username, $password, $dbname);
+              $sqlb =  "UPDATE tbl_usuarios SET ID_ESTADO_USUARIO=1 WHERE USUARIO='$usuario'";
+              if ($conn->query($sqlb) === TRUE) {}
+
+             
+
+             echo '<script>
+                      alert("Contraseña Actualizada");
+                      window.location.href="../../vistas/personas/vista_administradores.php";
+                  </script>';
+
+      }
+      
+    //  header('Location: ../tablero/vista_tablero.php');
+
+
+    }else {
+      
+      echo '<script>
+        alert("Las contraseñas ingresadas no coinciden");
+        window.Location = "/vistas/personas/vista_administradores.php";
+      </script>';
+    }
+    
+    break;
+    
+
+
+    default:
           
-          $conn->close();   
+    $conn->close();  
   }// Fin del switch, para validar el valor del boton accion
 
 

@@ -22,7 +22,7 @@ require '../../controladores/co_solicitud_empleo.php';
     
     <style> 
 body {
-  background-image: url('../../imagenes/1659393257_fondo1.jpg');
+  background-image: url('../../imagenes/fondo.jpg');
   background-repeat: no-repeat;
   background-attachment: fixed; 
   background-size: 100% 100%;

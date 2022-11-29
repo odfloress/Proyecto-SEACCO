@@ -7,10 +7,10 @@
         $correo=(isset($_POST['correo']))?$_POST['correo']:"";
         $telefono=(isset($_POST['telefono']))?$_POST['telefono']:"";
         $dni=(isset($_POST['dni']))?$_POST['dni']:"";
-        $direccionPersonal=(isset($_POST['direccionPersonal']))?$_POST['direccionPersonal']:"";
-        $referencia=(isset($_POST['referencia']))?$_POST['referencia']:"";
-        $genero=(isset($_POST['genero']))?$_POST['genero']:"";
-        $foto=(isset($_POST['foto']))?$_POST['foto']:"";
+        //$direccionPersonal=(isset($_POST['direccionPersonal']))?$_POST['direccionPersonal']:"";
+        //$referencia=(isset($_POST['referencia']))?$_POST['referencia']:"";
+        //$genero=(isset($_POST['genero']))?$_POST['genero']:"";
+        //$foto=(isset($_POST['foto']))?$_POST['foto']:"";
         //$id_genero=(isset($_POST['id_genero']))?$_POST['id_genero']:"";
 
         $descripcion=(isset($_POST['descripcion']))?$_POST['descripcion']:"";
@@ -26,23 +26,9 @@ switch($accion){
  //para insertar en la tabla mysl
   case "registrar": 
         
-            $permitidos2 = array("jpg", "png", "jpeg", "JPEG", "JPG", "PNG");
-            $extencion = pathinfo($_FILES['foto']["name"], PATHINFO_EXTENSION);
-            
-            if(in_array($extencion, $permitidos2)){
-                $Fecha1= new DateTime();
-                $destino1 ="../../imagenes/";
-                $nombrefoto=($_FILES['foto']["name"]!="")?$Fecha1->getTimestamp()."_".$_FILES["foto"]["name"]:"imagen.jpg";
-                $tmpArchivo1= $_FILES["foto"]["tmp_name"];
-                if($tmpArchivo1!="") 
-                {
-                 move_uploaded_file($tmpArchivo1,$destino1.$nombrefoto);
-                }
-               
-
-              $sqlcliente = "INSERT INTO tbl_clientes (CODIGO,NOMBRE_CLIENTE,APELLIDO,CORREO,TELEFONO,DIRECCION,REFERENCIA,ID_GENERO,FOTO
-                ) 
-                VALUES ('$dni','$nombre','$apellido','$correo','$telefono','$direccionPersonal','$referencia','$genero','$destino1$nombrefoto')";
+           
+              $sqlcliente = "INSERT INTO tbl_clientes (CODIGO,NOMBRE_CLIENTE,APELLIDO,CORREO,TELEFONO) 
+                VALUES ('$dni','$nombre','$apellido','$correo','$telefono')";
                 if (mysqli_query($conn,$sqlcliente)){
                   // inicio inserta en la tabla bitacora
                     $sql7 = "INSERT INTO tbl_bitacora (USUARIO, ACCION, OBSERVACION)
@@ -95,12 +81,7 @@ switch($accion){
                   </script>';
                 mysqli_close($conn);
                 }
-              }else{
-              echo '<script type="text/javascript">
-                       alert("En foto solo archivos de imagen JPEG, JPG, PNG ");
-                    </script>';
-          }
-                  
+             
                   
                   /*$sqlproyecto ="INSERT INTO tbl_proyectos (ID_CLIENTE,ID_USUARIO,ID_ESTADOS,NOMBRE_PROYECTO,DESCRIPCION,
                     ID_DEPARTAMENTO,UBICACION,FECHA_INICIO,FECHA_FINAL)

@@ -147,15 +147,15 @@ if (mysqli_num_rows($roles35) > 0)
                       
 
 
-                      <label for="">Nombre:</label>
-                      <input type="text" class="form-control" name="nombre"  required value="" placeholder="" autocomplete="on" onkeyup="mayus(this);" onkeypress="return soloLetras(event);" onkeyup="quitarespacios(this); sinespacio(this);"  maxlength="30" id="campoNombre">
+                      <label for="">Nombres:</label>
+                      <input type="text" onkeypress="return soloLetras(event);" class="form-control" name="nombre"  required value="" placeholder="" autocomplete="on" onkeyup="mayus(this);" onkeyup="un_espacio(this);"  maxlength="30" id="campoNombre">
                                 <!-- Mensaje de la validacion -->
                                 <div class="invalid-feedback">
                                     Favor ingrese un nombre
                                 </div >
 
                       <label for="">Apellidos:</label>
-                      <input type="text" class="form-control" name="apellido"  onkeyup="un_espacio(this);" required value="" placeholder="" autocomplete="off" onkeyup="mayus(this);"  onkeypress="return soloLetras(event);"  maxlength="30"  >
+                      <input type="text" onkeypress="return soloLetras(event);" class="form-control" name="apellido"  onkeyup="un_espacio(this);" required value="" placeholder="" autocomplete="off" onkeyup="mayus(this);"    maxlength="30"  >
                                 <!-- Mensaje de la validacion -->
                                 <div class="invalid-feedback">
                                     Favor ingrese un Apellido
@@ -171,7 +171,7 @@ if (mysqli_num_rows($roles35) > 0)
                       <label for="">Contraseña:</label>
                       <div class="col-sm-15 " >
                         <input type="password" class="form-control" name="contrasena" id="myInput" title="una mayuscula, minuscula, 8 caracteres, un 1 numero  " value="" minlength="<?php echo $parametro_min?>" maxlength="<?php echo $parametro_max?>" 
-                        onkeypress="return clave1(event);" required onblur="quitarespacios(this);" onkeyup="sinespacio(this);" pattern="(?=.*[\d])(?=.*[a-z])(?=.*[A-Z]).{<?php echo $parametro_min?>,}">
+                        onkeypress="return clave1(event);" required onblur="quitarespacioss(this);" onkeyup="sinespacioss(this);" pattern="(?=.*[\d])(?=.*[a-z])(?=.*[A-Z]).{<?php echo $parametro_min?>,}">
                         <input type="checkbox" onclick="mostrarContrasena()" > Mostrar/Ocultar
                                 <div class="invalid-feedback">
                                   Ingrese una contraseña de 8 caracteres mínimo, mayusculas, numeros y/o 1 caracter especial
@@ -211,7 +211,8 @@ if (mysqli_num_rows($roles35) > 0)
                       </select> -->
 
                       <label for="">DNI:</label>
-                      <input type="text" class="form-control" name="dni" required value="" autocomplete="off" minlength="13" maxlength="13" onkeypress="return solonumero(event)" required pattern="(?!0{13})^[0-9][0-9]{12}$" title="13 caracteres y no todos ceros">
+                      <input type="text" onkeyup="quitarespacios(this); sinespacio(this); " class="form-control" name="dni" required value="" autocomplete="off" minlength="13" maxlength="13" onkeypress="return solonumero(event)" 
+                      required pattern="(?!0{13})^[0-9][0-9]{12}$" title="13 caracteres y no todos ceros">
                             <!-- Mensaje de la validacion -->
                             <div class="invalid-feedback">
                                     Favor ingrese un DNI sin guiones ni espacios y que contenga trece digitos
@@ -239,22 +240,23 @@ if (mysqli_num_rows($roles35) > 0)
                       <input type="text" class="form-control" name="profesion" required value="" autocomplete="off" onkeyup="mayus(this);" maxlength="30" > -->
 
                       <label for="">Dirección:</label>
-                      <textarea type="text" class="form-control" name="direccion" onkeyup="un_espacio(this);" required value="" autocomplete="off" onkeyup="mayus(this);" maxlength="70" ></textarea>
+                      <textarea type="text" class="form-control" name="direccion" onkeyup="un_espacio(this);" required value="" autocomplete="off" onkeyup="mayus(this);" maxlength="255" ></textarea>
                       <div class="invalid-feedback">
                                     Ingrese la dirección de residencia actual del usuario
                               </div >
 
                       <label for="">Teléfono:</label>
-                      <input type="text" autocomplete="off" class="form-control" name="celular" minlength="8" maxlength="8" required value="" placeholder="" required pattern="[0-9]+[1-9]+[0-9]+" title="8 caracteres y no todos ceros" onkeypress="return solonumero(event)" >
+                      <input type="text" onkeyup="quitarespacios(this); sinespacio(this); " autocomplete="off" class="form-control" name="celular" minlength="8" maxlength="8" required value="" placeholder="" required pattern="[0-9]+[1-9]+[0-9]+" title="8 caracteres y no todos ceros" onkeypress="return solonumero(event)" >
                       
                       <label for="">Referencia:</label>
-                      <input type="text" class="form-control" name="referencia"  autocomplete="off" onkeyup="mayus(this);" maxlength="30" >
+                      <input type="text" onkeyup="un_espacio(this);" class="form-control" name="referencia"  autocomplete="off" onkeyup="mayus(this);" maxlength="50" 
+                      >
 
-                      <label for="">Teléfono de referencia:</label>
-                      <input type="text" autocomplete="off"  class="form-control" name="celular_referencia" minlength="8" maxlength="8"  value="" placeholder=""  pattern="[0-9]+[1-9]+[0-9]+" title="8 caracteres y no todos ceros" onkeypress="return solonumero(event)">
+                      <label for="">Teléfono  de referencia:</label>
+                      <input type="text" onkeyup="quitarespacios(this); sinespacio(this); " autocomplete="off"  class="form-control" name="celular_referencia" minlength="8" maxlength="8"  value="" placeholder=""  pattern="[0-9]+[1-9]+[0-9]+" title="8 caracteres y no todos ceros" onkeypress="return solonumero(event)">
 
                       <label for="">Experiencia laboral:</label>
-                      <textarea type="text" class="form-control" name="experiencia_laboral" onkeyup="un_espacio(this);" value="" autocomplete="off" onkeyup="mayus(this);" maxlength="30" required ></textarea>
+                      <textarea type="text" class="form-control" name="experiencia_laboral" onkeyup="un_espacio(this);" value="" autocomplete="off" onkeyup="mayus(this);" maxlength="255" required ></textarea>
 
                       <label for="">Currículum:</label>
                       <input type="file" class="form-control" name="curriculum"  accept=".pdf, .doxc" value="" placeholder="Opcional" required>
@@ -280,7 +282,9 @@ if (mysqli_num_rows($roles35) > 0)
                                   }}// finaliza el if y el while
                                   ?>
                           </select>
-                      
+                          <label for="">Fecha Entrada:</label>
+                    <input class="form-control" type="Datetime-local" name="fecha_inicio" minlength="" maxlength="" id="" required value="<?php echo "$fecha_inicio" ?>">
+                    
                   
                   </div>
                 <!-- Fin Cuerpo del modal Modal -->               
@@ -370,12 +374,16 @@ if (mysqli_num_rows($roles35) > 0)
                   <th class="desaparecerTemporalmente">Currículum</th>                                                    
                   <th class="desaparecerTemporalmente">Foto</th>
                   <th class="desaparecerTemporalmente1">Área</th>
+                  <th class="desaparecerTemporalmente1">Fecha Entrada</th>
+                  <th class="desaparecerTemporalmente1">Fecha Salida</th>
+                  <th class="desaparecerTemporalmente1">Motivo Salida</th>
                   
                   </tr>
                   </thead>
                   <tbody>
                     <?php 
                     $cont = 0;
+                    
                     while ($filas= mysqli_fetch_assoc($result)){
 
                      ?>
@@ -415,6 +423,7 @@ if (mysqli_num_rows($roles35) > 0)
                               
                 <div class="modal-body">
                     <label for="">Id del Usuario:</label>
+
                     <input type="text" class="form-control" readonly name="id_usuario" required value="<?php echo $filas['ID_USUARIO'] ?>"  placeholder=""  >
                     <!-- Inicio del select de rol -->
                     <label for="sel1" class="form-label">Rol:</label>
@@ -459,27 +468,17 @@ if (mysqli_num_rows($roles35) > 0)
                     <!-- Inicio del select deL estado -->
                     
                     <label for="">Nombres:</label>
-                    <input type="text" hidden class="form-control" name="nombre" pattern="[A-Za-z]*" required value="<?php echo $filas['NOMBRE'] ?>"  autocomplete="off" onkeyup="mayus(this);" maxlength="30" >
-                    <input type="text"  onkeyup="un_espacio(this);" onkeypress="return soloLetras(event);" class="form-control" name="nombre_anterior" pattern="[A-Za-z]*" required value="<?php echo $filas['NOMBRE'] ?>"  autocomplete="off" onkeyup="mayus(this);" maxlength="30" >
+                    <input type="text"  hidden class="form-control" name="nombre" pattern="[A-Za-z]*" required value="<?php echo $filas['NOMBRE'] ?>"  autocomplete="off" onkeyup="mayus(this);" maxlength="30" >
+                    <input type="text" onkeyup="un_espacio(this);"  class="form-control" name="nombre_anterior" pattern="[A-Za-z]*" required value="<?php echo $filas['NOMBRE'] ?>"  autocomplete="off" onkeyup="mayus(this);" maxlength="30" 
+                    onkeypress="return soloLetras(event);" >
 
                     <label for="">Apellidos:</label>
-                    <input type="text"  onkeyup="un_espacio(this);" onkeypress="return soloLetras(event);" class="form-control" name="apellido" pattern="[A-Za-z]*" required value="<?php echo $filas['APELLIDO'] ?>" autocomplete="off" onkeyup="mayus(this);" maxlength="30" >
+                    <input type="text" onkeyup="un_espacio(this);" class="form-control" name="apellido" pattern="[A-Za-z]*" required value="<?php echo $filas['APELLIDO'] ?>" autocomplete="off" onkeyup="mayus(this);" maxlength="30" 
+                    onkeypress="return soloLetras(event);" >
 
                     <label for="">Usuario:</label>
                     <input type="text" readonly class="form-control" name="usuario" required value="<?php echo $filas['USUARIO'] ?>" placeholder="" >
 
-                   <!-- <label for="">Contraseña:</label>
-                    <div class="col-sm-15 " >
-                    <input type="password" class="form-control" name="contrasena" id="myInpu" title="una mayuscula, minuscula, 8 caracteres, un 1 numero  " 
-                     minlength="<?php echo $parametro_min?>" maxlength="<?php echo $parametro_max?>" onkeypress="return clave1(event);" required onblur="quitarespacios(this);" 
-                    onkeyup="sinespacio(this);" pattern="(?=.*[\d])(?=.*[a-z])(?=.*[A-Z]).{<?php echo $parametro_min?>,}" required 
-                    value="<?php echo $filas['CONTRASENA'] ?>">
-                    <input type="checkbox" onclick="mostrarContrasena2()" > Mostrar/Ocultar
-                                <div class="invalid-feedback">
-                                  Ingrese una contraseña de 8 caracteres mínimo, mayusculas, numeros y/o 1 caracter especial
-                                </div>
-                          
-                      </div>-->
 
                     <label for="">Correo:</label>
                     <input type="email" readonly class="form-control" name="correo" required value="<?php echo $filas['CORREO'] ?>" placeholder="" >
@@ -506,7 +505,8 @@ if (mysqli_num_rows($roles35) > 0)
                     
 
                     <label for="">DNI:</label>
-                    <input type="text" class="form-control" name="dni" required value="<?php echo $filas['DNI'] ?>" autocomplete="off" minlength="15" maxlength="15"  onkeypress="return solonumero(event)" placeholder="0000-0000-000000" >
+                    <input type="text" class="form-control" name="dni" required value="<?php echo $filas['DNI'] ?>" autocomplete="off" 
+                    minlength="15" maxlength="15"  onkeypress="return solonumero(event)" placeholder="0000-0000-000000" onkeyup="quitarespacios(this); sinespacio(this); ">
 
                     <label for="">Profesión:</label>
                     <select class="form-select"  name="profesion" required >
@@ -529,22 +529,28 @@ if (mysqli_num_rows($roles35) > 0)
                    </select>
 
                     <label for="">Dirección:</label>
-                    <input type="text"  onkeyup="un_espacio(this);" class="form-control" name="direccion" required value="<?php echo $filas['DIRECCION'] ?>" autocomplete="off" onkeyup="mayus(this);" maxlength="70" >
+                    <input type="text" onkeyup="un_espacio(this);" class="form-control" name="direccion" required value="<?php echo $filas['DIRECCION'] ?>" 
+                    autocomplete="off" onkeyup="mayus(this);" maxlength="255" >
 
                     <label for="">Teléfono:</label>
-                    <input type="number" class="form-control" name="celular" required value="<?php echo $filas['CELULAR'] ?>" placeholder="" >
+                    <input type="number" onkeyup="quitarespacios(this); sinespacio(this); " minlength="8" maxlength="8"  class="form-control" name="celular" required value="<?php echo $filas['CELULAR'] ?>" 
+                    placeholder=""  >
                     
                     <label for="">Referencia:</label>
-                    <input type="text"  onkeyup="un_espacio(this);" class="form-control" name="referencia" required value="<?php echo $filas['REFERENCIA'] ?>" autocomplete="off" onkeyup="mayus(this);" maxlength="70" >
+                    <input type="text" onkeyup="un_espacio(this);" class="form-control" name="referencia" required value="<?php echo $filas['REFERENCIA'] ?>" 
+                    autocomplete="off" onkeyup="mayus(this);" maxlength="50" >
 
                     <label for="">Teléfono de referencia:</label>
-                    <input type="number" class="form-control" name="celular_referencia" required value="<?php echo $filas['CEL_REFERENCIA'] ?>" placeholder="" >
+                    <input type="number" onkeyup="quitarespacios(this); sinespacio(this);" minlength="8" maxlength="8" class="form-control" name="celular_referencia" required value="<?php echo $filas['CEL_REFERENCIA'] ?>" 
+                    placeholder=""  >
 
                     <label for="">Experiencia laboral:</label>
-                    <input type="text"  onkeyup="un_espacio(this);" class="form-control" name="experiencia_laboral" required value="<?php echo $filas['EXPERIENCIA_LABORAL'] ?>" autocomplete="off" onkeyup="mayus(this);" maxlength="30" >
+                    <input type="text" onkeyup="un_espacio(this);" class="form-control" name="experiencia_laboral" required value="<?php echo $filas['EXPERIENCIA_LABORAL'] ?>" 
+                    autocomplete="off" onkeyup="mayus(this);" maxlength="255" >
 
                     <label for="">Currículum:</label>
-                    <input type="file" class="form-control" name="curriculum" accept=".pdf, .doxc" value="<?php echo $filas['CURRICULUM'] ?>" placeholder="" >
+                    <input type="file" class="form-control" name="curriculum" accept=".pdf, .doxc" value="<?php echo $filas['CURRICULUM'] ?>" 
+                    placeholder="" >
 
                     <label for="">Foto:</label>
                     <input type="file" class="form-control" name="imagenes" accept=".jpg, .png, .jpej, .JPEG, .JPG, .PNG" value="<?php echo $filas['FOTO'] ?>" placeholder="" >
@@ -573,13 +579,21 @@ if (mysqli_num_rows($roles35) > 0)
                            ?>
 
                     </select>
+                    <label for="">Fecha Entrada:</label>
+                    <input class="form-control" type="Datetime-local" name="fecha_inicio" minlength="" maxlength="" id="" required value="<?php echo $filas['FECHA_ENTRADA'] ?>">
+                    
+                    <label for="">Fecha Salida:</label>
+                    <input class="form-control" type="Datetime-local" name="fecha_final" minlength="" maxlength="" id="" required value="<?php echo $filas['FECHA_SALIDA'] ?>">
+                    
+                    <label for="">Motivo Salida:</label>
+                      <textarea type="text" class="form-control" name="motivo_salida" onkeyup="un_espacio(this);" value="" autocomplete="off" onkeyup="mayus(this);" maxlength="255" required ><?php echo $filas['MOTIVO_SALIDA'] ?></textarea>
                 </div>
                 <!-- Fin Cuerpo del modal Modal -->
 
 
                                 <!-- pie del modal -->
                                 <div class="modal-footer">
-                                <button type="submit" name="accion" value="editar" class="btn btn-primary" onclick="return confirm('¿Desea editar la categoria?')">Guardar</button>
+                                <button type="submit" name="accion" value="editar" class="btn btn-primary" onclick="return confirm('¿Desea editar la usuario?')">Guardar</button>
                                   <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
                                 </div>
                                 </form>
@@ -593,6 +607,7 @@ if (mysqli_num_rows($roles35) > 0)
                           
                             <input type="hidden" name="id_usuario"  value="<?php echo $filas['ID_USUARIO'] ?>">
                             <?php 
+                            ////////////////////// INICIO PERMISO DE ELIMINAR //////////////////////////////
                           include '../../conexion/conexion.php';
                           $area1 = "SELECT * FROM tbl_ms_roles_ojetos WHERE ID_ROL='$id_rol7' and ID_OBJETO=1 and PERMISO_ELIMINACION=1";
                           $area2 = mysqli_query($conn, $area1);
@@ -602,10 +617,71 @@ if (mysqli_num_rows($roles35) > 0)
                         onclick="return confirm('¿Quieres eliminar este dato?')"
                         type="submit" class="btn btn-danger ">
                         <i class="fas fa-trash-alt"></i>
-                    </button><?php 
+                    </button>
+                    <!---- ////////////////////// FIN PERMISO DE ELIMINAR ////////////////////////////// -->
+                    <?php 
                           }
                         ?></form>
+                          <input type="hidden" name="id_usuario"  value="<?php echo $filas['ID_USUARIO'] ?>">
+                        <!--- ////////////////////// INICIO PERMISO DE EDITA CONTRASEÑA ////////////////////////////// -->
+                        <?php 
+                            
+                          include '../../conexion/conexion.php';
+                          $area1 = "SELECT * FROM tbl_ms_roles_ojetos WHERE ID_ROL='$id_rol7' and ID_OBJETO=1 and PERMISO_ACTUALIZACION=1";
+                          $area2 = mysqli_query($conn, $area1);
+                          if (mysqli_num_rows($area2) > 0)
+                          {?>
+                          
+                             <button
+                        type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#myModalr<?php echo $filas['USUARIO'] ?>">
+                        <i class="fas fa-key"></i>
+                    </button>
+                    <!-- The Modal -->
+                      <div class="modal" id="myModalr<?php echo $filas['USUARIO'] ?>">
+                        <div class="modal-dialog">
+                          <div class="modal-content">
+
+                            <!-- Modal Header -->
+                            <div class="modal-header">
+                              <h4 class="modal-title">Restablecer Contaseña</h4>
+                              <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                            </div>
+
+                            <!-- Modal body -->
+                            <div class="modal-body">
+                            <form action="" method="post">
+                            <label for="">Usuario:</label>
+                            <input type="text" readonly class="form-control" name="usuario" required value="<?php echo $filas['USUARIO'] ?>" placeholder="" >
+                            <br>
+                      <label for="">Nueva contraseña:</label>
+                        <input type="password" class="form-control" name="contrasena" id="contra" placeholder="Nueva contraseña" 
+                        onkeypress="return clave1(event);" required onblur="quitarespacioss(this);" onkeyup="sinespacioss(this);"  
+                        pattern="(?=.*[\d])(?=.*[a-z])(?=.*[A-Z]).{<?php echo $parametro_min?>,}" minlength="<?php echo $parametro_min?>" maxlength="<?php echo $parametro_max?>">
+                        <input type="checkbox" onclick="mostrarContrasena2()" > Mostrar/Ocultar
+                        <br>
+                      <label for="">Confirmar contraseña:</label>
+                        <input type="password" class="form-control" name="confirmar_contrasena" id="contrac" 
+                        onkeypress="return clave1(event);" placeholder="Confirmar nueva contraseña" 
+                        required onblur="quitarespacioss(this);" onkeyup="sinespacioss(this);" 
+                        pattern="(?=.*[\d])(?=.*[a-z])(?=.*[A-Z]).{<?php echo $parametro_min?>,}" minlength="<?php echo $parametro_min?>" maxlength="<?php echo $parametro_max?>">
+                        <input type="checkbox" onclick="mostrarContrasena3()" > Mostrar/Ocultar
+                      
+                            </div>
+
+                            <!-- Modal footer -->
+                            <div class="modal-footer">
+                              <button type="submit" value="restablecer" name="accion" class="btn btn-success">Actualizar</button>
+                              <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
+                            </div>
+
+                          </div>
+                        </div>
+                      </div>
                     
+                        <?php 
+                      }
+                    ?></form>
+                    <!--- ////////////////////// FIN PERMISO DE EDITAR CONTRASEÑA ////////////////////////////// --->
 </td>
                      <td class="desaparecerTemporalmente1"><?php echo $filas['ID_USUARIO'] ?></td>
                      <td class="desaparecerTemporalmente1"><?php echo $filas['ROL'] ?></td>
@@ -625,6 +701,9 @@ if (mysqli_num_rows($roles35) > 0)
                      <td class="desaparecerTemporalmente"><a href="<?php echo $filas['CURRICULUM'] ?>" download>Descargar</a></td>                     
                      <td class="desaparecerTemporalmente"><img class="img-thumbnail" width="100px" src="<?php echo $filas['FOTO'] ?>" /></td>
                      <td class="desaparecerTemporalmente1"><?php echo $filas['AREA'] ?></td>
+                     <td class="desaparecerTemporalmente1"><?php echo $filas['FECHA_ENTRADA'] ?></td>
+                     <td class="desaparecerTemporalmente1"><?php echo $filas['FECHA_SALIDA'] ?></td>
+                     <td class="desaparecerTemporalmente1"><?php echo $filas['MOTIVO_SALIDA'] ?></td>
 
                      
                      
@@ -804,32 +883,51 @@ if (mysqli_num_rows($roles35) > 0)
     </script>
 
 
-    <script type="text/javascript">
+<script type="text/javascript">
+function sinespacio(e) {
 
-        function sinespacio(e) {
-
-        var cadena =  e.value;
-        var limpia = "";
-        var parts = cadena.split(" ");
-        var length = parts.length;
-
-          for (var i = 0; i < length; i++) {
-              nuevacadena = parts[i];
-              subcadena = nuevacadena.trim();
-
-          if(subcadena != "") {
-             limpia += subcadena + " ";
-                }
-          }
-        limpia = limpia.trim();
+  var limpia = e.value;
+        limpia = limpia.toUpperCase().replace(' ', '');
         e.value = limpia;
 
-         };
-     </script>
+};
+</script>
 
- <script type="text/javascript">
+<script type="text/javascript">
+function quitarespacios(e) {
 
-    function quitarespacios(e) {
+  var cadena =  e.value;
+  cadena = cadena.trim();
+
+  e.value = cadena;
+
+};
+</script>
+<!--INICIO PARA LA CONTRASEÑA ------>
+<script type="text/javascript">
+    function sinespacioss(e) {
+
+      var cadena =  e.value;
+      var limpia = "";
+      var parts = cadena.split(" ");
+      var length = parts.length;
+
+      for (var i = 0; i < length; i++) {
+        nuevacadena = parts[i];
+        subcadena = nuevacadena.trim();
+
+        if(subcadena != "") {
+          limpia += subcadena + " ";
+        }
+      }
+      limpia = limpia.trim();
+      e.value = limpia;
+
+    };
+</script>
+
+<script type="text/javascript">
+    function quitarespacioss(e) {
 
       var cadena =  e.value;
       cadena = cadena.trim();
@@ -837,8 +935,8 @@ if (mysqli_num_rows($roles35) > 0)
       e.value = cadena;
 
     };
-
-  </script>
+</script>
+<!-- FIN PARA LA CONTRASEÑA ------>
 <script>
         function clave1(e) {
         key = e.keyCode || e.which;
@@ -869,7 +967,15 @@ if (mysqli_num_rows($roles35) > 0)
           }
         }
         function mostrarContrasena2(){
-          var x = document.getElementById("myInpu");
+          var x = document.getElementById("contra");
+          if (x.type === "password"){
+            x.type = "text";
+          }else{
+            x.type = "password";
+          }
+        }
+        function mostrarContrasena3(){
+          var x = document.getElementById("contrac");
           if (x.type === "password"){
             x.type = "text";
           }else{
@@ -877,6 +983,7 @@ if (mysqli_num_rows($roles35) > 0)
           }
         }
 </script>
+
 
 
 
