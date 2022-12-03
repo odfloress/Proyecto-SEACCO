@@ -14,7 +14,12 @@
   // //Variables para recuperar la información de los campos de la vista adminiistradores
   $id_usuario=(isset($_POST['id_usuario']))?$_POST['id_usuario']:"";
   $rol=(isset($_POST['rol']))?$_POST['rol']:"";
+  $id_rol = intval(preg_replace('/[^0-9]+/', '', $rol), 10);
+  $nuevo_rol= preg_replace('/[0-9]+/', '', $rol);
   $estado=(isset($_POST['estado']))?$_POST['estado']:"";
+  $id_estado = intval(preg_replace('/[^0-9]+/', '', $estado), 10);
+  $estado_nuevo = preg_replace('/[0-9]+/', '', $estado);
+  $estado_usuario=(isset($_POST['estado_usuario']))?$_POST['estado_usuario']:"";
   $nombre=(isset($_POST['nombre']))?$_POST['nombre']:"";
   $nombre_anterior=(isset($_POST['nombre_anterio']))?$_POST['nombre_anterio']:"";
   $apellido=(isset($_POST['apellido']))?$_POST['apellido']:"";
@@ -22,8 +27,12 @@
   $contrasena=(isset($_POST['contrasena']))?$_POST['contrasena']:"";
   $correo=(isset($_POST['correo']))?$_POST['correo']:"";
   $genero=(isset($_POST['genero']))?$_POST['genero']:"";
+  $id_genero = intval(preg_replace('/[^0-9]+/', '', $genero), 10);
+  $nuevo_genero= preg_replace('/[0-9]+/', '', $genero);
   $dni=(isset($_POST['dni']))?$_POST['dni']:"";
   $profesion=(isset($_POST['profesion']))?$_POST['profesion']:"";
+  $id_profesion = intval(preg_replace('/[^0-9]+/', '', $profesion), 10);
+  $nuevo_profesion= preg_replace('/[0-9]+/', '', $profesion);
   $direccionp=(isset($_POST['direccion']))?$_POST['direccion']:"";
   $celular=(isset($_POST['celular']))?$_POST['celular']:"";
   $referencia=(isset($_POST['referencia']))?$_POST['referencia']:"";
@@ -31,6 +40,8 @@
   $experiencia_laboral=(isset($_POST['experiencia_laboral']))?$_POST['experiencia_laboral']:"";
   $curriculum=(isset($_POST['curriculum']))?$_POST['curriculum']:"";
   $area=(isset($_POST['area']))?$_POST['area']:"";
+  $id_area = intval(preg_replace('/[^0-9]+/', '', $area), 10);
+  $nuevo_area = preg_replace('/[0-9]+/', '', $area);
   $ruta=(isset($_POST['ruta_curriculum']))?$_POST['ruta_curriculum']:"";
   $ruta2=(isset($_POST['ruta_imagen']))?$_POST['ruta_imagen']:"";
   $curriculum_persona = substr($ruta, 16); 
@@ -49,6 +60,44 @@
   //variable para recuperar los botones de la vista administradores  
   $accion=(isset($_POST['accion']))?$_POST['accion']:"";
   
+ ///////////////// INICIO SELECCIONAR LOS DATOS ACTUALES ////////////////////
+ $mostrar_actuales = "SELECT * FROM (((((tbl_usuarios u
+                       INNER JOIN tbl_generos g ON u.ID_GENERO = g.ID_GENERO)
+                       INNER JOIN tbl_roles r ON u.ID_ROL = r.ID_ROL)
+                       INNER JOIN tbl_areas a ON u.ID_AREA = a.ID_AREA)
+                       INNER JOIN tbl_estado_usuario e ON u.ID_ESTADO_USUARIO = e.ID_ESTADO_USUARIO)
+                       INNER JOIN tbl_profesiones p ON u.ID_PROFESION = p.ID_PROFESION) WHERE USUARIO!='ADMINISTRADOR'";
+$sultados_actuales = $conn->query($mostrar_actuales);
+if ($sultados_actuales->num_rows > 0) 
+{
+ while($datos_actuales = $sultados_actuales->fetch_assoc()) 
+ {
+    $ID_USUARIO = $datos_actuales["ID_USUARIO"];
+    $ROL = $datos_actuales["ROL"];
+    $ID_ROL = $datos_actuales["ID_ROL"];
+    $ID_ESTADO_USUARIO = $datos_actuales["ID_ESTADO_USUARIO"];
+    $ESTADO_ACTUAL = $datos_actuales["NOMBRE_ESTADO"];
+    $NOMBRE = $datos_actuales["NOMBRE"];
+    $APELLIDO = $datos_actuales["APELLIDO"];
+    $GENERO = $datos_actuales["GENERO"];
+    $ID_GENERO = $datos_actuales["ID_GENERO"];
+    $DNI = $datos_actuales["DNI"];
+    $PROFESION = $datos_actuales["PROFESION"];
+    $ID_PROFESION = $datos_actuales["ID_PROFESION"];
+    $DIRECCION = $datos_actuales["DIRECCION"];
+    $CELULAR = $datos_actuales["CELULAR"];
+    $REFERENCIA = $datos_actuales["REFERENCIA"];
+    $CEL_REFERENCIA = $datos_actuales["CEL_REFERENCIA"];
+    $EXPERIENCIA_LABORAL = $datos_actuales["EXPERIENCIA_LABORAL"];
+    $AREA = $datos_actuales["AREA"];
+    $ID_AREA = $datos_actuales["ID_AREA"];
+    $FECHA_ENTRADA = $datos_actuales["FECHA_ENTRADA"];
+    $FECHA_SALIDA = $datos_actuales["FECHA_SALIDA"];
+    $MOTIVO_SALIDA = $datos_actuales["MOTIVO_SALIDA"];
+  }
+}
+///////////////// FIN SELECCIONAR LOS DATOS ACTUALES ////////////////////
+
   // encripta la contraseña
   $contrasena= hash('sha512', $contrasena);
 
@@ -159,6 +208,13 @@
 
        //para editar en la tabla mysl      
       case "editar";
+/*
+      echo $fecha_inicio.'<br>';
+      echo $fecha_final.'<br>';
+      echo $FECHA_ENTRADA.'<br>';
+      echo $id_estado.'<br>';
+      echo $estado_usuario.'<br>';
+      die();*/
       ////////// extrae la extencion de la imagen ///////////
 $tmpFoto1= $_FILES["imagenes"]["tmp_name"];
 if($tmpFoto1!="") {
@@ -211,7 +267,7 @@ if(in_array($extencion, $permitidos))
                 $direccion2 = "$destino1$nombre_curriculum";
           
                         //////////// inicio realiza el update ////////
-                          $sql2 = "UPDATE tbl_usuarios SET ID_ROL='$rol', ID_ESTADO_USUARIO='$estado', NOMBRE='$nombre', 
+                          $sql2 = "UPDATE tbl_usuarios SET ID_ROL='$rol', ID_ESTADO_USUARIO='$id_estado', NOMBRE='$nombre', 
                           APELLIDO='$apellido', USUARIO='$usuario', ID_GENERO='$genero', CORREO='$correo', DNI='$dni', 
                           ID_PROFESION='$profesion', DIRECCION='$direccionp', CELULAR='$celular', REFERENCIA='$referencia', 
                           CEL_REFERENCIA='$celular_referencia', EXPERIENCIA_LABORAL='$experiencia_laboral' , 
@@ -222,11 +278,117 @@ if(in_array($extencion, $permitidos))
   
                                         if (mysqli_query($conn, $sql2)) 
                                         {
-                                            // inicio inserta en la tabla bitacora
+                                            /* inicio inserta en la tabla bitacora
                                             $sql = "INSERT INTO tbl_bitacora (USUARIO, OPERACION, PANTALLA, CAMPO, ID_REGISTRO,VALOR_ORIGINAL, VALOR_NUEVO)
                                               VALUES ('$usuario1[usuario]', 'EDITO','USUARIOS', 'NOMBRE','$id_usuario' ,'NUEVO','$usuario')";
-                                              if (mysqli_query($conn, $sql)) {} else {}
+                                              if (mysqli_query($conn, $sql)) {} else {} */
                                             // fin inserta en la tabla bitacora
+
+                                            // fin inserta en la tabla bitacora
+             // ////////////// INICIO FUNCION BITACORA /////////////////////
+        
+              if($ID_ROL != $id_rol) ///////////// 
+              {
+                include_once 'funcion_bitacora.php';
+                bitacora('EDITO', 'USUARIOS', 'ROL', $id_usuario, $ROL, $nuevo_rol);
+              }
+
+              if($ID_ESTADO_USUARIO != $id_estado) ///////////// 
+              {
+                include_once 'funcion_bitacora.php';
+                bitacora('EDITO', 'USUARIOS', 'NOMBRE ESTADO', $id_usuario, $ESTADO_ACTUAL, $estado_nuevo);
+              }
+
+              if($NOMBRE != $nombre) ///////////// 
+              {
+                include_once 'funcion_bitacora.php';
+                bitacora('EDITO', 'USUARIOS', 'NOMBRE', $id_usuario, $NOMBRE, $nombre);
+              }
+
+              if($APELLIDO != $apellido) ///////////// 
+              {
+                include_once 'funcion_bitacora.php';
+                bitacora('EDITO', 'USUARIOS', 'APELLIDO', $id_usuario, $APELLIDO, $apellido);
+              }
+
+              if($ID_GENERO != $id_genero) ///////////// 
+              {
+                include_once 'funcion_bitacora.php';
+                bitacora('EDITO', 'USUARIOS', 'GENERO', $id_usuario, $GENERO, $nuevo_genero);
+              }
+
+              if($DNI != $dni) ///////////// 
+              {
+                include_once 'funcion_bitacora.php';
+                bitacora('EDITO', 'USUARIOS', 'DNI', $id_usuario, $DNI, $dni);
+              }
+
+              if($ID_PROFESION != $id_profesion) ///////////// 
+              {
+                include_once 'funcion_bitacora.php';
+                bitacora('EDITO', 'USUARIOS', 'PROFESION', $id_usuario, $PROFESION, $nuevo_profesion);
+              }
+
+              if($DIRECCION != $direccionp) ///////////// 
+              {
+                include_once 'funcion_bitacora.php';
+                bitacora('EDITO', 'USUARIOS', 'DIRECCION', $id_usuario, $DIRECCION, $direccionp);
+              }
+
+              if($CELULAR != $celular) ///////////// 
+              {
+                include_once 'funcion_bitacora.php';
+                bitacora('EDITO', 'USUARIOS', 'CELULAR', $id_usuario, $CELULAR, $celular);
+              }
+
+              if($REFERENCIA != $referencia) ///////////// 
+              {
+                include_once 'funcion_bitacora.php';
+                bitacora('EDITO', 'USUARIOS', 'REFERENCIA', $id_usuario, $REFERENCIA, $referencia);
+              }
+
+              if($CEL_REFERENCIA != $celular_referencia) ///////////// 
+              {
+                include_once 'funcion_bitacora.php';
+                bitacora('EDITO', 'USUARIOS', 'CELULAR REFERENCIA', $id_usuario, $CEL_REFERENCIA, $celular_referencia);
+              }
+
+              if($EXPERIENCIA_LABORAL != $experiencia_laboral) ///////////// 
+              {
+                include_once 'funcion_bitacora.php';
+                bitacora('EDITO', 'USUARIOS', 'EXPERIENCIA LABORAL', $id_usuario, $EXPERIENCIA_LABORAL, $experiencia_laboral);
+              }
+
+              if($ID_AREA != $id_area) ///////////// 
+              {
+                include_once 'funcion_bitacora.php';
+                bitacora('EDITO', 'USUARIOS', 'AREA', $id_usuario, $AREA, $nuevo_area);
+              }
+
+              $fecha_inicio = str_replace("T", " ", $fecha_inicio);
+              $FECHA_ENTRADA = substr($FECHA_ENTRADA, 0, -3);
+              if($FECHA_ENTRADA != $fecha_inicio) ///////////// 
+              {
+                include_once 'funcion_bitacora.php';
+                bitacora('EDITO', 'USUARIOS', 'FECHA ENTRADA', $id_usuario, $FECHA_ENTRADA, $fecha_inicio);
+              }
+
+              $fecha_final = str_replace("T", " ", $fecha_final);
+              $FECHA_SALIDA = substr($FECHA_SALIDA, 0, -3);
+              if($FECHA_SALIDA != $fecha_final) ///////////// 
+              {
+                include_once 'funcion_bitacora.php';
+                bitacora('EDITO', 'USUARIOS', 'FECHA SALIDA', $id_usuario, $FECHA_SALIDA, $fecha_final);
+              }
+
+              if($MOTIVO_SALIDA != $motivo_salida) ///////////// 
+              {
+                include_once 'funcion_bitacora.php';
+                bitacora('EDITO', 'USUARIOS', 'FMOTIVO SALIDA', $id_usuario, $MOTIVO_SALIDA, $motivo_salida);
+              }
+      
+         // ////////////// FIN FUNCION BITACORA ///////////////////////
+
                                             echo '<script>
                                                     alert("Edición exitosa");
                                                     window.location.href="../../vistas/personas/vista_administradores";

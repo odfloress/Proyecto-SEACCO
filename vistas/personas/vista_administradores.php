@@ -439,7 +439,7 @@ if (mysqli_num_rows($roles35) > 0)
                               $id = $row['ID_ROL'];
                               $rol =$row['ROL'];
                         ?>
-                          <option value="<?php  echo $id; ?>"><?php echo $rol?></option>
+                          <option value="<?php  echo $id.$rol; ?>"><?php echo $rol?></option>
                           <?php
                            }}// finaliza el if y el while
                            ?>
@@ -447,6 +447,7 @@ if (mysqli_num_rows($roles35) > 0)
                     
                     <!-- Inicio del select deL estado -->
                     <label for="sel1" class="form-label">Estado:</label>
+                    <input type="hidden" name="estado_usuario" value="<?php echo $filas['NOMBRE_ESTADO']; ?>" >
                     <select class="form-select"  name="estado" required >
                     <option value="<?php echo $filas['ID_ESTADO_USUARIO']; ?>"> <?php echo $filas['NOMBRE_ESTADO']; ?></option>
                        
@@ -460,7 +461,7 @@ if (mysqli_num_rows($roles35) > 0)
                               $id = $row['ID_ESTADO_USUARIO'];
                               $estado =$row['NOMBRE_ESTADO'];
                         ?>
-                          <option value="<?php  echo $id; ?>"><?php echo $estado?></option>
+                          <option value="<?php  echo $id.$estado ?>"><?php echo $estado?></option>
                           <?php
                            }}// finaliza el if y el while
                            ?>
@@ -497,7 +498,7 @@ if (mysqli_num_rows($roles35) > 0)
                               $id_genero = $row['ID_GENERO'];
                               $genero =$row['GENERO'];
                         ?>
-                          <option value="<?php  echo $id_genero; ?>"><?php echo $genero?></option>
+                          <option value="<?php  echo $id_genero.$genero; ?>"><?php echo $genero?></option>
                           <?php
                            }}// finaliza el if y el while
                            ?>
@@ -522,7 +523,7 @@ if (mysqli_num_rows($roles35) > 0)
                               $id_profesion = $row['ID_PROFESION'];
                               $profesion3 =$row['PROFESION'];
                         ?>
-                          <option value="<?php  echo $id_profesion; ?>"><?php echo $profesion3?></option>
+                          <option value="<?php  echo $id_profesion.$profesion3; ?>"><?php echo $profesion3?></option>
                           <?php
                            }}// finaliza el if y el while
                            ?>
@@ -573,7 +574,7 @@ if (mysqli_num_rows($roles35) > 0)
                               $id_area = $row['ID_AREA'];
                               $area3 =$row['AREA'];
                         ?>
-                          <option value="<?php  echo $id_area; ?>"><?php echo $area3?></option>
+                          <option value="<?php  echo $id_area.$area3; ?>"><?php echo $area3?></option>
                           <?php
                            }}// finaliza el if y el while
                            ?>
@@ -633,7 +634,7 @@ if (mysqli_num_rows($roles35) > 0)
                           {?>
                           
                              <button
-                        type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#myModalr<?php echo $filas['USUARIO'] ?>">
+                        type="button" class="btn btn-success" onclick="ocultar()" data-bs-toggle="modal" data-bs-target="#myModalr<?php echo $filas['USUARIO'] ?>">
                         <i class="fas fa-key"></i>
                     </button>
                     <!-- The Modal -->
@@ -654,16 +655,16 @@ if (mysqli_num_rows($roles35) > 0)
                             <input type="text" readonly class="form-control" name="usuario" required value="<?php echo $filas['USUARIO'] ?>" placeholder="" >
                             <br>
                       <label for="">Nueva contraseña:</label>
-                        <input type="password" class="form-control" name="contrasena" id="contra" placeholder="Nueva contraseña" 
-                        onkeypress="return clave1(event);" required onblur="quitarespacioss(this);" onkeyup="sinespacioss(this);"  
-                        pattern="(?=.*[\d])(?=.*[a-z])(?=.*[A-Z]).{<?php echo $parametro_min?>,}" minlength="<?php echo $parametro_min?>" maxlength="<?php echo $parametro_max?>">
+                        <input type="password" class="form-control mostrar" name="contrasena" id="contra" placeholder="Nueva contraseña" 
+                        onkeypress="return clave1(event);" required onblur="quitarespacioss(this);" onkeyup="sinespacioss(this);" minlength="<?php echo $parametro_min?>" maxlength="<?php echo $parametro_max?>" 
+                        pattern="(?=.*[\d])(?=.*[a-z])(?=.*[A-Z]).{<?php echo $parametro_min?>,}" >
                         <input type="checkbox" onclick="mostrarContrasena2()" > Mostrar/Ocultar
                         <br>
                       <label for="">Confirmar contraseña:</label>
-                        <input type="password" class="form-control" name="confirmar_contrasena" id="contrac" 
-                        onkeypress="return clave1(event);" placeholder="Confirmar nueva contraseña" 
+                        <input type="password" class="form-control mostrar2" name="confirmar_contrasena" id="contrac" 
+                        onkeypress="return clave1(event);" placeholder="Confirmar nueva contraseña"  minlength="<?php echo $parametro_min?>" maxlength="<?php echo $parametro_max?>"
                         required onblur="quitarespacioss(this);" onkeyup="sinespacioss(this);" 
-                        pattern="(?=.*[\d])(?=.*[a-z])(?=.*[A-Z]).{<?php echo $parametro_min?>,}" minlength="<?php echo $parametro_min?>" maxlength="<?php echo $parametro_max?>">
+                        pattern="(?=.*[\d])(?=.*[a-z])(?=.*[A-Z]).{<?php echo $parametro_min?>,}" >
                         <input type="checkbox" onclick="mostrarContrasena3()" > Mostrar/Ocultar
                       
                             </div>
@@ -966,22 +967,30 @@ function quitarespacios(e) {
             x.type = "password";
           }
         }
+          
         function mostrarContrasena2(){
           var x = document.getElementById("contra");
           if (x.type === "password"){
-            x.type = "text";
+            $(".mostrar").attr("type","text");
           }else{
-            x.type = "password";
-          }
+            $(".mostrar").attr("type","password");
+          } 
         }
+
         function mostrarContrasena3(){
           var x = document.getElementById("contrac");
           if (x.type === "password"){
-            x.type = "text";
+            $(".mostrar2").attr("type","text");
           }else{
-            x.type = "password";
+            $(".mostrar2").attr("type","password");
           }
         }
+
+        function ocultar(){
+          $(".mostrar").attr("type","password");
+          $(".mostrar2").attr("type","password");
+        }
+
 </script>
 
 
