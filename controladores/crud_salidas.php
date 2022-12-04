@@ -1,20 +1,21 @@
 <?php
   require '../../conexion/conexion.php';
   //para mostrar los datos de la tabla mysql y mostrar en el crud
-  $sql = "SELECT ID_DEVOLUCION, tbl_devoluciones.ID_PRODUCTO AS ID_PRODUCTOSS, tbl_productos.NOMBRE AS NOMBRE_PRODUCTO, CANTIDAD, tbl_proveedores.NOMBRE, DESCRIPCION_DEVOLUCION, USUARIO, FECHA FROM ((tbl_devoluciones 
-  INNER JOIN tbl_proveedores ON tbl_devoluciones.ID_PROVEEDOR = tbl_proveedores.ID_PROVEEDOR)
-  INNER JOIN tbl_productos  ON tbl_devoluciones.ID_PRODUCTO = tbl_productos.ID_PRODUCTO)";
+  $sql = "SELECT ID_BAJAS_HERRAMIENTAS, tbl_bajas_herraminetas.ID_PRODUCTO AS ID_PRODUCTOSS, tbl_productos.NOMBRE AS NOMBRE_PRODUCTO, CANTIDAD_BAJA, DESCRIPCION_BAJAS, USUARIO, FECHA FROM (tbl_bajas_herraminetas 
+  INNER JOIN tbl_productos  ON tbl_bajas_herraminetas.ID_PRODUCTO = tbl_productos.ID_PRODUCTO)";
   $result = mysqli_query($conn, $sql);
 
 
-  // //Variables para recuperar la información de los campos de la vista categorias de productos
-  $id_devolucion=(isset($_POST['id_devolucion']))?$_POST['id_devolucion']:"";
-  $id_productoss=(isset($_POST['id_productoss']))?$_POST['id_productoss']:"";
-  
+ // //Variables para recuperar la información de los campos de la vista 
   $productoo=(isset($_POST['producto']))?$_POST['producto']:"";
   $cantidad=(isset($_POST['cantidad']))?$_POST['cantidad']:"";
-  $proveedorr=(isset($_POST['proveedor']))?$_POST['proveedor']:"";
   $descricion=(isset($_POST['descripcion']))?$_POST['descripcion']:"";
+
+ 
+  $id_devolucion=(isset($_POST['id_bajas_herramientas']))?$_POST['id_bajas_herramientas']:"";
+  $id_productoss=(isset($_POST['id_productoss']))?$_POST['id_productoss']:"";
+  
+
   
 
   $usuario1 = $_SESSION;
@@ -26,33 +27,33 @@
         $fecha = date("Y-m-d H:i:s");
 
 
-        // seleccionar la cantidad de producto del inventario
-      $cantidad_inventario = "SELECT * FROM tbl_inventario WHERE ID_PRODUCTOS='$productoo'";
-      $cantidad_inventario1 = mysqli_query($conn, $cantidad_inventario);
-      if (mysqli_num_rows($cantidad_inventario1) > 0)
-      {
-       while($row = mysqli_fetch_assoc($cantidad_inventario1))
-        { 
-            $inventario = $row['CANTIDAD_DISPONIBLE'];
-        } 
-      }
+    // seleccionar la cantidad de producto del inventario
+    $cantidad_inventario = "SELECT * FROM tbl_inventario WHERE ID_PRODUCTOS='$productoo'";
+    $cantidad_inventario1 = mysqli_query($conn, $cantidad_inventario);
+    if (mysqli_num_rows($cantidad_inventario1) > 0)
+    {
+     while($row = mysqli_fetch_assoc($cantidad_inventario1))
+      { 
+          $inventario = $row['CANTIDAD_DISPONIBLE'];
+      } 
+    }
       
  
   switch($accion){
       //para insertar en la tabla mysl
       case "agregar": 
-       
         if($cantidad <= $inventario)
         {
+       
                
-                $sql1 = "INSERT INTO tbl_devoluciones (ID_PRODUCTO, CANTIDAD, ID_PROVEEDOR, DESCRIPCION_DEVOLUCION, USUARIO, FECHA)
-                VALUES ('$productoo','$cantidad','$proveedorr','$descricion', '$usuario1[usuario]','$fecha')";
+                $sql1 = "INSERT INTO tbl_bajas_herraminetas (ID_PRODUCTO, CANTIDAD_BAJA,  DESCRIPCION_BAJAS, USUARIO, FECHA)
+                VALUES ('$productoo','$cantidad', '$descricion', '$usuario1[usuario]','$fecha')";
                 if (mysqli_query($conn, $sql1)) 
                 {
                     $ultimo_id = mysqli_insert_id($conn);
                      ///////////// INSERTA EN LA TABLA TBL_KARDEX /////////////
                     $kardex = "INSERT INTO tbl_kardex (ID_PRODUCTO, ID_COMPRA,  USUARIO, CANTIDAD, TIPO_MOVIMIENTO, FECHA_HORA)
-                     VALUES ($productoo, $ultimo_id, '$usuario1[usuario]', $cantidad,  'SALIDA DEVOLUCION', '$fecha')";
+                     VALUES ($productoo, $ultimo_id, '$usuario1[usuario]', $cantidad,  'OTRA SALIDA', '$fecha')";
                      if (mysqli_query($conn, $kardex)) 
                         {
                             ///////////// RESTA AL INVENTARIO /////////////
@@ -64,20 +65,21 @@
 
                                      
                     echo '<script>
-                                alert("Devolución completada con exito");
-                                window.location.href="../../vistas/inventario/devoluciones.php";                   
+                                alert("Proceso completado con exito");
+                                window.location.href="../../vistas/inventario/salidas.php";                   
                             </script>';
                              mysqli_close($conn);
                 } else {
                         echo '<script>
-                                alert("Error al tratar de crear la devolución");
-                              </script>'; 
+                                alert("Error al tratar de ingresar salida");
+                              </script>'; mysqli_close($conn);
                        }
                 
-                mysqli_close($conn);
-              }else{
+                
+              
+            }else{
                 echo '<script>
-                         alert("Error, la cantidad de devolución es mayor al inventario disponible.");
+                         alert("Error, la cantidad de salida es mayor al inventario disponible.");
                         //  window.location.href="../../vistas/inventario/devoluciones.php"; 
                       </script>'; 
           }
@@ -94,7 +96,7 @@
       // echo $cantidad.'<br>';
       // echo $fecha.'<br>';
       // die();
-      $sql3 = "DELETE FROM tbl_devoluciones WHERE ID_DEVOLUCION='$id_devolucion'";
+      $sql3 = "DELETE FROM tbl_bajas_herraminetas WHERE ID_BAJAS_HERRAMIENTAS='$id_devolucion'";
       if (mysqli_query($conn, $sql3)) 
       {
    
@@ -102,7 +104,7 @@
             
            ///////////// INSERTA EN LA TABLA TBL_KARDEX /////////////
            $kardex = "INSERT INTO tbl_kardex (ID_PRODUCTO, ID_COMPRA,  USUARIO, CANTIDAD, TIPO_MOVIMIENTO, FECHA_HORA)
-           VALUES ($id_productoss, $id_devolucion, '$usuario1[usuario]', $cantidad,  'ANULACION DEVOLUCION', '$fecha')";
+           VALUES ($id_productoss, $id_devolucion, '$usuario1[usuario]', $cantidad,  'ANULACION DE SALIDA', '$fecha')";
            if (mysqli_query($conn, $kardex)) 
               {
                   ///////////// RESTA AL INVENTARIO /////////////
@@ -112,16 +114,16 @@
               }
 
             echo '<script>
-                    alert("Elimino el devolución");
-                    window.location.href="../../vistas/inventario/devoluciones.php";                     
+                    alert("Elimino la salida");
+                    window.location.href="../../vistas/inventario/salidas.php";                     
                   </script>';
                   mysqli_close($conn);
      
           
       }else{
               echo '<script>
-                        alert("Error al tratar de eliminar la devolución");
-                        window.location.href="../../vistas/inventario/devoluciones.php";  
+                        alert("Error al tratar de eliminar la salida");
+                        window.location.href="../../vistas/inventario/salidas.php";  
                     </script>'; mysqli_error($conn);
                     mysqli_close($conn);
            }

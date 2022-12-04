@@ -206,7 +206,7 @@ if (mysqli_num_rows($roles35) > 0)
                 </button>';
                           }
                         ?> 
-              <button type="submit"  name="accion" value="reporte_pdf" class="btn btn-secondary buttons-pdf buttons-html5"  onclick="return confirm('¿Quieres generar reporte de Proveedores?')" onclick="textToPdf()"><span>Reporte PDF</span></button>
+              <button type="submit"  name="accion" value="reporte_pdf" class="btn btn-secondary buttons-pdf buttons-html5"  onclick="return confirm('¿Quieres generar reporte de devoluciones?')" onclick="textToPdf()"><span>Reporte PDF</span></button>
 	               </div>
             </form>
                 
@@ -264,7 +264,7 @@ if (mysqli_num_rows($roles35) > 0)
                     </td>
                                          <td class="desaparecerTemporalmente1"><?php echo $filas['ID_DEVOLUCION'] ?></td>
                                          <td class="desaparecerTemporalmente1"><?php echo $filas['NOMBRE_PRODUCTO'] ?></td>
-                                         <td class="desaparecerTemporalmente1"><?php echo $filas['CANTIDAD'] ?></td>
+                                         <td class="desaparecerTemporalmente1" style="text-align: right;"><?php echo $filas['CANTIDAD'] ?></td>
                                          <td class="desaparecerTemporalmente1"><?php echo $filas['NOMBRE'] ?></td>
                                          <td class="desaparecerTemporalmente1"><?php echo $filas['DESCRIPCION_DEVOLUCION'] ?></td>
                                          <td class="desaparecerTemporalmente1"><?php echo $filas['USUARIO'] ?></td>
@@ -337,10 +337,11 @@ if (mysqli_num_rows($roles35) > 0)
   $(function () {
     $("#example1").DataTable({
       "order": [[ 1, "desc" ]],
+      "lengthMenu": [[10, 25, 50,   100, -1], [10, 25, 50, 100, "Todos"]],
       language: {
                           processing: "Tratamiento en curso...",
                           search: "Buscar&nbsp;:",
-                          lengthMenu: "Agrupar de _MENU_ items",
+                          lengthMenu: "Consultar _MENU_ items",
                           info: "Mostrando del item _START_ al _END_ de un total de _TOTAL_ items",
                           infoEmpty: "No existen datos.",
                           infoFiltered: "(filtrado de _MAX_ elementos en total)",
@@ -381,7 +382,7 @@ if (mysqli_num_rows($roles35) > 0)
             extend:    'excelHtml5',
             text:      'Exportar a Excel',
             titleAttr: 'Exportar a Excel',
-            title:     'REPORTE DE PROVEEDORES',
+            title:     'REPORTE DE DEVOLUCIONES',
             exportOptions: {
                 columns: [1,2,3,4,5,6,7]
             }
@@ -465,11 +466,11 @@ if (mysqli_num_rows($roles35) > 0)
       
             0: {cellWidth: 11},
             1: {cellWidth: 41}, 
-            2: {cellWidth: 40},  
+            2: {cellWidth: 25},  
             3: {cellWidth: 35},  
             4: {cellWidth: 55},  
-            5: {cellWidth: 20},            
-            6: {cellWidth: 50}
+            5: {cellWidth: 40},            
+            6: {cellWidth: 45}
            } 
           }
 				);
@@ -493,7 +494,7 @@ if (mysqli_num_rows($roles35) > 0)
 				//muestra el titulo secundario
 				pdf.setFont('times');
 				pdf.setFontSize(12);
-				pdf.text("Reporte de proveedores", pdf.internal.pageSize.getWidth() / 2, 20, null, 'center');
+				pdf.text("Reporte de devoluciones", pdf.internal.pageSize.getWidth() / 2, 20, null, 'center');
 
 												//////// pie de Pagina ///////
 				//muestra la fecha
@@ -514,7 +515,7 @@ if (mysqli_num_rows($roles35) > 0)
 			}
 				//Fin Encabezado y pie de pagina
 
-							pdf.save('Reporte de proveedores.pdf');
+							pdf.save('Reporte de devoluciones.pdf');
               $(".desaparecerTemporalmente").css("display","");
 	})
 
