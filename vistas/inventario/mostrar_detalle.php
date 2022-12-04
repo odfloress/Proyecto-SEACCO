@@ -47,7 +47,15 @@ if (mysqli_num_rows($roles35) > 0)
                 if(!isset($_POST['compra'])){
                     header('Location: ../../vistas/inventario/vista_compras.php');
                 }
-                $compra=(isset($_POST['compra']))?$_POST['compra']:"";  
+                $compra=(isset($_POST['compra']))?$_POST['compra']:"";  // es el id de la compra
+                $codigo_factura=(isset($_POST['codigo']))?$_POST['codigo']:"Sin código"; 
+                if(empty($codigo_factura)){
+                  $codigo_factura='Sin código';
+                 
+                }else{
+                  $codigo_factura=$codigo_factura;
+                 
+                }
                 $fecha=(isset($_POST['fecha']))?$_POST['fecha']:""; 
                 $proveedores=(isset($_POST['proveedores']))?$_POST['proveedores']:""; 
                 
@@ -88,7 +96,7 @@ if (mysqli_num_rows($roles35) > 0)
           </div>
           <div class="col-sm-8">
             <ol class="breadcrumb float-sm-right">
-            <center><h3 class="card-title">Detalle de la compra realizada al proveedor <?php echo $proveedores; ?></h3></center>
+            <center><h3 class="card-title">Detalle de la compra realizada al proveedor: <?php echo $proveedores; ?> con el código: <?php echo $codigo_factura; ?></h3></center>
             </ol>
             
           </div>
@@ -123,13 +131,14 @@ if (mysqli_num_rows($roles35) > 0)
                   <tr>
                     
                   <!-- <th>ID</th> -->
-                  <th>ID compra</th>
-                  <th>Producto</th>
-                  <th>Garantía</th>
-                  <th>Unidad de medida</th>
-                  <th>Cantidad</th>
-                  <th>Precio</th>
-                  <th>Fecha</th>
+                  <th class="desaparecerTemporalmente1">#</th>
+                  <th class="desaparecerTemporalmente1">Código factura</th>
+                  <th class="desaparecerTemporalmente1">Producto</th>
+                  <th class="desaparecerTemporalmente1">Garantía</th>
+                  <th class="desaparecerTemporalmente1">Unidad de medida</th>
+                  <th class="desaparecerTemporalmente1">Cantidad</th>
+                  <th class="desaparecerTemporalmente1">Precio</th>
+                  <th class="desaparecerTemporalmente1">Fecha</th>
                   
                   
                   </tr>
@@ -143,18 +152,21 @@ if (mysqli_num_rows($roles35) > 0)
                   INNER JOIN tbl_productos p ON d.ID_PRODUCTO = p.ID_PRODUCTO) WHERE ID_COMPRA='$compra'";
                   $result = mysqli_query($conn, $sql7);
                   if (mysqli_num_rows($result) > 0) {
+                    $cont = 0;
                   while ($filas= mysqli_fetch_assoc($result)){
                     ?>
+                    <?php  $cont++; ?>
                   <tr>
                      
                     <!-- <td ><?php echo $filas['ID_DETALLE'] ?></td> -->
-                     <td><?php echo $filas['ID_COMPRA'] ?></td>
-                     <td><?php echo $filas['NOMBRE'] ?></td>
-                     <td><?php echo $filas['GARANTIA'] ?></td>
-                     <td><?php echo $filas['UNIDAD_MEDIDA'] ?></td>
-                     <td><?php echo $filas['CANTIDAD'] ?></td>
-                     <td><?php echo $filas['PRECIO'] ?></td>
-                     <td><?php echo $fecha; ?></td>
+                    <td class="desaparecerTemporalmente1"><?php echo $cont; ?></td>
+                     <td class="desaparecerTemporalmente1"><?php echo $codigo_factura; ?></td>
+                     <td class="desaparecerTemporalmente1"><?php echo $filas['NOMBRE'] ?></td>
+                     <td class="desaparecerTemporalmente1"><?php echo $filas['GARANTIA'] ?></td>
+                     <td class="desaparecerTemporalmente1"><?php echo $filas['UNIDAD_MEDIDA'] ?></td>
+                     <td class="desaparecerTemporalmente1" style="text-align: right;"><?php echo $filas['CANTIDAD'] ?></td>
+                     <td class="desaparecerTemporalmente1" style="text-align: right;"><?php echo $filas['PRECIO'] ?></td>
+                     <td class="desaparecerTemporalmente1"><?php echo $fecha; ?></td>
                     
       </tr>
                 <?php } }?>  
@@ -203,6 +215,8 @@ if (mysqli_num_rows($roles35) > 0)
 <script src="../../plantilla/AdminLTE-3.2.0/plugins/datatables-buttons/js/dataTables.buttons.min.js"></script>
 <script src="../../plantilla/AdminLTE-3.2.0/plugins/datatables-buttons/js/buttons.bootstrap4.min.js"></script>
 <script src="../../plantilla/AdminLTE-3.2.0/plugins/jszip/jszip.min.js"></script>
+<script src="../../plantilla/AdminLTE-3.2.0/plugins/datatables-buttons/js/buttons.html5.min.js"></script> 
+ <script src="../../plantilla/AdminLTE-3.2.0/plugins/datatables-buttons/js/buttons.print.min.js"></script>
 
 
 <script src="../../plantilla/AdminLTE-3.2.0/plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
@@ -217,11 +231,13 @@ if (mysqli_num_rows($roles35) > 0)
 <script>
   $(function () {
     $("#example1").DataTable({
+      "order": [[ 0, "desc" ]],
+      "lengthMenu": [[10, 25, 50,   100, -1], [10, 25, 50, 100, "Todos"]],
       
       language: {
                           processing: "Tratamiento en curso...",
                           search: "Buscar&nbsp;:",
-                          lengthMenu: "Agrupar de _MENU_ items",
+                          lengthMenu: "Consultar _MENU_ items",
                           info: "Mostrando del item _START_ al _END_ de un total de _TOTAL_ items",
                           infoEmpty: "No existen datos.",
                           infoFiltered: "(filtrado de _MAX_ elementos en total)",
@@ -254,8 +270,29 @@ if (mysqli_num_rows($roles35) > 0)
                          },
                          
                          "responsive": true, "lengthChange": true, "autoWidth": false,
-                          "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"],                   
-        
+                         "buttons": ["excel",  "colvis"],  
+
+//  Inicio   exportar en excel 
+    buttons:[ 
+{
+extend:    'excelHtml5',
+text:      'Exportar a Excel',
+titleAttr: 'Exportar a Excel',
+title:     'Detalle de la compra al proveedor -'+' <?php echo $proveedores; ?>'+' Con el codigo -'+' <?php echo $codigo_factura; ?>',
+exportOptions: {
+columns: [0,1,2,3,4,5,6,7]
+}
+},
+{
+extend:    'colvis',
+text:      'Visualizar',
+
+
+
+}
+
+] 
+//  Fin   exportar en excel  
     })
 
       
@@ -282,23 +319,8 @@ if (mysqli_num_rows($roles35) > 0)
  <!-- Enlace Script para quitar espacios en blanco -->
  <script type="text/javascript" src="../../js/quitar_espacios.js"></script>
 </body>
+
 <!-- // Inicio para exportar en pdf // -->
-<?php
-
-	require '../../conexion/conexion.php';
-	$sql = "SELECT * FROM ((tbl_detalle_compra d
-  INNER JOIN tbl_unidad_medida u ON d.ID_UNIDAD_MEDIDA = u.ID_UNIDAD_MEDIDA)
-  INNER JOIN tbl_productos p ON d.ID_PRODUCTO = p.ID_PRODUCTO) WHERE d.ID_COMPRA='$compra'
-  ORDER BY NOMBRE asc";
-	$query = $conn->query($sql);
-	$data = array();
-	while($r=$query->fetch_object()){
-	$data[] =$r;
-	}
-
-     
-
-?>
 
 <?php 
     $select_nombre = "SELECT * FROM tbl_parametros WHERE PARAMETRO='NOMBRE'";
@@ -312,41 +334,43 @@ if (mysqli_num_rows($roles35) > 0)
     }
 ?>
 
-
 <script>
-	//para descar al tocar el boton	
-	var form = document.getElementById("form")
+		//para descar al tocar el boton	
+    var form = document.getElementById("form")
+  
 	form.addEventListener("submit",function(event) {
-   
+  
 	event.preventDefault()
- 
-				const pdf = new jsPDF('p', 'mm', 'letter');			
+  $(".desaparecerTemporalmente1").css("display","");
+  $(".desaparecerTemporalmente").css("display","none");
+
+				const pdf = new jsPDF('L', 'mm', 'letter');			
         	
 
-				var columns = ["ID Compras", "Producto", "Garantía", "Unidad medida", "Cantidad", "Precio", "Fecha"];
-				var data = [
-          <?php foreach($data as $d):?>
-				["<?php echo $d->ID_COMPRA; ?>", "<?php echo $d->NOMBRE; ?>", "<?php echo $d->GARANTIA; ?>", "<?php echo $d->UNIDAD_MEDIDA; ?>", "<?php echo $d->CANTIDAD; ?>", "<?php echo $d->PRECIO; ?>", "<?php echo $fecha; ?>"],
-        <?php endforeach; ?>
-				 ];
+				
+				
 
-				pdf.autoTable(columns,data,
+				pdf.autoTable(
 				{ 
-					// html:'#example1',
+          html:'#example1',
+					
 					margin:{ top: 30 },
-          columnStyles: {
-            0: {cellWidth: 21},
-            1: {cellWidth: 27},
-            2: {cellWidth: 37},
-            3: {cellWidth: 30},
-            4: {cellWidth: 22},
-            5: {cellWidth: 22},
-            6: {cellWidth: 27}
-
-           } }
+          
+          columnStyles: {    
+      
+            0: {cellWidth: 11},
+            1: {cellWidth: 35}, 
+            2: {cellWidth: 35},  
+            3: {cellWidth: 34},  
+            4: {cellWidth: 35},  
+            5: {cellWidth: 30},            
+            6: {cellWidth: 30},
+            7: {cellWidth: 40}
+           
+           } 
+          }
 				);
-						
-				//Inicio Encabezado y pie de pagina
+			//Inicio Encabezado y pie de pagina
 			const pageCount = pdf.internal.getNumberOfPages();
 			for(var i = 1; i <= pageCount; i++) 
 			{
@@ -361,12 +385,12 @@ if (mysqli_num_rows($roles35) > 0)
 				//muestra el titulo principal
 				pdf.setFont('Arial');
 				pdf.setFontSize(17);
-				pdf.text("<?php echo $nombre_constructora;?>", 77,15,);
+				pdf.text('<?php echo $nombre_constructora ?>', pdf.internal.pageSize.getWidth() / 2, 15, null, 'center');
 
 				//muestra el titulo secundario
 				pdf.setFont('times');
 				pdf.setFontSize(12);
-				pdf.text("Reporte de compra a <?php echo $proveedores;?> ", 78,20,);
+				pdf.text('Reporte de compra a:'+'<?php echo $proveedores ?>', pdf.internal.pageSize.getWidth() / 2, 20, null, 'center');
 
 												//////// pie de Pagina ///////
 				//muestra la fecha
@@ -376,17 +400,23 @@ if (mysqli_num_rows($roles35) > 0)
 				let horas = today.getHours()
 				let jornada = horas >=12 ? 'PM' : 'AM';
 				var newdat = "Fecha: " + today.getDate() + "/" + (today.getMonth()+1) + "/" + today.getFullYear() + " " + (horas % 12) + ":" + today.getMinutes() + ":" + today.getSeconds() + " " + jornada;
-				pdf.text(183-20,297-284,newdat);
+				pdf.text(245-20,297-284,newdat);
+        pdf.text('<?php echo 'Creado por: '. $_SESSION['usuario']; ?>', 264, 20, {
+            align: 'right',
+            });
+        // pdf.text(245-25,297-281,"<?php echo 'Creado por:'. $_SESSION['usuario']; ?>");
 
 				//muestra el numero de pagina
-				pdf.text('Pagina ' + String(i) + '/' + String(pageCount),220-20,297-25,null,null,"right");
+				pdf.text('Pagina ' + String(i) + '/' + String(pageCount),282-20,297-89,null,null,"right");
 			}
 				//Fin Encabezado y pie de pagina
 
 							pdf.save('Reporte de detalle de compra.pdf');
+              $(".desaparecerTemporalmente").css("display","");
 	})
-  
+
 </script>
+
 <!-- // Fin para exportar en pdf // -->
 <script type="text/javascript" src="../../js/evitar_reenvio.js"></script>
 </html>

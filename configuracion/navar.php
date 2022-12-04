@@ -343,6 +343,48 @@
                 </li>';
                }
               ?> 
+                 <!-- Valida si tiene permiso para consultar la pantalla del CRUD DEVOLUCIONES -->
+            <?php 
+               include '../../conexion/conexion.php';
+               $tablero = "SELECT * FROM tbl_ms_roles_ojetos WHERE ID_ROL='$id_rol7' and ID_OBJETO=33 and PERMISO_CONSULTAR=1";
+               $tablero2 = mysqli_query($conn, $tablero);
+               if (mysqli_num_rows($tablero2) > 0)
+               {
+                  echo '<li class="nav-item">
+                  <a href="../../vistas/inventario/devoluciones.php" class="nav-link">
+                    <p>Devoluciones de compras</p>
+                  </a>
+                </li>';
+               }
+              ?> 
+                 <!-- Valida si tiene permiso para consultar la pantalla del CRUD OTRAS ENTRADAS -->
+            <?php 
+               include '../../conexion/conexion.php';
+               $tablero = "SELECT * FROM tbl_ms_roles_ojetos WHERE ID_ROL='$id_rol7' and ID_OBJETO=34 and PERMISO_CONSULTAR=1";
+               $tablero2 = mysqli_query($conn, $tablero);
+               if (mysqli_num_rows($tablero2) > 0)
+               {
+                  echo '<li class="nav-item">
+                  <a href="../../vistas/inventario/regalias.php" class="nav-link">
+                    <p>Otras entradas</p>
+                  </a>
+                </li>';
+               }
+              ?> 
+                  <!-- Valida si tiene permiso para consultar la pantalla del CRUD OTRAS saLIDAS -->
+            <?php 
+               include '../../conexion/conexion.php';
+               $tablero = "SELECT * FROM tbl_ms_roles_ojetos WHERE ID_ROL='$id_rol7' and ID_OBJETO=35 and PERMISO_CONSULTAR=1";
+               $tablero2 = mysqli_query($conn, $tablero);
+               if (mysqli_num_rows($tablero2) > 0)
+               {
+                  echo '<li class="nav-item">
+                  <a href="../../vistas/inventario/salidas.php" class="nav-link">
+                    <p>Otras salidas</p>
+                  </a>
+                </li>';
+               }
+              ?> 
             <!-- Valida si tiene permiso para consultar la pantalla del CRUD ASIGNACIONES -->
             <?php 
                include '../../conexion/conexion.php';
@@ -371,20 +413,7 @@
                 </li>';
                }
               ?> 
-               <!-- Valida si tiene permiso para consultar la pantalla del CRUD DECOLUCIONES -->
-            <?php 
-               include '../../conexion/conexion.php';
-               $tablero = "SELECT * FROM tbl_ms_roles_ojetos WHERE ID_ROL='$id_rol7' and ID_OBJETO=33 and PERMISO_CONSULTAR=1";
-               $tablero2 = mysqli_query($conn, $tablero);
-               if (mysqli_num_rows($tablero2) > 0)
-               {
-                  echo '<li class="nav-item">
-                  <a href="../../vistas/inventario/devoluciones.php" class="nav-link">
-                    <p>Devoluciones</p>
-                  </a>
-                </li>';
-               }
-              ?> 
+            
               <!-- Valida si tiene permiso para consultar la pantalla del CRUD CATEGORIA DE PRODUCTOS -->
             <?php 
                include '../../conexion/conexion.php';
