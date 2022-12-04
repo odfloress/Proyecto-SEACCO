@@ -140,7 +140,7 @@ if (mysqli_num_rows($roles35) > 0)
                     <div class="btn-group">
                     <?php 
       include '../../conexion/conexion.php';
-      $area1 = "SELECT * FROM tbl_ms_roles_ojetos WHERE ID_ROL='$id_rol7' and ID_OBJETO=30 and PERMISO_INSERCION=1";
+      $area1 = "SELECT * FROM tbl_ms_roles_ojetos WHERE ID_ROL='$id_rol7' and ID_OBJETO=14 and PERMISO_INSERCION=1";
       $area2 = mysqli_query($conn, $area1);
       if (mysqli_num_rows($area2) > 0)
        {
@@ -340,10 +340,11 @@ if (mysqli_num_rows($roles35) > 0)
   $(function () {
     $("#example1").DataTable({
       "order": [[ 1, "desc" ]],
+      "lengthMenu": [[10, 25, 50,   100, -1], [10, 25, 50, 100, "Todos"]],
       language: {
                           processing: "Tratamiento en curso...",
                           search: "Buscar&nbsp;:",
-                          lengthMenu: "Agrupar de _MENU_ items",
+                          lengthMenu: "Consultar de _MENU_ items",
                           info: "Mostrando del item _START_ al _END_ de un total de _TOTAL_ items",
                           infoEmpty: "No existen datos.",
                           infoFiltered: "(filtrado de _MAX_ elementos en total)",
@@ -456,7 +457,7 @@ $data[] =$r;
   $(".desaparecerTemporalmente1").css("display","");
   $(".desaparecerTemporalmente").css("display","none");
 
-				const pdf = new jsPDF('L', 'mm', 'letter');			
+				const pdf = new jsPDF('p', 'mm', 'letter');			
         	
 
 				
@@ -471,8 +472,8 @@ $data[] =$r;
           columnStyles: {
       
             0: {cellWidth: 15},
-            1: {cellWidth: 70},
-            2: {cellWidth: 70}
+            1: {cellWidth: 86},
+            2: {cellWidth: 86}
            } 
           }
 				);
@@ -507,13 +508,13 @@ $data[] =$r;
 				let horas = today.getHours()
 				let jornada = horas >=12 ? 'PM' : 'AM';
 				var newdat = "Fecha: " + today.getDate() + "/" + (today.getMonth()+1) + "/" + today.getFullYear() + " " + (horas % 12) + ":" + today.getMinutes() + ":" + today.getSeconds() + " " + jornada;
-				pdf.text(245-20,297-284,newdat);
-        pdf.text('<?php echo 'Creado por: '. $_SESSION['usuario']; ?>', 264, 20, {
+				pdf.text(183-20,297-284,newdat);
+        pdf.text('<?php echo 'Creado por: '. $_SESSION['usuario']; ?>', 202, 20, {
             align: 'right',
             });
 
 				//muestra el numero de pagina
-				pdf.text('Pagina ' + String(i) + '/' + String(pageCount),282-20,297-89,null,null,"right");
+				pdf.text('Pagina ' + String(i) + '/' + String(pageCount),220-20,297-27,null,null,"right");
 			}
 				//Fin Encabezado y pie de pagina
 

@@ -339,10 +339,11 @@ if (mysqli_num_rows($roles35) > 0)
  $(function () {
     $("#example1").DataTable({
       "order": [[ 1, "desc" ]],
+      "lengthMenu": [[10, 25, 50,   100, -1], [10, 25, 50, 100, "Todos"]],
       language: {
                           processing: "Tratamiento en curso...",
                           search: "Buscar&nbsp;:",
-                          lengthMenu: "Agrupar de _MENU_ items",
+                          lengthMenu: "Consultar de _MENU_ items",
                           info: "Mostrando del item _START_ al _END_ de un total de _TOTAL_ items",
                           infoEmpty: "No existen datos.",
                           infoFiltered: "(filtrado de _MAX_ elementos en total)",
@@ -453,9 +454,9 @@ if (mysqli_num_rows($roles35) > 0)
           columnStyles: {
       
             0: {cellWidth: 15},
-            1: {cellWidth: 30},
-            2: {cellWidth: 30},
-            3: {cellWidth: 115}
+            1: {cellWidth: 40},
+            2: {cellWidth: 40},
+            3: {cellWidth: 95}
            } 
           }
 				);

@@ -690,7 +690,7 @@
                 </li>';
                }
               ?>
-               <!-- Valida si tiene permiso para consultar la pantalla ESTADOS DE HERRAMIENTA -->
+               <!-- Valida si tiene permiso para consultar la pantalla ESTADOS DE HERRAMIENTA 
             <?php 
                include '../../conexion/conexion.php';
                $tablero = "SELECT * FROM tbl_ms_roles_ojetos WHERE ID_ROL='$id_rol7' and ID_OBJETO=26 and PERMISO_CONSULTAR=1";
@@ -703,7 +703,7 @@
                   </a>
                 </li>';
                }
-              ?>
+              ?> -->
             
               
               <!-- <li class="nav-item">
