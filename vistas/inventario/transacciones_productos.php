@@ -85,7 +85,7 @@ if (mysqli_num_rows($sqlts) > 0)
 
 include '../../conexion/conexion.php'; ?>
   <!-- Content Wrapper. Contains page content -->
-  <div class="content-wrapper"><br><center><h3 ><b>Transacciones del producto <?php echo $nombreproducto; ?></b></h3></center>
+  <div class="content-wrapper"><br><center><h3 ><b>Transacciones del producto: <?php echo $nombreproducto; ?></b></h3></center>
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <div class="container-fluid">
@@ -239,10 +239,11 @@ include '../../conexion/conexion.php'; ?>
   $(function () {
     $("#example1").DataTable({
       "order": [[ 1, "desc" ]],
+      "lengthMenu": [[10, 25, 50,   100, -1], [10, 25, 50, 100, "Todos"]],
       language: {
                           processing: "Tratamiento en curso...",
                           search: "Buscar&nbsp;:",
-                          lengthMenu: "Agrupar de _MENU_ items",
+                          lengthMenu: "Consultar _MENU_ items",
                           info: "Mostrando del item _START_ al _END_ de un total de _TOTAL_ items",
                           infoEmpty: "No existen datos.",
                           infoFiltered: "(filtrado de _MAX_ elementos en total)",
@@ -400,7 +401,7 @@ include '../../conexion/conexion.php'; ?>
 				//muestra el titulo secundario
 				pdf.setFont('times');
 				pdf.setFontSize(12);
-				pdf.text('Reporte de transacciones del producto <?php echo $nombreproducto; ?>', pdf.internal.pageSize.getWidth() / 2, 20, null, 'center');
+				pdf.text('Reporte de transacciones del producto: <?php echo $nombreproducto; ?>', pdf.internal.pageSize.getWidth() / 2, 20, null, 'center');
 
 												//////// pie de Pagina ///////
 				//muestra la fecha

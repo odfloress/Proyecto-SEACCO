@@ -26,14 +26,14 @@ if (mysqli_num_rows($roles35) > 0)
 
 
                //valida si tiene permisos de consultar la pantalla 
-               $role = "SELECT * FROM tbl_ms_roles_ojetos WHERE ID_ROL='$id_rol7' and ID_OBJETO=8 and PERMISO_CONSULTAR=0";
+               $role = "SELECT * FROM tbl_ms_roles_ojetos WHERE ID_ROL='$id_rol7' and ID_OBJETO=9 and PERMISO_CONSULTAR=0";
                $roless = mysqli_query($conn, $role);
                if (mysqli_num_rows($roless) > 0)
                {
                 header('Location: ../../vistas/tablero/vista_perfil.php');
                 die();
                }else{
-                      $role = "SELECT * FROM tbl_ms_roles_ojetos WHERE ID_ROL='$id_rol7' and ID_OBJETO=8 and PERMISO_CONSULTAR=1";
+                      $role = "SELECT * FROM tbl_ms_roles_ojetos WHERE ID_ROL='$id_rol7' and ID_OBJETO=9 and PERMISO_CONSULTAR=1";
                       $roless = mysqli_query($conn, $role);
                       if (mysqli_num_rows($roless) > 0){}
                       else{
@@ -111,7 +111,7 @@ if (mysqli_num_rows($roles35) > 0)
                     <option value="">Seleccione</option>
                         <?php
                             include '../../conexion/conexion.php';
-                            $proyecto = " SELECT * FROM tbl_proyectos WHERE ID_ESTADOS!=6 and ID_ESTADOS!=5 and ID_ESTADOS!=3";
+                            $proyecto = " SELECT * FROM tbl_proyectos WHERE ID_ESTADOS!=6 and ID_ESTADOS!=5 and ID_ESTADOS!=1";
                             $proyecto1 = mysqli_query($conn, $proyecto);
                             if (mysqli_num_rows($proyecto1) > 0) {
                                 while($row = mysqli_fetch_assoc($proyecto1))
@@ -180,7 +180,7 @@ if (mysqli_num_rows($roles35) > 0)
                               $id_estado_herramienta = $row['ID_ESTADO_ASIGNACION'];
                               $estado_herramienta =$row['ESTADO_ASIGNACION'];
                            ?>
-                              <option value="<?php  echo $id_estado_herramienta ?>"><?php echo $id_estado_herramienta .' - '.($estado_herramienta)?></option>
+                              <option value="<?php  echo $id_estado_herramienta ?>"><?php echo $estado_herramienta; ?></option>
                           <?php
                     }}// finaliza el if y el while
 
@@ -238,7 +238,7 @@ if (mysqli_num_rows($roles35) > 0)
       include '../../conexion/conexion.php'; 
 
 
-                $tablero = "SELECT * FROM tbl_ms_roles_ojetos WHERE ID_ROL='$id_rol7' and ID_OBJETO=8 and PERMISO_INSERCION=1";
+                $tablero = "SELECT * FROM tbl_ms_roles_ojetos WHERE ID_ROL='$id_rol7' and ID_OBJETO=9 and PERMISO_INSERCION=1";
                 $tablero2 = mysqli_query($conn, $tablero);
                 if (mysqli_num_rows($tablero2) > 0)
                 {
@@ -261,18 +261,18 @@ if (mysqli_num_rows($roles35) > 0)
                 <table id="example1" class="table table-bordered table-striped">
                   <thead>
                   <tr>
-                    <th>Acciones</th>
-                    <th>ID</th>
-                    <th>Proyecto</th>
-                    <th>Usuario</th> 
-                    <th>Producto</th>
-                    <th>Cantidad Asignada</th> 
-                    <th>Cantidad Entregada</th>
-                    <th>Estado asignación</th> 
-                    <th>Descripción asignación</th> 
-                    <th>Descripción entrega</th>
-                    <th>Fecha asignado</th>          
-                    <th>Fecha entrega</th> 
+                    <th class="desaparecerTemporalmente2">Acciones</th>
+                    <th class="desaparecerTemporalmente2">ID</th>
+                    <th class="desaparecerTemporalmente3">Proyecto</th>
+                    <th class="desaparecerTemporalmente3">Usuario</th> 
+                    <th class="desaparecerTemporalmente3">Producto</th>
+                    <th class="desaparecerTemporalmente3">Cantidad Asignada</th> 
+                    <th class="desaparecerTemporalmente3">Cantidad Entregada</th>
+                    <th class="desaparecerTemporalmente3">Estado asignación</th> 
+                    <th class="desaparecerTemporalmente2">Descripción asignación</th> 
+                    <th class="desaparecerTemporalmente2">Descripción entrega</th>
+                    <th class="desaparecerTemporalmente3">Fecha asignado</th>          
+                    <th class="desaparecerTemporalmente3">Fecha entrega</th> 
                   </tr>
                   </thead>
                   <tbody>
@@ -285,7 +285,7 @@ if (mysqli_num_rows($roles35) > 0)
                      ?>
                      <?php  $cont++; ?>
                   <tr>
-                  <td> <?php
+                  <td class="desaparecerTemporalmente2"> <?php
                   date_default_timezone_set("America/Guatemala");
                   $fechaSSS = date("Y-m-d H:i:s");
                   $catidades_entregadas=$filas['CANT_ENTREGADA'];
@@ -293,16 +293,31 @@ if (mysqli_num_rows($roles35) > 0)
                   $fecha_de_entrega_herramienta=$filas['FECHA_ENTREGA'];
                  
 if( $catidades_entregadas<$catidades_asignadas and $fechaSSS>$fecha_de_entrega_herramienta){
-  echo ' <button type="button"  class="btn btn-primary"  >
+  ?>
+<button type="submit"  class="btn btn-primary" onclick="return confirm('Esta asignación se encuentra pendiente')" >
   <i class="fas fa-bell"></i>
-  </button>';
-  
+  </button>
+  <?php
 }
                           ?>
                          <!-- inicio boton editar -->
-                         <button type="button"  class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#myModal2<?php echo $filas['ID_ASIGNADO'] ?>" >
+
+                         <?php 
+                          include '../../conexion/conexion.php';
+                          $tablero = "SELECT * FROM tbl_ms_roles_ojetos WHERE ID_ROL='$id_rol7' and ID_OBJETO=9 and PERMISO_ACTUALIZACION=1";
+                          $tablero2 = mysqli_query($conn, $tablero);
+                          if (mysqli_num_rows($tablero2) > 0)
+                          {?>
+                              <!-- inicio boton editar -->
+                              <button type="button"  class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#myModal2<?php echo $filas['ID_ASIGNADO'] ?>" >
                       <i class="fas fa-pencil-alt"></i>
                       </button>
+                       <?php } ?>
+
+
+
+
+                        
 
                           <!-- El Modal -->
                           <div class="modal" id="myModal2<?php echo $filas['ID_ASIGNADO'] ?>">
@@ -335,7 +350,7 @@ if( $catidades_entregadas<$catidades_asignadas and $fechaSSS>$fecha_de_entrega_h
                   <br>
                   <label for="">Cantidad Entregada:</label>
                  
-                   <input type="text"  class="form-control lectura" id="lectura"  readonly name="cantidad_entregada" required value="<?php echo $filas['CANT_ENTREGADA'] ?>" placeholder=""  
+                   <input type="text"  class="form-control lectura" id="lectura"  readonly name="cantidad_entregada_actual" required value="<?php echo $filas['CANT_ENTREGADA'] ?>" placeholder=""  
                     autocomplete = "off" minlength="1" maxlength="12"  onkeypress="return filterFloat(event,this);" >
                     <small>
                       <input type="checkbox"  class="ver" id="ver" onclick="desaparecer()" />
@@ -475,23 +490,23 @@ if( $catidades_entregadas<$catidades_asignadas and $fechaSSS>$fecha_de_entrega_h
                         ?>
                      </form>
                      </td>
-                     <td><?php echo $filas['ID_ASIGNADO'] ?></td>
-                     <td><?php echo $filas['NOMBRE_PROYECTO'] ?></td>  
-                     <td><?php echo $filas['USUARIO'] ?></td>
-                     <td><?php echo $filas['PRODUCTOSS'] ?></td>
-                     <td><?php echo $filas['CANT_ASIGNADA'] ?></td>
-                     <td><?php echo $filas['CANT_ENTREGADA']; ?></td>
-                     <td><?php echo $filas['ESTADO_ASIGNACION'] ?></td>
-                     <td><TEXtarea  readonly style="background-color:rgb(240, 244, 245);" onkeyup="un_espacio(this);" name="descripcion_asignacion" class="form-control" id="" required cols="40" rows="5"
+                     <td class="desaparecerTemporalmente2"><?php echo $filas['ID_ASIGNADO'] ?></td>
+                     <td class="desaparecerTemporalmente3"><?php echo $filas['NOMBRE_PROYECTO'] ?></td>  
+                     <td class="desaparecerTemporalmente3"><?php echo $filas['USUARIO'] ?></td>
+                     <td class="desaparecerTemporalmente3"><?php echo $filas['PRODUCTOSS'] ?></td>
+                     <td class="desaparecerTemporalmente3"><?php echo $filas['CANT_ASIGNADA'] ?></td>
+                     <td class="desaparecerTemporalmente3"><?php echo $filas['CANT_ENTREGADA']; ?></td>
+                     <td class="desaparecerTemporalmente3"><?php echo $filas['ESTADO_ASIGNACION'] ?></td>
+                     <td class="desaparecerTemporalmente2"><TEXtarea  readonly style="background-color:rgb(240, 244, 245);" onkeyup="un_espacio(this);" name="descripcion_asignacion" class="form-control" id="" required cols="40" rows="5"
                     autocomplete = "off"   minlength="3" maxlength="245"  ><?php echo $filas['DESCRIPCION_ASIGNACION']; ?></TEXtarea></td>
-                     <td>
+                     <td class="desaparecerTemporalmente2">
                      <TEXtarea  readonly style="background-color:rgb(240, 244, 245);" onkeyup="un_espacio(this);" name="descripcion_asignacion" class="form-control" id="" required cols="40" rows="5"
                     autocomplete = "off"   minlength="3" maxlength="245"  ><?php echo $filas['DESCRIPCION_ENTREGA']; ?></TEXtarea>
                      </td>
-                     <td><?php echo $filas['FECHA_ASIGNADO']; ?></td>
-                     <td><?php echo $filas['FECHA_ENTREGA']; ?></td>
+                     <td class="desaparecerTemporalmente3"><?php echo $filas['FECHA_ASIGNADO']; ?></td>
+                     <td class="desaparecerTemporalmente3" ><?php echo $filas['FECHA_ENTREGA']; ?></td>
 
-      </tr>
+                     </tr>
                 <?php } ?>  
                 </tbody>
                 </table>
@@ -538,6 +553,8 @@ if( $catidades_entregadas<$catidades_asignadas and $fechaSSS>$fecha_de_entrega_h
 <script src="../../plantilla/AdminLTE-3.2.0/plugins/datatables-buttons/js/dataTables.buttons.min.js"></script>
 <script src="../../plantilla/AdminLTE-3.2.0/plugins/datatables-buttons/js/buttons.bootstrap4.min.js"></script>
 <script src="../../plantilla/AdminLTE-3.2.0/plugins/jszip/jszip.min.js"></script>
+<script src="../../plantilla/AdminLTE-3.2.0/plugins/datatables-buttons/js/buttons.html5.min.js"></script> 
+ <script src="../../plantilla/AdminLTE-3.2.0/plugins/datatables-buttons/js/buttons.print.min.js"></script>
 
 
 <script src="../../plantilla/AdminLTE-3.2.0/plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
@@ -553,6 +570,7 @@ if( $catidades_entregadas<$catidades_asignadas and $fechaSSS>$fecha_de_entrega_h
   $(function () {
     $("#example1").DataTable({
       "order": [[ 1, "desc" ]],
+      "lengthMenu": [[10, 25, 50,   100, -1], [10, 25, 50, 100, "Todos"]],
       columnDefs: [
         { targets: [0, 1,2,3,4,5,6,7,10,11], visible: true},
         { targets: '_all', visible: false }
@@ -560,7 +578,7 @@ if( $catidades_entregadas<$catidades_asignadas and $fechaSSS>$fecha_de_entrega_h
       language: {
                           processing: "Tratamiento en curso...",
                           search: "Buscar&nbsp;:",
-                          lengthMenu: "Agrupar de _MENU_ items",
+                          lengthMenu: "Consultar _MENU_ items",
                           info: "Mostrando del item _START_ al _END_ de un total de _TOTAL_ items",
                           infoEmpty: "No existen datos.",
                           infoFiltered: "(filtrado de _MAX_ elementos en total)",
@@ -593,8 +611,29 @@ if( $catidades_entregadas<$catidades_asignadas and $fechaSSS>$fecha_de_entrega_h
                          },
                          
                          "responsive": true, "lengthChange": true, "autoWidth": false,
-                          "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"],                   
-        
+                         "buttons": ["excel",  "colvis"],  
+
+//  Inicio   exportar en excel 
+    buttons:[ 
+{
+extend:    'excelHtml5',
+text:      'Exportar a Excel',
+titleAttr: 'Exportar a Excel',
+title:     'REPORTE DE ASIGNACIONES',
+exportOptions: {
+columns: [1,2,3,4,5,6,7,8,9,10,11]
+}
+},
+{
+extend:    'colvis',
+text:      'Visualizar',
+
+
+
+}
+
+] 
+//  Fin   exportar en excel  
     })
 
       
@@ -623,53 +662,55 @@ if( $catidades_entregadas<$catidades_asignadas and $fechaSSS>$fecha_de_entrega_h
 </body>
 
 <!-- // Inicio para exportar en pdf // -->
-<?php
 
-	require '../../conexion/conexion.php';
-	$sql = "SELECT * FROM (tbl_asignaciones a
-  INNER JOIN tbl_proyectos p ON a.ID_PROYECTO = p.ID_PROYECTO)
-  ORDER BY ID_ASIGNADO desc";
-	$query = $conn->query($sql);
-	$data = array();
-	while($r=$query->fetch_object())
-	$data[] =$r;    
-
-?>
-
-<?php
+<?php 
     $select_nombre = "SELECT * FROM tbl_parametros WHERE PARAMETRO='NOMBRE'";
     $select_nombre1 = mysqli_query($conn, $select_nombre);
     if (mysqli_num_rows($select_nombre1) > 0)
     {
     while($row = mysqli_fetch_assoc($select_nombre1))
-      {
+      { 
           $nombre_constructora = $row['VALOR'];
-      }
+      } 
     }
 ?>
 
 <script>
-	//para descar al tocar el boton
-	var form = document.getElementById("form")
+		//para descar al tocar el boton	
+    var form = document.getElementById("form")
+  
 	form.addEventListener("submit",function(event) {
+  
 	event.preventDefault()
+  $(".desaparecerTemporalmente3").css("display","");
+  $(".desaparecerTemporalmente2").css("display","none");
 
-			
-			const pdf = new jsPDF('p', 'mm', 'letter');
-						
-			var columns = ["Id asignación", "Proyecto"];
-			var data = [
-  <?php foreach($data as $d):?>
-	
-      ["<?php echo $d->ID_ASIGNADO; ?>", "<?php echo $d->NOMBRE_PROYECTO; ?>"],
-      <?php endforeach; ?>
-  ];
-				pdf.autoTable(columns,data,
+				const pdf = new jsPDF('L', 'mm', 'letter');			
+        	
+
+				
+				
+
+				pdf.autoTable(
 				{ 
+          html:'#example1',
 					
-					margin:{ top: 30 }}
+					margin:{ top: 30 },
+          
+          columnStyles: {    
+      
+            0: {cellWidth: 37},
+            1: {cellWidth: 38}, 
+            2: {cellWidth: 35},  
+            3: {cellWidth: 25},  
+            4: {cellWidth: 25},  
+            5: {cellWidth: 30},            
+            6: {cellWidth: 30},
+            7: {cellWidth: 30}
+           
+           } 
+          }
 				);
-		
 			//Inicio Encabezado y pie de pagina
 			const pageCount = pdf.internal.getNumberOfPages();
 			for(var i = 1; i <= pageCount; i++) 
@@ -678,19 +719,19 @@ if( $catidades_entregadas<$catidades_asignadas and $fechaSSS>$fecha_de_entrega_h
 												//////// Encabezado ///////
 				//Inicio para imagen de logo 
 				var logo = new Image();
-				logo.src = '../../imagenes/LoogSEACCO.jpg';
+				logo.src = '../../imagenes/seacco.jpg';
 				pdf.addImage(logo, 'JPEG',14,7,24,15);
 				//Fin para imagen de logo 
 
 				//muestra el titulo principal
 				pdf.setFont('Arial');
 				pdf.setFontSize(17);
-				pdf.text("<?php echo $nombre_constructora;?>", 70,15,);
+				pdf.text('<?php echo $nombre_constructora ?>', pdf.internal.pageSize.getWidth() / 2, 15, null, 'center');
 
 				//muestra el titulo secundario
 				pdf.setFont('times');
 				pdf.setFontSize(12);
-				pdf.text("Reporte de asignaciones", 75,20,);
+				pdf.text('Reporte de asignación', pdf.internal.pageSize.getWidth() / 2, 20, null, 'center');
 
 												//////// pie de Pagina ///////
 				//muestra la fecha
@@ -700,17 +741,23 @@ if( $catidades_entregadas<$catidades_asignadas and $fechaSSS>$fecha_de_entrega_h
 				let horas = today.getHours()
 				let jornada = horas >=12 ? 'PM' : 'AM';
 				var newdat = "Fecha: " + today.getDate() + "/" + (today.getMonth()+1) + "/" + today.getFullYear() + " " + (horas % 12) + ":" + today.getMinutes() + ":" + today.getSeconds() + " " + jornada;
-				pdf.text(183-20,297-284,newdat);
+				pdf.text(245-20,297-284,newdat);
+        pdf.text('<?php echo 'Creado por: '. $_SESSION['usuario']; ?>', 264, 20, {
+            align: 'right',
+            });
+        // pdf.text(245-25,297-281,"<?php echo 'Creado por:'. $_SESSION['usuario']; ?>");
 
 				//muestra el numero de pagina
-				pdf.text('Pagina ' + String(i) + '/' + String(pageCount),220-20,297-27,null,null,"right");
+				pdf.text('Pagina ' + String(i) + '/' + String(pageCount),282-20,297-89,null,null,"right");
 			}
 				//Fin Encabezado y pie de pagina
 
 							pdf.save('Reporte de asignaciones.pdf');
+              $(".desaparecerTemporalmente2").css("display","");
 	})
 
 </script>
+
 <!-- // Fin para exportar en pdf // -->
 
 <script type="text/javascript" src="../../js/evitar_reenvio.js"></script>
@@ -779,4 +826,3 @@ function filter(__val__){
     document.getElementById('lectura').value=total;
   }
 </script> -->
-

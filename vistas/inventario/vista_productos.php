@@ -154,7 +154,7 @@ if (mysqli_num_rows($roles35) > 0)
                 <br>
                 <label for="">Nombre:</label>
                 <input type="text" onkeyup="un_espacio(this);" autocomplete="off"  value="<?php echo "$nombre"; ?>" 
-                onkeyup="mayus(this);" maxlength="255" class="form-control"  placeholder="Ingrese el nombre del producto" name="nombre" required
+                onkeyup="mayus(this);"  class="form-control"  placeholder="Ingrese el nombre del producto" name="nombre" required
                 minlength="3" maxlength="50">
                 <br>
                 <label for="">Descripción Modelo:</label>
@@ -444,10 +444,11 @@ if (mysqli_num_rows($roles35) > 0)
   $(function () {
     $("#example1").DataTable({
       "order": [[ 1, "desc" ]],
+      "lengthMenu": [[10, 25, 50,   100, -1], [10, 25, 50, 100, "Todos"]],
       language: {
                           processing: "Tratamiento en curso...",
                           search: "Buscar&nbsp;:",
-                          lengthMenu: "Agrupar de _MENU_ items",
+                          lengthMenu: "Consultar _MENU_ items",
                           info: "Mostrando del item _START_ al _END_ de un total de _TOTAL_ items",
                           infoEmpty: "No existen datos.",
                           infoFiltered: "(filtrado de _MAX_ elementos en total)",
@@ -486,15 +487,15 @@ if (mysqli_num_rows($roles35) > 0)
                             extend:     'excelHtml5',
                             text:       'Exportar a Excel',
                             titleAttr:  'Exportar a Excel',
-                            title:     'REPORTE DE PRODCUTOS',
+                            title:     'REPORTE DE PRODUCTOS',
                             exportOptions:{
-                              columns: [1,2,3,4,5,6,7]
+                              columns: [1,2,3,5,6,7,8]
                             }
                           },
                           {
                             extend: 'colvis',
                             text:   'Visualizar',
-                            title:  'REPORTE DE PRODCUTOS',
+                            title:  'REPORTE DE PRODUCTOS',
                           } 
                           ]                 
         
