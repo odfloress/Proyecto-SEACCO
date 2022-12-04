@@ -12,6 +12,8 @@ $id_repuesta=(isset($_POST['id_repuesta']))?$_POST['id_repuesta']:"";
 $repuesta=(isset($_POST['repuesta']))?$_POST['repuesta']:"";
 $repuesta_anterior=(isset($_POST['repuesta_anterior']))?$_POST['repuesta_anterior']:"";
 $id_pregunta=(isset($_POST['id_pregunta']))?$_POST['id_pregunta']:"";
+$pregunta = intval(preg_replace('/[^0-9]+/', '', $id_pregunta), 10);
+$nuevo_pregunta= preg_replace('/[0-9]+/', '', $id_pregunta);
 $usuario=(isset($_POST['usuario']))?$_POST['usuario']:"";
 
     $usuario1 = $_SESSION;
@@ -29,7 +31,7 @@ switch($accion){
     $result2 = mysqli_query($conn, $validar_repuesta); 
      if (mysqli_num_rows($result2) > 0) { 
           
-            $sql2 = "UPDATE tbl_respuestas_usuario SET RESPUESTA='$repuesta'  WHERE ID_RESPUESTA='$id_repuesta'";
+            $sql2 = "UPDATE tbl_respuestas_usuario SET RESPUESTA='$repuesta' ,ID_PREGUNTA ='$pregunta'  WHERE ID_RESPUESTA='$id_repuesta'";
             if (mysqli_query($conn, $sql2)) {
                 // ////////////// INICIO FUNCION BITACORA /////////////////////
                 if($repuesta_anterior !== $repuesta) ///////////// 
@@ -46,7 +48,7 @@ switch($accion){
             }
            // si no existe la repuesta con el mismo nombre
           }else{
-                    $sql2 = "UPDATE tbl_respuestas_usuario SET RESPUESTA='$repuesta' WHERE ID_RESPUESTA='$id_repuesta'";
+                    $sql2 = "UPDATE tbl_respuestas_usuario SET RESPUESTA='$repuesta',ID_PREGUNTA ='$pregunta' WHERE ID_RESPUESTA='$id_repuesta'";
                     if (mysqli_query($conn, $sql2)) {
                     // ////////////// INICIO FUNCION BITACORA /////////////////////
                     if($repuesta_anterior !== $repuesta) ///////////// PREGUNTA

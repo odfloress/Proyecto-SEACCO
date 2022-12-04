@@ -13,6 +13,7 @@
 
   // //Variables para recuperar la información de los campos de la vista adminiistradores
   $id_usuario=(isset($_POST['id_usuario']))?$_POST['id_usuario']:"";
+  $usuario_id=(isset($_POST['usuario_id']))?$_POST['usuario_id']:"";
   $rol=(isset($_POST['rol']))?$_POST['rol']:"";
   $id_rol = intval(preg_replace('/[^0-9]+/', '', $rol), 10);
   $nuevo_rol= preg_replace('/[0-9]+/', '', $rol);
@@ -478,7 +479,7 @@ if(in_array($extencion, $permitidos))
 
         // inicio inserta en la tabla bitacora
         $sqlC = "INSERT INTO tbl_bitacora (FECHA,USUARIO, OPERACION, PANTALLA, CAMPO,ID_REGISTRO, VALOR_ORIGINAL, VALOR_NUEVO)
-                  VALUES ('$fechaAC','$usuario1[usuario]', 'EDITO','USUARIOS', 'CONTRASEÑA','$id_usuario', '*********','*********')";
+                  VALUES ('$fechaAC','$usuario1[usuario]', 'EDITO','USUARIOS', 'CONTRASEÑA','$usuario_id', '*********','*********')";
           if (mysqli_query($conn, $sqlC)) {} else { }
         // fin inserta en la tabla bitacora
  

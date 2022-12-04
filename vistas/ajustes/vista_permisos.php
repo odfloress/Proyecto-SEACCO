@@ -46,6 +46,15 @@ if (mysqli_num_rows($roles35) > 0)
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Permisos</title>
+      <!-- ////////////// Inicio para select ////////// -->
+<!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"> -->
+<link rel='stylesheet prefetch' href='https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.11.2/css/bootstrap-select.min.css'>
+<link rel="stylesheet" href="../../css/est.css">
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.6.3/js/bootstrap-select.min.js"></script>
+<!-- ////////////// Fin para select ////////// -->
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
@@ -93,7 +102,7 @@ if (mysqli_num_rows($roles35) > 0)
                     <select class="form-select" id="lista1" name="lista1" required >
                         <?php
                             include '../../conexion/conexion.php';
-                            $roles = "SELECT * FROM tbl_roles WHERE ID_ROL!=3 ORDER BY ID_ROL";
+                            $roles = "SELECT * FROM tbl_roles WHERE ID_ROL!=3 AND	ESTADO_ROL='ACTIVO' ORDER BY ID_ROL";
                             $roles2 = mysqli_query($conn, $roles);
                             if (mysqli_num_rows($roles2) > 0) {
                                 while($row = mysqli_fetch_assoc($roles2))
@@ -365,10 +374,11 @@ if (mysqli_num_rows($roles35) > 0)
   $(function () {
     $("#example1").DataTable({
       "order": [[ 2, "desc" ]],
+      "lengthMenu": [[10, 25, 50,   100, -1], [10, 25, 50, 100, "Todos"]],
       language: {
                           processing: "Tratamiento en curso...",
                           search: "Buscar&nbsp;:",
-                          lengthMenu: "Agrupar de _MENU_ items",
+                          lengthMenu: "Consultar de _MENU_ items",
                           info: "Mostrando del item _START_ al _END_ de un total de _TOTAL_ items",
                           infoEmpty: "No existen datos.",
                           infoFiltered: "(filtrado de _MAX_ elementos en total)",

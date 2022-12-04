@@ -48,6 +48,15 @@ if (mysqli_num_rows($roles35) > 0)
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Respuestas Usuario</title>
+    <!-- ////////////// Inicio para select ////////// -->
+<!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"> -->
+<link rel='stylesheet prefetch' href='https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.11.2/css/bootstrap-select.min.css'>
+<link rel="stylesheet" href="../../css/est.css">
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.6.3/js/bootstrap-select.min.js"></script>
+<!-- ////////////// Fin para select ////////// -->
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
@@ -182,7 +191,7 @@ if (mysqli_num_rows($roles35) > 0)
                           if (mysqli_num_rows($profesion2) > 0)
                           {?>
                                  <!-- inicio boton editar -->
-                      <button type="button"  class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#myModal2<?php echo $filas['ID_RESPUESTA'] ?>" >
+                      <button type="button"  class="btn btn-warning" onclick="ocultar()" data-bs-toggle="modal" data-bs-target="#myModal2<?php echo $filas['ID_RESPUESTA'] ?>" >
                       <i class="fas fa-pencil-alt"></i>
                       </button> <?php 
                           }
@@ -214,11 +223,33 @@ if (mysqli_num_rows($roles35) > 0)
                                               <input type="text" readonly class="form-control" name="usuario" required value="<?php echo $filas['USUARIO'] ?>" placeholder=""  >
                                               <br>
                                               <label for="">Pregunta:</label>
-                                              <input type="text" readonly class="form-control" name="id_pregunta" required value="<?php echo $filas['PREGUNTA'] ?>" placeholder=""  >
+                                              <select style="background-color:rgb(240, 244, 245);" value="<?php echo "$id_departamento"; ?>"  id="lista1" name="id_pregunta" required  class="form-control selectpicker"  data-live-search="true">
+                                              <option value="<?php echo $filas['ID_PREGUNTA'] ?>"><?php echo $filas['PREGUNTA'] ?></option>
+                                                  <?php
+                                                      include 'conexion/conexion.php';
+                                                      $departamento = "SELECT * FROM tbl_preguntas";
+                                                      $departamento2 = mysqli_query($conn, $departamento);
+                                                      if (mysqli_num_rows($departamento2) > 0) {
+                                                          while($row = mysqli_fetch_assoc($departamento2))
+                                                          {
+                                                          $id_departamento = $row['ID_PREGUNTA'];
+                                                          $departamento3 =$row['PREGUNTA'];
+                                                  ?>
+                                                    <option value="<?php  echo $id_departamento.$departamento3 ?>"><?php echo $departamento3 ?></option>
+                                                    <?php
+                                                    }}// finaliza el if y el while
+                                                    ?>
+                                            </select>
+                                            <!--  <input type="text" readonly class="form-control" name="id_pregunta" required value="<?php echo $filas['PREGUNTA'] ?>" placeholder=""  > -->
                                               <br>
                                               <label for="">Respuesta:</label>
-                                              <input type="text" class="form-control" name="repuesta" required value="<?php echo $filas['RESPUESTA'] ?>" placeholder=""  autocomplete = "off"  onkeypress="return soloLetras(event);" minlength="3" maxlength="50" 
-                                              onkeyup="un_espacio(this);"  >
+                                             <!-- <input type="text" class="form-control" name="repuesta" required value="<?php echo $filas['RESPUESTA'] ?>" 
+                                              placeholder=""  autocomplete = "off"  onkeypress="return soloLetras(event);" minlength="3" maxlength="50" 
+                                              onkeyup="un_espacio(this);"  > -->
+
+                                              <input type="password" onkeyup="un_espacio(this);" class="form-control mostrar" name="repuesta" id="contra" placeholder="" 
+                                                required  minlength="3" maxlength="50" onkeypress="return soloLetras(event);" value="<?php echo $filas['RESPUESTA'] ?>">
+                                                <input type="checkbox" onclick="mostrarContrasena2()" > Mostrar/Ocultar
                                              <br>
                                           
                                           </div>
@@ -226,7 +257,7 @@ if (mysqli_num_rows($roles35) > 0)
 
                                 <!-- pie del modal -->
                                 <div class="modal-footer">
-                                <button type="submit" name="accion" value="editar" class="btn btn-primary" onclick="return confirm('¿Desea actualizar la profesión?')">Guardar</button>
+                                <button type="submit" name="accion" value="editar" class="btn btn-primary" >Guardar</button>
                                   <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
                                 </div>
                              
@@ -257,7 +288,7 @@ if (mysqli_num_rows($roles35) > 0)
                      <td class="desaparecerTemporalmente1"><?php echo $filas['ID_RESPUESTA'] ?></td>
                      <td class="desaparecerTemporalmente1"><?php echo $filas['USUARIO'] ?></td>
                      <td class="desaparecerTemporalmente1"><?php echo $filas['PREGUNTA'] ?></td>
-                     <td class="desaparecerTemporalmente1"><?php echo $filas['RESPUESTA'] ?></td>
+                     <td class="desaparecerTemporalmente1">***********</td>
                      
                     
       </tr>
@@ -324,11 +355,11 @@ if (mysqli_num_rows($roles35) > 0)
   $(function () {
     $("#example1").DataTable({
       "order": [[ 1, "desc" ]],
-      
+      "lengthMenu": [[10, 25, 50,   100, -1], [10, 25, 50, 100, "Todos"]],
       language: {
                           processing: "Tratamiento en curso...",
                           search: "Buscar&nbsp;:",
-                          lengthMenu: "Agrupar de _MENU_ items",
+                          lengthMenu: "Consultar de _MENU_ items",
                           info: "Mostrando del item _START_ al _END_ de un total de _TOTAL_ items",
                           infoEmpty: "No existen datos.",
                           infoFiltered: "(filtrado de _MAX_ elementos en total)",
@@ -426,6 +457,19 @@ if (mysqli_num_rows($roles35) > 0)
     }
  
 //   Fin Script para que solo permita letras
+        function mostrarContrasena2(){
+          var x = document.getElementById("contra");
+          if (x.type === "password"){
+            $(".mostrar").attr("type","text");
+          }else{
+            $(".mostrar").attr("type","password");
+          } 
+        }
+
+        function ocultar(){
+          $(".mostrar").attr("type","password");
+          $(".mostrar2").attr("type","password");
+        }
 </script>
 
  <!-- Enlace Script para que convierta a mayusculas las teclas que se van pulsando -->

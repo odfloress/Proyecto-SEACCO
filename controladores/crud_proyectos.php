@@ -1,7 +1,8 @@
 <?php
   require '../../conexion/conexion.php';
   //para mostrar los datos de la tabla mysql y mostrar en el crud
-  $sql = "SELECT ID_PROYECTO, NOMBRE_CLIENTE, NOMBRE, ESTADO_PROYECTO, NOMBRE_PROYECTO, DESCRIPCION, DEPARTAMENTO, UBICACION, FECHA_INICIO, FECHA_FINAL FROM ((((tbl_proyectos p
+  $sql = "SELECT ID_PROYECTO, NOMBRE_CLIENTE, NOMBRE, ESTADO_PROYECTO, NOMBRE_PROYECTO, DESCRIPCION, DEPARTAMENTO, 
+  UBICACION, FECHA_INICIO, FECHA_FINAL FROM ((((tbl_proyectos p
   INNER JOIN tbl_clientes c ON p.ID_CLIENTE = c.ID_CLIENTE)
   INNER JOIN tbl_usuarios u ON p.ID_USUARIO = u.ID_USUARIO)
   INNER JOIN tbl_estados_proyectos e ON p.ID_ESTADOS = e.ID_ESTADOS ) 
@@ -16,11 +17,19 @@
   // //Variables para recuperar la información de los campos de la vista categorias de productos
   $id_proyecto=(isset($_POST['id_proyecto']))?$_POST['id_proyecto']:"";
   $id_cliente=(isset($_POST['id_cliente']))?$_POST['id_cliente']:"";
+  $nombre_cliente_id = intval(preg_replace('/[^0-9]+/', '', $id_cliente), 10);
+  $nuevo_nombre_cliente= preg_replace('/[0-9]+/', '', $id_cliente);
   $id_usuario=(isset($_POST['id_usuario']))?$_POST['id_usuario']:"";
+  $nombre_usuario_id = intval(preg_replace('/[^0-9]+/', '', $id_usuario), 10);
+  $nuevo_nombre_usuario= preg_replace('/[0-9]+/', '', $id_usuario);
   $id_estado=(isset($_POST['id_estado']))?$_POST['id_estado']:"";
+  $estado_id = intval(preg_replace('/[^0-9]+/', '', $id_estado), 10);
+  $nuevo_nombre_estado= preg_replace('/[0-9]+/', '', $id_estado);
   $nombre=(isset($_POST['nombre']))?$_POST['nombre']:"";
   $descripcion=(isset($_POST['descripcion']))?$_POST['descripcion']:"";
   $id_departamento=(isset($_POST['id_departamento']))?$_POST['id_departamento']:"";
+  $departamento_id = intval(preg_replace('/[^0-9]+/', '', $id_departamento), 10);
+  $nuevo_nombre_departamento= preg_replace('/[0-9]+/', '', $id_departamento);
   $ubicacion=(isset($_POST['ubicacion']))?$_POST['ubicacion']:"";
   $fecha_inicio=(isset($_POST['fecha_inicio']))?$_POST['fecha_inicio']:"";
   $fecha_final=(isset($_POST['fecha_final']))?$_POST['fecha_final']:"";
@@ -32,18 +41,27 @@
   $accion=(isset($_POST['accion']))?$_POST['accion']:"";
   
   ///////////////// INICIO SELECCIONAR LOS DATOS ACTUALES ////////////////////
-  $mostrar_actuales= "SELECT * FROM  tbl_proyectos WHERE ID_PROYECTO='$id_proyecto'";
+  $mostrar_actuales= "SELECT * FROM  ((((tbl_proyectos p
+  INNER JOIN tbl_clientes c ON p.ID_CLIENTE = c.ID_CLIENTE)
+  INNER JOIN tbl_usuarios u ON p.ID_USUARIO = u.ID_USUARIO)
+  INNER JOIN tbl_estados_proyectos e ON p.ID_ESTADOS = e.ID_ESTADOS ) 
+  INNER JOIN tbl_departamentos d ON p.ID_DEPARTAMENTO = d.ID_DEPARTAMENTO)   
+   WHERE ID_PROYECTO='$id_proyecto'";
   $sultados_actuales = $conn->query($mostrar_actuales);
   if ($sultados_actuales->num_rows > 0) 
   {
    while($datos_actuales = $sultados_actuales->fetch_assoc()) 
    {
      $ID_CLIENTE = $datos_actuales["ID_CLIENTE"];
+     $NOMBRE_CLIENTE = $datos_actuales["NOMBRE_CLIENTE"];
      $ID_USUARIO = $datos_actuales["ID_USUARIO"];
+     $NOMBRE = $datos_actuales["NOMBRE"];
      $ID_ESTADOS = $datos_actuales["ID_ESTADOS"];
+     $ESTADO_PROYECTO	 = $datos_actuales["ESTADO_PROYECTO"];
      $NOMBRE_PROYECTO = $datos_actuales["NOMBRE_PROYECTO"];
-     $DESCRIPCION = $datos_actuales["ID_DEPARTAMENTO"];
+     $DESCRIPCION = $datos_actuales["DESCRIPCION"];
      $ID_DEPARTAMENTO = $datos_actuales["ID_DEPARTAMENTO"];
+     $DEPARTAMENTO = $datos_actuales["DEPARTAMENTO"];
      $UBICACION = $datos_actuales["UBICACION"];
      $FECHA_INICIO = $datos_actuales["FECHA_INICIO"];
      $FECHA_FINAL = $datos_actuales["FECHA_FINAL"];
@@ -106,6 +124,13 @@
 
        //para editar en la tabla mysl      
       case "editar";
+      //echo $DESCRIPCION.'<br>';
+      //echo $descripcion.'<br>';
+      //echo $nuevo_nombre_cliente.'<br>';
+     // echo $NOMBRE.'<br>';
+      //echo $nombre_usuario_id.'<br>';
+      //echo $nuevo_nombre_usuario.'<br>';
+      //die();
       // valida si existe el proyecto con el mismo nombre
       $validar_proyecto= "SELECT * FROM tbl_proyectos WHERE NOMBRE_PROYECTO='$nombre'";
       $result2 = mysqli_query($conn, $validar_proyecto); 
@@ -114,11 +139,63 @@
           $sql2 = "UPDATE tbl_proyectos SET ID_CLIENTE='$id_cliente', ID_USUARIO='$id_usuario',	ID_ESTADOS='$id_estado', NOMBRE_PROYECTO='$anterior', DESCRIPCION='$descripcion',  ID_DEPARTAMENTO='$id_departamento', UBICACION='$ubicacion', FECHA_INICIO='$fecha_inicio', FECHA_FINAL='$fecha_final' WHERE ID_PROYECTO='$id_proyecto'";
               if (mysqli_query($conn, $sql2)) {
    
-                   /* inicio inserta en la tabla bitacora
-                  $sql = "INSERT INTO tbl_bitacora (USUARIO, OPERACION, PANTALLA, CAMPO, ID_REGISTRO, VALOR_ORIGINAL, VALOR_NUEVO)
-                  VALUES ('$usuario1[usuario]', 'EDITO','PROYECTOS', 'PROYECTO','$id_proyecto', '$anterior','$nombre')";
-                if (mysqli_query($conn, $sql)) {} else { }
-              // fin inserta en la tabla bitacora */
+                   // ////////////// INICIO FUNCION BITACORA /////////////////////
+        
+        if($ID_CLIENTE != $nombre_cliente_id) ///////////// 
+        {
+          include_once 'funcion_bitacora.php';
+          bitacora('EDITO', 'PROYECTOS', 'CLIENTE', $id_proyecto, $NOMBRE_CLIENTE, $nuevo_nombre_cliente);
+        }
+
+        if($ID_USUARIO != $nombre_usuario_id) ///////////// 
+        {
+          include_once 'funcion_bitacora.php';
+          bitacora('EDITO', 'PROYECTOS', 'USUARIO', $id_proyecto, $NOMBRE, $nuevo_nombre_usuario);
+        }
+
+        if($ID_ESTADOS != $estado_id) ///////////// 
+        {
+          include_once 'funcion_bitacora.php';
+          bitacora('EDITO', 'PROYECTOS', 'ESTADO', $id_proyecto, $ESTADO_PROYECTO, $nuevo_nombre_estado);
+        }
+
+        if($NOMBRE_PROYECTO != $nombre) ///////////// 
+        {
+          include_once 'funcion_bitacora.php';
+          bitacora('EDITO', 'PROYECTOS', 'NOMBRE PROYECTO', $id_proyecto, $NOMBRE_PROYECTO, $nombre);
+        }
+        
+        if($DESCRIPCION != $descripcion) ///////////// 
+        {
+          include_once 'funcion_bitacora.php';
+          bitacora('EDITO', 'PROYECTOS', 'DESCRIPCION', $id_proyecto, $DESCRIPCION, $descripcion);
+        }
+        
+        if($ID_DEPARTAMENTO != $departamento_id) ///////////// 
+        {
+          include_once 'funcion_bitacora.php';
+          bitacora('EDITO', 'PROYECTOS', 'DEPARTAMENTO', $id_proyecto, $DEPARTAMENTO, $nuevo_nombre_departamento);
+        }
+        
+        if($UBICACION != $ubicacion) ///////////// 
+        {
+          include_once 'funcion_bitacora.php';
+          bitacora('EDITO', 'PROYECTOS', 'UBICASION', $id_proyecto, $UBICACION, $ubicacion);
+        }
+        
+        if($FECHA_INICIO != $fecha_inicio) ///////////// 
+        {
+          include_once 'funcion_bitacora.php';
+          bitacora('EDITO', 'PROYECTOS', 'FECHA INICIO', $id_proyecto, $FECHA_INICIO, $fecha_inicio);
+        }
+        
+        if($FECHA_FINAL != $fecha_final) ///////////// 
+        {
+          include_once 'funcion_bitacora.php';
+          bitacora('EDITO', 'PROYECTOS', 'FECHA FINAL', $id_proyecto, $FECHA_FINAL, $fecha_final);
+        }
+      
+         // ////////////// FIN FUNCION BITACORA ///////////////////////
               
                   echo '<script>
                           alert("Campos del Proyecto editado con exito");
@@ -140,62 +217,58 @@
           }else{
           $sql4 = "UPDATE tbl_proyectos SET ID_CLIENTE='$id_cliente', ID_USUARIO='$id_usuario', ID_ESTADOS='$id_estado', NOMBRE_PROYECTO='$nombre', DESCRIPCION='$descripcion',  ID_DEPARTAMENTO='$id_departamento', UBICACION='$ubicacion', FECHA_INICIO='$fecha_inicio', FECHA_FINAL='$fecha_final' WHERE ID_PROYECTO='$id_proyecto'"; 
                 if (mysqli_query($conn, $sql4)) {
-                 // inicio inserta en la tabla bitacora
-                /* $sql = "INSERT INTO tbl_bitacora (USUARIO, OPERACION, PANTALLA, CAMPO, ID_REGISTRO, VALOR_ORIGINAL, VALOR_NUEVO)
-                 VALUES ('$usuario1[usuario]', 'EDITO','PROYECTOS', 'PROYECTO','$id_proyecto', '$anterior','$nombre')";
-               if (mysqli_query($conn, $sql)) {} else { } */
-             // fin inserta en la tabla bitacora
+                 
              // ////////////// INICIO FUNCION BITACORA /////////////////////
         
-        if($ID_CLIENTE !== $id_cliente) ///////////// 
+        if($ID_CLIENTE != $nombre_cliente_id) ///////////// 
         {
           include_once 'funcion_bitacora.php';
-          bitacora('EDITO', 'PROYECTOS', 'CLIENTE', $id_proyecto, $ID_CLIENTE, $id_cliente);
+          bitacora('EDITO', 'PROYECTOS', 'CLIENTE', $id_proyecto, $NOMBRE_CLIENTE, $nuevo_nombre_cliente);
         }
 
-        if($ID_USUARIO !== $id_usuario) ///////////// 
+        if($ID_USUARIO != $nombre_usuario_id) ///////////// 
         {
           include_once 'funcion_bitacora.php';
-          bitacora('EDITO', 'PROYECTOS', 'USUARIO', $id_proyecto, $ID_USUARIO, $id_usuario);
+          bitacora('EDITO', 'PROYECTOS', 'USUARIO', $id_proyecto, $NOMBRE, $nuevo_nombre_usuario);
         }
 
-        if($ID_ESTADOS !== $id_estado) ///////////// 
+        if($ID_ESTADOS != $estado_id) ///////////// 
         {
           include_once 'funcion_bitacora.php';
-          bitacora('EDITO', 'PROYECTOS', 'ESTADO', $id_proyecto, $ID_ESTADOS, $id_estado);
+          bitacora('EDITO', 'PROYECTOS', 'ESTADO', $id_proyecto, $ESTADO_PROYECTO, $nuevo_nombre_estado);
         }
 
-        if($NOMBRE_PROYECTO !== $nombre) ///////////// 
+        if($NOMBRE_PROYECTO != $nombre) ///////////// 
         {
           include_once 'funcion_bitacora.php';
           bitacora('EDITO', 'PROYECTOS', 'NOMBRE PROYECTO', $id_proyecto, $NOMBRE_PROYECTO, $nombre);
         }
         
-        if($DESCRIPCION !== $descripcion) ///////////// 
+        if($DESCRIPCION != $descripcion) ///////////// 
         {
           include_once 'funcion_bitacora.php';
           bitacora('EDITO', 'PROYECTOS', 'DESCRIPCION', $id_proyecto, $DESCRIPCION, $descripcion);
         }
         
-        if($ID_DEPARTAMENTO !== $id_departamento) ///////////// 
+        if($ID_DEPARTAMENTO != $departamento_id) ///////////// 
         {
           include_once 'funcion_bitacora.php';
-          bitacora('EDITO', 'PROYECTOS', 'DEPARTAMENTO', $id_proyecto, $ID_DEPARTAMENTO, $id_departamento);
+          bitacora('EDITO', 'PROYECTOS', 'DEPARTAMENTO', $id_proyecto, $DEPARTAMENTO, $nuevo_nombre_departamento);
         }
         
-        if($UBICACION !== $ubicacion) ///////////// 
+        if($UBICACION != $ubicacion) ///////////// 
         {
           include_once 'funcion_bitacora.php';
           bitacora('EDITO', 'PROYECTOS', 'UBICASION', $id_proyecto, $UBICACION, $ubicacion);
         }
         
-        if($FECHA_INICIO !== $fecha_inicio) ///////////// 
+        if($FECHA_INICIO != $fecha_inicio) ///////////// 
         {
           include_once 'funcion_bitacora.php';
           bitacora('EDITO', 'PROYECTOS', 'FECHA INICIO', $id_proyecto, $FECHA_INICIO, $fecha_inicio);
         }
         
-        if($FECHA_FINAL !== $fecha_final) ///////////// 
+        if($FECHA_FINAL != $fecha_final) ///////////// 
         {
           include_once 'funcion_bitacora.php';
           bitacora('EDITO', 'PROYECTOS', 'FECHA FINAL', $id_proyecto, $FECHA_FINAL, $fecha_final);

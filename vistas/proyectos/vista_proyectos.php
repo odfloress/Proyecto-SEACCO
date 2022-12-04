@@ -115,7 +115,7 @@ if (mysqli_num_rows($roles35) > 0)
                       <option >Seleccione un Encargado</option>
                         <?php
                             include 'conexion/conexion.php';
-                            $idusuario= "SELECT * FROM tbl_usuarios ORDER BY ID_USUARIO";
+                            $idusuario= "SELECT * FROM tbl_usuarios WHERE ID_ESTADO_USUARIO = 1 ORDER BY ID_USUARIO";
                             $idusuario2 = mysqli_query($conn, $idusuario);
                             if (mysqli_num_rows($idusuario2) > 0) {
                                 while($row = mysqli_fetch_assoc($idusuario2))
@@ -153,7 +153,7 @@ if (mysqli_num_rows($roles35) > 0)
                     <input class="form-control" type="text" onkeyup="un_espacio(this);" name="nombre" value="<?php echo $nombre; ?>"  autocomplete="off" id="" required onkeypress="return soloLetras(event);" minlength="3" maxlength="255" onkeyup="mayus(this);">
 
                     <label for="">Descripción Proyecto:</label>
-                    <input class="form-control" type="text" onkeyup="un_espacio(this);" name="descripcion" id="" required value="<?php echo $descripcion; ?>" autocomplete="off"  minlength="3" maxlength="255" onkeyup="mayus(this);" >
+                    <textarea class="form-control" type="text" onkeyup="un_espacio(this);" name="descripcion" id="" required value="<?php echo $descripcion; ?>" autocomplete="off"  minlength="3" maxlength="255" onkeyup="mayus(this);" ></textarea>
                     
                     <label for="">Departamento:</label>
                     <select style="background-color:rgb(240, 244, 245);" value="<?php echo "$id_departamento"; ?>" class="form-select" id="lista1" name="id_departamento" required >
@@ -175,7 +175,7 @@ if (mysqli_num_rows($roles35) > 0)
                    </select>
                 
                     <label for="">Ubicación:</label>
-                    <input class="form-control" type="text" onkeyup="un_espacio(this);" name="ubicacion" value="<?php echo $ubicacion; ?>" autocomplete="off"  id="" required  minlength="3" maxlength="255" onkeyup="mayus(this);">
+                    <textarea class="form-control" type="text" onkeyup="un_espacio(this);" name="ubicacion" value="<?php echo $ubicacion; ?>" autocomplete="off"  id="" required  minlength="3" maxlength="255" onkeyup="mayus(this);"></textarea>
                     
                     <label for="">Fecha Inicio:</label>
                     <input class="form-control" type="Date" name="fecha_inicio" min="2022-08-08" value="<?php echo $fecha_inicio; ?>" autocomplete="off" id="" required> 
@@ -326,7 +326,7 @@ if (mysqli_num_rows($roles35) > 0)
                                   
                               <?php
                               }else{ ?>
-                                <option value="<?php  echo $id_cliente; ?>"><?php echo $cliente3; ?></option>
+                                <option value="<?php  echo $id_cliente.$cliente3; ?>"><?php echo $cliente3; ?></option>
                                 <?php
                                   }}}// finaliza el if y el while
                             ?>
@@ -336,7 +336,7 @@ if (mysqli_num_rows($roles35) > 0)
                               <option> </option>   
                                   <?php
                                   include '../../conexion/conexion.php';
-                                  $idusuario = "SELECT * FROM tbl_usuarios ORDER BY ID_USUARIO";
+                                  $idusuario = "SELECT * FROM tbl_usuarios WHERE ID_ESTADO_USUARIO = 1 ORDER BY ID_USUARIO";
                                   $idusuario2 = mysqli_query($conn, $idusuario);
                                   if (mysqli_num_rows($idusuario2) > 0) {
                             while($row = mysqli_fetch_assoc($idusuario2))
@@ -344,11 +344,11 @@ if (mysqli_num_rows($roles35) > 0)
                               $id_usuario = $row['ID_USUARIO'];
                               $idusuario3 =$row['NOMBRE'];
                               if($idusuario3 == $filas["NOMBRE"]){?>
-                                <option value="<?php  echo $id_usuario; ?>" selected><?php echo $idusuario3; ?></option>
+                                <option value="<?php  echo $id_usuario.$idusuario3; ?>" selected><?php echo $idusuario3; ?></option>
                               
                               <?php
                               }else{ ?>
-                                <option value="<?php  echo $id_usuario; ?>"><?php echo $idusuario3; ?></option>
+                                <option value="<?php  echo $id_usuario.$idusuario3; ?>"><?php echo $idusuario3; ?></option>
                                 <?php
                                       }}}// finaliza el if y el while
                                 ?>
@@ -366,11 +366,11 @@ if (mysqli_num_rows($roles35) > 0)
                                 $id_estado = $row['ID_ESTADOS'];
                                 $estado3 =$row['ESTADO_PROYECTO'];
                                 if($estado3 == $filas["ESTADO_PROYECTO"]){?>
-                                  <option value="<?php  echo $id_estado; ?>" selected><?php echo $estado3; ?></option>
+                                  <option value="<?php  echo $id_estado.$estado3; ?>" selected><?php echo $estado3; ?></option>
                                 
                          <?php
                          }else{ ?>
-                          <option value="<?php  echo $id_estado; ?>"><?php echo $estado3; ?></option>
+                          <option value="<?php  echo $id_estado.$estado3; ?>"><?php echo $estado3; ?></option>
                           <?php
                                 }}}// finaliza el if y el while
                            ?> 
@@ -380,7 +380,7 @@ if (mysqli_num_rows($roles35) > 0)
                     <input class="form-control" type="text" onkeyup="un_espacio(this);" name="nombre" id="" required value="<?php echo $filas['NOMBRE_PROYECTO'] ?>" autocomplete="off" onkeypress="return soloLetras(event);" minlength="4" maxlength="255" onkeyup="mayus(this);" >
                     
                     <label for="">Descripción Proyecto:</label>
-                    <input class="form-control" type="text" onkeyup="un_espacio(this);" name="descripcion" id="" required value="<?php echo $filas['DESCRIPCION'] ?>" autocomplete="off"  minlength="4" maxlength="255" onkeyup="mayus(this);" >
+                    <textarea class="form-control" type="text" onkeyup="un_espacio(this);" name="descripcion" id="" required value="" autocomplete="off"  minlength="4" maxlength="255" onkeyup="mayus(this);" ><?php echo $filas['DESCRIPCION'] ?></textarea>
                     
                     <label for="">Departamento:</label>
                     <select style="background-color:rgb(240, 244, 245);" class="form-select" id="lista1" name="id_departamento" required >
@@ -396,18 +396,18 @@ if (mysqli_num_rows($roles35) > 0)
                                 $departamento3 =$row['DEPARTAMENTO'];
 
                                 if($departamento3 == $filas["DEPARTAMENTO"]){?>
-                                  <option value="<?php  echo $id_departamentos; ?>" selected><?php echo $departamento3; ?></option>
+                                  <option value="<?php  echo $id_departamentos.$departamento3; ?>" selected><?php echo $departamento3; ?></option>
                                 
                          <?php
                          }else{ ?>
-                          <option value="<?php  echo $id_departamentos; ?>"><?php echo $departamento3; ?></option>
+                          <option value="<?php  echo $id_departamentos.$departamento3; ?>"><?php echo $departamento3; ?></option>
                           <?php
                                 }}}// finaliza el if y el while
                            ?>
                    </select>
                 
                     <label for="">Ubicación:</label>
-                    <input class="form-control" type="text" onkeyup="un_espacio(this);" name="ubicacion" id="" required value="<?php echo $filas['UBICACION'] ?>" autocomplete="off"  minlength="3" maxlength="255" onkeyup="mayus(this);"  >
+                    <textarea class="form-control" type="text" onkeyup="un_espacio(this);" name="ubicacion" id="" required value="" autocomplete="off"  minlength="3" maxlength="255" onkeyup="mayus(this);"  ><?php echo $filas['UBICACION'] ?></textarea>
                     
                     <label for="">Fecha Inicio:</label>
                     <input class="form-control" type="Date" name="fecha_inicio" id="" required value="<?php echo $filas['FECHA_INICIO'] ?>">
@@ -526,10 +526,11 @@ if (mysqli_num_rows($roles35) > 0)
   $(function () {
     $("#example1").DataTable({
       "order": [[ 1, "desc" ]],
+      "lengthMenu": [[10, 25, 50,   100, -1], [10, 25, 50, 100, "Todos"]],
       language: {
                           processing: "Tratamiento en curso...",
                           search: "Buscar&nbsp;:",
-                          lengthMenu: "Agrupar de _MENU_ items",
+                          lengthMenu: "Consultar de _MENU_ items",
                           info: "Mostrando del item _START_ al _END_ de un total de _TOTAL_ items",
                           infoEmpty: "No existen datos.",
                           infoFiltered: "(filtrado de _MAX_ elementos en total)",

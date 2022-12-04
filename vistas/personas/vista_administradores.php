@@ -363,17 +363,17 @@ if (mysqli_num_rows($roles35) > 0)
                   <th class="desaparecerTemporalmente1">Apellido</th>
                   <th class="desaparecerTemporalmente1">Usuario</th>
                   <th class="desaparecerTemporalmente1">Correo</th>
-                  <th class="desaparecerTemporalmente1">Genero</th>                  
+                  <th class="desaparecerTemporalmente">Genero</th>                  
                   <th class="desaparecerTemporalmente1">DNI</th>
-                  <th class="desaparecerTemporalmente1">Profesión</th>
-                  <th class="desaparecerTemporalmente1">Dirección</th>
+                  <th class="desaparecerTemporalmente">Profesión</th>
+                  <th class="desaparecerTemporalmente">Dirección</th>
                   <th class="desaparecerTemporalmente1">Teléfono</th>
                   <th class="desaparecerTemporalmente">Referencia</th>
                   <th class="desaparecerTemporalmente">Teléfono Referencia</th>
-                  <th class="desaparecerTemporalmente1">Experiencia laboral</th>
+                  <th class="desaparecerTemporalmente">Experiencia laboral</th>
                   <th class="desaparecerTemporalmente">Currículum</th>                                                    
                   <th class="desaparecerTemporalmente">Foto</th>
-                  <th class="desaparecerTemporalmente1">Área</th>
+                  <th class="desaparecerTemporalmente">Área</th>
                   <th class="desaparecerTemporalmente1">Fecha Entrada</th>
                   <th class="desaparecerTemporalmente1">Fecha Salida</th>
                   <th class="desaparecerTemporalmente1">Motivo Salida</th>
@@ -634,11 +634,11 @@ if (mysqli_num_rows($roles35) > 0)
                           {?>
                           
                              <button
-                        type="button" class="btn btn-success" onclick="ocultar()" data-bs-toggle="modal" data-bs-target="#myModalr<?php echo $filas['USUARIO'] ?>">
+                        type="button" class="btn btn-success" onclick="ocultar()" data-bs-toggle="modal" data-bs-target="#myModalr<?php echo $filas['ID_USUARIO'] ?>">
                         <i class="fas fa-key"></i>
                     </button>
                     <!-- The Modal -->
-                      <div class="modal" id="myModalr<?php echo $filas['USUARIO'] ?>">
+                      <div class="modal" id="myModalr<?php echo $filas['ID_USUARIO'] ?>">
                         <div class="modal-dialog">
                           <div class="modal-content">
 
@@ -652,6 +652,7 @@ if (mysqli_num_rows($roles35) > 0)
                             <div class="modal-body">
                             <form action="" method="post">
                             <label for="">Usuario:</label>
+                            <input type="text" hidden class="form-control" name="usuario_id" required value="<?php echo $filas['ID_USUARIO'] ?>" placeholder="" >
                             <input type="text" readonly class="form-control" name="usuario" required value="<?php echo $filas['USUARIO'] ?>" placeholder="" >
                             <br>
                       <label for="">Nueva contraseña:</label>
@@ -691,17 +692,17 @@ if (mysqli_num_rows($roles35) > 0)
                      <td class="desaparecerTemporalmente1"><?php echo $filas['APELLIDO'] ?></td>
                      <td class="desaparecerTemporalmente1"><?php echo $filas['USUARIO'] ?></td>
                      <td class="desaparecerTemporalmente1"><?php echo $filas['CORREO'] ?></td>
-                     <td class="desaparecerTemporalmente1"><?php echo $filas['GENERO'] ?></td>
+                     <td class="desaparecerTemporalmente"><?php echo $filas['GENERO'] ?></td>
                      <td class="desaparecerTemporalmente1"><?php echo $filas['DNI'] ?></td>
-                     <td class="desaparecerTemporalmente1"><?php echo $filas['PROFESION'] ?></td>
-                     <td class="desaparecerTemporalmente1"><?php echo $filas['DIRECCION'] ?></td>
+                     <td class="desaparecerTemporalmente"><?php echo $filas['PROFESION'] ?></td>
+                     <td class="desaparecerTemporalmente"><?php echo $filas['DIRECCION'] ?></td>
                      <td class="desaparecerTemporalmente1"><?php echo $filas['CELULAR'] ?></td>
                      <td class="desaparecerTemporalmente"><?php echo $filas['REFERENCIA'] ?></td>
                      <td class="desaparecerTemporalmente"><?php echo $filas['CEL_REFERENCIA'] ?></td>
-                     <td class="desaparecerTemporalmente1"><?php echo $filas['EXPERIENCIA_LABORAL'] ?></td>
+                     <td class="desaparecerTemporalmente"><?php echo $filas['EXPERIENCIA_LABORAL'] ?></td>
                      <td class="desaparecerTemporalmente"><a href="<?php echo $filas['CURRICULUM'] ?>" download>Descargar</a></td>                     
                      <td class="desaparecerTemporalmente"><img class="img-thumbnail" width="100px" src="<?php echo $filas['FOTO'] ?>" /></td>
-                     <td class="desaparecerTemporalmente1"><?php echo $filas['AREA'] ?></td>
+                     <td class="desaparecerTemporalmente"><?php echo $filas['AREA'] ?></td>
                      <td class="desaparecerTemporalmente1"><?php echo $filas['FECHA_ENTRADA'] ?></td>
                      <td class="desaparecerTemporalmente1"><?php echo $filas['FECHA_SALIDA'] ?></td>
                      <td class="desaparecerTemporalmente1"><?php echo $filas['MOTIVO_SALIDA'] ?></td>
@@ -770,10 +771,11 @@ if (mysqli_num_rows($roles35) > 0)
   $(function () {
     $("#example1").DataTable({
       "order": [[ 1, "desc" ]],
+      "lengthMenu": [[10, 25, 50,   100, -1], [10, 25, 50, 100, "Todos"]],
       language: {
                           processing: "Tratamiento en curso...",
                           search: "Buscar&nbsp;:",
-                          lengthMenu: "Agrupar de _MENU_ items",
+                          lengthMenu: "Consultar de _MENU_ items",
                           info: "Mostrando del item _START_ al _END_ de un total de _TOTAL_ items",
                           infoEmpty: "No existen datos.",
                           infoFiltered: "(filtrado de _MAX_ elementos en total)",
@@ -815,7 +817,7 @@ if (mysqli_num_rows($roles35) > 0)
                                             title:     'REPORTE DE ADMINISTRADORES', //T´tulo del reporte
                                             exportOptions: {
                                               // Columnas que se verán en el reporte
-                                                columns: [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,18]
+                                                columns: [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,18,19,20,21]
                                             } 
                                     },
                                     {
@@ -1082,23 +1084,23 @@ if(!isset($_POST['reporte_catalogo']))
           columnStyles: {    
       
             0: {cellWidth: 8},
-            1: {cellWidth: 20}, 
+            1: {cellWidth: 28}, 
             2: {cellWidth: 20},  
-            3: {cellWidth: 20},  
+            3: {cellWidth: 30},  
             4: {cellWidth: 20},  
             5: {cellWidth: 20},            
             6: {cellWidth: 20},
-            7: {cellWidth: 20},
+            7: {cellWidth: 28},
             8: {cellWidth: 20},
-            9: {cellWidth: 20},
-            10: {cellWidth: 20},
-            11: {cellWidth: 20},
-            12: {cellWidth: 20},
+            9: {cellWidth: 23},
+            10: {cellWidth: 23},
+            11: {cellWidth: 30},
+            //12: {cellWidth: 20},
             // 13: {cellWidth: 20},
             // 14: {cellWidth: 20},
             // 15: {cellWidth: 30},
             // 16: {cellWidth: 30},
-            15: {cellWidth: 20},
+            //15: {cellWidth: 20},
            } 
           }
 				);

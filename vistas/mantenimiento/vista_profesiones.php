@@ -144,7 +144,7 @@ if (mysqli_num_rows($roles35) > 0)
                     <div class="btn-group">
                     <?php 
       include '../../conexion/conexion.php';
-      $profesion1 = "SELECT * FROM tbl_ms_roles_ojetos WHERE ID_ROL='$id_rol7' and ID_OBJETO=19 and PERMISO_INSERCION=1";
+      $profesion1 = "SELECT * FROM tbl_ms_roles_ojetos WHERE ID_ROL='$id_rol7' and ID_OBJETO=24 and PERMISO_INSERCION=1";
       $profesion2 = mysqli_query($conn, $profesion1);
       if (mysqli_num_rows($profesion2) > 0)
        {
@@ -349,11 +349,11 @@ if (mysqli_num_rows($roles35) > 0)
   $(function () {
     $("#example1").DataTable({
       "order": [[ 1, "desc" ]],
-      
+      "lengthMenu": [[10, 25, 50,   100, -1], [10, 25, 50, 100, "Todos"]],
       language: {
                           processing: "Tratamiento en curso...",
                           search: "Buscar&nbsp;:",
-                          lengthMenu: "Agrupar de _MENU_ items",
+                          lengthMenu: "Consultar de _MENU_ items",
                           info: "Mostrando del item _START_ al _END_ de un total de _TOTAL_ items",
                           infoEmpty: "No existen datos.",
                           infoFiltered: "(filtrado de _MAX_ elementos en total)",
