@@ -13,6 +13,24 @@ $accion=(isset($_POST['accion']))?$_POST['accion']:"";
 $inicial=(isset($_POST['inicial']))?$_POST['inicial']:"";
 $final=(isset($_POST['final']))?$_POST['final']:"";
 $codigo=(isset($_POST['codigo']))?$_POST['codigo']:"";
+$codigo= hash('sha512', $codigo);
+
+$usuario = $_SESSION;
+
+
+      
+       $minima_contraseña = "SELECT * FROM tbl_parametros WHERE PARAMETRO='MIN_CONTRASENA'";
+       $resultado_minima = mysqli_query($conn, $minima_contraseña);
+            while($mostrar_minima = mysqli_fetch_assoc($resultado_minima)) {
+                  $parametro_min = $mostrar_minima["VALOR"];
+            }
+
+       $maxima_contraseña = "SELECT * FROM tbl_parametros WHERE PARAMETRO='MAX_CONTRASENA'";
+       $resultado_maxima = mysqli_query($conn, $maxima_contraseña);
+       while($mostrar_maxima = mysqli_fetch_assoc($resultado_maxima)) {
+                  $parametro_max = $mostrar_maxima["VALOR"];
+            }
+
 
 
 switch($accion)
@@ -20,8 +38,11 @@ switch($accion)
 
   case "eliminar": 
 
-    if($codigo == 7777747)
-    { 
+    $contraseña = "SELECT * FROM tbl_usuarios WHERE USUARIO='ADMINISTRADOR' and CONTRASENA='$codigo'";
+    $resultado_contraseña = mysqli_query($conn, $contraseña);
+    if (mysqli_num_rows($resultado_contraseña) > 0)
+    {
+        
       $sql5 = "DELETE FROM tbl_bitacora WHERE FECHA BETWEEN '$inicial' AND '$final'";
       if (mysqli_query($conn, $sql5)) 
       {     

@@ -76,31 +76,68 @@ if (mysqli_num_rows($roles35) > 0)
             <ol class="breadcrumb float-sm-right">
             <?php
                 date_default_timezone_set("America/Guatemala");
-                $dia = date("d")+1;
+                $y = 01;
+                $dia = date("d");
                 $mes = date("m");
                 $mes_anterior = date("m")-1;
                 $año = date("Y");
                
              ?>
             </ol>
-       
+           
           </div>
              <!-- inicio rango de fechas -->
              <form action="" method="post">
             <div class="row">
                 <div class="col">
-                Fecha Inicial <input type="date" name="inicial" class="form-control" id="creationDateFromCampaign" value="<?php echo $año.'-'.$mes_anterior.'-'.$dia; ?>" />
+                Fecha Inicial <input type="date" name="inicial" class="form-control" id="creationDateFromCampaign" value="<?php echo $año; ?>-<?php echo $mes_anterior; ?>-<?php echo $dia; ?>" />
                 </div>
                 <div class="col">
-                Fecha Final <input type="date"  name="final" class="form-control" id="creationDateToCampaign" value="<?php echo $año.'-'.$mes.'-'.$dia; ?>" />
+                Fecha Final <input type="datetime-local"  name="final" class="form-control" id="creationDateToCampaign" value="<?php echo $año.'-'.$mes.'-'.$dia; ?> 23:59" />
                 </div>
                 <div class="col">
-                Código<input type="number"  name="codigo"  class="form-control" id="numero"  min="7"  required>  
-                </div>
+
+                <?php 
+                          include '../../conexion/conexion.php';
+                          $tablero = "SELECT * FROM tbl_ms_roles_ojetos WHERE ID_ROL='$id_rol7' and ID_OBJETO=22 and PERMISO_ELIMINACION=1";
+                          $tablero2 = mysqli_query($conn, $tablero);
+                          if (mysqli_num_rows($tablero2) > 0)
+                          {?>
+                Código
+                <!-- Código<input type="number"  name="codigo"  class="form-control" id="numero"  min="7"  required>   -->
+                
+              
+              
+                <div class="input-group mb-3">
+                <input type="password"   name="codigo" id="id_password" class="form-control"
+                placeholder="Ingrese la contraseña"   minlength="<?php echo $parametro_min;?>" maxlength="<?php echo $parametro_max;?>" required onblur="quitarespacios(this);" onkeyup="sinespacio(this);" 
+                pattern="(?=.*[\d])(?=.*[a-z])(?=.*[A-Z]).{<?php echo $parametro_min;?>,}">
+                <div class="input-group-append ">
+                            
+                          <div class="input-group-text">
+                            <span>
+                            <i class="far fa-eye" id="togglePassword"  ></i>
+                            </span>
+                            
+                          </div> 
+                    </div></div>
+              
+                    <?php } ?>
+
+
+              </div>
                 
                 <div class="col"><br>
+
+                <?php 
+                          include '../../conexion/conexion.php';
+                          $tablero = "SELECT * FROM tbl_ms_roles_ojetos WHERE ID_ROL='$id_rol7' and ID_OBJETO=22 and PERMISO_ELIMINACION=1";
+                          $tablero2 = mysqli_query($conn, $tablero);
+                          if (mysqli_num_rows($tablero2) > 0)
+                          {?>
+                          
                 <button type="submit" name="accion" value="eliminar" class="btn btn-danger"  onclick="return confirm('¿Quieres eliminar estos registros?'); ">Eliminar</button>
-               
+                <?php } ?>
               </div>
               
                
@@ -422,7 +459,7 @@ if (mysqli_num_rows($roles35) > 0)
 				//muestra el titulo secundario
 				pdf.setFont('times');
 				pdf.setFontSize(12);
-				pdf.text("Reporte de proveedores", pdf.internal.pageSize.getWidth() / 2, 20, null, 'center');
+				pdf.text("Reporte de bitácora", pdf.internal.pageSize.getWidth() / 2, 20, null, 'center');
 
 												//////// pie de Pagina ///////
 				//muestra la fecha
@@ -443,7 +480,7 @@ if (mysqli_num_rows($roles35) > 0)
 			}
 				//Fin Encabezado y pie de pagina
 
-							pdf.save('Reporte de proveedores.pdf');
+							pdf.save('Reporte de bitacora.pdf');
               $(".desaparecerTemporalmente").css("display","");
 	})
 
@@ -505,3 +542,16 @@ input.addEventListener('input',function(){
 })
 </script>
 
+
+<script>
+              const togglePassword = document.querySelector('#togglePassword');
+              const password = document.querySelector('#id_password');
+
+                togglePassword.addEventListener('click', function (e) {
+              // toggle the type attribute
+              const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
+              password.setAttribute('type', type);
+              // toggle the eye slash icon
+              this.classList.toggle('fa-eye-slash');
+                });
+         </script>

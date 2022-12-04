@@ -504,6 +504,7 @@ if (mysqli_num_rows($roles35) > 0)
     $("#example1").DataTable({
       
       "order": [[ 1, "desc" ]],
+      "lengthMenu": [[10, 25, 50,   100, -1], [10, 25, 50, 100, "Todos"]],
 
       language: {
                           processing: "Tratamiento en curso...",

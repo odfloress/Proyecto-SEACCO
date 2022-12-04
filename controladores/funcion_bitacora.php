@@ -8,7 +8,7 @@ date_default_timezone_set("America/Guatemala");
 
 
 
-$fecha = date("Y-m-d h:i:s");
+$fecha = date("Y-m-d H:i:s");
 
 
 $consultaBitacora=mysqli_query($conn,"INSERT INTO tbl_bitacora (FECHA, USUARIO, OPERACION, PANTALLA, CAMPO, ID_REGISTRO, VALOR_ORIGINAL, VALOR_NUEVO)

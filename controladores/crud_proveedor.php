@@ -14,6 +14,7 @@
   $telefono=(isset($_POST['telefono']))?$_POST['telefono']:"";
   $correo=(isset($_POST['correo']))?$_POST['correo']:"";
   $anterior=(isset($_POST['nombre_anterior']))?$_POST['nombre_anterior']:"";
+  $ESTADOS=(isset($_POST['estado_proveedor']))?$_POST['estado_proveedor']:"";
 
   $usuario1 = $_SESSION;
 
@@ -37,8 +38,8 @@
          }else{ 
 
                 //si no existe un proveedor permite insertar
-                $sql1 = "INSERT INTO tbl_proveedores (ID_PROVEEDOR, NOMBRE, NOMBRE_REFERENCIA, SECTOR_COMERCIAL, DIRECCION, TELEFONO, CORREO)
-                VALUES ('$id_proveedor','$nombre','$nombre_referencia','$sector_comercial','$direccion','$telefono','$correo')";
+                $sql1 = "INSERT INTO tbl_proveedores (ID_PROVEEDOR, NOMBRE, NOMBRE_REFERENCIA, SECTOR_COMERCIAL, DIRECCION, TELEFONO, CORREO, ESTADOS)
+                VALUES ('$id_proveedor','$nombre','$nombre_referencia','$sector_comercial','$direccion','$telefono','$correo', '$ESTADOS')";
                 if (mysqli_query($conn, $sql1)) {
                                      
                     echo '<script>
@@ -66,7 +67,7 @@
       $result2 = mysqli_query($conn, $validar_proveedor); 
       if (mysqli_num_rows($result2) > 0) { 
             
-          $sql2 = "UPDATE tbl_proveedores SET NOMBRE='$anterior', NOMBRE_REFERENCIA='$nombre_referencia', SECTOR_COMERCIAL='$sector_comercial',DIRECCION='$direccion', TELEFONO='$telefono', CORREO='$correo' WHERE ID_PROVEEDOR='$id_proveedor'";
+          $sql2 = "UPDATE tbl_proveedores SET NOMBRE='$anterior', NOMBRE_REFERENCIA='$nombre_referencia', SECTOR_COMERCIAL='$sector_comercial',DIRECCION='$direccion', TELEFONO='$telefono', CORREO='$correo', ESTADOS='$ESTADOS' WHERE ID_PROVEEDOR='$id_proveedor'";
               if (mysqli_query($conn, $sql2)) {
 
                  

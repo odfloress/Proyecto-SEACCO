@@ -120,6 +120,11 @@ if (mysqli_num_rows($roles35) > 0)
                     <label for="">Correo</label>
                     <input onblur="quitarespacios(this);" onkeyup="quitarespacios1(this);"  onkeydown="sinespacio(this);"   type="email" class="form-control" minlength="3" maxlength="50" name="correo" required value=""  value="<?php echo $correo; ?>" placeholder="" id="txtcorreo"  autocomplete = "off" >
                     <br>
+                    <label for="">Estado</label>
+               <select class="form-select"  name="estado_proveedor" required>
+                  <option value="ACTIVO">ACTIVO</option>
+                  <option value="INACTIVO">INACTIVO</option>
+               </select>
                 </div>
                 <!-- Fin Cuerpo del modal Modal -->
                 <!-- pie del modal -->
@@ -189,6 +194,8 @@ if (mysqli_num_rows($roles35) > 0)
                   <th class="desaparecerTemporalmente1">Dirección</th>
                   <th class="desaparecerTemporalmente1">Teléfono</th>
                   <th class="desaparecerTemporalmente1">Correo</th>
+                  <th class="desaparecerTemporalmente1">Estado</th>
+
                   
                   </tr>
                   </thead>
@@ -255,7 +262,36 @@ if (mysqli_num_rows($roles35) > 0)
                                              <br>
                                              <label for="">Correo:</label>
                                              <input onblur="quitarespacios(this);" onkeydown="sinespacio(this);"  onkeyup="quitarespacios1(this);"  type="email" class="form-control" name="correo" autocomplete = "off" required value="<?php echo $filas['CORREO'] ?>" placeholder="" id="txtcorreo" minlength="3" maxlength="50" >
-                                             <br>   
+                                             <br> 
+                                             <label for="">Estado</label>
+                                               <select class="form-select"  name="estado_proveedor" required >
+                                                        <option> </option>
+                                                        <?php
+                                                        $estado = "SELECT * FROM tbl_proveedores WHERE ID_PROVEEDOR=$filas[ID_PROVEEDOR]";
+                                                        $estado2 = mysqli_query($conn, $estado);
+                                                        if (mysqli_num_rows($estado2) > 0) {
+                                                            while($row = mysqli_fetch_assoc($estado2))
+                                                            {
+                                                            $ESTADO_PROFESION = $row['ESTADOS'];
+                                                            ?>
+                                                              <option value="<?php  echo $ESTADO_PROFESION; ?>" selected><?php echo $ESTADO_PROFESION; ?></option>
+                                                            
+                                                    <?php
+                                                  ?>
+                                                      <?php if ($ESTADO_PROFESION=="ACTIVO"){
+                                                        echo '<option value="INACTIVO">INACTIVO</option>';
+                                                      }else{
+                                                        echo '<option value="ACTIVO">ACTIVO</option>';
+                                                      }
+                                                      ?>
+                                                      <?php
+                                                            }}// finaliza el if y el while
+                                                      ?> 
+                                              </select> 
+                                             
+                                             
+
+
                                            </div>
                                 <!-- Fin Cuerpo del modal Modal -->
 
@@ -299,6 +335,7 @@ if (mysqli_num_rows($roles35) > 0)
                                          <td class="desaparecerTemporalmente1"><?php echo $filas['DIRECCION'] ?></td>
                                          <td class="desaparecerTemporalmente1"><?php echo $filas['TELEFONO'] ?></td>
                                          <td class="desaparecerTemporalmente1"><?php echo $filas['CORREO'] ?></td>
+                                         <td class="desaparecerTemporalmente1"><?php echo $filas['ESTADOS'] ?></td>
                                         </tr>
                                     <?php } ?>
                     
@@ -366,6 +403,7 @@ if (mysqli_num_rows($roles35) > 0)
   $(function () {
     $("#example1").DataTable({
       "order": [[ 1, "desc" ]],
+      "lengthMenu": [[10, 25, 50,   100, -1], [10, 25, 50, 100, "Todos"]],
       language: {
                           processing: "Tratamiento en curso...",
                           search: "Buscar&nbsp;:",
@@ -412,7 +450,7 @@ if (mysqli_num_rows($roles35) > 0)
             titleAttr: 'Exportar a Excel',
             title:     'REPORTE DE PROVEEDORES',
             exportOptions: {
-                columns: [1,2,3,4,5,6,7]
+                columns: [1,2,3,4,5,6,7,8]
             }
     },
     {
@@ -493,12 +531,13 @@ if (mysqli_num_rows($roles35) > 0)
           columnStyles: {    
       
             0: {cellWidth: 11},
-            1: {cellWidth: 41}, 
-            2: {cellWidth: 40},  
-            3: {cellWidth: 35},  
-            4: {cellWidth: 55},  
+            1: {cellWidth: 38}, 
+            2: {cellWidth: 35},  
+            3: {cellWidth: 33},  
+            4: {cellWidth: 45},  
             5: {cellWidth: 20},            
-            6: {cellWidth: 50}
+            6: {cellWidth: 40},
+            7: {cellWidth: 30}
            } 
           }
 				);
