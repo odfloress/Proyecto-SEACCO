@@ -38,11 +38,7 @@ if (mysqli_num_rows($roles35) > 0)
                         die();
                       }
                }
-                // inicio inserta en la tabla bitacora
-                $sql = "INSERT INTO tbl_bitacora (USUARIO, ACCION, OBSERVACION)
-                VALUES ('$usuario1[usuario]', 'CONSULTO', 'CONSULTO LA PANTALLA  ADMINISTRATIVA DE USUARIOS')";
-                if (mysqli_query($conn, $sql)) {} else {}
-                // fin inserta en la tabla bitacora
+                
 
 
 ?>
@@ -653,7 +649,13 @@ if (mysqli_num_rows($roles35) > 0)
                             <form action="" method="post">
                             <label for="">Usuario:</label>
                             <input type="text" hidden class="form-control" name="usuario_id" required value="<?php echo $filas['ID_USUARIO'] ?>" placeholder="" >
+                            <!-- //// inicio -->
+                            <?php if($filas['ID_ESTADO_USUARIO']!=5){?>
                             <input type="text" readonly class="form-control" name="usuario" required value="<?php echo $filas['USUARIO'] ?>" placeholder="" >
+                            <?php }else{ ?>
+                              <input type="text" class="form-control" name="usuario" required value="" autocomplete = "off"  onkeypress="return soloLetras(event);" minlength="3" maxlength="20" onkeyup="mayus(this);" required onblur="quitarespacios(this);" onkeydown="sinespacio(this);">
+                            <?php }?>
+                            <!-- //// fin -->
                             <br>
                       <label for="">Nueva contraseña:</label>
                         <input type="password" class="form-control mostrar" name="contrasena" id="contra" placeholder="Nueva contraseña" 

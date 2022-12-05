@@ -190,7 +190,7 @@ if ($sultados_actuales->num_rows > 0)
                   VALUES ('$usuario1[usuario]', 'INSERTO','USUARIOS', 'USUARIO','$last_id' ,'NUEVO','$usuario')";
                   if (mysqli_query($conn, $sql)) {} else {}
                   // fin inserta en la tabla bitacora
-                 // fin inserta en la tabla bitacora
+                 
                 
               } else {
                 echo "Error: " . $sql . "<br>" . mysqli_error($conn);
@@ -209,13 +209,7 @@ if ($sultados_actuales->num_rows > 0)
 
        //para editar en la tabla mysl      
       case "editar";
-/*
-      echo $fecha_inicio.'<br>';
-      echo $fecha_final.'<br>';
-      echo $FECHA_ENTRADA.'<br>';
-      echo $id_estado.'<br>';
-      echo $estado_usuario.'<br>';
-      die();*/
+
       ////////// extrae la extencion de la imagen ///////////
 $tmpFoto1= $_FILES["imagenes"]["tmp_name"];
 if($tmpFoto1!="") {
@@ -279,13 +273,7 @@ if(in_array($extencion, $permitidos))
   
                                         if (mysqli_query($conn, $sql2)) 
                                         {
-                                            /* inicio inserta en la tabla bitacora
-                                            $sql = "INSERT INTO tbl_bitacora (USUARIO, OPERACION, PANTALLA, CAMPO, ID_REGISTRO,VALOR_ORIGINAL, VALOR_NUEVO)
-                                              VALUES ('$usuario1[usuario]', 'EDITO','USUARIOS', 'NOMBRE','$id_usuario' ,'NUEVO','$usuario')";
-                                              if (mysqli_query($conn, $sql)) {} else {} */
-                                            // fin inserta en la tabla bitacora
-
-                                            // fin inserta en la tabla bitacora
+                                            
              // ////////////// INICIO FUNCION BITACORA /////////////////////
         
               if($ID_ROL != $id_rol) ///////////// 
@@ -406,11 +394,7 @@ if(in_array($extencion, $permitidos))
 
          ///////// else de no permitido de curriculum //////////////
         }else{
-          // inicio inserta en la tabla bitacora
-          $sql = "INSERT INTO tbl_bitacora (USUARIO, ACCION, OBSERVACION)
-          VALUES ('$usuario1[usuario]', 'INTENTO', 'NO LOGRO EDITAR YA QUE EL ARCHIVO NO ERA PDF O DOCX EN LA PANTALLA ADMINISTRATIVA DE USUARIOS')";
-          if (mysqli_query($conn, $sql)) {} else {}
-          // fin inserta en la tabla bitacora
+          
           echo '<script type="text/javascript">
                   alert("Archivo de curriculum, no permitido");
                   window.location.href="../../vistas/personas/vista_administradores";
@@ -419,11 +403,7 @@ if(in_array($extencion, $permitidos))
 
          ///////// else de no permitido de imagen //////////////
 }else{
-    // inicio inserta en la tabla bitacora
-    $sql = "INSERT INTO tbl_bitacora (USUARIO, ACCION, OBSERVACION)
-    VALUES ('$usuario1[usuario]', 'INTENTO', 'NO LOGRO EDITAR YA QUE EL ARCHIVO NO ERA IMAGEN EN LA PANTALLA ADMINISTRATIVA DE USUARIOS')";
-    if (mysqli_query($conn, $sql)) {} else {}
-    // fin inserta en la tabla bitacora
+ 
     echo '<script type="text/javascript">
             alert("Archivo de imagen, no permitido");
             window.location.href="../../vistas/personas/vista_administradores";
@@ -474,7 +454,7 @@ if(in_array($extencion, $permitidos))
       $contrasenanueva= hash('sha512', $contrasenanueva);
       $contrasenaconfirmar= hash('sha512', $contrasenaconfirmar);
 
-      $sqlresultadoC =  "UPDATE tbl_usuarios SET CONTRASENA='$contrasenanueva' WHERE USUARIO='$usuario'";
+      $sqlresultadoC =  "UPDATE tbl_usuarios SET CONTRASENA='$contrasenanueva', USUARIO='$usuario' WHERE ID_USUARIO='$usuario_id'";
       if ($conn->query($sqlresultadoC) === TRUE) {
 
         // inicio inserta en la tabla bitacora
