@@ -84,7 +84,7 @@ if ($resultS=mysqli_query($conn,$sqlS)) {
             <div class="small-box bg-success">
                 <div class="inner">
                   <h3><?php echo $rowcountS?></h3>
-                  <p>Solicitudes</p>
+                  <p>Solicitudes de Proyectos</p>
                 </div>
                 <div class="icon">
                   <i class="fas fa-envelope-open-text"></i>
@@ -107,7 +107,7 @@ if ($result=mysqli_query($conn,$sql)) {
 <div class="small-box bg-info">
       <div class="inner">
         <h3><?php echo $rowcount?></h3>
-        <p>Usuarios registrados</p>
+        <p>Usuarios Registrados</p>
       </div>
       <div class="icon">
         <i class="fa fa-users"> </i> 

@@ -167,7 +167,7 @@ body {
                   <label for="pwd" class="form-label">DNI:</label>
                   <input minlength="13" style="background-color:rgb(240, 244, 245);" type="text" onkeyup="quitarespacios(this); sinespacio(this); "  autocomplete="off" value="<?php echo "$dni"; ?>"  
                   class="form-control"  placeholder="DNI" name="dni"  required maxlength="13" onkeypress="return solonumero(event)" 
-                  required pattern="[0-9]+[1-9].{13,}" title="13 caracteres y no todos ceros" >
+                  required pattern="(?!0{13})^[0-9][0-9]{12}$" title="13 caracteres y no todos ceros" >
                 </div>
             </div>
             <div class="row">
@@ -243,6 +243,7 @@ body {
                 <div class="col">
                 <label for="pwd" class="form-label">Genero:</label>
                 <select style="background-color:rgb(240, 244, 245);" value="<?php echo "$genero"; ?>" class="form-select" id="lista1" name="genero" required >
+                <option value="">Seleccione un genero</option>
                         <?php
                             include '../../conexion/conexion.php';
                             $genero = "SELECT * FROM tbl_generos ORDER BY ID_GENERO";
@@ -253,7 +254,7 @@ body {
                                 $id_genero = $row['ID_GENERO'];
                                 $genero3 =$row['GENERO'];
                          ?>
-                         <option value="">Seleccione un genero</option>
+                         
                           <option value="<?php  echo $id_genero ?>"><?php echo $genero3 ?></option>
                           <?php
                            }}// finaliza el if y el while
@@ -263,6 +264,7 @@ body {
                 <div class="col">
                 <label for="pwd" class="form-label">Área:</label>
                 <select style="background-color:rgb(240, 244, 245);" value="<?php echo "$area"; ?>" class="form-select" id="lista1" name="area" required >
+                <option value="">Seleccione un área</option>
                         <?php
                             include 'conexion/conexion.php';
                             $area = "SELECT * FROM tbl_areas ORDER BY ID_AREA";
@@ -273,7 +275,7 @@ body {
                                 $id_area = $row['ID_AREA'];
                                 $area3 =$row['AREA'];
                          ?>
-                         <option value="">Seleccione un área</option>
+                         
                           <option value="<?php  echo $id_area ?>"><?php echo $area3 ?></option>
                           <?php
                            }}// finaliza el if y el while
