@@ -8,6 +8,9 @@
   $confirmar_contrasena=(isset($_POST['confirmar_contrasena']))?$_POST['confirmar_contrasena']:"";
   $usuario = $_SESSION; 
 
+  date_default_timezone_set("America/Guatemala");
+
+  $fecha = date("Y-m-d H:i:s");
 
   $accion=(isset($_POST['accion']))?$_POST['accion']:"";
   switch($accion){
@@ -20,8 +23,8 @@
              $sql =  "UPDATE tbl_usuarios SET CONTRASENA='$confirmar_contrasena' WHERE usuario='$usuario[nombre]'";
               if ($conn->query($sql) === TRUE) {
                // inicio inserta en la tabla bitacora
-               $sql7 = "INSERT INTO tbl_bitacora (USUARIO, OPERACION, PANTALLA, CAMPO, ID_REGISTRO, VALOR_ORIGINAL, VALOR_NUEVO)
-                        VALUES ('$usuario[nombre]', 'EDITO', 'CAMBIO DE CLAVE', 'CLAVES', 0,  'ACTUAL', 'NUEVA')";
+               $sql7 = "INSERT INTO tbl_bitacora (FECHA, USUARIO, OPERACION, PANTALLA, CAMPO, ID_REGISTRO, VALOR_ORIGINAL, VALOR_NUEVO)
+                        VALUES ('$fecha', '$usuario[nombre]', 'EDITO', 'CAMBIO DE CLAVE', 'CLAVES', 0,  'ACTUAL', 'NUEVA')";
                if (mysqli_query($conn, $sql7)) {} else {}
                // fin inserta en la tabla bitacora
               
