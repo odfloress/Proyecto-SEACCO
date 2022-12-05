@@ -26,6 +26,10 @@ session_start();
   // encripta la contraseña
   $contrasena = hash('sha512', $contrasena);
 
+  date_default_timezone_set("America/Guatemala");
+
+  $fecha = date("Y-m-d H:i:s");
+
   switch($accion){
       case "registrar": 
         
@@ -103,7 +107,13 @@ session_start();
                   
                   if (mysqli_query($conn, $sql)) {
                     $_SESSION['nombre'] = $usuario;
-                    
+                    $ultimo_id = mysqli_insert_id($conn);
+                      // inicio inserta en la tabla bitacora
+                      $sql_BITACORA = "INSERT INTO tbl_bitacora (FECHA, USUARIO, OPERACION, PANTALLA, CAMPO, ID_REGISTRO, VALOR_ORIGINAL, VALOR_NUEVO)
+                      VALUES ('$fecha', '$usuario', 'INSERTO', 'AUTO REGISTRO', 'TODOS', $ultimo_id,  'NUEVO', 'NUEVO')";
+                      if (mysqli_query($conn, $sql_BITACORA)) {} else {}
+                      // fin inserta en la tabla bitacora
+
                     echo '<script>
                                   alert("Usuario creado con exito");
                                   window.location.href="/SEACCO/vistas/iniciar_sesion/preguntas_seguridad";
