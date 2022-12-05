@@ -601,7 +601,7 @@ if (mysqli_num_rows($roles35) > 0)
                           </div>
                           <!-- fin boton editar -->
                           
-                          
+                          <input type="hidden" name="usuario" value="<?php echo $filas['USUARIO'] ?>">
                             <input type="hidden" name="id_usuario"  value="<?php echo $filas['ID_USUARIO'] ?>">
                             <?php 
                             ////////////////////// INICIO PERMISO DE ELIMINAR //////////////////////////////

@@ -179,17 +179,23 @@ if ($sultados_actuales->num_rows > 0)
               
               if (mysqli_query($conn, $sql)) {
                 $last_id = $conn->insert_id;
+
+                 // inicio inserta en la tabla bitacora
+                  
+                 $sql = "INSERT INTO tbl_bitacora (USUARIO, OPERACION, PANTALLA, CAMPO, ID_REGISTRO,VALOR_ORIGINAL, VALOR_NUEVO)
+                 VALUES ('$usuario1[usuario]', 'INSERTO','USUARIOS', 'TODOS','$last_id' ,'NUEVO','$usuario')";
+                 if (mysqli_query($conn, $sql)) {} else {}
+                 // fin inserta en la tabla bitacora
+
+
+
+
                 echo '<script>
                               alert("Usuario creado con exito");
                               window.location.href="../../vistas/personas/vista_administradores.php";
                   </script>';
 
-                  // inicio inserta en la tabla bitacora
-                  
-                  $sql = "INSERT INTO tbl_bitacora (USUARIO, OPERACION, PANTALLA, CAMPO, ID_REGISTRO,VALOR_ORIGINAL, VALOR_NUEVO)
-                  VALUES ('$usuario1[usuario]', 'INSERTO','USUARIOS', 'USUARIO','$last_id' ,'NUEVO','$usuario')";
-                  if (mysqli_query($conn, $sql)) {} else {}
-                  // fin inserta en la tabla bitacora
+                 
                  
                 
               } else {
@@ -418,28 +424,81 @@ if(in_array($extencion, $permitidos))
       
       //para eliminar en la tabla mysl  
       case "eliminar";
-
-      date_default_timezone_set("America/Guatemala");
-
-    $fechaE = date("Y-m-d h:i:s");
-
-        $sql3 = "DELETE FROM tbl_usuarios WHERE ID_USUARIO='$id_usuario'";
-        if (mysqli_query($conn, $sql3)) {
-        // inicio inserta en la tabla bitacora
-        $sqlC = "INSERT INTO tbl_bitacora (FECHA,USUARIO, OPERACION, PANTALLA, CAMPO,ID_REGISTRO, VALOR_ORIGINAL, VALOR_NUEVO)
-                  VALUES ('$fechaE','$usuario1[usuario]', 'ELIMINO','USUARIOS', 'USUARIO','$id_usuario', 'ELIMINADO','ELIMINADO')";
-          if (mysqli_query($conn, $sqlC)) {} else { }
-        // fin inserta en la tabla bitacora
-        echo '<script>
-        alert("Usuario eliminado");
-    </script>';
-          header('Location: ../../vistas/personas/vista_administradores');
-      }else{
+   
+   $validar_compras = "SELECT * FROM tbl_compras WHERE USUARIO='$usuario'";
+   $resultado_compras = mysqli_query($conn, $validar_compras); 
+    if (mysqli_num_rows($resultado_compras) > 0) 
+    { 
+      echo '<script>
+               alert("Error, el usuario esta en uso en la pantalla compras");
+               window.location.href="../../vistas/personas/vista_administradores.php";                  
+            </script>';
+            mysqli_close($conn);       
+    }else{
+          $validar_kardex = "SELECT * FROM tbl_kardex WHERE USUARIO='$usuario'";
+          $resultado_kardex = mysqli_query($conn, $validar_kardex); 
+           if (mysqli_num_rows($resultado_kardex) > 0) 
+            {
               echo '<script>
-                        alert("Error al tratar de eliminar usuario");
-                    </script>'; mysqli_error($conn);
-           }
-        mysqli_close($conn);
+                       alert("Error, el usuario esta en uso en la pantalla transacciones");
+                       window.location.href="../../vistas/personas/vista_administradores.php";                  
+                    </script>';
+                    mysqli_close($conn); 
+            }else{
+                    $validar_bitacora = "SELECT * FROM tbl_bitacora WHERE USUARIO='$usuario'";
+                    $resultado_bitacora = mysqli_query($conn, $validar_bitacora); 
+                    if (mysqli_num_rows($resultado_bitacora) > 0) 
+                      { 
+                        echo '<script>
+                                alert("Error, el usuario esta en uso.");
+                                window.location.href="../../vistas/personas/vista_administradores.php";                  
+                              </script>';
+                              mysqli_close($conn); 
+                      }else{
+                              $validar_respuestas = "SELECT * FROM tbl_respuestas_usuario WHERE USUARIO='$id_usuario'";
+                              $resultado_respuestas = mysqli_query($conn, $validar_respuestas); 
+                              if (mysqli_num_rows($resultado_respuestas) > 0)
+                              {
+                                echo '<script>
+                                        alert("Error, el usuario esta en uso.");
+                                        window.location.href="../../vistas/personas/vista_administradores.php";                  
+                                      </script>';
+                                      mysqli_close($conn); 
+
+                              }else{
+                                        ///////////////////////////   INICIO ELIMINA USUARIO //////////////
+                                            date_default_timezone_set("America/Guatemala");
+                                            $fechaE = date("Y-m-d h:i:s");
+
+                                              $sql3 = "DELETE FROM tbl_usuarios WHERE ID_USUARIO='$id_usuario'";
+                                              if (mysqli_query($conn, $sql3)) 
+                                              {
+                                                  // inicio inserta en la tabla bitacora
+                                                    $sqlC = "INSERT INTO tbl_bitacora (FECHA,USUARIO, OPERACION, PANTALLA, CAMPO,ID_REGISTRO, VALOR_ORIGINAL, VALOR_NUEVO)
+                                                            VALUES ('$fechaE','$usuario1[usuario]', 'ELIMINO','USUARIOS', 'USUARIO','$id_usuario', 'ELIMINADO','ELIMINADO')";
+                                                    if (mysqli_query($conn, $sqlC)) {} else { }
+                                                    // fin inserta en la tabla bitacora
+                                                echo '<script>
+                                                        alert("Usuario eliminado");
+                                                      </script>';
+                                                header('Location: ../../vistas/personas/vista_administradores');
+                                            }else{
+                                                    echo '<script>
+                                                              alert("Error al tratar de eliminar usuario");
+                                                          </script>'; 
+                                                }
+                                              mysqli_close($conn);
+
+                                              ///////////////////////////   FIN ELIMINA USUARIO //////////////
+                                   }
+
+
+                           }
+
+                 }
+        }
+
+
 
       break;
       
