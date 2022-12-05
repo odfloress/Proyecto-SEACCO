@@ -687,7 +687,7 @@ text:      'Visualizar',
 
 				const pdf = new jsPDF('L', 'mm', 'letter');			
         	
-
+ 
 				
 				
 

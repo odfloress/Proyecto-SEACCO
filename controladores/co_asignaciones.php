@@ -55,7 +55,7 @@
               $sql1 = "INSERT INTO tbl_asignaciones (ID_PROYECTO, ID_USUARIO, ID_PRODUCTOS, CANT_ASIGNADA, CANT_ENTREGADA, ID_ESTADO_ASIGNACION, DESCRIPCION_ASIGNACION, FECHA_ASIGNADO, FECHA_ENTREGA)
                     VALUES ('$ID_PRODUCTO', '$ID_USUARIO', '$ID_PRODUCTO', '$CANT_ASIGNADA', 0, '$ID_ESTADO_ASIGNACION', '$DESCRIPCION_ASIGNACION' , '$fecha_asignacion', '$fecha_entrega')";
                     if (mysqli_query($conn, $sql1)) 
-                  {
+                  {  
 
                         $ultimo_id = mysqli_insert_id($conn);
                          ///////////// INSERTA EN LA TABLA TBL_KARDEX /////////////
