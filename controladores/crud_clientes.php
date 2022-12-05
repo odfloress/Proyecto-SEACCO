@@ -1,8 +1,8 @@
 <?php
 include '../../conexion/conexion.php';
 //para mostrar los datos de la tabla mysql y mostrar en el crud
-$sql = "SELECT * FROM tbl_clientes ";
-$result = mysqli_query($conn, $sql);
+// $sql = "SELECT * FROM tbl_clientes ";
+// $result = mysqli_query($conn, $sql);
 
 
 // //Variables para recuperar la información de los campos de la vista del crud del portafolio 

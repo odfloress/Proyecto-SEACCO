@@ -115,10 +115,10 @@ if (mysqli_num_rows($roles35) > 0)
                     autocomplete = "off"   minlength="3" maxlength="245"  ><?php echo $direccion; ?></TEXtarea>
                     <br>
                     <label for="">Teléfono</label>
-                    <input onblur="quitarespacios(this);" onkeydown="sinespacio(this);"  onkeyup="quitarespacios1(this);" type="text" min="8" class="form-control" name="telefono" value="" value="<?php echo $telefono; ?>"  placeholder="" id="txttelefono" autocomplete = "off" required minlength="8" maxlength="8" placeholder="" pattern="[0-9]+[1-9]+[0-9]+" title="8 caracteres y no todos ceros" onkeypress="return solonumero(event)" >
+                    <input onblur="quitarespacios(this);" onkeydown="sinespacio(this);"  onkeyup="quitarespacios1(this);" type="text" min="8" class="form-control" name="telefono"  value="<?php echo $telefono; ?>"  placeholder="" id="txttelefono" autocomplete = "off" required minlength="8" maxlength="8" placeholder="" pattern="[0-9]+[1-9]+[0-9]+" title="8 caracteres y no todos ceros" onkeypress="return solonumero(event)" >
                     <br>
                     <label for="">Correo</label>
-                    <input onblur="quitarespacios(this);" onkeyup="quitarespacios1(this);"  onkeydown="sinespacio(this);"   type="email" class="form-control" minlength="3" maxlength="50" name="correo" required value=""  value="<?php echo $correo; ?>" placeholder="" id="txtcorreo"  autocomplete = "off" >
+                    <input onblur="quitarespacios(this);" onkeyup="quitarespacios1(this);"  onkeydown="sinespacio(this);"   type="email" class="form-control" minlength="3" maxlength="50" name="correo" required value="<?php echo $correo; ?>" placeholder="" id="txtcorreo"  autocomplete = "off" >
                     <br>
                     <label for="">Estado</label>
                <select class="form-select"  name="estado_proveedor" required>

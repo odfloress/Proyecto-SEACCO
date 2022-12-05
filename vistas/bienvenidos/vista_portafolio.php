@@ -170,7 +170,7 @@
   <!-- The slideshow/carousel -->
   <div class="carousel-inner">
     <div class="carousel-item active">
-      <img src="../../imagenes/fondo.jpg" alt="Los Angeles" class="d-block" style="width:100%;height:590px;" >
+      <img src="../../imagenes/1670234720_1659925459_1659393097_banner1.jpg" alt="Los Angeles" class="d-block" style="width:100%;height:590px;" >
     </div>
     <?php 
   include '../../conexion/conexion.php';

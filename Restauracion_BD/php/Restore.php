@@ -1,11 +1,15 @@
 <?php
-session_start();
+include '../../conexion/conexion.php';
+// inicio inserta en la tabla bitacora
+$sql_trigger1 = "CREATE TRIGGER `triger_resta_inventario` AFTER DELETE ON `tbl_detalle_compra` FOR EACH ROW UPDATE tbl_inventario SET  CANTIDAD_DISPONIBLE=CANTIDAD_DISPONIBLE-old.CANTIDAD WHERE ID_PRODUCTOS=old.ID_PRODUCTO";
+$resutado = $result4 = mysqli_query($conn, $sql_trigger1); 
+// fin inserta en la tabla bitacora
 ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
       <script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
-      <title>Restabecimiento de Base de Datos</title>
+      <title>Restablecimiento de Base de Datos</title>
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width, initial-scale=1">
       <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -66,17 +70,25 @@ $con->query("SET FOREIGN_KEY_CHECKS=1");
 $con->close();
 if($totalErrors<=0){
 
-	
+  include '../../conexion/conexion.php';
+  // inicio inserta en la tabla bitacora
+  $sql_trigger1 = "CREATE TRIGGER `triger_resta_inventario` AFTER DELETE ON `tbl_detalle_compra` FOR EACH ROW UPDATE tbl_inventario SET  CANTIDAD_DISPONIBLE=CANTIDAD_DISPONIBLE-old.CANTIDAD WHERE ID_PRODUCTOS=old.ID_PRODUCTO";
+  $resutado = mysqli_query($conn, $sql_trigger1); 
+  // fin inserta en la tabla bitacora
+
+  $sql_trigger2 = "CREATE TRIGGER `triger_insertar_inventario` AFTER INSERT ON `tbl_productos` FOR EACH ROW INSERT INTO tbl_inventario (ID_PRODUCTOS, CANTIDAD_MINIMA, CANTIDAD_MAXIMA, CANTIDAD_DISPONIBLE) VALUES (NEW.ID_PRODUCTO, NEW.CANTIDAD_MIN, NEW.CANTIDAD_MAX, 0)";
+	$resutado2  = mysqli_query($conn, $sql_trigger2);
+
+  $sql_trigger3 = "CREATE TRIGGER `trigger_editar_inventario` AFTER UPDATE ON `tbl_productos` FOR EACH ROW UPDATE tbl_inventario SET CANTIDAD_MINIMA=NEW.CANTIDAD_MIN, CANTIDAD_MAXIMA=NEW.CANTIDAD_MAX WHERE ID_PRODUCTOS=old.ID_PRODUCTO";
+  $resutado3  = mysqli_query($conn, $sql_trigger3);
+
 	echo '<script>
 	alert("Restauración completada con éxito.");
 	window.location.href="./index.php";                  
 	</script>';
-  require '../../conexion/conexion.php';
- // inicio inserta en la tabla bitacora
- $sql7 = "INSERT INTO tbl_bitacora (USUARIO, ACCION, OBSERVACION)
- VALUES ('$_SESSION[usuario]', 'RESTAURO', 'RESTAURO LA BD')";
-  if (mysqli_query($conn, $sql7)) {} else { }
-// fin inserta en la tabla bitacora
+
+  
+  
 	
 
 }else{

@@ -144,7 +144,7 @@ if (mysqli_num_rows($roles35) > 0)
 
 
                       <label for="">Nombres:</label>
-                      <input type="text" onkeypress="return soloLetras(event);" class="form-control" name="nombre"  required value="" placeholder="" autocomplete="on" onkeyup="mayus(this);" onkeyup="un_espacio(this);"  maxlength="30" id="campoNombre">
+                      <input type="text" onkeyup="un_espacio(this);" onkeypress="return soloLetras(event);" class="form-control" name="nombre"  required value="" placeholder="" autocomplete="of"    maxlength="30" >
                                 <!-- Mensaje de la validacion -->
                                 <div class="invalid-feedback">
                                     Favor ingrese un nombre
@@ -465,12 +465,13 @@ if (mysqli_num_rows($roles35) > 0)
                     <!-- Inicio del select deL estado -->
                     
                     <label for="">Nombres:</label>
-                    <input type="text"  hidden class="form-control" name="nombre" pattern="[A-Za-z]*" required value="<?php echo $filas['NOMBRE'] ?>"  autocomplete="off" onkeyup="mayus(this);" maxlength="30" >
-                    <input type="text" onkeyup="un_espacio(this);"  class="form-control" name="nombre_anterior" pattern="[A-Za-z]*" required value="<?php echo $filas['NOMBRE'] ?>"  autocomplete="off" onkeyup="mayus(this);" maxlength="30" 
+                    <input type="text"  hidden class="form-control" name="nombre"  required value="<?php echo $filas['NOMBRE'] ?>"  autocomplete="off" onkeyup="mayus(this);" maxlength="30" >
+                    
+                    <input type="text" onkeyup="un_espacio(this);"  class="form-control" name="nombre_anterior"  required value="<?php echo $filas['NOMBRE'] ?>"  autocomplete="off" onkeyup="mayus(this);" maxlength="30" 
                     onkeypress="return soloLetras(event);" >
 
                     <label for="">Apellidos:</label>
-                    <input type="text" onkeyup="un_espacio(this);" class="form-control" name="apellido" pattern="[A-Za-z]*" required value="<?php echo $filas['APELLIDO'] ?>" autocomplete="off" onkeyup="mayus(this);" maxlength="30" 
+                    <input type="text" onkeyup="un_espacio(this);" class="form-control" name="apellido"  required value="<?php echo $filas['APELLIDO'] ?>" autocomplete="off" onkeyup="mayus(this);" maxlength="30" 
                     onkeypress="return soloLetras(event);" >
 
                     <label for="">Usuario:</label>

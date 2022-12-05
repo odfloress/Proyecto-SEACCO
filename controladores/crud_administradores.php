@@ -182,8 +182,8 @@ if ($sultados_actuales->num_rows > 0)
 
                  // inicio inserta en la tabla bitacora
                   
-                 $sql = "INSERT INTO tbl_bitacora (USUARIO, OPERACION, PANTALLA, CAMPO, ID_REGISTRO,VALOR_ORIGINAL, VALOR_NUEVO)
-                 VALUES ('$usuario1[usuario]', 'INSERTO','USUARIOS', 'TODOS','$last_id' ,'NUEVO','$usuario')";
+                 $sql = "INSERT INTO tbl_bitacora (FECHA, USUARIO, OPERACION, PANTALLA, CAMPO, ID_REGISTRO,VALOR_ORIGINAL, VALOR_NUEVO)
+                 VALUES ('$fechaactual', '$usuario1[usuario]', 'INSERTO','USUARIOS', 'TODOS','$last_id' ,'NUEVO','$usuario')";
                  if (mysqli_query($conn, $sql)) {} else {}
                  // fin inserta en la tabla bitacora
 

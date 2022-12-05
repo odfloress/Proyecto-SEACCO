@@ -553,7 +553,7 @@ if (mysqli_num_rows($tablero2) > 0)
 	})
   
 </script>
-categorías de productos
+
 <!-- // Fin para exportar en pdf // -->
 <script type="text/javascript" src="../../js/evitar_reenvio.js"></script>
 

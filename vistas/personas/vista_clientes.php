@@ -164,7 +164,7 @@ if (mysqli_num_rows($roles35) > 0)
                    </select>
                   <br>
                   <label for="">Imagen:</label>
-                    <input type="file" class="form-control" accept=".jpg, .png, .jpeg, .JPEG, .JPG, .PNG" name="imagenes"  value="<?php echo "$nombreimagen"; ?>" placeholder=""  >
+                    <input type="file" class="form-control" accept=".jpg, .png, .jpeg, .JPEG, .JPG, .PNG" name="imagenes"  value="<?php echo "$nombreimagen"; ?>" placeholder="" required >
                     <br>                  
                 
                 </div>
@@ -290,7 +290,7 @@ if (mysqli_num_rows($roles35) > 0)
                   INNER JOIN tbl_generos g ON c.ID_GENERO = g.ID_GENERO)";
                   $result = mysqli_query($conn, $sql7);
                   if (mysqli_num_rows($result) > 0) {
-                    $cont = 0;
+                    $cont = 0; 
                   while ($filas= mysqli_fetch_assoc($result)){
                     ?>
                      <?php  $cont++; ?>
@@ -434,7 +434,7 @@ if (mysqli_num_rows($roles35) > 0)
                      <td class="desaparecerTemporalmente1"><?php echo $filas['DIRECCION'] ?></td>
                      <td class="desaparecerTemporalmente1"><?php echo $filas['REFERENCIA'] ?></td>
                      <td class="desaparecerTemporalmente1"><?php echo $filas['GENERO'] ?></td>
-                     <td><img  width="100px" src="<?php echo $filas['FOTO'] ?>" /></td>              
+                     <td class="desaparecerTemporalmente"><img  width="100px" src="<?php echo $filas['FOTO'] ?>" /></td>              
                     </tr>
                     <?php }} ?>  
                   </tfoot>

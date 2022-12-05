@@ -11,7 +11,7 @@
     <?php
         include '../../conexion/conexion.php';
         $seleccion_rol=(isset($_POST['rol']))?$_POST['rol']:"";echo $seleccion_rol;
-        $roles = "SELECT * FROM tbl_ms_objetos  WHERE ID_OBJETO  NOT IN (SELECT ID_OBJETO  FROM  tbl_ms_roles_ojetos WHERE ID_ROL = '$tipo' ) ORDER BY ID_OBJETO";
+        $roles = "SELECT * FROM tbl_ms_objetos  WHERE ID_OBJETO  NOT IN (SELECT ID_OBJETO  FROM  tbl_ms_roles_ojetos WHERE ID_ROL = '$tipo' ) ORDER BY ID_OBJETO ";
         // $roles = "SELECT * FROM tbl_ms_objetos ORDER BY ID_OBJETO";
         $roles2 = mysqli_query($conn, $roles);
         if (mysqli_num_rows($roles2) > 0) {

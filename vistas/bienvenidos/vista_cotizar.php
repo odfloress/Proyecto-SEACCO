@@ -167,7 +167,7 @@ body {
             <div class="row">
                 <div class="col">
                   <label for="pwd" class="form-label">Correo:</label>
-                  <input style="background-color:rgb(240, 244, 245);" type="email" onkeyup="quitarespacios(this); sinespacio(this); " autocomplete="off" value="<?php echo "$correo"; ?>" onkeypress="return clave1(event);" class="form-control"  placeholder="Ingrese su correo" name="correo" required>
+                  <input style="background-color:rgb(240, 244, 245);" type="email" onkeyup="quitarespacios(this); sinespacio(this); " autocomplete="off" value="<?php echo "$correo"; ?>" onkeypress="return clave1(event);" class="form-control"  placeholder="Ingrese su correo" name="correo" required minlength="4" maxlength="50">
                   <div class="invalid-feedback">Campo requerido.</div>
                 </div>
                 <div class="col">
@@ -180,7 +180,7 @@ body {
           <!--  <div class="col">
                   <label for="pwd" class="form-label">Referencia:</label>
                   <input style="background-color:rgb(240, 244, 245);" type="text" autocomplete="off"  onkeyup="un_espacio(this);" onKeyUP="this.value=this.value.toUpperCase();" autocomplete="off"  value="<?php echo "$referencia"; ?>"   onKeyUP="this.value=this.value.toUpperCase();" class="form-control"  placeholder="Nombre de referencia"  name="referencia" onkeypress="return soloLetras(event);" id="CampoReferencia" required>
-                </div>
+                </div> -->
                 <div class="col ">
                 <label for="pwd" class="form-label">Genero:</label>                
                 <select style="background-color:rgb(240, 244, 245);" value="<?php echo "$genero"; ?>" class="form-select" id="lista1" name="genero" required >
@@ -200,7 +200,7 @@ body {
                            }}// finaliza el if y el while
                            ?>
                    </select>
-                </div> -->
+                </div> 
               </div>
               <div class="row">
               <!--  <div class="col">

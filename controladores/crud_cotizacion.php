@@ -17,6 +17,7 @@
         $depto=(isset($_POST['departamento']))?$_POST['departamento']:"";
         $ubicacion=(isset($_POST['ubicacion']))?$_POST['ubicacion']:"";
         $proyecto=(isset($_POST['proyecto']))?$_POST['proyecto']:"";
+        $genero=(isset($_POST['genero']))?$_POST['genero']:"";
         
 
         //variable para recuperar los botones de la vista categprias de productos  
@@ -27,14 +28,10 @@ switch($accion){
   case "registrar": 
         
            
-              $sqlcliente = "INSERT INTO tbl_clientes (CODIGO,NOMBRE_CLIENTE,APELLIDO,CORREO,TELEFONO) 
-                VALUES ('$dni','$nombre','$apellido','$correo','$telefono')";
+              $sqlcliente = "INSERT INTO tbl_clientes (CODIGO,NOMBRE_CLIENTE,APELLIDO,CORREO,TELEFONO,ID_GENERO) 
+                VALUES ('$dni','$nombre','$apellido','$correo','$telefono', $genero)";
                 if (mysqli_query($conn,$sqlcliente)){
-                  // inicio inserta en la tabla bitacora
-                    $sql7 = "INSERT INTO tbl_bitacora (USUARIO, ACCION, OBSERVACION)
-                    VALUES ('INVITADO', 'SOLICITUD', 'COTIZACION DE PROYECTO EN LA PANTALLA COTIZAR PROYECTO, CLIENTE $nombre $apellido')";
-                    if (mysqli_query($conn, $sql7)) {} else { }
-                  // fin inserta en la tabla bitacora
+                  
 
                   //Inicio consulta para seleccionar el ultimo cliente registrado
                   $idcliente = "SELECT * FROM tbl_clientes ORDER BY ID_CLIENTE DESC limit 1;";
@@ -49,7 +46,7 @@ switch($accion){
                   //Fin consulta para seleccionar el ultimo cliente registrado
 
                   //Inicio consulta para seleccionar el ultimo cliente registrado
-                  $idusuario= "SELECT * FROM tbl_usuarios ORDER BY ID_USUARIO ASC limit 1;";
+                  $idusuario= "SELECT * FROM tbl_usuarios ORDER BY ID_USUARIO DESC limit 1;";
                   $idusuario2 = mysqli_query($conn, $idusuario);
                   if (mysqli_num_rows($idusuario2) > 0)
                   {

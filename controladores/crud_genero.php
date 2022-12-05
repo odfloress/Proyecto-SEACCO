@@ -89,7 +89,7 @@
       case "eliminar";
 
     //validar que no este asignado a un usuario
-    $validar_genero = "SELECT * FROM tbl_usuarios WHERE GENERO='$genero7'";
+    $validar_genero = "SELECT * FROM tbl_usuarios WHERE ID_GENERO='$genero7'";
     $result4 = mysqli_query($conn, $validar_genero); 
      if (mysqli_num_rows($result4) > 0) { 
         

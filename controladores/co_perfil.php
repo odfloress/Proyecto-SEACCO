@@ -15,6 +15,20 @@ $correo=(isset($_POST['correo2']))?$_POST['correo2']:"";
 $correo_anterior=(isset($_POST['correo_anterior']))?$_POST['correo_anterior']:"";
 $usuario1 = $_SESSION;
 
+
+$roles34 = "SELECT * FROM tbl_usuarios WHERE USUARIO='$usuario1[usuario]'";
+$roles35 = mysqli_query($conn, $roles34);
+if (mysqli_num_rows($roles35) > 0)
+{
+ while($row = mysqli_fetch_assoc($roles35))
+  { 
+      $ID_USUARIO = $row['ID_USUARIO'];
+  } 
+}
+
+date_default_timezone_set("America/Guatemala");
+
+$fecha = date("Y-m-d H:i:s");
 switch ($accion){
 
   case "actualizar":
@@ -36,8 +50,8 @@ switch ($accion){
         if ($conn->query($sqlresultado) === TRUE) {
 
           // inicio inserta en la tabla bitacora
-          $sql = "INSERT INTO tbl_bitacora (USUARIO, OPERACION, PANTALLA, CAMPO, VALOR_ORIGINAL, VALOR_NUEVO)
-                    VALUES ('$usuario1[usuario]', 'EDITO','PERFIL', 'CONTRASEÑA', '*********','*********')";
+          $sql = "INSERT INTO tbl_bitacora (FECHA, USUARIO, OPERACION, PANTALLA, CAMPO, ID_REGISTRO, VALOR_ORIGINAL, VALOR_NUEVO)
+                    VALUES ('$fecha', '$usuario1[usuario]', 'EDITO','PERFIL', 'CONTRASEÑA', '$ID_USUARIO','*********','*********')";
             if (mysqli_query($conn, $sql)) {} else { }
           // fin inserta en la tabla bitacora
 
@@ -75,7 +89,7 @@ switch ($accion){
         $sqlguardar2 = "UPDATE tbl_usuarios SET NOMBRE='$nombre',APELLIDO='$apellido' WHERE USUARIO='$usuario1[usuario]'";
       if (mysqli_query($conn, $sqlguardar2)) {}
       echo '<script>
-        alert("Datos actualizados.");
+        alert("Nombre y apellido actualizados.");
         window.Location = "/_login.php";
       </script>';
     }else{

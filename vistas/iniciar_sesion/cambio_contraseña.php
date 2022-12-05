@@ -10,7 +10,21 @@ if(!isset($_SESSION['nombre'])){
 }
 include '../../controladores/con_config_contraseña.php';
 ?>
-
+ <?php 
+       include '../../conexion/conexion.php';
+       $minima_contraseña = "SELECT * FROM tbl_parametros WHERE PARAMETRO='MIN_CONTRASENA'";
+       $resultado_minima = mysqli_query($conn, $minima_contraseña);
+            while($mostrar_minima = mysqli_fetch_assoc($resultado_minima)) {
+                  $parametro_min = $mostrar_minima["VALOR"];
+            }
+?>
+<?php
+       $maxima_contraseña = "SELECT * FROM tbl_parametros WHERE PARAMETRO='MAX_CONTRASENA'";
+       $resultado_maxima = mysqli_query($conn, $maxima_contraseña);
+       while($mostrar_maxima = mysqli_fetch_assoc($resultado_maxima)) {
+                  $parametro_max = $mostrar_maxima["VALOR"];
+            }
+ ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -60,7 +74,7 @@ include '../../controladores/con_config_contraseña.php';
                 <input type="text" name="" value="<?php $usuario = $_SESSION; echo $usuario['nombre']; ?>" class="form-control" readonly>
                 <label for="sel1" class="form-label">Contraseña Actual:</label>
                 <div class="input-group mb-3">
-                  <input  id="id_password" type="password" name="contrasena_actual" value="" class="form-control" required minlength="8" maxlength="30" required onblur="quitarespacios(this);" onkeyup="sinespacio(this);" pattern="(?=.*[\d])(?=.*[a-z])(?=.*[A-Z]).{8,}">
+                  <input  id="id_password" type="password" name="contrasena_actual" value="" class="form-control" required minlength="<?php echo $parametro_min;?>" maxlength="<?php echo $parametro_max;?>" required onblur="quitarespacios(this);" onkeyup="sinespacio(this);" pattern="(?=.*[\d])(?=.*[a-z])(?=.*[A-Z]).{<?php echo $parametro_min;?>,}">
                   <div class="input-group-append ">
                       <div class="input-group-text">
                         <span>
@@ -72,7 +86,7 @@ include '../../controladores/con_config_contraseña.php';
 
                 <label for="sel1" class="form-label">Nueva contraseña</label>
                 <div class="input-group  mb-3">
-                  <input id="id_password2" type="password" name="nueva_contrasena" value="" class="form-control" required minlength="8" maxlength="30" required onblur="quitarespacios(this);" onkeyup="sinespacio(this);" pattern="(?=.*[\d])(?=.*[a-z])(?=.*[A-Z]).{8,}">
+                  <input id="id_password2" type="password" name="nueva_contrasena" value="" class="form-control" required minlength="<?php echo $parametro_min;?>" maxlength="<?php echo $parametro_max;?>" required onblur="quitarespacios(this);" onkeyup="sinespacio(this);" pattern="(?=.*[\d])(?=.*[a-z])(?=.*[A-Z]).{<?php echo $parametro_min;?>,}">
                   <div class="input-group-append ">
                         <div class="input-group-text">
                            <span>
@@ -84,7 +98,7 @@ include '../../controladores/con_config_contraseña.php';
                 
                 <label for="sel1" class="form-label">Confirmar contraseña</label>
                 <div class="input-group mb-3">
-                  <input id="id_password3" type="password" name="confirmar_contrasena" value="" class="form-control" required minlength="8" maxlength="30" required onblur="quitarespacios(this);" onkeyup="sinespacio(this);" pattern="(?=.*[\d])(?=.*[a-z])(?=.*[A-Z]).{8,}">
+                  <input id="id_password3" type="password" name="confirmar_contrasena" value="" class="form-control" required minlength="<?php echo $parametro_min;?>" maxlength="<?php echo $parametro_max;?>" required onblur="quitarespacios(this);" onkeyup="sinespacio(this);" pattern="(?=.*[\d])(?=.*[a-z])(?=.*[A-Z]).{<?php echo $parametro_min;?>,}">
                   <div class="input-group-append ">
                         <div class="input-group-text">
                             <span>

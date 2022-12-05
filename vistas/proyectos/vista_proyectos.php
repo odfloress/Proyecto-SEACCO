@@ -92,7 +92,7 @@ if (mysqli_num_rows($roles35) > 0)
                   
                   <label for="">Cliente:</label>
                   <select style="background-color:rgb(240, 244, 245);" value="<?php echo $id_cliente; ?>" required  class="form-select" id="lista1" name="id_cliente"  >
-                    <option >Seleccione un Cliente</option>
+                    <option value="">Seleccione un Cliente</option>
                         <?php
                             include 'conexion/conexion.php';
                             $cliente = "SELECT * FROM tbl_clientes ORDER BY ID_CLIENTE";
@@ -112,10 +112,10 @@ if (mysqli_num_rows($roles35) > 0)
                   
                     <label for="">Encargado:</label>
                     <select style="background-color:rgb(240, 244, 245);" value="<?php echo "$id_usuario"; ?>" required  class="form-select" id="lista1" name="id_usuario" >
-                      <option >Seleccione un Encargado</option>
+                      <option value="" >Seleccione un Encargado</option>
                         <?php
                             include 'conexion/conexion.php';
-                            $idusuario= "SELECT * FROM tbl_usuarios WHERE ID_ESTADO_USUARIO = 1 ORDER BY ID_USUARIO";
+                            $idusuario= "SELECT * FROM tbl_usuarios WHERE ID_ESTADO_USUARIO = 1 and ID_USUARIO!=31 ORDER BY ID_USUARIO";
                             $idusuario2 = mysqli_query($conn, $idusuario);
                             if (mysqli_num_rows($idusuario2) > 0) {
                                 while($row = mysqli_fetch_assoc($idusuario2))
@@ -132,7 +132,7 @@ if (mysqli_num_rows($roles35) > 0)
                   
                     <label for="" >Estado:</label>
                     <select style="background-color:rgb(240, 244, 245);" value="<?php echo "$id_estado"; ?>" required  class="form-select" id="lista1" name="id_estado" >
-                      <option >Seleccione un Estado</option>
+                      <option value="" >Seleccione un Estado</option>
                         <?php
                             include 'conexion/conexion.php';
                             $estado = "SELECT * FROM tbl_estados_proyectos WHERE ESTADO='ACTIVO' ORDER BY ID_ESTADOS";
