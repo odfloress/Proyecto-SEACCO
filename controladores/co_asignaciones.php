@@ -18,6 +18,7 @@
   $ID_PRODUCTO=(isset($_POST['id_producto']))?$_POST['id_producto']:"";
   $CANT_ASIGNADA=(isset($_POST['cantidad_asignada']))?$_POST['cantidad_asignada']:"";
   $CANT_ENTREGADA=(isset($_POST['cantidad_entregada']))?$_POST['cantidad_entregada']:"";
+  $CANT_Actual=(isset($_POST['cantidad_entregada_actual']))?$_POST['cantidad_entregada_actual']:"";
   $CANT_A_ENTREGADAR=(isset($_POST['cantidad_entregada1']))?$_POST['cantidad_entregada1']:"";
   $ID_ESTADO_ASIGNACION=(isset($_POST['id_estado_asignacion']))?$_POST['id_estado_asignacion']:"";
   $DESCRIPCION_ASIGNACION=(isset($_POST['descripcion_asignacion']))?$_POST['descripcion_asignacion']:"";
@@ -98,12 +99,16 @@
       break;
       case "editar": 
 
-        $CANTIDAD_restante = $CANT_ASIGNADA - $CANT_ENTREGADA;
-
+$CANTIDAD_restante = $CANT_ASIGNADA - $CANT_Actual;
+// echo $CANT_ASIGNADA.'<br>';
+// echo $CANT_Actual.'<br>';
+// echo $CANT_A_ENTREGADAR.'<br>';
+// echo $CANTIDAD_restante;
+// die();
 
         if($CANT_A_ENTREGADAR <= $CANTIDAD_restante)
         {
-          $Nueva_cantidad = $CANT_ENTREGADA + $CANT_A_ENTREGADAR;
+          $Nueva_cantidad = $CANT_Actual + $CANT_A_ENTREGADAR;
             $sql2 = "UPDATE tbl_asignaciones SET CANT_ENTREGADA='$Nueva_cantidad', ID_ESTADO_ASIGNACION='$ID_ESTADO_ASIGNACION', DESCRIPCION_ENTREGA='$DESCRIPCION_ENTREGA'  WHERE ID_ASIGNADO='$ID_ASIGNACION'";
             if (mysqli_query($conn, $sql2)) 
             {
@@ -147,9 +152,15 @@
           if (mysqli_query($conn, $sql3)) 
           {
              ///////////// ELIMINA DE LA TABLA KARDEX /////////////
-            $sql3 = "DELETE FROM tbl_kardex WHERE ID_PRODUCTO='$ID_PRODUCTO' and ID_ASIGNACION='$ID_ASIGNACION' ";
-            if (mysqli_query($conn, $sql3)) 
-            {
+
+                ///////////// INSERTA EN LA TABLA TBL_KARDEX /////////////
+                $kardex = "INSERT INTO tbl_kardex (ID_PRODUCTO, ID_ASIGNACION, USUARIO, CANTIDAD, TIPO_MOVIMIENTO, FECHA_HORA)
+                VALUES ('$ID_PRODUCTO', '$ID_ASIGNACION', '$usuario1[usuario]', '$CANT_ASIGNADA', 'ANULACION ASIGNACION', '$fechasss')";
+                if (mysqli_query($conn, $kardex)) 
+                {
+
+
+          
                   ///////////// SUMA AL INVENTARIO /////////////
                   $inventario = "UPDATE tbl_inventario SET CANTIDAD_DISPONIBLE=CANTIDAD_DISPONIBLE + $CANT_ASIGNADA WHERE ID_PRODUCTOS='$ID_PRODUCTO'";
                   if (mysqli_query($conn, $inventario)) {}
@@ -177,9 +188,12 @@
           if (mysqli_query($conn, $sql2)) 
           {
                  ///////////// ELIMINA DE LA TABLA KARDEX /////////////
-            $sql3 = "DELETE FROM tbl_kardex WHERE ID_PRODUCTO='$ID_PRODUCTO' and ID_ASIGNACION='$ID_ASIGNACION' and CANTIDAD='$CANT_ENTREGADA' AND FECHA_HORA='$fecha_entrega'";
-            if (mysqli_query($conn, $sql3)) 
-            {
+
+                 $kardex = "INSERT INTO tbl_kardex (ID_PRODUCTO, ID_ASIGNACION, USUARIO, CANTIDAD, TIPO_MOVIMIENTO, FECHA_HORA)
+                 VALUES ('$ID_PRODUCTO', '$ID_ASIGNACION', '$usuario1[usuario]', '$CANT_ENTREGADA', 'ANULACION ENTRADA ASIGNACION', '$fechasss')";
+                 if (mysqli_query($conn, $kardex)) 
+                 {
+ 
                   ///////////// resta AL INVENTARIO /////////////
                   $inventario = "UPDATE tbl_inventario SET CANTIDAD_DISPONIBLE=CANTIDAD_DISPONIBLE - $CANT_ENTREGADA WHERE ID_PRODUCTOS='$ID_PRODUCTO'";
                   if (mysqli_query($conn, $inventario)) {}

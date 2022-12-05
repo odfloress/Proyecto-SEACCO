@@ -9,7 +9,35 @@ if(!isset($_SESSION['usuario'])){
         
 }
 include '../../controladores/crud_categoria_productos.php';
+// Selecciona el id del rol del usuario logueado
+include '../../conexion/conexion.php';
+$usuario = $_SESSION;
+$roles34 = "SELECT * FROM tbl_usuarios WHERE USUARIO='$usuario[usuario]'";
+$roles35 = mysqli_query($conn, $roles34);
+if (mysqli_num_rows($roles35) > 0)
+{
+ while($row = mysqli_fetch_assoc($roles35))
+  { 
+      $id_rol7 = $row['ID_ROL'];
+  } 
+}
 
+               //valida si tiene permisos de consultar la pantalla 
+               $tablero = "SELECT * FROM tbl_ms_roles_ojetos WHERE ID_ROL='$id_rol7' and ID_OBJETO=11 and PERMISO_CONSULTAR=0";
+               $tablero2 = mysqli_query($conn, $tablero);
+               if (mysqli_num_rows($tablero2) > 0)
+               {
+                header('Location: ../../vistas/tablero/vista_perfil.php');
+                die();
+               }else{
+                $role = "SELECT * FROM tbl_ms_roles_ojetos WHERE ID_ROL='$id_rol7' and ID_OBJETO=11 and PERMISO_CONSULTAR=1";
+                $roless = mysqli_query($conn, $role);
+                if (mysqli_num_rows($roless) > 0){}
+                else{
+                  header('Location: ../../vistas/tablero/vista_perfil.php');
+                  die();
+                }
+         }
 
 ?>
 <!DOCTYPE html>
@@ -28,6 +56,28 @@ include '../../controladores/crud_categoria_productos.php';
   
   <script type="text/javascript" src="../../js/un_espacio.js"></script>
   <script type="text/javascript" src="../../js/converir_a_mayusculas.js"></script>
+
+  <script>
+  function clave1(e) {
+  key = e.keyCode || e.which;
+  tecla = String.fromCharCode(key).toString();
+  letras = " ABCDEFGHIJKLMNÑOPQRSTUVWXYZabcdefghijklmnñopqrstuvwxyz0123456789";
+  
+  especiales = [8,13];
+  tecla_especial = false;
+  for(var i in especiales) {
+    if(key == especiales[i]){
+      tecla_especial = true;
+      break;
+    }
+  }
+  
+  if(letras.indexOf(tecla) == -1 && !tecla_especial){
+    alert("Solo letras y números");
+    return false;
+  }
+}
+</script>    
 
   <?php include '../../configuracion/navar.php' ?>
   <!-- Content Wrapper. Contains page content -->
@@ -57,7 +107,8 @@ include '../../controladores/crud_categoria_productos.php';
                 <div class="modal-body">
                
                     <label for="">Categoria:</label>
-                    <input type="text" class="form-control" onkeyup="mayus(this); un_espacio(this); " name="categoria" required value="" placeholder="" id="txtPrecio_Compra"   >
+                    <input    minlength="3" maxlength="50" type="text" class="form-control" onkeypress="return clave1(event);" onkeyup="mayus(this); un_espacio(this); " name="categoria" required value="" placeholder="" id="txtPrecio_Compra"   >
+                    <br>
                     <label for="">Estado</label>
                     <select class="form-select"  name="estado" required>
                     <option value="">Selecciona un estado</option>
@@ -103,16 +154,26 @@ include '../../controladores/crud_categoria_productos.php';
             <div class="card table-responsive">
               <div class="card-header">
                 <!-- <h3 class="card-title">Categorias</h3> -->
+             
+                
                 <form id="form" action="" method="post">
-                <div class="container mt-3">
+                <?php 
+
+include '../../conexion/conexion.php';
+$tablero = "SELECT * FROM tbl_ms_roles_ojetos WHERE ID_ROL='$id_rol7' and ID_OBJETO=11 and PERMISO_INSERCION=1";
+$tablero2 = mysqli_query($conn, $tablero);
+if (mysqli_num_rows($tablero2) > 0)
+ {
+   echo '<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal">
+   Nueva categoria
+   <form id="form" action="" method="post">';
+ }
+?>
          
-         <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal">
-             Nueva categoria
-             <form id="form" action="" method="post">
              <button type="submit"  name="accion" value="reporte_pdf" class="btn btn-secondary buttons-pdf buttons-html5"  onclick="return confirm('¿Desea generar reporte de categorias de productos?')" onclick="textToPdf()"><span>Reporte PDF</span></button>
              </form>
          </button>
-     </div>
+ 
                 </form>
               </div>
               
@@ -139,9 +200,24 @@ include '../../controladores/crud_categoria_productos.php';
                   <tr>
                   <td class="desaparecerTemporalmente">
                         <!-- inicio boton editar -->
-                      <button type="button"  class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#myModal2<?php echo $filas['ID_CATEGORIA'] ?>" >
+
+                        <?php 
+                          include '../../conexion/conexion.php';
+                          $tablero = "SELECT * FROM tbl_ms_roles_ojetos WHERE ID_ROL='$id_rol7' and ID_OBJETO=11 and PERMISO_ACTUALIZACION=1";
+                          $tablero2 = mysqli_query($conn, $tablero);
+                          if (mysqli_num_rows($tablero2) > 0)
+                          {?>
+                              <!-- inicio boton editar -->
+                              <button type="button"  class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#myModal2<?php echo $filas['ID_CATEGORIA'] ?>" >
                       <i class="fas fa-pencil-alt"></i>
-                      </button>
+                      </button>  <?php
+                          }
+                        ?>
+
+
+
+                        
+                    
 
                           <!-- El Modal -->
                           <div class="modal" id="myModal2<?php echo $filas['ID_CATEGORIA'] ?>">
@@ -164,8 +240,8 @@ include '../../controladores/crud_categoria_productos.php';
                                               <input type="text" readonly class="form-control" name="id_categoria" required value="<?php echo $filas['ID_CATEGORIA'] ?>" placeholder=""  >
                                               <br>
                                               <label for="">Categoría</label>
-                                              <input type="text" class="form-control" name="categoria" required value="<?php echo $filas['NOMBRE_CATEGORIA'] ?>" placeholder=""  autocomplete = "off"  onkeypress="return soloLetras(event);" minlength="3" maxlength="20" 
-                                                onkeyup="mayus(this);" required onblur="quitarespacios(this);" onkeydown="sinespacio(this);"  >
+                                              <input type="text" class="form-control" name="categoria" required value="<?php echo $filas['NOMBRE_CATEGORIA'] ?>" placeholder=""  autocomplete = "off"  
+                                              minlength="3" maxlength="50" onkeypress="return clave1(event);" onkeyup="mayus(this); un_espacio(this);"  >
                                                 <br>
                                                <label for="">Estado</label>
                                                <select class="form-select"  name="estado" required >
@@ -209,14 +285,22 @@ include '../../controladores/crud_categoria_productos.php';
                             </div>
                           </div>
                           <!-- fin boton editar -->
-                         
-                         
+                         <?php
+                          include '../../conexion/conexion.php';
+                          $tablero = "SELECT * FROM tbl_ms_roles_ojetos WHERE ID_ROL='$id_rol7' and ID_OBJETO=11 and PERMISO_ELIMINACION=1";
+                          $tablero2 = mysqli_query($conn, $tablero);
+                          if (mysqli_num_rows($tablero2) > 0)
+                          {?>
                           
                       <button  value="eliminar" name="accion" 
                         onclick="return confirm('¿Quieres eliminar este dato?')"
                         type="submit" class="btn btn-danger ">
                         <i class="fas fa-trash-alt"></i>
                     </button></form>
+
+                    <?php 
+                          }
+                        ?>
                     
 </td>
                      <td ><?php echo $filas['ID_CATEGORIA'] ?></td>
