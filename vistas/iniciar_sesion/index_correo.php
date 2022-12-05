@@ -11,6 +11,28 @@ if(!isset($_SESSION['correo'])){
 }
 require '../../conexion/conexion.php';
 
+//////////// PARAMETRO DURACIÓN DEL TOKEN //////////////
+
+       $duracion_token = "SELECT * FROM tbl_parametros WHERE PARAMETRO='DURACION_TOKEN'";
+       $resultado_duracion_token = mysqli_query($conn, $duracion_token);
+       while($mostrar_maxima = mysqli_fetch_assoc($resultado_duracion_token)) {
+                  $PARAMETRO_HORA = $mostrar_maxima["VALOR"];
+            }
+
+
+  ////// FECHA SIGUIENTE /////////
+
+$hora = $PARAMETRO_HORA;
+$minutos = 0;
+date_default_timezone_set('America/Guatemala'); 
+$date= date('Y-m-j H:i:s'); 
+$fecha_siguiente = strtotime ( '+'.$hora.'hour' , strtotime ($date) ) ; 
+$fecha_siguiente = strtotime ( '+0 minute' , $fecha_siguiente ) ; 
+$fecha_siguiente = strtotime ( '+0 second' , $fecha_siguiente ) ; 
+$fecha_siguiente = date ( 'Y-m-d H:i:s' , $fecha_siguiente); 
+
+     
+
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 use PHPMailer\PHPMailer\SMTP;
@@ -24,11 +46,16 @@ if(isset($_POST['submit'])){
     require '../../PHPMailer/PHPMailer.php';
     require '../../PHPMailer/SMTP.php';
 
-      date_default_timezone_set('America/Guatemala');
-      $fecha_actual = date("Y-m-d H:i:s");
-      $fecha_siguiente = date("Y-m-d H:i:s",strtotime($fecha_actual."+ 1 days")-1);
+      // date_default_timezone_set('America/Guatemala');
+      // $fecha_actual = date("Y-m-d H:i:s");
+
+      // $fecha_siguiente = date("Y-m-d H:i:s",strtotime($fecha_actual."+ 1 days")-1);
+
+      
     
-     
+
+        
+
     $correo=(isset($_POST['correo']))?$_POST['correo']:"";
     $token=(isset($_POST['token']))?$_POST['token']:"";
   
@@ -96,7 +123,7 @@ if(isset($_POST['submit'])){
 
         
           <h3>'.$token.'</h3> <br>
-          <b>El token tiene una duración de 24 horas,</b> presione <a type="button" href="http://localhost/SEACCO/vistas/iniciar_sesion/index_restablecer.php">aqu&iacute;</a> para recuperar la contrase&ntildea <br><br>
+          <b>El token tiene una duración de '.$PARAMETRO_HORA.' horas,</b> presione <a type="button" href="http://localhost/SEACCO/vistas/iniciar_sesion/index_restablecer.php">aqu&iacute;</a> para recuperar la contrase&ntildea <br><br>
           Si no solicit&oacute; un restablecimiento de contrase&ntilde;a, no se requiere ninguna otra acci&oacute;n. <br>
           Saludos,  Constructora SEACCO S. De R.L.';
           //$mail->AltBody = 'This is the body in plain text for non-HTML mail clients';

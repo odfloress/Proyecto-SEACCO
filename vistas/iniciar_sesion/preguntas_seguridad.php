@@ -27,6 +27,29 @@ include '../../controladores/con_preguntas.php';
        }
 
 </style>
+
+
+<script>
+  function clave1(e) {
+  key = e.keyCode || e.which;
+  tecla = String.fromCharCode(key).toString();
+  letras = "ABCDEFGHIJKLMNÑOPQRSTUVWXYZabcdefghijklmnñopqrstuvwxyz0123456789";
+  
+  especiales = [8,13];
+  tecla_especial = false;
+  for(var i in especiales) {
+    if(key == especiales[i]){
+      tecla_especial = true;
+      break;
+    }
+  }
+  
+  if(letras.indexOf(tecla) == -1 && !tecla_especial){
+    alert("Solo letras y números");
+    return false;
+  }
+}
+</script>  
 <!-- enlace del scritpt para evitar si preciona F12, si preciona Ctrl+Shift+I, si preciona Ctr+u  -->
 <script type="text/javascript" src="../../js/evita_ver_codigo_utilizando_teclas.js"></script>
 </head>
@@ -78,7 +101,7 @@ include '../../controladores/con_preguntas.php';
                 </select>
 
                 <label for="pwd" class="form-label">Respuesta:</label>
-                <input type="text" class="form-control" id="email" placeholder="Ingrese su respuesta" name="respuesta" autocomplete="off"   onkeyup="mayus(this);" maxlength="30" required>
+                <input type="text" class="form-control" id="email" placeholder="Ingrese su respuesta" name="respuesta" autocomplete="off"  autocomplete="off" onkeypress="return clave1(event);"  onkeyup="mayus(this);" maxlength="30" required>
                 <br>                
                 <div class="d-grid">
                   <button type="submit" name="accion" value="guardar" class="btn btn-dark btn-block">Guardar</button><br>
