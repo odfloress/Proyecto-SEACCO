@@ -31,7 +31,7 @@
                 if($anterior_valor !== $valor) ///////////// 
                 {
                 include_once 'funcion_bitacora.php';
-                bitacora('EDITO', 'PREGUNTAS DE SEGURIDAD', 'PREGUNTA', $id_parametro, $anterior_valor, $valor);
+                bitacora('EDITO', 'PARAMETROS', 'VALOR', $id_parametro, $anterior_valor, $valor);
                 }
                 // ////////////// FIN FUNCION BITACORA ///////////////////////
                     echo '<script>

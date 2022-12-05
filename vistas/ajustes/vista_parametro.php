@@ -56,6 +56,28 @@ if (mysqli_num_rows($roles35) > 0)
     <!-- /// para exportar en pdf /// -->
     <script type="text/javascript" src="../../js/complemento_1_jspdf.min.js"></script>
 	<script type="text/javascript" src="../../js/complemento_2_jspdf.plugin.autotable.min.js"></script>
+
+  <script>
+  function clave1(e) {
+  key = e.keyCode || e.which;
+  tecla = String.fromCharCode(key).toString();
+  letras = "ABCDEFGHIJKLMNÑOPQRSTUVWXYZabcdefghijklmnñopqrstuvwxyz0123456789.# ,-/";
+  
+  especiales = [8,13];
+  tecla_especial = false;
+  for(var i in especiales) {
+    if(key == especiales[i]){
+      tecla_especial = true;
+      break;
+    }
+  }
+  
+  if(letras.indexOf(tecla) == -1 && !tecla_especial){
+    // alert("Solo letras y números");
+    return false;
+  }
+}
+</script>  
     
   <?php include '../../configuracion/navar.php' ?>
   <!-- Inicio evita el click derecho de la pagina -->
@@ -182,8 +204,21 @@ if (mysqli_num_rows($roles35) > 0)
                                               <input type="text" class="form-control" readonly name="parametro" required value="<?php echo $filas['PARAMETRO'] ?>" placeholder=""  autocomplete = "off"  onkeypress="return soloLetras(event);" minlength="3" maxlength="20" 
                                                 onkeyup="mayus(this);" required >
                                                 <label for="">Valor:</label>
-                                                <input type="text" class="form-control" name="valor" required value="<?php echo $filas['VALOR'] ?>" placeholder=""  autocomplete = "off"  required minlength="1" maxlength="100" onkeyup="mayus(this);" >
-                                              <input type="text" class="form-control" name="anterior_valor" hidden value="<?php echo $filas['VALOR'] ?>" placeholder=""  autocomplete = "off"  required minlength="1" maxlength="100" onkeyup="mayus(this);" >
+
+                                                
+                                                <?php 
+                                                if($filas['ID_PARAMETRO'] != 7)
+                                                {
+                                                ?>
+                                                <input onkeyup="quitarespacios(this);" onkeydown="sinespacio(this);" type="text" class="form-control" name="valor" required value="<?php echo $filas['VALOR']; ?>" placeholder=""  autocomplete = "off"  required minlength="1" maxlength="2" onkeypress="return solonumero(event)" >
+                                             
+                                                  <?php }else{ ?>
+                                                    <input onkeyup="un_espacio(this);" type="text"  onkeypress="return clave1(event);" autocomplete="off" name="valor" class="form-control " maxlength="50" value="<?php echo $filas['VALOR']; ?>" placeholder="Ingrese el nombre" >
+                                                    <?php } ?>
+
+
+
+                                                <input type="text" class="form-control" name="anterior_valor" hidden value="<?php echo $filas['VALOR'] ?>" placeholder=""  autocomplete = "off"  required minlength="1" maxlength="100" onkeyup="mayus(this);" >
                                                 <label for="">Fecha de Creación:</label>
                                               <input type="text" class="form-control" readonly name="creado" required value="<?php echo $filas['FECHA_CREACION'] ?>" placeholder=""  autocomplete = "off"  onkeypress="return soloLetras(event);" minlength="3" maxlength="20" 
                                                 onkeyup="mayus(this);" required >
@@ -507,3 +542,40 @@ var form = document.getElementById("form")
     }
 	</script>
 </html>
+
+
+<script type="text/javascript">
+
+function sinespacio(e) {
+
+var cadena =  e.value;
+var limpia = "";
+var parts = cadena.split(" ");
+var length = parts.length;
+
+  for (var i = 0; i < length; i++) {
+      nuevacadena = parts[i];
+      subcadena = nuevacadena.trim();
+
+  if(subcadena != "") {
+     limpia += subcadena + " ";
+        }
+  }
+limpia = limpia.trim();
+e.value = limpia;
+
+ };
+</script>
+
+<script type="text/javascript">
+
+function quitarespacios(e) {
+
+var cadena =  e.value;
+cadena = cadena.trim();
+
+e.value = cadena;
+
+};
+
+</script>

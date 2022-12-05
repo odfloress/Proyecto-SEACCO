@@ -191,13 +191,13 @@ body {
                            }}// finaliza el if y el while
                            ?>
                    </select>
-                </div>
-                <div class="col">
+                
+                
                   <label for="pwd" class="form-label">Dirección:</label>
                   <textarea style="background-color:rgb(240, 244, 245);" type="text" onkeyup="un_espacio(this);" autocomplete="off"  value="<?php echo "$direccion"; 
                   ?>" onKeyUP="this.value=this.value.toUpperCase();" class="form-control" 
-                  placeholder="Ingrese su dirección" name="direccion" required minlength="3" maxlength="255"  ></textarea>
-                </div>
+                  placeholder="Ingrese su dirección" name="direccion" required minlength="3" maxlength="255"  cols="50" rows="3"></textarea>
+                  </div>
             </div>
             <div class="row"> 
                 <div class="col">
@@ -205,29 +205,29 @@ body {
                   <input style="background-color:rgb(240, 244, 245);" type="text" onkeyup="quitarespacios(this); sinespacio(this); "  autocomplete="off"  value="<?php echo "$celular"; ?>" 
                   class="form-control"  placeholder="Ingrese su celular" name="celular" required minlength="8" 
                   onkeypress="return solonumero(event)" maxlength="8" pattern="[0-9]+[1-9]+[0-9]+" title="8 caracteres y no todos ceros">
-                </div>
-                <div class="col">
+               
+               
                   <label for="pwd" class="form-label">Referencia:</label>
                   <input style="background-color:rgb(240, 244, 245);" type="text" onkeyup="un_espacio(this);" autocomplete="off"  value="<?php echo "$referencia"; ?>"
                   onkeypress="return soloLetras(event);" onKeyUP="this.value=this.value.toUpperCase();" class="form-control"  
-                   placeholder="Ingrese nombre referencia" name="referencia" required minlength="3" maxlength="30"  >
-                </div>
+                   placeholder="Opcional nombre referencia" name="referencia"  minlength="3" maxlength="50"  >
+                   </div>
             </div>
             <div class="row">
                 <div class="col">
                   <label for="pwd" class="form-label">Celular Referencia:</label>
                   <input style="background-color:rgb(240, 244, 245);" type="text" onkeyup="quitarespacios(this); sinespacio(this); " autocomplete="off"  
                   value="<?php echo "$celular_referencia"; ?>" class="form-control"  placeholder="Opcional" 
-                  name="celular_referencia" onkeypress="return solonumero(event)" required minlength="8" maxlength="8" pattern="[0-9]+[1-9]+[0-9]+" 
+                  name="celular_referencia" onkeypress="return solonumero(event)"  minlength="8" maxlength="8" pattern="[0-9]+[1-9]+[0-9]+" 
                   title="8 caracteres y no todos ceros" >
-                </div>
-                <div class="col">
+                
+                
                   <label for="pwd" class="form-label">Experiencia Laboral:</label>
                   <textarea style="background-color:rgb(240, 244, 245);" type="text" onkeyup="un_espacio(this);" autocomplete="off"  
                   value="<?php echo "$experiencia_laboral"; ?>" onkeypress="return SoloLetras(event);" 
                   onKeyUP="this.value=this.value.toUpperCase();" class="form-control"  placeholder="Expeirencia laboral" 
                   name="experiencia_laboral" required minlength="3" maxlength="255"></textarea>
-                </div>
+                  </div>
             </div>
             <div class="row">
                 <div class="col"> 
