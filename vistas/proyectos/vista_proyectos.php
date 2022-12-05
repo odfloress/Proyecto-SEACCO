@@ -177,11 +177,12 @@ if (mysqli_num_rows($roles35) > 0)
                     <label for="">Ubicación:</label>
                     <textarea class="form-control" type="text" onkeyup="un_espacio(this);" name="ubicacion" value="<?php echo $ubicacion; ?>" autocomplete="off"  id="" required  minlength="3" maxlength="255" onkeyup="mayus(this);"></textarea>
                     
-                    <label for="">Fecha Inicio:</label>
-                    <input class="form-control" type="Date" name="fecha_inicio" min="2022-08-08" value="<?php echo $fecha_inicio; ?>" autocomplete="off" id="" required> 
+                    <label for="">Fecha Inicio:</label> 
+                    <!-- min="2022-08-08" -->
+                    <input class="form-control" type="date" name="fecha_inicio"  value="<?php echo $fecha_inicio; ?>" autocomplete="off" id="" required> 
                     
                     <label for="">Fecha Final:</label>
-                    <input class="form-control" type="Date" name="fecha_final" value="<?php echo $fecha_final; ?>" autocomplete="off" id="" required>
+                    <input class="form-control" type="date" name="fecha_final" value="<?php echo $fecha_final; ?>" autocomplete="off" id="" required>
                     
         
                 
@@ -410,12 +411,12 @@ if (mysqli_num_rows($roles35) > 0)
                     <textarea class="form-control" type="text" onkeyup="un_espacio(this);" name="ubicacion" id="" required value="" autocomplete="off"  minlength="3" maxlength="255" onkeyup="mayus(this);"  ><?php echo $filas['UBICACION'] ?></textarea>
                     
                     <label for="">Fecha Inicio:</label>
-                    <input class="form-control" type="Date" name="fecha_inicio" id="" required value="<?php echo $filas['FECHA_INICIO'] ?>">
+                    <input class="form-control" type="date" name="fecha_inicio" id="" required value="<?php echo $filas['FECHA_INICIO'] ?>">
                     
                     <label for="">Fecha Final:</label>
-                    <input class="form-control" type="Date" name="fecha_final" id="" required value="<?php echo $filas['FECHA_FINAL'] ?>">
+                    <input class="form-control" type="date" name="fecha_final" id="" required value="<?php echo $filas['FECHA_FINAL'] ?>">
                     
-        
+  
       </div>
                             <!-- Fin Cuerpo del modal Modal -->
 
