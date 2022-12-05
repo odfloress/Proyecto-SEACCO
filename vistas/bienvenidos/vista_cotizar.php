@@ -233,13 +233,15 @@ body {
                    </select>
                 </div>
                 <br>  
+                
+            </div>
+            
+            <div class="row"> 
                 <div class="col">
                   <label for="pwd" class="form-label">Ubicación del Proyecto:</label>
                   <textarea style="background-color:rgb(240, 244, 245);" type="text"  onkeyup="un_espacio(this);" autocomplete="off" value="<?php echo "$ubicacion"; ?>"    onKeyUP="this.value=this.value.toUpperCase();"  class="form-control"   placeholder="Ingrese dirección" name="ubicacion" required></textarea>
                 </div>
             </div>
-            
-
             <div class="row"> 
                 <div class="col">
                   <label for="pwd" class="form-label">Proyecto:</label>
@@ -258,19 +260,23 @@ body {
                                 <option  value="Otro">Otro</option> 
                     </select>
                   
-                  <br>
+                  
                   <div class="w3-half w3-margin-bottom">
                   
-                      <label for="">Describa su solicitud:</label>
-                      <textarea style="background-color:rgb(240, 244, 245);" name="descripcion" id="" value="<?php echo "$descripcion"; ?>" onkeyup="un_espacio(this);"  onkeyup="mayus(this);"  cols="50" rows="5"></textarea>
+                      
                     </div>
                 </div>
 
                 
-            </div><br>
-            
-           
-            
+            </div>
+            <div class="row"> 
+                <div class="col">
+                <label for="">Describa su solicitud:</label>
+                <textarea style="background-color:rgb(240, 244, 245);" type="text" required name="descripcion" id="" value="<?php echo "$descripcion"; ?>" onkeyup="un_espacio(this);"  onkeyup="mayus(this);"  onKeyUP="this.value=this.value.toUpperCase();"  class="form-control"  cols="50" rows="5" ></textarea>
+                </div>
+              </div>
+              <br>
+              
             <div class="d-grid">
             <button type="submit" name="accion" value="registrar" class="btn btn-dark btn-block">Enviar Cotización</button><br>
             <a href="/SEACCO/" class="btn btn-danger btn-block">Cancelar</a>

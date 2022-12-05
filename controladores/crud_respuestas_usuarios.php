@@ -26,7 +26,7 @@ switch($accion){
     //para editar en la tabla mysl      
     case "editar";
 
-    // valida si existe la profesion con el mismo nombre
+    
     $validar_repuesta= "SELECT * FROM tbl_respuestas_usuario WHERE ID_RESPUESTA='$id_repuesta'";
     $result2 = mysqli_query($conn, $validar_repuesta); 
      if (mysqli_num_rows($result2) > 0) { 
@@ -37,7 +37,7 @@ switch($accion){
                 if($repuesta_anterior !== $repuesta) ///////////// 
                 {
                 include_once 'funcion_bitacora.php';
-                bitacora('EDITO', 'PREGUNTAS DE SEGURIDAD', 'PREGUNTA', $id_repuesta, $repuesta_anterior, $repuesta);
+                bitacora('EDITO', 'PREGUNTAS DE SEGURIDAD', 'RESPUESTA', $id_repuesta, $repuesta_anterior, $repuesta);
                 }
                 // ////////////// FIN FUNCION BITACORA ///////////////////////
                 echo '<script>
@@ -46,7 +46,7 @@ switch($accion){
                       </script>';
                       mysqli_close($conn);
             }
-           // si no existe la repuesta con el mismo nombre
+           
           }else{
                     $sql2 = "UPDATE tbl_respuestas_usuario SET RESPUESTA='$repuesta',ID_PREGUNTA ='$pregunta' WHERE ID_RESPUESTA='$id_repuesta'";
                     if (mysqli_query($conn, $sql2)) {
@@ -54,7 +54,7 @@ switch($accion){
                     if($repuesta_anterior !== $repuesta) ///////////// PREGUNTA
                     {
                     include_once 'funcion_bitacora.php';
-                    bitacora('EDITO', 'PREGUNTAS DE SEGURIDAD', 'PREGUNTA', $id_repuesta, $repuesta_anterior, $repuesta);
+                    bitacora('EDITO', 'PREGUNTAS DE SEGURIDAD', 'RESPUESTA', $id_repuesta, $repuesta_anterior, $repuesta);
                     }
                     // ////////////// FIN FUNCION BITACORA ///////////////////////
                         echo '<script>
