@@ -167,7 +167,7 @@ function quitarespacios(e) {
                     src="<?php echo $row["FOTO"]; ?>"
                     alt="User profile picture"><br>
                   
-                </div><br>
+                </div>
                 <!-- Editar foto de perfil-->
                 <div class="text-center">
                   <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal2">
@@ -191,7 +191,7 @@ function quitarespacios(e) {
                           <input type="hidden" name="ruta" value="<?php echo $row["FOTO"]; ?>">
                           <img class="profile-user-img img-fluid img-circle"
                             src="<?php echo $row["FOTO"]; ?>"
-                            alt="User profile picture"><br><br>
+                            alt="User profile picture"><br>
                             <input type="file" name="imagenes" accept=".jpg, .png, .jpej, .JPEG, .JPG, .PNG">
                         </div>
                         </div>
@@ -208,8 +208,8 @@ function quitarespacios(e) {
                   </div>
 
                 <!-- <h3 class="profile-username text-center" >DAVIDS</h3> -->
-                <br>
-                <br>
+                
+                
                 <p class="text-muted text-center">Información</p>
                 <ul class="list-group list-group-unbordered mb-3">
                 <label for="inputusuario" class="col-sm-10 col-form-label">Usuario:</label>
@@ -228,8 +228,10 @@ function quitarespacios(e) {
                 <div class="col-sm-10">
                   <input type="text" class="form-control" readonly name="correo1" id="correo" 
                   placeholder="" value="<?php echo $row["CORREO"]; ?>">
+                  <input type="text" class="form-control" hidden name="correo_anterior" id="correo" 
+                  placeholder="" value="<?php echo $row["CORREO"]; ?>">
                 </div>
-                <br>
+                
                 
                 <div class="container mt-3">
                   <button type="button" name="accion" value="editar" class="btn btn-primary btn-block" data-bs-toggle="modal" data-bs-target="#myModal">

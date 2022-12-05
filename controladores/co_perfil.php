@@ -12,6 +12,7 @@ $nombre=(isset($_POST['nombre2']))?$_POST['nombre2']:"";
 $nombre_anterior=(isset($_POST['nombre3']))?$_POST['nombre3']:"";
 $apellido=(isset($_POST['apellido2']))?$_POST['apellido2']:"";
 $correo=(isset($_POST['correo2']))?$_POST['correo2']:"";
+$correo_anterior=(isset($_POST['correo_anterior']))?$_POST['correo_anterior']:"";
 $usuario1 = $_SESSION;
 
 switch ($accion){
@@ -65,8 +66,21 @@ switch ($accion){
   break;
       
   case "guardar":
-        
-        $conn = new mysqli($servername, $username, $password, $dbname);
+        // Valida que exista la correo
+    $validar_actual = "SELECT * FROM tbl_usuarios WHERE CORREO='$correo'";
+    $reultado = mysqli_query($conn,$validar_actual);
+
+    if (mysqli_num_rows($reultado) > 0){
+      $conn = new mysqli($servername, $username, $password, $dbname);
+        $sqlguardar2 = "UPDATE tbl_usuarios SET NOMBRE='$nombre',APELLIDO='$apellido' WHERE USUARIO='$usuario1[usuario]'";
+      if (mysqli_query($conn, $sqlguardar2)) {}
+      echo '<script>
+        alert("Datos actualizados.");
+        window.Location = "/_login.php";
+      </script>';
+    }else{
+
+      $conn = new mysqli($servername, $username, $password, $dbname);
         $sqlguardar = "UPDATE tbl_usuarios SET NOMBRE='$nombre',APELLIDO='$apellido',CORREO='$correo' WHERE USUARIO='$usuario1[usuario]'";
 
       if (mysqli_query($conn, $sqlguardar)) {
@@ -74,7 +88,7 @@ switch ($accion){
         
 
         echo '<script>
-          alert("Información actualizada exitosamente");
+          alert("Información actualizada exitosamente.");
           window.Location = "/_login.php";
         </script>';
       } else {
@@ -84,6 +98,9 @@ switch ($accion){
         window.Location = "/_login.php";
       </script>';
       }
+
+    }
+
       
       mysqli_close($conn);
     

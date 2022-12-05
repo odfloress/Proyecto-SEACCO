@@ -91,7 +91,7 @@ if (mysqli_num_rows($roles35) > 0)
                 <div class="modal-body">
                   
                     <label for="">Estado Proyecto:</label>
-                    <input type="text" onkeyup="quitarespacios(this); sinespacio(this);" class="form-control" name="nombre" value="<?php echo $nombre; ?>" required value="" placeholder="" id="txtPrecio_Compra" autocomplete="off" onkeypress="return soloLetras(event);" minlength="3" maxlength="20" onkeyup="mayus(this);"   >
+                    <input type="text" onkeyup="un_espacio(this);" class="form-control" name="nombre" value="<?php echo $nombre; ?>" required value="" placeholder="" id="txtPrecio_Compra" autocomplete="off" onkeypress="return soloLetras(event);" minlength="3" maxlength="20" onkeyup="mayus(this);"   >
                     <br>
                     <label for="">Estado:</label>
                     <select class="form-select"  name="estado" required>
@@ -213,7 +213,7 @@ if (mysqli_num_rows($roles35) > 0)
                                               <input type="number" class="form-control" name="id_estados" readonly required value="<?php echo $filas['ID_ESTADOS'] ?>" placeholder="" id="txtPrecio_Compra"   >
                                               <br>
                                               <label for="">Estado Proyecto:</label>
-                                              <input type="text" onkeyup="quitarespacios(this); sinespacio(this);" class="form-control" name="nombre" autocomplete="off" required value="<?php echo $filas['ESTADO_PROYECTO'] ?>" placeholder="" id="txtPrecio_Compra" onkeypress="return soloLetras(event);" minlength="3" maxlength="20"  onkeyup="mayus(this);" >
+                                              <input type="text" onkeyup="un_espacio(this);" class="form-control" name="nombre" autocomplete="off" required value="<?php echo $filas['ESTADO_PROYECTO'] ?>" placeholder="" id="txtPrecio_Compra" onkeypress="return soloLetras(event);" minlength="3" maxlength="20"  onkeyup="mayus(this);" >
                                               <label for="">Estado</label>
                                                <select class="form-select"  name="estado" required >
                                                         <option> </option>
@@ -418,7 +418,7 @@ if (mysqli_num_rows($roles35) > 0)
 
  <!-- Enlace Script para que convierta a mayusculas las teclas que se van pulsando -->
  <script type="text/javascript" src="../../js/converir_a_mayusculas.js"></script>
-
+ <script type="text/javascript" src="../../js/un_espacio.js"></script>
  <!-- Enlace Script para quitar espacios en blanco -->
  <script type="text/javascript" src="../../js/quitar_espacios.js"></script>
 </body>

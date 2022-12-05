@@ -584,10 +584,10 @@ if (mysqli_num_rows($roles35) > 0)
                     <input class="form-control" type="Datetime-local" name="fecha_inicio" minlength="" maxlength="" id="" required value="<?php echo $filas['FECHA_ENTRADA'] ?>">
                     
                     <label for="">Fecha Salida:</label>
-                    <input class="form-control" type="Datetime-local" name="fecha_final" minlength="" maxlength="" id="" required value="<?php echo $filas['FECHA_SALIDA'] ?>">
+                    <input class="form-control" type="Datetime-local" name="fecha_final" minlength="" maxlength="" id=""  value="<?php echo $filas['FECHA_SALIDA'] ?>">
                     
                     <label for="">Motivo Salida:</label>
-                      <textarea type="text" class="form-control" name="motivo_salida" onkeyup="un_espacio(this);" value="" autocomplete="off" onkeyup="mayus(this);" maxlength="255" required ><?php echo $filas['MOTIVO_SALIDA'] ?></textarea>
+                      <textarea type="text" class="form-control" name="motivo_salida" onkeyup="un_espacio(this);" value="" autocomplete="off" onkeyup="mayus(this);" maxlength="255" ><?php echo $filas['MOTIVO_SALIDA'] ?></textarea>
                 </div>
                 <!-- Fin Cuerpo del modal Modal -->
 
