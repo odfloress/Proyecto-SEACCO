@@ -143,8 +143,7 @@
 <?php  
       $id_catalogo=(isset($_POST['id_catalogo']))?$_POST['id_catalogo']:""; 
       $catalogo=(isset($_POST['catalogo']))?$_POST['catalogo']:"";  
-        if(!isset($_POST['catalogo']))
-        {  ?> 
+         ?> 
  
 <!-- Carousel -->
 <div id="demo" class="carousel slide" data-bs-ride="carousel" >
@@ -170,7 +169,16 @@
   <!-- The slideshow/carousel -->
   <div class="carousel-inner">
     <div class="carousel-item active">
-      <img src="../../imagenes/1670234720_1659925459_1659393097_banner1.jpg" alt="Los Angeles" class="d-block" style="width:100%;height:590px;" >
+      <?php
+    include '../../conexion/conexion.php';
+  $sql70 = "SELECT * FROM tbl_portafolio WHERE ID_CATALOGO=3 ORDER by ID_CATALOGO DESC LIMIT 1";
+  $result70 = mysqli_query($conn, $sql70);
+  while($muestra70 = mysqli_fetch_assoc($result70)) {
+   
+  ?>
+      <img src="<?php echo $muestra70["RUTA_PORTAFOLIO"]; ?>" alt="Los Angeles" class="d-block" style="width:100%;height:590px;" >
+      <?php } ?>
+    
     </div>
     <?php 
   include '../../conexion/conexion.php';
@@ -194,7 +202,7 @@
   </button>
 </div>
 <!-- fin Carrucel -->
-<?php }  ?>
+
 <br>
 
                                   <!--     si existe un post muestra las imagenes  -->
