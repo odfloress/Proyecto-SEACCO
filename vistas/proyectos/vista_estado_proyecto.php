@@ -145,7 +145,7 @@ if (mysqli_num_rows($roles35) > 0)
       if (mysqli_num_rows($area2) > 0)
        {
          echo '<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal">
-                    Nueva Estado
+                    Nuevo Estado
                 </button>';
                           }
                         ?> 
