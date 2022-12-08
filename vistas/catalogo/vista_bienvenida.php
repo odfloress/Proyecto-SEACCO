@@ -97,7 +97,7 @@ if (mysqli_num_rows($roles35) > 0)
                     <br>
                     <label for="">Descripción</label>
                     <TEXtarea  style="background-color: white;" onkeyup="un_espacio(this);" name="descripcion" class="form-control"name="" id="" cols="40" rows="5"
-                    autocomplete = "off"  onkeypress="return soloLetras(event);" minlength="3" maxlength="200" 
+                    autocomplete = "off"  minlength="3" maxlength="200" 
                     onkeyup="mayus(this);" ><?php echo "$descripcion"; ?></TEXtarea>
                 
                 </div>
@@ -235,7 +235,7 @@ if (mysqli_num_rows($roles35) > 0)
                                               <br>
                                               <label for="">Descripción</label>
                                               <TEXtarea  style="background-color: white;" onkeyup="un_espacio(this);" name="descripcion" class="form-control"name="" id="" cols="40" rows="5"
-                                              autocomplete = "off"  onkeypress="return soloLetras(event);" minlength="3" maxlength="200" onkeyup="mayus(this);" ><?php echo $filas['DESCRIPCION'] ?></TEXtarea>
+                                              autocomplete = "off"   minlength="3" maxlength="200" onkeyup="mayus(this);" ><?php echo $filas['DESCRIPCION'] ?></TEXtarea>
                                           
                                           
                                           </div>

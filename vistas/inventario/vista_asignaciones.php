@@ -417,7 +417,7 @@ if( $catidades_entregadas<$catidades_asignadas and $fechaSSS>$fecha_de_entrega_h
                         <?php
                   include '../../conexion/conexion.php';
                   //para mostrar los datos de la tabla mysql y mostrar en el crud                
-                  $mostrar_KARDEX = "SELECT * FROM tbl_kardex   WHERE ID_ASIGNACION=$filas[ID_ASIGNADO] and TIPO_MOVIMIENTO='ENTRADA ASIGNACION'";
+                  $mostrar_KARDEX = "SELECT * FROM tbl_kardex   WHERE ID_ASIGNACION=$filas[ID_ASIGNADO] and TIPO_MOVIMIENTO='ENTRADA ASIGNACION' and CANTIDAD>0";
                   $resultado_kardex = mysqli_query($conn, $mostrar_KARDEX);
                   if (mysqli_num_rows($resultado_kardex) > 0) 
                  
@@ -429,7 +429,7 @@ if( $catidades_entregadas<$catidades_asignadas and $fechaSSS>$fecha_de_entrega_h
                              <input type="hidden" name="id_producto" value="<?php echo $filas['ID_PRODUCTO'] ?>">
                              <input type="hidden" name="id_asignado"  value="<?php echo $filas['ID_ASIGNADO'] ?>">
                               <input type="hidden" name="cantidad_entregada" value="<?php echo $fila_kardex['CANTIDAD']; ?>">
-                              <input type="hidden" name="fecha_entrega" value="<?php echo $fila_kardex['FECHA_HORA']; ?>">
+                              <input type="datetime" hidden name="fecha_entrega" value="<?php echo $fila_kardex['FECHA_HORA']; ?>">
                             <button  value="eliminar_entrega" name="accion" 
                                 onclick="return confirm('¿Quieres eliminar este dato?')"
                                 type="submit" class="btn btn-danger " data-id="19">
