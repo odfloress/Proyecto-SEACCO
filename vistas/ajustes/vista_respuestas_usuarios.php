@@ -76,13 +76,14 @@ if (mysqli_num_rows($roles35) > 0)
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <div class="container-fluid">
-        <div class="row mb-2">
+        <div class="row mb-3">
+        <h3>Respuestas de Usuario</h3> 
           <div class="col-sm-2">
             <h1></h1>
             <!-- Inicio de modal de agregar -->
-<div class="container mt-3">
+<div class="container mt-12">
   
-        <h3>Respuestas de Usuario</h3> 
+        
     
         
     </div>
@@ -223,8 +224,8 @@ if (mysqli_num_rows($roles35) > 0)
                                               <input type="text" readonly class="form-control" name="usuario" required value="<?php echo $filas['USUARIO'] ?>" placeholder=""  >
                                               <br>
                                               <label for="">Pregunta:</label>
-                                              <select style="background-color:rgb(240, 244, 245);" value="<?php echo "$id_departamento"; ?>"  id="lista1" name="id_pregunta" required  class="form-control selectpicker"  data-live-search="true">
-                                              <option value="<?php echo $filas['ID_PREGUNTA'] ?>"><?php echo $filas['PREGUNTA'] ?></option>
+                                              <select style="background-color:rgb(240, 244, 245);"   id="lista1" name="id_pregunta" required  class="form-control selectpicker"  data-live-search="true">
+                                              <option value="<?php echo $filas['ID_PREGUNTAS'] ?>"><?php echo $filas['PREGUNTA'] ?></option>
                                                   <?php
                                                       include 'conexion/conexion.php';
                                                       $departamento = "SELECT * FROM tbl_preguntas";
@@ -239,7 +240,7 @@ if (mysqli_num_rows($roles35) > 0)
                                                     <?php
                                                     }}// finaliza el if y el while
                                                     ?>
-                                            </select>
+                                            </select><br>
                                             <!--  <input type="text" readonly class="form-control" name="id_pregunta" required value="<?php echo $filas['PREGUNTA'] ?>" placeholder=""  > -->
                                               <br>
                                               <label for="">Respuesta:</label>

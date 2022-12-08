@@ -172,7 +172,7 @@ body {
                   <option value="">Seleccione una profesión</option>
                         <?php
                             include 'conexion/conexion.php';
-                            $profesion = "SELECT * FROM tbl_profesiones ORDER BY ID_PROFESION";
+                            $profesion = "SELECT * FROM tbl_profesiones WHERE ESTADO='ACTIVO' ORDER BY ID_PROFESION";
                             $profesion2 = mysqli_query($conn, $profesion);
                             if (mysqli_num_rows($profesion2) > 0) {
                                 while($row = mysqli_fetch_assoc($profesion2))
@@ -185,14 +185,14 @@ body {
                            }}// finaliza el if y el while
                            ?>
                    </select>
-                </div>
-                <div class="col">
+               
+                
                   <label for="pwd" class="form-label">Dirección:</label>
                   <textarea style="background-color:rgb(240, 244, 245);" type="text" onkeyup="un_espacio(this);" autocomplete="off"  
                   value="<?php echo "$direccion"; ?>" onkeypress="return SoloLetras(event);"  
                   onKeyUP="this.value=this.value.toUpperCase();" class="form-control"  
                   placeholder="Ingrese su dirección" name="direccion" required minlength="3" maxlength="255"></textarea>
-                </div>
+                  </div>
             </div>
             <div class="row"> 
                 <div class="col">
@@ -217,8 +217,8 @@ body {
                   value="<?php echo "$celular_referencia"; ?>" class="form-control"  placeholder="Numero opcional" 
                   name="celular_referencia" onkeypress="return solonumero(event)" required minlength="8" maxlength="8" 
                   pattern="[0-9]+[1-9]+[0-9]+" title="8 caracteres y no todos ceros">
-                </div>
-                <div class="col">
+              
+                
                   <label for="pwd" class="form-label">Experiencia Laboral:</label>
                   <textarea style="background-color:rgb(240, 244, 245);" type="text" onkeyup="un_espacio(this);" autocomplete="off"  
                   value="<?php echo "$experiencia_laboral"; ?>" onkeypress="return SoloLetras(event);"  
@@ -269,7 +269,7 @@ body {
                 <option value="">Seleccione una Área de Trabajo</option>
                         <?php
                             include 'conexion/conexion.php';
-                            $area = "SELECT * FROM tbl_areas ORDER BY ID_AREA";
+                            $area = "SELECT * FROM tbl_areas WHERE ESTADO='ACTIVO' ORDER BY ID_AREA";
                             $area2 = mysqli_query($conn, $area);
                             if (mysqli_num_rows($area2) > 0) {
                                 while($row = mysqli_fetch_assoc($area2))

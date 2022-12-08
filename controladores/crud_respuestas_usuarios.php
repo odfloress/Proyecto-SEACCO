@@ -1,7 +1,7 @@
 <?php 
     require '../../conexion/conexion.php';
     //para mostrar los datos de la tabla mysql y mostrar en el crud
-    $sql = "SELECT ID_RESPUESTA,PREGUNTA,USUARIO,RESPUESTA FROM tbl_respuestas_usuario r INNER JOIN tbl_preguntas p ON r.ID_PREGUNTA = p.ID_PREGUNTA WHERE USUARIO = '$_SESSION[usuario]'";
+    $sql = "SELECT ID_RESPUESTA,PREGUNTA,USUARIO,RESPUESTA, r.ID_PREGUNTA AS ID_PREGUNTAS FROM tbl_respuestas_usuario r INNER JOIN tbl_preguntas p ON r.ID_PREGUNTA = p.ID_PREGUNTA WHERE USUARIO = '$_SESSION[usuario]'";
 //(tbl_respuestas_usuario p
 //INNER JOIN tbl_preguntas c ON p.ID_PREGUNTA = c.ID_PREGUNTA)
     $result = mysqli_query($conn, $sql);
@@ -25,8 +25,9 @@ switch($accion){
     
     //para editar en la tabla mysl      
     case "editar";
-
     
+// echo $pregunta;
+//     die();
     $validar_repuesta= "SELECT * FROM tbl_respuestas_usuario WHERE ID_RESPUESTA='$id_repuesta'";
     $result2 = mysqli_query($conn, $validar_repuesta); 
      if (mysqli_num_rows($result2) > 0) { 
@@ -42,7 +43,7 @@ switch($accion){
                 // ////////////// FIN FUNCION BITACORA ///////////////////////
                 echo '<script>
                             alert("Edición de respuesta exitasa"); 
-                            window.location.href="../../vistas/ajustes/vista_respuestas_usuarios.php";                
+                             window.location.href="../../vistas/ajustes/vista_respuestas_usuarios.php";                
                       </script>';
                       mysqli_close($conn);
             }

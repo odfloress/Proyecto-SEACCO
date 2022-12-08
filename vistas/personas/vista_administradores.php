@@ -219,7 +219,7 @@ if (mysqli_num_rows($roles35) > 0)
                         <option value="">Seleccione una Profesión</option>
                               <?php
                                   include 'conexion/conexion.php';
-                                  $profesion = "SELECT * FROM tbl_profesiones ORDER BY ID_PROFESION";
+                                  $profesion = "SELECT * FROM tbl_profesiones WHERE ESTADO='ACTIVO' ORDER BY ID_PROFESION";
                                   $profesion2 = mysqli_query($conn, $profesion);
                                   if (mysqli_num_rows($profesion2) > 0) {
                                       while($row = mysqli_fetch_assoc($profesion2))
@@ -265,7 +265,7 @@ if (mysqli_num_rows($roles35) > 0)
                         <option value="">Seleccione un Área</option>
                                 <?php
                                     include 'conexion/conexion.php';
-                                    $area = "SELECT * FROM tbl_areas ORDER BY ID_AREA";
+                                    $area = "SELECT * FROM tbl_areas WHERE ESTADO='ACTIVO' ORDER BY ID_AREA";
                                     $area2 = mysqli_query($conn, $area);
                                     if (mysqli_num_rows($area2) > 0) {
                                         while($row = mysqli_fetch_assoc($area2))
@@ -512,7 +512,7 @@ if (mysqli_num_rows($roles35) > 0)
                        
                         <?php
                         include '../../conexion/conexion.php';
-                        $profesion = "SELECT * FROM tbl_profesiones ORDER BY ID_PROFESION";
+                        $profesion = "SELECT * FROM tbl_profesiones WHERE ESTADO='ACTIVO' ORDER BY ID_PROFESION";
                         $profesion2 = mysqli_query($conn, $profesion);
                         if (mysqli_num_rows($profesion2) > 0) {
                             while($row = mysqli_fetch_assoc($profesion2))
@@ -563,7 +563,7 @@ if (mysqli_num_rows($roles35) > 0)
 
                       <?php
                         include '../../conexion/conexion.php';
-                        $area = "SELECT * FROM tbl_areas ORDER BY ID_AREA";
+                        $area = "SELECT * FROM tbl_areas WHERE ESTADO='ACTIVO' ORDER BY ID_AREA";
                         $area2 = mysqli_query($conn, $area);
                         if (mysqli_num_rows($profesion2) > 0) {
                             while($row = mysqli_fetch_assoc($area2))

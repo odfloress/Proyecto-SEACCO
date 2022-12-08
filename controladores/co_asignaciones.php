@@ -25,6 +25,7 @@
   $DESCRIPCION_ENTREGA=(isset($_POST['descripcion_entrega']))?$_POST['descripcion_entrega']:"";
   $fecha_asignacion=(isset($_POST['fecha_asignacion']))?$_POST['fecha_asignacion']:"";
   $fecha_entrega=(isset($_POST['fecha_entrega']))?$_POST['fecha_entrega']:"";
+  
 
 
   $usuario1 = $_SESSION;
@@ -32,7 +33,7 @@
   $accion=(isset($_POST['accion']))?$_POST['accion']:"";
   
   date_default_timezone_set("America/Guatemala");
-  $fechasss = date("Y-m-d h:i:s");
+  $fechasss = date("Y-m-d H:i:s");
 
       // seleccionar la cantidad de producto del inventario
       $cantidad_inventario = "SELECT * FROM tbl_inventario WHERE ID_PRODUCTOS='$ID_PRODUCTO'";
@@ -184,19 +185,29 @@ $CANTIDAD_restante = $CANT_ASIGNADA - $CANT_Actual;
        
         case "eliminar_entrega": 
 
+           
+
           $sql2 = "UPDATE tbl_asignaciones SET CANT_ENTREGADA=CANT_ENTREGADA-$CANT_ENTREGADA WHERE ID_ASIGNADO='$ID_ASIGNACION'";
           if (mysqli_query($conn, $sql2)) 
           {
-                 ///////////// ELIMINA DE LA TABLA KARDEX /////////////
+                 ///////////// INSERTA DE LA TABLA KARDEX /////////////
 
                  $kardex = "INSERT INTO tbl_kardex (ID_PRODUCTO, ID_ASIGNACION, USUARIO, CANTIDAD, TIPO_MOVIMIENTO, FECHA_HORA)
                  VALUES ('$ID_PRODUCTO', '$ID_ASIGNACION', '$usuario1[usuario]', '$CANT_ENTREGADA', 'ANULACION ENTRADA ASIGNACION', '$fechasss')";
                  if (mysqli_query($conn, $kardex)) 
                  {
- 
+                  
+                
+           
+                
                   ///////////// resta AL INVENTARIO /////////////
                   $inventario = "UPDATE tbl_inventario SET CANTIDAD_DISPONIBLE=CANTIDAD_DISPONIBLE - $CANT_ENTREGADA WHERE ID_PRODUCTOS='$ID_PRODUCTO'";
-                  if (mysqli_query($conn, $inventario)) {}
+                  if (mysqli_query($conn, $inventario)) {
+
+                       ///////////// Cambia estado /////////////
+                        $inventario2 = "UPDATE tbl_kardex SET TIPO_MOVIMIENTO='ENTRADA ASIGNACION(Anulada)' WHERE ID_PRODUCTO='$ID_PRODUCTO' and ID_ASIGNACION='$ID_ASIGNACION' and FECHA_HORA='$fecha_entrega'";
+                        if (mysqli_query($conn, $inventario2)) {}
+                  }
             }
               header('Location: ../../vistas/inventario/vista_asignaciones.php');
           }
